@@ -39,9 +39,9 @@ Partial Class MainFrm
         Me.tabs_preview = New WinPaletter.TablessControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.pnl_preview = New System.Windows.Forms.Panel()
-        Me.ActionCenter = New WinPaletter.XenonAcrylic()
-        Me.start = New WinPaletter.XenonAcrylic()
-        Me.taskbar = New WinPaletter.XenonAcrylic()
+        Me.ActionCenter = New WinPaletter.XenonWinElement()
+        Me.start = New WinPaletter.XenonWinElement()
+        Me.taskbar = New WinPaletter.XenonWinElement()
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
         Me.Panel3 = New System.Windows.Forms.Panel()
@@ -353,14 +353,6 @@ Partial Class MainFrm
         Me.PictureBox45 = New System.Windows.Forms.PictureBox()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.Label78 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox53 = New WinPaletter.XenonGroupBox()
-        Me.WVista_EnableAeroPeek_toggle = New WinPaletter.XenonToggle()
-        Me.PictureBox46 = New System.Windows.Forms.PictureBox()
-        Me.Vista_EnableAeroPeek_lbl = New System.Windows.Forms.Label()
-        Me.XenonGroupBox54 = New WinPaletter.XenonGroupBox()
-        Me.WVista_AlwaysHibernateThumbnails_Toggle = New WinPaletter.XenonToggle()
-        Me.PictureBox47 = New System.Windows.Forms.PictureBox()
-        Me.Vista_AlwaysHibernateThumbnails_lbl = New System.Windows.Forms.Label()
         Me.XenonGroupBox55 = New WinPaletter.XenonGroupBox()
         Me.XenonGroupBox56 = New WinPaletter.XenonGroupBox()
         Me.WVista_ColorizationColorBalance_val = New WinPaletter.XenonButton()
@@ -442,6 +434,7 @@ Partial Class MainFrm
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -576,10 +569,6 @@ Partial Class MainFrm
         CType(Me.PictureBox44, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox52.SuspendLayout()
         CType(Me.PictureBox45, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox53.SuspendLayout()
-        CType(Me.PictureBox46, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox54.SuspendLayout()
-        CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox55.SuspendLayout()
         Me.XenonGroupBox56.SuspendLayout()
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -744,28 +733,19 @@ Partial Class MainFrm
         Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.ActionCenter.BackColor2 = System.Drawing.Color.Empty
         Me.ActionCenter.BackColorAlpha = 50
-        Me.ActionCenter.Basic = False
         Me.ActionCenter.BlurPower = 8
-        Me.ActionCenter.Borders = True
         Me.ActionCenter.DarkMode = True
-        Me.ActionCenter.DropShadow = True
         Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
         Me.ActionCenter.Location = New System.Drawing.Point(400, 165)
         Me.ActionCenter.Name = "ActionCenter"
         Me.ActionCenter.NoisePower = 0.2!
         Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
-        Me.ActionCenter.Radius = 5
-        Me.ActionCenter.RoundedCorners = True
         Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
+        Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
-        Me.ActionCenter.UseItAsActionCenter = True
-        Me.ActionCenter.UseItAsStartMenu = False
-        Me.ActionCenter.UseItAsTaskbar = False
-        Me.ActionCenter.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.ActionCenter.Win7AeroOpaque = False
         Me.ActionCenter.Win7ColorBal = 100
         Me.ActionCenter.Win7GlowBal = 100
         '
@@ -779,28 +759,19 @@ Partial Class MainFrm
         Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.start.BackColor2 = System.Drawing.Color.Empty
         Me.start.BackColorAlpha = 150
-        Me.start.Basic = False
         Me.start.BlurPower = 7
-        Me.start.Borders = True
         Me.start.DarkMode = True
-        Me.start.DropShadow = True
         Me.start.LinkColor = System.Drawing.Color.Empty
         Me.start.Location = New System.Drawing.Point(7, 50)
         Me.start.Name = "start"
         Me.start.NoisePower = 0.2!
         Me.start.Padding = New System.Windows.Forms.Padding(2)
-        Me.start.Radius = 5
-        Me.start.RoundedCorners = True
         Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
+        Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
         Me.start.TabIndex = 1
         Me.start.Transparency = True
-        Me.start.UseItAsActionCenter = False
-        Me.start.UseItAsStartMenu = True
-        Me.start.UseItAsTaskbar = False
-        Me.start.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.start.Win7AeroOpaque = False
         Me.start.Win7ColorBal = 100
         Me.start.Win7GlowBal = 100
         '
@@ -814,28 +785,19 @@ Partial Class MainFrm
         Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
         Me.taskbar.BackColor2 = System.Drawing.Color.Empty
         Me.taskbar.BackColorAlpha = 130
-        Me.taskbar.Basic = False
         Me.taskbar.BlurPower = 12
-        Me.taskbar.Borders = False
         Me.taskbar.DarkMode = True
         Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.taskbar.DropShadow = True
         Me.taskbar.LinkColor = System.Drawing.Color.Empty
         Me.taskbar.Location = New System.Drawing.Point(0, 255)
         Me.taskbar.Name = "taskbar"
         Me.taskbar.NoisePower = 0.2!
-        Me.taskbar.Radius = 4
-        Me.taskbar.RoundedCorners = False
         Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
+        Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
-        Me.taskbar.UseItAsActionCenter = False
-        Me.taskbar.UseItAsStartMenu = False
-        Me.taskbar.UseItAsTaskbar = True
-        Me.taskbar.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.taskbar.Win7AeroOpaque = False
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
         '
@@ -4727,7 +4689,7 @@ Partial Class MainFrm
         'XenonAlertBox1
         '
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
@@ -4735,7 +4697,7 @@ Partial Class MainFrm
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(3, 426)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(3, 450)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(513, 79)
         Me.XenonAlertBox1.TabIndex = 47
@@ -4893,13 +4855,11 @@ Partial Class MainFrm
         Me.XenonGroupBox50.Controls.Add(Me.PictureBox44)
         Me.XenonGroupBox50.Controls.Add(Me.XenonGroupBox52)
         Me.XenonGroupBox50.Controls.Add(Me.Label78)
-        Me.XenonGroupBox50.Controls.Add(Me.XenonGroupBox53)
-        Me.XenonGroupBox50.Controls.Add(Me.XenonGroupBox54)
         Me.XenonGroupBox50.Location = New System.Drawing.Point(3, 255)
         Me.XenonGroupBox50.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox50.Name = "XenonGroupBox50"
         Me.XenonGroupBox50.Padding = New System.Windows.Forms.Padding(1)
-        Me.XenonGroupBox50.Size = New System.Drawing.Size(513, 165)
+        Me.XenonGroupBox50.Size = New System.Drawing.Size(513, 105)
         Me.XenonGroupBox50.TabIndex = 45
         '
         'XenonGroupBox51
@@ -5067,111 +5027,6 @@ Partial Class MainFrm
         Me.Label78.TabIndex = 0
         Me.Label78.Text = "Aero Tweaks"
         Me.Label78.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox53
-        '
-        Me.XenonGroupBox53.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox53.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox53.Controls.Add(Me.WVista_EnableAeroPeek_toggle)
-        Me.XenonGroupBox53.Controls.Add(Me.PictureBox46)
-        Me.XenonGroupBox53.Controls.Add(Me.Vista_EnableAeroPeek_lbl)
-        Me.XenonGroupBox53.Location = New System.Drawing.Point(2, 104)
-        Me.XenonGroupBox53.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox53.Name = "XenonGroupBox53"
-        Me.XenonGroupBox53.Size = New System.Drawing.Size(508, 28)
-        Me.XenonGroupBox53.TabIndex = 22
-        '
-        'WVista_EnableAeroPeek_toggle
-        '
-        Me.WVista_EnableAeroPeek_toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WVista_EnableAeroPeek_toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.WVista_EnableAeroPeek_toggle.Checked = False
-        Me.WVista_EnableAeroPeek_toggle.DarkLight_Toggler = False
-        Me.WVista_EnableAeroPeek_toggle.Location = New System.Drawing.Point(464, 5)
-        Me.WVista_EnableAeroPeek_toggle.Name = "WVista_EnableAeroPeek_toggle"
-        Me.WVista_EnableAeroPeek_toggle.Size = New System.Drawing.Size(40, 20)
-        Me.WVista_EnableAeroPeek_toggle.TabIndex = 16
-        '
-        'PictureBox46
-        '
-        Me.PictureBox46.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox46.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox46.Image = CType(resources.GetObject("PictureBox46.Image"), System.Drawing.Image)
-        Me.PictureBox46.Location = New System.Drawing.Point(3, 2)
-        Me.PictureBox46.Name = "PictureBox46"
-        Me.PictureBox46.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox46.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox46.TabIndex = 4
-        Me.PictureBox46.TabStop = False
-        '
-        'Vista_EnableAeroPeek_lbl
-        '
-        Me.Vista_EnableAeroPeek_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Vista_EnableAeroPeek_lbl.AutoEllipsis = True
-        Me.Vista_EnableAeroPeek_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Vista_EnableAeroPeek_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Vista_EnableAeroPeek_lbl.Location = New System.Drawing.Point(30, 4)
-        Me.Vista_EnableAeroPeek_lbl.Name = "Vista_EnableAeroPeek_lbl"
-        Me.Vista_EnableAeroPeek_lbl.Size = New System.Drawing.Size(423, 20)
-        Me.Vista_EnableAeroPeek_lbl.TabIndex = 13
-        Me.Vista_EnableAeroPeek_lbl.Text = "Aero Peek"
-        Me.Vista_EnableAeroPeek_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonGroupBox54
-        '
-        Me.XenonGroupBox54.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox54.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox54.Controls.Add(Me.WVista_AlwaysHibernateThumbnails_Toggle)
-        Me.XenonGroupBox54.Controls.Add(Me.PictureBox47)
-        Me.XenonGroupBox54.Controls.Add(Me.Vista_AlwaysHibernateThumbnails_lbl)
-        Me.XenonGroupBox54.Location = New System.Drawing.Point(2, 134)
-        Me.XenonGroupBox54.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox54.Name = "XenonGroupBox54"
-        Me.XenonGroupBox54.Size = New System.Drawing.Size(508, 28)
-        Me.XenonGroupBox54.TabIndex = 23
-        '
-        'WVista_AlwaysHibernateThumbnails_Toggle
-        '
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.Checked = False
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.DarkLight_Toggler = False
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.Location = New System.Drawing.Point(464, 5)
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.Name = "WVista_AlwaysHibernateThumbnails_Toggle"
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.Size = New System.Drawing.Size(40, 20)
-        Me.WVista_AlwaysHibernateThumbnails_Toggle.TabIndex = 17
-        '
-        'PictureBox47
-        '
-        Me.PictureBox47.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox47.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox47.Image = CType(resources.GetObject("PictureBox47.Image"), System.Drawing.Image)
-        Me.PictureBox47.Location = New System.Drawing.Point(3, 2)
-        Me.PictureBox47.Name = "PictureBox47"
-        Me.PictureBox47.Size = New System.Drawing.Size(24, 23)
-        Me.PictureBox47.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox47.TabIndex = 4
-        Me.PictureBox47.TabStop = False
-        '
-        'Vista_AlwaysHibernateThumbnails_lbl
-        '
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Vista_AlwaysHibernateThumbnails_lbl.AutoEllipsis = True
-        Me.Vista_AlwaysHibernateThumbnails_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Location = New System.Drawing.Point(30, 4)
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Name = "Vista_AlwaysHibernateThumbnails_lbl"
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Size = New System.Drawing.Size(423, 19)
-        Me.Vista_AlwaysHibernateThumbnails_lbl.TabIndex = 3
-        Me.Vista_AlwaysHibernateThumbnails_lbl.Text = "Hibernate Thumbnails"
-        Me.Vista_AlwaysHibernateThumbnails_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox55
         '
@@ -5375,6 +5230,7 @@ Partial Class MainFrm
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox1)
         Me.TabPage9.Controls.Add(Me.Label83)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage9.Controls.Add(Me.Label82)
@@ -5393,7 +5249,7 @@ Partial Class MainFrm
         Me.Label83.AutoEllipsis = True
         Me.Label83.BackColor = System.Drawing.Color.Transparent
         Me.Label83.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label83.Location = New System.Drawing.Point(8, 304)
+        Me.Label83.Location = New System.Drawing.Point(8, 339)
         Me.Label83.Name = "Label83"
         Me.Label83.Size = New System.Drawing.Size(508, 63)
         Me.Label83.TabIndex = 46
@@ -5428,7 +5284,7 @@ Partial Class MainFrm
         Me.Label82.AutoEllipsis = True
         Me.Label82.BackColor = System.Drawing.Color.Transparent
         Me.Label82.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label82.Location = New System.Drawing.Point(8, 266)
+        Me.Label82.Location = New System.Drawing.Point(8, 301)
         Me.Label82.Name = "Label82"
         Me.Label82.Size = New System.Drawing.Size(508, 35)
         Me.Label82.TabIndex = 45
@@ -6351,6 +6207,18 @@ Partial Class MainFrm
         Me.OpenFileDialog2.DefaultExt = "wpt"
         Me.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme"
         '
+        'XenonCheckBox1
+        '
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox1.Checked = False
+        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(8, 260)
+        Me.XenonCheckBox1.Name = "XenonCheckBox1"
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(503, 23)
+        Me.XenonCheckBox1.TabIndex = 49
+        Me.XenonCheckBox1.Text = "Make choosing any theme overwrites colors in Classic Colors"
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -6508,10 +6376,6 @@ Partial Class MainFrm
         CType(Me.PictureBox44, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox52.ResumeLayout(False)
         CType(Me.PictureBox45, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox53.ResumeLayout(False)
-        CType(Me.PictureBox46, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox54.ResumeLayout(False)
-        CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox55.ResumeLayout(False)
         Me.XenonGroupBox56.ResumeLayout(False)
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).EndInit()
@@ -6581,15 +6445,15 @@ Partial Class MainFrm
     Friend WithEvents previewContainer As XenonGroupBox
     Friend WithEvents PictureBox21 As PictureBox
     Friend WithEvents pnl_preview As Panel
-    Friend WithEvents taskbar As XenonAcrylic
-    Friend WithEvents start As XenonAcrylic
+    Friend WithEvents taskbar As XenonWinElement
+    Friend WithEvents start As XenonWinElement
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents XenonWindow1 As XenonWindow
     Friend WithEvents W11_Color_Index3 As XenonCP
     Friend WithEvents apply_btn As XenonButton
     Friend WithEvents W11_Color_Index0 As XenonCP
     Friend WithEvents W11_Color_Index6 As XenonCP
-    Friend WithEvents ActionCenter As XenonAcrylic
+    Friend WithEvents ActionCenter As XenonWinElement
     Friend WithEvents pnl4 As XenonGroupBox
     Friend WithEvents W11_pic4 As PictureBox
     Friend WithEvents W11_lbl4 As Label
@@ -6922,14 +6786,6 @@ Partial Class MainFrm
     Friend WithEvents PictureBox45 As PictureBox
     Friend WithEvents Label77 As Label
     Friend WithEvents Label78 As Label
-    Friend WithEvents XenonGroupBox53 As XenonGroupBox
-    Friend WithEvents WVista_EnableAeroPeek_toggle As XenonToggle
-    Friend WithEvents PictureBox46 As PictureBox
-    Friend WithEvents Vista_EnableAeroPeek_lbl As Label
-    Friend WithEvents XenonGroupBox54 As XenonGroupBox
-    Friend WithEvents WVista_AlwaysHibernateThumbnails_Toggle As XenonToggle
-    Friend WithEvents PictureBox47 As PictureBox
-    Friend WithEvents Vista_AlwaysHibernateThumbnails_lbl As Label
     Friend WithEvents XenonGroupBox55 As XenonGroupBox
     Friend WithEvents XenonGroupBox56 As XenonGroupBox
     Friend WithEvents WVista_ColorizationColorBalance_val As XenonButton
@@ -6949,4 +6805,5 @@ Partial Class MainFrm
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents Label83 As Label
     Friend WithEvents Label82 As Label
+    Friend WithEvents XenonCheckBox1 As XenonCheckBox
 End Class

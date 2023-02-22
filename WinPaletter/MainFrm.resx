@@ -1209,44 +1209,6 @@ If it will work on Windows Vista, This will be updated to make Windows Vista's s
         coCWbz34PzOF8FnzM/Rn5Ev+tHRy4oH+5/H5fgPAaG1hImWWGQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="PictureBox46.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAcpJREFUSEvt0ElSwkAUxvE44izihLMCop5AvU6O4aw4IyIiooDzMaxy06dwQERU
-        nDCi5d687nReUoRAuTZVvypW/695wv9X1Ddy+jM+cvZ9LiPDp9wXGTpB7mOQpQaPGNfhp8p5wEnEEZPO
-        nbHMqJIXhOGTrGgWMo5JPEYNRMEH1R+R7WdEJS8I7qOsWGyIxVhIjUUyVN8+07snC7/hgOtAEjV/zyTE
-        YjzEYu+qnjD3RrpDmgFHVBILhzCmC+2irhB4pTqDLzgA9/pzaId7IR1BZA9oBuBeRjHj0Ks+tA2eqfYA
-        avOncQDuVehVLMRiutBWWtXq555Ii+8RB+BehV+VJ7SJmn2PKptXM2APpEXzVz3pYs0+jNk2uAfS5EXW
-        tRQOwL2MQjmvUkLamHUdpKjGNe6eNKwkcQDulRsyeJUSyomtMvUrIEnVLWkGbN6UqA/leZUSyoktc3ek
-        domp8SRwAO711xCNLYIEVe1hajxxHIB7GYeSBUOgauFWZZkHcVI1rxmAe+n+Hg2xmHmIxSrnUMXsDVU5
-        d40DcC99rPgQKJ/hrknZNCP/xgGLJz4uxy54KF/MKARKp8AVVTJJXQgTl2NK/v8z+wThFxiygYlR0sS9
-        AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="PictureBox47.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAABERJREFUSEvt
-        1HlMk3ccx/GH6SQyoSA8pW54oYmIQNnc3JLFZU4ncshwQw45MhD/IS4xi0Noy/JkclSlohUmoNNBwHIY
-        gXETJirsYETmCi2UUsod5hDG0VmO8dnvaTti0tRs//tpXmn/en/zpE2pF/tf4+UNNPNyB8DL0cKZddWI
-        +7XBHJ2tPXR7H2/XnX3cgfIPuCjfTxzgouJDo8qDXH2lD33JlDMfG2q+/Q7qpO+Czu43yuqHE+sKS8NU
-        HHAWVhwkMR/iEBff+XJRH7Yditw4NIS7ouowvWDKmY8NNUnfQtWZtw1BR6nG6LIG61mZGqbSj8tU+dOo
-        CqBRzTpMQ3ktDphvJe/HUXuEhilnvn9DNInG1ozjZOPv2ESewiGzD/YXCYmaqQniEjR+PmWPnz6zR93H
-        NL6P2YbuG3G4G+uK+qPPOWAIEYlNo5j6cxrTM7N4oJlCdMUIOBlq2F1QM3XBXEaRsg4L9yjME49EdmgI
-        pdEYRoQbmXLm40j6kN2iRd/AMAZHxjAyNo6x8ccYfzyBY2WDWHdOxfSm2ZTpayjoa43+qqbQkcjBcP4O
-        zNzlozV+g+UDtufVuN/Rjd+UKnT1qKHs1aCnTwt1/yCCb2lgk65ihi9ZN+vKKDxrrsyKPA0PC22umG3a
-        avnAK+Leea+sbsTc6iIUiJUpEVesRMC3PbBJVWFtiipxKNNaMpNPwUwBOVZvg5kGzlNTznw2aT2Ba1N7
-        zqw4a7SGsD7b84Uto3ICQ60ey3zp83HJKilrIndV5eRNqx9M7s1VUJ6mnPk2l0Zt3VwSI9ok+1TssiJa
-        7FIULd5YGB1KgbJ6n2lezU9SxLwuUIqfxWcldX/5RkLnTlPOfBuLontdiqLgUhgFt5IT2Ft5Gq8VRBIR
-        eDWfKDgW5pWkPM5PUsJIgYjUYuwRdYAvUBh4CRSDppz52JALCfpWi1A90IZl8gppSMXu0pPg3QgD75sw
-        xlugYNiQ31eNmPl1DxY73PC03RulJfHgC7vYA5a/5A03w5Hw43Ww0+ufYHlWBf3SAsZ1k+BeCwE3N4Qh
-        AcZbKIfu0ZvQ163BnIzCdB75udZugyRPBE9Bl+UDztdDsP9OAqb0s5hvD4Wu1ApL00oUdjeBzvkETleD
-        yYFOJjK9CIsPd6zEJyVWmEi3RkttODzIU5hy5qNzgnH6QY7hCZaGZHjaEoLlRR3G5p7AMSsI668EMR6i
-        TmZ38kPo2rxW4n8w5MB5e0jzRdgl7LR8wDH7CPbKTqFe246+qVHDoQbyOeOXUjhcDiR/I4GGA14iOWTF
-        8dBVbcFEysuYEHMwVPceIsUFzz/gIP1okQ2xTtRLUN7bCpfso+BcDCD8wZH4Cz0EnUI2wjqXm4z7tWGQ
-        FggRQeLuok6W5b9rTmZAGoktkhDsWBl+BrYXfGGb4au1S/fZ7pkkd3MXyEdNMUK+YqdI/rd7slxiyr3Y
-        fxlF/QO4QBQ+dkipCAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="PictureBox48.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAmZJREFUSEvV
@@ -1373,7 +1335,7 @@ If it will work on Windows Vista, This will be updated to make Windows Vista's s
   <data name="WXP_CustomTheme.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAB1VJREFUaEPtmFtsm2cZx32xk5B2t452a+PD51OSdtCUrmu7lRVNqKwdQXABKxUS
+        vQAADr0BR/uQrQAAB1VJREFUaEPtmFtsm2cZx32xk5B2t452a+PD51OSdtCUrmu7lRVNqKwdQXABKxUS
         1cpBsKndupYeVoU2pzbHLoljx04cn5LYOdiOnYOd0Dpc7IILEBOMSR0UiW0Sh12AmBgS8Of/vPaXOLWn
         bpQmAdXST8/r7/0+f7/3+R6/jxODvDadqb/L3OY5bHUFXnP4R7A5OIZHQhPYGpnA9kgcO8ZS2DmRxq7E
         FHaTx1Mz2J2cxu5JRp2EMMvjszxP5vNjBd/viufZPT6DnWPT2DUmcUqxa1TGM3g0msb2kTQeFWJTqIlN

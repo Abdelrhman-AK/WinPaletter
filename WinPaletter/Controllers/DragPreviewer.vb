@@ -419,9 +419,7 @@ Public Class DragPreviewer
                 Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
                         start.Transparency = True
-                        start.Basic = False
                         taskbar.Transparency = True
-                        taskbar.Basic = False
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
@@ -445,7 +443,6 @@ Public Class DragPreviewer
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
-                            .Win7AeroOpaque = False
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -454,7 +451,6 @@ Public Class DragPreviewer
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
-                            .Win7AeroOpaque = False
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -465,9 +461,7 @@ Public Class DragPreviewer
 
                     Case CP.AeroTheme.AeroOpaque
                         start.Transparency = True
-                        start.Basic = False
                         taskbar.Transparency = True
-                        taskbar.Basic = False
 
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Opaque
@@ -484,14 +478,12 @@ Public Class DragPreviewer
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
-                            .Win7AeroOpaque = True
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
                             .BackColor = [CP].Windows7.ColorizationColor
                             .BackColor2 = [CP].Windows7.ColorizationColor
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
-                            .Win7AeroOpaque = True
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
                             .BackColor = [CP].Windows7.ColorizationColor
                             .BackColor2 = [CP].Windows7.ColorizationColor
@@ -524,11 +516,8 @@ Public Class DragPreviewer
                         taskbar.Transparency = False
                         taskbar.NoisePower = 0
 
-                        start.Basic = True
-                        taskbar.Basic = True
                         start.Refresh()
                         taskbar.Refresh()
-
 #End Region
 
                     Case CP.AeroTheme.Classic
@@ -566,35 +555,38 @@ Public Class DragPreviewer
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
-                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                ActionCenter.Style = XenonWinElement.Styles.ActionCenter11
+                taskbar.Style = XenonWinElement.Styles.Taskbar11
+                start.Style = XenonWinElement.Styles.Start11
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
 
             Case WinVer.W10
-                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                ActionCenter.Style = XenonWinElement.Styles.ActionCenter10
+                taskbar.Style = XenonWinElement.Styles.Taskbar10
+                start.Style = XenonWinElement.Styles.Start10
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
 
             Case WinVer.W8
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
+                taskbar.Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
 
             Case WinVer.W7
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
-
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Aero
+                        start.Style = XenonWinElement.Styles.Start7Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.AeroOpaque
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Opaque
+                        start.Style = XenonWinElement.Styles.Start7Opaque
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.Basic
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Basic
+                        start.Style = XenonWinElement.Styles.Start7Basic
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
                         tabs_preview.SelectedIndex = 0
 
@@ -610,13 +602,11 @@ Public Class DragPreviewer
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
                 ActionCenter.Dock = Nothing
-                ActionCenter.RoundedCorners = True
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
                 taskbar.BlurPower = 12
                 '########################
-                start.RoundedCorners = True
                 start.BlurPower = 7
                 start.NoisePower = 0.2
                 '########################
@@ -632,13 +622,11 @@ Public Class DragPreviewer
 
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
-                ActionCenter.RoundedCorners = False
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
                 taskbar.BlurPower = 12
                 '########################
-                start.RoundedCorners = False
                 start.BlurPower = 7
                 start.NoisePower = 0.2
                 '########################
@@ -670,7 +658,6 @@ Public Class DragPreviewer
                 taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
 
-                start.RoundedCorners = True
                 start.BlurPower = 1
                 start.NoisePower = 0.5
                 start.Width = 136

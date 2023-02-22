@@ -3813,351 +3813,240 @@ Public Class XenonAlertBox
     End Sub
 
 End Class
-Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyPropertyChanged
-
+Public Class XenonWinElement : Inherits ContainerControl
     Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.15))
-
     Dim Noise7 As Bitmap = My.Resources.AeroGlass
     Dim Noise7Start As Bitmap = My.Resources.Start7Glass
-
     Dim adaptedBack As Bitmap
     Dim adaptedBackBlurred As Bitmap
-    Private _Transparency As Boolean = True
-    Public Property Radius As Integer = 5
-    Public Property Basic As Boolean = False
-    Public Property Borders As Boolean = True
-    Public Property UseItAsStartMenu As Boolean = False
-    Public Property UseItAsTaskbar As Boolean = False
-    Public Property UseItAsTaskbar_Version As TaskbarVersion = TaskbarVersion.Eleven
-    Public Property UseItAsActionCenter As Boolean = False
-    Public Property DropShadow As Boolean = True
-    Public Property RoundedCorners As Boolean = False
 
+    Private _Style As Styles = Styles.Start11
+    Public Property Style As Styles
+        Get
+            Return _Style
+        End Get
+        Set(value As Styles)
+            _Style = value
+            ProcessBack()
+            Refresh()
+        End Set
+    End Property
+
+    Enum Styles
+        Start11
+        Taskbar11
+        ActionCenter11
+        Start10
+        Taskbar10
+        ActionCenter10
+        Start8
+        Taskbar8Aero
+        Taskbar8Lite
+        Start7Aero
+        Taskbar7Aero
+        Start7Opaque
+        Taskbar7Opaque
+        Start7Basic
+        Taskbar7Basic
+        StartVistaAero
+        TaskbarVistaAero
+        StartVistaOpaque
+        TaskbarVistaOpaque
+        StartVistaBasic
+        TaskbarVistaBasic
+        StartXP
+        TaskbarXP
+    End Enum
+
+#Region "Properties"
     Private _BackColorAlpha As Byte = 130
-    Public Event BackColorAlphaChanged As PropertyChangedEventHandler
-    Private Sub NotifyBackColorAlphaChanged(ByVal info As Integer)
-        Invalidate()
-        RaiseEvent BackColorAlphaChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property BackColorAlpha() As Integer
         Get
             Return _BackColorAlpha
         End Get
-
         Set(ByVal value As Integer)
-            If Not (value = _BackColorAlpha) Then
-                Me._BackColorAlpha = value
-                NotifyBackColorAlphaChanged(_BackColorAlpha)
-            End If
+            _BackColorAlpha = value
+            Refresh()
         End Set
     End Property
 
-
     Private _NoisePower As Single = 0.15
-    Public Event NoisePowerChanged As PropertyChangedEventHandler
-    Private Sub NotifyNoisePowerChanged(ByVal info As Single)
-        Invalidate()
-        RaiseEvent NoisePowerChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property NoisePower() As Single
         Get
             Return _NoisePower
         End Get
-
         Set(ByVal value As Single)
-            If Not (value = _NoisePower) Then
-                Me._NoisePower = value
-                NotifyNoisePowerChanged(_NoisePower)
-                If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
-                End If
+            Me._NoisePower = value
+
+            If Style = Styles.Taskbar7Aero Then
+                Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
             End If
+
+            If Style = Styles.Start7Aero Then
+                Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
+            End If
+
+            NoiseBack()
+            Refresh()
         End Set
     End Property
 
-    Private Sub NotifyBlurPowerChanged(ByVal info As String)
-        RaiseEvent BlurPowerChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-
     Private _BlurPower As Integer = 8
-    Public Event BlurPowerChanged As PropertyChangedEventHandler
     Public Property BlurPower() As Integer
         Get
             Return _BlurPower
         End Get
-
         Set(ByVal value As Integer)
-            If Not (value = _BlurPower) Then
-                Me._BlurPower = value
-                NotifyBlurPowerChanged("BlurPower")
-            End If
+            _BlurPower = value
+            BlurBack()
+            Refresh()
         End Set
     End Property
 
-    Public Event TransparencyChanged As PropertyChangedEventHandler _
-        Implements INotifyPropertyChanged.PropertyChanged
-    Private Sub NotifyTransparencyChanged(ByVal info As String)
-        RaiseEvent TransparencyChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
+    Private _Transparency As Boolean = True
     Public Property Transparency() As Boolean
         Get
             Return _Transparency
         End Get
-
         Set(ByVal value As Boolean)
-            If Not (value = _Transparency) Then
-                Me._Transparency = value
-                NotifyTransparencyChanged("Transparency")
-                ProcessBack()
-                Refresh()
-            End If
+            _Transparency = value
+            ProcessBack()
+            Refresh()
         End Set
     End Property
 
-
     Private _DarkMode As Boolean = True
-    Public Event DarkModeChanged As PropertyChangedEventHandler
-    Private Sub NotifyDarkModeChanged(ByVal info As String)
-        RaiseEvent DarkModeChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property DarkMode() As Boolean
         Get
             Return _DarkMode
         End Get
-
         Set(ByVal value As Boolean)
-            If Not (value = _DarkMode) Then
-                Me._DarkMode = value
-                NotifyDarkModeChanged("DarkMode")
-                Invalidate()
-            End If
+            _DarkMode = value
+            Refresh()
         End Set
     End Property
 
-
     Private _AppUnderline As Color
-    Public Event AppUnderlineChanged As PropertyChangedEventHandler
-    Private Sub NotifyAppUnderlineChanged(ByVal info As String)
-        RaiseEvent AppUnderlineChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property AppUnderline() As Color
         Get
             Return _AppUnderline
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _AppUnderline) Then
-                Me._AppUnderline = value
-                NotifyAppUnderlineChanged("AppUnderline")
-                Try : Refresh() : Catch : End Try
-            End If
+            _AppUnderline = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _AppBackground As Color
-    Public Event AppBackgroundChanged As PropertyChangedEventHandler
-    Private Sub NotifyAppBackgroundChanged(ByVal info As String)
-        RaiseEvent AppBackgroundChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property AppBackground() As Color
         Get
             Return _AppBackground
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _AppBackground) Then
-                Me._AppBackground = value
-                NotifyAppBackgroundChanged("AppBackground")
-                Try : Refresh() : Catch : End Try
-            End If
+            _AppBackground = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _SearchBoxAccent As Color
-    Public Event SearchBoxAccentChanged As PropertyChangedEventHandler
-    Private Sub NotifySearchBoxAccentChanged(ByVal info As String)
-        RaiseEvent SearchBoxAccentChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property SearchBoxAccent() As Color
         Get
             Return _SearchBoxAccent
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _SearchBoxAccent) Then
-                Me._SearchBoxAccent = value
-                NotifySearchBoxAccentChanged("SearchBoxAccent")
-                Try : Refresh() : Catch : End Try
-            End If
+            _SearchBoxAccent = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _ActionCenterButton_Normal As Color
-    Public Event ActionCenterButton_NormalChanged As PropertyChangedEventHandler
-    Private Sub NotifyActionCenterButton_NormalChanged(ByVal info As String)
-        RaiseEvent ActionCenterButton_NormalChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property ActionCenterButton_Normal() As Color
         Get
             Return _ActionCenterButton_Normal
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _ActionCenterButton_Normal) Then
-                Me._ActionCenterButton_Normal = value
-                NotifyActionCenterButton_NormalChanged("ActionCenterButton_Normal")
-                Try : Refresh() : Catch : End Try
-            End If
+            _ActionCenterButton_Normal = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _ActionCenterButton_Hover As Color
-    Public Event ActionCenterButton_HoverChanged As PropertyChangedEventHandler
-    Private Sub NotifyActionCenterButton_HoverChanged(ByVal info As String)
-        RaiseEvent ActionCenterButton_HoverChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property ActionCenterButton_Hover() As Color
         Get
             Return _ActionCenterButton_Hover
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _ActionCenterButton_Hover) Then
-                Me._ActionCenterButton_Hover = value
-                NotifyActionCenterButton_HoverChanged("ActionCenterButton_Hover")
-                Try : Refresh() : Catch : End Try
-            End If
+            _ActionCenterButton_Hover = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _ActionCenterButton_Pressed As Color
-    Public Event ActionCenterButton_PressedChanged As PropertyChangedEventHandler
-    Private Sub NotifyActionCenterButton_PressedChanged(ByVal info As String)
-        RaiseEvent ActionCenterButton_PressedChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property ActionCenterButton_Pressed() As Color
         Get
             Return _ActionCenterButton_Pressed
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _ActionCenterButton_Pressed) Then
-                Me._ActionCenterButton_Pressed = value
-                NotifyActionCenterButton_PressedChanged("ActionCenterButton_Pressed")
-                Try : Refresh() : Catch : End Try
-            End If
+            _ActionCenterButton_Pressed = value
+            Try : Refresh() : Catch : End Try
         End Set
     End Property
 
-
     Private _StartColor As Color
-    Public Event StartColorChanged As PropertyChangedEventHandler
-    Private Sub NotifyStartColorChanged(ByVal info As String)
-        RaiseEvent StartColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property StartColor() As Color
         Get
             Return _StartColor
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _StartColor) Then
-                Me._StartColor = value
-                NotifyStartColorChanged("StartColor")
-                Refresh()
-            End If
+            _StartColor = value
+            Refresh()
         End Set
     End Property
 
     Private _LinkColor As Color
-    Public Event LinkColorChanged As PropertyChangedEventHandler
-    Private Sub NotifyLinkColorChanged(ByVal info As String)
-        RaiseEvent LinkColorChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property LinkColor() As Color
         Get
             Return _LinkColor
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _LinkColor) Then
-                Me._LinkColor = value
-                NotifyLinkColorChanged("LinkColor")
-                Refresh()
-            End If
+            _LinkColor = value
+            Refresh()
         End Set
     End Property
 
     Private _BackColor2 As Color
-    Public Event BackColor2Changed As PropertyChangedEventHandler
-    Private Sub NotifyBackColor2Changed(ByVal info As String)
-        RaiseEvent BackColor2Changed(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property BackColor2() As Color
         Get
             Return _BackColor2
         End Get
-
         Set(ByVal value As Color)
-            If Not (value = _BackColor2) Then
-                Me._BackColor2 = value
-                NotifyBackColor2Changed("BackColor2")
-            End If
+            _BackColor2 = value
+            Refresh()
         End Set
     End Property
 
     Private _Win7ColorBal As Integer = 0.15
-    Public Event Win7ColorBalChanged As PropertyChangedEventHandler
-    Private Sub NotifyWin7ColorBalChanged(ByVal info As Integer)
-        Invalidate()
-        RaiseEvent Win7ColorBalChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property Win7ColorBal() As Integer
         Get
             Return _Win7ColorBal
         End Get
-
         Set(ByVal value As Integer)
-            If Not (value = _Win7ColorBal) Then
-                Me._Win7ColorBal = value
-                NotifyWin7ColorBalChanged(_Win7ColorBal)
-            End If
+            _Win7ColorBal = value
+            Refresh()
         End Set
     End Property
 
     Private _Win7GlowBal As Integer = 0.15
-    Public Event Win7GlowBalChanged As PropertyChangedEventHandler
-    Private Sub NotifyWin7GlowBalChanged(ByVal info As Integer)
-        Invalidate()
-        RaiseEvent Win7GlowBalChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property Win7GlowBal() As Integer
         Get
             Return _Win7GlowBal
         End Get
-
         Set(ByVal value As Integer)
-            If Not (value = _Win7GlowBal) Then
-                Me._Win7GlowBal = value
-                NotifyWin7GlowBalChanged(_Win7GlowBal)
-            End If
+            _Win7GlowBal = value
+            Refresh()
         End Set
     End Property
-
-    Enum TaskbarVersion
-        Eleven
-        Ten
-        Eight
-        Seven
-        Vista
-        XP
-    End Enum
+#End Region
 
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
@@ -4175,25 +4064,25 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     Dim Button2 As Rectangle
 
     Private Sub XenonAcrylic_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
-        If UseItAsActionCenter And UseItAsTaskbar_Version = TaskbarVersion.Eleven Then
+        If Style = Styles.ActionCenter11 Then
 
             If Button1.Contains(PointToClient(MousePosition)) Then
                 If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
-                Invalidate()
+                Refresh()
             Else
                 If Not _State_Btn1 = MouseState.Normal Then
                     _State_Btn1 = MouseState.Normal
-                    Invalidate()
+                    Refresh()
                 End If
             End If
 
             If Button2.Contains(PointToClient(MousePosition)) Then
                 If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
-                Invalidate()
+                Refresh()
             Else
                 If Not _State_Btn2 = MouseState.Normal Then
                     _State_Btn2 = MouseState.Normal
-                    Invalidate()
+                    Refresh()
                 End If
             End If
 
@@ -4201,158 +4090,140 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
     End Sub
 
     Private Sub XenonAcrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-        If UseItAsActionCenter And UseItAsTaskbar_Version = TaskbarVersion.Eleven Then
+        If Style = Styles.ActionCenter11 Then
             _State_Btn1 = MouseState.Normal
             _State_Btn2 = MouseState.Normal
-            Invalidate()
+            Refresh()
         End If
     End Sub
 
-    Public Property Win7AeroOpaque As Boolean = False
-
-
-    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
-
         Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
         Dim RRect As New Rectangle(0, 0, Width, Height)
         G.Clear(Color.Transparent)
 
-        Try
-            If RoundedCorners Or UseItAsTaskbar_Version = TaskbarVersion.Eight Or UseItAsTaskbar_Version = TaskbarVersion.XP Then G.DrawImage(adaptedBack, RRect)
-        Catch : End Try
+        Dim Radius As Integer = 5
 
-        Try
-            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight And Not UseItAsTaskbar_Version = TaskbarVersion.XP Then
-                If RoundedCorners Then
-                    G.FillRoundedImg(adaptedBackBlurred, RRect, Radius, True)
-                Else
-                    G.DrawImage(adaptedBackBlurred, Rect)
-                End If
-            End If
-        Catch : End Try
-
-
-        If RoundedCorners Then
-
-            If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-
-                If Not Basic Then
-                    Dim RestRect As New Rectangle(0, 15, Width, Height - 15)
-                    G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
-
-                    If Not Win7AeroOpaque Then
-                        Dim bk As Bitmap = adaptedBackBlurred
-
-                        Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
-                        If alphaX < 0 Then alphaX = 0
-                        If alphaX > 1 Then alphaX = 1
-
-                        Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
-                        Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
-                        Dim Color1 As Color = BackColor
-                        Dim Color2 As Color = BackColor2
-
-                        G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3, True)
-
-                    Else
-                        G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 3, True)
-                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
-                    End If
-
-                    G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
-
-                    G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
-
-                Else
-                    G.FillRoundedImg(My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
-                End If
-
-            ElseIf UseItAsTaskbar_Version = TaskbarVersion.XP Then
-                G.DrawImage(My.LunaRes.Start, Rect)
-            Else
+        Select Case Style
+            Case Styles.Start11
+#Region "Start 11"
+                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
 
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
+                If Transparency Then G.FillRoundedRect(Noise, RRect, Radius, True)
+                Dim SearchRect As New Rectangle(7, 10, 120, 18)
+                Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
+                Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
+                G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                G.FillRoundedRect(New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
+                G.FillRoundedRect(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
+                G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
+                G.DrawRoundedRect(New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+#End Region
 
-                If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.FillRoundedRect(Noise, RRect, Radius, True)
+            Case Styles.ActionCenter11
+#Region "Action Center 11"
+                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
 
-                If UseItAsStartMenu Then
-                    Dim SearchRect As New Rectangle(7, 10, 120, 18)
-                    Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
-                    Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
+                If Transparency Then G.FillRoundedRect(Noise, RRect, Radius, True)
+                Button1 = New Rectangle(8, 8, 49, 20)
+                Button2 = New Rectangle(62, 8, 49, 20)
 
-                    G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
-                    G.FillRoundedRect(New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
-                    G.FillRoundedRect(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
-                    G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
-                    G.DrawRoundedRect(New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
-                End If
+                Dim Cx1, Cx2 As Color
 
-                If UseItAsActionCenter Then
-                    Button1 = New Rectangle(8, 8, 49, 20)
-                    Button2 = New Rectangle(62, 8, 49, 20)
+                Select Case _State_Btn1
+                    Case MouseState.Normal
+                        Cx1 = ActionCenterButton_Normal
+                    Case MouseState.Hover
+                        Cx1 = ActionCenterButton_Hover
+                    Case MouseState.Pressed
+                        Cx1 = ActionCenterButton_Pressed
+                End Select
 
-                    G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                Select Case _State_Btn2
+                    Case MouseState.Normal
+                        Cx2 = If(DarkMode, Color.FromArgb(190, 70, 70, 70), Color.FromArgb(180, 140, 140, 140))
+                    Case MouseState.Hover
+                        Cx2 = If(DarkMode, Color.FromArgb(190, 90, 90, 90), Color.FromArgb(210, 230, 230, 230))
+                    Case MouseState.Pressed
+                        Cx2 = If(DarkMode, Color.FromArgb(190, 75, 75, 75), Color.FromArgb(210, 210, 210, 210))
+                End Select
 
-                    Dim Cx1, Cx2 As Color
+                G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
+                G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius)
+                G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
+                G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+#End Region
 
-                    Select Case _State_Btn1
-                        Case MouseState.Normal
-                            Cx1 = ActionCenterButton_Normal
-                        Case MouseState.Hover
-                            Cx1 = ActionCenterButton_Hover
-                        Case MouseState.Pressed
-                            Cx1 = ActionCenterButton_Pressed
-                    End Select
-
-                    Select Case _State_Btn2
-                        Case MouseState.Normal
-                            Cx2 = If(DarkMode, Color.FromArgb(190, 70, 70, 70), Color.FromArgb(180, 140, 140, 140))
-                        Case MouseState.Hover
-                            Cx2 = If(DarkMode, Color.FromArgb(190, 90, 90, 90), Color.FromArgb(210, 230, 230, 230))
-                        Case MouseState.Pressed
-                            Cx2 = If(DarkMode, Color.FromArgb(190, 75, 75, 75), Color.FromArgb(210, 210, 210, 210))
-                    End Select
-
-                    G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
-                    G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius)
-
-                    G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
-                    G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
-                End If
-
-                If Borders Then G.DrawRoundedRect(New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
-
-            End If
-
-        Else
-
-            If Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then
+            Case Styles.Taskbar11
+#Region "Taskbar 11"
+                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
-            Else
-                Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
-                Dim bc As Color = Color.FromArgb(217, 217, 217)
 
-                If Transparency Then
-                    G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, bc)), Rect)
-                    G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha * (Win7ColorBal / 100), c)), Rect)
+                Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
+                Dim StartImgRect As New Rectangle(8, 3, 37, 37)
+
+                Dim App2BtnRect As New Rectangle(StartBtnRect.Right + 5, 3, 36, 36)
+                Dim App2ImgRect As New Rectangle(StartBtnRect.Right + 5, 3, 37, 37)
+                Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3)
+
+                Dim AppBtnRect As New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
+                Dim AppImgRect As New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
+                Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 16) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 16, 3)
+
+                Dim BackC As Color
+                Dim BorderC As Color
+
+                If DarkMode Then
+                    BackC = Color.FromArgb(45, 130, 130, 130)
+                    BorderC = Color.FromArgb(45, 130, 130, 130)
                 Else
-                    G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc)), Rect)
-                    G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c)), Rect)
+                    BackC = Color.FromArgb(225, 255, 255, 255)
+                    BorderC = Color.FromArgb(200, 230, 230, 230)
                 End If
-            End If
 
-            If Transparency And Not UseItAsTaskbar_Version = TaskbarVersion.Eight Then G.FillRectangle(Noise, Rect)
-            If UseItAsStartMenu Then G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
+                G.FillRoundedRect(New SolidBrush(BackC), StartBtnRect, 3, True)
+                G.DrawRoundedRect_LikeW11(New Pen(BorderC), StartBtnRect, 3)
+                G.DrawImage(If(DarkMode, My.Resources.StartBtn_11Dark, My.Resources.StartBtn_11Light), StartImgRect)
 
-            If UseItAsActionCenter Then
+                G.FillRoundedRect(New SolidBrush(BackC), AppBtnRect, 3, True)
+                G.DrawRoundedRect_LikeW11(New Pen(BorderC), AppBtnRect, 3)
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppImgRect)
+                G.FillRoundedRect(New SolidBrush(_AppUnderline), AppBtnRectUnderline, 2, True)
+
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2ImgRect)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
+
+                G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
+#End Region
+
+            Case Styles.Start10
+#Region "Start 10"
+                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+
+                If Transparency Then G.FillRectangle(Noise, Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+                G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
+#End Region
+
+            Case Styles.ActionCenter10
+#Region "Action Center 10"
+                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+
+                If Transparency Then G.FillRectangle(Noise, Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+
                 Dim rect1 As New Rectangle(85, 6, 30, 3)
                 Dim rect2 As New Rectangle(5, 190, 30, 3)
-
                 Dim rect3 As New Rectangle(42, 201, 34, 24)
 
                 G.FillRectangle(New SolidBrush(ActionCenterButton_Normal), rect3)
@@ -4361,210 +4232,297 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
                 G.FillRectangle(New SolidBrush(LinkColor), rect2)
                 G.DrawLine(New Pen(Color.FromArgb(150, 100, 100, 100)), New Point(0, 0), New Point(0, Height - 1))
 
-            End If
+                G.DrawRectangle(New Pen(Color.FromArgb(150, 76, 76, 76)), Rect)
+#End Region
 
-            If Borders Then G.DrawRectangle(New Pen(Color.FromArgb(150, 76, 76, 76)), Rect)
+            Case Styles.Taskbar10
+#Region "Taskbar 10"
+                G.SmoothingMode = SmoothingMode.HighSpeed
+                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
 
-        End If
+                Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
+                Dim StartBtnImgRect As New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2 - 1, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
+                Dim StartColor As Color = _StartColor
+                G.FillRectangle(New SolidBrush(StartColor), StartBtnRect)
+                G.DrawImage(If(DarkMode, My.Resources.StartBtn_10Dark, My.Resources.StartBtn_10Light), StartBtnImgRect)
+
+                Dim AppColor As Color = _AppBackground
+                G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)
+                G.FillRectangle(New SolidBrush(_AppUnderline.Light), AppBtnRectUnderline)
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+
+                G.FillRectangle(New SolidBrush(_AppUnderline.Light), App2BtnRectUnderline)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.Taskbar8Aero
+#Region "Taskbar 8 Aero"
+                G.DrawImage(adaptedBack, RRect)
+
+                Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
+                Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+                G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, bc)), Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha * (Win7ColorBal / 100), c)), Rect)
+
+                Dim StartORB As New Bitmap(My.Resources.Win8ORB)
+                Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27)
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
+                Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
+
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
+                Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+
+                G.DrawImage(StartORB, StartBtnRect)
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(100, Color.White)), AppBtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(200, c.CB(-0.5))), AppBtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(215, Color.White)), AppBtnRectInner)
+
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100, c.CB(-0.5))), App2BtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100, Color.White)), App2BtnRectInner)
+
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.Taskbar8Lite
+#Region "Taskbar 8 Lite"
+                G.DrawImage(adaptedBack, RRect)
+                Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
+                Dim bc As Color = Color.FromArgb(217, 217, 217)
+
+                G.DrawRectangle(New Pen(Color.FromArgb(89, 89, 89)), New Rectangle(0, 0, Width - 1, Height - 1))
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc)), Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c)), Rect)
+
+                Dim StartORB As New Bitmap(My.Resources.Win8ORB)
+                Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27)
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
+                Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
+
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
+                Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+
+                G.DrawImage(StartORB, StartBtnRect)
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.CB(0.5))), AppBtnRect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5))), AppBtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100, bc.CB(-0.5))), AppBtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5))), AppBtnRect)
+
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.Light(0.1))), App2BtnRect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1))), App2BtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100, bc.Dark(0.1))), App2BtnRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1))), App2BtnRect)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.Start7Aero
+#Region "Start 7 Aero"
+                Dim RestRect As New Rectangle(0, 15, Width, Height - 15)
+                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
+
+                Dim bk As Bitmap = adaptedBackBlurred
+
+                Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
+                If alphaX < 0 Then alphaX = 0
+                If alphaX > 1 Then alphaX = 1
+
+                Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
+                Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
+                Dim Color1 As Color = BackColor
+                Dim Color2 As Color = BackColor2
+
+                G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3, True)
+
+                G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
+
+                G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
+#End Region
+
+            Case Styles.Start7Opaque
+#Region "Start 7 Opaque"
+                Dim RestRect As New Rectangle(0, 15, Width, Height - 15)
+                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
+                G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 3, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
+                G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
+                G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
+#End Region
+
+            Case Styles.Start7Basic
+#Region "Start 7 Basic"
+                G.DrawImage(adaptedBack, RRect)
+                G.FillRoundedImg(My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
+#End Region
+
+            Case Styles.Taskbar7Aero
+#Region "Taskbar 7 Aero"
+                G.DrawImage(adaptedBackBlurred, Rect)
+
+                Dim bk As Bitmap = adaptedBackBlurred
+                Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
+                If alphaX < 0 Then alphaX = 0
+                If alphaX > 1 Then alphaX = 1
+
+                Dim ColBal As Single = Win7ColorBal / 100        'ColorBalance
+                Dim GlowBal As Single = Win7GlowBal / 100        'AfterGlowBalance
+                Dim Color1 As Color = BackColor
+                Dim Color2 As Color = BackColor2
+
+                G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 0, False)
 
 
+                G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
-        If UseItAsTaskbar Then
-            Select Case UseItAsTaskbar_Version
-                Case TaskbarVersion.Eleven
-                    Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
-                    Dim StartImgRect As New Rectangle(8, 3, 37, 37)
+                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
 
-                    Dim App2BtnRect As New Rectangle(StartBtnRect.Right + 5, 3, 36, 36)
-                    Dim App2ImgRect As New Rectangle(StartBtnRect.Right + 5, 3, 37, 37)
-                    Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - 8) / 2, App2BtnRect.Y + App2BtnRect.Height - 3, 8, 3)
+                G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+                G.DrawLine(New Pen(Color.FromArgb(80, 255, 255, 255)), New Point(0, 1), New Point(Width - 1, 1))
 
-                    Dim AppBtnRect As New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
-                    Dim AppImgRect As New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
-                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 16) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 16, 3)
+                G.DrawImage(My.Resources.AeroPeek, New Rectangle(Width - 10, 0, 10, Height))
 
-                    Dim BackC As Color
-                    Dim BorderC As Color
+                Dim StartORB As New Bitmap(My.Resources.Win7ORB)
 
-                    If DarkMode Then
-                        BackC = Color.FromArgb(45, 130, 130, 130)
-                        BorderC = Color.FromArgb(45, 130, 130, 130)
-                    Else
-                        BackC = Color.FromArgb(225, 255, 255, 255)
-                        BorderC = Color.FromArgb(200, 230, 230, 230)
-                    End If
+                Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
-                    G.FillRoundedRect(New SolidBrush(BackC), StartBtnRect, 3, True)
-                    G.DrawRoundedRect_LikeW11(New Pen(BorderC), StartBtnRect, 3)
-                    G.DrawImage(If(DarkMode, My.Resources.StartBtn_11Dark, My.Resources.StartBtn_11Light), StartImgRect)
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
 
-                    G.FillRoundedRect(New SolidBrush(BackC), AppBtnRect, 3, True)
-                    G.DrawRoundedRect_LikeW11(New Pen(BorderC), AppBtnRect, 3)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppImgRect)
-                    G.FillRoundedRect(New SolidBrush(_AppUnderline), AppBtnRectUnderline, 2, True)
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
 
-                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2ImgRect)
-                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
+                G.DrawImage(StartORB, StartBtnRect)
 
-                    G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
 
-                Case TaskbarVersion.Ten
+                G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.Taskbar7Opaque
+#Region "Taskbar 7 Opaque"
+                G.FillRectangle(New SolidBrush(Color.White), Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), Rect)
+                G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
+
+                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+
+                G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
+                G.DrawLine(New Pen(Color.FromArgb(80, 255, 255, 255)), New Point(0, 1), New Point(Width - 1, 1))
+
+                G.DrawImage(My.Resources.AeroPeek, New Rectangle(Width - 10, 0, 10, Height))
+
+                Dim StartORB As New Bitmap(My.Resources.Win7ORB)
+
+                Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
+
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+
+                G.DrawImage(StartORB, StartBtnRect)
+
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+
+                G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.Taskbar7Basic
+#Region "Taskbar 7 Basic"
+                G.DrawImage(My.Resources.BasicTaskbar, Rect)
+
+                G.DrawImage(My.Resources.AeroPeek, New Rectangle(Width - 10, 0, 10, Height))
+
+                Dim StartORB As New Bitmap(My.Resources.Win7ORB)
+
+                Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
+
+                Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+
+                Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+
+                G.DrawImage(StartORB, StartBtnRect)
+
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+
+                G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
+                G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.StartVistaAero
+
+            Case Styles.StartVistaOpaque
+
+            Case Styles.StartVistaBasic
+
+            Case Styles.TaskbarVistaAero
+
+            Case Styles.TaskbarVistaOpaque
+
+            Case Styles.TaskbarVistaBasic
+
+            Case Styles.StartXP
+#Region "Start XP"
+                G.DrawImage(adaptedBack, RRect)
+                G.DrawImage(My.LunaRes.Start, Rect)
+#End Region
+
+            Case Styles.TaskbarXP
+#Region "Taskbar XP"
+                G.DrawImage(adaptedBack, RRect)
+                Try
+                    Dim sm As SmoothingMode = G.SmoothingMode
                     G.SmoothingMode = SmoothingMode.HighSpeed
 
-                    Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
-                    Dim StartBtnImgRect As New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
+                    My.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
+                    G.DrawImage(My.LunaRes.StartBtn, New Rectangle(0, 0, My.LunaRes.StartBtn.Width, Rect.Height - 1))
 
+                    G.SmoothingMode = sm
+                Catch
+                End Try
+#End Region
 
-                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2 - 1, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
-                    Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
-
-                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
-                    Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
-
-
-                    Dim StartColor As Color = _StartColor
-                    G.FillRectangle(New SolidBrush(StartColor), StartBtnRect)
-                    G.DrawImage(If(DarkMode, My.Resources.StartBtn_10Dark, My.Resources.StartBtn_10Light), StartBtnImgRect)
-
-                    Dim AppColor As Color = _AppBackground
-                    G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)
-                    G.FillRectangle(New SolidBrush(_AppUnderline.Light), AppBtnRectUnderline)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
-
-                    G.FillRectangle(New SolidBrush(_AppUnderline.Light), App2BtnRectUnderline)
-                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
-
-                Case TaskbarVersion.Seven
-
-                    If Basic Then
-                        G.DrawImage(My.Resources.BasicTaskbar, Rect)
-                    Else
-
-                        If Not Win7AeroOpaque Then
-                            Dim bk As Bitmap = adaptedBackBlurred
-                            Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
-                            If alphaX < 0 Then alphaX = 0
-                            If alphaX > 1 Then alphaX = 1
-
-                            Dim ColBal As Single = Win7ColorBal / 100        'ColorBalance
-                            Dim GlowBal As Single = Win7GlowBal / 100        'AfterGlowBalance
-                            Dim Color1 As Color = BackColor
-                            Dim Color2 As Color = BackColor2
-
-                            G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 0, False)
-
-                        Else
-                            G.FillRectangle(New SolidBrush(Color.White), Rect)
-                            G.FillRectangle(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), Rect)
-                        End If
-
-                        G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
-
-                        G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
-                    End If
-
-                    If Not Basic Then
-                        G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
-                        G.DrawLine(New Pen(Color.FromArgb(80, 255, 255, 255)), New Point(0, 1), New Point(Width - 1, 1))
-                    End If
-
-                    G.DrawImage(My.Resources.AeroPeek, New Rectangle(Width - 10, 0, 10, Height))
-
-                    Dim StartORB As New Bitmap(My.Resources.Win7ORB)
-
-                    Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
-
-                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
-
-                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
-
-                    G.DrawImage(StartORB, StartBtnRect)
-
-                    G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
-                    G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
-
-                    G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
-                    G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
-                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
-
-
-                Case TaskbarVersion.Eight
-                    Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
-                    Dim bc As Color = Color.FromArgb(217, 217, 217)
-
-                    If Transparency Then
-                        G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
-                    Else
-                        G.DrawRectangle(New Pen(Color.FromArgb(89, 89, 89)), New Rectangle(0, 0, Width - 1, Height - 1))
-                    End If
-
-                    Dim StartORB As New Bitmap(My.Resources.Win8ORB)
-                    Dim StartBtnRect As New Rectangle((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27)
-                    Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
-                    Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
-
-                    Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
-                    Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
-                    Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
-                    Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
-
-
-                    G.DrawImage(StartORB, StartBtnRect)
-
-                    If Transparency Then
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(100, Color.White)), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(200, c.CB(-0.5))), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(215, Color.White)), AppBtnRectInner)
-                    Else
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.CB(0.5))), AppBtnRect)
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5))), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, bc.CB(-0.5))), AppBtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5))), AppBtnRect)
-                    End If
-
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
-
-                    If Transparency Then
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, c.CB(-0.5))), App2BtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, Color.White)), App2BtnRectInner)
-                    Else
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.Light(0.1))), App2BtnRect)
-                        G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1))), App2BtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100, bc.Dark(0.1))), App2BtnRect)
-                        G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1))), App2BtnRect)
-                    End If
-
-                    G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
-
-
-                Case TaskbarVersion.XP
-                    Try
-                        Dim sm As SmoothingMode = G.SmoothingMode
-                        G.SmoothingMode = SmoothingMode.HighSpeed
-
-                        My.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
-                        G.DrawImage(My.LunaRes.StartBtn, New Rectangle(0, 0, My.LunaRes.StartBtn.Width, Rect.Height - 1))
-
-                        G.SmoothingMode = sm
-                    Catch
-
-                    End Try
-            End Select
-        End If
+        End Select
 
     End Sub
 
     Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler BlurPowerChanged, AddressOf BlurBack : Catch : End Try
-            Try : AddHandler NoisePowerChanged, AddressOf NoiseBack : Catch : End Try
 
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
@@ -4579,7 +4537,6 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
             ProcessBack()
         End If
     End Sub
-
 
     Sub ProcessBack()
 
@@ -4596,38 +4553,41 @@ Public Class XenonAcrylic : Inherits ContainerControl : Implements INotifyProper
 
         Catch : End Try
 
-        Try : If Transparency Then
-                If UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
-                End If
+        Try
+            If Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
+                adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
     End Sub
 
     Sub BlurBack()
-        Try : If Transparency Then
-                If UseItAsTaskbar_Version <> TaskbarVersion.Seven And UseItAsTaskbar_Version <> TaskbarVersion.Eight Then
-                    adaptedBackBlurred = New Bitmap(adaptedBack).Blur(BlurPower)
-                End If
+        Try
+            If Style = Styles.Taskbar11 Or Style = Styles.Taskbar10 Or Style = Styles.Start11 Or Style = Styles.Start10 Or
+                        Style = Styles.ActionCenter11 Or Style = Styles.ActionCenter10 Then
+
+                If Transparency Then adaptedBackBlurred = New Bitmap(adaptedBack).Blur(BlurPower)
+
+            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
+
+                adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
     End Sub
 
     Sub NoiseBack()
-        Try
-            If Transparency Then
-                If UseItAsTaskbar_Version = TaskbarVersion.Eleven Or UseItAsTaskbar_Version = TaskbarVersion.Ten Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
-                ElseIf UseItAsTaskbar_Version = TaskbarVersion.Seven Then
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
-                ElseIf UseItAsTaskbar_Version = TaskbarVersion.Eight Then
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
-                    Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
-                End If
 
-            End If
-        Catch : End Try
+        If Style = Styles.ActionCenter11 Or Style = Styles.Start11 Or Style = Styles.Taskbar11 Then
+            If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
+
+        ElseIf Style = Styles.ActionCenter10 Or Style = Styles.Start10 Or Style = Styles.Taskbar10 Then
+            If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
+
+        ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
+            Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
+            Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
+
+        End If
+
     End Sub
 End Class
 Public Class XenonFakeIcon : Inherits Panel

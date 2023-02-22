@@ -74,6 +74,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "WallpaperToner".ToLower Then Return WallpaperToner
         If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
         If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
+        If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
 
     End Function
 
@@ -111,7 +112,8 @@ Public Class Localizer : Implements IDisposable
                         "Lang_JSON_Manage",
                         "WallpaperToner",
                         "WinEffecter",
-                        "LogonUIXP"
+                        "LogonUIXP",
+                        "VS2Win32UI"
                         }
 
 #Region "Language Info"

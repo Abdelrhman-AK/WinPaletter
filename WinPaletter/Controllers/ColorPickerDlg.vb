@@ -157,7 +157,6 @@ Public Class ColorPickerDlg
 
             MainFrm.ResumeLayout()
             MainFrm.previewContainer.Visible = True
-
         End If
 
         MainFrm.MinimumSize = PrevoiusMin
@@ -177,7 +176,7 @@ Public Class ColorPickerDlg
         For Each ctrl As Control In CList
 
             If TypeOf ctrl Is XenonWindow Then
-                With TryCast(ctrl, XenonWindow)
+                With DirectCast(ctrl, XenonWindow)
 
                     If Not _Conditions.Win7 Then
                         If _Conditions.Window_ActiveTitlebar Then
@@ -202,56 +201,59 @@ Public Class ColorPickerDlg
 
                     End If
 
-                    .Invalidate()
+                    .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is XenonAcrylic Then
+            ElseIf TypeOf ctrl Is XenonWinElement Then
 
-                With TryCast(ctrl, XenonAcrylic)
+                With DirectCast(ctrl, XenonWinElement)
 
-                    If .UseItAsTaskbar Then
+                    If .Style = XenonWinElement.Styles.Taskbar11 Or .Style = XenonWinElement.Styles.Taskbar10 Then
+
                         If _Conditions.AppUnderlineOnly Then
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
-                            .Invalidate()
+
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
+                            .Refresh()
                         ElseIf _Conditions.AppBackgroundOnly Then
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                            .Invalidate()
+
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            .Refresh()
                         ElseIf _Conditions.StartColorOnly Then
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
-                            .Invalidate()
+
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                            .Refresh()
                         Else
                             If _Conditions.BackColor1 Then
                                 .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
                             ElseIf _Conditions.BackColor2 Then
                                 .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
                             Else
-                                Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                                Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                             End If
-                            .Invalidate()
+                            .Refresh()
                         End If
-                        .Invalidate()
 
-                    ElseIf .UseItAsStartMenu And _Conditions.StartSearchOnly Then
-                        Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "SearchBoxAccent", .SearchBoxAccent, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                        .Invalidate()
+                    ElseIf .Style = XenonWinElement.Styles.Start11 And _Conditions.StartSearchOnly Then
+                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "SearchBoxAccent", .SearchBoxAccent, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        .Refresh()
 
-                    ElseIf .UseItAsActionCenter And _Conditions.ActionCenterBtn Then
-                        Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                        .Invalidate()
+                    ElseIf .Style = XenonWinElement.Styles.ActionCenter11 And _Conditions.ActionCenterBtn Then
+                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        .Refresh()
 
-                    ElseIf .UseItAsActionCenter And _Conditions.ActionCenterLink Then
-                        Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                        .Invalidate()
+                    ElseIf .Style = XenonWinElement.Styles.ActionCenter10 And _Conditions.ActionCenterLink Then
+                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        .Refresh()
                     Else
                         If _Conditions.BackColor1 Then
                             .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
                         ElseIf _Conditions.BackColor2 Then
                             .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
                         Else
-                            Visual.FadeColor(TryCast(ctrl, XenonAcrylic), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         End If
 
-                        .Invalidate()
+                        .Refresh()
                     End If
                 End With
 
@@ -263,7 +265,7 @@ Public Class ColorPickerDlg
                 End If
 
             ElseIf TypeOf ctrl Is RetroWindow Then
-                With TryCast(ctrl, RetroWindow)
+                With DirectCast(ctrl, RetroWindow)
                     If _Conditions.RetroWindowColor1 Then .Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowColor2 Then .Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -280,11 +282,11 @@ Public Class ColorPickerDlg
                         End If
                     End If
                     If _Conditions.RetroBackground Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is RetroTextBox Then
-                With TryCast(ctrl, RetroTextBox)
+                With DirectCast(ctrl, RetroTextBox)
 
                     If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -294,11 +296,11 @@ Public Class ColorPickerDlg
                     If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroBackground Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
 
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is RetroButton Then
-                With TryCast(ctrl, RetroButton)
+                With DirectCast(ctrl, RetroButton)
                     If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -307,13 +309,13 @@ Public Class ColorPickerDlg
                     If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is RetroScrollBar Then
-                With TryCast(ctrl, RetroScrollBar)
+                With DirectCast(ctrl, RetroScrollBar)
                     If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color) Else .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is Panel Then
@@ -336,20 +338,20 @@ Public Class ColorPickerDlg
                 If TypeOf ctrl Is XenonCP Then
                     Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                 End If
-                ctrl.Invalidate()
+                ctrl.Refresh()
 
             ElseIf TypeOf ctrl Is RetroTextBox Then
-                With TryCast(ctrl, RetroTextBox)
+                With DirectCast(ctrl, RetroTextBox)
                     If _Conditions.RetroWindowText Then
                         ctrl.ForeColor = Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color)
                     Else
                         ctrl.BackColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)
                     End If
-                    ctrl.Invalidate()
+                    ctrl.Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is XenonTerminal Then
-                With TryCast(ctrl, XenonTerminal)
+                With DirectCast(ctrl, XenonTerminal)
 
                     If _Conditions.Terminal_Back Then
                         .Color_Background = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -379,11 +381,11 @@ Public Class ColorPickerDlg
                         .Color_Titlebar_Unfocused = Color.FromArgb(255, ColorEditorManager1.Color)
                     End If
 
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is XenonCMD Then
-                With TryCast(ctrl, XenonCMD)
+                With DirectCast(ctrl, XenonCMD)
                     If _Conditions.CMD_ColorTable00 Then
                         .CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color)
 
@@ -475,7 +477,7 @@ Public Class ColorPickerDlg
                         .Prop_LoadingCircleHot2 = ColorEditorManager1.Color
                     End If
 
-                    .Invalidate()
+                    .Refresh()
                 End With
 
             Else
@@ -485,7 +487,6 @@ Public Class ColorPickerDlg
                     Try
                         ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     Catch
-
                     End Try
                 End Try
             End If

@@ -445,16 +445,22 @@
     <Compile Include="WallpaperToner.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win32UI.Designer.vb">
-      <DependentUpon>Win32UI.vb</DependentUpon>
+    <Compile Include="Win32UI\VS2Win32UI.Designer.vb">
+      <DependentUpon>VS2Win32UI.vb</DependentUpon>
     </Compile>
-    <Compile Include="Win32UI.vb">
+    <Compile Include="Win32UI\VS2Win32UI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win7_8\Start8Selector.Designer.vb">
+    <Compile Include="Win32UI\Win32UI.Designer.vb">
+      <DependentUpon>Win32UI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win8\Start8Selector.Designer.vb">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </Compile>
-    <Compile Include="Win7_8\Start8Selector.vb">
+    <Compile Include="Win8\Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinEffecter.Designer.vb">
@@ -471,6 +477,9 @@
     <Content Include="My Project\Application.myapp" />
     <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
       <DependentUpon>LogonUIXP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
+      <DependentUpon>VS2Win32UI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinEffecter.resx">
       <DependentUpon>WinEffecter.vb</DependentUpon>
@@ -706,10 +715,10 @@
     <EmbeddedResource Include="WallpaperToner.resx">
       <DependentUpon>WallpaperToner.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win32UI.resx">
+    <EmbeddedResource Include="Win32UI\Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win7_8\Start8Selector.resx">
+    <EmbeddedResource Include="Win8\Start8Selector.resx">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

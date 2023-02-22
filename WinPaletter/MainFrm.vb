@@ -552,9 +552,7 @@ Public Class MainFrm
                     Case CP.AeroTheme.Aero
                         tabs_preview.SelectedIndex = 0
                         start.Transparency = True
-                        start.Basic = False
                         taskbar.Transparency = True
-                        taskbar.Basic = False
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
@@ -578,7 +576,6 @@ Public Class MainFrm
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
-                            .Win7AeroOpaque = False
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -587,7 +584,6 @@ Public Class MainFrm
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
-                            .Win7AeroOpaque = False
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
@@ -600,9 +596,7 @@ Public Class MainFrm
                     Case CP.AeroTheme.AeroOpaque
                         tabs_preview.SelectedIndex = 0
                         start.Transparency = True
-                        start.Basic = False
                         taskbar.Transparency = True
-                        taskbar.Basic = False
 
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Opaque
@@ -619,14 +613,12 @@ Public Class MainFrm
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With taskbar
-                            .Win7AeroOpaque = True
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
                             .BackColor = [CP].Windows7.ColorizationColor
                             .BackColor2 = [CP].Windows7.ColorizationColor
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With start
-                            .Win7AeroOpaque = True
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
                             .BackColor = [CP].Windows7.ColorizationColor
                             .BackColor2 = [CP].Windows7.ColorizationColor
@@ -659,9 +651,6 @@ Public Class MainFrm
                         start.NoisePower = 0
                         taskbar.Transparency = False
                         taskbar.NoisePower = 0
-
-                        start.Basic = True
-                        taskbar.Basic = True
 
                         start.Refresh()
                         taskbar.Refresh()
@@ -752,7 +741,7 @@ Public Class MainFrm
         XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
         XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
         XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
-        XenonWindow.Refresh()
+        XenonWindow.Invalidate()
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -820,39 +809,43 @@ Public Class MainFrm
 
         Select Case PreviewConfig
             Case WinVer.W11
-                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eleven
+                ActionCenter.Style = XenonWinElement.Styles.ActionCenter11
+                taskbar.Style = XenonWinElement.Styles.Taskbar11
+                start.Style = XenonWinElement.Styles.Start11
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
                 If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W10
-                ActionCenter.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Ten
+                ActionCenter.Style = XenonWinElement.Styles.ActionCenter10
+                taskbar.Style = XenonWinElement.Styles.Taskbar10
+                start.Style = XenonWinElement.Styles.Start10
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
                 If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W8
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Eight
+                taskbar.Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
                 If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W7
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Seven
                 If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Aero
+                        start.Style = XenonWinElement.Styles.Start7Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.AeroOpaque
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Opaque
+                        start.Style = XenonWinElement.Styles.Start7Opaque
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.Basic
+                        taskbar.Style = XenonWinElement.Styles.Taskbar7Basic
+                        start.Style = XenonWinElement.Styles.Start7Basic
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
                         tabs_preview.SelectedIndex = 0
 
@@ -862,19 +855,23 @@ Public Class MainFrm
                 End Select
 
             Case WinVer.WVista
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Vista
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.Vista
 
                 Select Case CP.WindowsVista.Theme     'Windows Vista uses the same aero of Windows 7
                     Case AeroTheme.Aero
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaAero
+                        start.Style = XenonWinElement.Styles.StartVistaAero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.AeroOpaque
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaOpaque
+                        start.Style = XenonWinElement.Styles.StartVistaOpaque
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
                         tabs_preview.SelectedIndex = 0
 
                     Case AeroTheme.Basic
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaBasic
+                        start.Style = XenonWinElement.Styles.StartVistaBasic
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
                         tabs_preview.SelectedIndex = 0
 
@@ -886,8 +883,8 @@ Public Class MainFrm
                 If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.WXP
-                taskbar.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.XP
-                start.UseItAsTaskbar_Version = XenonAcrylic.TaskbarVersion.XP
+                taskbar.Style = XenonWinElement.Styles.TaskbarXP
+                start.Style = XenonWinElement.Styles.StartXP
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.WXP
                 If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
 
@@ -930,6 +927,16 @@ Public Class MainFrm
 
                 End Select
 
+                Try
+                    If XenonCheckBox1.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                        If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                            Dim vs As New VisualStyleFile(My.VS)
+                            Overwrites_Win32UI(CP, vs.Metrics)
+                        End If
+                    End If
+                Catch
+                End Try
+
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
@@ -938,13 +945,11 @@ Public Class MainFrm
         Select Case PreviewConfig
             Case WinVer.W11
                 ActionCenter.Dock = Nothing
-                ActionCenter.RoundedCorners = True
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
                 taskbar.BlurPower = 12
                 '########################
-                start.RoundedCorners = True
                 start.BlurPower = 7
                 start.NoisePower = 0.2
                 '########################
@@ -960,13 +965,11 @@ Public Class MainFrm
 
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
-                ActionCenter.RoundedCorners = False
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
                 taskbar.BlurPower = 12
                 '########################
-                start.RoundedCorners = False
                 start.BlurPower = 7
                 start.NoisePower = 0.2
                 '########################
@@ -999,7 +1002,6 @@ Public Class MainFrm
                 taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 taskbar.Height = 34
 
-                start.RoundedCorners = True
                 start.BlurPower = 1
                 start.NoisePower = 0.5
                 start.Width = 136
@@ -1180,8 +1182,7 @@ Public Class MainFrm
         WVista_ColorizationAfterglowBalance_val.Text = [CP].WindowsVista.ColorizationAfterglowBalance
         WVista_ColorizationBlurBalance_val.Text = [CP].WindowsVista.ColorizationBlurBalance
         WVista_ColorizationGlassReflectionIntensity_val.Text = [CP].WindowsVista.ColorizationGlassReflectionIntensity
-        WVista_EnableAeroPeek_toggle.Checked = [CP].WindowsVista.EnableAeroPeek
-        WVista_AlwaysHibernateThumbnails_Toggle.Checked = [CP].WindowsVista.AlwaysHibernateThumbnails
+
         Select Case [CP].WindowsVista.Theme
             Case CP.AeroTheme.Aero
                 WVista_theme_aero.Checked = True
@@ -1435,6 +1436,42 @@ Public Class MainFrm
 
         Return HSL.ExecuteFilter(img)
     End Function
+
+    Sub Overwrites_Win32UI([CP] As CP, vs As VisualStyleMetrics)
+        [CP].Win32.EnableTheming = vs.FlatMenus
+        '[CP].Win32.ActiveBorder = ActiveBorder
+        [CP].Win32.ActiveTitle = vs.Colors.ActiveCaption
+        '[CP].Win32.AppWorkspace = AppWorkspace
+        [CP].Win32.Background = vs.Colors.Background
+        '[CP].Win32.ButtonAlternateFace = btnaltface_pick.BackColor
+        [CP].Win32.ButtonDkShadow = vs.Colors.DkShadow3d
+        [CP].Win32.ButtonFace = vs.Colors.Btnface
+        [CP].Win32.ButtonHilight = vs.Colors.BtnHighlight
+        [CP].Win32.ButtonLight = vs.Colors.Light3d
+        [CP].Win32.ButtonShadow = vs.Colors.BtnShadow
+        [CP].Win32.ButtonText = vs.Colors.WindowText
+        [CP].Win32.GradientActiveTitle = vs.Colors.GradientActiveCaption
+        [CP].Win32.GradientInactiveTitle = vs.Colors.GradientInactiveCaption
+        [CP].Win32.GrayText = vs.Colors.GrayText
+        [CP].Win32.HilightText = vs.Colors.HighlightText
+        [CP].Win32.HotTrackingColor = vs.Colors.HotTracking
+        '[CP].Win32.InactiveBorder = InactiveBorder
+        [CP].Win32.InactiveTitle = vs.Colors.InactiveCaption
+        [CP].Win32.InactiveTitleText = vs.Colors.InactiveCaptionText
+        '[CP].Win32.InfoText = InfoText
+        '[CP].Win32.InfoWindow = InfoWindow
+        [CP].Win32.Menu = vs.Colors.Menu
+        [CP].Win32.MenuBar = vs.Colors.MenuBar
+        [CP].Win32.MenuText = vs.Colors.MenuText
+        '[CP].Win32.Scrollbar = Scrollbar
+        [CP].Win32.TitleText = vs.Colors.CaptionText
+        [CP].Win32.Window = vs.Colors.Window
+        '[CP].Win32.WindowFrame = Frame
+        [CP].Win32.WindowText = vs.Colors.WindowText
+        [CP].Win32.Hilight = vs.Colors.Highlight
+        [CP].Win32.MenuHilight = vs.Colors.MenuHilight
+        [CP].Win32.Desktop = vs.Colors.Background
+    End Sub
 #End Region
 
 #Region "Misc"
@@ -1900,7 +1937,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
     End Sub
 
     Private Sub W11_Color_Index0_Click(sender As Object, e As EventArgs) Handles W11_Color_Index0.Click
@@ -2847,6 +2883,7 @@ Public Class MainFrm
         If W7_theme_classic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
 
@@ -2856,6 +2893,7 @@ Public Class MainFrm
         If W7_theme_basic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Basic
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -2864,6 +2902,7 @@ Public Class MainFrm
         If W7_theme_aeroopaque.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -2872,6 +2911,7 @@ Public Class MainFrm
         If W7_theme_aero.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -2970,14 +3010,6 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub WVista_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WVista_EnableAeroPeek_toggle.CheckedChanged
-        If _Shown Then CP.WindowsVista.EnableAeroPeek = WVista_EnableAeroPeek_toggle.Checked
-    End Sub
-
-    Private Sub WVista_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles WVista_AlwaysHibernateThumbnails_Toggle.CheckedChanged
-        If _Shown Then CP.WindowsVista.AlwaysHibernateThumbnails = WVista_AlwaysHibernateThumbnails_Toggle.Checked
-    End Sub
-
     Private Sub WVista_ColorizationColorBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationColorBalance_bar.Scroll
         If _Shown Then
             WVista_ColorizationColorBalance_val.Text = sender.Value.ToString()
@@ -3006,6 +3038,7 @@ Public Class MainFrm
         If WVista_theme_classic.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
 
@@ -3015,6 +3048,7 @@ Public Class MainFrm
         If WVista_theme_basic.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Basic
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -3023,6 +3057,7 @@ Public Class MainFrm
         If WVista_theme_aeroopaque.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.AeroOpaque
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -3031,6 +3066,7 @@ Public Class MainFrm
         If WVista_theme_aero.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
+            Adjust_Preview(False)
             tabs_preview.Refresh()
         End If
     End Sub
@@ -3813,7 +3849,6 @@ Public Class MainFrm
     Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
         WinEffecter.ShowDialog()
     End Sub
-
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
         log_lbl.Text = ""

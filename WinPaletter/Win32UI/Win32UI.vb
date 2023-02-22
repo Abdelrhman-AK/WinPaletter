@@ -1202,4 +1202,7 @@ Public Class Win32UI
         End If
     End Sub
 
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        VS2Win32UI.ShowDialog()
+    End Sub
 End Class

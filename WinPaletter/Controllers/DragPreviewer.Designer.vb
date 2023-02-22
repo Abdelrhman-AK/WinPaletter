@@ -24,15 +24,15 @@ Partial Class DragPreviewer
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DragPreviewer))
         Me.pnl_preview = New System.Windows.Forms.Panel()
-        Me.ActionCenter = New WinPaletter.XenonAcrylic()
+        Me.ActionCenter = New WinPaletter.XenonWinElement()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
         Me.Panel5 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.setting_icon_preview = New System.Windows.Forms.Label()
         Me.lnk_preview = New System.Windows.Forms.Label()
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
-        Me.start = New WinPaletter.XenonAcrylic()
-        Me.taskbar = New WinPaletter.XenonAcrylic()
+        Me.start = New WinPaletter.XenonWinElement()
+        Me.taskbar = New WinPaletter.XenonWinElement()
         Me.pnlRetroPreview = New System.Windows.Forms.Panel()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
@@ -117,28 +117,19 @@ Partial Class DragPreviewer
         Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.ActionCenter.BackColor2 = System.Drawing.Color.Empty
         Me.ActionCenter.BackColorAlpha = 50
-        Me.ActionCenter.Basic = False
         Me.ActionCenter.BlurPower = 8
-        Me.ActionCenter.Borders = True
         Me.ActionCenter.DarkMode = True
-        Me.ActionCenter.DropShadow = True
         Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
         Me.ActionCenter.Location = New System.Drawing.Point(400, 165)
         Me.ActionCenter.Name = "ActionCenter"
         Me.ActionCenter.NoisePower = 0.2!
         Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
-        Me.ActionCenter.Radius = 5
-        Me.ActionCenter.RoundedCorners = True
         Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
-        Me.ActionCenter.UseItAsActionCenter = True
-        Me.ActionCenter.UseItAsStartMenu = False
-        Me.ActionCenter.UseItAsTaskbar = False
-        Me.ActionCenter.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.ActionCenter.Win7AeroOpaque = False
+        Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
         Me.ActionCenter.Win7ColorBal = 100
         Me.ActionCenter.Win7GlowBal = 100
         '
@@ -263,28 +254,19 @@ Partial Class DragPreviewer
         Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
         Me.start.BackColor2 = System.Drawing.Color.Empty
         Me.start.BackColorAlpha = 150
-        Me.start.Basic = False
         Me.start.BlurPower = 7
-        Me.start.Borders = True
         Me.start.DarkMode = True
-        Me.start.DropShadow = True
         Me.start.LinkColor = System.Drawing.Color.Empty
         Me.start.Location = New System.Drawing.Point(7, 50)
         Me.start.Name = "start"
         Me.start.NoisePower = 0.2!
         Me.start.Padding = New System.Windows.Forms.Padding(2)
-        Me.start.Radius = 5
-        Me.start.RoundedCorners = True
         Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
         Me.start.TabIndex = 1
         Me.start.Transparency = True
-        Me.start.UseItAsActionCenter = False
-        Me.start.UseItAsStartMenu = True
-        Me.start.UseItAsTaskbar = False
-        Me.start.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.start.Win7AeroOpaque = False
+        Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
         Me.start.Win7ColorBal = 100
         Me.start.Win7GlowBal = 100
         '
@@ -298,28 +280,19 @@ Partial Class DragPreviewer
         Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
         Me.taskbar.BackColor2 = System.Drawing.Color.Empty
         Me.taskbar.BackColorAlpha = 130
-        Me.taskbar.Basic = False
         Me.taskbar.BlurPower = 12
-        Me.taskbar.Borders = False
         Me.taskbar.DarkMode = True
         Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.taskbar.DropShadow = True
         Me.taskbar.LinkColor = System.Drawing.Color.Empty
         Me.taskbar.Location = New System.Drawing.Point(0, 255)
         Me.taskbar.Name = "taskbar"
         Me.taskbar.NoisePower = 0.2!
-        Me.taskbar.Radius = 4
-        Me.taskbar.RoundedCorners = False
         Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
-        Me.taskbar.UseItAsActionCenter = False
-        Me.taskbar.UseItAsStartMenu = False
-        Me.taskbar.UseItAsTaskbar = True
-        Me.taskbar.UseItAsTaskbar_Version = WinPaletter.XenonAcrylic.TaskbarVersion.Eleven
-        Me.taskbar.Win7AeroOpaque = False
+        Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
         '
@@ -1068,15 +1041,15 @@ Partial Class DragPreviewer
     Friend WithEvents RetroLabel2 As RetroLabel
     Friend WithEvents RetroLabel1 As RetroLabel
     Friend WithEvents pnl_preview As Panel
-    Friend WithEvents ActionCenter As XenonAcrylic
+    Friend WithEvents ActionCenter As XenonWinElement
     Friend WithEvents XenonWindow1 As XenonWindow
     Friend WithEvents lnk_preview As Label
     Friend WithEvents Panel5 As Panel
     Friend WithEvents Label8 As Label
     Friend WithEvents setting_icon_preview As Label
     Friend WithEvents XenonWindow2 As XenonWindow
-    Friend WithEvents start As XenonAcrylic
-    Friend WithEvents taskbar As XenonAcrylic
+    Friend WithEvents start As XenonWinElement
+    Friend WithEvents taskbar As XenonWinElement
     Friend WithEvents pnlRetroPreview As Panel
     Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
