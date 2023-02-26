@@ -9,7 +9,7 @@ Imports Devcorp.Controls.VisualStyles
 
 Public Class MainFrm
     Private _Shown As Boolean = False
-    Public CP, CP_Original, CP_FirstTime, CP_BeforeDragAndDrop As CP
+    Public CP, CP_Original, CP_FirstTime, CP_BeforeDrag As CP
     Public PreviewConfig As WinVer = WinVer.W11
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
@@ -41,6 +41,9 @@ Public Class MainFrm
 
                 XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
                 XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Visual.FadeColor(Label8, "ForeColor", Label8.ForeColor, If([CP].Windows11.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
@@ -169,6 +172,9 @@ Public Class MainFrm
 
                 XenonWindow1.DarkMode = Not [CP].Windows10.AppMode_Light
                 XenonWindow2.DarkMode = Not [CP].Windows10.AppMode_Light
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Visual.FadeColor(Label8, "ForeColor", Label8.ForeColor, If([CP].Windows10.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
@@ -544,9 +550,12 @@ Public Class MainFrm
 #End Region
             Case WinVer.W7
 #Region "Win7"
-                If My.W7 And My.[Settings].Win7LivePreview And _Shown Then
+                If My.WVista And My.[Settings].Win7LivePreview And _Shown Then
                     RefreshDWM([CP])
                 End If
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
@@ -623,6 +632,127 @@ Public Class MainFrm
                             .BackColor = [CP].Windows7.ColorizationColor
                             .BackColor2 = [CP].Windows7.ColorizationColor
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
+                        End With
+
+
+                    Case CP.AeroTheme.Basic
+                        tabs_preview.SelectedIndex = 0
+                        taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        taskbar.BackColorAlpha = 100
+
+                        start.BackColor = Color.FromArgb(166, 190, 218)
+                        start.BackColorAlpha = 100
+
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
+                            .Win7Alpha = 100
+                            .AccentColor_Active = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
+                            .Win7Alpha = 100
+                            .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
+
+                        start.Transparency = False
+                        start.NoisePower = 0
+                        taskbar.Transparency = False
+                        taskbar.NoisePower = 0
+
+                        start.Refresh()
+                        taskbar.Refresh()
+
+                    Case CP.AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
+
+                End Select
+#End Region
+            Case WinVer.WVista
+#Region "WinVista"
+                If My.WVista And My.[Settings].Win7LivePreview And _Shown Then
+                    RefreshDWM([CP])
+                End If
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+
+                Select Case [CP].WindowsVista.Theme
+                    Case CP.AeroTheme.Aero
+                        tabs_preview.SelectedIndex = 0
+                        start.Transparency = True
+                        taskbar.Transparency = True
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
+                            .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .AccentColor_Active = Color.FromArgb([CP].WindowsVista.Alpha, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Active = Color.FromArgb([CP].WindowsVista.Alpha, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .Win7Noise = 100
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
+                            .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor2_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .Win7Noise = 100
+                        End With
+                        With start
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+                        With taskbar
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+
+
+                    Case CP.AeroTheme.AeroOpaque
+                        tabs_preview.SelectedIndex = 0
+                        start.Transparency = True
+                        taskbar.Transparency = True
+
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
+                            .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = [CP].WindowsVista.ColorizationColor
+                            .Win7Noise = 100
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
+                            .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = [CP].WindowsVista.ColorizationColor
+                            .Win7Noise = 100
+                        End With
+                        With taskbar
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+                        With start
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
                         End With
 
 
@@ -792,7 +922,7 @@ Public Class MainFrm
 
         If AnimateThePreview Then
             If _Shown Then
-                If tabs_preview.Visible Then My.[AnimatorNS].HideSync(tabs_preview)
+                If tabs_preview.Visible Then My.Animator.HideSync(tabs_preview)
             Else
                 tabs_preview.Visible = False
             End If
@@ -854,6 +984,9 @@ Public Class MainFrm
 
                 End Select
 
+                XenonWindow1.WinVista = False
+                XenonWindow2.WinVista = False
+
             Case WinVer.WVista
 
                 Select Case CP.WindowsVista.Theme     'Windows Vista uses the same aero of Windows 7
@@ -881,6 +1014,9 @@ Public Class MainFrm
                 End Select
 
                 If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+                XenonWindow1.WinVista = True
+                XenonWindow2.WinVista = True
 
             Case WinVer.WXP
                 taskbar.Style = XenonWinElement.Styles.TaskbarXP
@@ -931,7 +1067,21 @@ Public Class MainFrm
                     If XenonCheckBox1.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
                         If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New VisualStyleFile(My.VS)
-                            Overwrites_Win32UI(CP, vs.Metrics)
+                            Overwrite_Win32UI(CP, vs.Metrics)
+                        End If
+                    End If
+
+                    If XenonCheckBox2.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                        If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                            Dim vs As New VisualStyleFile(My.VS)
+                            Overwrite_Metrics(CP, vs.Metrics)
+                        End If
+                    End If
+
+                    If XenonCheckBox3.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                        If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                            Dim vs As New VisualStyleFile(My.VS)
+                            Overwrite_Fonts(CP, vs.Metrics)
                         End If
                     End If
                 Catch
@@ -1024,6 +1174,32 @@ Public Class MainFrm
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
 
+            Case WinVer.WVista
+                XenonButton23.Visible = True
+                Panel3.Visible = False
+                lnk_preview.Visible = False
+                ActionCenter.Visible = False
+                taskbar.Height = 30
+
+                start.Width = 136
+                start.Height = 191
+                start.Left = 0
+                start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = taskbar.Height
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton3.Width = 140
+                RetroButton4.Width = 140
+                RetroButton3.Text = ClassicWindow1.TitlebarText
+                RetroButton4.Text = ClassicWindow2.TitlebarText
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+
             Case WinVer.WXP
                 taskbar.Height = 30
                 start.Width = 150
@@ -1067,7 +1243,7 @@ Public Class MainFrm
             'tabs_preview.Visible = True
 
             If _Shown Then
-                My.[AnimatorNS].ShowSync(tabs_preview)
+                My.Animator.ShowSync(tabs_preview)
             Else
                 tabs_preview.Visible = True
             End If
@@ -1173,16 +1349,8 @@ Public Class MainFrm
         End Select
 
         WVista_ColorizationColor_pick.BackColor = [CP].WindowsVista.ColorizationColor
-        WVista_ColorizationAfterglow_pick.BackColor = [CP].WindowsVista.ColorizationAfterglow
-        WVista_ColorizationColorBalance_bar.Value = [CP].WindowsVista.ColorizationColorBalance
-        WVista_ColorizationAfterglowBalance_bar.Value = [CP].WindowsVista.ColorizationAfterglowBalance
-        WVista_ColorizationBlurBalance_bar.Value = [CP].WindowsVista.ColorizationBlurBalance
-        WVista_ColorizationGlassReflectionIntensity_bar.Value = [CP].WindowsVista.ColorizationGlassReflectionIntensity
-        WVista_ColorizationColorBalance_val.Text = [CP].WindowsVista.ColorizationColorBalance
-        WVista_ColorizationAfterglowBalance_val.Text = [CP].WindowsVista.ColorizationAfterglowBalance
-        WVista_ColorizationBlurBalance_val.Text = [CP].WindowsVista.ColorizationBlurBalance
-        WVista_ColorizationGlassReflectionIntensity_val.Text = [CP].WindowsVista.ColorizationGlassReflectionIntensity
-
+        WVista_ColorizationColorBalance_bar.Value = [CP].WindowsVista.Alpha
+        WVista_ColorizationColorBalance_val.Text = [CP].WindowsVista.Alpha
         Select Case [CP].WindowsVista.Theme
             Case CP.AeroTheme.Aero
                 WVista_theme_aero.Checked = True
@@ -1274,7 +1442,6 @@ Public Class MainFrm
         W7_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
 
         WVista_ColorizationColor_pick.DefaultColor = DefCP.WindowsVista.ColorizationColor
-        WVista_ColorizationAfterglow_pick.DefaultColor = DefCP.WindowsVista.ColorizationAfterglow
 
         CP.Dispose()
     End Sub
@@ -1437,7 +1604,7 @@ Public Class MainFrm
         Return HSL.ExecuteFilter(img)
     End Function
 
-    Sub Overwrites_Win32UI([CP] As CP, vs As VisualStyleMetrics)
+    Sub Overwrite_Win32UI([CP] As CP, vs As VisualStyleMetrics)
         [CP].Win32.EnableTheming = vs.FlatMenus
         '[CP].Win32.ActiveBorder = ActiveBorder
         [CP].Win32.ActiveTitle = vs.Colors.ActiveCaption
@@ -1471,6 +1638,23 @@ Public Class MainFrm
         [CP].Win32.Hilight = vs.Colors.Highlight
         [CP].Win32.MenuHilight = vs.Colors.MenuHilight
         [CP].Win32.Desktop = vs.Colors.Background
+    End Sub
+
+    Sub Overwrite_Metrics([CP] As CP, vs As VisualStyleMetrics)
+        [CP].MetricsFonts.CaptionHeight = vs.Sizes.CaptionBarHeight
+        [CP].MetricsFonts.ScrollHeight = vs.Sizes.ScrollbarHeight
+        [CP].MetricsFonts.ScrollWidth = vs.Sizes.ScrollbarWidth
+        [CP].MetricsFonts.SmCaptionHeight = vs.Sizes.SMCaptionBarHeight
+        [CP].MetricsFonts.SmCaptionWidth = vs.Sizes.SMCaptionBarWidth
+    End Sub
+
+    Sub Overwrite_Fonts([CP] As CP, vs As VisualStyleMetrics)
+        [CP].MetricsFonts.CaptionFont = vs.Fonts.CaptionFont
+        [CP].MetricsFonts.IconFont = vs.Fonts.IconTitleFont
+        [CP].MetricsFonts.MenuFont = vs.Fonts.MenuFont
+        [CP].MetricsFonts.SmCaptionFont = vs.Fonts.SmallCaptionFont
+        [CP].MetricsFonts.MessageFont = vs.Fonts.MsgBoxFont
+        [CP].MetricsFonts.StatusFont = vs.Fonts.StatusFont
     End Sub
 #End Region
 
@@ -1592,9 +1776,9 @@ Public Class MainFrm
         If My.WXP Then PreviewConfig = WinVer.WXP
 
         If Not My.Application.ExternalLink Then
-            CP = New CP(CP.Mode.Registry)
+            CP = New CP(CP_Type.Registry)
         Else
-            CP = New CP(CP.Mode.File, My.Application.ExternalLink_File)
+            CP = New CP(CP_Type.File, My.Application.ExternalLink_File)
             OpenFileDialog1.FileName = My.Application.ExternalLink_File
             SaveFileDialog1.FileName = My.Application.ExternalLink_File
             My.Application.ExternalLink = False
@@ -1691,7 +1875,6 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-
         If Me.WindowState = FormWindowState.Normal Then
             My.[Settings].MainFormWidth = Me.Size.Width
             My.[Settings].MainFormHeight = Me.Size.Height
@@ -1719,11 +1902,11 @@ Public Class MainFrm
                         Select Case r1
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                         CP_Original = CP.Clone
                                     Else
                                         e.Cancel = True
@@ -1731,7 +1914,7 @@ Public Class MainFrm
                                 End If
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     e.Cancel = True
@@ -2978,58 +3161,10 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub WVista_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationAfterglow_pick.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.WindowsVista.ColorizationAfterglow = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
-            End If
-            Exit Sub
-        End If
-
-        Dim CList As New List(Of Control) From {
-            sender,
-            start,
-            taskbar,
-            XenonWindow1,
-            XenonWindow2
-        }
-
-        Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
-
-        Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
-
-        CP.WindowsVista.ColorizationAfterglow = Color.FromArgb(255, C)
-
-        ApplyLivePreviewFromCP(CP)
-
-        sender.backcolor = C
-        sender.invalidate
-
-        CList.Clear()
-    End Sub
-
     Private Sub WVista_ColorizationColorBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationColorBalance_bar.Scroll
         If _Shown Then
             WVista_ColorizationColorBalance_val.Text = sender.Value.ToString()
-            CP.WindowsVista.ColorizationColorBalance = WVista_ColorizationColorBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub WVista_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationBlurBalance_bar.Scroll
-        If _Shown Then
-            WVista_ColorizationBlurBalance_val.Text = sender.Value.ToString()
-            CP.WindowsVista.ColorizationBlurBalance = WVista_ColorizationBlurBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
-
-    Private Sub WVista_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles WVista_ColorizationGlassReflectionIntensity_bar.Scroll
-        If _Shown Then
-            WVista_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
-            CP.WindowsVista.ColorizationGlassReflectionIntensity = WVista_ColorizationGlassReflectionIntensity_bar.Value
+            CP.WindowsVista.Alpha = WVista_ColorizationColorBalance_bar.Value
             ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -3071,31 +3206,9 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub WVista_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationAfterglowBalance_bar.Scroll
-        If _Shown Then
-            WVista_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
-            CP.WindowsVista.ColorizationAfterglowBalance = WVista_ColorizationAfterglowBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
-        End If
-    End Sub
     Private Sub WVista_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColorBalance_val.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationColorBalance_bar.Maximum), WVista_ColorizationColorBalance_bar.Minimum) : WVista_ColorizationColorBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub WVista_ColorizationAfterglowBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationAfterglowBalance_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationAfterglowBalance_bar.Maximum), WVista_ColorizationAfterglowBalance_bar.Minimum) : WVista_ColorizationAfterglowBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub WVista_ColorizationBlurBalance_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationBlurBalance_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationBlurBalance_bar.Maximum), WVista_ColorizationBlurBalance_bar.Minimum) : WVista_ColorizationBlurBalance_bar.Value = Val(sender.Text)
-    End Sub
-
-    Private Sub WVista_ColorizationGlassReflectionIntensity_val_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationGlassReflectionIntensity_val.Click
-        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), WVista_ColorizationGlassReflectionIntensity_bar.Maximum), WVista_ColorizationGlassReflectionIntensity_bar.Minimum) : WVista_ColorizationGlassReflectionIntensity_bar.Value = Val(sender.Text)
     End Sub
 
 #End Region
@@ -3206,9 +3319,9 @@ Public Class MainFrm
             TablessControl1.Refresh()
         End If
 
-        CP.Save(CP.Mode.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
+        CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
 
-        CP_Original = New CP(Mode.Registry)
+        CP_Original = New CP(CP_Type.Registry)
 
         Cursor = Cursors.Default
 
@@ -3219,6 +3332,8 @@ Public Class MainFrm
         End If
 
         If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+
+        If CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
         log_lbl.Visible = True
         XenonButton8.Visible = True
@@ -3342,7 +3457,7 @@ Public Class MainFrm
 
             If My.[Settings].DragAndDropPreview Then
                 DragAccepted = True
-                CP_BeforeDragAndDrop = CP.Clone
+                CP_BeforeDrag = CP.Clone
                 DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
                 DragPreviewer.File = files(0)
                 DragPreviewer.Show()
@@ -3361,9 +3476,9 @@ Public Class MainFrm
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         If DragAccepted Then
             If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
-            CP = CP_BeforeDragAndDrop.Clone
-            ApplyCPValues(CP_BeforeDragAndDrop)
-            ApplyLivePreviewFromCP(CP_BeforeDragAndDrop)
+            CP = CP_BeforeDrag.Clone
+            ApplyCPValues(CP_BeforeDrag)
+            ApplyLivePreviewFromCP(CP_BeforeDrag)
         End If
     End Sub
 
@@ -3392,11 +3507,11 @@ Public Class MainFrm
                                 Select Case r1
                                     Case 0              '' Save
                                         If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                            CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                             CP_Original = CP.Clone
                                         Else
                                             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                                CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                                 CP_Original = CP.Clone
                                             Else
                                                 '''''''' If My.[Settings].DragPreview then ReleaseBlur()
@@ -3405,7 +3520,7 @@ Public Class MainFrm
                                         End If
                                     Case 1              '' Save As
                                         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                            CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                             CP_Original = CP.Clone
                                         Else
                                             '''''''' If My.[Settings].DragPreview then ReleaseBlur()
@@ -3426,7 +3541,7 @@ Public Class MainFrm
                     End If
                 End If
 
-                CP = New CP(CP.Mode.File, files(0))
+                CP = New CP(CP.CP_Type.File, files(0))
                 ApplyCPValues(CP)
                 ApplyLivePreviewFromCP(CP)
                 Adjust_Preview()
@@ -3444,10 +3559,10 @@ Public Class MainFrm
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
+                CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
             End If
         Else
-            CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
+            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
@@ -3466,11 +3581,11 @@ Public Class MainFrm
                         Select Case r1
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                         CP_Original = CP.Clone
                                     Else
                                         Exit Sub
@@ -3478,7 +3593,7 @@ Public Class MainFrm
                                 End If
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     Exit Sub
@@ -3499,7 +3614,7 @@ Public Class MainFrm
             End If
 
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
-            CP = New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             CP_Original = CP.Clone
 
             ApplyCPValues(CP)
@@ -3509,7 +3624,7 @@ Public Class MainFrm
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-            CP.Save(CP.Mode.File, SaveFileDialog1.FileNames(0))
+            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
@@ -3526,11 +3641,11 @@ Public Class MainFrm
                         Select Case r1
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                         CP_Original = CP.Clone
                                     Else
                                         Exit Sub
@@ -3538,7 +3653,7 @@ Public Class MainFrm
                                 End If
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     Exit Sub
@@ -3558,7 +3673,7 @@ Public Class MainFrm
             End If
         End If
 
-        CP = New CP(CP.Mode.Registry)
+        CP = New CP(CP.CP_Type.Registry)
         CP_Original = CP.Clone
         SaveFileDialog1.FileName = Nothing
 
@@ -3595,10 +3710,12 @@ Public Class MainFrm
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         If PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10 Then
             LogonUI.ShowDialog()
-        ElseIf PreviewConfig = WinVer.W8 Or PreviewConfig = WinVer.W7 Or PreviewConfig = WinVer.WVista Then
+        ElseIf PreviewConfig = WinVer.W8 Or PreviewConfig = WinVer.W7 Then
             LogonUI7.ShowDialog()
         ElseIf PreviewConfig = WinVer.WXP Then
             LogonUIXP.ShowDialog()
+        ElseIf PreviewConfig = WinVer.WVista Then
+            MsgBox(My.Lang.VistaLogonNotSupported, MsgBoxStyle.Exclamation)
         Else
             LogonUI.ShowDialog()
         End If
@@ -3647,11 +3764,11 @@ Public Class MainFrm
                         Select Case r1
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                         CP_Original = CP.Clone
                                     Else
                                         Exit Sub
@@ -3659,7 +3776,7 @@ Public Class MainFrm
                                 End If
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.Mode.File, SaveFileDialog1.FileName)
+                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
                                     CP_Original = CP.Clone
                                 Else
                                     Exit Sub
@@ -3741,7 +3858,7 @@ Public Class MainFrm
 
     Sub Select_Preview_Version()
 
-        My.AnimatorNS.HideSync(TablessControl1)
+        My.Animator.HideSync(TablessControl1)
 
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
@@ -3779,7 +3896,7 @@ Public Class MainFrm
             TablessControl1.SelectedIndex = 0
         End If
 
-        My.AnimatorNS.Show(TablessControl1)
+        My.Animator.Show(TablessControl1)
 
     End Sub
 

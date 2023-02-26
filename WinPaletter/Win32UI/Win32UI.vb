@@ -1079,14 +1079,14 @@ Public Class Win32UI
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim cpx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            Dim cpx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadCP(cpx)
             cpx.Dispose()
         End If
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        Dim cpx As New CP(CP.Mode.Registry)
+        Dim cpx As New CP(CP.CP_Type.Registry)
         LoadCP(cpx)
         cpx.Dispose()
     End Sub
@@ -1120,7 +1120,7 @@ Public Class Win32UI
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Cursor = Cursors.WaitCursor
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         CPx.Win32.Apply()
         CPx.Dispose()

@@ -127,6 +127,21 @@
     <value>625, 18</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="XenonButton20.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vQAADr0BR/uQrQAAAjFJREFUOE+dk19IE3EAx/dQEFE9ZBAFJsVmBAtcVOSTvtRDPuRzEAW99FCBvURQ
+        7KUewv5pYC60bboyF8wVg81TvEWrSVkJOkkP52zbbbe5O13t9r9vd95vTOcq6AMfuIf7fLmD309VwmAw
+        bKUoSkPTLjVN0+t0Op0H9Xr9NvJqdaS4KZFIzAuCwPI8HykpSEZYNup973loNBq3kNc34na7T+ZyuWSh
+        UMBai8Ui4vEY2HA4PTn59U5Pz93tJFmP2z26OiCJtebzeXBcFIuBBWTS6Zw08kj6nY1f8qcB2UwmjWAw
+        iFAoiHgsxlktlgaSlfnbgKz8JbKimIrb7a+OkqzMvwZKiqn/GJhdyaLDn8KtmR8wM7zwZNB2nGRlqg2I
+        2RyeBpJo9i7j7Fw3Gt/5oLNGoR1cHFP3z+0gqUK1AeN3Eb0fb6J97J4UO9BAzaP++mfUm/w48CJ0nqQK
+        lQPhn1lceBvFjdcDODc8Ch21hMMODscsQTQ/mMY+U+A2SRUqBz4lMrC3PUPXNTOOUHG0TQg4TXFofOxD
+        6yUH9hiYyyRVqBwYX0qjdYhBi3UWF8d5nBrmoLWGUGdawN5uZmV357f9JFUoHWX56MqyYh4tHh7tM0ks
+        Z/JoesOizhxArYH5pbnvvUqyMtJlOhGJRLzSsf3Ccdyq4ajyPDQdntL0+5OHepnQFbvP09X3UkuyMtJ1
+        3jwyYqtxuVw7P1T4nJ7Ypetj1GcGpmptNluNdBc2KZVK9Rvdi1xPxSNzbgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="XenonButton9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO

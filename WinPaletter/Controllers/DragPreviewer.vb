@@ -26,7 +26,7 @@ Public Class DragPreviewer
             TransparencyKey = Color.Fuchsia
         End If
 
-        CP = New CP(CP.Mode.File, File, True)
+        CP = New CP(CP.CP_Type.File, File, True)
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11

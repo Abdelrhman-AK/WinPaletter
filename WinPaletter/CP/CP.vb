@@ -6,6 +6,7 @@ Imports WinPaletter.Metrics
 Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods.User32
 Imports System.IO
+Imports WinPaletter.NativeMethods
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -67,7 +68,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Win2000
         [Default]
     End Enum
-    Enum Mode
+    Enum CP_Type
         Registry
         File
         Empty
@@ -84,7 +85,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Scroll
     End Enum
 #End Region
-
     Public Class Structures
         Structure Info : Implements ICloneable
             Public AppVersion As String
@@ -374,74 +374,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End Structure
 
-        Structure WindowsDWM : Implements ICloneable
-            Public ColorizationColor As Color
-            Public ColorizationAfterglow As Color
-            Public EnableAeroPeek As Boolean
-            Public AlwaysHibernateThumbnails As Boolean
-            Public ColorizationColorBalance As Integer
-            Public ColorizationAfterglowBalance As Integer
-            Public ColorizationBlurBalance As Integer
-            Public ColorizationGlassReflectionIntensity As Integer
-            Public Theme As AeroTheme
-
-            Shared Operator =(First As WindowsDWM, Second As WindowsDWM) As Boolean
-                Return First.Equals(Second)
-            End Operator
-
-            Shared Operator <>(First As WindowsDWM, Second As WindowsDWM) As Boolean
-                Return Not First.Equals(Second)
-            End Operator
-
-            Public Sub Apply()
-                Select Case Theme
-                    Case AeroTheme.Aero
-                        NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-                    Case AeroTheme.AeroOpaque
-                        NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-
-                    Case AeroTheme.Basic
-                        NativeMethods.Uxtheme.EnableTheming(1)
-                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-
-                    Case AeroTheme.Classic
-                        NativeMethods.Uxtheme.EnableTheming(0)
-
-                End Select
-
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity)
-
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
-
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek.ToInteger)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails.ToInteger)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
-            End Sub
-
-            Public Function Clone() Implements ICloneable.Clone
-                Return MemberwiseClone()
-            End Function
-        End Structure
-
         Structure Windows8 : Implements ICloneable
             Public Start As Integer
             Public ColorizationColor As Color
@@ -496,6 +428,127 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & PersonalColors_Accent.HEX(False), RegistryValueKind.String)
             End Sub
 
+        End Structure
+
+        Structure Windows7 : Implements ICloneable
+            Public ColorizationColor As Color
+            Public ColorizationAfterglow As Color
+            Public EnableAeroPeek As Boolean
+            Public AlwaysHibernateThumbnails As Boolean
+            Public ColorizationColorBalance As Integer
+            Public ColorizationAfterglowBalance As Integer
+            Public ColorizationBlurBalance As Integer
+            Public ColorizationGlassReflectionIntensity As Integer
+            Public Theme As AeroTheme
+
+            Shared Operator =(First As Windows7, Second As Windows7) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As Windows7, Second As Windows7) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Sub Apply()
+                Select Case Theme
+                    Case AeroTheme.Aero
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                    Case AeroTheme.AeroOpaque
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+
+                    Case AeroTheme.Basic
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                    Case AeroTheme.Classic
+                        NativeMethods.Uxtheme.EnableTheming(0)
+
+                End Select
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity)
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek.ToInteger)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails.ToInteger)
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+            End Sub
+
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+        End Structure
+
+        Structure WindowsVista : Implements ICloneable
+            Public ColorizationColor As Color
+            Public [Alpha] As Byte
+            Public Theme As AeroTheme
+
+            Shared Operator =(First As WindowsVista, Second As WindowsVista) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As WindowsVista, Second As WindowsVista) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Sub Apply()
+                Select Case Theme
+                    Case AeroTheme.Aero
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                    Case AeroTheme.AeroOpaque
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+
+                    Case AeroTheme.Basic
+                        NativeMethods.Uxtheme.EnableTheming(1)
+                        NativeMethods.Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+
+                    Case AeroTheme.Classic
+                        NativeMethods.Uxtheme.EnableTheming(0)
+
+                End Select
+
+                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb([Alpha], ColorizationColor).ToArgb)
+
+            End Sub
+
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
         End Structure
 
         Structure WindowsXP : Implements ICloneable
@@ -647,6 +700,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
                     SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
                     SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
+
+                    If XenonCore.GetWindowsScreenScalingFactor > 100 Then
+                        CaptionFont = New Font(CaptionFont.Name, CaptionFont.SizeInPoints, CaptionFont.Style)
+                        IconFont = New Font(IconFont.Name, IconFont.SizeInPoints, IconFont.Style)
+                        MenuFont = New Font(MenuFont.Name, MenuFont.SizeInPoints, MenuFont.Style)
+                        MessageFont = New Font(MessageFont.Name, MessageFont.SizeInPoints, MessageFont.Style)
+                        SmCaptionFont = New Font(SmCaptionFont.Name, SmCaptionFont.SizeInPoints, SmCaptionFont.Style)
+                        StatusFont = New Font(StatusFont.Name, StatusFont.SizeInPoints, StatusFont.Style)
+                    End If
 
                     Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
                     Dim lfIconFont As New LogFont : IconFont.ToLogFont(lfIconFont)
@@ -817,7 +879,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 S.Dispose()
 
                 Dim path As String
-                If Not My.WXP Then
+                If Not My.WXP And Not My.WVista Then
                     path = IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp")
                     HSL.ExecuteFilter(img).Save(path)
 
@@ -1621,7 +1683,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LockScreenType = LogonUI_Modes.Default_,
                     .LockScreenSystemID = 0}
 
-    Public Windows7 As New Structures.WindowsDWM With {
+    Public Windows7 As New Structures.Windows7 With {
             .ColorizationColor = Color.FromArgb(116, 184, 252),
             .ColorizationAfterglow = Color.FromArgb(116, 184, 252),
             .ColorizationColorBalance = 8,
@@ -1631,6 +1693,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .EnableAeroPeek = True,
             .AlwaysHibernateThumbnails = False,
             .Theme = CP.AeroTheme.Aero}
+
+    Public WindowsVista As New Structures.WindowsVista With {
+            .ColorizationColor = Color.FromArgb(64, 158, 254),
+            .Theme = CP.AeroTheme.Aero}
+
+    Public WindowsXP As New Structures.WindowsXP With {
+        .Theme = WinXPTheme.LunaBlue,
+        .ColorScheme = "NormalColor",
+        .ThemeFile = My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles"}
 
     Public LogonUI7 As New Structures.LogonUI7 With {
                     .Enabled = False,
@@ -1643,34 +1714,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .Noise = False,
                     .Noise_Mode = NoiseMode.Acrylic,
                     .Noise_Intensity = 0}
-
-    Public LogonUIVista As New Structures.LogonUI7 With {
-                    .Enabled = False,
-                    .Mode = LogonUI_Modes.Default_,
-                    .ImagePath = "C:\Windows\Web\Wallpaper\Windows\img0.jpg",
-                    .Color = Color.Black,
-                    .Blur = False,
-                    .Blur_Intensity = 0,
-                    .Grayscale = False,
-                    .Noise = False,
-                    .Noise_Mode = NoiseMode.Acrylic,
-                    .Noise_Intensity = 0}
-
-    Public WindowsVista As New Structures.WindowsDWM With {
-            .ColorizationColor = Color.FromArgb(116, 184, 252),
-            .ColorizationAfterglow = Color.FromArgb(116, 184, 252),
-            .ColorizationColorBalance = 8,
-            .ColorizationAfterglowBalance = 43,
-            .ColorizationBlurBalance = 49,
-            .ColorizationGlassReflectionIntensity = 0,
-            .EnableAeroPeek = True,
-            .AlwaysHibernateThumbnails = False,
-            .Theme = CP.AeroTheme.Aero}
-
-    Public WindowsXP As New Structures.WindowsXP With {
-        .Theme = WinXPTheme.LunaBlue,
-        .ColorScheme = "NormalColor",
-        .ThemeFile = My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles"}
 
     Public LogonUIXP As New Structures.LogonUIXP With {
         .Enabled = True,
@@ -1759,7 +1802,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .TooltipFade = MenuAnimType.Fade}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
-                .Enabled = True,
+                .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
                 .BorderWidth = 1,
                 .CaptionHeight = 22,
                 .CaptionWidth = 22,
@@ -2612,7 +2655,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
         Next
 
-        For Each field In GetType(Structures.WindowsDWM).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+        For Each field In GetType(Structures.Windows7).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
             If field.FieldType.Name.ToLower = "color" Then
                 CL.Add(field.GetValue(Windows7))
             End If
@@ -2878,6 +2921,38 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     End Function
 
+    Sub Excute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
+               Optional TimeStr As String = "", Optional overallstopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "")
+
+        Dim ReportProgress As Boolean = [TreeView] IsNot Nothing
+        Dim sw As New Stopwatch
+        sw.Reset()
+        sw.Stop()
+        sw.Start()
+
+        If Not Skip Then
+            If Not String.IsNullOrWhiteSpace(StartStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, StartStr), "info")
+            Try
+                [Sub]()
+                If ReportProgress And Not String.IsNullOrWhiteSpace(TimeStr) Then AddNode([TreeView], String.Format(TimeStr, sw.ElapsedMilliseconds / 1000), "time")
+            Catch ex As Exception
+                sw.Stop() : overallstopwatch.Stop()
+                _ErrorHappened = True
+                If ReportProgress Then
+                    If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, ErrorStr), "error")
+                    AddException(ErrorStr, ex)
+                Else
+                    BugReport.ThrowError(ex)
+                End If
+                sw.Start() : overallstopwatch.Start()
+            End Try
+        Else
+            If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, SkipStr), "skip")
+
+        End If
+        sw.Stop()
+    End Sub
+
 #End Region
 
 #Region "EXPERIMENTAL  -  JSON"
@@ -2905,7 +2980,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         JSON_Overall.Add("Windows 10x", GetMembersToJSON(GetType(Structures.Windows10x), Windows11))
         JSON_Overall.Add("LogonUI Windows 10x", GetMembersToJSON(GetType(Structures.LogonUI10x), LogonUI10x))
         JSON_Overall.Add("Windows 8", GetMembersToJSON(GetType(Structures.Windows8), Windows8))
-        JSON_Overall.Add("Windows 7", GetMembersToJSON(GetType(Structures.WindowsDWM), Windows7))
+        JSON_Overall.Add("Windows 7", GetMembersToJSON(GetType(Structures.Windows7), Windows7))
         JSON_Overall.Add("LogonUI Windows 7", GetMembersToJSON(GetType(Structures.LogonUI7), LogonUI7))
         JSON_Overall.Add("Win32UI", GetMembersToJSON(GetType(Structures.Win32UI), Win32))
         JSON_Overall.Add("Metrics & Fonts", GetMembersToJSON(GetType(Structures.MetricsFonts), MetricsFonts))
@@ -2916,10 +2991,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "CP Handling (Loading/Applying)"
 
-    Sub New([Mode] As Mode, Optional ByVal PaletteFile As String = "", Optional IgnoreWindowsTerminal As Boolean = False)
-        Select Case [Mode]
-            Case Mode.Registry
 
+    Dim _ErrorHappened As Boolean = False
+
+    Sub New(CP_Type As CP_Type, Optional File As String = "", Optional IgnoreWTerminal As Boolean = False)
+
+        Select Case CP_Type
+            Case CP_Type.Registry
                 Dim _Def As CP
                 If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
                     _Def = New CP_Defaults().Default_Windows11
@@ -3417,97 +3495,43 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Try
                         y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Def.WindowsVista.ColorizationColor.ToArgb)
                         WindowsVista.ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
+                        WindowsVista.Alpha = Color.FromArgb(y).A
                     Catch
                         WindowsVista.ColorizationColor = Def.WindowsVista.ColorizationColor
+                        WindowsVista.Alpha = _Def.WindowsVista.Alpha
                     End Try
+
+                    Dim Com, Opaque As Boolean
+                    NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
 
                     Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", Def.WindowsVista.ColorizationColorBalance)
-                        WindowsVista.ColorizationColorBalance = y
+                        Opaque = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
                     Catch
-                        WindowsVista.ColorizationColorBalance = Def.WindowsVista.ColorizationColorBalance
+                        Opaque = False
                     End Try
 
-                    If Not My.W8 Then
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", Def.WindowsVista.ColorizationAfterglow.ToArgb)
-                            WindowsVista.ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
-                        Catch
-                            WindowsVista.ColorizationAfterglow = Def.WindowsVista.ColorizationAfterglow
-                        End Try
+                    Dim Classic As Boolean = False
 
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", Def.WindowsVista.ColorizationAfterglowBalance)
-                            WindowsVista.ColorizationAfterglowBalance = y
-                        Catch
-                            WindowsVista.ColorizationAfterglowBalance = Def.WindowsVista.ColorizationAfterglowBalance
-                        End Try
+                    Try
+                        Dim stringThemeName As New System.Text.StringBuilder(260)
+                        NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                        Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
+                    Catch
+                        Classic = False
+                    End Try
 
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", Def.WindowsVista.ColorizationBlurBalance)
-                            WindowsVista.ColorizationBlurBalance = y
-                        Catch
-                            WindowsVista.ColorizationBlurBalance = Def.WindowsVista.ColorizationBlurBalance
-                        End Try
-
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", Def.WindowsVista.ColorizationGlassReflectionIntensity)
-                            WindowsVista.ColorizationGlassReflectionIntensity = y
-                        Catch
-                            WindowsVista.ColorizationGlassReflectionIntensity = Def.WindowsVista.ColorizationGlassReflectionIntensity
-                        End Try
-
-                        Dim Com, Opaque As Boolean
-                        NativeMethods.Dwmapi.DwmIsCompositionEnabled(Com)
-
-                        Try
-                            Opaque = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
-                        Catch
-                            Opaque = False
-                        End Try
-
-                        Dim Classic As Boolean = False
-
-                        Try
-                            Dim stringThemeName As New System.Text.StringBuilder(260)
-                            NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
-                            Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
-                        Catch
-                            Classic = False
-                        End Try
-
-                        If Classic Then
-                            WindowsVista.Theme = AeroTheme.Classic
-                        ElseIf Com Then
-                            If Not Opaque Then WindowsVista.Theme = AeroTheme.Aero Else WindowsVista.Theme = AeroTheme.AeroOpaque
-                        Else
-                            WindowsVista.Theme = AeroTheme.Basic
-                        End If
-
+                    If Classic Then
+                        WindowsVista.Theme = AeroTheme.Classic
+                    ElseIf Com Then
+                        If Not Opaque Then WindowsVista.Theme = AeroTheme.Aero Else WindowsVista.Theme = AeroTheme.AeroOpaque
+                    Else
+                        WindowsVista.Theme = AeroTheme.Basic
                     End If
-
-                    Try
-                        WindowsVista.EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", Def.WindowsVista.EnableAeroPeek)
-                    Catch
-                        WindowsVista.EnableAeroPeek = Def.WindowsVista.EnableAeroPeek
-                    End Try
-
-                    Try
-                        WindowsVista.AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", Def.WindowsVista.AlwaysHibernateThumbnails)
-                    Catch
-                        WindowsVista.AlwaysHibernateThumbnails = Def.WindowsVista.AlwaysHibernateThumbnails
-                    End Try
 
                 Else
                     WindowsVista.ColorizationColor = _Def.WindowsVista.ColorizationColor
-                    WindowsVista.ColorizationColorBalance = _Def.WindowsVista.ColorizationColorBalance
-                    WindowsVista.ColorizationAfterglow = _Def.WindowsVista.ColorizationAfterglow
-                    WindowsVista.ColorizationAfterglowBalance = _Def.WindowsVista.ColorizationAfterglowBalance
-                    WindowsVista.ColorizationBlurBalance = _Def.WindowsVista.ColorizationBlurBalance
-                    WindowsVista.ColorizationGlassReflectionIntensity = _Def.WindowsVista.ColorizationGlassReflectionIntensity
+                    WindowsVista.Alpha = _Def.WindowsVista.Alpha
                     WindowsVista.Theme = _Def.WindowsVista.Theme
-                    WindowsVista.EnableAeroPeek = _Def.WindowsVista.EnableAeroPeek
-                    WindowsVista.AlwaysHibernateThumbnails = _Def.WindowsVista.AlwaysHibernateThumbnails
                 End If
 
 #End Region
@@ -3535,7 +3559,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         WindowsXP.ThemeFile = vsFile.ToString
                         WindowsXP.ColorScheme = colorName.ToString
 
-                    ElseIf File.Exists(vsFile.ToString) AndAlso (Path.GetExtension(vsFile.ToString) = ".theme" Or Path.GetExtension(vsFile.ToString) = ".msstyles") Then
+                    ElseIf IO.File.Exists(vsFile.ToString) AndAlso (Path.GetExtension(vsFile.ToString) = ".theme" Or Path.GetExtension(vsFile.ToString) = ".msstyles") Then
                         WindowsXP.Theme = WinXPTheme.Custom
                         WindowsXP.ThemeFile = vsFile.ToString
                         WindowsXP.ColorScheme = colorName.ToString
@@ -3862,83 +3886,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     LogonUI7.Noise = _Def.LogonUI7.Noise
                     LogonUI7.Noise_Mode = _Def.LogonUI7.Noise_Mode
                     LogonUI7.Noise_Intensity = _Def.LogonUI7.Noise_Intensity
-                End If
-#End Region
-
-#Region "LogonUI Vista"
-                If My.WVista Then
-                    Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
-                    Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
-                    LogonUIVista.Enabled = b1 Or b2
-
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUIVista")
-
-                    Try
-                        LogonUIVista.Mode = rLog.GetValue("Mode", LogonUI_Modes.Default_)
-                    Catch
-                        LogonUIVista.Mode = LogonUI_Modes.Default_
-                    End Try
-
-                    Try
-                        LogonUIVista.ImagePath = rLog.GetValue("ImagePath", "")
-                    Catch
-                        LogonUIVista.ImagePath = ""
-                    End Try
-
-                    Try
-                        LogonUIVista.Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
-                    Catch
-                        LogonUIVista.Color = Color.Black
-                    End Try
-
-                    Try
-                        LogonUIVista.Blur = rLog.GetValue("Blur", False)
-                    Catch
-                        LogonUIVista.Blur = False
-                    End Try
-
-                    Try
-                        LogonUIVista.Blur_Intensity = rLog.GetValue("Blur_Intensity", 0)
-                    Catch
-                        LogonUIVista.Blur_Intensity = 0
-                    End Try
-
-                    Try
-                        LogonUIVista.Grayscale = rLog.GetValue("Grayscale", False)
-                    Catch
-                        LogonUIVista.Grayscale = False
-                    End Try
-
-                    Try
-                        LogonUIVista.Noise = rLog.GetValue("Noise", False)
-                    Catch
-                        LogonUIVista.Noise = False
-                    End Try
-
-                    Try
-                        LogonUIVista.Noise_Mode = rLog.GetValue("Noise_Mode", NoiseMode.Acrylic)
-                    Catch
-                        LogonUIVista.Noise_Mode = NoiseMode.Acrylic
-                    End Try
-
-                    Try
-                        LogonUIVista.Noise_Intensity = rLog.GetValue("Noise_Intensity", 0)
-                    Catch
-                        LogonUIVista.Noise_Intensity = 0
-                    End Try
-
-                    rLog.Close()
-                Else
-                    LogonUIVista.Enabled = _Def.LogonUIVista.Enabled
-                    LogonUIVista.Mode = _Def.LogonUIVista.Mode
-                    LogonUIVista.ImagePath = _Def.LogonUIVista.ImagePath
-                    LogonUIVista.Color = _Def.LogonUIVista.Color
-                    LogonUIVista.Blur = _Def.LogonUIVista.Blur
-                    LogonUIVista.Blur_Intensity = _Def.LogonUIVista.Blur_Intensity
-                    LogonUIVista.Grayscale = _Def.LogonUIVista.Grayscale
-                    LogonUIVista.Noise = _Def.LogonUIVista.Noise
-                    LogonUIVista.Noise_Mode = _Def.LogonUIVista.Noise_Mode
-                    LogonUIVista.Noise_Intensity = _Def.LogonUIVista.Noise_Intensity
                 End If
 #End Region
 
@@ -4421,11 +4368,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 _Def.Dispose()
 
-            Case Mode.File
+            Case CP_Type.File
 #Region "File"
                 Dim txt As New List(Of String)
                 txt.Clear()
-                txt = IO.File.ReadAllText(PaletteFile).CList
+                txt = IO.File.ReadAllText(File).CList
 
                 Dim CUR_Arrow_List, CUR_AppLoading_List, CUR_Busy_List, CUR_Help_List, CUR_Move_List, CUR_NS_List, CUR_EW_List, CUR_NESW_List, CUR_NWSE_List,
                     CUR_Up_List, CUR_Pen_List, CUR_None_List, CUR_Link_List, CUR_Pin_List, CUR_Person_List, CUR_IBeam_List, CUR_Cross_List As New List(Of String)
@@ -4701,13 +4648,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Vista"
                     If lin.StartsWith("*Vista_ColorizationColor= ", My._strIgnore) Then WindowsVista.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Vista_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Vista_ColorizationAfterglow= ", My._strIgnore) Then WindowsVista.ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Vista_ColorizationAfterglow= ".Count))
-                    If lin.StartsWith("*Vista_ColorizationColorBalance= ", My._strIgnore) Then WindowsVista.ColorizationColorBalance = lin.Remove(0, "*Vista_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Vista_ColorizationAfterglowBalance= ", My._strIgnore) Then WindowsVista.ColorizationAfterglowBalance = lin.Remove(0, "*Vista_ColorizationAfterglowBalance= ".Count)
-                    If lin.StartsWith("*Vista_ColorizationBlurBalance= ", My._strIgnore) Then WindowsVista.ColorizationBlurBalance = lin.Remove(0, "*Vista_ColorizationBlurBalance= ".Count)
-                    If lin.StartsWith("*Vista_ColorizationGlassReflectionIntensity= ", My._strIgnore) Then WindowsVista.ColorizationGlassReflectionIntensity = lin.Remove(0, "*Vista_ColorizationGlassReflectionIntensity= ".Count)
-                    If lin.StartsWith("*Vista_EnableAeroPeek= ", My._strIgnore) Then WindowsVista.EnableAeroPeek = lin.Remove(0, "*Vista_EnableVistaPeek= ".Count)
-                    If lin.StartsWith("*Vista_AlwaysHibernateThumbnails= ", My._strIgnore) Then WindowsVista.AlwaysHibernateThumbnails = lin.Remove(0, "*Vista_AlwaysHibernateThumbnails= ".Count)
+                    If lin.StartsWith("*Vista_Alpha= ", My._strIgnore) Then WindowsVista.Alpha = lin.Remove(0, "*Vista_Alpha= ".Count)
                     If lin.StartsWith("*Vista_Theme= ", My._strIgnore) Then WindowsVista.Theme = lin.Remove(0, "*Vista_Theme= ".Count)
 #End Region
 
@@ -4734,19 +4675,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*LogonUI7_Noise= ", My._strIgnore) Then LogonUI7.Noise = lin.Remove(0, "*LogonUI7_Noise= ".Count)
                     If lin.StartsWith("*LogonUI7_Noise_Mode= ", My._strIgnore) Then LogonUI7.Noise_Mode = lin.Remove(0, "*LogonUI7_Noise_Mode= ".Count)
                     If lin.StartsWith("*LogonUI7_Noise_Intensity= ", My._strIgnore) Then LogonUI7.Noise_Intensity = lin.Remove(0, "*LogonUI7_Noise_Intensity= ".Count)
-#End Region
-
-#Region "LogonUI_Vista"
-                    If lin.StartsWith("*LogonUIVista_Color= ", My._strIgnore) Then LogonUIVista.Color = Color.FromArgb(lin.Remove(0, "*LogonUIVista_Color= ".Count))
-                    If lin.StartsWith("*LogonUIVista_Enabled= ", My._strIgnore) Then LogonUIVista.Enabled = lin.Remove(0, "*LogonUIVista_Enabled= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Mode= ", My._strIgnore) Then LogonUIVista.Mode = lin.Remove(0, "*LogonUIVista_Mode= ".Count)
-                    If lin.StartsWith("*LogonUIVista_ImagePath= ", My._strIgnore) Then LogonUIVista.ImagePath = lin.Remove(0, "*LogonUIVista_ImagePath= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Blur= ", My._strIgnore) Then LogonUIVista.Blur = lin.Remove(0, "*LogonUIVista_Blur= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Blur_Intensity= ", My._strIgnore) Then LogonUIVista.Blur_Intensity = lin.Remove(0, "*LogonUIVista_Blur_Intensity= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Grayscale= ", My._strIgnore) Then LogonUIVista.Grayscale = lin.Remove(0, "*LogonUIVista_Grayscale= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Noise= ", My._strIgnore) Then LogonUIVista.Noise = lin.Remove(0, "*LogonUIVista_Noise= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Noise_Mode= ", My._strIgnore) Then LogonUIVista.Noise_Mode = lin.Remove(0, "*LogonUIVista_Noise_Mode= ".Count)
-                    If lin.StartsWith("*LogonUIVista_Noise_Intensity= ", My._strIgnore) Then LogonUIVista.Noise_Intensity = lin.Remove(0, "*LogonUIVista_Noise_Intensity= ".Count)
 #End Region
 
 #Region "LogonUI XP"
@@ -4842,7 +4770,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*PS_32_", My._strIgnore) Then PS86List.Add(lin.Remove(0, "*PS_32_".Count))
                     If lin.StartsWith("*PS_64_", My._strIgnore) Then PS64List.Add(lin.Remove(0, "*PS_64_".Count))
 
-                    If Not IgnoreWindowsTerminal Then
+                    If Not IgnoreWTerminal Then
                         If My.W10 Or My.W11 Then
                             If lin.StartsWith("terminal.", My._strIgnore) Then ls_stable.Add(lin)
                             If lin.StartsWith("terminalpreview.", My._strIgnore) Then ls_preview.Add(lin)
@@ -4952,7 +4880,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 PowerShellx86 = Structures.Console.Load_Console_From_ListOfString(PS86List)
                 PowerShellx64 = Structures.Console.Load_Console_From_ListOfString(PS64List)
 
-                If Not IgnoreWindowsTerminal Then
+                If Not IgnoreWTerminal Then
                     Dim str_stable, str_preview As String
                     str_stable = ls_stable.CString
                     str_preview = ls_preview.CString
@@ -4970,19 +4898,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End Select
     End Sub
 
-    Sub Save(ByVal [SaveTo] As Mode, Optional ByVal FileLocation As String = "", Optional ByVal [TreeView] As TreeView = Nothing)
+    Sub Save(ByVal [SaveTo] As CP_Type, Optional ByVal FileLocation As String = "", Optional ByVal [TreeView] As TreeView = Nothing)
 
         Select Case [SaveTo]
-            Case Mode.Registry
+            Case CP_Type.Registry
 
+#Region "Registry"
                 Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
-                Dim _ErrorHappened As Boolean = False
+                _ErrorHappened = False
 
-                Dim sw, sw_all As New Stopwatch
+                Dim sw_all As New Stopwatch
                 sw_all.Reset()
                 sw_all.Start()
-                sw.Reset()
-                sw.Stop()
 
                 If ReportProgress Then
                     My.Saving_Exceptions.Clear()
@@ -5016,353 +4943,91 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 End If
 
-#Region "Registry"
                 If My.W11 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win11), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Windows11.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
+                    Excute(CType(Sub()
+                                     Windows11.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win11, My.Lang.CP_W11_Error, My.Lang.CP_Time, sw_all)
 
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W11_Error), "error")
-                            AddException(My.Lang.CP_W11_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI11), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI11_Error), "error")
-                            AddException(My.Lang.CP_LogonUI11_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
+                    Excute(CType(Sub()
+                                     LogonUI10x.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI11, My.Lang.CP_LogonUI11_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.W10 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win10), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Windows10.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W10_Error), "error")
-                            AddException(My.Lang.CP_W10_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
+                    Excute(CType(Sub()
+                                     Windows10.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win10, My.Lang.CP_W10_Error, My.Lang.CP_Time, sw_all)
 
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI10), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        LogonUI10x.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI10_Error), "error")
-                            AddException(My.Lang.CP_LogonUI10_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
+                    Excute(CType(Sub()
+                                     LogonUI10x.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI10, My.Lang.CP_LogonUI10_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.W8 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win8), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Windows8.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W8_Error), "error")
-                            AddException(My.Lang.CP_W8_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
+                    Excute(CType(Sub()
+                                     Windows8.Apply()
+                                     RefreshDWM(Me)
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win8, My.Lang.CP_W8_Error, My.Lang.CP_Time, sw_all)
 
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    RefreshDWM(Me)
-                    sw.Stop()
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI8), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Apply_LogonUI_8([TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI8_Error), "error")
-                            AddException(My.Lang.CP_LogonUI8_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
+                    Excute(CType(Sub()
+                                     Apply_LogonUI_8([TreeView])
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI8, My.Lang.CP_LogonUI8_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.W7 Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win7), "info")
-                    sw.Reset() : sw.Start()
-                    RefreshDWM(Me)
-                    Try
-                        Windows7.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_W7_Error), "error")
-                            AddException(My.Lang.CP_W7_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
+                    Excute(CType(Sub()
+                                     Windows7.Apply()
+                                     RefreshDWM(Me)
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win7, My.Lang.CP_W7_Error, My.Lang.CP_Time, sw_all)
 
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUI7), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Apply_LogonUI7(LogonUI7, "LogonUI", [TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUI7_Error), "error")
-                            AddException(My.Lang.CP_LogonUI7_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
+                    Excute(CType(Sub()
+                                     Apply_LogonUI7(LogonUI7, "LogonUI", [TreeView])
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI7, My.Lang.CP_LogonUI7_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.WVista Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WinVista), "info")
-                    sw.Reset() : sw.Start()
-                    RefreshDWM(Me)
-                    Try
-                        WindowsVista.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WVista_Error), "error")
-                            AddException(My.Lang.CP_WVista_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUIVista), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        Apply_LogonUI7(LogonUIVista, "LogonUIVista", [TreeView])
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUIVista_Error), "error")
-                            AddException(My.Lang.CP_LogonUIVista_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
+                    Excute(CType(Sub()
+                                     WindowsVista.Apply()
+                                     RefreshDWM(Me)
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinVista, My.Lang.CP_WVista_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.WXP Then
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WinXP), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        WindowsXP.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WXP_Error), "error")
-                            AddException(My.Lang.CP_WXP_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
+                    Excute(CType(Sub()
+                                     WindowsXP.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinXP, My.Lang.CP_WXP_Error, My.Lang.CP_Time, sw_all)
 
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
-
-
-                    If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_LogonUIXP), "info")
-                    sw.Reset() : sw.Start()
-                    Try
-                        LogonUIXP.Apply()
-                        If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                    Catch ex As Exception
-                        sw.Stop() : sw_all.Stop()
-                        _ErrorHappened = True
-                        If ReportProgress Then
-                            AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_LogonUIXP_Error), "error")
-                            AddException(My.Lang.CP_LogonUIXP_Error, ex)
-                        Else
-                            BugReport.ThrowError(ex)
-                        End If
-
-                        sw.Start() : sw_all.Start()
-                    End Try
-                    sw.Stop()
+                    Excute(CType(Sub()
+                                     LogonUIXP.Apply()
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUIXP, My.Lang.CP_LogonUIXP_Error, My.Lang.CP_Time, sw_all)
                 End If
 
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Win32UI), "info")
-                sw.Reset() : sw.Start()
-                Try
-                    Win32.Apply()
-                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WIN32UI_Error), "error")
-                        AddException(My.Lang.CP_WIN32UI_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
+                Excute(CType(Sub()
+                                 Win32.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win32UI, My.Lang.CP_WIN32UI_Error, My.Lang.CP_Time, sw_all)
 
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
+                Excute(CType(Sub()
+                                 WindowsEffects.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinEffects, My.Lang.CP_WinEffects_Error, My.Lang.CP_Time, sw_all)
 
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WinEffects), "info")
-                sw.Reset() : sw.Start()
-                Try
-                    WindowsEffects.Apply()
-                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WinEffects_Error), "error")
-                        AddException(My.Lang.CP_WinEffects_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
+                Excute(CType(Sub()
+                                 MetricsFonts.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Metrics, My.Lang.CP_Error_Metrics, My.Lang.CP_Time_They, sw_all, Not MetricsFonts.Enabled, My.Lang.CP_Skip_Metrics)
 
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
-
-                If ReportProgress Then
-                    If MetricsFonts.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Metrics), "info")
-                    Else
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Metrics), "skip")
-                    End If
-                End If
-                sw.Reset() : sw.Start()
-                Try
-                    MetricsFonts.Apply()
-                    If ReportProgress And MetricsFonts.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time_They, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_Metrics), "error")
-                        AddException(My.Lang.CP_Error_Metrics, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
-
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
-
-
-                'Wallpaper Tint
-                If ReportProgress Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_WallpaperTone), "info")
-                sw.Reset() : sw.Start()
-                Try
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10")
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W8, "Win8.1")
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7")
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista")
-                    Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP")
-
-                    If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply()
-                    If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply()
-                    If My.W8 And WallpaperTone_W8.Enabled Then WallpaperTone_W8.Apply()
-                    If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply()
-                    If My.WVista And WallpaperTone_WVista.Enabled Then WallpaperTone_WVista.Apply()
-                    If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
-
-                    If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_WallpaperTone_Error), "error")
-                        AddException(My.Lang.CP_WallpaperTone_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
-
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
-
+                Excute(CType(Sub()
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10")
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W8, "Win8.1")
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7")
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista")
+                                 Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP")
+                                 If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply()
+                                 If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply()
+                                 If My.W8 And WallpaperTone_W8.Enabled Then WallpaperTone_W8.Apply()
+                                 If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply()
+                                 If My.WVista And WallpaperTone_WVista.Enabled Then WallpaperTone_WVista.Apply()
+                                 If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
 
                 'Windows Terminals/Consoles
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
@@ -5372,81 +5037,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 rLogX.SetValue("Terminal_Stable_Enabled", Terminal.Enabled.ToInteger)
                 rLogX.SetValue("Terminal_Preview_Enabled", TerminalPreview.Enabled.ToInteger)
 
-                If ReportProgress Then
-                    If CommandPrompt.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_CMD), "info")
-                    Else
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_CMD), "skip")
-                    End If
-                End If
-                sw.Reset() : sw.Start()
-                Try
-                    Apply_CommandPrompt()
-                    If ReportProgress And CommandPrompt.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_CMD_Error), "error")
-                        AddException(My.Lang.CP_CMD_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
+                Excute(CType(Sub()
+                                 Apply_CommandPrompt()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_CMD, My.Lang.CP_CMD_Error, My.Lang.CP_Time, sw_all, Not CommandPrompt.Enabled, My.Lang.CP_Skip_CMD)
 
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
+                Excute(CType(Sub()
+                                 Apply_PowerShell86()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_PS32, My.Lang.CP_PS32_Error, My.Lang.CP_Time, sw_all, Not PowerShellx86.Enabled, My.Lang.CP_Skip_PS32)
 
-                If ReportProgress Then
-                    If PowerShellx86.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_PS32), "info")
-                    Else
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_PS32), "skip")
-                    End If
-                End If
-                sw.Reset() : sw.Start()
-                Try
-                    Apply_PowerShell86()
-                    If ReportProgress And PowerShellx86.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_PS32_Error), "error")
-                        AddException(My.Lang.CP_PS32_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
+                Excute(CType(Sub()
+                                 Apply_PowerShell64()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_PS64, My.Lang.CP_PS64_Error, My.Lang.CP_Time, sw_all, Not PowerShellx64.Enabled, My.Lang.CP_Skip_PS64)
 
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
-
-                If ReportProgress Then
-                    If PowerShellx64.Enabled Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_PS64), "info")
-                    Else
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_PS64), "skip")
-                    End If
-                End If
-                sw.Reset() : sw.Start()
-                Try
-                    Apply_PowerShell64()
-                    If ReportProgress And PowerShellx64.Enabled Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_PS64_Error), "error")
-                        AddException(My.Lang.CP_PS64_Error, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
-
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
-
+                Dim sw As New Stopwatch
                 sw.Reset() : sw.Start()
                 If My.W10 Or My.W11 Then
 
@@ -5554,30 +5157,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
                 sw.Stop()
 
-                If ReportProgress Then
-                    If Cursor_Enabled Then
-                        '### Leave it empty
-                    Else
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_Cursors), "skip")
-                    End If
-                End If
-                sw.Reset() : sw.Start()
-                Try
-                    Apply_Cursors([TreeView])
-                    If ReportProgress And Cursor_Enabled Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_Time_Cursors, sw.ElapsedMilliseconds / 1000)), "time")
-                Catch ex As Exception
-                    sw.Stop() : sw_all.Stop()
-                    _ErrorHappened = True
-                    If ReportProgress Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Error_Cursors), "error")
-                        AddException(My.Lang.CP_Error_Cursors, ex)
-                    Else
-                        BugReport.ThrowError(ex)
-                    End If
-
-                    sw.Start() : sw_all.Start()
-                End Try
-                sw.Stop()
+                Excute(CType(Sub()
+                                 Apply_Cursors([TreeView])
+                             End Sub, MethodInvoker), [TreeView], "", My.Lang.CP_Error_Cursors, My.Lang.CP_Time_Cursors, sw_all, Not Cursor_Enabled, My.Lang.CP_Skip_Cursors)
 
                 If ReportProgress Then
                     If Not _ErrorHappened Then
@@ -5589,12 +5171,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 sw_all.Reset()
                 sw_all.Stop()
-                sw.Reset()
-                sw.Stop()
-
 #End Region
 
-            Case Mode.File
+            Case CP_Type.File
 #Region "File"
                 Dim tx As New List(Of String)
                 tx.Clear()
@@ -5726,13 +5305,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Vista"
                 tx.Add("<Vista>")
                 tx.Add("*Vista_ColorizationColor= " & WindowsVista.ColorizationColor.ToArgb)
-                tx.Add("*Vista_ColorizationAfterglow= " & WindowsVista.ColorizationAfterglow.ToArgb)
-                tx.Add("*Vista_ColorizationColorBalance= " & WindowsVista.ColorizationColorBalance)
-                tx.Add("*Vista_ColorizationAfterglowBalance= " & WindowsVista.ColorizationAfterglowBalance)
-                tx.Add("*Vista_ColorizationBlurBalance= " & WindowsVista.ColorizationBlurBalance)
-                tx.Add("*Vista_ColorizationGlassReflectionIntensity= " & WindowsVista.ColorizationGlassReflectionIntensity)
-                tx.Add("*Vista_EnableAeroPeek= " & WindowsVista.EnableAeroPeek)
-                tx.Add("*Vista_AlwaysHibernateThumbnails= " & WindowsVista.AlwaysHibernateThumbnails)
+                tx.Add("*Vista_Alpha= " & WindowsVista.Alpha)
                 tx.Add("*Vista_Theme= " & WindowsVista.Theme)
                 tx.Add("</Vista>" & vbCrLf)
 #End Region
@@ -5766,21 +5339,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*LogonUI7_Effect_Noise_Mode= " & LogonUI7.Noise_Mode)
                 tx.Add("*LogonUI7_Effect_Noise_Intensity= " & LogonUI7.Noise_Intensity)
                 tx.Add("</LogonUI_7_8>" & vbCrLf)
-#End Region
-
-#Region "LogonUI_Vista"
-                tx.Add("<LogonUI_Vista>")
-                tx.Add("*LogonUIVista_Enabled= " & LogonUIVista.Enabled)
-                tx.Add("*LogonUIVista_Mode= " & LogonUIVista.Mode)
-                tx.Add("*LogonUIVista_ImagePath= " & LogonUIVista.ImagePath)
-                tx.Add("*LogonUIVista_Color= " & LogonUIVista.Color.ToArgb)
-                tx.Add("*LogonUIVista_Effect_Blur= " & LogonUIVista.Blur)
-                tx.Add("*LogonUIVista_Effect_Blur_Intensity= " & LogonUIVista.Blur_Intensity)
-                tx.Add("*LogonUIVista_Effect_Grayscale= " & LogonUIVista.Grayscale)
-                tx.Add("*LogonUIVista_Effect_Noise= " & LogonUIVista.Noise)
-                tx.Add("*LogonUIVista_Effect_Noise_Mode= " & LogonUIVista.Noise_Mode)
-                tx.Add("*LogonUIVista_Effect_Noise_Intensity= " & LogonUIVista.Noise_Intensity)
-                tx.Add("</LogonUI_Vista>" & vbCrLf)
 #End Region
 
 #Region "LogonUI XP"
@@ -5995,15 +5553,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Select Case [LogonElement].Mode
                 Case LogonUI_Modes.Default_
-
                     For i As Integer = 5031 To 5043 Step +1
                         bmpList.Add(NativeMethods.DLLFunc.GetDllRes(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                     Next
 
                 Case LogonUI_Modes.CustomImage
-
                     If IO.File.Exists([LogonElement].ImagePath) Then
-                        bmpList.Add(Image.FromStream(New IO.FileStream([LogonElement].ImagePath, IO.FileMode.Open, IO.FileAccess.Read)))
+                        bmpList.Add(New Bitmap(Image.FromStream(New IO.FileStream([LogonElement].ImagePath, IO.FileMode.Open, IO.FileAccess.Read))))
                     Else
                         bmpList.Add(Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size))
                     End If
@@ -6013,8 +5569,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Case LogonUI_Modes.Wallpaper
                     bmpList.Add(My.Application.GetWallpaper)
-            End Select
 
+            End Select
 
             For x = 0 To bmpList.Count - 1
                 If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Lang.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
@@ -6025,10 +5581,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Next
 
             If bmpList.Count = 1 Then
-                bmpList(0).Save(DirX & "\backgroundDefault.jpg", Drawing.Imaging.ImageFormat.Jpeg)
+                bmpList(0).Save(DirX & "\backgroundDefault.jpg", Imaging.ImageFormat.Jpeg)
             Else
                 For x = 0 To bmpList.Count - 1
-                    bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Drawing.Imaging.ImageFormat.Jpeg)
+                    bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Imaging.ImageFormat.Jpeg)
                 Next
             End If
 
@@ -6937,15 +6493,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         'If TerminalPreview <> DirectCast(obj, CP).TerminalPreview Then _Equals = False
 
         Return _Equals
-        End Function
+    End Function
 
-        Public Shared Operator =(First As CP, Second As CP)
-            Return First.Equals(Second)
-        End Operator
+    Public Shared Operator =(First As CP, Second As CP)
+        Return First.Equals(Second)
+    End Operator
 
-        Public Shared Operator <>(First As CP, Second As CP)
-            Return Not First = Second
-        End Operator
+    Public Shared Operator <>(First As CP, Second As CP)
+        Return Not First = Second
+    End Operator
 #End Region
 
     End Class

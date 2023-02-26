@@ -533,11 +533,10 @@ Public Module BitmapExtensions
     '''Return Blurred Bitmap
     '''</summary>
     <Extension()>
-    Public Function Blur(ByRef image As Image, Optional ByVal BlurForce As Integer = 2) As Bitmap
-        Dim g As Graphics = Graphics.FromImage(image)
-
-        g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-
+    Public Function Blur(ByRef image As Bitmap, Optional ByVal BlurForce As Integer = 2) As Bitmap
+        Dim img As Bitmap = image
+        Dim G As Graphics = Graphics.FromImage(img)
+        G.SmoothingMode = SmoothingMode.HighQuality
         Dim att As New ImageAttributes
         Dim m As New ColorMatrix With {.Matrix33 = 0.4F}
         att.SetColorMatrix(m)
@@ -545,24 +544,26 @@ Public Module BitmapExtensions
         BlurForce += 1
 
         For x = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(image, New Rectangle(x, 0, image.Width - 1, image.Height - 1), 0, 0, image.Width - 1, image.Height - 1, GraphicsUnit.Pixel, att)
+            g.DrawImage(img, New Rectangle(x, 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
         Next
 
         For y = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(image, New Rectangle(0, y, image.Width - 1, image.Height - 1), 0, 0, image.Width - 1, image.Height - 1, GraphicsUnit.Pixel, att)
+            g.DrawImage(img, New Rectangle(0, y, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
         Next
 
-        Return image
+        g.Save()
         att.Dispose()
         g.Dispose()
+
+        Return img
     End Function
 
     '''<summary>
     '''Return Blurred Bitmap
     '''</summary>
     <Extension()>
-    Public Function Blur(ByRef Bitmap As Bitmap, Optional ByVal BlurForce As Integer = 2) As Bitmap
-        Return Blur(DirectCast(Bitmap, Image), BlurForce)
+    Public Function Blur(ByRef Bitmap As Image, Optional ByVal BlurForce As Integer = 2) As Bitmap
+        Return Blur(DirectCast(Bitmap, Bitmap), BlurForce)
     End Function
 
     '''<summary>

@@ -1177,12 +1177,27 @@ Namespace NativeMethods
         <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
         Public Shared Function GetTextMetrics(ByVal hdc As IntPtr, <Out> ByRef lptm As TEXTMETRICW) As Boolean
         End Function
+
         <DllImport("gdi32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
         Public Shared Function DeleteObject(ByVal hObject As IntPtr) As Boolean
         End Function
+
         <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
         Public Shared Function SelectObject(ByVal hdc As IntPtr, ByVal hgdiObj As IntPtr) As IntPtr
         End Function
+
+        <DllImport("gdi32.dll")>
+        Public Shared Function AddFontMemResourceEx(ByVal pbFont As IntPtr, ByVal cbFont As UInteger, ByVal pdv As IntPtr, <[In]> ByRef pcFonts As UInteger) As IntPtr
+        End Function
+
+        <DllImport("gdi32.dll", CharSet:=CharSet.Auto, SetLastError:=True, ExactSpelling:=True)>
+        Public Shared Function GetDeviceCaps(ByVal hDC As IntPtr, ByVal nIndex As Integer) As Integer
+        End Function
+
+        Public Enum DeviceCap
+            VERTRES = 10
+            DESKTOPVERTRES = 117
+        End Enum
 
         <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
         Public Structure TEXTMETRICW
@@ -1298,7 +1313,6 @@ Namespace NativeMethods
 #Region "Kernel32"
         Public Shared Function GetDllRes(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
             Try
-
                 If IO.File.Exists(File) Then
                     Dim hMod As IntPtr = Kernel32.LoadLibraryEx(File, IntPtr.Zero, &H2)
                     Dim hRes As IntPtr = Kernel32.FindResource(hMod, ResourceID, ResourceType)
@@ -1307,9 +1321,8 @@ Namespace NativeMethods
                     Dim bPtr As Byte() = New Byte(size - 1) {}
                     Marshal.Copy(pt, bPtr, 0, CInt(size))
                     Dim ms As New MemoryStream(bPtr)
-                    Dim img As Image = Image.FromStream(ms)
+                    Dim img As New Bitmap(Image.FromStream(ms))
                     ms.Close()
-                    ms.Dispose()
                     Return img
                 Else
                     Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
@@ -1317,7 +1330,6 @@ Namespace NativeMethods
             Catch
                 Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
             End Try
-
         End Function
 
 #End Region

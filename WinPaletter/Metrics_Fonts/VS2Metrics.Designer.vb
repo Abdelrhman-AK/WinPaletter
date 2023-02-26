@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class VS2Win32UI
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class VS2Metrics
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,9 @@ Partial Class VS2Win32UI
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VS2Win32UI))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VS2Metrics))
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
@@ -31,6 +31,8 @@ Partial Class VS2Win32UI
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -102,7 +104,7 @@ Partial Class VS2Win32UI
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(241, 98)
+        Me.XenonButton7.Location = New System.Drawing.Point(241, 159)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
         Me.XenonButton7.TabIndex = 209
@@ -119,11 +121,11 @@ Partial Class VS2Win32UI
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(327, 98)
+        Me.XenonButton8.Location = New System.Drawing.Point(327, 159)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(171, 30)
         Me.XenonButton8.TabIndex = 208
-        Me.XenonButton8.Text = "Load into Classic Colors"
+        Me.XenonButton8.Text = "Load into Metrics\Fonts"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'OpenFileDialog2
@@ -144,12 +146,42 @@ Partial Class VS2Win32UI
     "d .msstyles file in it"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'VS2Win32UI
+        'XenonCheckBox1
+        '
+        Me.XenonCheckBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox1.Checked = True
+        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 86)
+        Me.XenonCheckBox1.Name = "XenonCheckBox1"
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(486, 23)
+        Me.XenonCheckBox1.TabIndex = 211
+        Me.XenonCheckBox1.Text = "Include Metrics"
+        '
+        'XenonCheckBox2
+        '
+        Me.XenonCheckBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox2.Checked = True
+        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox2.Location = New System.Drawing.Point(12, 115)
+        Me.XenonCheckBox2.Name = "XenonCheckBox2"
+        Me.XenonCheckBox2.Size = New System.Drawing.Size(486, 23)
+        Me.XenonCheckBox2.TabIndex = 212
+        Me.XenonCheckBox2.Text = "Include Fonts"
+        '
+        'VS2Metrics
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(510, 140)
+        Me.ClientSize = New System.Drawing.Size(510, 201)
+        Me.Controls.Add(Me.XenonCheckBox2)
+        Me.Controls.Add(Me.XenonCheckBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton8)
@@ -163,9 +195,9 @@ Partial Class VS2Win32UI
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "VS2Win32UI"
+        Me.Name = "VS2Metrics"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Theme\Visual Styles to Classic Colors"
+        Me.Text = "Theme\Visual Styles to Metrics\Fonts"
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -179,4 +211,6 @@ Partial Class VS2Win32UI
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents OpenFileDialog2 As OpenFileDialog
     Friend WithEvents Label1 As Label
+    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents XenonCheckBox2 As XenonCheckBox
 End Class

@@ -45,7 +45,6 @@ Public Class XenonCore
 #Region "Misc"
     Public Shared Sub RefreshDWM(CP As CP)
 
-
         Try
             Dim Com As Boolean
             Dwmapi.DwmIsCompositionEnabled(Com)
@@ -53,20 +52,31 @@ Public Class XenonCore
             If Com Then
                 Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS
 
-                If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                If My.W8 Then
                     temp.clrColor = CP.Windows8.ColorizationColor.ToArgb
                     temp.nIntensity = CP.Windows8.ColorizationColorBalance
 
-                Else
+                ElseIf My.W7 Then
                     temp.clrColor = CP.Windows7.ColorizationColor.ToArgb
                     temp.nIntensity = CP.Windows7.ColorizationColorBalance
+
+                    temp.clrAfterGlow = CP.Windows7.ColorizationAfterglow.ToArgb
+                    temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
+                    temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
+                    temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (CP.Windows7.Theme = AeroTheme.AeroOpaque)
+
+                ElseIf My.WVista Then
+                    temp.clrColor = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor).ToArgb
+                    temp.clrAfterGlow = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor).ToArgb
+
+                    'temp.nIntensity = CP.WindowsVista.ColorizationColorBalance
+                    'temp.clrAfterGlowBalance = CP.WindowsVista.ColorizationAfterglowBalance
+                    'temp.clrBlurBalance = CP.WindowsVista.ColorizationBlurBalance
+                    'temp.clrGlassReflectionIntensity = CP.WindowsVista.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (CP.WindowsVista.Theme = AeroTheme.AeroOpaque)
                 End If
 
-                temp.clrAfterGlow = CP.Windows7.ColorizationAfterglow.ToArgb
-                temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
-                temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
-                temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
-                temp.fOpaque = (CP.Windows7.Theme = AeroTheme.AeroOpaque)
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
 
@@ -147,8 +157,22 @@ Public Class XenonCore
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
     'End Sub
-#End Region
 
+    Public Shared Function GetWindowsScreenScalingFactor(ByVal Optional percentage As Boolean = True) As Double
+        Dim GraphicsObject As Graphics = Graphics.FromHwnd(IntPtr.Zero)
+        Dim DeviceContextHandle As IntPtr = GraphicsObject.GetHdc()
+        Dim LogicalScreenHeight As Integer = GDI32.GetDeviceCaps(DeviceContextHandle, CInt(GDI32.DeviceCap.VERTRES))
+        Dim PhysicalScreenHeight As Integer = GDI32.GetDeviceCaps(DeviceContextHandle, CInt(GDI32.DeviceCap.DESKTOPVERTRES))
+        Dim ScreenScalingFactor As Double = Math.Round(CDbl(PhysicalScreenHeight) / CDbl(LogicalScreenHeight), 2)
+
+        If percentage Then ScreenScalingFactor *= 100.0
+
+        GraphicsObject.ReleaseHdc(DeviceContextHandle)
+        GraphicsObject.Dispose()
+        Return ScreenScalingFactor
+    End Function
+
+#End Region
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
         If My.Settings.Appearance_Custom Then
@@ -690,7 +714,7 @@ Public Module FormDWMEffects
             ElseIf My.W10 AndAlso Transparency_W11_10 Then
                 [Form].DrawAcrylic(Border)
 
-            ElseIf My.W7 AndAlso Transparency_W7 Then
+            ElseIf (My.W7 OrElse My.WVista) AndAlso Transparency_W7 Then
                 [Form].DrawAero
 
             Else

@@ -82,7 +82,7 @@ Public Class CMD
 
         If CMDEnabled.Checked Then
             Cursor = Cursors.WaitCursor
-            Dim CPx As New CP(CP.Mode.Registry)
+            Dim CPx As New CP(CP.CP_Type.Registry)
             ApplyToCP(CPx, _Edition)
 
             Select Case _Edition
@@ -892,7 +892,7 @@ Public Class CMD
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
-            Dim CPx As New CP(CP.Mode.File, OpenWPTHDlg.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenWPTHDlg.FileName)
             Dim ee As Boolean = CMDEnabled.Checked
             ApplyFromCP(CPx, _Edition)
             ApplyPreview()
@@ -906,7 +906,7 @@ Public Class CMD
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         Dim ee As Boolean = CMDEnabled.Checked
         ApplyFromCP(CPx, _Edition)
         ApplyPreview()

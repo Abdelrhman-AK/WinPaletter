@@ -4338,8 +4338,9 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Start7Aero
 #Region "Start 7 Aero"
-                Dim RestRect As New Rectangle(0, 15, Width, Height - 15)
-                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
+                Dim RestRect As New Rectangle(0, 14, Width - 5, Height - 10)
+
+                G.DrawImage(adaptedBack, Rect)
 
                 Dim bk As Bitmap = adaptedBackBlurred
 
@@ -4352,27 +4353,27 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim Color1 As Color = BackColor
                 Dim Color2 As Color = BackColor2
 
-                G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 3, True)
+                G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 5, True)
 
-                G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
+                G.FillRoundedImg(Noise7Start, Rect, 5, True)
 
-                G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
+                G.FillRoundedImg(My.Resources.Start7, Rect, 5, True)
 #End Region
 
             Case Styles.Start7Opaque
 #Region "Start 7 Opaque"
-                Dim RestRect As New Rectangle(0, 15, Width, Height - 15)
-                G.DrawImage(adaptedBack.Clone(New Rectangle(0, 0, Width, 16), Imaging.PixelFormat.Format32bppArgb), New Rectangle(0, 0, Width, 16))
-                G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 3, True)
-                G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 3, True)
-                G.FillRoundedImg(Noise7Start, New Rectangle(0, 0, Width, Height), 3, True)
-                G.FillRoundedImg(My.Resources.Start7, New Rectangle(0, 0, Width, Height), 3, True)
+                Dim RestRect As New Rectangle(0, 14, Width - 5, Height - 10)
+                G.DrawImage(adaptedBack, Rect)
+                G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 5, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 5, True)
+                G.FillRoundedImg(Noise7Start, Rect, 5, True)
+                G.FillRoundedImg(My.Resources.Start7, Rect, 5, True)
 #End Region
 
             Case Styles.Start7Basic
 #Region "Start 7 Basic"
-                G.DrawImage(adaptedBack, RRect)
-                G.FillRoundedImg(My.Resources.Start7Basic, New Rectangle(0, 0, Width, Height), 2, True)
+                G.DrawImage(adaptedBack, Rect)
+                G.DrawImage(My.Resources.Start7Basic, Rect)
 #End Region
 
             Case Styles.Taskbar7Aero
@@ -4484,20 +4485,105 @@ Public Class XenonWinElement : Inherits ContainerControl
 #End Region
 
             Case Styles.StartVistaAero
+#Region "Start Vista Aero"
+                G.DrawImage(adaptedBack, Rect)
+                Dim RestRect As New Rectangle(0, 14, Width - 6, Height - 14)
+                G.DrawImage(adaptedBackBlurred, RestRect)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), RestRect, 4, True)
+                G.DrawImage(My.Resources.Vista_StartAero, RRect)
+#End Region
 
             Case Styles.StartVistaOpaque
+#Region "Start Vista Opaque"
+                G.DrawImage(adaptedBack, Rect)
+                Dim RestRect As New Rectangle(0, 14, Width - 6, Height - 14)
+                G.FillRoundedRect(Brushes.White, RestRect, 4, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), RestRect, 4, True)
+                G.DrawImage(My.Resources.Vista_StartAero, RRect)
+#End Region
 
             Case Styles.StartVistaBasic
+#Region "Start Vista Basic"
+                G.DrawImage(adaptedBack, Rect)
+                G.DrawImage(My.Resources.Vista_StartBasic, RRect)
+#End Region
 
             Case Styles.TaskbarVistaAero
+#Region "Taskbar Vista Aero"
+                G.DrawImage(adaptedBackBlurred, Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), Rect)
+                G.FillRectangle(New TextureBrush(My.Resources.Vista_Taskbar), Rect)
+                Dim orb As Bitmap = My.Resources.Vista_StartLowerORB
+                G.DrawImage(orb, New Rectangle(0, 0, orb.Width, Height))
+
+                Dim apprect1 As New Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4)
+                Dim apprect2 As New Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4)
+                Dim appIcon1 As New Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2 - 1, 20, 20)
+                Dim appIcon2 As New Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2 - 1, 20, 20)
+                Dim appLabel1 As New Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height)
+                Dim appLabel2 As New Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height)
+
+                G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
+                G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
+
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+
+                G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
+                G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
+#End Region
 
             Case Styles.TaskbarVistaOpaque
+#Region "Taskbar Vista Opaque"
+                Dim orb As Bitmap = My.Resources.Vista_StartLowerORB
+                G.FillRectangle(Brushes.White, Rect)
+                G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), Rect)
+                G.FillRectangle(New TextureBrush(My.Resources.Vista_Taskbar), Rect)
+                G.DrawImage(orb, New Rectangle(0, 0, orb.Width, Height))
+
+                Dim apprect1 As New Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4)
+                Dim apprect2 As New Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4)
+                Dim appIcon1 As New Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20)
+                Dim appIcon2 As New Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20)
+                Dim appLabel1 As New Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height)
+                Dim appLabel2 As New Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height)
+
+                G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
+                G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
+
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+
+                G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
+                G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
+#End Region
 
             Case Styles.TaskbarVistaBasic
+#Region "Taskbar Vista Basic"
+                Dim orb As Bitmap = My.Resources.Vista_StartLowerORB
+                G.FillRectangle(New TextureBrush(My.Resources.Vista_Taskbar), Rect)
+                G.DrawImage(orb, New Rectangle(0, 0, orb.Width, Height))
+
+                Dim apprect1 As New Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4)
+                Dim apprect2 As New Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4)
+                Dim appIcon1 As New Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20)
+                Dim appIcon2 As New Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20)
+                Dim appLabel1 As New Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height)
+                Dim appLabel2 As New Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height)
+
+                G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
+                G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
+
+                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
+                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+
+                G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
+                G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
+#End Region
 
             Case Styles.StartXP
 #Region "Start XP"
-                G.DrawImage(adaptedBack, RRect)
+                G.DrawImage(adaptedBack, Rect)
                 G.DrawImage(My.LunaRes.Start, Rect)
 #End Region
 
@@ -4554,7 +4640,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Catch : End Try
 
         Try
-            If Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
+            If Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Then
                 adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
@@ -4567,8 +4653,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 If Transparency Then adaptedBackBlurred = New Bitmap(adaptedBack).Blur(BlurPower)
 
-            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
-
+            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Then
                 adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
@@ -4590,115 +4675,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
     End Sub
 End Class
-Public Class XenonFakeIcon : Inherits Panel
-
-    Sub New()
-        DoubleBuffered = True
-        BackColor = Color.Transparent
-        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-        SetStyle(ControlStyles.UserPaint, True)
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-    End Sub
-
-    Protected Overrides ReadOnly Property CreateParams As CreateParams
-        Get
-            Dim cp As CreateParams = MyBase.CreateParams
-            cp.ExStyle = cp.ExStyle Or &H20
-            Return cp
-        End Get
-    End Property
-
-    Public Property ColorText As Color = Color.White
-    Public Property ColorGlow As Color = Color.FromArgb(50, 0, 0, 0)
-    Public Property Icon As Icon
-    Public Property Title As String = "New Folder"
-
-    Private _IconSize As Integer = 32
-    Public Property IconSize As Integer
-        Get
-            Return _IconSize
-        End Get
-        Set(value As Integer)
-            _IconSize = value
-            Invalidate()
-        End Set
-    End Property
-
-    Protected Overrides Sub OnPaint(e As PaintEventArgs)
-        Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighQuality
-        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
-        DoubleBuffered = True
-
-        Dim IconRect As New Rectangle(0, 0, Width - 1, Height - 30)
-
-        Dim LabelRect As New Rectangle(0, Height - 35, Width - 1, 30)
-        Dim LabelRectShadow As New Rectangle(1, Height - 34, Width - 1, 30)
-
-        If _IconSize < 16 Then _IconSize = 16
-        If _IconSize > 256 Then _IconSize = 256
-
-        Dim IconRectX As New Rectangle(IconRect.X + (IconRect.Width - _IconSize) / 2, IconRect.Y + (IconRect.Height - _IconSize) / 2, _IconSize, _IconSize)
-
-        If Icon IsNot Nothing Then
-            Dim ico As New Icon(Icon, _IconSize, _IconSize)
-            G.DrawIcon(ico, IconRectX)
-            ico.Dispose()
-        End If
-
-        G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
-        'G.DrawString(Title, Font, Brushes.White, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
-
-        G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
-
-        'G.DrawRectangle(Pens.Red, New Rectangle(0, 0, Width - 1, Height - 1))
-    End Sub
-
-End Class
-Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
-
-    Private _DarkMode As Boolean = True
-
-    Public Event DarkModeChanged As PropertyChangedEventHandler _
-        Implements INotifyPropertyChanged.PropertyChanged
-    Private Sub NotifyDarkModeChanged(ByVal info As String)
-        RaiseEvent DarkModeChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-    Public Property DarkMode() As Boolean
-        Get
-            Return _DarkMode
-        End Get
-
-        Set(ByVal value As Boolean)
-            If Not (value = _DarkMode) Then
-                Me._DarkMode = value
-                NotifyDarkModeChanged("DarkMode")
-                Invalidate()
-            End If
-        End Set
-    End Property
-
-
-    Private _AccentColor_Enabled As Boolean = True
-    Public Event AccentColor_EnabledChanged As PropertyChangedEventHandler
-    Private Sub NotifyAccentColor_EnabledChanged(ByVal info As String)
-        RaiseEvent AccentColor_EnabledChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
-    Public Property AccentColor_Enabled() As Boolean
-        Get
-            Return _AccentColor_Enabled
-        End Get
-
-        Set(ByVal value As Boolean)
-            If Not (value = AccentColor_Enabled) Then
-                Me._AccentColor_Enabled = value
-                NotifyAccentColor_EnabledChanged("AccentColor_Enabled")
-                Invalidate()
-            End If
-        End Set
-    End Property
-
+Public Class XenonWindow : Inherits Panel
     Sub New()
         AdjustPadding()
         Font = New Font("Segoe UI", 9)
@@ -4716,54 +4693,75 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         End Get
     End Property
 
+#Region "Properties"
+    Public Property Shadow As Boolean = True
+    Public Property Radius As Integer = 5
+    Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
+    Public Property AccentColor_Inactive As Color = Color.FromArgb(32, 32, 32)
+    Public Property AccentColor2_Active As Color = Color.FromArgb(0, 120, 212)
+    Public Property AccentColor2_Inactive As Color = Color.FromArgb(32, 32, 32)
+    Public Property Active As Boolean = True
+    Public Property Preview As Preview_Enum = XenonWindow.Preview_Enum.W11
+    Public Property Win7Alpha As Integer = 100
+    Public Property Win7ColorBal As Integer = 100
+    Public Property Win7GlowBal As Integer = 100
+    Public Property ToolWindow As Boolean = False
+    Public Property WinVista As Boolean = False
+
+    Public Event MetricsChanged()
+
+    Private _DarkMode As Boolean = True
+    Public Property DarkMode() As Boolean
+        Get
+            Return _DarkMode
+        End Get
+        Set(ByVal value As Boolean)
+            _DarkMode = value
+            Refresh()
+        End Set
+    End Property
+
+    Private _AccentColor_Enabled As Boolean = True
+    Public Property AccentColor_Enabled() As Boolean
+        Get
+            Return _AccentColor_Enabled
+        End Get
+        Set(ByVal value As Boolean)
+            _AccentColor_Enabled = value
+            Refresh()
+        End Set
+    End Property
+
     Private _DropShadow As Boolean = True
-    Public Event DropShadowChanged As PropertyChangedEventHandler
-    Private Sub NotifyDropShadowChanged(ByVal info As String)
-        RaiseEvent DropShadowChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property DropShadow() As Boolean
         Get
             Return _DropShadow
         End Get
-
         Set(ByVal value As Boolean)
-            If Not (value = DropShadow) Then
-                Me._DropShadow = value
-                NotifyDropShadowChanged("DropShadow")
-            End If
+            _DropShadow = value
+            Refresh()
         End Set
     End Property
 
     Private _Win7Noise As Single = 1
-    Public Event Win7NoiseChanged As PropertyChangedEventHandler
-    Private Sub NotifyWin7NoiseChanged(ByVal info As Single)
-        RaiseEvent Win7NoiseChanged(Me, New PropertyChangedEventArgs(info))
-    End Sub
     Public Property Win7Noise() As Single
         Get
             Return _Win7Noise
         End Get
-
         Set(ByVal value As Single)
-            If Not (value = Win7Noise) Then
-                Me._Win7Noise = value
-
-                If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
-                End If
-
-                NotifyWin7NoiseChanged(_Win7Noise)
+            _Win7Noise = value
+            If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
+                Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
             End If
+            Refresh()
         End Set
     End Property
-
 
     Private _Metrics_CaptionHeight As Integer = 22
     Public Property Metrics_CaptionHeight As Integer
         Get
             Return _Metrics_CaptionHeight
         End Get
-
         Set(value As Integer)
             _Metrics_CaptionHeight = value
             AdjustPadding()
@@ -4777,7 +4775,6 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         Get
             Return _Metrics_BorderWidth
         End Get
-
         Set(value As Integer)
             _Metrics_BorderWidth = value
             AdjustPadding()
@@ -4798,6 +4795,12 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
             RaiseEvent MetricsChanged()
         End Set
     End Property
+#End Region
+
+#Region "Helpers"
+    Dim AdaptedBack, AdaptedBackBlurred As Bitmap
+    Dim Noise7 As Bitmap = My.Resources.AeroGlass
+    ReadOnly FreeMargin As Integer = 8
 
     Public Sub SetMetrics(ByVal [XenonWindow] As XenonWindow)
         [XenonWindow].Metrics_BorderWidth = Metrics_BorderWidth
@@ -4805,8 +4808,6 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         [XenonWindow].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
         [XenonWindow].Refresh()
     End Sub
-
-    Public Event MetricsChanged()
     Sub AdjustPadding()
         Dim i, iTop As Integer
 
@@ -4832,7 +4833,6 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 
         Padding = New Padding(i, iTop, i, i)
     End Sub
-
     Enum Preview_Enum
         W11
         W10
@@ -4843,25 +4843,42 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         W7Basic
         WXP
     End Enum
+    Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
+        Try
+            If [Radius] = -1 Then [Radius] = 6
 
-    Public Property Shadow As Boolean = True
-    Public Property Radius As Integer = 5
-    Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
-    Public Property AccentColor_Inactive As Color = Color.FromArgb(32, 32, 32)
-    Public Property AccentColor2_Active As Color = Color.FromArgb(0, 120, 212)
-    Public Property AccentColor2_Inactive As Color = Color.FromArgb(32, 32, 32)
-    Public Property Active As Boolean = True
-    Public Property Preview As Preview_Enum = XenonWindow.Preview_Enum.W11
-    Public Property Win7Alpha As Integer = 100
-    Public Property Win7ColorBal As Integer = 100
-    Public Property Win7GlowBal As Integer = 100
-    Public Property ToolWindow As Boolean = False
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
 
-    Dim AdaptedBack, AdaptedBackBlurred As Bitmap
-    Dim Noise7 As Bitmap = My.Resources.AeroGlass
+            Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
+                Graphics.FillPath(Brush, path)
+            End Using
 
-    ReadOnly FreeMargin As Integer = 8
+        Catch
+        End Try
+    End Sub
+    Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+        Try
+            Dim path As New GraphicsPath()
+            Dim d As Integer = radius * 2
 
+            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90)
+
+            path.AddLine(r.Right, r.Top, r.Right, r.Bottom)
+
+            path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom)
+
+            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d)
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180, 90)
+
+            path.CloseFigure()
+            Return path
+        Catch
+            Return Nothing
+        End Try
+    End Function
+#End Region
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -5156,9 +5173,17 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                     Dim CloseRect As New Rectangle
 
                     If Active Then
-                        closeBtn = My.Resources.Win7_Close_Active
+                        If Not WinVista Then
+                            closeBtn = My.Resources.Win7_Close_Active
+                        Else
+                            closeBtn = My.Resources.Vista_Close_Active
+                        End If
                     Else
-                        closeBtn = My.Resources.Win7_Close_inactive
+                        If Not WinVista Then
+                            closeBtn = My.Resources.Win7_Close_inactive
+                        Else
+                            closeBtn = My.Resources.Vista_Close_inactive
+                        End If
                     End If
 
                     CloseRect = New Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height)
@@ -5340,7 +5365,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                 G.ResetClip()
                 G.FillRectangle(Brushes.White, InnerWindow_1)
                 G.DrawRectangle(New Pen(Color.FromArgb(186, 210, 234)), InnerWindow_1)
-                G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
+                If Not WinVista Then G.DrawRectangle(New Pen(Color.FromArgb(130, 135, 144)), InnerWindow_2)
 
                 '### Render Close Button
                 Dim CloseRect As New Rectangle
@@ -5433,7 +5458,7 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
                 LabelRect = New Rectangle(Rect.X + LE.Width + 2, Rect.Y + TitlebarRect.Height - 4 - CloseBtn_W, Rect.Width - CloseBtn_W - LE.Width - RE.Width, CloseBtn_W)
             End If
 
-            IconRect = New Rectangle(Rect.X + LE.Width + 2, LabelRect.Y + 2, 14, 14)
+            IconRect = New Rectangle(Rect.X + LE.Width + 2, Rect.Y + (TitlebarRect.Height - 14) / 2, 14, 14)
 
             My.resVS.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow)
             My.resVS.Draw(G, LE, VisualStylesRes.Element.LeftEdge, Active, ToolWindow)
@@ -5503,43 +5528,6 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
 
     End Sub
 
-    Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
-        Try
-            If [Radius] = -1 Then [Radius] = 6
-
-            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
-            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
-
-            Using path As GraphicsPath = RoundedSemiRectangle(Rectangle, Radius)
-                Graphics.FillPath(Brush, path)
-            End Using
-
-        Catch
-        End Try
-    End Sub
-
-    Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
-        Try
-            Dim path As New GraphicsPath()
-            Dim d As Integer = radius * 2
-
-            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)
-            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90)
-
-            path.AddLine(r.Right, r.Top, r.Right, r.Bottom)
-
-            path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom)
-
-            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d)
-            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180, 90)
-
-            path.CloseFigure()
-            Return path
-        Catch
-            Return Nothing
-        End Try
-    End Function
-
     Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
         If Not DesignMode Then
@@ -5561,6 +5549,72 @@ Public Class XenonWindow : Inherits Panel : Implements INotifyPropertyChanged
         Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
         Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
     End Sub
+End Class
+Public Class XenonIcon : Inherits Panel
+
+    Sub New()
+        DoubleBuffered = True
+        BackColor = Color.Transparent
+        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        SetStyle(ControlStyles.UserPaint, True)
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+    End Sub
+
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.ExStyle = cp.ExStyle Or &H20
+            Return cp
+        End Get
+    End Property
+
+    Public Property ColorText As Color = Color.White
+    Public Property ColorGlow As Color = Color.FromArgb(50, 0, 0, 0)
+    Public Property Icon As Icon
+    Public Property Title As String = "New Folder"
+
+    Private _IconSize As Integer = 32
+    Public Property IconSize As Integer
+        Get
+            Return _IconSize
+        End Get
+        Set(value As Integer)
+            _IconSize = value
+            Invalidate()
+        End Set
+    End Property
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        Dim G As Graphics = e.Graphics
+        G.SmoothingMode = SmoothingMode.HighQuality
+        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+        DoubleBuffered = True
+
+        Dim IconRect As New Rectangle(0, 0, Width - 1, Height - 30)
+
+        Dim LabelRect As New Rectangle(0, Height - 35, Width - 1, 30)
+        Dim LabelRectShadow As New Rectangle(1, Height - 34, Width - 1, 30)
+
+        If _IconSize < 16 Then _IconSize = 16
+        If _IconSize > 256 Then _IconSize = 256
+
+        Dim IconRectX As New Rectangle(IconRect.X + (IconRect.Width - _IconSize) / 2, IconRect.Y + (IconRect.Height - _IconSize) / 2, _IconSize, _IconSize)
+
+        If Icon IsNot Nothing Then
+            Dim ico As New Icon(Icon, _IconSize, _IconSize)
+            G.DrawIcon(ico, IconRectX)
+            ico.Dispose()
+        End If
+
+        G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
+        'G.DrawString(Title, Font, Brushes.White, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
+
+        G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
+
+        'G.DrawRectangle(Pens.Red, New Rectangle(0, 0, Width - 1, Height - 1))
+    End Sub
+
 End Class
 
 <DefaultEvent("Scroll")>
@@ -7243,7 +7297,6 @@ Public Class XenonColorBar
         Invalidate()
     End Sub
 End Class
-
 Public Class StripRenderer
     Inherits ToolStripSystemRenderer
 

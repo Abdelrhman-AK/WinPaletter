@@ -505,6 +505,30 @@
   <data name="Update_Dot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Update_Dot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Vista_ActiveApp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_ActiveApp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_Close_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_Close_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_Close_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_Close_inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_InactiveApp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_InactiveApp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_StartAero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_StartAero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_StartBasic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_StartBasic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_StartLowerORB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_StartLowerORB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Vista_Taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Vista_Taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Win7ORB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Win7ORB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

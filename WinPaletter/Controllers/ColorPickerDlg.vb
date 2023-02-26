@@ -493,7 +493,7 @@ Public Class ColorPickerDlg
 
         Next
 
-        If (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
+        If (My.WVista Or My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If
@@ -513,13 +513,29 @@ Public Class ColorPickerDlg
             If Com Then
                 Dim temp As New Dwmapi.DWM_COLORIZATION_PARAMS With {
                     .clrColor = Color1.ToArgb,
-                    .clrAfterGlow = Color2.ToArgb,
-                    .nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance,
-                    .clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance,
-                    .clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance,
-                    .clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity,
-                    .fOpaque = MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque
-                }
+                    .clrAfterGlow = Color2.ToArgb}
+
+                If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                    temp.nIntensity = MainFrm.CP.Windows8.ColorizationColorBalance
+
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+                    temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
+
+                    temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
+                    temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
+                    temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque)
+
+                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                    temp.clrColor = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
+                    temp.clrAfterGlowBalance = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
+
+                    'temp.nIntensity = MainFrm.CP.WindowsVista.ColorizationColorBalance
+                    'temp.clrBlurBalance = MainFrm.CP.WindowsVista.ColorizationBlurBalance
+                    'temp.clrGlassReflectionIntensity = MainFrm.CP.WindowsVista.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (MainFrm.CP.WindowsVista.Theme = AeroTheme.AeroOpaque)
+                End If
+
                 Dwmapi.DwmSetColorizationParameters(temp, False)
             End If
         Catch
@@ -555,8 +571,8 @@ Public Class ColorPickerDlg
 
         If img IsNot Nothing Then
             Label4.Text = My.Lang.Extracting
-            My.[AnimatorNS].HideSync(XenonButton6, True)
-            My.[AnimatorNS].HideSync(ImgPaletteContainer, True)
+            My.Animator.HideSync(XenonButton6, True)
+            My.Animator.HideSync(ImgPaletteContainer, True)
             ProgressBar1.Visible = True
             ColorsList.Clear()
 
@@ -597,8 +613,8 @@ Public Class ColorPickerDlg
 
         ProgressBar1.Visible = False
         ColorsList.Clear()
-        My.[AnimatorNS].ShowSync(ImgPaletteContainer, True)
-        My.[AnimatorNS].ShowSync(XenonButton6, True)
+        My.Animator.ShowSync(ImgPaletteContainer, True)
+        My.Animator.ShowSync(XenonButton6, True)
     End Sub
 
     Private Sub Pnl_click(ByVal sender As Object, ByVal e As EventArgs)
@@ -709,7 +725,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        If DialogResult <> DialogResult.OK And (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
+        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(InitColor, MainFrm.CP.Windows7.ColorizationAfterglow)
             End If

@@ -17,7 +17,7 @@ Public Class LogonUI7
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
-        Else
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
             PictureBox4.Image = My.Resources.Native7
@@ -50,7 +50,26 @@ Public Class LogonUI7
             End Select
 
             ID = CP.Windows8.LockScreenSystemID
-        Else
+
+            XenonTextBox1.Text = CP.LogonUI7.ImagePath
+            color_pick.BackColor = CP.LogonUI7.Color
+            pnl_preview.BackColor = CP.LogonUI7.Color
+            XenonCheckBox8.Checked = CP.LogonUI7.Grayscale
+            XenonCheckBox7.Checked = CP.LogonUI7.Blur
+            XenonCheckBox6.Checked = CP.LogonUI7.Noise
+
+            XenonTrackbar1.Value = CP.LogonUI7.Blur_Intensity
+            XenonTrackbar2.Value = CP.LogonUI7.Noise_Intensity
+
+            Select Case CP.LogonUI7.Noise_Mode
+                Case BitmapExtensions.NoiseMode.Acrylic
+                    XenonComboBox1.SelectedIndex = 0
+
+                Case BitmapExtensions.NoiseMode.Aero
+                    XenonComboBox1.SelectedIndex = 1
+            End Select
+
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
 
             XenonToggle1.Checked = CP.LogonUI7.Enabled
 
@@ -67,25 +86,27 @@ Public Class LogonUI7
                 Case CP.LogonUI_Modes.SolidColor
                     XenonRadioButton3.Checked = True
             End Select
+
+            XenonTextBox1.Text = CP.LogonUI7.ImagePath
+            color_pick.BackColor = CP.LogonUI7.Color
+            pnl_preview.BackColor = CP.LogonUI7.Color
+            XenonCheckBox8.Checked = CP.LogonUI7.Grayscale
+            XenonCheckBox7.Checked = CP.LogonUI7.Blur
+            XenonCheckBox6.Checked = CP.LogonUI7.Noise
+
+            XenonTrackbar1.Value = CP.LogonUI7.Blur_Intensity
+            XenonTrackbar2.Value = CP.LogonUI7.Noise_Intensity
+
+            Select Case CP.LogonUI7.Noise_Mode
+                Case BitmapExtensions.NoiseMode.Acrylic
+                    XenonComboBox1.SelectedIndex = 0
+
+                Case BitmapExtensions.NoiseMode.Aero
+                    XenonComboBox1.SelectedIndex = 1
+            End Select
         End If
 
-        XenonTextBox1.Text = CP.LogonUI7.ImagePath
-        color_pick.BackColor = CP.LogonUI7.Color
-        pnl_preview.BackColor = CP.LogonUI7.Color
-        XenonCheckBox8.Checked = CP.LogonUI7.Grayscale
-        XenonCheckBox7.Checked = CP.LogonUI7.Blur
-        XenonCheckBox6.Checked = CP.LogonUI7.Noise
 
-        XenonTrackbar1.Value = CP.LogonUI7.Blur_Intensity
-        XenonTrackbar2.Value = CP.LogonUI7.Noise_Intensity
-
-        Select Case CP.LogonUI7.Noise_Mode
-            Case BitmapExtensions.NoiseMode.Acrylic
-                XenonComboBox1.SelectedIndex = 0
-
-            Case BitmapExtensions.NoiseMode.Aero
-                XenonComboBox1.SelectedIndex = 1
-        End Select
 
     End Sub
 
@@ -100,35 +121,49 @@ Public Class LogonUI7
             If XenonRadioButton4.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.CustomImage
 
             CP.Windows8.LockScreenSystemID = ID
-        Else
+
+            CP.LogonUI7.ImagePath = XenonTextBox1.Text
+            CP.LogonUI7.Color = color_pick.BackColor
+
+            CP.LogonUI7.Grayscale = XenonCheckBox8.Checked
+            CP.LogonUI7.Blur = XenonCheckBox7.Checked
+            CP.LogonUI7.Noise = XenonCheckBox6.Checked
+
+            CP.LogonUI7.Blur_Intensity = XenonTrackbar1.Value
+            CP.LogonUI7.Noise_Intensity = XenonTrackbar2.Value
+
+            If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic
+            If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero
+
+        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
             CP.LogonUI7.Enabled = XenonToggle1.Checked
 
             If XenonRadioButton1.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.Default_
             If XenonRadioButton2.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.Wallpaper
             If XenonRadioButton3.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.SolidColor
             If XenonRadioButton4.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.CustomImage
+
+            CP.LogonUI7.ImagePath = XenonTextBox1.Text
+            CP.LogonUI7.Color = color_pick.BackColor
+
+            CP.LogonUI7.Grayscale = XenonCheckBox8.Checked
+            CP.LogonUI7.Blur = XenonCheckBox7.Checked
+            CP.LogonUI7.Noise = XenonCheckBox6.Checked
+
+            CP.LogonUI7.Blur_Intensity = XenonTrackbar1.Value
+            CP.LogonUI7.Noise_Intensity = XenonTrackbar2.Value
+
+            If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic
+            If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero
         End If
 
-
-        CP.LogonUI7.ImagePath = XenonTextBox1.Text
-        CP.LogonUI7.Color = color_pick.BackColor
-
-        CP.LogonUI7.Grayscale = XenonCheckBox8.Checked
-        CP.LogonUI7.Blur = XenonCheckBox7.Checked
-        CP.LogonUI7.Noise = XenonCheckBox6.Checked
-
-        CP.LogonUI7.Blur_Intensity = XenonTrackbar1.Value
-        CP.LogonUI7.Noise_Intensity = XenonTrackbar2.Value
-
-        If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic
-        If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero
     End Sub
 
     Function ReturnBK() As Bitmap
         Dim bmpX As Bitmap = Nothing
 
         If XenonRadioButton1.Checked Then
-            If My.W7 Then
+            If My.W7 Or My.WVista Then
                 bmpX = NativeMethods.DLLFunc.GetDllRes(My.PATH_imageres, 5038)
             End If
 
@@ -157,9 +192,7 @@ Public Class LogonUI7
 
     Sub ApplyPreview()
         Cursor = Cursors.AppStarting
-
         pnl_preview.BackgroundImage = ReturnBK()
-
         Cursor = Cursors.Default
     End Sub
 
@@ -290,14 +323,14 @@ Public Class LogonUI7
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadFromCP(CPx)
             CPx.Dispose()
         End If
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         LoadFromCP(CPx)
         CPx.Dispose()
     End Sub

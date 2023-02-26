@@ -4,14 +4,14 @@ Imports System.Net
 Imports System.Reflection
 Imports System.Security.Principal
 Imports System.Threading
-Imports AnimatorNS
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Runtime.InteropServices
 
 Namespace My
-    Module GlobalVariables
+    Module Env
 
         Public ReadOnly PATH_Windows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows")
         Public ReadOnly PATH_System32 As String = PATH_Windows & "\System32"
@@ -20,8 +20,8 @@ Namespace My
         Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-        Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
 
+        Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
         Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
@@ -69,7 +69,7 @@ Namespace My
         ''' <summary>
         ''' Class Represents AnimatorNS
         ''' </summary>
-        Public WithEvents [AnimatorNS] As Animator
+        Public WithEvents Animator As AnimatorNS.Animator
 
         ''' <summary>
         ''' Class Represents WinPaletter's Settings
@@ -404,7 +404,7 @@ Namespace My
 
             'Gets Wallpaper Type (Valid only for Windows 10\11)
             Dim WallpaperType As Integer = 0
-            If Not W7 And Not W8 Then
+            If Not W7 And Not W8 And Not WVista And Not WXP Then
                 Try
                     Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
                     If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
@@ -418,7 +418,7 @@ Namespace My
 
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
                 Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
-                img = Image.FromStream(x)
+                img = New Bitmap(Image.FromStream(x))
                 x.Close()
             Else
                 With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
@@ -537,18 +537,19 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
 
-            [AnimatorNS] = New Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = Animation.Transparent, .AnimationType = AnimationType.Transparent}
-            AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+            Animator = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
 
             Try
-                MemoryFonts.AddMemoryFont(Resources.JetBrainsMono_Regular)
-                ConsoleFont = MemoryFonts.GetFont(0, 7.5)
-                ConsoleFontDef = MemoryFonts.GetFont(0, 7.5, FontStyle.Underline)
-                ConsoleFontLarge = MemoryFonts.GetFont(0, 10)
-                ConsoleFontMedium = MemoryFonts.GetFont(0, 9)
+                AddMemoryFont(Resources.JetBrainsMono_Regular)
+                ConsoleFont = GetFont(0, 7.5)
+                ConsoleFontDef = GetFont(0, 7.5, FontStyle.Underline)
+                ConsoleFontLarge = GetFont(0, 10)
+                ConsoleFontMedium = GetFont(0, 9)
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
                 ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
@@ -564,23 +565,16 @@ Namespace My
             End If
 
             FontsList = FontFamily.Families.[Select](Function(f) f.Name).ToList()
-            Try
-                FontsFixedList = Windows.Media.Fonts.SystemTypefaces.GroupBy(Function(x) x.FontFamily.ToString()).[Select](Function(grp) grp.First()).Where(Function(x) New Windows.Media.FormattedText("Hl", Globalization.CultureInfo.InvariantCulture, Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width = New Windows.Media.FormattedText("HH", Globalization.CultureInfo.InvariantCulture, System.Windows.FlowDirection.LeftToRight, x, 10, Windows.Media.Brushes.Black).Width).[Select](Function(f) f.FontFamily.Source.Split("#")(0)).ToList()
-            Catch
-                Try
-                    Dim B As New Bitmap(30, 30)
-                    Dim G As Graphics = Graphics.FromImage(B)
-                    FontsFixedList.Clear()
-                    FontsFixedList = NativeMethods.GDI32.GetFixedWidthFonts(G).[Select](Function(f) f.Name).ToList()
-                    B.Dispose()
-                    G.Dispose()
-                Catch ex As Exception
-                    If MsgBox(My.Lang.MonospacedFontsError, MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel, My.Lang.MonospacedFontsError2 & vbCrLf & vbCrLf & My.Lang.CP_RestoreCursorsErrorPressOK) = MsgBoxResult.Ok Then
-                        BugReport.ThrowError(ex)
-                    End If
-                End Try
 
-            End Try
+            'Old method of loading fixed fonts reused due to 2 issues:
+            '1) A reported GitHub issue
+            '2) Windows Vista issue with Windows.Media.Fonts
+            Dim B As New Bitmap(30, 30)
+            Dim G As Graphics = Graphics.FromImage(B)
+            FontsFixedList.Clear()
+            FontsFixedList = NativeMethods.GDI32.GetFixedWidthFonts(G).[Select](Function(f) f.Name).ToList()
+            B.Dispose()
+            G.Dispose()
 
             ApplyDarkMode()
 
@@ -612,8 +606,6 @@ Namespace My
                 Catch ex As Exception
                     MsgBox("There is an error occured during loading language.", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
                 End Try
-            Else
-                Lang.LoadInternal()
             End If
 
             ExternalLink = False
@@ -632,8 +624,8 @@ Namespace My
                             ExternalLink = True
                             ExternalLink_File = arg
                         Else
-                            Dim CPx As New CP(CP.Mode.File, arg)
-                            CPx.Save(CP.Mode.Registry, arg)
+                            Dim CPx As New CP(CP.CP_Type.File, arg)
+                            CPx.Save(CP.CP_Type.Registry, arg)
                             If [Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
@@ -651,8 +643,8 @@ Namespace My
                         Dim File As String = arg.Remove(0, "/apply:".Count)
                         File = File.Replace("""", "")
                         If IO.File.Exists(File) Then
-                            Dim CPx As New CP(CP.Mode.File, File)
-                            CPx.Save(CP.Mode.Registry)
+                            Dim CPx As New CP(CP.CP_Type.File, File)
+                            CPx.Save(CP.CP_Type.Registry)
                             If [Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
@@ -711,7 +703,7 @@ Namespace My
 
             Saving_Exceptions.Clear()
 
-            If My.W7 Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            If W7 Or My.WVista Or My.WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
             If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then
                 IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
@@ -722,8 +714,6 @@ Namespace My
             IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
             ZipFile.ExtractToDirectory(appData & "\VisualStyles\Luna\Luna.zip", appData & "\VisualStyles\Luna")
             IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
-
-            'If My.WXP Then IO.File.WriteAllBytes("Devcorp.Controls.VisualStyles.dll", Resources.Devcorp_Controls_VisualStyles)
 
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
@@ -747,7 +737,6 @@ Namespace My
                 ShowWhatsNew = False
             End If
 #End Region
-
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
@@ -778,11 +767,11 @@ Namespace My
                                                 Select Case r1
                                                     Case 0              '' Save
                                                         If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                                MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                                 MainFrm.CP_Original = MainFrm.CP.Clone
                                                             Else
                                                                 Exit Sub
@@ -791,7 +780,7 @@ Namespace My
 
                                                     Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             Exit Sub
@@ -813,7 +802,7 @@ Namespace My
 
                                 End If
 
-                                MainFrm.CP = New CP(CP.Mode.File, arg)
+                                MainFrm.CP = New CP(CP.CP_Type.File, arg)
                                 MainFrm.CP_Original = MainFrm.CP.Clone
                                 MainFrm.OpenFileDialog1.FileName = arg
                                 MainFrm.SaveFileDialog1.FileName = arg
@@ -836,8 +825,8 @@ Namespace My
                                 Dim File As String = arg.Remove(0, "/apply:".Count)
                                 File = File.Replace("""", "")
                                 If IO.File.Exists(File) Then
-                                    Dim CPx As New CP(CP.Mode.File, File)
-                                    CPx.Save(CP.Mode.Registry)
+                                    Dim CPx As New CP(CP.CP_Type.File, File)
+                                    CPx.Save(CP.CP_Type.Registry)
                                     If [Settings].AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
@@ -857,11 +846,11 @@ Namespace My
                                                 Select Case r1
                                                     Case 0              '' Save
                                                         If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                                MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                                MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                                 MainFrm.CP_Original = MainFrm.CP.Clone
                                                             Else
                                                                 Exit Sub
@@ -870,7 +859,7 @@ Namespace My
 
                                                     Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.Mode.File, MainFrm.SaveFileDialog1.FileName)
+                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
                                                             MainFrm.CP_Original = MainFrm.CP.Clone
                                                         Else
                                                             Exit Sub
@@ -892,7 +881,7 @@ Namespace My
 
                                 End If
 
-                                MainFrm.CP = New CP(CP.Mode.File, File)
+                                MainFrm.CP = New CP(CP.CP_Type.File, File)
                                 MainFrm.CP_Original = MainFrm.CP.Clone
                                 MainFrm.OpenFileDialog1.FileName = File
                                 MainFrm.SaveFileDialog1.FileName = File
@@ -910,7 +899,7 @@ Namespace My
 #End Region
 
 #Region "   Domain (External Resources) and Exceptions Handling"
-        Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As System.Reflection.Assembly Handles Domain.AssemblyResolve
+        Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As Assembly Handles Domain.AssemblyResolve
             Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(Resources.Animator)
             Catch : End Try
 
@@ -966,7 +955,6 @@ Namespace My
         End Sub
 
 #End Region
-
     End Class
 
 End Namespace

@@ -1111,7 +1111,7 @@ Public Class ExternalTerminal
         End If
 
         If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
-            Dim CPx As New CP(CP.Mode.File, OpenWPTHDlg.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenWPTHDlg.FileName)
             ApplyFromCP(CPx)
             ApplyPreview()
             CPx.Dispose()
@@ -1124,7 +1124,7 @@ Public Class ExternalTerminal
             Exit Sub
         End If
 
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyFromCP(CPx)
         ApplyPreview()
         CPx.Dispose()

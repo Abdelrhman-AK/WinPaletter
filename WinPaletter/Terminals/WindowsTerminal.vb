@@ -1511,7 +1511,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
 
         Select Case _Mode
             Case WinTerminal.Version.Stable

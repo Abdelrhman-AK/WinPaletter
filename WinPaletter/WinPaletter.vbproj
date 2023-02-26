@@ -80,6 +80,26 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>WinPaletter.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>WinPaletter.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\References\Animator.dll</HintPath>
@@ -101,7 +121,9 @@
       <HintPath>..\References\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
@@ -111,23 +133,42 @@
       <HintPath>..\packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
+    <Reference Include="PresentationCore">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Management" />
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Design">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Management">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
       <Private>False</Private>
@@ -140,15 +181,33 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="WindowsBase" />
+    <Reference Include="System.Security">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ServiceProcess">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -163,6 +222,8 @@
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
     <Import Include="WinPaletter" />
+    <Import Include="WinPaletter.GUI" />
+    <Import Include="WinPaletter.GUI.WindowsSimulators" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -176,10 +237,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="My Project\app.manifest" />
@@ -212,8 +270,8 @@
     <Compile Include="BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\CP.vb" />
-    <Compile Include="Classes\CP_Defaults.vb" />
+    <Compile Include="CP\CP.vb" />
+    <Compile Include="CP\CP_Defaults.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
     <Compile Include="Classes\TypesExtensions.vb" />
@@ -268,7 +326,6 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Luna.vb" />
     <Compile Include="GUI\RetroUI.Designer.vb">
       <DependentUpon>RetroUI.vb</DependentUpon>
     </Compile>
@@ -356,6 +413,12 @@
       <DependentUpon>Metrics_Fonts.vb</DependentUpon>
     </Compile>
     <Compile Include="Metrics_Fonts\Metrics_Fonts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metrics_Fonts\VS2Metrics.Designer.vb">
+      <DependentUpon>VS2Metrics.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics_Fonts\VS2Metrics.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
@@ -478,6 +541,9 @@
     <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
       <DependentUpon>LogonUIXP.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Metrics_Fonts\VS2Metrics.resx">
+      <DependentUpon>VS2Metrics.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
       <DependentUpon>VS2Win32UI.vb</DependentUpon>
     </EmbeddedResource>
@@ -572,9 +638,9 @@
     <Content Include="Resources\PS_8x8.png" />
     <Content Include="Resources\Start11_Dark.png" />
     <Content Include="Resources\Start11_Light.png" />
-    <Content Include="Resources\Start7.png" />
-    <Content Include="Resources\Start7Basic.png" />
-    <Content Include="Resources\Start7Glass.png" />
+    <None Include="Resources\Start7Glass.png" />
+    <None Include="Resources\Start7Basic.png" />
+    <None Include="Resources\Start7.png" />
     <Content Include="Resources\StartBtn_10Dark.png" />
     <Content Include="Resources\StartBtn_10Light.png" />
     <Content Include="Resources\System.Buffers.dll" />
@@ -586,6 +652,14 @@
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <Content Include="Resources\Update.png" />
     <Content Include="Resources\Update_Dot.png" />
+    <None Include="Resources\Vista_Close_Active.png" />
+    <None Include="Resources\Vista_Close_inactive.png" />
+    <None Include="Resources\Vista_StartAero.png" />
+    <None Include="Resources\Vista_StartBasic.png" />
+    <None Include="Resources\Vista_StartLowerORB.png" />
+    <None Include="Resources\Vista_Taskbar.png" />
+    <None Include="Resources\Vista_ActiveApp.png" />
+    <None Include="Resources\Vista_InactiveApp.png" />
     <Content Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win7ORB.png" />
     <Content Include="Resources\Win7Sides.png" />
@@ -673,7 +747,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">

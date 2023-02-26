@@ -213,7 +213,7 @@ Public Class WallpaperToner
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
 
-            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
 
             Select Case MainFrm.PreviewConfig
                 Case MainFrm.WinVer.W11
@@ -242,7 +242,7 @@ Public Class WallpaperToner
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
         Cursor = Cursors.WaitCursor
 
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
 
         Select Case MainFrm.PreviewConfig
             Case MainFrm.WinVer.W11

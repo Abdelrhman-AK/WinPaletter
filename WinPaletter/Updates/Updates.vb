@@ -19,10 +19,10 @@ Public Class Updates
         If url Is Nothing Then
             Me.Cursor = Cursors.AppStarting
 
-            My.[AnimatorNS].HideSync(XenonAlertBox2, True)
-            My.[AnimatorNS].HideSync(XenonButton1, True)
-            My.[AnimatorNS].HideSync(XenonButton3, True)
-            My.[AnimatorNS].HideSync(Panel1, True)
+            My.Animator.HideSync(XenonAlertBox2, True)
+            My.Animator.HideSync(XenonButton1, True)
+            My.Animator.HideSync(XenonButton3, True)
+            My.Animator.HideSync(Panel1, True)
             ProgressBar1.Visible = False
             ProgressBar1.Value = 0
 
@@ -56,7 +56,7 @@ Public Class Updates
 
                         LinkLabel3.Visible = True
 
-                        My.[AnimatorNS].Show(Panel1, True)
+                        My.Animator.Show(Panel1, True)
                         XenonButton1.Text = My.Lang.DoAction_Update
                         XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
                         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
@@ -88,9 +88,9 @@ Public Class Updates
                 BugReport.ThrowError(ex)
             End Try
 
-            My.[AnimatorNS].Show(XenonAlertBox2, True)
-            My.[AnimatorNS].Show(XenonButton1, True)
-            My.[AnimatorNS].ShowSync(XenonButton3, True)
+            My.Animator.Show(XenonAlertBox2, True)
+            My.Animator.Show(XenonButton1, True)
+            My.Animator.ShowSync(XenonButton3, True)
 
             Me.Cursor = Cursors.Default
         Else
@@ -164,13 +164,13 @@ Public Class Updates
 
             LinkLabel3.Visible = True
 
-            My.[AnimatorNS].Show(Panel1, True)
+            My.Animator.Show(Panel1, True)
             XenonButton1.Text = My.Lang.DoAction_Update
             XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
             XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
 
-            My.[AnimatorNS].Show(XenonAlertBox2, True)
-            My.[AnimatorNS].ShowSync(XenonButton1, True)
+            My.Animator.Show(XenonAlertBox2, True)
+            My.Animator.ShowSync(XenonButton1, True)
         End If
 
     End Sub

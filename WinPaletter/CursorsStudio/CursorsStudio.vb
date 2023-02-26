@@ -694,14 +694,14 @@ Public Class CursorsStudio
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadFromCP(CPx)
             CPx.Dispose()
         End If
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         LoadFromCP(CPx)
         CPx.Dispose()
     End Sub
@@ -734,7 +734,7 @@ Public Class CursorsStudio
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         Cursor = Cursors.WaitCursor
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         SaveToCP(CPx)
         CPx.Apply_Cursors()
         CPx.Dispose()

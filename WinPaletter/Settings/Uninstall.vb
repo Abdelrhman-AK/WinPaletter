@@ -38,8 +38,8 @@ Public Class Uninstall
 
         ElseIf XenonRadioImage2.Checked Then
             If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-                Dim cpx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
-                cpx.Save(CP.Mode.Registry)
+                Dim cpx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
+                cpx.Save(CP.CP_Type.Registry)
                 If My.[Settings].AutoRestartExplorer Then RestartExplorer()
                 cpx.Dispose()
             End If
@@ -61,7 +61,7 @@ Public Class Uninstall
                 _Def = New CP_Defaults().Default_Windows11
             End If
 
-            _Def.Save(CP.Mode.Registry)
+            _Def.Save(CP.CP_Type.Registry)
             If My.[Settings].AutoRestartExplorer Then RestartExplorer()
             _Def.Dispose()
         End If

@@ -75,7 +75,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
         If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
         If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
-
+        If Name.ToLower = "VS2Metrics".ToLower Then Return VS2Metrics
     End Function
 
     Public allForms As New List(Of String) From {
@@ -113,7 +113,8 @@ Public Class Localizer : Implements IDisposable
                         "WallpaperToner",
                         "WinEffecter",
                         "LogonUIXP",
-                        "VS2Win32UI"
+                        "VS2Win32UI",
+                        "VS2Metrics"
                         }
 
 #Region "Language Info"
@@ -160,8 +161,7 @@ Public Class Localizer : Implements IDisposable
     Property OS_WinVista As String = "Windows Vista"
     Property OS_WinXP As String = "Windows XP"
     Property OS_WinUndefined As String = "Windows 11 or Higher"
-    Property MonospacedFontsError As String = "Error occured during loading list of Fixed\Monospaced fonts. Anyway, loading will continue without this list."
-    Property MonospacedFontsError2 As String = "WinPaletter already used a second method after failure of the first one, but unfortunately both have failed."
+    Property VistaLogonNotSupported As String = "Editing Windows Vista LogonUI with registry is not supported. Change the preview to another OS and try again."
     Property MonitorIssue As String = "Error occured during loading registry monitor (Used in real-time-detection of wallpaper\dark mode change from registry). Resetting your wallpaper may fix the issue."
     Property MonitorIssue2 As String = "Anyway, loading will continue without it."
     Property LogoffQuestion As String = "Are you sure from Logging-off?"
@@ -198,9 +198,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
     Property CP_Undefined As String = "Undefined"
-    Property CP_ClassicThemeEditable As String = "Classic theme is editable by Win32UI Editor"
     Property CP_AccentOnTaskbarTib As String = "Applying Accent on Taskbar only isn't effective only for Windows 10 2015 Versions, but it is effective for higher versions."
-    Property CP_TitlebarToggle As String = "To colorize Titlebar, please activate its toggle."
     Property CP_Time As String = "It took {0} seconds"
     Property CP_Time_They As String = "They took {0} seconds"
     Property CP_Time_Cursors As String = "Total Applying Windows Cursors took {0} seconds"
@@ -217,7 +215,6 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_LogonUI11 As String = "Applying Windows 11 LogonUI"
     Property CP_Applying_LogonUI10 As String = "Applying Windows 10 LogonUI"
     Property CP_Applying_LogonUI7 As String = "Applying Windows 7 LogonUI"
-    Property CP_Applying_LogonUIVista As String = "Applying Windows Vista LogonUI"
     Property CP_Applying_LogonUIXP As String = "Applying Windows XP LogonUI"
     Property CP_Applying_LogonUI8 As String = "Applying Windows 8.1 Lock Screen"
     Property CP_Applying_Win32UI As String = "Applying Win32UI (Classic Windows Elements)"
@@ -257,7 +254,6 @@ Public Class Localizer : Implements IDisposable
     Property CP_LogonUI10_Error As String = "Error occured while applying Windows 10 LogonUI"
     Property CP_LogonUI11_Error As String = "Error occured while applying Windows 11 LogonUI"
     Property CP_LogonUI7_Error As String = "Error occured while applying Windows 7 LogonUI"
-    Property CP_LogonUIVista_Error As String = "Error occured while applying Windows Vista LogonUI"
     Property CP_LogonUIXP_Error As String = "Error occured while applying Windows XP LogonUI"
     Property CP_LogonUI8_Error As String = "Error occured while applying Windows 8.1 Lock Screen"
     Property CP_W10_Error As String = "Error occured while applying Windows 10 Scheme"
@@ -271,6 +267,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Error_Metrics As String = "Error occured while applying Windows Metrics and Fonts"
     Property CP_Error_TerminalPreview As String = "Error occured while applying Windows Terminal Preview"
     Property CP_Error_TerminalStable As String = "Error occured while applying Windows Terminal Stable"
+    Property CP_MetricsHighDPIAlert As String = "Please Logoff and Logon after setting Metrics and fonts with a high DPI"
     Property CP_AllDone As String = "All operations are done"
     Property CP_ErrorHappened As String = "Error\s happened. Press on Show Errors for details"
     Property CP_LogWillClose As String = "This log will close after {0} second\s"
@@ -304,8 +301,6 @@ Public Class Localizer : Implements IDisposable
     Property Sorting As String = "Sorting Colors in a palette ..."
     Property Version As String = "Version"
     Property Checking As String = "Checking ..."
-    Property NoNetwork As String = "No Network is Available"
-    Property CheckConnection As String = "Check your connection and try again"
     Property DoAction_Update As String = "Do Action"
     Property NoUpdateAvailable As String = "No Available Updates"
     Property CheckForUpdates As String = "Check for updates"
@@ -391,10 +386,10 @@ Public Class Localizer : Implements IDisposable
             With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
 
-            With Whatsnew.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label13 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label22 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label24 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
         End If
 
     End Sub

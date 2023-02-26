@@ -64,4 +64,8 @@ Public Class About
     Private Sub XenonLinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
         Process.Start("https://www.codeproject.com/Articles/19077/Hue-Saturation-Lightness-Filter")
     End Sub
+
+    Private Sub XenonLinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel3.LinkClicked
+        Process.Start("https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper")
+    End Sub
 End Class

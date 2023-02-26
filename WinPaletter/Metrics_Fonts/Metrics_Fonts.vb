@@ -104,9 +104,8 @@ Public Class Metrics_Fonts
         End If
 
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-
+        XenonAlertBox10.Text = My.Lang.CP_MetricsHighDPIAlert
         MainFrm.Visible = False
-
 
     End Sub
 
@@ -149,6 +148,8 @@ Public Class Metrics_Fonts
         [ToXenonWindow].Win7GlowBal = [FromXenonWindow].Win7GlowBal
         [ToXenonWindow].Win7Noise = [FromXenonWindow].Win7Noise
         [ToXenonWindow].Padding = [FromXenonWindow].Padding
+        [ToXenonWindow].Shadow = [FromXenonWindow].Shadow
+        [ToXenonWindow].WinVista = [FromXenonWindow].WinVista
     End Sub
 
     Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
@@ -398,7 +399,7 @@ Public Class Metrics_Fonts
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Cursor = Cursors.WaitCursor
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         CPx.MetricsFonts.Apply()
         CPx.Dispose()
@@ -568,14 +569,14 @@ Public Class Metrics_Fonts
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim CPx As New CP(CP.Mode.File, OpenFileDialog1.FileName)
+            Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             ApplyFromCP(CPx)
             CPx.Dispose()
         End If
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        Dim CPx As New CP(CP.Mode.Registry)
+        Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyFromCP(CPx)
         CPx.Dispose()
     End Sub
@@ -752,5 +753,9 @@ Public Class Metrics_Fonts
             sender.Font = New Font("Segoe UI", 9, FontStyle.Regular)
         End If
 
+    End Sub
+
+    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+        VS2Metrics.ShowDialog()
     End Sub
 End Class
