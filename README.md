@@ -11,8 +11,7 @@
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
 | Windows Effects (Animations)                           | :large_blue_circle: Coming Soon                                        |
-| Extended Support to Windows XP                         | :large_blue_circle: Working on it                                      |
-| Extended Support to Vista                              | :yellow_square: Will be tested & implemented later                     |
+| Extended Support to Windows XP & Vista                 | :large_blue_circle: Coming Soon                                        |
 | Fonts Substitutes                                      | :white_check_mark: Done (Version 1.0.7.0)                              | 
 | Wallpaper's Color Tone                                 | :white_check_mark: Done (Version 1.0.7.0)                              |
 | Windows Metrics & Fonts                                | :white_check_mark: Done (Beta: 1.0.6.9, Stable: 1.0.7.0)               |
