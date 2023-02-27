@@ -30,7 +30,7 @@
 
 ---
 
-# Getting ready Windows Vista to make it run WinPaletter
+# Getting ready Windows Vista to run WinPaletter
 
 You won't do too much steps like Windows XP. You just follow the documentation here to [install .Net Framework 4.8 on Windows Vista](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Documentations/LegacyOS/dotNet.md)
 
