@@ -1,6 +1,6 @@
 # Getting ready Windows XP to make it can launch WinPaletter
 
-1. Download latest release of [Skulltrail192/One-Core-API]([GitHub - Skulltrail192/One-Core-Api: A complete layer to get compatibility on XP/2003 for newer applications](https://github.com/Skulltrail192/One-Core-Api)).
+1. Download latest release of [Skulltrail192/One-Core-API](https://github.com/Skulltrail192/One-Core-Api).
 
 2. Install it in the target real\virtual machine.
 
@@ -36,4 +36,4 @@ You won't do too much steps like Windows XP. You just follow the documentation h
 
 > Important note for Windows Vista:
 > 
-> When you run WinPaletter you might face a `KERNEL32.DLL` error. If so, download a modified `CLR.dll` from either `Framework` or `Framework64` folder from [this link](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/References%5CNETFX48Fix) and then copy `CLR.dll` to `%windir%\Microsoft.NET\Framework\v4.0.30319\Framework` or `%windir%\Microsoft.NET\Framework\v4.0.30319\Framework64` and replace. If you found both `Framework` and `Framework64`, then you will download two `CLR.dll`s and move them to their corresponding folders, and finally restart the target Windows.
+> When you run WinPaletter you might face a `KERNEL32.DLL` error. If so, download a modified `CLR.dll` from either `Framework` or `Framework64` folder from [this link](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/References/NETFX48Fix) and then copy `CLR.dll` to `%windir%\Microsoft.NET\Framework\v4.0.30319\Framework` or `%windir%\Microsoft.NET\Framework\v4.0.30319\Framework64` and replace. If you found both `Framework` and `Framework64`, then you will download two `CLR.dll`s and move them to their corresponding folders, and finally restart the target Windows.
