@@ -23,6 +23,9 @@ Public Class MainFrm
         Dim AnimX1 As Integer = 25
         Dim AnimX2 As Integer = 1
 
+        ApplyMetrics([CP], XenonWindow1)
+        ApplyMetrics([CP], XenonWindow2)
+
         XenonWindow1.Active = True
         XenonWindow2.Active = False
 
@@ -792,23 +795,18 @@ Public Class MainFrm
 #End Region
             Case WinVer.WXP
 #Region "WinXP"
-
-
                 start.Refresh()
                 taskbar.Refresh()
 #End Region
         End Select
-
-        ApplyMetrics([CP], XenonWindow1)
-        ApplyMetrics([CP], XenonWindow2)
     End Sub
 
     Sub AdjustClassicPreview()
         SetToClassicWindow(ClassicWindow1, CP)
         SetToClassicWindow(ClassicWindow2, CP, False)
 
-        SetClassicMetics(ClassicWindow1, CP)
-        SetClassicMetics(ClassicWindow2, CP)
+        SetClassicMetrics(ClassicWindow1, CP)
+        SetClassicMetrics(ClassicWindow2, CP)
         SetToClassicButton(RetroButton2, CP)
         SetToClassicButton(RetroButton3, CP)
         SetToClassicButton(RetroButton4, CP)
@@ -818,13 +816,21 @@ Public Class MainFrm
         ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
     End Sub
 
-    Sub SetClassicMetics([Window] As RetroWindow, [CP] As CP)
+    Sub SetClassicMetrics([Window] As RetroWindow, [CP] As CP)
         [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
         [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
         [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
         [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
         [Window].Font = CP.MetricsFonts.CaptionFont
         [Window].Refresh()
+    End Sub
+
+    Sub ApplyMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
+        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
+        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
+        XenonWindow.Invalidate()
     End Sub
 
     Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
@@ -866,19 +872,24 @@ Public Class MainFrm
         [Button].ForeColor = [CP].Win32.ButtonText
     End Sub
 
-    Sub ApplyMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
-        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
-        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
-        XenonWindow.Invalidate()
-    End Sub
-
     Sub ReValidateLivePreview(ByVal Parent As Control)
         Parent.Refresh()
 
         For Each ctrl As Control In Parent.Controls
             ctrl.Refresh()
+            If ctrl.HasChildren Then
+                For Each c As Control In ctrl.Controls
+                    ReValidateLivePreview(c)
+                Next
+            End If
+        Next
+    End Sub
+
+    Sub DoubleBufferAll(ByVal Parent As Control)
+        MakeItDoubleBuffered(Parent)
+
+        For Each ctrl As Control In Parent.Controls
+            MakeItDoubleBuffered(ctrl)
             If ctrl.HasChildren Then
                 For Each c As Control In ctrl.Controls
                     ReValidateLivePreview(c)
@@ -1064,24 +1075,24 @@ Public Class MainFrm
                 End Select
 
                 Try
-                    If XenonCheckBox1.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
                         If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New VisualStyleFile(My.VS)
-                            Overwrite_Win32UI(CP, vs.Metrics)
+                            CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
                         End If
                     End If
 
-                    If XenonCheckBox2.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
                         If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New VisualStyleFile(My.VS)
-                            Overwrite_Metrics(CP, vs.Metrics)
+                            CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
                         End If
                     End If
 
-                    If XenonCheckBox3.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceFonts.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
                         If File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New VisualStyleFile(My.VS)
-                            Overwrite_Fonts(CP, vs.Metrics)
+                            CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
                         End If
                     End If
                 Catch
@@ -1240,8 +1251,6 @@ Public Class MainFrm
         ReValidateLivePreview(tabs_preview)
 
         If AnimateThePreview Then
-            'tabs_preview.Visible = True
-
             If _Shown Then
                 My.Animator.ShowSync(tabs_preview)
             Else
@@ -1382,8 +1391,8 @@ Public Class MainFrm
                 WXP_Classic.Checked = True
 
         End Select
-        XenonTextBox1.Text = [CP].WindowsXP.ThemeFile
-        If XenonComboBox1.Items.Contains([CP].WindowsXP.ColorScheme) Then XenonComboBox1.SelectedItem = [CP].WindowsXP.ColorScheme
+        WXP_VS_textbox.Text = [CP].WindowsXP.ThemeFile
+        If WXP_VS_ColorsList.Items.Contains([CP].WindowsXP.ColorScheme) Then WXP_VS_ColorsList.SelectedItem = [CP].WindowsXP.ColorScheme
 
         ApplyMetroStartToButton([CP])
         ApplyBackLogonUI([CP])
@@ -1603,59 +1612,6 @@ Public Class MainFrm
 
         Return HSL.ExecuteFilter(img)
     End Function
-
-    Sub Overwrite_Win32UI([CP] As CP, vs As VisualStyleMetrics)
-        [CP].Win32.EnableTheming = vs.FlatMenus
-        '[CP].Win32.ActiveBorder = ActiveBorder
-        [CP].Win32.ActiveTitle = vs.Colors.ActiveCaption
-        '[CP].Win32.AppWorkspace = AppWorkspace
-        [CP].Win32.Background = vs.Colors.Background
-        '[CP].Win32.ButtonAlternateFace = btnaltface_pick.BackColor
-        [CP].Win32.ButtonDkShadow = vs.Colors.DkShadow3d
-        [CP].Win32.ButtonFace = vs.Colors.Btnface
-        [CP].Win32.ButtonHilight = vs.Colors.BtnHighlight
-        [CP].Win32.ButtonLight = vs.Colors.Light3d
-        [CP].Win32.ButtonShadow = vs.Colors.BtnShadow
-        [CP].Win32.ButtonText = vs.Colors.WindowText
-        [CP].Win32.GradientActiveTitle = vs.Colors.GradientActiveCaption
-        [CP].Win32.GradientInactiveTitle = vs.Colors.GradientInactiveCaption
-        [CP].Win32.GrayText = vs.Colors.GrayText
-        [CP].Win32.HilightText = vs.Colors.HighlightText
-        [CP].Win32.HotTrackingColor = vs.Colors.HotTracking
-        '[CP].Win32.InactiveBorder = InactiveBorder
-        [CP].Win32.InactiveTitle = vs.Colors.InactiveCaption
-        [CP].Win32.InactiveTitleText = vs.Colors.InactiveCaptionText
-        '[CP].Win32.InfoText = InfoText
-        '[CP].Win32.InfoWindow = InfoWindow
-        [CP].Win32.Menu = vs.Colors.Menu
-        [CP].Win32.MenuBar = vs.Colors.MenuBar
-        [CP].Win32.MenuText = vs.Colors.MenuText
-        '[CP].Win32.Scrollbar = Scrollbar
-        [CP].Win32.TitleText = vs.Colors.CaptionText
-        [CP].Win32.Window = vs.Colors.Window
-        '[CP].Win32.WindowFrame = Frame
-        [CP].Win32.WindowText = vs.Colors.WindowText
-        [CP].Win32.Hilight = vs.Colors.Highlight
-        [CP].Win32.MenuHilight = vs.Colors.MenuHilight
-        [CP].Win32.Desktop = vs.Colors.Background
-    End Sub
-
-    Sub Overwrite_Metrics([CP] As CP, vs As VisualStyleMetrics)
-        [CP].MetricsFonts.CaptionHeight = vs.Sizes.CaptionBarHeight
-        [CP].MetricsFonts.ScrollHeight = vs.Sizes.ScrollbarHeight
-        [CP].MetricsFonts.ScrollWidth = vs.Sizes.ScrollbarWidth
-        [CP].MetricsFonts.SmCaptionHeight = vs.Sizes.SMCaptionBarHeight
-        [CP].MetricsFonts.SmCaptionWidth = vs.Sizes.SMCaptionBarWidth
-    End Sub
-
-    Sub Overwrite_Fonts([CP] As CP, vs As VisualStyleMetrics)
-        [CP].MetricsFonts.CaptionFont = vs.Fonts.CaptionFont
-        [CP].MetricsFonts.IconFont = vs.Fonts.IconTitleFont
-        [CP].MetricsFonts.MenuFont = vs.Fonts.MenuFont
-        [CP].MetricsFonts.SmCaptionFont = vs.Fonts.SmallCaptionFont
-        [CP].MetricsFonts.MessageFont = vs.Fonts.MsgBoxFont
-        [CP].MetricsFonts.StatusFont = vs.Fonts.StatusFont
-    End Sub
 #End Region
 
 #Region "Misc"
@@ -1835,6 +1791,7 @@ Public Class MainFrm
         MakeItDoubleBuffered(Me)
         MakeItDoubleBuffered(TreeView1)
         MakeItDoubleBuffered(TablessControl1)
+        DoubleBufferAll(tabs_preview)
 
         Adjust_Preview()
         ApplyCPValues(CP)
@@ -3174,7 +3131,6 @@ Public Class MainFrm
             CP.WindowsVista.Theme = CP.AeroTheme.Classic
             ApplyLivePreviewFromCP(CP)
             Adjust_Preview(False)
-            tabs_preview.Refresh()
         End If
 
     End Sub
@@ -3184,7 +3140,6 @@ Public Class MainFrm
             CP.WindowsVista.Theme = CP.AeroTheme.Basic
             ApplyLivePreviewFromCP(CP)
             Adjust_Preview(False)
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3193,7 +3148,6 @@ Public Class MainFrm
             CP.WindowsVista.Theme = CP.AeroTheme.AeroOpaque
             ApplyLivePreviewFromCP(CP)
             Adjust_Preview(False)
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3202,7 +3156,6 @@ Public Class MainFrm
             CP.WindowsVista.Theme = CP.AeroTheme.Aero
             ApplyLivePreviewFromCP(CP)
             Adjust_Preview(False)
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3218,7 +3171,6 @@ Public Class MainFrm
         If WXP_Luna_Blue.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaBlue
             Adjust_Preview()
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3226,7 +3178,6 @@ Public Class MainFrm
         If WXP_Luna_OliveGreen.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaOliveGreen
             Adjust_Preview()
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3234,7 +3185,6 @@ Public Class MainFrm
         If WXP_Luna_Silver.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaSilver
             Adjust_Preview()
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3242,7 +3192,6 @@ Public Class MainFrm
         If WXP_CustomTheme.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.Custom
             Adjust_Preview()
-            tabs_preview.Refresh()
         End If
     End Sub
 
@@ -3250,51 +3199,50 @@ Public Class MainFrm
         If WXP_Classic.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.Classic
             Adjust_Preview()
-            tabs_preview.Refresh()
         End If
     End Sub
 
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles WXP_VS_textbox.TextChanged
         Dim theme As String = ""
 
-        If Path.GetExtension(XenonTextBox1.Text) = ".theme" Then
-            theme = XenonTextBox1.Text
+        If Path.GetExtension(WXP_VS_textbox.Text) = ".theme" Then
+            theme = WXP_VS_textbox.Text
 
-        ElseIf Path.GetExtension(XenonTextBox1.Text) = ".msstyles" Then
+        ElseIf Path.GetExtension(WXP_VS_textbox.Text) = ".msstyles" Then
             theme = My.Application.appData & "\VisualStyles\Luna\custom.theme"
-            File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+            File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, vbCrLf))
 
         End If
 
-        CP.WindowsXP.ThemeFile = XenonTextBox1.Text
+        CP.WindowsXP.ThemeFile = WXP_VS_textbox.Text
 
-        If File.Exists(XenonTextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
+        If File.Exists(WXP_VS_textbox.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
             Dim vs As New VisualStyleFile(theme)
-            XenonComboBox1.Items.Clear()
+            WXP_VS_ColorsList.Items.Clear()
 
             Try
                 For Each x In vs.ColorSchemes
-                    XenonComboBox1.Items.Add(x.Name)
+                    WXP_VS_ColorsList.Items.Add(x.Name)
                 Next
             Catch
 
             End Try
 
-            If XenonComboBox1.Items.Count > 0 Then XenonComboBox1.SelectedIndex = 0
+            If WXP_VS_ColorsList.Items.Count > 0 Then WXP_VS_ColorsList.SelectedIndex = 0
 
             If WXP_CustomTheme.Checked Then Adjust_Preview(False)
         End If
     End Sub
 
-    Private Sub XenonButton30_Click(sender As Object, e As EventArgs) Handles XenonButton30.Click
+    Private Sub XenonButton30_Click(sender As Object, e As EventArgs) Handles WXP_VS_Browse.Click
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenFileDialog2.FileName
+            WXP_VS_textbox.Text = OpenFileDialog2.FileName
         End If
     End Sub
 
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles WXP_VS_ColorsList.SelectedIndexChanged
         If _Shown AndAlso WXP_CustomTheme.Checked Then
-            CP.WindowsXP.ColorScheme = XenonComboBox1.SelectedItem
+            CP.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem
             Adjust_Preview(False)
         End If
     End Sub
@@ -3445,11 +3393,13 @@ Public Class MainFrm
 #Region "Drag And Drop"
     Dim wpth_or_wpsf As Boolean = True
     Dim DragAccepted As Boolean
+    Dim Dropped As Boolean
 
-    Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, pnl_preview.DragEnter,
-        PaletteContainer_W11.DragEnter, XenonGroupBox5.DragEnter, XenonGroupBox1.DragEnter, MainToolbar.DragEnter, XenonGroupBox13.DragEnter
+
+    Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, tabs_preview.DragEnter, TablessControl1.DragEnter
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dropped = False
 
         If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpth" Then
             wpth_or_wpsf = True
@@ -3462,6 +3412,7 @@ Public Class MainFrm
                 DragPreviewer.File = files(0)
                 DragPreviewer.Show()
             End If
+
         ElseIf My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpsf" Then
             wpth_or_wpsf = False
             DragAccepted = True
@@ -3474,23 +3425,20 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
+        Dropped = False
         If DragAccepted Then
             If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
             CP = CP_BeforeDrag.Clone
-            ApplyCPValues(CP_BeforeDrag)
-            ApplyLivePreviewFromCP(CP_BeforeDrag)
         End If
     End Sub
 
-    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, pnl_preview.DragOver,
-        PaletteContainer_W11.DragOver, XenonGroupBox5.DragOver, XenonGroupBox1.DragOver, MainToolbar.DragOver, XenonGroupBox13.DragOver
+    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, tabs_preview.DragOver, TablessControl1.DragOver
         If DragAccepted And My.[Settings].DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        Dropped = Me.Bounds.Contains(New Point(e.X, e.Y))
     End Sub
 
-    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, pnl_preview.DragDrop,
-        PaletteContainer_W11.DragDrop, XenonGroupBox5.DragDrop, XenonGroupBox1.DragDrop, MainToolbar.DragDrop, XenonGroupBox13.DragDrop
-
-        If DragAccepted Then
+    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, tabs_preview.DragDrop, TablessControl1.DragDrop
+        If Dropped And DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If wpth_or_wpsf Then
                 If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
@@ -3542,17 +3490,18 @@ Public Class MainFrm
                 End If
 
                 CP = New CP(CP.CP_Type.File, files(0))
+                tabs_preview.Visible = False
+                Adjust_Preview(False)
                 ApplyCPValues(CP)
                 ApplyLivePreviewFromCP(CP)
-                Adjust_Preview()
                 AdjustClassicPreview()
+                tabs_preview.Visible = True
             Else
                 SettingsX._External = True
                 SettingsX._File = files(0)
                 SettingsX.ShowDialog()
             End If
         End If
-
     End Sub
 #End Region
 
@@ -3663,6 +3612,7 @@ Public Class MainFrm
                         Select Case r2
                             Case 1      '' Apply   ' Case 0= Don't Apply
                                 Apply_Theme()
+
                         End Select
 
                     Case DialogResult.No
@@ -3676,7 +3626,6 @@ Public Class MainFrm
         CP = New CP(CP.CP_Type.Registry)
         CP_Original = CP.Clone
         SaveFileDialog1.FileName = Nothing
-
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub

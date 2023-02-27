@@ -839,6 +839,15 @@ Public Class WinTerminal : Implements ICloneable
         End Select
     End Function
 
+    Public Overloads Function ToString(Signature As String, Edition As Version) As String
+        Dim tx As New List(Of String)
+        tx.Clear()
+        tx.Add(String.Format("<{0}>", Signature))
+        tx.Add(Save("", Mode.WinPaletterFile, Edition))
+        tx.Add(String.Format("</{0}>", Signature))
+        Return tx.CString
+    End Function
+
     Public Shared Sub TakeOwnership(ByVal filepath As String)
         Dim proc = New Process()
         proc.StartInfo.FileName = "takeown.exe"

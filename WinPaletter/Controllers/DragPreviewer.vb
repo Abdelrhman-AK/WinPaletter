@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.CP
+﻿Imports Devcorp.Controls.VisualStyles
+Imports WinPaletter.CP
 Imports WinPaletter.MainFrm
 
 Public Class DragPreviewer
@@ -7,14 +8,11 @@ Public Class DragPreviewer
     Public File As String
 
     Private Sub DragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SuspendLayout()
-
         MainFrm.MakeItDoubleBuffered(Me)
         MainFrm.MakeItDoubleBuffered(pnl_preview)
         MainFrm.MakeItDoubleBuffered(pnlRetroPreview)
-
-        Opacity = 0
-        Visible = False
+        tabs_preview.Visible = False
+        pnlRetroPreview.Visible = False
 
         If My.W11 Or My.W10 Then
             FormBorderStyle = FormBorderStyle.None
@@ -26,6 +24,12 @@ Public Class DragPreviewer
             TransparencyKey = Color.Fuchsia
         End If
 
+        DrawDWMEffect(True, FormStyle.Acrylic)
+
+        ProgressBar1.Visible = True
+    End Sub
+
+    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         CP = New CP(CP.CP_Type.File, File, True)
 
         Select Case MainFrm.PreviewConfig
@@ -54,26 +58,28 @@ Public Class DragPreviewer
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
         ApplyRetroPreview(CP)
-        SetMetics(CP)
+        SetClassicMetrics(CP)
+        AdjustClassicPreview()
 
-        DrawDWMEffect(True, FormStyle.Acrylic)
+        ProgressBar1.Visible = False
 
-        ResumeLayout()
-    End Sub
+        tabs_preview.Visible = True
+        pnlRetroPreview.Visible = True
 
-    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Opacity = 1
-        Visible = True
         Me.Invalidate()
     End Sub
 
-    Sub ApplyLivePreviewFromCP([CP] As CP)
+    Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
+        Dim AnimX1 As Integer = 25
+        Dim AnimX2 As Integer = 1
+
         XenonWindow1.Active = True
         XenonWindow2.Active = False
 
         Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+            Case WinVer.W11
 #Region "Win11"
+                tabs_preview.SelectedIndex = 0
                 XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
 
@@ -86,6 +92,9 @@ Public Class DragPreviewer
                 XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
                 XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
 
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+
                 Label8.ForeColor = If([CP].Windows11.AppMode_Light, Color.Black, Color.White)
 
                 start.DarkMode = Not [CP].Windows11.WinMode_Light
@@ -95,8 +104,6 @@ Public Class DragPreviewer
                 taskbar.Transparency = [CP].Windows11.Transparency
                 start.Transparency = [CP].Windows11.Transparency
                 ActionCenter.Transparency = [CP].Windows11.Transparency
-
-                start.Top = taskbar.Top - start.Height - 9
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
@@ -122,13 +129,11 @@ Public Class DragPreviewer
 
                         End Select
 
-
                         ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index1
                         ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index0
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
                         start.SearchBoxAccent = [CP].Windows11.Color_Index1
                         taskbar.AppUnderline = [CP].Windows11.Color_Index1
-
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index0
 
@@ -155,21 +160,18 @@ Public Class DragPreviewer
 
                         End Select
 
-
                         ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index4
                         ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index5
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
                         start.SearchBoxAccent = [CP].Windows11.Color_Index4
                         taskbar.AppUnderline = [CP].Windows11.Color_Index4
-
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index5
                 End Select
-
-                ReValidateLivePreview(pnl_preview)
 #End Region
-            Case MainFrm.WinVer.W10
+            Case WinVer.W10
 #Region "Win10"
+                tabs_preview.SelectedIndex = 0
                 XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
 
@@ -182,15 +184,18 @@ Public Class DragPreviewer
                 XenonWindow1.DarkMode = Not [CP].Windows10.AppMode_Light
                 XenonWindow2.DarkMode = Not [CP].Windows10.AppMode_Light
 
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+
                 Label8.ForeColor = If([CP].Windows10.AppMode_Light, Color.Black, Color.White)
 
                 start.DarkMode = Not [CP].Windows10.WinMode_Light
                 taskbar.DarkMode = Not [CP].Windows10.WinMode_Light
                 ActionCenter.DarkMode = Not [CP].Windows10.WinMode_Light
+
                 taskbar.Transparency = [CP].Windows10.Transparency
                 start.Transparency = [CP].Windows10.Transparency
                 ActionCenter.Transparency = [CP].Windows10.Transparency
-                start.Top = taskbar.Top - start.Height
 
                 If [CP].Windows10.Transparency Then
                     If Not [CP].Windows10.WinMode_Light Then
@@ -382,19 +387,17 @@ Public Class DragPreviewer
                         End If
                 End Select
 
-
-
-                ReValidateLivePreview(pnl_preview)
 #End Region
-            Case MainFrm.WinVer.W8
+            Case WinVer.W8
 #Region "Win8.1"
+                tabs_preview.SelectedIndex = 0
+
                 Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8
                         taskbar.Transparency = True
                         taskbar.BackColorAlpha = 100
-
                     Case CP.AeroTheme.AeroLite
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8Lite
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8Lite
@@ -402,22 +405,24 @@ Public Class DragPreviewer
                         taskbar.BackColorAlpha = 255
                 End Select
 
-                XenonWindow1.AccentColor_Active = [CP].Windows7.ColorizationColor
-                XenonWindow1.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                XenonWindow1.AccentColor_Active = [CP].Windows8.ColorizationColor
+                XenonWindow1.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 
-                XenonWindow2.AccentColor_Active = [CP].Windows7.ColorizationColor
-                XenonWindow2.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
+                XenonWindow2.AccentColor_Active = [CP].Windows8.ColorizationColor
+                XenonWindow2.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 
-                taskbar.BackColor = [CP].Windows7.ColorizationColor
-                taskbar.Win7ColorBal = [CP].Windows7.ColorizationColorBalance
-
-                ReValidateLivePreview(pnl_preview)
+                taskbar.BackColor = [CP].Windows8.ColorizationColor
+                taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 #End Region
-            Case MainFrm.WinVer.W7
+            Case WinVer.W7
 #Region "Win7"
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].Windows7.Theme
                     Case CP.AeroTheme.Aero
+                        tabs_preview.SelectedIndex = 0
                         start.Transparency = True
                         taskbar.Transparency = True
                         With XenonWindow1
@@ -458,8 +463,10 @@ Public Class DragPreviewer
                             .BackColor2 = [CP].Windows7.ColorizationAfterglow
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
+
 
                     Case CP.AeroTheme.AeroOpaque
+                        tabs_preview.SelectedIndex = 0
                         start.Transparency = True
                         taskbar.Transparency = True
 
@@ -490,10 +497,12 @@ Public Class DragPreviewer
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
+
                     Case CP.AeroTheme.Basic
-#Region "Basic"
+                        tabs_preview.SelectedIndex = 0
                         taskbar.BackColor = Color.FromArgb(166, 190, 218)
                         taskbar.BackColorAlpha = 100
+
                         start.BackColor = Color.FromArgb(166, 190, 218)
                         start.BackColorAlpha = 100
 
@@ -503,7 +512,6 @@ Public Class DragPreviewer
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
-
                         With XenonWindow2
                             .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
@@ -518,17 +526,140 @@ Public Class DragPreviewer
 
                         start.Refresh()
                         taskbar.Refresh()
-#End Region
 
                     Case CP.AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
 
                 End Select
+#End Region
+            Case WinVer.WVista
+#Region "WinVista"
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
-                pnl_preview.Refresh()
+                Select Case [CP].WindowsVista.Theme
+                    Case CP.AeroTheme.Aero
+                        tabs_preview.SelectedIndex = 0
+                        start.Transparency = True
+                        taskbar.Transparency = True
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
+                            .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .AccentColor_Active = Color.FromArgb([CP].WindowsVista.Alpha, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Active = Color.FromArgb([CP].WindowsVista.Alpha, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .Win7Noise = 100
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Aero
+                            .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor2_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .AccentColor2_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
+                            .Win7Noise = 100
+                        End With
+                        With start
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+                        With taskbar
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
+                            .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
+                            '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
 
-                ReValidateLivePreview(pnl_preview)
+
+                    Case CP.AeroTheme.AeroOpaque
+                        tabs_preview.SelectedIndex = 0
+                        start.Transparency = True
+                        taskbar.Transparency = True
+
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
+                            .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = [CP].WindowsVista.ColorizationColor
+                            .Win7Noise = 100
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Opaque
+                            .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
+                            .AccentColor_Active = [CP].WindowsVista.ColorizationColor
+                            .AccentColor_Inactive = [CP].WindowsVista.ColorizationColor
+                            .Win7Noise = 100
+                        End With
+                        With taskbar
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+                        With start
+                            .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
+                            .BackColor = [CP].WindowsVista.ColorizationColor
+                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .NoisePower = 100
+                        End With
+
+
+                    Case CP.AeroTheme.Basic
+                        tabs_preview.SelectedIndex = 0
+                        taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        taskbar.BackColorAlpha = 100
+
+                        start.BackColor = Color.FromArgb(166, 190, 218)
+                        start.BackColorAlpha = 100
+
+                        With XenonWindow1
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
+                            .Win7Alpha = 100
+                            .AccentColor_Active = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
+                        With XenonWindow2
+                            .Preview = XenonWindow.Preview_Enum.W7Basic
+                            .Win7Alpha = 100
+                            .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
+                            .Win7Noise = 0
+                        End With
+
+                        start.Transparency = False
+                        start.NoisePower = 0
+                        taskbar.Transparency = False
+                        taskbar.NoisePower = 0
+
+                        start.Refresh()
+                        taskbar.Refresh()
+
+                    Case CP.AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
+
+                End Select
+#End Region
+            Case WinVer.WXP
+#Region "WinXP"
+
+
+                start.Refresh()
+                taskbar.Refresh()
 #End Region
         End Select
+
+        MainFrm.ApplyMetrics([CP], XenonWindow1)
+        MainFrm.ApplyMetrics([CP], XenonWindow2)
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -545,13 +676,13 @@ Public Class DragPreviewer
     End Sub
 
     Sub Adjust_Preview()
-
-        tabs_preview.Visible = False
         Panel5.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
-        start.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
-        tabs_preview.SelectedIndex = If(MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic, 1, 0)
+        Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
+        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -559,18 +690,23 @@ Public Class DragPreviewer
                 taskbar.Style = XenonWinElement.Styles.Taskbar11
                 start.Style = XenonWinElement.Styles.Start11
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W10
                 ActionCenter.Style = XenonWinElement.Styles.ActionCenter10
                 taskbar.Style = XenonWinElement.Styles.Taskbar10
                 start.Style = XenonWinElement.Styles.Start10
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W8
                 taskbar.Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W7
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
                         taskbar.Style = XenonWinElement.Styles.Taskbar7Aero
@@ -595,9 +731,89 @@ Public Class DragPreviewer
 
                 End Select
 
+                XenonWindow1.WinVista = False
+                XenonWindow2.WinVista = False
+
+            Case WinVer.WVista
+
+                Select Case CP.WindowsVista.Theme     'Windows Vista uses the same aero of Windows 7
+                    Case AeroTheme.Aero
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaAero
+                        start.Style = XenonWinElement.Styles.StartVistaAero
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Aero
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.AeroOpaque
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaOpaque
+                        start.Style = XenonWinElement.Styles.StartVistaOpaque
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Opaque
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Basic
+                        taskbar.Style = XenonWinElement.Styles.TaskbarVistaBasic
+                        start.Style = XenonWinElement.Styles.StartVistaBasic
+                        XenonWindow1.Preview = XenonWindow.Preview_Enum.W7Basic
+                        tabs_preview.SelectedIndex = 0
+
+                    Case AeroTheme.Classic
+                        tabs_preview.SelectedIndex = 1
+
+                End Select
+
+                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+                XenonWindow1.WinVista = True
+                XenonWindow2.WinVista = True
+
+            Case WinVer.WXP
+                taskbar.Style = XenonWinElement.Styles.TaskbarXP
+                start.Style = XenonWinElement.Styles.StartXP
+                XenonWindow1.Preview = XenonWindow.Preview_Enum.WXP
+                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+                Select Case CP.WindowsXP.Theme
+                    Case WinXPTheme.LunaBlue
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Blue)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.LunaOliveGreen
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.OliveGreen)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.LunaSilver
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Silver)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.Custom
+                        If IO.File.Exists(CP.WindowsXP.ThemeFile) Then
+                            If IO.Path.GetExtension(CP.WindowsXP.ThemeFile) = ".theme" Then
+                                My.VS = CP.WindowsXP.ThemeFile
+                            ElseIf IO.Path.GetExtension(CP.WindowsXP.ThemeFile) = ".msstyles" Then
+                                My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                                IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", CP.WindowsXP.ThemeFile, vbCrLf, CP.WindowsXP.ColorScheme))
+                            End If
+                        End If
+                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                    Case WinXPTheme.Classic
+                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.LunaRes = New Luna(Luna.ColorStyles.Empty)
+                        My.resVS = New VisualStylesRes(My.VS)
+
+                End Select
+
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -665,6 +881,67 @@ Public Class DragPreviewer
                 start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity / 100
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = 44
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
+                RetroButton3.Width = 48
+                RetroButton4.Width = 48
+                RetroButton3.Text = ""
+                RetroButton4.Text = ""
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+
+            Case WinVer.WVista
+                Panel5.Visible = False
+                lnk_preview.Visible = False
+                ActionCenter.Visible = False
+                taskbar.Height = 30
+
+                start.Width = 136
+                start.Height = 191
+                start.Left = 0
+                start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = taskbar.Height
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton3.Width = 140
+                RetroButton4.Width = 140
+                RetroButton3.Text = ClassicWindow1.TitlebarText
+                RetroButton4.Text = ClassicWindow2.TitlebarText
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+
+            Case WinVer.WXP
+                taskbar.Height = 30
+                start.Width = 150
+                start.Height = 190
+                start.Left = 0
+                start.Top = taskbar.Top - start.Height
+                ClassicTaskbar.Height = taskbar.Height
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
+                RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
+                RetroButton3.Width = 140
+                RetroButton4.Width = 140
+                RetroButton3.Text = ClassicWindow1.TitlebarText
+                RetroButton4.Text = ClassicWindow2.TitlebarText
+                RetroButton4.Left = RetroButton3.Right + 3
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+
         End Select
 
         If MainFrm.PreviewConfig = WinVer.W10 Or MainFrm.PreviewConfig = WinVer.W11 Then
@@ -682,12 +959,88 @@ Public Class DragPreviewer
         End If
 
         ReValidateLivePreview(tabs_preview)
+    End Sub
 
-        tabs_preview.Visible = True
+    Sub AdjustClassicPreview()
+        SetToClassicWindow(ClassicWindow1, CP)
+        SetToClassicWindow(ClassicWindow2, CP, False)
+
+        SetClassicMetrics(ClassicWindow1, CP)
+        SetClassicMetrics(ClassicWindow2, CP)
+        SetToClassicButton(RetroButton2, CP)
+        SetToClassicButton(RetroButton3, CP)
+        SetToClassicButton(RetroButton4, CP)
+        SetToClassicRaisedPanel(ClassicTaskbar, CP)
+
+        ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
+        ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
+    End Sub
+
+    Sub SetClassicMetrics([Window] As RetroWindow, [CP] As CP)
+        [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+        [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+        [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+        [Window].Font = CP.MetricsFonts.CaptionFont
+        [Window].Refresh()
+    End Sub
+
+    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
+        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Window].BackColor = [CP].Win32.ButtonFace
+        [Window].ButtonHilight = [CP].Win32.ButtonHilight
+        [Window].ButtonLight = [CP].Win32.ButtonLight
+        [Window].ButtonShadow = [CP].Win32.ButtonShadow
+        [Window].ButtonText = [CP].Win32.ButtonText
+
+        If Active Then
+            [Window].ColorBorder = [CP].Win32.ActiveBorder
+            [Window].ForeColor = [CP].Win32.TitleText
+            [Window].Color1 = [CP].Win32.ActiveTitle
+            [Window].Color2 = [CP].Win32.GradientActiveTitle
+        Else
+            [Window].ColorBorder = [CP].Win32.InactiveBorder
+            [Window].ForeColor = [CP].Win32.InactiveTitleText
+            [Window].Color1 = [CP].Win32.InactiveTitle
+            [Window].Color2 = [CP].Win32.GradientInactiveTitle
+        End If
+
+        [Window].ColorGradient = [CP].Win32.EnableGradient
+    End Sub
+
+    Sub SetToClassicRaisedPanel([Panel] As RetroPanelRaised, [CP] As CP)
+        [Panel].BackColor = [CP].Win32.ButtonFace
+        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ForeColor = [CP].Win32.TitleText
+    End Sub
+
+    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
+        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Button].ButtonHilight = [CP].Win32.ButtonHilight
+        [Button].ButtonLight = [CP].Win32.ButtonLight
+        [Button].ButtonShadow = [CP].Win32.ButtonShadow
+        [Button].BackColor = [CP].Win32.ButtonFace
+        [Button].ForeColor = [CP].Win32.ButtonText
     End Sub
 
 
-    Sub SetMetics(CP As CP)
+    Sub SetClassicMetrics(CP As CP)
+        Try
+            If MainFrm.PreviewConfig = WinVer.WXP AndAlso MainFrm.WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
+                End If
+
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
+                End If
+            End If
+        Catch
+        End Try
+
         RetroPanel2.Width = CP.MetricsFonts.ScrollWidth
         menucontainer0.Height = CP.MetricsFonts.MenuHeight
 
@@ -719,7 +1072,7 @@ Public Class DragPreviewer
 
         Dim iP As Integer = 3 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth
         Dim iT As Integer = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum
-        Dim _Padding As New Padding(iP, iT, iP, iP)
+        Dim _Padding As New Windows.Forms.Padding(iP, iT, iP, iP)
 
         For Each RW As RetroWindow In pnlRetroPreview.Controls.OfType(Of RetroWindow)
             If Not RW.UseItAsMenu Then
@@ -749,9 +1102,15 @@ Public Class DragPreviewer
     End Sub
 
     Sub ApplyRetroPreview([CP] As CP)
-        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
-        RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
+        Try
+            If MainFrm.PreviewConfig = WinVer.WXP AndAlso MainFrm.WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
+                End If
+            End If
+        Catch
+        End Try
 
         RetroWindow1.ColorGradient = [CP].Win32.EnableGradient
         RetroWindow2.ColorGradient = [CP].Win32.EnableGradient
@@ -979,6 +1338,5 @@ Public Class DragPreviewer
         highlight.Invalidate()
 
     End Sub
-
 
 End Class

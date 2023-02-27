@@ -4049,7 +4049,11 @@ Public Class XenonWinElement : Inherits ContainerControl
 #End Region
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.UserPaint, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        SetStyle(ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.DoubleBuffer, True)
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
     End Sub
 
     Enum MouseState
@@ -4102,7 +4106,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
         Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
-        Dim RRect As New Rectangle(0, 0, Width, Height)
+        Dim RRect As New Rectangle(0, 0, Width - 1, Height - 1)
         G.Clear(Color.Transparent)
 
         Dim Radius As Integer = 5
@@ -4110,7 +4114,10 @@ Public Class XenonWinElement : Inherits ContainerControl
         Select Case Style
             Case Styles.Start11
 #Region "Start 11"
-                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                If Not DesignMode Then
+                    G.DrawImage(adaptedBack, Rect)
+                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                End If
 
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
@@ -4118,16 +4125,20 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim SearchRect As New Rectangle(7, 10, 120, 18)
                 Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
                 Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
-                G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), RRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
                 G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
                 G.DrawRoundedRect(New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 90, 90, 90)), RRect, Radius, True)
 #End Region
 
             Case Styles.ActionCenter11
 #Region "Action Center 11"
-                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                If Not DesignMode Then
+                    G.DrawImage(adaptedBack, Rect)
+                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                End If
 
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
@@ -4135,7 +4146,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Button1 = New Rectangle(8, 8, 49, 20)
                 Button2 = New Rectangle(62, 8, 49, 20)
 
-                G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), RRect, Radius, True)
 
                 Dim Cx1, Cx2 As Color
 
@@ -4161,12 +4172,13 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius)
                 G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
                 G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
-                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 76, 76, 76)), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(150, 90, 90, 90)), RRect, Radius, True)
 #End Region
 
             Case Styles.Taskbar11
 #Region "Taskbar 11"
-                If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
 
                 Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
@@ -4208,8 +4220,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Start10
 #Region "Start 10"
-                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
-
+                If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
                 If Transparency Then G.FillRectangle(Noise, Rect)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
                 G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
@@ -4217,7 +4228,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.ActionCenter10
 #Region "Action Center 10"
-                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+                If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
 
                 If Transparency Then G.FillRectangle(Noise, Rect)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
@@ -4238,7 +4249,7 @@ Public Class XenonWinElement : Inherits ContainerControl
             Case Styles.Taskbar10
 #Region "Taskbar 10"
                 G.SmoothingMode = SmoothingMode.HighSpeed
-                If Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+                If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
 
                 Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
@@ -4264,7 +4275,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Taskbar8Aero
 #Region "Taskbar 8 Aero"
-                G.DrawImage(adaptedBack, RRect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, RRect)
 
                 Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
                 Dim bc As Color = Color.FromArgb(217, 217, 217)
@@ -4301,7 +4312,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Taskbar8Lite
 #Region "Taskbar 8 Lite"
-                G.DrawImage(adaptedBack, RRect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, RRect)
                 Dim c As Color = Color.FromArgb((Win7ColorBal / 100) * 255, BackColor)
                 Dim bc As Color = Color.FromArgb(217, 217, 217)
 
@@ -4340,7 +4351,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 #Region "Start 7 Aero"
                 Dim RestRect As New Rectangle(0, 14, Width - 5, Height - 10)
 
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
 
                 Dim bk As Bitmap = adaptedBackBlurred
 
@@ -4363,7 +4374,7 @@ Public Class XenonWinElement : Inherits ContainerControl
             Case Styles.Start7Opaque
 #Region "Start 7 Opaque"
                 Dim RestRect As New Rectangle(0, 14, Width - 5, Height - 10)
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 5, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 5, True)
                 G.FillRoundedImg(Noise7Start, Rect, 5, True)
@@ -4372,13 +4383,13 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Start7Basic
 #Region "Start 7 Basic"
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 G.DrawImage(My.Resources.Start7Basic, Rect)
 #End Region
 
             Case Styles.Taskbar7Aero
 #Region "Taskbar 7 Aero"
-                G.DrawImage(adaptedBackBlurred, Rect)
+                If Not DesignMode Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
 
                 Dim bk As Bitmap = adaptedBackBlurred
                 Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
@@ -4486,31 +4497,31 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.StartVistaAero
 #Region "Start Vista Aero"
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 Dim RestRect As New Rectangle(0, 14, Width - 6, Height - 14)
                 G.DrawImage(adaptedBackBlurred, RestRect)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), RestRect, 4, True)
-                G.DrawImage(My.Resources.Vista_StartAero, RRect)
+                G.DrawImage(My.Resources.Vista_StartAero, New Rectangle(0, 0, Width, Height))
 #End Region
 
             Case Styles.StartVistaOpaque
 #Region "Start Vista Opaque"
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 Dim RestRect As New Rectangle(0, 14, Width - 6, Height - 14)
                 G.FillRoundedRect(Brushes.White, RestRect, 4, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), RestRect, 4, True)
-                G.DrawImage(My.Resources.Vista_StartAero, RRect)
+                G.DrawImage(My.Resources.Vista_StartAero, New Rectangle(0, 0, Width, Height))
 #End Region
 
             Case Styles.StartVistaBasic
 #Region "Start Vista Basic"
-                G.DrawImage(adaptedBack, Rect)
-                G.DrawImage(My.Resources.Vista_StartBasic, RRect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
+                G.DrawImage(My.Resources.Vista_StartBasic, New Rectangle(0, 0, Width, Height))
 #End Region
 
             Case Styles.TaskbarVistaAero
 #Region "Taskbar Vista Aero"
-                G.DrawImage(adaptedBackBlurred, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBackBlurred, Rect)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(BackColorAlpha, BackColor)), Rect)
                 G.FillRectangle(New TextureBrush(My.Resources.Vista_Taskbar), Rect)
                 Dim orb As Bitmap = My.Resources.Vista_StartLowerORB
@@ -4518,8 +4529,8 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 Dim apprect1 As New Rectangle(Rect.X + 60, 1, 140, Rect.Height - 4)
                 Dim apprect2 As New Rectangle(apprect1.Right + 2, 1, 140, Rect.Height - 4)
-                Dim appIcon1 As New Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2 - 1, 20, 20)
-                Dim appIcon2 As New Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2 - 1, 20, 20)
+                Dim appIcon1 As New Rectangle(apprect1.X + 4, apprect1.Y + (apprect1.Height - 20) / 2, 20, 20)
+                Dim appIcon2 As New Rectangle(apprect2.X + 4, apprect2.Y + (apprect2.Height - 20) / 2, 20, 20)
                 Dim appLabel1 As New Rectangle(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height)
                 Dim appLabel2 As New Rectangle(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height)
 
@@ -4583,13 +4594,13 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.StartXP
 #Region "Start XP"
-                G.DrawImage(adaptedBack, Rect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 G.DrawImage(My.LunaRes.Start, Rect)
 #End Region
 
             Case Styles.TaskbarXP
 #Region "Taskbar XP"
-                G.DrawImage(adaptedBack, RRect)
+                If Not DesignMode Then G.DrawImage(adaptedBack, RRect)
                 Try
                     Dim sm As SmoothingMode = G.SmoothingMode
                     G.SmoothingMode = SmoothingMode.HighSpeed

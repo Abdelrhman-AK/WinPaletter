@@ -20,6 +20,8 @@ Public Class WinEffecter
             XenonCheckBox7.Checked = .ListBoxSmoothScrolling
             XenonCheckBox9.Checked = .TooltipAnimation
             If .TooltipFade = CP.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
+            XenonCheckBox4.Checked = .IconsShadow
+            XenonCheckBox10.Checked = .IconsDesktopTranslSel
         End With
     End Sub
 
@@ -35,7 +37,9 @@ Public Class WinEffecter
             .ComboboxAnimation = XenonCheckBox8.Checked
             .ListBoxSmoothScrolling = XenonCheckBox7.Checked
             .TooltipAnimation = XenonCheckBox9.Checked
-            If XenonComboBox2.SelectedIndex = 0 Then .TooltipAnimation = CP.MenuAnimType.Fade Else .TooltipAnimation = CP.MenuAnimType.Scroll
+            If XenonComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.MenuAnimType.Fade Else .TooltipFade = CP.MenuAnimType.Scroll
+            .IconsShadow = XenonCheckBox4.Checked
+            .IconsDesktopTranslSel = XenonCheckBox10.Checked
         End With
     End Sub
 
@@ -93,4 +97,5 @@ Public Class WinEffecter
         MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
         Me.Close()
     End Sub
+
 End Class

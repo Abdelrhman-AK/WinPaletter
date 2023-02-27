@@ -156,6 +156,7 @@
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem">
       <Private>False</Private>
     </Reference>
@@ -270,14 +271,6 @@
     <Compile Include="BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CP\CP.vb" />
-    <Compile Include="CP\CP_Defaults.vb" />
-    <Compile Include="Classes\MemoryFonts.vb" />
-    <Compile Include="Classes\NativeMethods.vb" />
-    <Compile Include="Classes\TypesExtensions.vb" />
-    <Compile Include="Classes\WinResources.vb" />
-    <Compile Include="Classes\XenonCore.vb" />
-    <Compile Include="Classes\XeSettings.vb" />
     <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </Compile>
@@ -308,6 +301,14 @@
     <Compile Include="Controllers\SubMenu.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CP\CP.vb" />
+    <Compile Include="CP\CP_Defaults.vb" />
+    <Compile Include="Classes\MemoryFonts.vb" />
+    <Compile Include="Classes\NativeMethods.vb" />
+    <Compile Include="Classes\TypesExtensions.vb" />
+    <Compile Include="Classes\WinResources.vb" />
+    <Compile Include="Classes\XenonCore.vb" />
+    <Compile Include="Classes\XeSettings.vb" />
     <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
       <DependentUpon>CursorsCustomizer.vb</DependentUpon>
     </Compile>
@@ -538,6 +539,21 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
+    <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
+      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\ComplexSave.resx">
+      <DependentUpon>ComplexSave.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\DragPreviewer.resx">
+      <DependentUpon>DragPreviewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Saving_ex_list.resx">
+      <DependentUpon>Saving_ex_list.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\SubMenu.resx">
+      <DependentUpon>SubMenu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
       <DependentUpon>LogonUIXP.vb</DependentUpon>
     </EmbeddedResource>
@@ -688,21 +704,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
-      <DependentUpon>ColorPickerDlg.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\ComplexSave.resx">
-      <DependentUpon>ComplexSave.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\DragPreviewer.resx">
-      <DependentUpon>DragPreviewer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\Saving_ex_list.resx">
-      <DependentUpon>Saving_ex_list.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\SubMenu.resx">
-      <DependentUpon>SubMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.vb</DependentUpon>

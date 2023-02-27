@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json
@@ -1006,6 +1007,35 @@ Public Module Icons
         ico.Dispose()
     End Function
 
+End Module
+
+Public Module Zips
+    <Extension()>
+    Public Sub ExtractToDirectory(ByVal archive As ZipArchive, ByVal destinationDirectoryName As String, ByVal overwrite As Boolean)
+        If Not overwrite Then
+            archive.ExtractToDirectory(destinationDirectoryName)
+            Return
+        End If
+
+        For Each file As ZipArchiveEntry In archive.Entries
+            Dim completeFileName As String = Path.Combine(destinationDirectoryName, file.FullName)
+
+            If file.Name = "" Then
+                Directory.CreateDirectory(Path.GetDirectoryName(completeFileName))
+                Continue For
+            End If
+
+            Dim dirToCreate = destinationDirectoryName
+
+            For i = 0 To file.FullName.Split("/"c).Length - 1 - 1
+                Dim s = file.FullName.Split("/"c)(i)
+                dirToCreate = Path.Combine(dirToCreate, s)
+                If Not Directory.Exists(dirToCreate) Then Directory.CreateDirectory(dirToCreate)
+            Next
+
+            file.ExtractToFile(completeFileName, True)
+        Next
+    End Sub
 End Module
 
 Public Module Others

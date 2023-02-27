@@ -1091,11 +1091,6 @@ Public Class Win32UI
         cpx.Dispose()
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
-        XenonToggle1.Checked = (XenonComboBox1.SelectedIndex = 0)
-        LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-    End Sub
 
     Private Sub XenonToggle2_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle2.CheckedChanged
         RetroWindow1.ColorGradient = XenonToggle2.Checked
@@ -1204,5 +1199,11 @@ Public Class Win32UI
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         VS2Win32UI.ShowDialog()
+    End Sub
+
+    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+        If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
+        XenonToggle1.Checked = (XenonComboBox1.SelectedIndex = 0)
+        LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
     End Sub
 End Class

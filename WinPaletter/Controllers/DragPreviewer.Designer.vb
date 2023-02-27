@@ -70,6 +70,7 @@ Partial Class DragPreviewer
         Me.RetroButton4 = New WinPaletter.RetroButton()
         Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroButton2 = New WinPaletter.RetroButton()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.pnl_preview.SuspendLayout()
         Me.XenonWindow1.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -127,9 +128,9 @@ Partial Class DragPreviewer
         Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
+        Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
-        Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
         Me.ActionCenter.Win7ColorBal = 100
         Me.ActionCenter.Win7GlowBal = 100
         '
@@ -164,6 +165,7 @@ Partial Class DragPreviewer
         Me.XenonWindow1.Win7ColorBal = 100
         Me.XenonWindow1.Win7GlowBal = 100
         Me.XenonWindow1.Win7Noise = 1.0!
+        Me.XenonWindow1.WinVista = False
         '
         'Panel5
         '
@@ -243,6 +245,7 @@ Partial Class DragPreviewer
         Me.XenonWindow2.Win7ColorBal = 100
         Me.XenonWindow2.Win7GlowBal = 100
         Me.XenonWindow2.Win7Noise = 1.0!
+        Me.XenonWindow2.WinVista = False
         '
         'start
         '
@@ -264,9 +267,9 @@ Partial Class DragPreviewer
         Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
+        Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
         Me.start.TabIndex = 1
         Me.start.Transparency = True
-        Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
         Me.start.Win7ColorBal = 100
         Me.start.Win7GlowBal = 100
         '
@@ -290,9 +293,9 @@ Partial Class DragPreviewer
         Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
+        Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
-        Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
         '
@@ -922,6 +925,8 @@ Partial Class DragPreviewer
         '
         'RetroButton4
         '
+        Me.RetroButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton4.AppearsAsPressed = False
         Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
@@ -941,6 +946,8 @@ Partial Class DragPreviewer
         '
         'RetroButton3
         '
+        Me.RetroButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton3.AppearsAsPressed = True
         Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
@@ -960,6 +967,8 @@ Partial Class DragPreviewer
         '
         'RetroButton2
         '
+        Me.RetroButton2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.RetroButton2.AppearsAsPressed = False
         Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
@@ -979,6 +988,17 @@ Partial Class DragPreviewer
         Me.RetroButton2.UseVisualStyleBackColor = False
         Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Location = New System.Drawing.Point(252, 161)
+        Me.ProgressBar1.MarqueeAnimationSpeed = 20
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(400, 15)
+        Me.ProgressBar1.Step = 1
+        Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee
+        Me.ProgressBar1.TabIndex = 37
+        Me.ProgressBar1.Visible = False
+        '
         'DragPreviewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -988,6 +1008,7 @@ Partial Class DragPreviewer
         Me.ControlBox = False
         Me.Controls.Add(Me.tabs_preview)
         Me.Controls.Add(Me.pnlRetroPreview)
+        Me.Controls.Add(Me.ProgressBar1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -1074,4 +1095,5 @@ Partial Class DragPreviewer
     Friend WithEvents RetroButton4 As RetroButton
     Friend WithEvents RetroButton3 As RetroButton
     Friend WithEvents RetroButton2 As RetroButton
+    Friend WithEvents ProgressBar1 As ProgressBar
 End Class

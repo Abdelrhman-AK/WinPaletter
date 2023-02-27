@@ -98,6 +98,15 @@ Namespace NativeMethods
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Boolean, fuWinIni As Integer) As Integer
 
+        Class Fixer
+
+            ''' <summary>
+            ''' It is used outside global user32 to fix issue of not remembring settings
+            ''' </summary>
+            Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
+
+        End Class
+
         ''' <summary>
         ''' SPI: System-wide parameter - Used in SystemParametersInfo function
         ''' </summary>

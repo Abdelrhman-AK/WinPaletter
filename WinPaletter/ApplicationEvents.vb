@@ -6,9 +6,9 @@ Imports System.Security.Principal
 Imports System.Threading
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
-Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.Runtime.InteropServices
+Imports System.IO.Compression
 
 Namespace My
     Module Env
@@ -524,7 +524,7 @@ Namespace My
                     WallMon_Watcher1.Stop()
                     WallMon_Watcher2.Stop()
 
-                    If Not W7 And Not W8 Then
+                    If Not W7 And Not W8 And Not My.WVista Then
                         WallMon_Watcher3.Stop()
                         WallMon_Watcher4.Stop()
                     End If
@@ -703,17 +703,21 @@ Namespace My
 
             Saving_Exceptions.Clear()
 
-            If W7 Or My.WVista Or My.WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
-            If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then
-                IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
-            Else
-                IO.Directory.Delete(appData & "\VisualStyles\Luna", True)
-                IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
-            End If
-            IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
-            ZipFile.ExtractToDirectory(appData & "\VisualStyles\Luna\Luna.zip", appData & "\VisualStyles\Luna")
-            IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+            Try
+                If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
+                IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
+                Dim s As New IO.FileStream(appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
+                Dim z As New ZipArchive(s, ZipArchiveMode.Read)
+                z.ExtractToDirectory(appData & "\VisualStyles\Luna", True)
+                z.Dispose()
+                s.Close()
+                s.Dispose()
+                IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+            Catch ex As Exception
+                BugReport.ThrowError(ex)
+            End Try
 
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
@@ -738,6 +742,7 @@ Namespace My
             End If
 #End Region
         End Sub
+
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try
