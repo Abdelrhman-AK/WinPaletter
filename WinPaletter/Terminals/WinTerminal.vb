@@ -13,16 +13,16 @@ Public Class WinTerminal : Implements ICloneable
     Public Property Theme As String = "system"
     Public Property UseAcrylicInTabRow As Boolean = False
 
-    Public Sub New(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable)
+    Public Sub New(str As String, Mode As Mode, Optional [Version] As Version = Version.Stable)
         Select Case Mode
             Case Mode.JSONFile
-                If IO.File.Exists(File) Then
-                    Dim St As New StreamReader(File)
+                If IO.File.Exists(str) Then
+                    Dim St As New StreamReader(str)
                     Dim JSON_String As String = St.ReadToEnd
                     Dim JSonFile As JObject = JObject.Parse(JSON_String)
 
-                    If JSonFile("useAcrylicInTabRow") IsNot Nothing Then useAcrylicInTabRow = JSonFile("useAcrylicInTabRow")
-                    If JSonFile("theme") IsNot Nothing Then theme = JSonFile("theme")
+                    If JSonFile("useAcrylicInTabRow") IsNot Nothing Then UseAcrylicInTabRow = JSonFile("useAcrylicInTabRow")
+                    If JSonFile("theme") IsNot Nothing Then Theme = JSonFile("theme")
 
 
 #Region "Getting Default Profile"
@@ -69,7 +69,7 @@ Public Class WinTerminal : Implements ICloneable
                                 If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
                             End If
                             '
-                            If item("commandline") IsNot Nothing Then P.commandline = item("commandline")
+                            If item("commandline") IsNot Nothing Then P.Commandline = item("commandline")
                             If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme") Else P.ColorScheme = DefaultProf.ColorScheme
                             If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
                             If item("icon") IsNot Nothing Then P.Icon = item("icon")
@@ -133,7 +133,7 @@ Public Class WinTerminal : Implements ICloneable
                             If item("tabRow")("unfocusedBackground") IsNot Nothing Then Th.Titlebar_Inactive = HEX2RGB(item("tabRow")("unfocusedBackground"))
                             If item("tab")("background") IsNot Nothing Then Th.Tab_Active = HEX2RGB(item("tab")("background"))
                             If item("tab")("unfocusedBackground") IsNot Nothing Then Th.Tab_Inactive = HEX2RGB(item("tab")("unfocusedBackground"))
-                            If item("window")("applicationTheme") IsNot Nothing Then Th.applicationTheme_light = item("window")("applicationTheme")
+                            If item("window")("applicationTheme") IsNot Nothing Then Th.ApplicationTheme_light = item("window")("applicationTheme")
                             Themes.Add(Th)
                         Next
                     End If
@@ -171,7 +171,7 @@ Public Class WinTerminal : Implements ICloneable
                            .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
 
-                    MsgBox(My.Lang.Terminal_SettingsNotExist, MsgBoxStyle.Critical, File)
+                    MsgBox(My.Lang.Terminal_SettingsNotExist, MsgBoxStyle.Critical, str)
                 End If
 
             Case Mode.WinPaletterFile
@@ -180,7 +180,7 @@ Public Class WinTerminal : Implements ICloneable
 
                 Dim lst As New List(Of String)
                 lst.Clear()
-                lst = File.CList
+                lst = str.CList
 
                 For Each lin As String In lst
 
@@ -199,7 +199,6 @@ Public Class WinTerminal : Implements ICloneable
 
 
                 Next
-
 
                 Dim Defs As New List(Of String)
                 Dim CollectedColors, EnumColors As New List(Of String)
@@ -237,42 +236,42 @@ Public Class WinTerminal : Implements ICloneable
                     Dim value As String = lin.Split("=")(1).Trim
 
                     Select Case prop.ToLower
-                        Case "name", My._strIgnore
+                        Case "name".ToLower
                             DefaultProf.Name = value
 
-                        Case "BackgroundImage", My._strIgnore
+                        Case "BackgroundImage".ToLower
                             DefaultProf.BackgroundImage = value
 
-                        Case "ColorScheme", My._strIgnore
+                        Case "ColorScheme".ToLower
                             DefaultProf.ColorScheme = value
 
-                        Case "TabTitle", My._strIgnore
+                        Case "TabTitle".ToLower
                             DefaultProf.TabTitle = value
 
-                        Case "Icon", My._strIgnore
+                        Case "Icon".ToLower
                             DefaultProf.Icon = value
 
-                        Case "CursorShape", My._strIgnore
+                        Case "CursorShape".ToLower
                             DefaultProf.CursorShape = value
 
-                        Case "Font", My._strIgnore
+                        Case "Font".ToLower
                             DefaultProf.Font.Face = value.Split(",")(0)
                             DefaultProf.Font.Size = value.Split(",")(1)
                             DefaultProf.Font.Weight = FontWeight_GetFromString(value.Split(",")(2))
 
-                        Case "TabColor", My._strIgnore
+                        Case "TabColor".ToLower
                             DefaultProf.TabColor = Color.FromArgb(value)
 
-                        Case "UseAcrylic", My._strIgnore
+                        Case "UseAcrylic".ToLower
                             DefaultProf.UseAcrylic = value
 
-                        Case "CursorHeight", My._strIgnore
+                        Case "CursorHeight".ToLower
                             DefaultProf.CursorHeight = value
 
-                        Case "Opacity", My._strIgnore
+                        Case "Opacity".ToLower
                             DefaultProf.Opacity = value
 
-                        Case "BackgroundImageOpacity", My._strIgnore
+                        Case "BackgroundImageOpacity".ToLower
                             DefaultProf.BackgroundImageOpacity = value
                     End Select
                 Next
@@ -290,42 +289,42 @@ Public Class WinTerminal : Implements ICloneable
                             Dim value As String = lin.Split("=")(1).Trim
 
                             Select Case prop.ToLower
-                                Case "Name", My._strIgnore
+                                Case "Name".ToLower
                                     P.Name = value
 
-                                Case "TabTitle", My._strIgnore
+                                Case "TabTitle".ToLower
                                     P.TabTitle = value
 
-                                Case "Icon", My._strIgnore
+                                Case "Icon".ToLower
                                     P.Icon = value
 
-                                Case "TabColor", My._strIgnore
+                                Case "TabColor".ToLower
                                     P.TabColor = Color.FromArgb(value)
 
-                                Case "UseAcrylic", My._strIgnore
+                                Case "UseAcrylic".ToLower
                                     P.UseAcrylic = value
 
-                                Case "Opacity", My._strIgnore
+                                Case "Opacity".ToLower
                                     P.Opacity = value
 
-                                Case "Font", My._strIgnore
+                                Case "Font".ToLower
                                     P.Font.Face = value.Split(",")(0)
                                     P.Font.Size = value.Split(",")(1)
                                     P.Font.Weight = FontWeight_GetFromString(value.Split(",")(2))
 
-                                Case "BackgroundImage", My._strIgnore
+                                Case "BackgroundImage".ToLower
                                     P.BackgroundImage = value
 
-                                Case "BackgroundImageOpacity", My._strIgnore
+                                Case "BackgroundImageOpacity".ToLower
                                     P.BackgroundImageOpacity = value
 
-                                Case "ColorScheme", My._strIgnore
+                                Case "ColorScheme".ToLower
                                     P.ColorScheme = value
 
-                                Case "CursorShape", My._strIgnore
+                                Case "CursorShape".ToLower
                                     P.CursorShape = value
 
-                                Case "CursorHeight", My._strIgnore
+                                Case "CursorHeight".ToLower
                                     P.CursorHeight = value
 
                             End Select
@@ -349,67 +348,67 @@ Public Class WinTerminal : Implements ICloneable
                             Dim value As String = lin.Split("=")(1).Trim
 
                             Select Case prop.ToLower
-                                Case "Name", My._strIgnore
+                                Case "Name".ToLower
                                     TC.Name = value
 
-                                Case "Background", My._strIgnore
+                                Case "Background".ToLower
                                     TC.Background = Color.FromArgb(value)
 
-                                Case "Foreground", My._strIgnore
+                                Case "Foreground".ToLower
                                     TC.Foreground = Color.FromArgb(value)
 
-                                Case "SelectionBackground", My._strIgnore
+                                Case "SelectionBackground".ToLower
                                     TC.SelectionBackground = Color.FromArgb(value)
 
-                                Case "Black", My._strIgnore
+                                Case "Black".ToLower
                                     TC.Black = Color.FromArgb(value)
 
-                                Case "Blue", My._strIgnore
+                                Case "Blue".ToLower
                                     TC.Blue = Color.FromArgb(value)
 
-                                Case "BrightBlack", My._strIgnore
+                                Case "BrightBlack".ToLower
                                     TC.BrightBlack = Color.FromArgb(value)
 
-                                Case "BrightBlue", My._strIgnore
+                                Case "BrightBlue".ToLower
                                     TC.BrightBlue = Color.FromArgb(value)
 
-                                Case "BrightCyan", My._strIgnore
+                                Case "BrightCyan".ToLower
                                     TC.BrightCyan = Color.FromArgb(value)
 
-                                Case "BrightGreen", My._strIgnore
+                                Case "BrightGreen".ToLower
                                     TC.BrightGreen = Color.FromArgb(value)
 
-                                Case "BrightPurple", My._strIgnore
+                                Case "BrightPurple".ToLower
                                     TC.BrightPurple = Color.FromArgb(value)
 
-                                Case "BrightRed", My._strIgnore
+                                Case "BrightRed".ToLower
                                     TC.BrightRed = Color.FromArgb(value)
 
-                                Case "BrightWhite", My._strIgnore
+                                Case "BrightWhite".ToLower
                                     TC.BrightWhite = Color.FromArgb(value)
 
-                                Case "BrightYellow", My._strIgnore
+                                Case "BrightYellow".ToLower
                                     TC.BrightYellow = Color.FromArgb(value)
 
-                                Case "CursorColor", My._strIgnore
+                                Case "CursorColor".ToLower
                                     TC.CursorColor = Color.FromArgb(value)
 
-                                Case "Cyan", My._strIgnore
+                                Case "Cyan".ToLower
                                     TC.Cyan = Color.FromArgb(value)
 
-                                Case "Green", My._strIgnore
+                                Case "Green".ToLower
                                     TC.Green = Color.FromArgb(value)
 
-                                Case "Purple", My._strIgnore
+                                Case "Purple".ToLower
                                     TC.Purple = Color.FromArgb(value)
 
-                                Case "Red", My._strIgnore
+                                Case "Red".ToLower
                                     TC.Red = Color.FromArgb(value)
 
-                                Case "White", My._strIgnore
+                                Case "White".ToLower
                                     TC.White = Color.FromArgb(value)
 
-                                Case "Yellow", My._strIgnore
+                                Case "Yellow".ToLower
                                     TC.Yellow = Color.FromArgb(value)
 
                             End Select
@@ -433,22 +432,22 @@ Public Class WinTerminal : Implements ICloneable
                             Dim value As String = lin.Split("=")(1).Trim
 
                             Select Case prop.ToLower
-                                Case "Name", My._strIgnore
+                                Case "Name".ToLower
                                     Th.Name = value
 
-                                Case "Titlebar_Active", My._strIgnore
+                                Case "Titlebar_Active".ToLower
                                     Th.Titlebar_Active = Color.FromArgb(value)
 
-                                Case "Titlebar_Inactive", My._strIgnore
+                                Case "Titlebar_Inactive".ToLower
                                     Th.Titlebar_Inactive = Color.FromArgb(value)
 
-                                Case "Tab_Active", My._strIgnore
+                                Case "Tab_Active".ToLower
                                     Th.Tab_Active = Color.FromArgb(value)
 
-                                Case "Tab_Inactive", My._strIgnore
+                                Case "Tab_Inactive".ToLower
                                     Th.Tab_Inactive = Color.FromArgb(value)
 
-                                Case "applicationTheme_light", My._strIgnore
+                                Case "applicationTheme_light".ToLower
                                     Th.ApplicationTheme_light = value
 
                             End Select
@@ -782,59 +781,82 @@ Public Class WinTerminal : Implements ICloneable
 
                 End Select
 
-
                 Dim S As New List(Of String)
                 S.Clear()
 
-                S.Add(String.Format("{0}{1}= {2}", First, "theme", Theme))
-                S.Add(String.Format("{0}{1}= {2}", First, "Enabled", Enabled))
-                S.Add(String.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", UseAcrylicInTabRow))
+                Try
+                    Try : S.Add(String.Format("{0}{1}= {2}", First, "theme", Theme)) : Catch : End Try
+                    Try : S.Add(String.Format("{0}{1}= {2}", First, "Enabled", Enabled)) : Catch : End Try
+                    Try : S.Add(String.Format("{0}{1}= {2}", First, "useAcrylicInTabRow", UseAcrylicInTabRow)) : Catch : End Try
+                Catch
+                End Try
 
-                Dim type1 As Type = DefaultProf.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+                Try
+                    Dim type1 As Type = DefaultProf.[GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
 
-                For Each [property] As PropertyInfo In properties1
-                    If [property].GetValue(Me.DefaultProf) IsNot Nothing Then
-                        S.Add(String.Format("{0}{1}.{2}= {3}", First, "Default", [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(Me.DefaultProf))))
-                    End If
-                Next
-
-                For Each c As TColor In Colors
-                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
-
-                    For Each [property] As PropertyInfo In properties2
-                        If [property].GetValue(c) IsNot Nothing Then
-                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
-                        End If
+                    For Each [property] As PropertyInfo In properties1
+                        Try
+                            If [property].GetValue(Me.DefaultProf) IsNot Nothing Then
+                                S.Add(String.Format("{0}{1}.{2}= {3}", First, "Default", [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(Me.DefaultProf))))
+                            End If
+                        Catch
+                        End Try
                     Next
+                Catch
+                End Try
 
-                Next
+                Try
 
-                For Each c As ProfilesList In Profiles
-                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+                    For Each c As TColor In Colors
+                        Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
 
-                    For Each [property] As PropertyInfo In properties2
-                        If [property].GetValue(c) IsNot Nothing And [property].Name <> "commandline" Then
-                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
-                        End If
+                        For Each [property] As PropertyInfo In properties2
+                            Try
+                                If [property].GetValue(c) IsNot Nothing Then
+                                    S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Schemes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                                End If
+                            Catch
+                            End Try
+                        Next
+
                     Next
+                Catch
+                End Try
 
-                Next
-
-                For Each c As ThemesList In Themes
-                    Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
-
-                    For Each [property] As PropertyInfo In properties2
-                        If [property].GetValue(c) IsNot Nothing Then
-                            S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
-                        End If
+                Try
+                    For Each c As ProfilesList In Profiles
+                        Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+                        Try
+                            For Each [property] As PropertyInfo In properties2
+                                If [property].GetValue(c) IsNot Nothing And [property].Name <> "commandline" Then
+                                    S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Profiles", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                                End If
+                            Next
+                        Catch
+                        End Try
                     Next
+                Catch
+                End Try
 
-                Next
+                Try
+                    For Each c As ThemesList In Themes
+                        Dim type2 As Type = c.[GetType]() : Dim properties2 As PropertyInfo() = type2.GetProperties()
+                        For Each [property] As PropertyInfo In properties2
+                            Try
+                                If [property].GetValue(c) IsNot Nothing Then
+                                    S.Add(String.Format("{0}{1}.{2}.{3}= {4}", First, "Themes", c.Name.Replace(" ", "").Replace(".", ""), [property].Name, ReturnPerfectValue([property].PropertyType, [property].GetValue(c))))
+                                End If
+                            Catch
+                            End Try
+                        Next
+                    Next
+                Catch
+                End Try
 
-                Return String.Join(vbCrLf, S.ToArray)
+                Return S.CString
 
             Case Else
-                Return "NonValid"
+                Return ""
 
         End Select
     End Function
@@ -1085,22 +1107,22 @@ Public Class ProfilesList : Implements IComparable : Implements ICloneable
     End Function
     Public Shared Function CursorShape_GetFromString(str As String) As CursorShape_Enum
         Select Case str.ToLower
-            Case "bar", My._strIgnore
+            Case "bar".ToLower
                 Return CursorShape_Enum.bar
 
-            Case "doubleunderscore", My._strIgnore
+            Case "doubleunderscore".ToLower
                 Return CursorShape_Enum.doubleUnderscore
 
-            Case "emptybox", My._strIgnore
+            Case "emptybox".ToLower
                 Return CursorShape_Enum.emptyBox
 
-            Case "filledbox", My._strIgnore
+            Case "filledbox".ToLower
                 Return CursorShape_Enum.filledBox
 
-            Case "underscore", My._strIgnore
+            Case "underscore".ToLower
                 Return CursorShape_Enum.underscore
 
-            Case "vintage", My._strIgnore
+            Case "vintage".ToLower
                 Return CursorShape_Enum.vintage
 
             Case Else
@@ -1164,37 +1186,37 @@ Public Class ProfilesList : Implements IComparable : Implements ICloneable
     Public Shared Function FontWeight_GetFromString(str As String) As FontWeight_Enum
         Select Case str.ToLower
 
-            Case "thin", My._strIgnore
+            Case "thin".ToLower
                 Return FontWeight_Enum.thin
 
-            Case "extra-light", My._strIgnore
+            Case "extra-light".ToLower
                 Return FontWeight_Enum.extra_light
 
-            Case "light", My._strIgnore
+            Case "light".ToLower
                 Return FontWeight_Enum.light
 
-            Case "semi-light", My._strIgnore
+            Case "semi-light".ToLower
                 Return FontWeight_Enum.semi_light
 
-            Case "medium", My._strIgnore
+            Case "medium".ToLower
                 Return FontWeight_Enum.medium
 
-            Case "normal", My._strIgnore
+            Case "normal".ToLower
                 Return FontWeight_Enum.normal
 
-            Case "semi-bold", My._strIgnore
+            Case "semi-bold".ToLower
                 Return FontWeight_Enum.semi_bold
 
-            Case "bold", My._strIgnore
+            Case "bold".ToLower
                 Return FontWeight_Enum.bold
 
-            Case "extra-bold", My._strIgnore
+            Case "extra-bold".ToLower
                 Return FontWeight_Enum.extra_bold
 
-            Case "black", My._strIgnore
+            Case "black".ToLower
                 Return FontWeight_Enum.black
 
-            Case "extra-black", My._strIgnore
+            Case "extra-black".ToLower
                 Return FontWeight_Enum.extra_black
 
             Case Else

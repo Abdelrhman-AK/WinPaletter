@@ -4988,6 +4988,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Cursor_Cross = Structures.Cursor.Load_Cursor_From_ListOfString(CUR_Cross_List)
 #End Region
 
+
 #Region "Windows Terminal"
                 CommandPrompt = Structures.Console.Load_Console_From_ListOfString(cmdList)
                 PowerShellx86 = Structures.Console.Load_Console_From_ListOfString(PS86List)
@@ -5295,8 +5296,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
             Case CP_Type.File
-                IO.File.WriteAllText(FileLocation, ToString)
+                If IO.File.Exists(FileLocation) Then
+                    Try : Kill(FileLocation) : Catch : End Try
+                End If
 
+                IO.File.WriteAllText(FileLocation, ToString)
         End Select
     End Sub
 
@@ -5366,8 +5370,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add(CommandPrompt.ToString("CMD"))
         tx.Add(PowerShellx86.ToString("PS_32"))
         tx.Add(PowerShellx64.ToString("PS_64"))
-        tx.Add(Terminal.ToString("WindowsTerminal_Stable", WinTerminal.Version.Stable))
-        tx.Add(TerminalPreview.ToString("WindowsTerminal_Preview", WinTerminal.Version.Preview))
+        Try : If Terminal IsNot Nothing Then tx.Add(Terminal.ToString("WindowsTerminal_Stable", WinTerminal.Version.Stable))
+        Catch : End Try
+        Try : If TerminalPreview IsNot Nothing Then tx.Add(TerminalPreview.ToString("WindowsTerminal_Preview", WinTerminal.Version.Preview))
+        Catch : End Try
         tx.Add("</Terminals>" & vbCrLf)
 
         tx.Add("<Cursors>")
