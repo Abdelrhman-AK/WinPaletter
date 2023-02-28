@@ -1,6 +1,54 @@
 # Changelog
 
 ---
+### 1.0.7.1
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` |  28 Feb 2023 |
+
+> **What's New?**
+
+# New Features:
+### 1. Extended support to Windows XP and Vista
+- In Windows XP, you can change specifically the themes and logonui preferences.
+- In Windows Vista, you can change specifically Windows colors.
+- It is necessary to read their [documentation in GitHub](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md)
+
+### 2. Windows Effects:
+- You can change now effects and animations in Windows, like window shadow, window transition animation, desktop icons label shadow, combobox animation and other effects.
+- Partially suggested in #80 by @Annix
+
+# Redesigns:
+- Classic Colors’ 3D objects (Formerly Win32UI) redesigned to make it have an illustrative look, with doing this #79
+- Changed some icons in Classic Colors as the previous ones were not obvious in relation to their functions.
+- Main Form Extra Tools buttons are condensed to make their container able to contain new\more features.
+
+# Improvements and bugs fixes:
+1. Classic Colors and Metrics & Fonts now have a button that imports preferences from a Visual Styles file.
+2. Windows Animations toggle is moved from “Windows Metrics and Fonts” to “Windows Effects”.
+3. Fixed bug in color picker that occurs during picking a color from the screen.
+4. Fixed issue of Font “Segoe UI”’s substitution not being saved into WinPaletter theme file.
+5. Fixed issue of Wallpaper Tone, if any value of it changed, WinPaletter couldn’t detect the change happened and so the confirmation dialog didn’t appear when you exit in the previous situation.
+6. Remove a code caused issue in GUI with high DPIs #70.
+7. Fixed an issue during application’s startup when listing monospaced fonts #73.
+8. Fixed an issue during rendering LogonUI images for Windows 8.1 & 7.
+9. Bug reporter improved and will show more details.
+10. Drag Previewer improved a bit.
+11. Known issue might occur during application’s startup when monitoring wallpaper\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.
+12. Now you can control cursors shadow.
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.0...v1.0.7.1) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.1) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.1) |
+
+---
 
 ### 1.0.7.0
 
