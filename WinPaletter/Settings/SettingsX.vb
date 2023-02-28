@@ -151,7 +151,7 @@ Public Class SettingsX
         With My.Lang
             Label11.Text = .Name
             Label12.Text = .TranslationVersion
-            Label14.Text = .AppVer & " and below"
+            Label14.Text = .AppVer & " " & My.Lang.AndBelow
             Label19.Text = .Lang
             Label16.Text = .LangCode
             Label22.Text = If(Not .RightToLeft, My.Lang.Lang_HasLeftToRight, My.Lang.Lang_HasRightToLeft)
@@ -515,7 +515,7 @@ Public Class SettingsX
 
                 Label11.Text = J("Information")("name")
                 Label12.Text = J("Information")("translationversion")
-                Label14.Text = J("Information")("appver").ToString & " and below"
+                Label14.Text = J("Information")("appver").ToString & " " & My.Lang.AndBelow
                 Label19.Text = J("Information")("lang")
                 Label16.Text = J("Information")("langcode")
                 Label22.Text = If(Not CBool(J("Information")("righttoleft")), My.Lang.Lang_HasLeftToRight, My.Lang.Lang_HasRightToLeft)

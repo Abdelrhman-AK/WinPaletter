@@ -14,7 +14,7 @@ Namespace NativeMethods
         Public Shared Function DwmIsCompositionEnabled(ByRef enabled As Boolean) As Integer
         End Function
 
-        <DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(ByVal hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
+        <DllImport("dwmapi")> Public Shared Function DwmExtendFrameIntoClientArea(hWnd As IntPtr, ByRef pMarInset As MARGINS) As Integer
         End Function
 
         <DllImport("dwmapi")> Friend Shared Function DwmSetWindowAttribute(ByVal hwnd As IntPtr, ByVal attr As Integer, ByRef attrValue As Integer, ByVal attrSize As Integer) As Integer

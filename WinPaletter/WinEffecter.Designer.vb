@@ -319,7 +319,7 @@ Partial Class WinEffecter
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(537, 35)
         Me.Label3.TabIndex = 0
-        Me.Label3.Text = "Selections and Icons"
+        Me.Label3.Text = "Selection Controls"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5

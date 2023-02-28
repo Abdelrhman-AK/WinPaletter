@@ -1,13 +1,30 @@
 {
   "Information": {
     "name": "Abdelrhman-AK",
-    "translationversion": "1.1",
+    "translationversion": "1.2",
     "lang": "العربية (Arabic)",
     "langcode": "ع (AR-EG)",
-    "appver": "1.0.7.0",
+    "appver": "1.0.7.1",
     "righttoleft": "True"
   },
   "Global Strings": {
+    "os_winvista": "ويندوز فيستا",
+    "os_winxp": "ويندوز XP",
+    "andbelow": "و أقل",
+    "vistalogonnotsupported": "تعديل واجهة تسجيل الدخول بويندوز فيستا غير مدعوم عن طريق سجل الويندوز. غير المعاينة لنظام آخر ثم حاول مجدداً.",
+    "monitorissue": "حدث خطأ أثناء تحميل مراقب سجل الويندوز (مُستخدم فى التحقق من تغيير الخلفية\\وضع الداكن من سجل الويندوز). اعادة ضبط خلفية سطح المكتب من الممكن أن يحل المشكلة.",
+    "monitorissue2": "على أيه حال، تحميل البرنامج سيستمر بدون المراقب.",
+    "cp_applying_winvista": "جار تطبيق ألوان ويندوز فيستا",
+    "cp_applying_winxp": "جار تطبيق ثيم ويندوز XP",
+    "cp_applying_logonuixp": "جار تطبيق واجهة تسجيل دخول ويندوز XP",
+    "cp_applying_wineffects": "جار تطبيق تأثيرات الويندوز",
+    "cp_wineffects_error": "حدث خطأ أثناء تطبيق تأثيرات الويندوز",
+    "cp_logonuixp_error": "حدث خطأ أثناء تطبيق واجهة تسجيل دخول ويندوز XP",
+    "cp_wvista_error": "حدث خطأ أثناء تطبيق ألوان ويندوز فيستا",
+    "cp_wxp_error": "حدث خطأ أثناء تطبيق ثيم ويندوز XP",
+    "cp_metricshighdpialert": "قم بتسجيل الخروج و الدخول بعد ضبط مقاسات و خطوط الويندوز مع وضع دقة شاشة عالية",
+    "cp_renderingcursors_error": "حدث خطأ أثناء معالجة مؤشرات الفأرة",
+    "cp_cursorsapplying_error": "حدث خطأ أثناء تطبيق مؤشرات الفأرة",
     "logoffquestion": "هل أنت متأكد من تسجيل الخروج؟",
     "logoffalert1": "هذا سيغلق جميع الملفات و التطبيقات المفتوحة",
     "logoffalert2": "\"Logoff\" يعادل \"Sign out\" فى ويندوز 8.1/10/11",
@@ -228,19 +245,63 @@
     "cp_applyingcursors": "جار تطبيق مؤشرات الفأرة ..."
   },
   "Forms Strings": {
-    "BK": "Text",
-    "WallpaperToner": {
-      "Text": "تلوين الخلفية",
+    "LogonUIXP": {
+      "Text": "واجهة تسجيل الدخول - ويندوز XP",
       "Controls": {
-        "XenonButton3.Text": "الافتراضى",
-        "XenonButton2.Text": "الحالى",
-        "Label3.Text": "صورة:",
-        "Label2.Text": "التشبع:",
-        "Label1.Text": "الاضاءة:",
-        "Label8.Text": "درجة اللون:",
-        "XenonButton4.Text": "حفظ كـ ...",
-        "Label19.Text": "معاينة",
-        "XenonButton9.Text": "المٌطبق الحالى",
+        "XenonCheckBox1.Text": "اظهار اعدادات اخرى (مثل زر اغلاق التشغيل)",
+        "Label3.Text": "لون الخلفية:",
+        "Label5.Text": "لمسات محددة لوضع ويندوز 2000",
+        "Label2.Text": "ويندوز 2000",
+        "Label1.Text": "ويندوز XP",
+        "Label13.Text": "نوع الواجهة",
+        "XenonButton9.Text": "الوضع المطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
+        "XenonButton10.Text": "تطبيق سريع",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للثيم الحالى"
+      }
+    },
+    "VS2Metrics": {
+      "Text": "حمل ملف ثيم ويندوز لمقاسات و خطوط",
+      "Controls": {
+        "XenonCheckBox2.Text": "ضمّن الخطوط",
+        "XenonCheckBox1.Text": "ضمّن المقاسات",
+        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل لمقاسات و خطوط",
+        "Label102.Text": "ملف:"
+      }
+    },
+    "VS2Win32UI": {
+      "Text": "حمل ملف ثيم ويندوز لألوان كلاسيك",
+      "Controls": {
+        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للألوان الكلاسيك",
+        "Label102.Text": "ملف:"
+      }
+    },
+    "WinEffecter": {
+      "Text": "تأثيرات الويندوز",
+      "Controls": {
+        "XenonCheckBox10.Text": "مربع التحديد الشفاف على سطح المكتب",
+        "Label5.Text": "أيقونات سطح المكتب",
+        "XenonCheckBox4.Text": "ظل وراء نص أيقونة سطح المكتب",
+        "XenonCheckBox9.Text": "تأثيرات حركية مُفعلة",
+        "Label4.Text": "تلميح",
+        "XenonCheckBox7.Text": "التمرير السلس فى صندوق القائمة",
+        "XenonCheckBox8.Text": "تأثيرات القائمة المنسدلة",
+        "Label3.Text": "أدوات الاختيار",
+        "XenonCheckBox5.Text": "اجعل العنصر المُختار بتأثير التلاشى",
+        "XenonCheckBox6.Text": "تأثيرات حركية مُفعلة",
+        "Label2.Text": "قائمة",
+        "XenonCheckBox3.Text": "تأثيرات النظام",
+        "XenonCheckBox2.Text": "ظل حدود النافذة",
+        "XenonCheckBox1.Text": "تأثيرات حركية (أغلاق\\فتح\\تكبير\\تصغير\\...)",
+        "Label1.Text": "عام",
+        "XenonButton9.Text": "الوضع المطبق الحالى",
         "Label12.Text": "فتح من:",
         "XenonButton11.Text": "ثيم WinPaletter",
         "XenonButton12.Text": "ويندوز افتراضى",
@@ -252,6 +313,7 @@
     "About": {
       "Text": "عن",
       "Controls": {
+        "XenonLinkLabel3.Text": "الحصول على عناصر ملف الثيم (*.msstyles) بواسطة Advanced UxTheme wrapper",
         "XenonLinkLabel2.Text": "تلوين الصورة (HSL) بواسطة ميران يوان (مستخدمة فى تلوين الخلفية)",
         "XenonLinkLabel1.Text": "تصميم النوافذ العصرية بواسطة Ookii.Dialogs.WinForms",
         "Label17.Text": "WinPaletter",
@@ -274,7 +336,7 @@
       }
     },
     "BugReport": {
-      "Text": "خطأ جسيم",
+      "Text": "تقرير الخطأ",
       "Controls": {
         "XenonButton6.Text": "التقارير السابقة",
         "XenonButton4.Text": "حفظ التفاصيل كـ ...",
@@ -282,7 +344,7 @@
         "Label4.Text": "تفاصيل الخطأ:",
         "Label5.Text": "إصدار WinPaletter:",
         "Label1.Text": "معلومات النظام:",
-        "Label7.Text": "يوجد  خطأ جسيم، من فضلك حاول مجدداً أو ارفع التقرير على أخطاء جيت هب.",
+        "Label7.Text": "حدث خطأ ما، من فضلك حاول مجدداً أو ارفع التقرير على أخطاء جيت هب.",
         "XenonButton5.Text": "مشاكل جيت هب",
         "XenonButton2.Text": "اخرج",
         "XenonButton1.Text": "إستكمال"
@@ -383,6 +445,7 @@
     "CursorsStudio": {
       "Text": "أستوديو مؤشر الفأرة",
       "Controls": {
+        "XenonCheckBox9.Text": "Make Cursors have a shadow",
         "XenonButton7.Text": "ثيم WinPaletter مُصدر",
         "XenonButton8.Text": "ويندوز إفتراضى",
         "XenonButton9.Text": "اللوحة الحالية",
@@ -549,8 +612,41 @@
     "MainFrm": {
       "Text": "WinPaletter",
       "Controls": {
+        "Select_WXP.Tag": "تغيير العرض لويندوز XP",
+        "Select_WVista.Tag": "تغيير العرض لويندوز فيستا",
+        "Label80.Text": "اللون الرئيسى",
+        "Label70.Text": "أيرو",
+        "Label72.Text": "ثيم",
+        "Label73.Text": "أيرو معتم",
+        "Label74.Text": "بيزك",
+        "Label75.Text": "كلاسيك",
+        "Label71.Text": "ثيم خارجى",
+        "Label69.Text": "نسق:",
+        "Label67.Text": "ملف:",
+        "Label68.Text": "خارجى",
+        "Label66.Text": "كلاسيك",
+        "Label62.Text": "لونا أزرق",
+        "Label63.Text": "ثيم",
+        "Label64.Text": "لونا أخضر",
+        "Label65.Text": "لونا فضى",
+        "WXP_Alert2.Text": "لو كان ثيم كلاسيك مطبق وفتحت WinPaletter، العرض لن يعمل مع الثيمات الأخرى بسبب بعض التحديدات فى عارض ملف الثيمات. طبق ثيم آخر ثم قم باعادة فتح WinPaletter.",
+        "WXP_Alert1.Text": "الثيم الخارجى يتطلب ويندوز بـUX-Theme Patcher",
+        "Label76.Text": "اجعل اختيار ثيم يبدل:",
+        "WXP_VS_ReplaceFonts.Text": "خطوط النظام",
+        "WXP_VS_ReplaceMetrics.Text": "مقاسات الويندوز",
+        "WXP_VS_ReplaceColors.Text": "الألوان الكلاسيكية",
+        "WXP_Alert3.Text": "من الممكن أن يكون WinPaletter على ويندوز XP غير مستقر، من الممكن أن تواجه دائماً أخطاء عند تطبيق ثيم خارجى أو تواجه أخطاء اخرى. من فضلك قم بقراءة المستند على جيت هب.",
+        "TabPage8.Text": "WVista",
+        "TabPage9.Text": "WXP",
+        "XenonButton29.Tag": "تأثيرات الويندوز",
+        "XenonButton26.Tag": "لون الخلفية",
+        "XenonButton27.Tag": "خطوط و مقاسات",
+        "XenonButton24.Tag": "موجهى الأوامر ...",
+        "XenonButton21.Tag": "مؤشرات الفأرة",
+        "XenonButton16.Tag": "واجهة تسجيل الدخول",
+        "XenonButton4.Tag": "ألوان كلاسيك",
         "RetroButton2.Text": "ابدأ",
-        "XenonButton26.Text": "تلوين الخلفية",
+        "XenonButton26.Text": "",
         "XenonButton28.Text": "تسجيل خروج",
         "XenonButton25.Text": "اقف المؤقت",
         "TabPage1.Text": "W11",
@@ -637,12 +733,12 @@
         "XenonButton9.Tag": "حفظ ملف الثيم كـ ...",
         "XenonButton3.Tag": "إنشاء ملف ثيم (لوحة ألوان) جديدة",
         "XenonButton2.Tag": "فتح ملف ثيم",
-        "XenonButton27.Text": "مقاس/خط",
-        "XenonButton24.Text": "منفذى الأوامر ...",
-        "XenonButton21.Text": "المؤشرات",
-        "XenonButton16.Text": "شاشة تسجيل الدخول",
-        "XenonButton4.Text": "ألوان كلاسيك",
-        "XenonButton19.Text": "أعد تشغيل المتصفح",
+        "XenonButton27.Text": "",
+        "XenonButton24.Text": "",
+        "XenonButton21.Text": "",
+        "XenonButton16.Text": "",
+        "XenonButton4.Text": "",
+        "XenonButton19.Text": "اعد تشغيل المتصفح",
         "apply_btn.Text": "طبق",
         "XenonButton13.Text": "إلغاء"
       }
@@ -650,6 +746,7 @@
     "Metrics_Fonts": {
       "Text": "مقاسات و خطوط",
       "Controls": {
+        "XenonButton20.Text": "ملف ثيم حديث",
         "Label14.Text": "شريط الحالة",
         "Label13.Text": "هذا نص معروض كرسالة",
         "XenonAlertBox9.Text": "قائمة ابدأ فى ويندوز 10 لا يمكن تغيير خطها. ستبقى هى على خط \"Segoe UI\" حتى لو تم الاستبدال بصورة صحيحة",
@@ -1067,10 +1164,46 @@
     "Whatsnew": {
       "Text": "ما الجديد!",
       "Controls": {
+        "XenonButton4.Text": "Documentation",
+        "Label6.Text": "• In Windows XP, you can change specifically the themes and logonui preferences.\r\n\r\n• In Windows Vista, you can change specifically the themes with its colors.\r\n\r\n• It is necessary to read their documentation in GitHub",
+        "Label4.Text": "Extended Support to Windows XP and Windows Vista",
+        "Label21.Text": "• You can change now effects and animations in Windows, like window shadow, window transition animation, desktop icons label shadow, combobox animation and other effects.",
+        "Label22.Text": "Windows Effects",
+        "Label23.Text": "• Classic Colors’ 3D objects (Formerly Win32UI) redesigned to make it have an illustrative look.\r\n\r\n• Changed some icons in Classic Colors as the previous ones were not obvious in relation to their functions.\r\n\r\n• Main Form Extra Tools buttons are condensed to make their container able to contain new\\more features.",
+        "Label24.Text": "Redesigns",
+        "Label3.Text": "• Classic Colors and Metrics && Fonts now have a button that imports preferences from a Visual Styles file.\r\n\r\n• Windows Animations toggle is moved from “Windows Metrics and Fonts” to “Windows Effects”.\r\n\r\n• Fixed bug in color picker that occurs during picking a color from the screen.\r\n\r\n• Fixed issue of Font “Segoe UI”’s substitution not being saved into WinPaletter theme file.\r\n\r\n• Fixed issue of Wallpaper Tone, if any value of it changed, WinPaletter couldn’t detect the change happened and so the confirmation dialog didn’t appear when you exit in the previous situation.\r\n\r\n• Remove a code caused issue in GUI with high DPIs.\r\n\r\n• Fixed an issue during application’s startup when listing monospaced fonts.",
+        "Label1.Text": "Improvements and Bugs Fixes #1",
+        "Label5.Text": "• Fixed an issue during rendering LogonUI images for Windows 8.1 && 7.\r\n\r\n• Bug reporter improved and will show more details.\r\n\r\n• Drag Previewer improved a bit.\r\n\r\n• Known issue might occur during application’s startup when monitoring wallpaper\\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.",
+        "Label7.Text": "Improvements and Bugs Fixes #2",
+        "TabPage1.Text": "Windows XP, Vista",
+        "TabPage10.Text": "Windows Effects",
+        "TabPage11.Text": "Redesigns",
+        "TabPage2.Text": "Improvements #1",
+        "TabPage3.Text": "Improvements #2",
         "Label2.Text": "ما الجديد",
         "XenonButton3.Text": "تفاصيل سجل التغييرات",
         "XenonButton2.Text": "السابق",
         "XenonButton1.Text": "التالى"
+      }
+    },
+    "WallpaperToner": {
+      "Text": "تلوين الخلفية",
+      "Controls": {
+        "XenonButton3.Text": "الافتراضى",
+        "XenonButton2.Text": "الحالى",
+        "Label3.Text": "صورة:",
+        "Label2.Text": "التشبع:",
+        "Label1.Text": "الاضاءة:",
+        "Label8.Text": "درجة اللون:",
+        "XenonButton4.Text": "حفظ كـ ...",
+        "Label19.Text": "معاينة",
+        "XenonButton9.Text": "المٌطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
+        "XenonButton10.Text": "تطبيق سريع",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للثيم الحالى"
       }
     },
     "Win32UI": {
@@ -1134,7 +1267,7 @@
         "Label41.Text": "معاينة",
         "XenonButton10.Text": "تطبيق سريع",
         "XenonAlertBox1.Text": "هذه الألوان مطبقة فقط بواسطة بعض عناصر الويندوز مثل خلفيات النوافذ و العناصر الكلاسيك فى البرامج القديمة (16-بت)",
-        "XenonButton8.Text": "تلميح",
+        "XenonButton8.Text": "ملف ثيم حديث",
         "XenonButton4.Text": "اجعل عناصر الثلاثية الأبعاد تبدو كلاسيكية",
         "XenonButton2.Text": "إلغاء",
         "XenonButton1.Text": "حمل هذه الألوان فى اللوحة الحالية"

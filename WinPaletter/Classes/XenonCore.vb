@@ -714,7 +714,7 @@ Public Module FormDWMEffects
             ElseIf My.W10 AndAlso Transparency_W11_10 Then
                 [Form].DrawAcrylic(Border)
 
-            ElseIf (My.W7 OrElse My.WVista) AndAlso Transparency_W7 Then
+            ElseIf (My.W7 Or My.WVista) AndAlso Transparency_W7 Then
                 [Form].DrawAero
 
             Else

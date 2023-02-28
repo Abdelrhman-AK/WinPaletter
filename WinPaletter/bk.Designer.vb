@@ -37,6 +37,8 @@ Partial Class BK
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "BK"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.TransparencyKey = System.Drawing.Color.Black
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

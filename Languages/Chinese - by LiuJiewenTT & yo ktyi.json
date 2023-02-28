@@ -226,10 +226,6 @@
     "cp_applyingcursors": "正在应用光标..."
   },
   "Forms Strings": {
-    "BK": {
-      "Text": "",
-      "Controls": {}
-    },
     "WallpaperToner": {
       "Text": "墙纸色调",
       "Controls": {
@@ -551,7 +547,6 @@
       "Text": "WinPaletter",
       "Controls": {
         "RetroButton2.Text": "开始",
-        "XenonButton26.Text": "墙纸色调",
         "Label49.Text": "Accents (强调)",
         "XenonButton25.Text": "停止计时器",
         "TabPage1.Text": "W11",
@@ -638,11 +633,6 @@
         "XenonButton9.Tag": "主题文件另存为...",
         "XenonButton3.Tag": "创建新主题",
         "XenonButton2.Tag": "打开主题文件",
-        "XenonButton27.Text": "度量、字体",
-        "XenonButton24.Text": "终端...",
-        "XenonButton21.Text": "光标",
-        "XenonButton16.Text": "登录界面",
-        "XenonButton4.Text": "经典颜色",
         "XenonButton28.Text": "注销",
         "XenonButton19.Text": "重启资源管理器",
         "apply_btn.Text": "应用",
@@ -1174,7 +1164,6 @@
         "Label41.Text": "预览",
         "XenonButton10.Text": "快速应用",
         "XenonAlertBox1.Text": "这些仅适用于某些元素（对话框背景、前景色、...）和经典/非主题应用程序（例如 VB6、非主题 OTVDM）",
-        "XenonButton8.Text": "提示",
         "XenonButton4.Text": "使 3D 看起来像 Windows 9x",
         "XenonButton2.Text": "取消",
         "XenonButton1.Text": "加载到当前调色板中"

@@ -346,6 +346,8 @@ Partial Class MainFrm
         Me.WVista_theme_aeroopaque = New WinPaletter.XenonRadioImage()
         Me.Label75 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.WXP_Alert2 = New WinPaletter.XenonAlertBox()
+        Me.WXP_Alert1 = New WinPaletter.XenonAlertBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.WXP_VS_ReplaceFonts = New WinPaletter.XenonCheckBox()
         Me.WXP_VS_ReplaceMetrics = New WinPaletter.XenonCheckBox()
@@ -413,8 +415,6 @@ Partial Class MainFrm
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
-        Me.WXP_Alert1 = New WinPaletter.XenonAlertBox()
-        Me.WXP_Alert2 = New WinPaletter.XenonAlertBox()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -4897,6 +4897,44 @@ Partial Class MainFrm
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
+        'WXP_Alert2
+        '
+        Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.WXP_Alert2.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.WXP_Alert2.CenterText = True
+        Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.WXP_Alert2.Image = Nothing
+        Me.WXP_Alert2.Location = New System.Drawing.Point(3, 401)
+        Me.WXP_Alert2.Name = "WXP_Alert2"
+        Me.WXP_Alert2.Size = New System.Drawing.Size(513, 60)
+        Me.WXP_Alert2.TabIndex = 54
+        Me.WXP_Alert2.TabStop = False
+        Me.WXP_Alert2.Text = "If classic theme is enabled and you open WinPaletter, the preview won't work for " &
+    "other themes due to some limitations in Visual Styles Previewer. Apply another t" &
+    "heme first then reopen WinPaletter."
+        '
+        'WXP_Alert1
+        '
+        Me.WXP_Alert1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.WXP_Alert1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.WXP_Alert1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.WXP_Alert1.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.WXP_Alert1.CenterText = True
+        Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.WXP_Alert1.Image = Nothing
+        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 369)
+        Me.WXP_Alert1.Name = "WXP_Alert1"
+        Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
+        Me.WXP_Alert1.TabIndex = 53
+        Me.WXP_Alert1.TabStop = False
+        Me.WXP_Alert1.Text = "External Theme\Visual Styles require a UX-Theme-Patched Windows"
+        '
         'Label76
         '
         Me.Label76.AutoEllipsis = True
@@ -4919,7 +4957,7 @@ Partial Class MainFrm
         Me.WXP_VS_ReplaceFonts.Name = "WXP_VS_ReplaceFonts"
         Me.WXP_VS_ReplaceFonts.Size = New System.Drawing.Size(129, 23)
         Me.WXP_VS_ReplaceFonts.TabIndex = 51
-        Me.WXP_VS_ReplaceFonts.Text = "System Fonts" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.WXP_VS_ReplaceFonts.Text = "System Fonts"
         '
         'WXP_VS_ReplaceMetrics
         '
@@ -5881,44 +5919,6 @@ Partial Class MainFrm
         '
         Me.OpenFileDialog2.DefaultExt = "wpt"
         Me.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme"
-        '
-        'WXP_Alert1
-        '
-        Me.WXP_Alert1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.WXP_Alert1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WXP_Alert1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.WXP_Alert1.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.WXP_Alert1.CenterText = True
-        Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.WXP_Alert1.Image = Nothing
-        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 369)
-        Me.WXP_Alert1.Name = "WXP_Alert1"
-        Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
-        Me.WXP_Alert1.TabIndex = 53
-        Me.WXP_Alert1.TabStop = False
-        Me.WXP_Alert1.Text = "External Theme\Visual Styles require a UX-Theme-Patched Windows"
-        '
-        'WXP_Alert2
-        '
-        Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.WXP_Alert2.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.WXP_Alert2.CenterText = True
-        Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.WXP_Alert2.Image = Nothing
-        Me.WXP_Alert2.Location = New System.Drawing.Point(3, 401)
-        Me.WXP_Alert2.Name = "WXP_Alert2"
-        Me.WXP_Alert2.Size = New System.Drawing.Size(513, 60)
-        Me.WXP_Alert2.TabIndex = 54
-        Me.WXP_Alert2.TabStop = False
-        Me.WXP_Alert2.Text = "If classic theme is enabled and you open WinPaletter, the preview won't work for " &
-    "other themes due to some limitations in Visual Styles Previewer. Apply another t" &
-    "heme first then reopen WinPaletter."
         '
         'MainFrm
         '

@@ -70,7 +70,6 @@ Partial Class DragPreviewer
         Me.RetroButton4 = New WinPaletter.RetroButton()
         Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroButton2 = New WinPaletter.RetroButton()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.pnl_preview.SuspendLayout()
         Me.XenonWindow1.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -988,17 +987,6 @@ Partial Class DragPreviewer
         Me.RetroButton2.UseVisualStyleBackColor = False
         Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
-        'ProgressBar1
-        '
-        Me.ProgressBar1.Location = New System.Drawing.Point(252, 161)
-        Me.ProgressBar1.MarqueeAnimationSpeed = 20
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(400, 15)
-        Me.ProgressBar1.Step = 1
-        Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee
-        Me.ProgressBar1.TabIndex = 37
-        Me.ProgressBar1.Visible = False
-        '
         'DragPreviewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1008,7 +996,6 @@ Partial Class DragPreviewer
         Me.ControlBox = False
         Me.Controls.Add(Me.tabs_preview)
         Me.Controls.Add(Me.pnlRetroPreview)
-        Me.Controls.Add(Me.ProgressBar1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -1095,5 +1082,4 @@ Partial Class DragPreviewer
     Friend WithEvents RetroButton4 As RetroButton
     Friend WithEvents RetroButton3 As RetroButton
     Friend WithEvents RetroButton2 As RetroButton
-    Friend WithEvents ProgressBar1 As ProgressBar
 End Class

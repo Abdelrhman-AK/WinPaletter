@@ -152,6 +152,7 @@ Public Class Localizer : Implements IDisposable
     Property Stable As String = "Stable"
     Property Beta As String = "Beta"
     Property Channel As String = "Channel"
+    Property AndBelow As String = "and below"
     Property InvalidTheme As String = "Error: Invalid Theme File."
     Property ThemeNotExist As String = "Theme File doesn't exist."
     Property OS_Win11 As String = "Windows 11"
@@ -391,6 +392,7 @@ Public Class Localizer : Implements IDisposable
             With Whatsnew.Label22 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             With Whatsnew.Label24 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
             With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
+            With Whatsnew.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
         End If
 
     End Sub
@@ -434,26 +436,28 @@ Public Class Localizer : Implements IDisposable
             Dim ins As New Form
             ins = DirectCast(Activator.CreateInstance(f), Form)
 
-            Dim j_ctrl, j_child As New JObject()
-            j_ctrl.RemoveAll()
-            j_child.RemoveAll()
+            If ins.Name.ToLower <> BK.Name.ToLower Then
+                Dim j_ctrl, j_child As New JObject()
+                j_ctrl.RemoveAll()
+                j_child.RemoveAll()
 
-            j_ctrl.Add("Text", ins.Text)
+                j_ctrl.Add("Text", ins.Text)
 
-            For Each ctrl In GetAllControls(ins)
+                For Each ctrl In GetAllControls(ins)
 
-                If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
-                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
-                End If
+                    If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
+                        j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                    End If
 
-                If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
-                    j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
-                End If
-            Next
+                    If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                        j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
+                    End If
+                Next
 
-            If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
+                If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
 
-            j_Forms.Add(ins.Name, j_ctrl)
+                j_Forms.Add(ins.Name, j_ctrl)
+            End If
 
             ins.Dispose()
             'End If

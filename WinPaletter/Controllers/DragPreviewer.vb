@@ -8,11 +8,14 @@ Public Class DragPreviewer
     Public File As String
 
     Private Sub DragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SuspendLayout()
+
         MainFrm.MakeItDoubleBuffered(Me)
         MainFrm.MakeItDoubleBuffered(pnl_preview)
         MainFrm.MakeItDoubleBuffered(pnlRetroPreview)
-        tabs_preview.Visible = False
-        pnlRetroPreview.Visible = False
+
+        Opacity = 0
+        Visible = False
 
         If My.W11 Or My.W10 Then
             FormBorderStyle = FormBorderStyle.None
@@ -26,11 +29,7 @@ Public Class DragPreviewer
 
         DrawDWMEffect(True, FormStyle.Acrylic)
 
-        ProgressBar1.Visible = True
-    End Sub
-
-    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        CP = New CP(CP.CP_Type.File, File, True)
+        CP = New CP(CP_Type.File, File, True)
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -61,11 +60,12 @@ Public Class DragPreviewer
         SetClassicMetrics(CP)
         AdjustClassicPreview()
 
-        ProgressBar1.Visible = False
+        ResumeLayout()
+    End Sub
 
-        tabs_preview.Visible = True
-        pnlRetroPreview.Visible = True
-
+    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Opacity = 1
+        Visible = True
         Me.Invalidate()
     End Sub
 
