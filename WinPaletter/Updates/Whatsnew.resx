@@ -189,19 +189,10 @@
         s8G+j39vWFjYvwD6pNp+6eQ0EwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>• Fixed an issue during rendering LogonUI images for Windows 8.1 &amp;&amp; 7.
-
-• Bug reporter improved and will show more details.
-
-• Drag Previewer improved a bit.
-
-• Known issue might occur during application’s startup when monitoring wallpaper\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.</value>
-  </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>• In Windows XP, you can change specifically the themes and logonui preferences.
 
-• In Windows Vista, you can change specifically the themes with its colors.
+• In Windows Vista, you can change specifically Windows colors.
 
 • It is necessary to read their documentation in GitHub</value>
   </data>
@@ -226,6 +217,17 @@
 • Remove a code caused issue in GUI with high DPIs.
 
 • Fixed an issue during application’s startup when listing monospaced fonts.</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>• Fixed an issue during rendering LogonUI images for Windows 8.1 &amp;&amp; 7.
+
+• Bug reporter improved and will show more details.
+
+• Drag Previewer improved a bit.
+
+• Known issue might occur during application’s startup when monitoring wallpaper\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.
+
+• Now you can control cursors shadow.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
