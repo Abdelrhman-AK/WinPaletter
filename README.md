@@ -35,7 +35,8 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 | Operation System                                       | Requirements                                                                             |
 | ------------------------------------------------------ | -----------------------------------------------------------------------------------------|
-| **Windows 7, 8.1, XP on OneCore API**                                     | WinPaletter `1.0.5.0` and **Higher** + [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`    |
+| **Windows XP**                                         | WinPaletter `1.0.7.1` and **Higher** + OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md)
+| **Windows 7, 8.1                                       | WinPaletter `1.0.5.0` and **Higher** + [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`    |
 | **Windows 10, 11**                                     | WinPaletter `Any Version` + .Net Framework 4.8 is already pre-installed, so no extra step is required.               |
 
 ---
