@@ -5799,7 +5799,7 @@ Partial Class MainFrm
         Me.XenonButton30.Image = CType(resources.GetObject("XenonButton30.Image"), System.Drawing.Image)
         Me.XenonButton30.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(133, Byte), Integer))
         Me.XenonButton30.LineSize = 1
-        Me.XenonButton30.Location = New System.Drawing.Point(186, 3)
+        Me.XenonButton30.Location = New System.Drawing.Point(194, 3)
         Me.XenonButton30.Name = "XenonButton30"
         Me.XenonButton30.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton30.TabIndex = 33
@@ -5816,7 +5816,7 @@ Partial Class MainFrm
         Me.XenonButton29.Image = CType(resources.GetObject("XenonButton29.Image"), System.Drawing.Image)
         Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(111, Byte), Integer))
         Me.XenonButton29.LineSize = 1
-        Me.XenonButton29.Location = New System.Drawing.Point(228, 3)
+        Me.XenonButton29.Location = New System.Drawing.Point(235, 3)
         Me.XenonButton29.Name = "XenonButton29"
         Me.XenonButton29.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton29.TabIndex = 32
@@ -5832,7 +5832,7 @@ Partial Class MainFrm
         Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label61.Location = New System.Drawing.Point(4, 4)
         Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(178, 58)
+        Me.Label61.Size = New System.Drawing.Size(184, 58)
         Me.Label61.TabIndex = 31
         Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -5846,7 +5846,7 @@ Partial Class MainFrm
         Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
         Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(111, Byte), Integer))
         Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(270, 3)
+        Me.XenonButton26.Location = New System.Drawing.Point(276, 3)
         Me.XenonButton26.Name = "XenonButton26"
         Me.XenonButton26.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton26.TabIndex = 30
@@ -5863,7 +5863,7 @@ Partial Class MainFrm
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
         Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.XenonButton27.LineSize = 1
-        Me.XenonButton27.Location = New System.Drawing.Point(312, 3)
+        Me.XenonButton27.Location = New System.Drawing.Point(317, 3)
         Me.XenonButton27.Name = "XenonButton27"
         Me.XenonButton27.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton27.TabIndex = 29
@@ -5880,7 +5880,7 @@ Partial Class MainFrm
         Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
         Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(354, 3)
+        Me.XenonButton24.Location = New System.Drawing.Point(358, 3)
         Me.XenonButton24.Name = "XenonButton24"
         Me.XenonButton24.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton24.TabIndex = 28
@@ -5897,7 +5897,7 @@ Partial Class MainFrm
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
         Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
         Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(396, 3)
+        Me.XenonButton21.Location = New System.Drawing.Point(399, 3)
         Me.XenonButton21.Name = "XenonButton21"
         Me.XenonButton21.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton21.TabIndex = 27
@@ -5914,7 +5914,7 @@ Partial Class MainFrm
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(480, 3)
+        Me.XenonButton16.Location = New System.Drawing.Point(481, 3)
         Me.XenonButton16.Name = "XenonButton16"
         Me.XenonButton16.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton16.TabIndex = 26
@@ -5931,7 +5931,7 @@ Partial Class MainFrm
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(81, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(438, 3)
+        Me.XenonButton4.Location = New System.Drawing.Point(440, 3)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton4.TabIndex = 25

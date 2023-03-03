@@ -1559,8 +1559,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
 
-                    'ShowWinContentDrag should be re-written in registry as SystemParametersInfo looses its effect after logoff here
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger)
+                    'ShowWinContentDrag should be re-written in registry with string format as SystemParametersInfo looses its effect after logoff here
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger, RegistryValueKind.String)
+
+                    User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
                 End If
             End Sub
 

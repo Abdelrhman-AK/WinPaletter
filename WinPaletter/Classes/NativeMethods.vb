@@ -105,7 +105,6 @@ Namespace NativeMethods
             ''' It is used outside global user32 to fix issue of not remembring settings
             ''' </summary>
             Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
-
         End Class
 
         ''' <summary>
