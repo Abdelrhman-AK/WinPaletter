@@ -60,6 +60,11 @@ Public Class DragPreviewer
         SetClassicMetrics(CP)
         AdjustClassicPreview()
 
+        XenonAlertBox11.Text = MainFrm.WXP_Alert2.Text
+        XenonAlertBox11.Text = MainFrm.WXP_Alert2.Text
+        XenonAlertBox11.Size = XenonAlertBox11.Parent.Size - New Size(40, 40)
+        XenonAlertBox11.Location = New Point(20, 20)
+
         ResumeLayout()
     End Sub
 
@@ -683,6 +688,7 @@ Public Class DragPreviewer
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
         Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
         tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        XenonAlertBox11.Visible = MainFrm.PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -1091,7 +1097,7 @@ Public Class DragPreviewer
 
 
         Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu_Window.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
+        Menu_Window.Left = Math.Min(RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3, RetroWindow2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
 
         RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
         RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
@@ -1099,6 +1105,7 @@ Public Class DragPreviewer
         RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
         RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
 
+        RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
     End Sub
 
     Sub ApplyRetroPreview([CP] As CP)
@@ -1303,6 +1310,7 @@ Public Class DragPreviewer
 
         Refresh17BitPreference([CP])
 
+        RetroShadow1.refresh
     End Sub
 
     Sub Refresh17BitPreference([CP] As CP)
@@ -1337,6 +1345,21 @@ Public Class DragPreviewer
         menuhilight.Invalidate()
         highlight.Invalidate()
 
+    End Sub
+
+    Private Sub Menu_Window_SizeChanged(sender As Object, e As EventArgs) Handles Menu_Window.SizeChanged, Menu_Window.LocationChanged
+        RetroShadow1.Size = Menu_Window.Size
+        RetroShadow1.Location = Menu_Window.Location + New Point(6, 5)
+
+        Dim b As New Bitmap(RetroShadow1.Width, RetroShadow1.Height)
+        Dim g As Graphics = Graphics.FromImage(b)
+        g.DrawGlow(New Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0))
+        g.Save()
+        RetroShadow1.Image = b
+        g.Dispose()
+
+        RetroShadow1.BringToFront()
+        Menu_Window.BringToFront()
     End Sub
 
 End Class

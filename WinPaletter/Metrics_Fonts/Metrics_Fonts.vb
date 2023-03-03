@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Windows.Interop
 Imports WinPaletter.NativeMethods
+Imports WinPaletter.NativeMethods.User32
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -105,8 +106,23 @@ Public Class Metrics_Fonts
 
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         XenonAlertBox10.Text = My.Lang.CP_MetricsHighDPIAlert
-        MainFrm.Visible = False
 
+        XenonAlertBox11.Text = MainFrm.WXP_Alert2.Text
+        XenonAlertBox11.Visible = MainFrm.WXP_Alert2.Visible
+        XenonAlertBox11.Size = XenonAlertBox11.Parent.Size - New Size(40, 40)
+        XenonAlertBox11.Location = New Point(20, 20)
+
+        XenonAlertBox12.Text = XenonAlertBox11.Text
+        XenonAlertBox12.Visible = XenonAlertBox11.Visible
+        XenonAlertBox12.Size = XenonAlertBox11.Size
+        XenonAlertBox12.Location = XenonAlertBox11.Location
+
+        XenonAlertBox13.Text = XenonAlertBox11.Text
+        XenonAlertBox13.Visible = XenonAlertBox11.Visible
+        XenonAlertBox13.Size = XenonAlertBox11.Size
+        XenonAlertBox13.Location = XenonAlertBox11.Location
+
+        MainFrm.Visible = False
     End Sub
 
     Sub Refresh17BitPreference()
@@ -242,6 +258,14 @@ Public Class Metrics_Fonts
         RetroWindow1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
         RetroWindow3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
         RetroWindow5.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+
+        If CP.WindowsEffects.IconsShadow Then
+            XenonFakeIcon1.ColorGlow = Color.FromArgb(75, 0, 0, 0)
+        Else
+            XenonFakeIcon1.ColorGlow = Color.FromArgb(0, 0, 0, 0)
+        End If
+        XenonFakeIcon2.ColorGlow = XenonFakeIcon1.ColorGlow
+        XenonFakeIcon3.ColorGlow = XenonFakeIcon1.ColorGlow
 
         RetroWindow1.Refresh()
         RetroWindow2.Refresh()
@@ -758,4 +782,9 @@ Public Class Metrics_Fonts
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
         VS2Metrics.ShowDialog()
     End Sub
+
+    Private Sub MetricsEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles MetricsEnabled.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
 End Class

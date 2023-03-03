@@ -6,6 +6,9 @@ Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
+Imports System.Windows.Interop
+Imports System.Runtime.InteropServices
+Imports WinPaletter.NativeMethods
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -946,6 +949,8 @@ Public Class MainFrm
         XenonButton23.Visible = (PreviewConfig = WinVer.W7)
         Dim condition0 As Boolean = PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
         Dim condition1 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        WXP_Alert2.Visible = PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
+
         tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
 
         Select Case PreviewConfig
@@ -1184,6 +1189,7 @@ Public Class MainFrm
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = False
 
             Case WinVer.WVista
                 XenonButton23.Visible = True
@@ -1210,6 +1216,7 @@ Public Class MainFrm
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = True
 
             Case WinVer.WXP
                 taskbar.Height = 30
@@ -1231,6 +1238,7 @@ Public Class MainFrm
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = True
 
         End Select
 
@@ -1798,6 +1806,9 @@ Public Class MainFrm
         ApplyDefaultCPValues()
         ApplyLivePreviewFromCP(CP)
         AdjustClassicPreview()
+
+        WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
+        WXP_Alert2.Location = New Point(20, 20)
 
         Visible = True
     End Sub
@@ -3905,15 +3916,19 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
+        WinEffecter.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        Accessibility.ShowDialog()
+    End Sub
+
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
         If _Shown And Select_WXP.Checked Then
             PreviewConfig = WinVer.WXP
             Select_Preview_Version()
         End If
-    End Sub
-
-    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
-        WinEffecter.ShowDialog()
     End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click

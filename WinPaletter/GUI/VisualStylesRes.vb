@@ -117,7 +117,11 @@ Public Class Luna
 
         Dim part As Integer
 
-        Select Case ColorStyle
+        Dim _Style As ColorStyles
+
+        If Not My.StartedWithClassicTheme Then _Style = ColorStyle Else _Style = ColorStyles.Empty
+
+        Select Case _Style
             Case ColorStyles.Blue
                 part = 0
                 Start = My.Resources.Luna_Start_Blue
@@ -142,7 +146,7 @@ Public Class Luna
         ''Titlebar_Shaft_Active = ttl.Clone(New Rectangle(i, 0, i, ttl.Height), ttl.PixelFormat)
 
         'Taskbar = ElementToBitmap(Element.Taskbar, part, True)
-        If Not ColorStyle = ColorStyles.Empty Then StartBtn = ElementToBitmap(Element.StartBtn, part, True) Else StartBtn = New Bitmap(My.Resources.Luna_StartBtn.Size.Width, CInt(My.Resources.Luna_StartBtn.Size.Height / 3))
+        If Not _Style = ColorStyles.Empty Then StartBtn = ElementToBitmap(Element.StartBtn, part, True) Else StartBtn = New Bitmap(My.Resources.Luna_StartBtn.Size.Width, CInt(My.Resources.Luna_StartBtn.Size.Height / 3))
 
         'Titlebar_Active = ElementToBitmap(Element.Titlebar, part, True)
         'Titlebar_Inactive = ElementToBitmap(Element.Titlebar, part, False)

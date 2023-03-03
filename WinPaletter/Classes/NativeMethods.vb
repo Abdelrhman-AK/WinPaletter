@@ -97,6 +97,7 @@ Namespace NativeMethods
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Boolean, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Boolean, lpvParam As Integer, fuWinIni As Integer) As Integer
 
         Class Fixer
 
@@ -232,48 +233,48 @@ Namespace NativeMethods
                 ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
                 ''' </summary>
                 SETCURSORSHADOW = &H101B
-            End Enum
-
-            Enum FontSmoothing
-                ''' <summary>
-                ''' <b>Sets the contrast value used in ClearType smoothing.</b>
-                ''' <br></br>
-                ''' <br></br> • The pvParam parameter points to a int that holds the contrast value.
-                ''' <br></br> • Valid contrast values are from 1000 to 2200. The default value is 1400.
-                ''' <br></br> • When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise, SystemParametersInfo fails.
-                ''' <br></br> • SPI_SETFONTSMOOTHINGTYPE must also be set to FE_FONTSMOOTHINGCLEARTYPE.
-                ''' <br></br>
-                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
-                ''' </summary>
-                SPI_SETFONTSMOOTHINGCONTRAST = &H200D
 
                 ''' <summary>
-                ''' <b>Sets the font smoothing type.</b>
+                ''' <b>Determines whether the Mouse Trails feature is enabled. This feature improves the visibility of mouse cursor movements by briefly showing a trail of cursors and quickly erasing them.</b>
                 ''' <br></br>
-                ''' <br></br> • The pvParam parameter points to a int that contains either FE_FONTSMOOTHINGSTANDARD,
-                ''' <br></br> • if standard anti-aliasing is used, or FE_FONTSMOOTHINGCLEARTYPE, if ClearType is used. The default is FE_FONTSMOOTHINGSTANDARD.
-                ''' <br></br> • When using this option, the fWinIni parameter must be set to SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE; otherwise, SystemParametersInfo fails.
+                ''' <br></br> • The pvParam parameter must point to an integer variable that receives a value.
+                ''' <br></br> • If the value is zero or 1, the feature is disabled. If the value Is greater than 1, the feature Is enabled And the value indicates the number of cursors drawn in the trail.
+                ''' <br></br> • The uiParam parameter is not used.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT:  This value is not supported.</i>
                 ''' </summary>
-                SPI_SETFONTSMOOTHINGTYPE = &H200B
+                GETMOUSETRAILS = &H5E
 
                 ''' <summary>
-                ''' <b>Retrieves a contrast value that is used in ClearType™ smoothing.</b>
+                ''' <b>Enables or disables the Mouse Trails feature, which improves the visibility of mouse cursor movements by briefly showing a trail of cursors and quickly erasing them.</b>
                 ''' <br></br>
-                ''' <br></br> • The pvParam parameter must point to a int that receives the information.
+                ''' <br></br> • To disable the feature, set the uiParam parameter to zero or 1.
+                ''' <br></br> • To enable the feature, set uiParam to a value greater than 1 to indicate the number of cursors drawn in the trail.
                 ''' <br></br>
-                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' <br></br> <i>(!) Windows 2000/NT:  This value is not supported.</i>
                 ''' </summary>
-                SPI_GETFONTSMOOTHINGCONTRAST = &H200C
+                SETMOUSETRAILS = &H5D
 
                 ''' <summary>
-                ''' <i>(!) Not implemented.</i>
+                ''' <b>Retrieves the state of the Mouse Sonar feature.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if enabled or FALSE otherwise.
+                ''' <br></br> • For more information, see About Mouse Input on MSDN.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows 98/95:  This value is not supported.</i>
                 ''' </summary>
-                SPI_GETFONTSMOOTHINGORIENTATION = &H2012
+                GETMOUSESONAR = &H101C
 
                 ''' <summary>
-                ''' <i>(!) Not implemented.</i>
+                ''' <b>Turns the Sonar accessibility feature on or off. This feature briefly shows several concentric circles around the mouse pointer when the user presses And releases the CTRL key.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter specifies TRUE for on and FALSE for off. The default is off.
+                ''' <br></br> • For more information, see About Mouse Input on MSDN.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows 98/95:  This value is not supported.</i>
                 ''' </summary>
-                SPI_SETFONTSMOOTHINGORIENTATION = &H2013
+                SETMOUSESONAR = &H101D
+
             End Enum
 
             Enum Titlebars
@@ -511,6 +512,25 @@ Namespace NativeMethods
                 ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
                 ''' </summary>
                 SETUIEFFECTS = &H103F
+
+                ''' <summary>
+                ''' <b>Sets dragging of full windows either on or off.</b>
+                ''' <br></br>
+                ''' <br></br> • The uiParam parameter specifies TRUE for on, or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.</i>
+                ''' </summary>
+                SETDRAGFULLWINDOWS = &H25
+
+                ''' <summary>
+                ''' <b>Determines whether dragging of full windows is enabled.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if enabled, Or FALSE otherwise.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.</i>
+                ''' </summary>
+                GETDRAGFULLWINDOWS = &H26
+
             End Enum
 
         End Class

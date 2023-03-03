@@ -227,7 +227,13 @@ Public Class CMD
             Case "6x8"
                 XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._6x8
 
+            Case "6x9"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._6x8
+
             Case "8x8"
+                XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x8
+
+            Case "8x9"
                 XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x8
 
             Case "16x8"
@@ -598,7 +604,13 @@ Public Class CMD
                 Case "6x8"
                     [Console].FontSize = 524294
 
+                Case "6x9"
+                    [Console].FontSize = 524294
+
                 Case "8x8"
+                    [Console].FontSize = 524296
+
+                Case "8x9"
                     [Console].FontSize = 524296
 
                 Case "16x8"
@@ -753,6 +765,9 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles CMD_RasterToggle.CheckedChanged
+        CMD_FontsBox.Enabled = Not CMD_RasterToggle.Checked
+        CMD_FontWeightBox.Enabled = Not CMD_RasterToggle.Checked
+
         If _Shown Then
             RasterList.Visible = CMD_RasterToggle.Checked
             ApplyPreview()
@@ -927,5 +942,9 @@ Public Class CMD
     Private Sub CMD_OpacityVal_Click(sender As Object, e As EventArgs) Handles CMD_OpacityVal.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), CMD_OpacityBar.Maximum), CMD_OpacityBar.Minimum) : CMD_OpacityBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub CMDEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles CMDEnabled.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 End Class

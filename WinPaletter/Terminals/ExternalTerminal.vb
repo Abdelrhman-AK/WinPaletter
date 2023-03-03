@@ -402,7 +402,13 @@ Public Class ExternalTerminal
                     Case "6x8"
                         CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
 
+                    Case "6x9"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
+
                     Case "8x8"
+                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
+
+                    Case "8x9"
                         CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
 
                     Case "16x8"
@@ -512,6 +518,9 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ExtTerminal_RasterToggle.CheckedChanged
+        ExtTerminal_FontsBox.Enabled = Not ExtTerminal_RasterToggle.Checked
+        ExtTerminal_FontWeightBox.Enabled = Not ExtTerminal_RasterToggle.Checked
+
         If _Shown Then
             RasterList.Visible = ExtTerminal_RasterToggle.Checked
             ApplyPreview()
@@ -761,7 +770,13 @@ Public Class ExternalTerminal
             Case "6x8"
                 XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._6x8
 
+            Case "6x9"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._6x8
+
             Case "8x8"
+                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x8
+
+            Case "8x9"
                 XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x8
 
             Case "16x8"
@@ -1000,8 +1015,6 @@ Public Class ExternalTerminal
             ApplyPreview()
         End If
     End Sub
-
-
 
     Sub ApplyFromCP(CP As CP)
 

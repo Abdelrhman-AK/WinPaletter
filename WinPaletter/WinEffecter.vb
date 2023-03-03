@@ -22,6 +22,7 @@ Public Class WinEffecter
             If .TooltipFade = CP.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
             XenonCheckBox4.Checked = .IconsShadow
             XenonCheckBox10.Checked = .IconsDesktopTranslSel
+            XenonCheckBox11.Checked = .ShowWinContentDrag
         End With
     End Sub
 
@@ -40,6 +41,7 @@ Public Class WinEffecter
             If XenonComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.MenuAnimType.Fade Else .TooltipFade = CP.MenuAnimType.Scroll
             .IconsShadow = XenonCheckBox4.Checked
             .IconsDesktopTranslSel = XenonCheckBox10.Checked
+            .ShowWinContentDrag = XenonCheckBox11.Checked
         End With
     End Sub
 
@@ -98,4 +100,7 @@ Public Class WinEffecter
         Me.Close()
     End Sub
 
+    Private Sub EffectsEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles EffectsEnabled.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
 End Class

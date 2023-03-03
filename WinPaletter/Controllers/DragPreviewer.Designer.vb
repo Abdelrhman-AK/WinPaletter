@@ -22,8 +22,8 @@ Partial Class DragPreviewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DragPreviewer))
         Me.pnl_preview = New System.Windows.Forms.Panel()
+        Me.XenonAlertBox11 = New WinPaletter.XenonAlertBox()
         Me.ActionCenter = New WinPaletter.XenonWinElement()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
         Me.Panel5 = New System.Windows.Forms.Panel()
@@ -34,6 +34,7 @@ Partial Class DragPreviewer
         Me.start = New WinPaletter.XenonWinElement()
         Me.taskbar = New WinPaletter.XenonWinElement()
         Me.pnlRetroPreview = New System.Windows.Forms.Panel()
+        Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
         Me.RetroLabel9 = New WinPaletter.RetroLabel()
@@ -74,6 +75,7 @@ Partial Class DragPreviewer
         Me.XenonWindow1.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.pnlRetroPreview.SuspendLayout()
+        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Menu_Window.SuspendLayout()
         Me.menucontainer3.SuspendLayout()
         Me.highlight.SuspendLayout()
@@ -97,6 +99,7 @@ Partial Class DragPreviewer
         '
         Me.pnl_preview.BackColor = System.Drawing.Color.Black
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnl_preview.Controls.Add(Me.XenonAlertBox11)
         Me.pnl_preview.Controls.Add(Me.ActionCenter)
         Me.pnl_preview.Controls.Add(Me.XenonWindow1)
         Me.pnl_preview.Controls.Add(Me.XenonWindow2)
@@ -106,6 +109,23 @@ Partial Class DragPreviewer
         Me.pnl_preview.Name = "pnl_preview"
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
         Me.pnl_preview.TabIndex = 12
+        '
+        'XenonAlertBox11
+        '
+        Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox11.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox11.CenterText = True
+        Me.XenonAlertBox11.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox11.Image = Nothing
+        Me.XenonAlertBox11.Location = New System.Drawing.Point(7, 7)
+        Me.XenonAlertBox11.Name = "XenonAlertBox11"
+        Me.XenonAlertBox11.Size = New System.Drawing.Size(24, 21)
+        Me.XenonAlertBox11.TabIndex = 9
+        Me.XenonAlertBox11.TabStop = False
+        Me.XenonAlertBox11.Text = Nothing
+        Me.XenonAlertBox11.Visible = False
         '
         'ActionCenter
         '
@@ -303,6 +323,7 @@ Partial Class DragPreviewer
         Me.pnlRetroPreview.BackColor = System.Drawing.Color.Teal
         Me.pnlRetroPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnlRetroPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlRetroPreview.Controls.Add(Me.RetroShadow1)
         Me.pnlRetroPreview.Controls.Add(Me.Menu_Window)
         Me.pnlRetroPreview.Controls.Add(Me.RetroWindow3)
         Me.pnlRetroPreview.Controls.Add(Me.RetroLabel13)
@@ -313,6 +334,16 @@ Partial Class DragPreviewer
         Me.pnlRetroPreview.Name = "pnlRetroPreview"
         Me.pnlRetroPreview.Size = New System.Drawing.Size(344, 297)
         Me.pnlRetroPreview.TabIndex = 13
+        '
+        'RetroShadow1
+        '
+        Me.RetroShadow1.BackColor = System.Drawing.Color.Transparent
+        Me.RetroShadow1.Location = New System.Drawing.Point(6, 225)
+        Me.RetroShadow1.Name = "RetroShadow1"
+        Me.RetroShadow1.Size = New System.Drawing.Size(115, 66)
+        Me.RetroShadow1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.RetroShadow1.TabIndex = 7
+        Me.RetroShadow1.TabStop = False
         '
         'Menu_Window
         '
@@ -342,7 +373,7 @@ Partial Class DragPreviewer
         Me.Menu_Window.Metrics_PaddedBorderWidth = 4
         Me.Menu_Window.MinimizeBox = True
         Me.Menu_Window.Name = "Menu_Window"
-        Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3)
+        Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3, 3, 5, 5)
         Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
         Me.Menu_Window.TabIndex = 4
         Me.Menu_Window.TitlebarText = "New Window"
@@ -356,7 +387,7 @@ Partial Class DragPreviewer
         Me.menucontainer3.Location = New System.Drawing.Point(3, 43)
         Me.menucontainer3.Name = "menucontainer3"
         Me.menucontainer3.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
-        Me.menucontainer3.Size = New System.Drawing.Size(109, 20)
+        Me.menucontainer3.Size = New System.Drawing.Size(107, 20)
         Me.menucontainer3.TabIndex = 12
         '
         'RetroLabel9
@@ -368,7 +399,7 @@ Partial Class DragPreviewer
         Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel9.Name = "RetroLabel9"
         Me.RetroLabel9.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel9.Size = New System.Drawing.Size(88, 20)
+        Me.RetroLabel9.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel9.TabIndex = 3
         Me.RetroLabel9.Text = "Disabled item"
         Me.RetroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -380,7 +411,7 @@ Partial Class DragPreviewer
         Me.highlight.Dock = System.Windows.Forms.DockStyle.Top
         Me.highlight.Location = New System.Drawing.Point(3, 23)
         Me.highlight.Name = "highlight"
-        Me.highlight.Size = New System.Drawing.Size(109, 20)
+        Me.highlight.Size = New System.Drawing.Size(107, 20)
         Me.highlight.TabIndex = 10
         '
         'menuhilight
@@ -391,7 +422,7 @@ Partial Class DragPreviewer
         Me.menuhilight.Location = New System.Drawing.Point(0, 0)
         Me.menuhilight.Name = "menuhilight"
         Me.menuhilight.Padding = New System.Windows.Forms.Padding(21, 0, 1, 0)
-        Me.menuhilight.Size = New System.Drawing.Size(109, 20)
+        Me.menuhilight.Size = New System.Drawing.Size(107, 20)
         Me.menuhilight.TabIndex = 11
         '
         'RetroLabel5
@@ -403,7 +434,7 @@ Partial Class DragPreviewer
         Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel5.Name = "RetroLabel5"
         Me.RetroLabel5.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel5.Size = New System.Drawing.Size(87, 20)
+        Me.RetroLabel5.Size = New System.Drawing.Size(85, 20)
         Me.RetroLabel5.TabIndex = 3
         Me.RetroLabel5.Text = "Hovered item"
         Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -416,7 +447,7 @@ Partial Class DragPreviewer
         Me.menucontainer1.Location = New System.Drawing.Point(3, 3)
         Me.menucontainer1.Name = "menucontainer1"
         Me.menucontainer1.Padding = New System.Windows.Forms.Padding(21, 0, 0, 0)
-        Me.menucontainer1.Size = New System.Drawing.Size(109, 20)
+        Me.menucontainer1.Size = New System.Drawing.Size(107, 20)
         Me.menucontainer1.TabIndex = 6
         '
         'RetroLabel6
@@ -428,7 +459,7 @@ Partial Class DragPreviewer
         Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
         Me.RetroLabel6.Name = "RetroLabel6"
         Me.RetroLabel6.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel6.Size = New System.Drawing.Size(88, 20)
+        Me.RetroLabel6.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel6.TabIndex = 3
         Me.RetroLabel6.Text = "Menu item"
         Me.RetroLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -477,6 +508,7 @@ Partial Class DragPreviewer
         Me.RetroButton1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton1.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton1.HatchBrush = False
         Me.RetroButton1.Image = Nothing
         Me.RetroButton1.Location = New System.Drawing.Point(37, 49)
         Me.RetroButton1.Name = "RetroButton1"
@@ -745,6 +777,7 @@ Partial Class DragPreviewer
         Me.RetroButton12.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton12.Font = New System.Drawing.Font("Marlett", 6.0!)
         Me.RetroButton12.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton12.HatchBrush = False
         Me.RetroButton12.Image = Nothing
         Me.RetroButton12.Location = New System.Drawing.Point(0, 29)
         Me.RetroButton12.Name = "RetroButton12"
@@ -765,6 +798,7 @@ Partial Class DragPreviewer
         Me.RetroButton11.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
         Me.RetroButton11.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton11.HatchBrush = False
         Me.RetroButton11.Image = Nothing
         Me.RetroButton11.Location = New System.Drawing.Point(0, 92)
         Me.RetroButton11.Name = "RetroButton11"
@@ -787,6 +821,7 @@ Partial Class DragPreviewer
         Me.RetroButton10.Dock = System.Windows.Forms.DockStyle.Top
         Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
         Me.RetroButton10.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton10.HatchBrush = False
         Me.RetroButton10.Image = Nothing
         Me.RetroButton10.Location = New System.Drawing.Point(0, 0)
         Me.RetroButton10.Name = "RetroButton10"
@@ -934,6 +969,7 @@ Partial Class DragPreviewer
         Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton4.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton4.HatchBrush = False
         Me.RetroButton4.Image = Nothing
         Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
         Me.RetroButton4.Name = "RetroButton4"
@@ -955,6 +991,7 @@ Partial Class DragPreviewer
         Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton3.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton3.HatchBrush = False
         Me.RetroButton3.Image = Nothing
         Me.RetroButton3.Location = New System.Drawing.Point(63, 4)
         Me.RetroButton3.Name = "RetroButton3"
@@ -976,6 +1013,7 @@ Partial Class DragPreviewer
         Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton2.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton2.HatchBrush = False
         Me.RetroButton2.Image = Nothing
         Me.RetroButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.RetroButton2.Location = New System.Drawing.Point(2, 4)
@@ -999,7 +1037,6 @@ Partial Class DragPreviewer
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -1013,6 +1050,7 @@ Partial Class DragPreviewer
         Me.Panel5.ResumeLayout(False)
         Me.pnlRetroPreview.ResumeLayout(False)
         Me.pnlRetroPreview.PerformLayout()
+        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Menu_Window.ResumeLayout(False)
         Me.menucontainer3.ResumeLayout(False)
         Me.highlight.ResumeLayout(False)
@@ -1082,4 +1120,6 @@ Partial Class DragPreviewer
     Friend WithEvents RetroButton4 As RetroButton
     Friend WithEvents RetroButton3 As RetroButton
     Friend WithEvents RetroButton2 As RetroButton
+    Friend WithEvents RetroShadow1 As TransparentPictureBox
+    Friend WithEvents XenonAlertBox11 As XenonAlertBox
 End Class

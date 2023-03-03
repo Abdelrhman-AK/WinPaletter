@@ -51,6 +51,8 @@ Partial Class WinEffecter
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox3 = New WinPaletter.XenonCheckBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
@@ -65,7 +67,7 @@ Partial Class WinEffecter
         Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.XenonButton12 = New WinPaletter.XenonButton()
         Me.EffectsEnabled = New WinPaletter.XenonToggle()
-        Me.PictureBox30 = New System.Windows.Forms.PictureBox()
+        Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
@@ -84,12 +86,13 @@ Partial Class WinEffecter
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox1.SuspendLayout()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
-        CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox5.SuspendLayout()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -110,7 +113,7 @@ Partial Class WinEffecter
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(274, 607)
+        Me.XenonButton10.Location = New System.Drawing.Point(274, 668)
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 207
@@ -126,7 +129,7 @@ Partial Class WinEffecter
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(188, 607)
+        Me.XenonButton7.Location = New System.Drawing.Point(188, 668)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
         Me.XenonButton7.TabIndex = 206
@@ -143,7 +146,7 @@ Partial Class WinEffecter
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(404, 607)
+        Me.XenonButton8.Location = New System.Drawing.Point(404, 668)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
         Me.XenonButton8.TabIndex = 205
@@ -160,7 +163,7 @@ Partial Class WinEffecter
         Me.XenonGroupBox4.Controls.Add(Me.XenonCheckBox9)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox4.Controls.Add(Me.Label4)
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(12, 519)
+        Me.XenonGroupBox4.Location = New System.Drawing.Point(12, 552)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(580, 74)
@@ -242,7 +245,7 @@ Partial Class WinEffecter
         Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox8)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox11)
         Me.XenonGroupBox3.Controls.Add(Me.Label3)
-        Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 410)
+        Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 443)
         Me.XenonGroupBox3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(580, 103)
@@ -359,7 +362,7 @@ Partial Class WinEffecter
         Me.XenonGroupBox2.Controls.Add(Me.XenonCheckBox6)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox8)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 302)
+        Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 335)
         Me.XenonGroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(580, 102)
@@ -460,6 +463,8 @@ Partial Class WinEffecter
         Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox1.Controls.Add(Me.PictureBox15)
+        Me.XenonGroupBox1.Controls.Add(Me.XenonCheckBox11)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox4)
         Me.XenonGroupBox1.Controls.Add(Me.XenonCheckBox3)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox3)
@@ -471,8 +476,33 @@ Partial Class WinEffecter
         Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 57)
         Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(580, 130)
+        Me.XenonGroupBox1.Size = New System.Drawing.Size(580, 163)
         Me.XenonGroupBox1.TabIndex = 201
+        '
+        'PictureBox15
+        '
+        Me.PictureBox15.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(44, 131)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox15.TabIndex = 9
+        Me.PictureBox15.TabStop = False
+        '
+        'XenonCheckBox11
+        '
+        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonCheckBox11.Checked = False
+        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox11.Location = New System.Drawing.Point(74, 131)
+        Me.XenonCheckBox11.Name = "XenonCheckBox11"
+        Me.XenonCheckBox11.Size = New System.Drawing.Size(499, 24)
+        Me.XenonCheckBox11.TabIndex = 8
+        Me.XenonCheckBox11.Text = "Show window contents while dragging"
         '
         'PictureBox4
         '
@@ -583,7 +613,7 @@ Partial Class WinEffecter
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
         Me.XenonGroupBox12.Controls.Add(Me.EffectsEnabled)
-        Me.XenonGroupBox12.Controls.Add(Me.PictureBox30)
+        Me.XenonGroupBox12.Controls.Add(Me.checker_img)
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(580, 39)
@@ -667,16 +697,16 @@ Partial Class WinEffecter
         Me.EffectsEnabled.Size = New System.Drawing.Size(40, 20)
         Me.EffectsEnabled.TabIndex = 85
         '
-        'PictureBox30
+        'checker_img
         '
-        Me.PictureBox30.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
-        Me.PictureBox30.Location = New System.Drawing.Point(492, 4)
-        Me.PictureBox30.Name = "PictureBox30"
-        Me.PictureBox30.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox30.TabIndex = 83
-        Me.PictureBox30.TabStop = False
+        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Location = New System.Drawing.Point(492, 4)
+        Me.checker_img.Name = "checker_img"
+        Me.checker_img.Size = New System.Drawing.Size(35, 31)
+        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.checker_img.TabIndex = 83
+        Me.checker_img.TabStop = False
         '
         'PictureBox14
         '
@@ -714,7 +744,7 @@ Partial Class WinEffecter
         Me.XenonGroupBox5.Controls.Add(Me.Label5)
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox5.Controls.Add(Me.XenonCheckBox4)
-        Me.XenonGroupBox5.Location = New System.Drawing.Point(12, 193)
+        Me.XenonGroupBox5.Location = New System.Drawing.Point(12, 226)
         Me.XenonGroupBox5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(580, 103)
@@ -749,7 +779,7 @@ Partial Class WinEffecter
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(604, 649)
+        Me.ClientSize = New System.Drawing.Size(604, 710)
         Me.Controls.Add(Me.XenonGroupBox5)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton7)
@@ -782,12 +812,13 @@ Partial Class WinEffecter
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox1.ResumeLayout(False)
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
-        CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox5.ResumeLayout(False)
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).EndInit()
@@ -801,7 +832,7 @@ Partial Class WinEffecter
     Friend WithEvents XenonButton11 As XenonButton
     Friend WithEvents XenonButton12 As XenonButton
     Friend WithEvents EffectsEnabled As XenonToggle
-    Friend WithEvents PictureBox30 As PictureBox
+    Friend WithEvents checker_img As PictureBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents PictureBox4 As PictureBox
@@ -843,4 +874,6 @@ Partial Class WinEffecter
     Friend WithEvents XenonGroupBox5 As XenonGroupBox
     Friend WithEvents Label5 As Label
     Friend WithEvents PictureBox19 As PictureBox
+    Friend WithEvents PictureBox15 As PictureBox
+    Friend WithEvents XenonCheckBox11 As XenonCheckBox
 End Class

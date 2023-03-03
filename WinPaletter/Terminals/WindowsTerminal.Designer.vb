@@ -127,7 +127,7 @@ Partial Class WindowsTerminal
         Me.XenonButton22 = New WinPaletter.XenonButton()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
@@ -185,7 +185,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox13.SuspendLayout()
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox3.SuspendLayout()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.XenonGroupBox4.SuspendLayout()
@@ -1599,7 +1599,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox3.Controls.Add(Me.Label11)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton9)
-        Me.XenonGroupBox3.Controls.Add(Me.PictureBox6)
+        Me.XenonGroupBox3.Controls.Add(Me.checker_img)
         Me.XenonGroupBox3.Controls.Add(Me.XenonAlertBox1)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton7)
@@ -1646,16 +1646,16 @@ Partial Class WindowsTerminal
         Me.Label11.Text = "Open From:"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PictureBox6
+        'checker_img
         '
-        Me.PictureBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(891, 5)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox6.TabIndex = 83
-        Me.PictureBox6.TabStop = False
+        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Location = New System.Drawing.Point(891, 5)
+        Me.checker_img.Name = "checker_img"
+        Me.checker_img.Size = New System.Drawing.Size(35, 31)
+        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.checker_img.TabIndex = 83
+        Me.checker_img.TabStop = False
         '
         'XenonTabControl1
         '
@@ -2279,7 +2279,7 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox13.ResumeLayout(False)
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonTabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.XenonGroupBox4.ResumeLayout(False)
@@ -2412,7 +2412,7 @@ Partial Class WindowsTerminal
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
     Friend WithEvents XenonSeparator2 As XenonSeparator
     Friend WithEvents Label11 As Label
-    Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents checker_img As PictureBox
     Friend WithEvents XenonButton22 As XenonButton
     Friend WithEvents XenonTabControl1 As XenonTabControl
     Friend WithEvents TabPage1 As TabPage

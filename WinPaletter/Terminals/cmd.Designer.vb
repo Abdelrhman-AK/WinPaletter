@@ -33,7 +33,7 @@ Partial Class CMD
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.CMDEnabled = New WinPaletter.XenonToggle()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
@@ -143,7 +143,7 @@ Partial Class CMD
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox3.SuspendLayout()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
@@ -206,7 +206,7 @@ Partial Class CMD
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton6)
         Me.XenonGroupBox3.Controls.Add(Me.CMDEnabled)
-        Me.XenonGroupBox3.Controls.Add(Me.PictureBox5)
+        Me.XenonGroupBox3.Controls.Add(Me.checker_img)
         Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(896, 39)
@@ -290,16 +290,16 @@ Partial Class CMD
         Me.CMDEnabled.Size = New System.Drawing.Size(40, 20)
         Me.CMDEnabled.TabIndex = 85
         '
-        'PictureBox5
+        'checker_img
         '
-        Me.PictureBox5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
-        Me.PictureBox5.Location = New System.Drawing.Point(804, 4)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox5.TabIndex = 83
-        Me.PictureBox5.TabStop = False
+        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Location = New System.Drawing.Point(804, 4)
+        Me.checker_img.Name = "checker_img"
+        Me.checker_img.Size = New System.Drawing.Size(35, 31)
+        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.checker_img.TabIndex = 83
+        Me.checker_img.TabStop = False
         '
         'XenonGroupBox2
         '
@@ -1082,7 +1082,7 @@ Partial Class CMD
         Me.RasterList.ForeColor = System.Drawing.Color.White
         Me.RasterList.FormattingEnabled = True
         Me.RasterList.ItemHeight = 20
-        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
+        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "6x9", "8x8", "8x9", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
         Me.RasterList.Location = New System.Drawing.Point(96, 65)
         Me.RasterList.Name = "RasterList"
         Me.RasterList.Size = New System.Drawing.Size(199, 26)
@@ -1737,7 +1737,7 @@ Partial Class CMD
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Terminals"
         Me.XenonGroupBox3.ResumeLayout(False)
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
@@ -1858,7 +1858,7 @@ Partial Class CMD
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents XenonButton6 As XenonButton
     Friend WithEvents CMDEnabled As XenonToggle
-    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents checker_img As PictureBox
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
     Friend WithEvents XenonSeparator2 As XenonSeparator

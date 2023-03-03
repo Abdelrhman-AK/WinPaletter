@@ -318,4 +318,8 @@ Public Class WallpaperToner
             HSL.ExecuteFilter(img).Save(SaveFileDialog2.FileName)
         End If
     End Sub
+
+    Private Sub ToneEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles ToneEnabled.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
 End Class

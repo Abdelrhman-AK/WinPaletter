@@ -49,6 +49,7 @@ Partial Class WallpaperToner
         Me.SBar = New WinPaletter.XenonColorBar()
         Me.HBar = New WinPaletter.XenonColorBar()
         Me.previewContainer = New WinPaletter.XenonGroupBox()
+        Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -58,9 +59,8 @@ Partial Class WallpaperToner
         Me.XenonButton11 = New WinPaletter.XenonButton()
         Me.XenonButton12 = New WinPaletter.XenonButton()
         Me.ToneEnabled = New WinPaletter.XenonToggle()
-        Me.PictureBox30 = New System.Windows.Forms.PictureBox()
+        Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,7 +70,7 @@ Partial Class WallpaperToner
         Me.previewContainer.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
-        CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenImgDlg
@@ -445,6 +445,22 @@ Partial Class WallpaperToner
         Me.previewContainer.Size = New System.Drawing.Size(619, 340)
         Me.previewContainer.TabIndex = 201
         '
+        'XenonButton4
+        '
+        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton4.ForeColor = System.Drawing.Color.White
+        Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
+        Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonButton4.LineSize = 1
+        Me.XenonButton4.Location = New System.Drawing.Point(513, 9)
+        Me.XenonButton4.Name = "XenonButton4"
+        Me.XenonButton4.Size = New System.Drawing.Size(99, 23)
+        Me.XenonButton4.TabIndex = 5
+        Me.XenonButton4.Text = "Save as ..."
+        Me.XenonButton4.UseVisualStyleBackColor = False
+        '
         'pnl_preview
         '
         Me.pnl_preview.BackColor = System.Drawing.Color.Black
@@ -486,7 +502,7 @@ Partial Class WallpaperToner
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
         Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
         Me.XenonGroupBox12.Controls.Add(Me.ToneEnabled)
-        Me.XenonGroupBox12.Controls.Add(Me.PictureBox30)
+        Me.XenonGroupBox12.Controls.Add(Me.checker_img)
         Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
         Me.XenonGroupBox12.Name = "XenonGroupBox12"
         Me.XenonGroupBox12.Size = New System.Drawing.Size(619, 39)
@@ -562,37 +578,21 @@ Partial Class WallpaperToner
         Me.ToneEnabled.Size = New System.Drawing.Size(40, 20)
         Me.ToneEnabled.TabIndex = 85
         '
-        'PictureBox30
+        'checker_img
         '
-        Me.PictureBox30.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
-        Me.PictureBox30.Location = New System.Drawing.Point(533, 4)
-        Me.PictureBox30.Name = "PictureBox30"
-        Me.PictureBox30.Size = New System.Drawing.Size(35, 31)
-        Me.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox30.TabIndex = 83
-        Me.PictureBox30.TabStop = False
+        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Location = New System.Drawing.Point(533, 4)
+        Me.checker_img.Name = "checker_img"
+        Me.checker_img.Size = New System.Drawing.Size(35, 31)
+        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.checker_img.TabIndex = 83
+        Me.checker_img.TabStop = False
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
-        '
-        'XenonButton4
-        '
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
-        Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(513, 9)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(99, 23)
-        Me.XenonButton4.TabIndex = 5
-        Me.XenonButton4.Text = "Save as ..."
-        Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'SaveFileDialog2
         '
@@ -630,7 +630,7 @@ Partial Class WallpaperToner
         Me.previewContainer.ResumeLayout(False)
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
-        CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -641,7 +641,7 @@ Partial Class WallpaperToner
     Friend WithEvents XenonButton11 As XenonButton
     Friend WithEvents XenonButton12 As XenonButton
     Friend WithEvents ToneEnabled As XenonToggle
-    Friend WithEvents PictureBox30 As PictureBox
+    Friend WithEvents checker_img As PictureBox
     Friend WithEvents previewContainer As XenonGroupBox
     Friend WithEvents pnl_preview As Panel
     Friend WithEvents PictureBox41 As PictureBox

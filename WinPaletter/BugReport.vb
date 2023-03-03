@@ -7,10 +7,13 @@ Public Class BugReport
         Dim c As Color = PictureBox1.Image.AverageColor
         Dim c1 As Color = c.CB(If(GetDarkMode(), -0.35, 0.35))
         Dim c2 As Color = c.CB(If(GetDarkMode(), -0.75, 0.75))
-        XenonTreeView1.BackColor = c2
+        'XenonTreeView1.BackColor = c2
 
-        Panel1.BackColor = c1
-        BackColor = c2
+        XenonAnimatedBox1.BackColor = c1
+        'BackColor = c2
+
+        Label2.Font = My.Application.ConsoleFontMedium
+        Label3.Font = My.Application.ConsoleFontMedium
 
         XenonTreeView1.Font = My.Application.ConsoleFontMedium
 

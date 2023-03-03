@@ -65,7 +65,8 @@ Public Class CursorsStudio
     Sub LoadFromCP([CP] As CP)
         XenonToggle1.Checked = [CP].Cursor_Enabled
         XenonCheckBox9.Checked = [CP].Cursor_Shadow
-
+        XenonTrackbar2.Value = [CP].Cursor_Trails
+        XenonCheckBox10.Checked = [CP].Cursor_Sonar
         CursorCP_to_Cursor(Arrow, [CP].Cursor_Arrow)
         CursorCP_to_Cursor(Help, [CP].Cursor_Help)
         CursorCP_to_Cursor(AppLoading, [CP].Cursor_AppLoading)
@@ -94,6 +95,8 @@ Public Class CursorsStudio
     Sub SaveToCP([CP] As CP)
         [CP].Cursor_Enabled = XenonToggle1.Checked
         [CP].Cursor_Shadow = XenonCheckBox9.Checked
+        [CP].Cursor_Trails = XenonTrackbar2.Value
+        [CP].Cursor_Sonar = XenonCheckBox10.Checked
         [CP].Cursor_Arrow = Cursor_to_CursorCP(Arrow)
         [CP].Cursor_Help = Cursor_to_CursorCP(Help)
         [CP].Cursor_AppLoading = Cursor_to_CursorCP(AppLoading)
@@ -111,6 +114,7 @@ Public Class CursorsStudio
         [CP].Cursor_Person = Cursor_to_CursorCP(Person)
         [CP].Cursor_IBeam = Cursor_to_CursorCP(IBeam)
         [CP].Cursor_Cross = Cursor_to_CursorCP(Cross)
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -739,5 +743,18 @@ Public Class CursorsStudio
         CPx.Apply_Cursors()
         CPx.Dispose()
         Cursor = Cursors.Default
+    End Sub
+
+    Private Sub ttl_h_Click(sender As Object, e As EventArgs) Handles trails_btn.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+        trails_btn.Text = sender.Value.ToString
+    End Sub
+
+    Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 End Class

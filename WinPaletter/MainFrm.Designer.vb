@@ -39,6 +39,7 @@ Partial Class MainFrm
         Me.tabs_preview = New WinPaletter.TablessControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.pnl_preview = New System.Windows.Forms.Panel()
+        Me.WXP_Alert2 = New WinPaletter.XenonAlertBox()
         Me.ActionCenter = New WinPaletter.XenonWinElement()
         Me.start = New WinPaletter.XenonWinElement()
         Me.taskbar = New WinPaletter.XenonWinElement()
@@ -346,7 +347,6 @@ Partial Class MainFrm
         Me.WVista_theme_aeroopaque = New WinPaletter.XenonRadioImage()
         Me.Label75 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.WXP_Alert2 = New WinPaletter.XenonAlertBox()
         Me.WXP_Alert1 = New WinPaletter.XenonAlertBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.WXP_VS_ReplaceFonts = New WinPaletter.XenonCheckBox()
@@ -406,6 +406,7 @@ Partial Class MainFrm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton30 = New WinPaletter.XenonButton()
         Me.XenonButton29 = New WinPaletter.XenonButton()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.XenonButton26 = New WinPaletter.XenonButton()
@@ -683,6 +684,7 @@ Partial Class MainFrm
         '
         Me.pnl_preview.BackColor = System.Drawing.Color.Black
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnl_preview.Controls.Add(Me.WXP_Alert2)
         Me.pnl_preview.Controls.Add(Me.ActionCenter)
         Me.pnl_preview.Controls.Add(Me.start)
         Me.pnl_preview.Controls.Add(Me.taskbar)
@@ -692,6 +694,27 @@ Partial Class MainFrm
         Me.pnl_preview.Name = "pnl_preview"
         Me.pnl_preview.Size = New System.Drawing.Size(528, 297)
         Me.pnl_preview.TabIndex = 2
+        '
+        'WXP_Alert2
+        '
+        Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.WXP_Alert2.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.WXP_Alert2.CenterText = True
+        Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.WXP_Alert2.Image = Nothing
+        Me.WXP_Alert2.Location = New System.Drawing.Point(7, 8)
+        Me.WXP_Alert2.Name = "WXP_Alert2"
+        Me.WXP_Alert2.Size = New System.Drawing.Size(135, 36)
+        Me.WXP_Alert2.TabIndex = 54
+        Me.WXP_Alert2.TabStop = False
+        Me.WXP_Alert2.Text = "Classic Theme is enabled. The preview won't work for other themes due to some lim" &
+    "itations in Visual Styles Previewer. Apply another theme first then reopen WinPa" &
+    "letter."
+        Me.WXP_Alert2.Visible = False
         '
         'ActionCenter
         '
@@ -999,6 +1022,7 @@ Partial Class MainFrm
         Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton4.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton4.HatchBrush = False
         Me.RetroButton4.Image = Nothing
         Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
         Me.RetroButton4.Name = "RetroButton4"
@@ -1020,6 +1044,7 @@ Partial Class MainFrm
         Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton3.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton3.HatchBrush = False
         Me.RetroButton3.Image = Nothing
         Me.RetroButton3.Location = New System.Drawing.Point(63, 4)
         Me.RetroButton3.Name = "RetroButton3"
@@ -1041,6 +1066,7 @@ Partial Class MainFrm
         Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton2.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton2.HatchBrush = False
         Me.RetroButton2.Image = Nothing
         Me.RetroButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.RetroButton2.Location = New System.Drawing.Point(2, 4)
@@ -4882,7 +4908,6 @@ Partial Class MainFrm
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage9.Controls.Add(Me.WXP_Alert2)
         Me.TabPage9.Controls.Add(Me.WXP_Alert1)
         Me.TabPage9.Controls.Add(Me.Label76)
         Me.TabPage9.Controls.Add(Me.WXP_VS_ReplaceFonts)
@@ -4897,26 +4922,6 @@ Partial Class MainFrm
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
-        'WXP_Alert2
-        '
-        Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.WXP_Alert2.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.WXP_Alert2.CenterText = True
-        Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.WXP_Alert2.Image = Nothing
-        Me.WXP_Alert2.Location = New System.Drawing.Point(3, 401)
-        Me.WXP_Alert2.Name = "WXP_Alert2"
-        Me.WXP_Alert2.Size = New System.Drawing.Size(513, 60)
-        Me.WXP_Alert2.TabIndex = 54
-        Me.WXP_Alert2.TabStop = False
-        Me.WXP_Alert2.Text = "If classic theme is enabled and you open WinPaletter, the preview won't work for " &
-    "other themes due to some limitations in Visual Styles Previewer. Apply another t" &
-    "heme first then reopen WinPaletter."
-        '
         'WXP_Alert1
         '
         Me.WXP_Alert1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
@@ -4928,7 +4933,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert1.Image = Nothing
-        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 369)
+        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 434)
         Me.WXP_Alert1.Name = "WXP_Alert1"
         Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
         Me.WXP_Alert1.TabIndex = 53
@@ -5769,6 +5774,7 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonGroupBox3.Controls.Add(Me.XenonButton30)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton29)
         Me.XenonGroupBox3.Controls.Add(Me.Label61)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton26)
@@ -5783,6 +5789,23 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Size = New System.Drawing.Size(524, 66)
         Me.XenonGroupBox3.TabIndex = 28
         '
+        'XenonButton30
+        '
+        Me.XenonButton30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton30.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton30.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton30.ForeColor = System.Drawing.Color.White
+        Me.XenonButton30.Image = CType(resources.GetObject("XenonButton30.Image"), System.Drawing.Image)
+        Me.XenonButton30.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(133, Byte), Integer))
+        Me.XenonButton30.LineSize = 1
+        Me.XenonButton30.Location = New System.Drawing.Point(186, 3)
+        Me.XenonButton30.Name = "XenonButton30"
+        Me.XenonButton30.Size = New System.Drawing.Size(40, 60)
+        Me.XenonButton30.TabIndex = 33
+        Me.XenonButton30.Tag = "Windows Accessiblity"
+        Me.XenonButton30.UseVisualStyleBackColor = False
+        '
         'XenonButton29
         '
         Me.XenonButton29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -5793,9 +5816,9 @@ Partial Class MainFrm
         Me.XenonButton29.Image = CType(resources.GetObject("XenonButton29.Image"), System.Drawing.Image)
         Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(111, Byte), Integer))
         Me.XenonButton29.LineSize = 1
-        Me.XenonButton29.Location = New System.Drawing.Point(200, 3)
+        Me.XenonButton29.Location = New System.Drawing.Point(228, 3)
         Me.XenonButton29.Name = "XenonButton29"
-        Me.XenonButton29.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton29.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton29.TabIndex = 32
         Me.XenonButton29.Tag = "Windows Effects"
         Me.XenonButton29.UseVisualStyleBackColor = False
@@ -5809,7 +5832,7 @@ Partial Class MainFrm
         Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label61.Location = New System.Drawing.Point(4, 4)
         Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(190, 58)
+        Me.Label61.Size = New System.Drawing.Size(178, 58)
         Me.Label61.TabIndex = 31
         Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -5823,9 +5846,9 @@ Partial Class MainFrm
         Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
         Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(111, Byte), Integer))
         Me.XenonButton26.LineSize = 1
-        Me.XenonButton26.Location = New System.Drawing.Point(246, 3)
+        Me.XenonButton26.Location = New System.Drawing.Point(270, 3)
         Me.XenonButton26.Name = "XenonButton26"
-        Me.XenonButton26.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton26.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton26.TabIndex = 30
         Me.XenonButton26.Tag = "Wallpaper Tone"
         Me.XenonButton26.UseVisualStyleBackColor = False
@@ -5840,9 +5863,9 @@ Partial Class MainFrm
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
         Me.XenonButton27.LineColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.XenonButton27.LineSize = 1
-        Me.XenonButton27.Location = New System.Drawing.Point(292, 3)
+        Me.XenonButton27.Location = New System.Drawing.Point(312, 3)
         Me.XenonButton27.Name = "XenonButton27"
-        Me.XenonButton27.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton27.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton27.TabIndex = 29
         Me.XenonButton27.Tag = "Metrics and Fonts"
         Me.XenonButton27.UseVisualStyleBackColor = False
@@ -5857,9 +5880,9 @@ Partial Class MainFrm
         Me.XenonButton24.Image = CType(resources.GetObject("XenonButton24.Image"), System.Drawing.Image)
         Me.XenonButton24.LineColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
         Me.XenonButton24.LineSize = 1
-        Me.XenonButton24.Location = New System.Drawing.Point(338, 3)
+        Me.XenonButton24.Location = New System.Drawing.Point(354, 3)
         Me.XenonButton24.Name = "XenonButton24"
-        Me.XenonButton24.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton24.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton24.TabIndex = 28
         Me.XenonButton24.Tag = "Terminals ..."
         Me.XenonButton24.UseVisualStyleBackColor = False
@@ -5874,9 +5897,9 @@ Partial Class MainFrm
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
         Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(56, Byte), Integer))
         Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(384, 3)
+        Me.XenonButton21.Location = New System.Drawing.Point(396, 3)
         Me.XenonButton21.Name = "XenonButton21"
-        Me.XenonButton21.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton21.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton21.TabIndex = 27
         Me.XenonButton21.Tag = "Cursors"
         Me.XenonButton21.UseVisualStyleBackColor = False
@@ -5891,9 +5914,9 @@ Partial Class MainFrm
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(72, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(476, 3)
+        Me.XenonButton16.Location = New System.Drawing.Point(480, 3)
         Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton16.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton16.TabIndex = 26
         Me.XenonButton16.Tag = "LogonUI"
         Me.XenonButton16.UseVisualStyleBackColor = False
@@ -5908,9 +5931,9 @@ Partial Class MainFrm
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(81, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(430, 3)
+        Me.XenonButton4.Location = New System.Drawing.Point(438, 3)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(45, 60)
+        Me.XenonButton4.Size = New System.Drawing.Size(40, 60)
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Tag = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
@@ -6477,4 +6500,5 @@ Partial Class MainFrm
     Friend WithEvents Label80 As Label
     Friend WithEvents WXP_Alert2 As XenonAlertBox
     Friend WithEvents WXP_Alert1 As XenonAlertBox
+    Friend WithEvents XenonButton30 As XenonButton
 End Class

@@ -98,4 +98,8 @@ Public Class LogonUIXP
         CList.Clear()
 
     End Sub
+
+    Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
 End Class

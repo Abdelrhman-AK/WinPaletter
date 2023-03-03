@@ -1,3 +1,4 @@
+Imports Cyotek.Windows.Forms
 Imports WinPaletter.XenonCore
 
 Public Class Win32UI
@@ -822,7 +823,7 @@ Public Class Win32UI
 
 
         Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu_Window.Left = RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3
+        Menu_Window.Left = Math.Min(RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3, RetroWindow2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
 
         RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
         RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
@@ -830,6 +831,7 @@ Public Class Win32UI
         RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
         RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
 
+        RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
     End Sub
 
     Sub ApplyRetroPreview()
@@ -1026,6 +1028,7 @@ Public Class Win32UI
 
         Refresh17BitPreference()
 
+        RetroShadow1.Refresh()
     End Sub
 
     Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
@@ -1038,8 +1041,8 @@ Public Class Win32UI
             'Theming Enabled (Menus Has colors and borders)
             Menu_Window.Flat = True
             RetroPanel1.Flat = True
-            menuhilight.BackColor = menuhilight_pick.BackColor 'Filling of selected item
-            highlight.BackColor = hilight_pick.BackColor 'Outer Border of selected item
+            menuhilight.BackColor = menuhilight_pick.BackColor  'Filling of selected item
+            highlight.BackColor = hilight_pick.BackColor        'Outer Border of selected item
 
             RetroPanel1.BackColor = menuhilight_pick.BackColor
             RetroPanel1.ButtonShadow = hilight_pick.BackColor
@@ -1050,8 +1053,8 @@ Public Class Win32UI
             'Theming Disabled (Menus are retro 3d)
             Menu_Window.Flat = False
             RetroPanel1.Flat = False
-            menuhilight.BackColor = hilight_pick.BackColor 'Both will have same color
-            highlight.BackColor = hilight_pick.BackColor 'Both will have same color
+            menuhilight.BackColor = hilight_pick.BackColor      'Both will have same color
+            highlight.BackColor = hilight_pick.BackColor        'Both will have same color
             RetroPanel1.BackColor = menu_pick.BackColor
             RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
             menucontainer0.BackColor = menu_pick.BackColor
@@ -1205,5 +1208,20 @@ Public Class Win32UI
         If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
         XenonToggle1.Checked = (XenonComboBox1.SelectedIndex = 0)
         LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+    End Sub
+
+    Private Sub Menu_Window_SizeChanged(sender As Object, e As EventArgs) Handles Menu_Window.SizeChanged, Menu_Window.LocationChanged
+        RetroShadow1.Size = Menu_Window.Size
+        RetroShadow1.Location = Menu_Window.Location + New Point(6, 5)
+
+        Dim b As New Bitmap(RetroShadow1.Width, RetroShadow1.Height)
+        Dim g As Graphics = Graphics.FromImage(b)
+        g.DrawGlow(New Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0))
+        g.Save()
+        RetroShadow1.Image = b
+        g.Dispose()
+
+        RetroShadow1.BringToFront()
+        Menu_Window.BringToFront()
     End Sub
 End Class

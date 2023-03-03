@@ -222,6 +222,12 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Accessibility.Designer.vb">
+      <DependentUpon>Accessibility.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Accessibility.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="bk.Designer.vb">
       <DependentUpon>bk.vb</DependentUpon>
@@ -388,6 +394,7 @@
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb" />
     <Compile Include="My Project\Resources1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -515,6 +522,10 @@
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\Animator.dll" />
     <Content Include="Resources\BasicTaskbar.png" />
+    <None Include="Resources\checker_enabled.png" />
+    <None Include="Resources\checker_disabled.png" />
+    <None Include="Resources\checker_enabled.png" />
+    <None Include="Resources\checker_disabled.png" />
     <Content Include="Resources\CMD_10x18.png" />
     <Content Include="Resources\CMD_10x18_P.png" />
     <Content Include="Resources\CMD_12x16.png" />
@@ -632,8 +643,13 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Accessibility.resx">
+      <DependentUpon>Accessibility.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="bk.resx">
       <DependentUpon>bk.vb</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>bk1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
@@ -699,9 +715,8 @@
       <DependentUpon>VS2Metrics.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

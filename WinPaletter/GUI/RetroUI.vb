@@ -48,6 +48,7 @@ Public Class RetroButton : Inherits Button
     Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
     Public Property UseItAsScrollbar As Boolean = False
     Public Property AppearsAsPressed As Boolean = False
+    Public Property HatchBrush As Boolean = False
 #End Region
 
 #Region "Events"
@@ -125,6 +126,12 @@ Public Class RetroButton : Inherits Button
         Else
             If AppearsAsPressed Then
                 G.Clear(ButtonHilight)
+
+                If HatchBrush Then
+                    Dim hb As New HatchBrush(HatchStyle.Percent50, ButtonHilight, BackColor)
+                    G.FillRectangle(hb, rect)
+                End If
+
                 G.DrawLine(New Pen(ButtonDkShadow), New Point(0, 0), New Point(Width - 1, 0))
                 G.DrawLine(New Pen(ButtonDkShadow), New Point(0, 1), New Point(0, Height - 1))
                 G.DrawLine(New Pen(ButtonShadow), New Point(1, 1), New Point(Width - 2, 1))
@@ -133,6 +140,7 @@ Public Class RetroButton : Inherits Button
                 G.DrawLine(New Pen(ButtonHilight), New Point(Width - 1, 0), New Point(Width - 1, Height - 1))
                 G.DrawLine(New Pen(BackColor), New Point(1, Height - 2), New Point(Width - 2, Height - 2))
                 G.DrawLine(New Pen(BackColor), New Point(Width - 2, 1), New Point(Width - 2, Height - 2))
+
             Else
                 If State = MouseState.Over Or State = MouseState.None Or Not Enabled Then
                     If Not Focused Then
@@ -223,210 +231,6 @@ Public Class RetroButton : Inherits Button
 
         e.Graphics.DrawImage(B, New Point(0, 0))
         G.Dispose() : B.Dispose()
-    End Sub
-
-End Class
-
-<DefaultEvent("CheckedChanged")>
-Public Class RetroCheckBox
-    Inherits Control
-
-    Event CheckedChanged(sender As Object)
-
-    Sub New()
-        SetStyle(DirectCast(139286, ControlStyles), True)
-        SetStyle(ControlStyles.Selectable, False)
-        DoubleBuffered = True
-        Font = New Font("Microsoft Sans Serif", 8)
-        BackColor = Color.FromArgb(192, 192, 192)
-        ForeColor = Color.Black
-    End Sub
-
-#Region "Properties"
-
-    Public Property Checked() As Boolean
-        Get
-            Return _Checked
-        End Get
-        Set(ByVal value As Boolean)
-            _Checked = value
-            RaiseEvent CheckedChanged(Me)
-            Invalidate()
-        End Set
-    End Property
-
-    Private _Checked As Boolean
-    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
-    Public Property ButtonDkShadow As Color = Color.Black
-    Public Property ButtonHilight As Color = Color.White
-    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-#End Region
-
-#Region "Events"
-
-    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
-        Checked = Not Checked
-        MyBase.OnMouseDown(e)
-        State = MouseState.Down : Invalidate()
-    End Sub
-
-    Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
-        MyBase.OnMouseUp(e)
-        State = MouseState.Over : Invalidate()
-    End Sub
-
-    Enum MouseState
-        None
-        Over
-        Down
-    End Enum
-
-    Dim State As MouseState = MouseState.None
-#End Region
-
-    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
-        Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
-        DoubleBuffered = True
-
-        '################################################################################# Customizer
-        Dim CheckRect As New Rectangle(0, 0, 12, 12)
-        Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
-        '#################################################################################
-        G.Clear(BackColor)
-
-        With CheckRect
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.Width - 1, .Y))
-            G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height - 1))
-            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.Width - 2, .Y + 1))
-            G.DrawLine(New Pen(ButtonDkShadow), New Point(.X, .Y) + New Point(1, 1), New Point(.X + 1, .Height - 2))
-            G.DrawLine(New Pen(ButtonLight), New Point(.Width - 1, 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ButtonLight), New Point(1, .Height - 1), New Point(.Width - 1, .Height - 1))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .X), New Point(.Width, .Height))
-            G.DrawLine(New Pen(ButtonHilight), New Point(.X, .Height), New Point(.Width, .Height))
-            G.FillRectangle(New SolidBrush(If(State = MouseState.Down, BackColor, Color.White)), New Rectangle(.X + 2, .Y + 2, .Width - 3, .Height - 3))
-        End With
-
-        If Checked Then
-            G.DrawString("b", New Font("Marlett", 10), New SolidBrush(Color.Black), New Point(-2, 0))
-        End If
-
-        G.DrawString(Text, Font, New SolidBrush(ForeColor), New Point(16, 0))
-
-        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(18, 0, Text.Measure(Font).Width - 6, 12))
-    End Sub
-
-    Private Sub RetroCheckBox_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        If Height <> 13 Then Height = 13
-    End Sub
-
-
-End Class
-
-<DefaultEvent("CheckedChanged")>
-Public Class RetroRadioButton
-    Inherits Control
-    Event CheckedChanged(sender As Object)
-
-    Sub New()
-        SetStyle(DirectCast(139286, ControlStyles), True)
-        SetStyle(ControlStyles.Selectable, False)
-        DoubleBuffered = True
-        Font = New Font("Microsoft Sans Serif", 8)
-        BackColor = Color.FromArgb(192, 192, 192)
-        ForeColor = Color.Black
-    End Sub
-
-#Region "Properties"
-    Private Sub InvalidateParent()
-        If Parent Is Nothing Then Return
-
-        For Each C As Control In Parent.Controls
-            If Not (C Is Me) AndAlso (TypeOf C Is RetroRadioButton) Then
-                DirectCast(C, RetroRadioButton).Checked = False
-            End If
-        Next
-    End Sub
-
-    Public Property Checked() As Boolean
-        Get
-            Return _Checked
-        End Get
-        Set(ByVal value As Boolean)
-            _Checked = value
-            If _Checked Then
-                InvalidateParent()
-            End If
-            RaiseEvent CheckedChanged(Me)
-            Invalidate()
-        End Set
-    End Property
-    Private _Checked As Boolean
-
-    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
-    Public Property ButtonDkShadow As Color = Color.Black
-    Public Property ButtonHilight As Color = Color.White
-    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-#End Region
-
-#Region "Events"
-    Enum MouseState
-        None
-        Over
-        Down
-    End Enum
-
-    Dim State As MouseState = MouseState.None
-
-    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-        Checked = True
-        State = MouseState.Down
-        Invalidate()
-        MyBase.OnMouseDown(e)
-    End Sub
-
-    Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-        State = MouseState.None
-        Invalidate()
-    End Sub
-#End Region
-
-    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
-        Dim G As Graphics = e.Graphics
-        G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
-        DoubleBuffered = True
-
-        '################################################################################# Customizer
-        Dim CheckRect As New Rectangle(0, 0, 11, 11)
-        Dim CheckRect2 As New Rectangle(1, 1, 9, 9)
-        Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
-        '#################################################################################
-
-        G.Clear(BackColor)
-
-        G.FillEllipse(New SolidBrush(If(State = MouseState.Down, BackColor, Color.White)), CheckRect)
-        G.DrawArc(New Pen(ButtonShadow), CheckRect, 140, 180)
-        G.DrawArc(New Pen(ButtonHilight), CheckRect, 320, 180)
-        G.DrawArc(New Pen(ButtonDkShadow), CheckRect2, 140, 180)
-        G.DrawLine(New Pen(ButtonDkShadow), New Point(CheckRect2.X, CheckRect2.Y) + New Point(1, 1), New Point(CheckRect2.X, CheckRect2.Y) + New Point(2, 1))
-        G.DrawLine(New Pen(ButtonDkShadow), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-1, 1), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y) + New Point(-2, 1))
-        G.DrawArc(New Pen(BackColor), CheckRect2, 320, 180)
-        G.DrawLine(New Pen(BackColor), New Point(CheckRect2.X, CheckRect2.Y + CheckRect2.Height) + New Point(1, -1), New Point(CheckRect2.X, CheckRect2.Y + CheckRect2.Height) + New Point(2, -1))
-        G.DrawLine(New Pen(BackColor), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y + CheckRect2.Height) + New Point(-1, -1), New Point(CheckRect2.X + CheckRect2.Width, CheckRect2.Y + CheckRect2.Height) + New Point(-2, -1))
-
-        If Checked Then
-            G.DrawString("h", New Font("Marlett", 10), New SolidBrush(Color.Black), New Point(-3, 0))
-        End If
-
-        G.DrawString(Text, Font, New SolidBrush(ForeColor), New Point(14, 0))
-
-        If State = MouseState.Down Then G.DrawRectangle(pendash, New Rectangle(16, 0, Text.Measure(Font).Width - 6, 12))
-    End Sub
-
-    Private Sub RetroCheckBox_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        If Height <> 13 Then Height = 13
     End Sub
 
 End Class
@@ -1100,14 +904,16 @@ Public Class RetroWindow : Inherits Panel
     Private BtnWidth As Integer = Metrics_CaptionWidth - 2
 
     Private Sub RetroWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-        Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
-        _CloseBtn.Visible = _ControlBox
-        _MinBtn.Visible = _ControlBox And _MinimizeBox
-        _MaxBtn.Visible = _ControlBox And _MaximizeBox
+        If Not UseItAsMenu Then
+            Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
+            _CloseBtn.Visible = _ControlBox
+            _MinBtn.Visible = _ControlBox And _MinimizeBox
+            _MaxBtn.Visible = _ControlBox And _MaximizeBox
 
-        AdjustControlBoxFontsSizes()
-        AdjustButtonSizes()
-        AdjustLocations()
+            AdjustControlBoxFontsSizes()
+            AdjustButtonSizes()
+            AdjustLocations()
+        End If
     End Sub
 
     Private Sub RetroWindow_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -1314,5 +1120,31 @@ Public Class RetroScrollBar : Inherits Panel
         G.Clear(BackColor)
         Dim b As New HatchBrush(HatchStyle.Percent50, ButtonHilight, BackColor)
         G.FillRectangle(b, Rect)
+    End Sub
+End Class
+
+Public Class TransparentPictureBox
+    Inherits PictureBox
+
+    Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaintBackground(e)
+
+        DoubleBuffered = True
+
+        If Parent IsNot Nothing Then
+            Dim index As Integer = Parent.Controls.GetChildIndex(Me)
+
+            For i As Integer = Parent.Controls.Count - 1 To index + 1 Step -1
+                Dim c As Control = Parent.Controls(i)
+                If c.Bounds.IntersectsWith(Bounds) AndAlso c.Visible = True Then
+                    Dim bmp As New Bitmap(c.Width, c.Height, e.Graphics)
+                    c.DrawToBitmap(bmp, c.ClientRectangle)
+                    e.Graphics.TranslateTransform(c.Left - Left, c.Top - Top)
+                    e.Graphics.DrawImageUnscaled(bmp, Point.Empty)
+                    e.Graphics.TranslateTransform(Left - c.Left, Top - c.Top)
+                    bmp.Dispose()
+                End If
+            Next
+        End If
     End Sub
 End Class

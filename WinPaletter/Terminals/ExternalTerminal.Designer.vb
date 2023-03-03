@@ -409,7 +409,7 @@ Partial Class ExternalTerminal
         '
         'PictureBox17
         '
-        Me.PictureBox17.Image = Global.WinPaletter.My.Resources.Resources.notify_warning
+        Me.PictureBox17.Image = CType(resources.GetObject("PictureBox17.Image"), System.Drawing.Image)
         Me.PictureBox17.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox17.Name = "PictureBox17"
         Me.PictureBox17.Size = New System.Drawing.Size(24, 24)
@@ -1383,7 +1383,7 @@ Partial Class ExternalTerminal
         Me.RasterList.ForeColor = System.Drawing.Color.White
         Me.RasterList.FormattingEnabled = True
         Me.RasterList.ItemHeight = 20
-        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "8x8", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
+        Me.RasterList.Items.AddRange(New Object() {"4x6", "6x8", "6x9", "8x8", "8x9", "16x8", "5x12", "7x12", "8x12", "16x12", "12x16", "10x18"})
         Me.RasterList.Location = New System.Drawing.Point(96, 65)
         Me.RasterList.Name = "RasterList"
         Me.RasterList.Size = New System.Drawing.Size(199, 26)

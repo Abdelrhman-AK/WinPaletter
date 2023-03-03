@@ -7,7 +7,6 @@ Imports System.Threading
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.Runtime.InteropServices
 Imports System.IO.Compression
 
 Namespace My
@@ -25,6 +24,11 @@ Namespace My
         Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
+
+        ''' <summary>
+        ''' Boolean Represents if OS is Windows XP
+        ''' </summary>
+        Public StartedWithClassicTheme As Boolean = False
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows XP
@@ -704,6 +708,13 @@ Namespace My
             Saving_Exceptions.Clear()
 
             If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
+            'Detects if WinPaletter started with Classic Theme
+            Dim vsFile As New Text.StringBuilder(260)
+            Dim colorName As New Text.StringBuilder(260)
+            Dim sizeName As New Text.StringBuilder(260)
+            NativeMethods.Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+            My.StartedWithClassicTheme = String.IsNullOrEmpty(vsFile.ToString)
 
             Try
                 If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")

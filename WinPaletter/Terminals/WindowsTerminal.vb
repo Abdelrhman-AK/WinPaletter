@@ -1547,4 +1547,8 @@ Public Class WindowsTerminal
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), TerOpacityBar.Maximum), TerOpacityBar.Minimum) : TerOpacityBar.Value = Val(sender.Text)
     End Sub
+
+    Private Sub TerEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles TerEnabled.CheckedChanged
+        checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
 End Class

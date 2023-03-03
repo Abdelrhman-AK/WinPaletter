@@ -406,7 +406,6 @@ Public Class XenonTreeView
         End Get
     End Property
 End Class
-
 Public Class XenonLinkLabel
     Inherits Windows.Forms.LinkLabel
 
@@ -5618,7 +5617,7 @@ Public Class XenonIcon : Inherits Panel
             ico.Dispose()
         End If
 
-        G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
+        If ColorGlow.A > 0 Then G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
         'G.DrawString(Title, Font, Brushes.White, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
         G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))

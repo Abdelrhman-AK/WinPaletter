@@ -1386,6 +1386,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public WindowAnimation As Boolean
             Public WindowShadow As Boolean
             Public WindowUIEffects As Boolean
+            Public ShowWinContentDrag As Boolean
 
             Public MenuAnimation As Boolean
             Public MenuFade As MenuAnimType
@@ -1513,6 +1514,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Try
 
                 Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETDRAGFULLWINDOWS, 0, i, SPIF.None) = 1 Then
+                        ShowWinContentDrag = i
+                    Else
+                        ShowWinContentDrag = _DefEffects.ShowWinContentDrag
+                    End If
+                Catch
+                    ShowWinContentDrag = _DefEffects.ShowWinContentDrag
+                End Try
+
+                Try
                     IconsShadow = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", _DefEffects.IconsShadow)
                 Catch
                     IconsShadow = _DefEffects.IconsShadow
@@ -1536,6 +1547,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SendChange) 'use uiParam not pvParam
                     SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SendChange)
@@ -1543,10 +1555,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.SendChange)
+
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
-                End If
 
+                    'ShowWinContentDrag should be re-written in registry as SystemParametersInfo looses its effect after logoff here
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger)
+                End If
             End Sub
 
             Shared Operator =(First As WinEffects, Second As WinEffects) As Boolean
@@ -1577,7 +1592,99 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_TooltipFade= " & TooltipFade)
                 tx.Add("*WinEffects_IconsShadow= " & IconsShadow)
                 tx.Add("*WinEffects_IconsDesktopTranslSel= " & IconsDesktopTranslSel)
+                tx.Add("*WinEffects_ShowWinContentDrag= " & ShowWinContentDrag)
                 tx.Add("</WindowsEffects>" & vbCrLf)
+                Return tx.CString
+            End Function
+
+        End Structure
+
+        Structure WinAccessibility : Implements ICloneable
+            Public Enabled As Boolean
+            Public CursorColor As Color
+            Public CursorSize As Integer
+            Public CursorType As Integer
+            Public TextScaleFactor As Integer
+            Public IndicatorColor As Color
+            Public IndicatorType As Integer
+
+            Sub Load(_DefAccessibility As WinAccessibility)
+                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WinAccessibility")
+                Enabled = rMain_WE.GetValue("", True)
+                rMain_WE.Close()
+
+                Try
+                    CursorColor = Color.FromArgb(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorColor", _DefAccessibility.CursorColor)).Reverse
+                Catch
+                    CursorColor = _DefAccessibility.CursorColor
+                End Try
+
+                Try
+                    CursorSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorSize", _DefAccessibility.CursorSize)
+                Catch
+                    CursorSize = _DefAccessibility.CursorSize
+                End Try
+
+                Try
+                    CursorType = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorType", _DefAccessibility.CursorType)
+                Catch
+                    CursorType = _DefAccessibility.CursorType
+                End Try
+
+                Try
+                    TextScaleFactor = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "TextScaleFactor", _DefAccessibility.TextScaleFactor)
+                Catch
+                    TextScaleFactor = _DefAccessibility.TextScaleFactor
+                End Try
+
+                Try
+                    IndicatorColor = Color.FromArgb(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorColor", _DefAccessibility.IndicatorColor)).Reverse
+                Catch
+                    IndicatorColor = _DefAccessibility.IndicatorColor
+                End Try
+
+                Try
+                    IndicatorType = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorType", _DefAccessibility.IndicatorType)
+                Catch
+                    IndicatorType = _DefAccessibility.IndicatorType
+                End Try
+
+            End Sub
+
+            Sub Apply()
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WinAccessibility")
+                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
+                rMain.Close()
+
+                If Enabled Then
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorColor", CursorColor.Reverse.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorSize", CursorSize)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorType", CursorType)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "TextScaleFactor", TextScaleFactor)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorColor", IndicatorColor.Reverse.ToArgb)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorType", IndicatorType)
+                End If
+
+            End Sub
+
+            Shared Operator =(First As WinAccessibility, Second As WinAccessibility) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As WinAccessibility, Second As WinAccessibility) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<WinAccessibility>")
+                tx.Add("*WinEffects_Enabled= " & Enabled)
+                'tx.Add("*WinEffects_WindowAnimation= " & WindowAnimation)
+                tx.Add("</WinAccessibility>" & vbCrLf)
                 Return tx.CString
             End Function
 
@@ -3085,6 +3192,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Desktop = Color.FromArgb(0, 0, 0)
             }
 
+    Public WinAccessibility As New Structures.WinAccessibility
+
     Public WallpaperTone_W11 As New Structures.WallpaperTone With {
         .Enabled = False,
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
@@ -3264,6 +3373,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Public Cursor_Enabled As Boolean = False
 
     Public Cursor_Shadow As Boolean = False
+
+    Public Cursor_Sonar As Boolean = False
+
+    Public Cursor_Trails As Integer = 0
 
     Public Cursor_Arrow As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -4023,6 +4136,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
         Next
 
+        For Each field In GetType(Structures.WinAccessibility).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+            If field.FieldType.Name.ToLower = "color" Then
+                CL.Add(field.GetValue(WinAccessibility))
+            End If
+        Next
+
         For Each field In GetType(Structures.WallpaperTone).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
             If field.FieldType.Name.ToLower = "color" Then
                 CL.Add(field.GetValue(WallpaperTone_W11))
@@ -4355,6 +4474,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 WindowsVista.Load(_Def.WindowsVista)
                 WindowsXP.Load(_Def.WindowsXP)
                 WindowsEffects.Load(_Def.WindowsEffects)
+                WinAccessibility.Load(_Def.WinAccessibility)
                 LogonUI10x.Load(_Def.LogonUI10x)
                 LogonUI7.Load(_Def.LogonUI7)
                 LogonUIXP.Load(_Def.LogonUIXP)
@@ -4445,6 +4565,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Cursor_Enabled = rMain.GetValue("", False)
                 rMain.Close()
                 Dim ii As Boolean
+
                 Try
                     If Fixer.SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, ii, SPIF.None) = 1 Then
                         Cursor_Shadow = ii
@@ -4453,6 +4574,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
                 Catch
                     Cursor_Shadow = _Def.Cursor_Shadow
+                End Try
+
+                Try
+                    Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSETRAILS, 0, Cursor_Trails, SPIF.None)
+                Catch
+                    Cursor_Trails = _Def.Cursor_Trails
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSESONAR, 0, ii, SPIF.None) = 1 Then
+                        Cursor_Sonar = ii
+                    Else
+                        Cursor_Sonar = _Def.Cursor_Sonar
+                    End If
+                Catch
+                    Cursor_Sonar = _Def.Cursor_Sonar
                 End Try
 
                 Cursor_Arrow.Load("Arrow")
@@ -4845,7 +4982,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*WinEffects_TooltipFade= ", My._strIgnore) Then WindowsEffects.TooltipFade = lin.Remove(0, "*WinEffects_TooltipFade= ".Count)
                     If lin.StartsWith("*WinEffects_IconsShadow= ", My._strIgnore) Then WindowsEffects.IconsShadow = lin.Remove(0, "*WinEffects_IconsShadow= ".Count)
                     If lin.StartsWith("*WinEffects_IconsDesktopTranslSel= ", My._strIgnore) Then WindowsEffects.IconsDesktopTranslSel = lin.Remove(0, "*WinEffects_IconsDesktopTranslSel= ".Count)
-
+                    If lin.StartsWith("*WinEffects_ShowWinContentDrag= ", My._strIgnore) Then WindowsEffects.ShowWinContentDrag = lin.Remove(0, "*WinEffects_ShowWinContentDrag= ".Count)
 #End Region
 
 #Region "Metrics & Fonts"
@@ -4903,6 +5040,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Cursors"
                     If lin.StartsWith("*Cursor_Enabled= ", My._strIgnore) Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
                     If lin.StartsWith("*Cursor_Shadow= ", My._strIgnore) Then Cursor_Shadow = lin.Remove(0, "*Cursor_Shadow= ".Count)
+                    If lin.StartsWith("*Cursor_Trails= ", My._strIgnore) Then Cursor_Trails = lin.Remove(0, "*Cursor_Trails= ".Count)
+                    If lin.StartsWith("*Cursor_Sonar= ", My._strIgnore) Then Cursor_Sonar = lin.Remove(0, "*Cursor_Sonar= ".Count)
 
                     If lin.StartsWith("*Cursor_Arrow_", My._strIgnore) Then CUR_Arrow_List.Add(lin.Remove(0, "*Cursor_Arrow_".Count))
                     If lin.StartsWith("*Cursor_Help_", My._strIgnore) Then CUR_Help_List.Add(lin.Remove(0, "*Cursor_Help_".Count))
@@ -5125,6 +5264,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Excute(CType(Sub()
                                  WindowsEffects.Apply()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinEffects, My.Lang.CP_WinEffects_Error, My.Lang.CP_Time, sw_all)
+
+                'WindowsAccessibility
+                Excute(CType(Sub()
+                                 WinAccessibility.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinAccessibility, My.Lang.CP_WinAccessibility_Error, My.Lang.CP_Time, sw_all)
 
                 'Metrics\Fonts
                 Excute(CType(Sub()
@@ -5356,6 +5500,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         tx.Add(Win32.ToString)
         tx.Add(WindowsEffects.ToString)
+        tx.Add(WinAccessibility.ToString)
 
         tx.Add(MetricsFonts.ToString)
 
@@ -5379,6 +5524,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add("<Cursors>")
         tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
         tx.Add("*Cursor_Shadow= " & Cursor_Shadow)
+        tx.Add("*Cursor_Sonar= " & Cursor_Sonar)
+        tx.Add("*Cursor_Trails= " & Cursor_Trails)
         tx.Add(Cursor_Arrow.ToString("Arrow"))
         tx.Add(Cursor_Help.ToString("Help"))
         tx.Add(Cursor_AppLoading.ToString("AppLoading"))
@@ -5653,7 +5800,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             If My.[Settings].AutoApplyCursors Then
                 Excute(CType(Sub()
+
                                  SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.SendChange)
+                                 SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.SendChange)
+                                 SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.SendChange)
+
                                  ApplyCursorsToReg()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_ApplyingCursors, My.Lang.CP_CursorsApplying_Error, My.Lang.CP_Time)
             Else
@@ -6353,6 +6504,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If LogonUIXP <> DirectCast(obj, CP).LogonUIXP Then _Equals = False
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
+        If WinAccessibility <> DirectCast(obj, CP).WinAccessibility Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
