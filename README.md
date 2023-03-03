@@ -11,7 +11,6 @@
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
 | Windows Accessibility                                  | :yellow_square: Trying                                                 | 
-| ClearType™ Fonts Preferences                           | :yellow_square: Trying                                                 | 
 | Windows Effects (& Animations)                         | :white_check_mark: Done (Version 1.0.7.1)                              | 
 | Extended Support to Windows XP & Vista                 | :white_check_mark: Done (Version 1.0.7.1)                              | 
 | Fonts Substitutes                                      | :white_check_mark: Done (Version 1.0.7.0)                              | 
