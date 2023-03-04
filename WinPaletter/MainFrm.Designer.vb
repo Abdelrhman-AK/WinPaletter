@@ -406,7 +406,6 @@ Partial Class MainFrm
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton30 = New WinPaletter.XenonButton()
         Me.XenonButton29 = New WinPaletter.XenonButton()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.XenonButton26 = New WinPaletter.XenonButton()
@@ -5774,7 +5773,6 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonGroupBox3.Controls.Add(Me.XenonButton30)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton29)
         Me.XenonGroupBox3.Controls.Add(Me.Label61)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton26)
@@ -5788,23 +5786,6 @@ Partial Class MainFrm
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(524, 66)
         Me.XenonGroupBox3.TabIndex = 28
-        '
-        'XenonButton30
-        '
-        Me.XenonButton30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton30.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton30.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton30.ForeColor = System.Drawing.Color.White
-        Me.XenonButton30.Image = CType(resources.GetObject("XenonButton30.Image"), System.Drawing.Image)
-        Me.XenonButton30.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(133, Byte), Integer))
-        Me.XenonButton30.LineSize = 1
-        Me.XenonButton30.Location = New System.Drawing.Point(194, 3)
-        Me.XenonButton30.Name = "XenonButton30"
-        Me.XenonButton30.Size = New System.Drawing.Size(40, 60)
-        Me.XenonButton30.TabIndex = 33
-        Me.XenonButton30.Tag = "Windows Accessiblity"
-        Me.XenonButton30.UseVisualStyleBackColor = False
         '
         'XenonButton29
         '
@@ -5832,7 +5813,7 @@ Partial Class MainFrm
         Me.Label61.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label61.Location = New System.Drawing.Point(4, 4)
         Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(184, 58)
+        Me.Label61.Size = New System.Drawing.Size(225, 58)
         Me.Label61.TabIndex = 31
         Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -6500,5 +6481,4 @@ Partial Class MainFrm
     Friend WithEvents Label80 As Label
     Friend WithEvents WXP_Alert2 As XenonAlertBox
     Friend WithEvents WXP_Alert1 As XenonAlertBox
-    Friend WithEvents XenonButton30 As XenonButton
 End Class

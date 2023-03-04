@@ -663,8 +663,8 @@ Public Class DragPreviewer
 #End Region
         End Select
 
-        MainFrm.ApplyMetrics([CP], XenonWindow1)
-        MainFrm.ApplyMetrics([CP], XenonWindow2)
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -689,6 +689,9 @@ Public Class DragPreviewer
         Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
         tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
         XenonAlertBox11.Visible = MainFrm.PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
+
+        MainFrm.ApplyMetrics([CP], XenonWindow1)
+        MainFrm.ApplyMetrics([CP], XenonWindow2)
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11

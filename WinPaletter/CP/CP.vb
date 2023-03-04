@@ -1601,97 +1601,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End Structure
 
-        Structure WinAccessibility : Implements ICloneable
-            Public Enabled As Boolean
-            Public CursorColor As Color
-            Public CursorSize As Integer
-            Public CursorType As Integer
-            Public TextScaleFactor As Integer
-            Public IndicatorColor As Color
-            Public IndicatorType As Integer
-
-            Sub Load(_DefAccessibility As WinAccessibility)
-                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WinAccessibility")
-                Enabled = rMain_WE.GetValue("", True)
-                rMain_WE.Close()
-
-                Try
-                    CursorColor = Color.FromArgb(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorColor", _DefAccessibility.CursorColor)).Reverse
-                Catch
-                    CursorColor = _DefAccessibility.CursorColor
-                End Try
-
-                Try
-                    CursorSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorSize", _DefAccessibility.CursorSize)
-                Catch
-                    CursorSize = _DefAccessibility.CursorSize
-                End Try
-
-                Try
-                    CursorType = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorType", _DefAccessibility.CursorType)
-                Catch
-                    CursorType = _DefAccessibility.CursorType
-                End Try
-
-                Try
-                    TextScaleFactor = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "TextScaleFactor", _DefAccessibility.TextScaleFactor)
-                Catch
-                    TextScaleFactor = _DefAccessibility.TextScaleFactor
-                End Try
-
-                Try
-                    IndicatorColor = Color.FromArgb(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorColor", _DefAccessibility.IndicatorColor)).Reverse
-                Catch
-                    IndicatorColor = _DefAccessibility.IndicatorColor
-                End Try
-
-                Try
-                    IndicatorType = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorType", _DefAccessibility.IndicatorType)
-                Catch
-                    IndicatorType = _DefAccessibility.IndicatorType
-                End Try
-
-            End Sub
-
-            Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WinAccessibility")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
-
-                If Enabled Then
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorColor", CursorColor.Reverse.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorSize", CursorSize)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "CursorType", CursorType)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility", "TextScaleFactor", TextScaleFactor)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorColor", IndicatorColor.Reverse.ToArgb)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Accessibility\CursorIndicator", "IndicatorType", IndicatorType)
-                End If
-
-            End Sub
-
-            Shared Operator =(First As WinAccessibility, Second As WinAccessibility) As Boolean
-                Return First.Equals(Second)
-            End Operator
-
-            Shared Operator <>(First As WinAccessibility, Second As WinAccessibility) As Boolean
-                Return Not First.Equals(Second)
-            End Operator
-
-            Public Function Clone() As Object Implements ICloneable.Clone
-                Return MemberwiseClone()
-            End Function
-            Public Overrides Function ToString() As String
-                Dim tx As New List(Of String)
-                tx.Clear()
-                tx.Add("<WinAccessibility>")
-                tx.Add("*WinEffects_Enabled= " & Enabled)
-                'tx.Add("*WinEffects_WindowAnimation= " & WindowAnimation)
-                tx.Add("</WinAccessibility>" & vbCrLf)
-                Return tx.CString
-            End Function
-
-        End Structure
-
         Structure MetricsFonts : Implements ICloneable
             Public Enabled As Boolean
             Public BorderWidth As Integer
@@ -3194,8 +3103,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Desktop = Color.FromArgb(0, 0, 0)
             }
 
-    Public WinAccessibility As New Structures.WinAccessibility
-
     Public WallpaperTone_W11 As New Structures.WallpaperTone With {
         .Enabled = False,
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
@@ -3238,7 +3145,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .ListBoxSmoothScrolling = True,
         .TooltipAnimation = True,
         .TooltipFade = MenuAnimType.Fade,
-        .IconsShadow = True}
+        .IconsShadow = True,
+        .IconsDesktopTranslSel = True,
+        .ShowWinContentDrag = True}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
@@ -4138,12 +4047,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
         Next
 
-        For Each field In GetType(Structures.WinAccessibility).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
-            If field.FieldType.Name.ToLower = "color" Then
-                CL.Add(field.GetValue(WinAccessibility))
-            End If
-        Next
-
         For Each field In GetType(Structures.WallpaperTone).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
             If field.FieldType.Name.ToLower = "color" Then
                 CL.Add(field.GetValue(WallpaperTone_W11))
@@ -4476,7 +4379,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 WindowsVista.Load(_Def.WindowsVista)
                 WindowsXP.Load(_Def.WindowsXP)
                 WindowsEffects.Load(_Def.WindowsEffects)
-                WinAccessibility.Load(_Def.WinAccessibility)
                 LogonUI10x.Load(_Def.LogonUI10x)
                 LogonUI7.Load(_Def.LogonUI7)
                 LogonUIXP.Load(_Def.LogonUIXP)
@@ -5267,11 +5169,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                  WindowsEffects.Apply()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinEffects, My.Lang.CP_WinEffects_Error, My.Lang.CP_Time, sw_all)
 
-                'WindowsAccessibility
-                Excute(CType(Sub()
-                                 WinAccessibility.Apply()
-                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinAccessibility, My.Lang.CP_WinAccessibility_Error, My.Lang.CP_Time, sw_all)
-
                 'Metrics\Fonts
                 Excute(CType(Sub()
                                  MetricsFonts.Apply()
@@ -5502,8 +5399,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         tx.Add(Win32.ToString)
         tx.Add(WindowsEffects.ToString)
-        tx.Add(WinAccessibility.ToString)
-
         tx.Add(MetricsFonts.ToString)
 
         tx.Add(WallpaperTone_W11.ToString("Win11"))
@@ -6506,7 +6401,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If LogonUIXP <> DirectCast(obj, CP).LogonUIXP Then _Equals = False
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
-        If WinAccessibility <> DirectCast(obj, CP).WinAccessibility Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False

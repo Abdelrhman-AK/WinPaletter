@@ -147,7 +147,6 @@ Public Class ColorPickerDlg
 
         If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
             MainFrm.previewContainer.Visible = False
-            MainFrm.SuspendLayout()
 
             MainFrm.Width = PreviousWidth
 
@@ -155,7 +154,6 @@ Public Class ColorPickerDlg
                 If ct IsNot MainFrm.previewContainer Then ct.Visible = True
             Next
 
-            MainFrm.ResumeLayout()
             MainFrm.previewContainer.Visible = True
         End If
 

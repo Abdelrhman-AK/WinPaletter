@@ -184,7 +184,7 @@ Partial Class CursorsStudio
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.checker_img.BackColor = System.Drawing.Color.Transparent
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
+        Me.checker_img.Image = CType(resources.GetObject("checker_img.Image"), System.Drawing.Image)
         Me.checker_img.Location = New System.Drawing.Point(545, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -985,7 +985,7 @@ Partial Class CursorsStudio
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(196, 680)
+        Me.XenonButton3.Location = New System.Drawing.Point(196, 677)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(91, 35)
         Me.XenonButton3.TabIndex = 66
@@ -1002,7 +1002,7 @@ Partial Class CursorsStudio
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(423, 680)
+        Me.XenonButton4.Location = New System.Drawing.Point(423, 677)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(221, 35)
         Me.XenonButton4.TabIndex = 65
@@ -1770,7 +1770,7 @@ Partial Class CursorsStudio
         Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(293, 680)
+        Me.XenonButton11.Location = New System.Drawing.Point(293, 677)
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(124, 35)
         Me.XenonButton11.TabIndex = 82
@@ -1880,7 +1880,7 @@ Partial Class CursorsStudio
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(657, 727)
+        Me.ClientSize = New System.Drawing.Size(657, 724)
         Me.Controls.Add(Me.PictureBox22)
         Me.Controls.Add(Me.XenonCheckBox10)
         Me.Controls.Add(Me.trails_btn)

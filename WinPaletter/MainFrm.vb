@@ -6,9 +6,6 @@ Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
-Imports System.Windows.Interop
-Imports System.Runtime.InteropServices
-Imports WinPaletter.NativeMethods
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -25,9 +22,6 @@ Public Class MainFrm
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
         Dim AnimX1 As Integer = 25
         Dim AnimX2 As Integer = 1
-
-        ApplyMetrics([CP], XenonWindow1)
-        ApplyMetrics([CP], XenonWindow2)
 
         XenonWindow1.Active = True
         XenonWindow2.Active = False
@@ -802,6 +796,9 @@ Public Class MainFrm
                 taskbar.Refresh()
 #End Region
         End Select
+
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
     End Sub
 
     Sub AdjustClassicPreview()
@@ -902,6 +899,8 @@ Public Class MainFrm
     End Sub
 
     Public Sub Update_Wallpaper_Preview()
+        Cursor = Cursors.WaitCursor
+
         My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
 
         Select Case PreviewConfig
@@ -930,10 +929,11 @@ Public Class MainFrm
         ApplyCPValues(CP)
         ReValidateLivePreview(pnl_preview)
         ReValidateLivePreview(pnl_preview_classic)
+
+        Cursor = Cursors.Default
     End Sub
 
     Sub Adjust_Preview(Optional AnimateThePreview As Boolean = True)
-
         If AnimateThePreview Then
             If _Shown Then
                 If tabs_preview.Visible Then My.Animator.HideSync(tabs_preview)
@@ -952,6 +952,9 @@ Public Class MainFrm
         WXP_Alert2.Visible = PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
         tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+
+        ApplyMetrics([CP], XenonWindow1)
+        ApplyMetrics([CP], XenonWindow2)
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -1188,7 +1191,7 @@ Public Class MainFrm
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = False
 
             Case WinVer.WVista
@@ -1215,7 +1218,7 @@ Public Class MainFrm
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = True
 
             Case WinVer.WXP
@@ -1237,7 +1240,7 @@ Public Class MainFrm
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = True
 
         End Select
@@ -1919,7 +1922,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Titlebar_Active = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -1928,7 +1931,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.Titlebar_Active = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1945,7 +1948,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Titlebar_Inactive = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -1957,7 +1960,7 @@ Public Class MainFrm
 
         CP.Windows11.Titlebar_Inactive = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1972,49 +1975,49 @@ Public Class MainFrm
     Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows11.WinMode_Light = Not sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_AppMode_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows11.AppMode_Light = Not sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_Transparency_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows11.Transparency = sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows11.ApplyAccentonTitlebars = sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
         If _Shown Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
         If _Shown Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
         If _Shown Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
@@ -2023,7 +2026,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index1 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2052,7 +2055,7 @@ Public Class MainFrm
 
 
         CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2065,7 +2068,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index5 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2082,7 +2085,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.Color_Index5 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2095,7 +2098,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index0 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2116,7 +2119,7 @@ Public Class MainFrm
         End If
 
         CP.Windows11.Color_Index0 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2130,7 +2133,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index3 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2144,7 +2147,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList)
 
         CP.Windows11.Color_Index3 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2157,7 +2160,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index6 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2172,7 +2175,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows11.Color_Index6 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2185,7 +2188,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.StartMenu_Accent = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2195,7 +2198,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2209,7 +2212,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index2 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2219,7 +2222,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows11.Color_Index2 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2232,7 +2235,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows11.Color_Index4 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2267,7 +2270,7 @@ Public Class MainFrm
         End If
 
         CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2304,7 +2307,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Titlebar_Active = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2313,7 +2316,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows10.Titlebar_Active = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2330,7 +2333,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Titlebar_Inactive = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2342,7 +2345,7 @@ Public Class MainFrm
 
         CP.Windows10.Titlebar_Inactive = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2357,49 +2360,49 @@ Public Class MainFrm
     Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows10.WinMode_Light = Not sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_AppMode_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows10.AppMode_Light = Not sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_Transparency_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows10.Transparency = sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
             CP.Windows10.ApplyAccentonTitlebars = sender.Checked
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
         If _Shown Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
         If _Shown Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
         If _Shown Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
@@ -2408,7 +2411,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index1 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2433,7 +2436,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows10.Color_Index1 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2446,7 +2449,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index5 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2461,7 +2464,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows10.Color_Index5 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2475,7 +2478,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index0 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2503,7 +2506,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows10.Color_Index0 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2517,7 +2520,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index3 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2560,7 +2563,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows10.Color_Index3 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2573,7 +2576,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index6 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2614,7 +2617,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows10.Color_Index6 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2627,7 +2630,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.StartMenu_Accent = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2638,7 +2641,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows10.StartMenu_Accent = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2652,7 +2655,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index2 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2666,7 +2669,7 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         CP.Windows10.Color_Index2 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2680,7 +2683,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows10.Color_Index4 = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2731,7 +2734,7 @@ Public Class MainFrm
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows10.Color_Index4 = Color.FromArgb(255, C)
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2772,7 +2775,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows8.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2791,7 +2794,7 @@ Public Class MainFrm
 
         CP.Windows8.ColorizationColor = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2803,7 +2806,7 @@ Public Class MainFrm
         If _Shown Then
             W8_ColorizationBalance_val.Text = sender.Value.ToString()
             CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
@@ -2812,7 +2815,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows8.StartColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2823,7 +2826,7 @@ Public Class MainFrm
 
         CP.Windows8.StartColor = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2836,7 +2839,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows8.AccentColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2847,7 +2850,7 @@ Public Class MainFrm
 
         CP.Windows8.AccentColor = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2860,7 +2863,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows8.PersonalColors_Background = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2871,7 +2874,7 @@ Public Class MainFrm
 
         CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2884,7 +2887,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows8.PersonalColors_Accent = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2895,7 +2898,7 @@ Public Class MainFrm
 
         CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2911,25 +2914,25 @@ Public Class MainFrm
     Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
         If W8_theme_aero.Checked Then
             CP.Windows8.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W8_theme_aerolite.CheckedChanged
         If W8_theme_aerolite.Checked Then
             CP.Windows8.Theme = CP.AeroTheme.AeroLite
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W8_start_Click(sender As Object, e As EventArgs) Handles W8_start.Click
         Start8Selector.ShowDialog()
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
     End Sub
 
     Private Sub W8_logonui_Click(sender As Object, e As EventArgs) Handles W8_logonui.Click
         LogonUI8Colors.ShowDialog()
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W8 Then ApplyLivePreviewFromCP(CP)
     End Sub
 #End Region
 
@@ -2939,7 +2942,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.Windows7.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -2958,7 +2961,7 @@ Public Class MainFrm
 
         CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -2990,7 +2993,7 @@ Public Class MainFrm
 
         CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -3010,7 +3013,7 @@ Public Class MainFrm
         If _Shown Then
             W7_ColorizationColorBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
@@ -3018,7 +3021,7 @@ Public Class MainFrm
         If _Shown Then
             W7_ColorizationBlurBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
@@ -3026,16 +3029,18 @@ Public Class MainFrm
         If _Shown Then
             W7_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
         If W7_theme_classic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Classic
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
-            tabs_preview.Refresh()
+            If PreviewConfig = WinVer.W7 Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+                tabs_preview.Refresh()
+            End If
         End If
 
     End Sub
@@ -3043,27 +3048,33 @@ Public Class MainFrm
     Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
         If W7_theme_basic.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Basic
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
-            tabs_preview.Refresh()
+            If PreviewConfig = WinVer.W7 Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+                tabs_preview.Refresh()
+            End If
         End If
     End Sub
 
     Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
         If W7_theme_aeroopaque.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
-            tabs_preview.Refresh()
+            If PreviewConfig = WinVer.W7 Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+                tabs_preview.Refresh()
+            End If
         End If
     End Sub
 
     Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
         If W7_theme_aero.Checked Then
             CP.Windows7.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
-            tabs_preview.Refresh()
+            If PreviewConfig = WinVer.W7 Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+                tabs_preview.Refresh()
+            End If
         End If
     End Sub
 
@@ -3071,7 +3082,7 @@ Public Class MainFrm
         If _Shown Then
             W7_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
             CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.W7 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
     Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
@@ -3102,7 +3113,7 @@ Public Class MainFrm
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 CP.WindowsVista.ColorizationColor = sender.BackColor
-                ApplyLivePreviewFromCP(CP)
+                If PreviewConfig = WinVer.WVista Then ApplyLivePreviewFromCP(CP)
             End If
             Exit Sub
         End If
@@ -3121,7 +3132,7 @@ Public Class MainFrm
 
         CP.WindowsVista.ColorizationColor = Color.FromArgb(255, C)
 
-        ApplyLivePreviewFromCP(CP)
+        If PreviewConfig = WinVer.WVista Then ApplyLivePreviewFromCP(CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -3133,15 +3144,17 @@ Public Class MainFrm
         If _Shown Then
             WVista_ColorizationColorBalance_val.Text = sender.Value.ToString()
             CP.WindowsVista.Alpha = WVista_ColorizationColorBalance_bar.Value
-            ApplyLivePreviewFromCP(CP)
+            If PreviewConfig = WinVer.WVista Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
 
     Private Sub WVista_theme_classic_CheckedChanged(sender As Object) Handles WVista_theme_classic.CheckedChanged
         If WVista_theme_classic.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Classic
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
+            If PreviewConfig = WinVer.WVista Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+            End If
         End If
 
     End Sub
@@ -3149,24 +3162,30 @@ Public Class MainFrm
     Private Sub WVista_theme_basic_CheckedChanged(sender As Object) Handles WVista_theme_basic.CheckedChanged
         If WVista_theme_basic.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Basic
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
+            If PreviewConfig = WinVer.WVista Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+            End If
         End If
     End Sub
 
     Private Sub WVista_theme_aeroopaque_CheckedChanged(sender As Object) Handles WVista_theme_aeroopaque.CheckedChanged
         If WVista_theme_aeroopaque.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.AeroOpaque
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
+            If PreviewConfig = WinVer.WVista Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+            End If
         End If
     End Sub
 
     Private Sub WVista_theme_Vista_CheckedChanged(sender As Object) Handles WVista_theme_aero.CheckedChanged
         If WVista_theme_aero.Checked Then
             CP.WindowsVista.Theme = CP.AeroTheme.Aero
-            ApplyLivePreviewFromCP(CP)
-            Adjust_Preview(False)
+            If PreviewConfig = WinVer.WVista Then
+                ApplyLivePreviewFromCP(CP)
+                Adjust_Preview(False)
+            End If
         End If
     End Sub
 
@@ -3181,35 +3200,35 @@ Public Class MainFrm
     Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
         If WXP_Luna_Blue.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaBlue
-            Adjust_Preview()
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
     Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
         If WXP_Luna_OliveGreen.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaOliveGreen
-            Adjust_Preview()
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
     Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
         If WXP_Luna_Silver.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.LunaSilver
-            Adjust_Preview()
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
     Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
         If WXP_CustomTheme.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.Custom
-            Adjust_Preview()
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
     Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
         If WXP_Classic.Checked Then
             CP.WindowsXP.Theme = WinXPTheme.Classic
-            Adjust_Preview()
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
@@ -3241,7 +3260,7 @@ Public Class MainFrm
 
             If WXP_VS_ColorsList.Items.Count > 0 Then WXP_VS_ColorsList.SelectedIndex = 0
 
-            If WXP_CustomTheme.Checked Then Adjust_Preview(False)
+            If WXP_CustomTheme.Checked And PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 
@@ -3254,7 +3273,7 @@ Public Class MainFrm
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles WXP_VS_ColorsList.SelectedIndexChanged
         If _Shown AndAlso WXP_CustomTheme.Checked Then
             CP.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem
-            Adjust_Preview(False)
+            If PreviewConfig = WinVer.WXP Then Adjust_Preview(False)
         End If
     End Sub
 #End Region
@@ -3918,10 +3937,6 @@ Public Class MainFrm
 
     Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
         WinEffecter.ShowDialog()
-    End Sub
-
-    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
-        Accessibility.ShowDialog()
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

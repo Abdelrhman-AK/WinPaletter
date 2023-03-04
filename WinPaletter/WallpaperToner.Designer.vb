@@ -620,7 +620,7 @@ Partial Class WallpaperToner
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "WallpaperToner"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Wallpaper Tone"
         Me.XenonGroupBox1.ResumeLayout(False)
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()

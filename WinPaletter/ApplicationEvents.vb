@@ -19,6 +19,7 @@ Namespace My
         Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
+        Public ReadOnly PATH_AccessibilityCursors As String = PATH_UserProfile & "\AppData\Local\Microsoft\Windows\Cursors"
 
         Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
         Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"

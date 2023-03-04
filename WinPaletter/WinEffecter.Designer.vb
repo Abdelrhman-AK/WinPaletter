@@ -797,7 +797,7 @@ Partial Class WinEffecter
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "WinEffecter"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Windows Effects"
         Me.XenonGroupBox4.ResumeLayout(False)
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()

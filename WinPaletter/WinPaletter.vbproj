@@ -222,12 +222,6 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Accessibility.Designer.vb">
-      <DependentUpon>Accessibility.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Accessibility.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="bk.Designer.vb">
       <DependentUpon>bk.vb</DependentUpon>
@@ -642,9 +636,6 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Accessibility.resx">
-      <DependentUpon>Accessibility.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="bk.resx">
       <DependentUpon>bk.vb</DependentUpon>
