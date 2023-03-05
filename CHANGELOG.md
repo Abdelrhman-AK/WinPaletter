@@ -1,6 +1,41 @@
 # Changelog
 
 ---
+
+### 1.0.7.2
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` |  05 Mar 2023 |
+
+> **What's New?**
+
+### The same as [1.0.7.1](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1071), except for:
+#### New features:
+- Adding Cursor Tracking (Sonar) option #88 and Cursor Trails option in Cursors
+- Adding "Show content while dragging" option in Windows Effects #87
+
+#### Changes and fixes:
+- There was a lag during changing the preview in main form. Now it is improved a bit.
+- Improvements in UI #97 #95 #93 #90
+- Making Icons labels in metrics preview follow the preset of shadow in Windows Effects #94
+- Making Menu in Classic Colors follows the preset of shadow in Windows Effects #91
+- Making user in Command Prompt can't choose a font if raster font is checked, and that is to remove the vague preview #96
+- Making Command Prompt have 6x9 & 8x9 raster fonts layouts. They are identical to 6x8 & 8x8 respectively #96
+- Making alert if you are using a classic theme and opened Windows XP preview (as there are limitations in the component used in visual styles previewer) #89
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.1`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.1...v1.0.7.2) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.2) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.2) |
+
+---
+
 ### 1.0.7.1
 
 > **Info:**
