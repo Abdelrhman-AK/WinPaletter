@@ -229,6 +229,25 @@
 
 • Now you can control cursors shadow.</value>
   </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>• Adding Cursor Tracking (Sonar) option and Cursor Trails option in Cursors
+
+• Adding "Show content while dragging" option in Windows Effects
+
+• There was a lag during changing the preview in main form. Now it is improved a bit.
+
+• Improvements in UI
+
+• Making Icons labels in metrics preview follow the preset of shadow in Windows Effects
+
+• Making Menu in Classic Colors follows the preset of shadow in Windows Effects
+
+• Making user in Command Prompt can't choose a font if raster font is checked, and that is to remove the vague preview
+
+• Making Command Prompt have 6x9 &amp; 8x9 raster fonts layouts. They are identical to 6x8 &amp; 8x8 respectively
+
+• Making alert if you are using a classic theme and opened Windows XP preview (as there are limitations in the component used in visual styles previewer)</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAQAEBAAAAEAIABoBAAARgAAACAgAAABACAAqBAAAK4EAAAwMAAAAQAgAKglAABWFQAAQEAAAAEA
