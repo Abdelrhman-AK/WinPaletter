@@ -4051,8 +4051,6 @@ Public Class XenonWinElement : Inherits ContainerControl
         SetStyle(ControlStyles.UserPaint, True)
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         SetStyle(ControlStyles.ResizeRedraw, True)
-        SetStyle(ControlStyles.DoubleBuffer, True)
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
     End Sub
 
     Enum MouseState
@@ -4106,6 +4104,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         DoubleBuffered = True
         Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
         Dim RRect As New Rectangle(0, 0, Width - 1, Height - 1)
+
         G.Clear(Color.Transparent)
 
         Dim Radius As Integer = 5
@@ -4691,7 +4690,6 @@ Public Class XenonWindow : Inherits Panel
         Font = New Font("Segoe UI", 9)
         DoubleBuffered = True
         SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         BackColor = Color.Transparent
     End Sub
 

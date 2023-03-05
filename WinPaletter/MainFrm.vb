@@ -20,7 +20,7 @@ Public Class MainFrm
 #Region "CP Subs"
 
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
-        Dim AnimX1 As Integer = 25
+        Dim AnimX1 As Integer = 15
         Dim AnimX2 As Integer = 1
 
         XenonWindow1.Active = True
@@ -94,9 +94,9 @@ Public Class MainFrm
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        taskbar.BackColorAlpha = 130
-                        start.BackColorAlpha = 130
-                        ActionCenter.BackColorAlpha = 130
+                        taskbar.BackColorAlpha = 75
+                        start.BackColorAlpha = 75
+                        ActionCenter.BackColorAlpha = 75
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
@@ -899,7 +899,7 @@ Public Class MainFrm
     End Sub
 
     Public Sub Update_Wallpaper_Preview()
-        Cursor = Cursors.WaitCursor
+        Cursor = Cursors.AppStarting
 
         My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
 
@@ -3247,7 +3247,9 @@ Public Class MainFrm
         CP.WindowsXP.ThemeFile = WXP_VS_textbox.Text
 
         If File.Exists(WXP_VS_textbox.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
+
             Dim vs As New VisualStyleFile(theme)
+
             WXP_VS_ColorsList.Items.Clear()
 
             Try
@@ -3323,7 +3325,8 @@ Public Class MainFrm
             XenonButton14.Visible = True
         Else
             If My.[Settings].Log_Countdown_Enabled Then
-                ellapsedSecs = 0
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
+                ellapsedSecs = 1
                 Timer1.Enabled = True
                 Timer1.Start()
             End If

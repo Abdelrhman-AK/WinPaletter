@@ -112,9 +112,9 @@ Public Class DragPreviewer
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        taskbar.BackColorAlpha = 130
-                        start.BackColorAlpha = 130
-                        ActionCenter.BackColorAlpha = 130
+                        taskbar.BackColorAlpha = 75
+                        start.BackColorAlpha = 75
+                        ActionCenter.BackColorAlpha = 75
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None

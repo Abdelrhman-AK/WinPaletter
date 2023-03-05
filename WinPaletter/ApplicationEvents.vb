@@ -420,7 +420,6 @@ Namespace My
             End If
 
             Dim img As Bitmap
-
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
                 Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
                 img = New Bitmap(Image.FromStream(x))

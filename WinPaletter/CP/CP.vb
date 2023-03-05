@@ -2020,7 +2020,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim path As String
                 If Not My.WXP And Not My.WVista Then
                     path = IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp")
-                    HSL.ExecuteFilter(img).Save(path)
+                    HSL.ExecuteFilter(img).Save(path, Imaging.ImageFormat.Bmp)
 
                 Else
                     path = IO.Path.Combine(My.PATH_Windows, "Web\Wallpaper\TintedWallpaper.bmp")
