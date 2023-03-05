@@ -24,6 +24,7 @@
 - Making Menu in Classic Colors follows the preset of shadow in Windows Effects #91
 - Making user in Command Prompt can't choose a font if raster font is checked, and that is to remove the vague preview #96
 - Making Command Prompt have 6x9 & 8x9 raster fonts layouts. They are identical to 6x8 & 8x8 respectively #96
+- Fixing bug in Windows Terminal #83
 - Making alert if you are using a classic theme and opened Windows XP preview (as there are limitations in the component used in visual styles previewer) #89
 
 > **Compare source code with:**
