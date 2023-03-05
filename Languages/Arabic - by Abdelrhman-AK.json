@@ -4,7 +4,7 @@
     "translationversion": "1.2",
     "lang": "العربية (Arabic)",
     "langcode": "ع (AR-EG)",
-    "appver": "1.0.7.1",
+    "appver": "1.0.7.2",
     "righttoleft": "True"
   },
   "Global Strings": {
@@ -245,71 +245,6 @@
     "cp_applyingcursors": "جار تطبيق مؤشرات الفأرة ..."
   },
   "Forms Strings": {
-    "LogonUIXP": {
-      "Text": "واجهة تسجيل الدخول - ويندوز XP",
-      "Controls": {
-        "XenonCheckBox1.Text": "اظهار اعدادات اخرى (مثل زر اغلاق التشغيل)",
-        "Label3.Text": "لون الخلفية:",
-        "Label5.Text": "لمسات محددة لوضع ويندوز 2000",
-        "Label2.Text": "ويندوز 2000",
-        "Label1.Text": "ويندوز XP",
-        "Label13.Text": "نوع الواجهة",
-        "XenonButton9.Text": "الوضع المطبق الحالى",
-        "Label12.Text": "فتح من:",
-        "XenonButton11.Text": "ثيم WinPaletter",
-        "XenonButton12.Text": "ويندوز افتراضى",
-        "XenonButton10.Text": "تطبيق سريع",
-        "XenonButton7.Text": "الغاء",
-        "XenonButton8.Text": "حمل للثيم الحالى"
-      }
-    },
-    "VS2Metrics": {
-      "Text": "حمل ملف ثيم ويندوز لمقاسات و خطوط",
-      "Controls": {
-        "XenonCheckBox2.Text": "ضمّن الخطوط",
-        "XenonCheckBox1.Text": "ضمّن المقاسات",
-        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
-        "XenonButton7.Text": "الغاء",
-        "XenonButton8.Text": "حمل لمقاسات و خطوط",
-        "Label102.Text": "ملف:"
-      }
-    },
-    "VS2Win32UI": {
-      "Text": "حمل ملف ثيم ويندوز لألوان كلاسيك",
-      "Controls": {
-        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
-        "XenonButton7.Text": "الغاء",
-        "XenonButton8.Text": "حمل للألوان الكلاسيك",
-        "Label102.Text": "ملف:"
-      }
-    },
-    "WinEffecter": {
-      "Text": "تأثيرات الويندوز",
-      "Controls": {
-        "XenonCheckBox10.Text": "مربع التحديد الشفاف على سطح المكتب",
-        "Label5.Text": "أيقونات سطح المكتب",
-        "XenonCheckBox4.Text": "ظل وراء نص أيقونة سطح المكتب",
-        "XenonCheckBox9.Text": "تأثيرات حركية مُفعلة",
-        "Label4.Text": "تلميح",
-        "XenonCheckBox7.Text": "التمرير السلس فى صندوق القائمة",
-        "XenonCheckBox8.Text": "تأثيرات القائمة المنسدلة",
-        "Label3.Text": "أدوات الاختيار",
-        "XenonCheckBox5.Text": "اجعل العنصر المُختار بتأثير التلاشى",
-        "XenonCheckBox6.Text": "تأثيرات حركية مُفعلة",
-        "Label2.Text": "قائمة",
-        "XenonCheckBox3.Text": "تأثيرات النظام",
-        "XenonCheckBox2.Text": "ظل حدود النافذة",
-        "XenonCheckBox1.Text": "تأثيرات حركية (أغلاق\\فتح\\تكبير\\تصغير\\...)",
-        "Label1.Text": "عام",
-        "XenonButton9.Text": "الوضع المطبق الحالى",
-        "Label12.Text": "فتح من:",
-        "XenonButton11.Text": "ثيم WinPaletter",
-        "XenonButton12.Text": "ويندوز افتراضى",
-        "XenonButton10.Text": "تطبيق سريع",
-        "XenonButton7.Text": "الغاء",
-        "XenonButton8.Text": "حمل للثيم الحالى"
-      }
-    },
     "About": {
       "Text": "عن",
       "Controls": {
@@ -445,6 +380,8 @@
     "CursorsStudio": {
       "Text": "أستوديو مؤشر الفأرة",
       "Controls": {
+        "XenonCheckBox10.Text": "Cursor Tracking (Sonar)",
+        "Label11.Text": "Trails",
         "XenonCheckBox9.Text": "Make Cursors have a shadow",
         "XenonButton7.Text": "ثيم WinPaletter مُصدر",
         "XenonButton8.Text": "ويندوز إفتراضى",
@@ -607,6 +544,24 @@
         "XenonButton2.Text": "إلغاء",
         "XenonButton1.Text": "حمل",
         "Label1.Text": "الخلفيات الإفتراضية"
+      }
+    },
+    "LogonUIXP": {
+      "Text": "واجهة تسجيل الدخول - ويندوز XP",
+      "Controls": {
+        "XenonCheckBox1.Text": "اظهار اعدادات اخرى (مثل زر اغلاق التشغيل)",
+        "Label3.Text": "لون الخلفية:",
+        "Label5.Text": "لمسات محددة لوضع ويندوز 2000",
+        "Label2.Text": "ويندوز 2000",
+        "Label1.Text": "ويندوز XP",
+        "Label13.Text": "نوع الواجهة",
+        "XenonButton9.Text": "الوضع المطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
+        "XenonButton10.Text": "تطبيق سريع",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للثيم الحالى"
       }
     },
     "MainFrm": {
@@ -829,6 +784,17 @@
         "XenonButton10.Text": "تطبيق سريع",
         "XenonButton7.Text": "الغاء",
         "XenonButton8.Text": "حمل"
+      }
+    },
+    "VS2Metrics": {
+      "Text": "حمل ملف ثيم ويندوز لمقاسات و خطوط",
+      "Controls": {
+        "XenonCheckBox2.Text": "ضمّن الخطوط",
+        "XenonCheckBox1.Text": "ضمّن المقاسات",
+        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل لمقاسات و خطوط",
+        "Label102.Text": "ملف:"
       }
     },
     "SettingsX": {
@@ -1164,22 +1130,6 @@
     "Whatsnew": {
       "Text": "ما الجديد!",
       "Controls": {
-        "XenonButton4.Text": "Documentation",
-        "Label6.Text": "• In Windows XP, you can change specifically the themes and logonui preferences.\r\n\r\n• In Windows Vista, you can change specifically the themes with its colors.\r\n\r\n• It is necessary to read their documentation in GitHub",
-        "Label4.Text": "Extended Support to Windows XP and Windows Vista",
-        "Label21.Text": "• You can change now effects and animations in Windows, like window shadow, window transition animation, desktop icons label shadow, combobox animation and other effects.",
-        "Label22.Text": "Windows Effects",
-        "Label23.Text": "• Classic Colors’ 3D objects (Formerly Win32UI) redesigned to make it have an illustrative look.\r\n\r\n• Changed some icons in Classic Colors as the previous ones were not obvious in relation to their functions.\r\n\r\n• Main Form Extra Tools buttons are condensed to make their container able to contain new\\more features.",
-        "Label24.Text": "Redesigns",
-        "Label3.Text": "• Classic Colors and Metrics && Fonts now have a button that imports preferences from a Visual Styles file.\r\n\r\n• Windows Animations toggle is moved from “Windows Metrics and Fonts” to “Windows Effects”.\r\n\r\n• Fixed bug in color picker that occurs during picking a color from the screen.\r\n\r\n• Fixed issue of Font “Segoe UI”’s substitution not being saved into WinPaletter theme file.\r\n\r\n• Fixed issue of Wallpaper Tone, if any value of it changed, WinPaletter couldn’t detect the change happened and so the confirmation dialog didn’t appear when you exit in the previous situation.\r\n\r\n• Remove a code caused issue in GUI with high DPIs.\r\n\r\n• Fixed an issue during application’s startup when listing monospaced fonts.",
-        "Label1.Text": "Improvements and Bugs Fixes #1",
-        "Label5.Text": "• Fixed an issue during rendering LogonUI images for Windows 8.1 && 7.\r\n\r\n• Bug reporter improved and will show more details.\r\n\r\n• Drag Previewer improved a bit.\r\n\r\n• Known issue might occur during application’s startup when monitoring wallpaper\\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.",
-        "Label7.Text": "Improvements and Bugs Fixes #2",
-        "TabPage1.Text": "Windows XP, Vista",
-        "TabPage10.Text": "Windows Effects",
-        "TabPage11.Text": "Redesigns",
-        "TabPage2.Text": "Improvements #1",
-        "TabPage3.Text": "Improvements #2",
         "Label2.Text": "ما الجديد",
         "XenonButton3.Text": "تفاصيل سجل التغييرات",
         "XenonButton2.Text": "السابق",
@@ -1204,6 +1154,15 @@
         "XenonButton10.Text": "تطبيق سريع",
         "XenonButton7.Text": "الغاء",
         "XenonButton8.Text": "حمل للثيم الحالى"
+      }
+    },
+    "VS2Win32UI": {
+      "Text": "حمل ملف ثيم ويندوز لألوان كلاسيك",
+      "Controls": {
+        "Label1.Text": "من الممكن أن تكون ملف .msstyles أو .theme\r\nملف .theme سيُتخدم فى الحصول على ملف .msstyles المربوط به",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للألوان الكلاسيك",
+        "Label102.Text": "ملف:"
       }
     },
     "Win32UI": {
@@ -1279,6 +1238,34 @@
         "Label41.Text": "لون شاشة إبدأ",
         "XenonButton2.Text": "إلغاء",
         "XenonButton1.Text": "حمل"
+      }
+    },
+    "WinEffecter": {
+      "Text": "تأثيرات الويندوز",
+      "Controls": {
+        "XenonCheckBox11.Text": "اظهار محتويات النافذة اثناء السحب",
+        "XenonCheckBox10.Text": "مربع التحديد الشفاف على سطح المكتب",
+        "Label5.Text": "أيقونات سطح المكتب",
+        "XenonCheckBox4.Text": "ظل وراء نص أيقونة سطح المكتب",
+        "XenonCheckBox9.Text": "تأثيرات حركية مُفعلة",
+        "Label4.Text": "تلميح",
+        "XenonCheckBox7.Text": "التمرير السلس فى صندوق القائمة",
+        "XenonCheckBox8.Text": "تأثيرات القائمة المنسدلة",
+        "Label3.Text": "أدوات الاختيار",
+        "XenonCheckBox5.Text": "اجعل العنصر المُختار بتأثير التلاشى",
+        "XenonCheckBox6.Text": "تأثيرات حركية مُفعلة",
+        "Label2.Text": "قائمة",
+        "XenonCheckBox3.Text": "تأثيرات النظام",
+        "XenonCheckBox2.Text": "ظل حدود النافذة",
+        "XenonCheckBox1.Text": "تأثيرات حركية (أغلاق\\فتح\\تكبير\\تصغير\\...)",
+        "Label1.Text": "عام",
+        "XenonButton9.Text": "الوضع المطبق الحالى",
+        "Label12.Text": "فتح من:",
+        "XenonButton11.Text": "ثيم WinPaletter",
+        "XenonButton12.Text": "ويندوز افتراضى",
+        "XenonButton10.Text": "تطبيق سريع",
+        "XenonButton7.Text": "الغاء",
+        "XenonButton8.Text": "حمل للثيم الحالى"
       }
     }
   }
