@@ -10,6 +10,7 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
+| Sync. preview between ExplorerPatcher & Windows 11     | :large_blue_circle: Coming soon                                        | 
 | Windows Effects & Animations                           | :white_check_mark: Done (Version 1.0.7.1)                              | 
 | Extended Support to Windows XP & Vista                 | :white_check_mark: Done (Version 1.0.7.1)                              | 
 | Fonts Substitutes                                      | :white_check_mark: Done (Version 1.0.7.0)                              | 
