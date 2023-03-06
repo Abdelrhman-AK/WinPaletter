@@ -26,7 +26,7 @@ Partial Class DragPreviewer
         Me.XenonAlertBox11 = New WinPaletter.XenonAlertBox()
         Me.ActionCenter = New WinPaletter.XenonWinElement()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
-        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.setting_icon_preview = New System.Windows.Forms.Label()
         Me.lnk_preview = New System.Windows.Forms.Label()
@@ -73,7 +73,7 @@ Partial Class DragPreviewer
         Me.RetroButton2 = New WinPaletter.RetroButton()
         Me.pnl_preview.SuspendLayout()
         Me.XenonWindow1.SuspendLayout()
-        Me.Panel5.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.pnlRetroPreview.SuspendLayout()
         CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Menu_Window.SuspendLayout()
@@ -162,7 +162,7 @@ Partial Class DragPreviewer
         Me.XenonWindow1.AccentColor2_Inactive = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.XenonWindow1.Active = True
         Me.XenonWindow1.BackColor = System.Drawing.Color.Transparent
-        Me.XenonWindow1.Controls.Add(Me.Panel5)
+        Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
         Me.XenonWindow1.DropShadow = True
@@ -186,17 +186,17 @@ Partial Class DragPreviewer
         Me.XenonWindow1.Win7Noise = 1.0!
         Me.XenonWindow1.WinVista = False
         '
-        'Panel5
+        'Panel3
         '
-        Me.Panel5.BackColor = System.Drawing.Color.Transparent
-        Me.Panel5.Controls.Add(Me.Label8)
-        Me.Panel5.Controls.Add(Me.setting_icon_preview)
-        Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel5.Location = New System.Drawing.Point(4, 40)
-        Me.Panel5.Name = "Panel5"
-        Me.Panel5.Padding = New System.Windows.Forms.Padding(1)
-        Me.Panel5.Size = New System.Drawing.Size(181, 79)
-        Me.Panel5.TabIndex = 0
+        Me.Panel3.BackColor = System.Drawing.Color.Transparent
+        Me.Panel3.Controls.Add(Me.Label8)
+        Me.Panel3.Controls.Add(Me.setting_icon_preview)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel3.Location = New System.Drawing.Point(4, 40)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Padding = New System.Windows.Forms.Padding(1)
+        Me.Panel3.Size = New System.Drawing.Size(181, 79)
+        Me.Panel3.TabIndex = 0
         '
         'Label8
         '
@@ -1047,7 +1047,7 @@ Partial Class DragPreviewer
         Me.Text = "Preview"
         Me.pnl_preview.ResumeLayout(False)
         Me.XenonWindow1.ResumeLayout(False)
-        Me.Panel5.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
         Me.pnlRetroPreview.ResumeLayout(False)
         Me.pnlRetroPreview.PerformLayout()
         CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1090,7 +1090,7 @@ Partial Class DragPreviewer
     Friend WithEvents ActionCenter As XenonWinElement
     Friend WithEvents XenonWindow1 As XenonWindow
     Friend WithEvents lnk_preview As Label
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel3 As Panel
     Friend WithEvents Label8 As Label
     Friend WithEvents setting_icon_preview As Label
     Friend WithEvents XenonWindow2 As XenonWindow

@@ -125,6 +125,12 @@ Namespace My
         ''' ImageList for Languages Nodes (Loaded at application startup)
         ''' </summary>
         Public Lang_IL As New ImageList With {.ImageSize = New Size(16, 16), .ColorDepth = ColorDepth.Depth32Bit}
+
+        ''' <summary>
+        ''' Class contains info about ExplorerPatcher settings
+        ''' </summary>
+        Public EP As New ExplorerPatcher
+
     End Module
 
     Partial Friend Class MyApplication
@@ -752,8 +758,8 @@ Namespace My
                 ShowWhatsNew = False
             End If
 #End Region
-        End Sub
 
+        End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             Try

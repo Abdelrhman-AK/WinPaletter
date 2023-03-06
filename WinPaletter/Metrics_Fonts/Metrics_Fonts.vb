@@ -480,7 +480,7 @@ Public Class Metrics_Fonts
         s_h.Text = sender.Value
         HScrollBar1.Height = sender.Value
         RetroScrollBar1.Height = sender.Value
-        RetroButton1.Height = sender.Value - 1
+        RetroButton1.Height = sender.Value
         RetroScrollBar1.Refresh()
     End Sub
 
@@ -488,7 +488,7 @@ Public Class Metrics_Fonts
         s_w.Text = sender.Value
         VScrollBar1.Width = sender.Value
         RetroScrollBar2.Width = sender.Value
-        RetroButton12.Width = sender.Value - 1
+        RetroButton12.Width = sender.Value
         RetroScrollBar2.Refresh()
     End Sub
 

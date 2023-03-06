@@ -76,6 +76,8 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
         If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
         If Name.ToLower = "VS2Metrics".ToLower Then Return VS2Metrics
+        If Name.ToLower = "Uninstall".ToLower Then Return Uninstall
+
     End Function
 
     Public allForms As New List(Of String) From {
@@ -114,7 +116,8 @@ Public Class Localizer : Implements IDisposable
                         "WinEffecter",
                         "LogonUIXP",
                         "VS2Win32UI",
-                        "VS2Metrics"
+                        "VS2Metrics",
+                        "Uninstall"
                         }
 
 #Region "Language Info"
@@ -178,6 +181,7 @@ Public Class Localizer : Implements IDisposable
     Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
     Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
+    Property CP_EP_ACButton_TaskbarAppLine As String = "Action Center Buttons && Taskbar App Underline"
     Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
     Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, Toggles, Buttons && Taskbar Tray (Overflow)"
     Property CP_11_OverflowTray As String = "Taskbar Tray Overflow (Requires 22H2, Accent on Taskbar Enabled)"
@@ -194,8 +198,12 @@ Public Class Localizer : Implements IDisposable
     Property CP_10_Settings_Links_TaskbarUndeline_SomeBtns As String = "Settings Icons, Links, Taskbar App Underline && Some Pressed Buttons"
     Property CP_10_Hamburger As String = "Sliding Hamburger Menu"
     Property CP_10_StartMenu_AC As String = "Start Menu && Action Center"
+    Property CP_EP_StartMenu_OverflowMenus As String = "Start Menu && Overflow Menus"
+    Property CP_EP_StartMenu_ActionCenterButtons As String = "Start Menu && Action Center Buttons"
+    Property CP_EP_ActionCenterBackground As String = "Action Center Background"
     Property CP_10_StartMenu_AC_TaskbarActiveApp As String = "Start Menu, Action Center && Taskbar Active App"
     Property CP_10_Taskbar As String = "Taskbar"
+    Property CP_EP_Taskbar_AppUnderline As String = "Taskbar && App Underline"
     Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
     Property CP_Undefined As String = "Undefined"

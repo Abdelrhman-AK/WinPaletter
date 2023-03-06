@@ -25,6 +25,7 @@ Public Class MainFrm
 
         XenonWindow1.Active = True
         XenonWindow2.Active = False
+        If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -52,7 +53,6 @@ Public Class MainFrm
                 W11_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win11)
                 W11_lbl8.Text = My.Lang.CP_Undefined
                 W11_lbl9.Text = My.Lang.CP_Undefined
-
                 W11_pic5.Image = My.Resources.Mini_Settings_Icons
                 W11_pic6.Image = My.Resources.Mini_PressedButton
                 W11_pic7.Image = My.Resources.Mini_UWPDlg
@@ -70,19 +70,66 @@ Public Class MainFrm
                         W11_pic2.Image = My.Resources.Mini_ACHover_Links
                         W11_pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
                         W11_pic4.Image = My.Resources.Mini_Overflow
-
-
                     Case False   ''''''''''Light
                         W11_lbl1.Text = My.Lang.CP_11_ACHover_Links
                         W11_lbl2.Text = My.Lang.CP_11_StartMenu_AC
                         W11_lbl3.Text = My.Lang.CP_11_Taskbar
                         W11_lbl4.Text = My.Lang.CP_11_Lines_Toggles_Buttons_Overflow
-
                         W11_pic1.Image = My.Resources.Mini_ACHover_Links
                         W11_pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         W11_pic3.Image = My.Resources.Mini_Taskbar
                         W11_pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
                 End Select
+
+                If ExplorerPatcher.IsAllowed Then
+                    Select Case Not [CP].Windows11.WinMode_Light
+                        Case True ''''''''''Dark
+
+                            If My.EP.UseTaskbar10 Then
+                                W11_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+
+                                If My.EP.UseStart10 Then
+                                    W11_lbl1.Text = My.Lang.CP_10_Taskbar
+                                    W11_pic1.Image = My.Resources.Mini_Taskbar
+                                Else
+                                    W11_lbl1.Text = My.Lang.CP_11_StartMenu_Taskbar_AC
+                                    W11_pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                                End If
+
+                                W11_lbl3.Text = My.Lang.CP_EP_ACButton_TaskbarAppLine
+                                W11_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
+
+                                W11_pic3.Image = My.Resources.Mini_AC
+                                W11_pic5.Image = My.Resources.Mini_Settings_Icons
+                                W11_pic6.Image = My.Resources.Native11
+                            End If
+
+                            If My.EP.UseStart10 Then
+                                W11_lbl4.Text = My.Lang.CP_EP_StartMenu_OverflowMenus
+                                W11_pic4.Image = My.Resources.Mini_StartMenu
+                            End If
+
+                        Case False ''''''''''Light
+
+                            If My.EP.UseTaskbar10 Then
+                                W11_lbl3.Text = My.Lang.CP_EP_Taskbar_AppUnderline
+                                W11_lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
+                                W11_lbl6.Text = My.Lang.CP_10_StartMenuIconHover
+
+                                W11_pic3.Image = My.Resources.Mini_TaskbarApp
+                                W11_pic5.Image = My.Resources.Mini_Settings_Icons
+                                W11_pic6.Image = My.Resources.Native11
+                            End If
+
+                            If My.EP.UseStart10 Then
+                                W11_lbl2.Text = My.Lang.CP_EP_ActionCenterBackground
+                                W11_lbl4.Text = My.Lang.CP_EP_StartMenu_ActionCenterButtons
+                                W11_pic2.Image = My.Resources.Mini_AC
+                                W11_pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
+                            End If
+
+                    End Select
+                End If
 
                 start.DarkMode = Not [CP].Windows11.WinMode_Light
                 taskbar.DarkMode = Not [CP].Windows11.WinMode_Light
@@ -94,9 +141,24 @@ Public Class MainFrm
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        taskbar.BackColorAlpha = 75
-                        start.BackColorAlpha = 75
                         ActionCenter.BackColorAlpha = 75
+
+                        If ExplorerPatcher.IsAllowed Then
+                            If My.EP.UseStart10 Then
+                                start.BackColorAlpha = 185
+                            Else
+                                start.BackColorAlpha = 75
+                            End If
+
+                            If My.EP.UseTaskbar10 Then
+                                taskbar.BackColorAlpha = 185
+                            Else
+                                taskbar.BackColorAlpha = 75
+                            End If
+                        Else
+                            taskbar.BackColorAlpha = 75
+                            start.BackColorAlpha = 75
+                        End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
@@ -106,7 +168,13 @@ Public Class MainFrm
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
+
+                                If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4), AnimX1, AnimX2)
+                                Else
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
+                                End If
+
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
@@ -126,9 +194,24 @@ Public Class MainFrm
                         Visual.FadeColor(lnk_preview, "ForeColor", lnk_preview.ForeColor, [CP].Windows11.Color_Index0, AnimX1, AnimX2)
 
                     Case False   ''''''''''Light
-                        taskbar.BackColorAlpha = 180
-                        start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
+
+                        If ExplorerPatcher.IsAllowed Then
+                            If My.EP.UseStart10 Then
+                                start.BackColorAlpha = 210
+                            Else
+                                start.BackColorAlpha = 180
+                            End If
+
+                            If My.EP.UseTaskbar10 Then
+                                taskbar.BackColorAlpha = 210
+                            Else
+                                taskbar.BackColorAlpha = 180
+                            End If
+                        Else
+                            taskbar.BackColorAlpha = 180
+                            start.BackColorAlpha = 180
+                        End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
@@ -138,7 +221,13 @@ Public Class MainFrm
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
+
+                                If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4), AnimX1, AnimX2)
+                                Else
+                                    Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
+                                End If
+
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
@@ -152,7 +241,12 @@ Public Class MainFrm
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows11.Color_Index2, AnimX1, AnimX2)
                         Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
-                        Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
+
+                        If ExplorerPatcher.IsAllowed And My.EP.UseTaskbar10 Then
+                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
+                        Else
+                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
+                        End If
 
                         Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
                         Visual.FadeColor(lnk_preview, "ForeColor", lnk_preview.ForeColor, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
@@ -927,6 +1021,7 @@ Public Class MainFrm
 
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
+        Adjust_Preview(False)
         ReValidateLivePreview(pnl_preview)
         ReValidateLivePreview(pnl_preview_classic)
 
@@ -941,6 +1036,8 @@ Public Class MainFrm
                 tabs_preview.Visible = False
             End If
         End If
+
+        If My.W11 Then My.EP = New ExplorerPatcher
 
         Panel3.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
@@ -959,9 +1056,30 @@ Public Class MainFrm
         Select Case PreviewConfig
             Case WinVer.W11
                 ActionCenter.Style = XenonWinElement.Styles.ActionCenter11
-                taskbar.Style = XenonWinElement.Styles.Taskbar11
-                start.Style = XenonWinElement.Styles.Start11
+
+                If ExplorerPatcher.IsAllowed Then
+                    With My.EP
+
+                        If Not .UseStart10 Then
+                            start.Style = XenonWinElement.Styles.Start11
+                        Else
+                            start.Style = XenonWinElement.Styles.Start10
+                        End If
+
+                        If Not .UseTaskbar10 Then
+                            taskbar.Style = XenonWinElement.Styles.Taskbar11
+                        Else
+                            taskbar.Style = XenonWinElement.Styles.Taskbar10
+                        End If
+
+                    End With
+                Else
+                    taskbar.Style = XenonWinElement.Styles.Taskbar11
+                    start.Style = XenonWinElement.Styles.Start11
+                End If
+
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+
                 If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W10
@@ -1116,21 +1234,65 @@ Public Class MainFrm
                 ActionCenter.Dock = Nothing
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                '########################
-                taskbar.BlurPower = 12
-                '########################
-                start.BlurPower = 7
-                start.NoisePower = 0.2
-                '########################
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
-                '########################
 
-                taskbar.Height = 42
+                If ExplorerPatcher.IsAllowed Then
 
-                start.Size = New Size(135, 200)
-                start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
+                    With My.EP
+                        If Not .UseTaskbar10 Then
+                            taskbar.BlurPower = 12
+                            taskbar.Height = 42
+                        Else
+                            taskbar.BlurPower = 12
+                            taskbar.Height = 35
+                            taskbar.UseWin11ORB_WithWin10 = Not .TaskbarButton10
+                        End If
 
+                        If Not .UseStart10 Then
+                            start.BlurPower = 7
+                            start.NoisePower = 0.2
+                            start.Size = New Size(135, 200)
+                            start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
+                        Else
+                            start.BlurPower = 7
+                            start.NoisePower = 0.2
+
+                            Select Case .StartStyle
+                                Case ExplorerPatcher.StartStyles.NotRounded
+                                    start.Size = New Size(182, 201)
+                                    start.Left = 0
+                                    start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = False
+
+                                Case ExplorerPatcher.StartStyles.RoundedCornersDockedMenu
+                                    start.Size = New Size(182, 201)
+                                    start.Left = 0
+                                    start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = True
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = False
+
+                                Case ExplorerPatcher.StartStyles.RoundedCornersFloatingMenu
+                                    start.Size = New Size(182, 201)
+                                    start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = True
+
+                            End Select
+
+                        End If
+                    End With
+
+                Else
+                    taskbar.BlurPower = 12
+                    taskbar.Height = 42
+                    '########################
+                    start.BlurPower = 7
+                    start.NoisePower = 0.2
+                    start.Size = New Size(135, 200)
+                    start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
+                End If
 
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
@@ -1144,10 +1306,12 @@ Public Class MainFrm
                 '########################
 
                 taskbar.Height = 35
-
+                taskbar.UseWin11ORB_WithWin10 = False
                 start.Size = New Size(182, 201)
                 start.Left = 0
                 start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                start.UseWin11RoundedCorners_WithWin10_Level2 = False
 
             Case WinVer.W8
                 Panel3.Visible = False
@@ -1206,8 +1370,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1228,8 +1392,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1246,8 +1410,14 @@ Public Class MainFrm
         End Select
 
         If PreviewConfig = WinVer.W10 Or PreviewConfig = WinVer.W11 Then
-            XenonWindow1.Top = start.Top - If(PreviewConfig = WinVer.W11, 30, 35)
-            XenonWindow1.Left = start.Right + If(PreviewConfig = WinVer.W11, 30, 15)
+
+            If My.W11 And My.EP.UseStart10 Then
+                XenonWindow1.Top = start.Top - 35
+                XenonWindow1.Left = start.Right + 15
+            Else
+                XenonWindow1.Top = start.Top - If(PreviewConfig = WinVer.W11, 30, 35)
+                XenonWindow1.Left = start.Right + If(PreviewConfig = WinVer.W11, 30, 15)
+            End If
 
             XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left
@@ -2035,24 +2205,33 @@ Public Class MainFrm
         Dim C As Color
         CList.Add(sender)
 
-
         CList.Add(taskbar)
 
-        If Not CP.Windows11.WinMode_Light Then
-            CList.Add(ActionCenter)
-            CList.Add(start)
-
-            Dim _Conditions As New Conditions With {
-                    .AppUnderlineOnly = True,
-                     .StartSearchOnly = True,
-                     .ActionCenterBtn = True
- }
-
-            C = ColorPickerDlg.Pick(CList, _Conditions)
+        If ExplorerPatcher.IsAllowed Then
+            If Not CP.Windows11.WinMode_Light Then
+                CList.Add(ActionCenter)
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True, .ActionCenterBtn = True}
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            Else
+                Dim _Conditions As New Conditions With {.AppUnderlineWithTaskbar = True}
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            End If
         Else
-            C = ColorPickerDlg.Pick(CList)
-        End If
+            If Not CP.Windows11.WinMode_Light Then
+                CList.Add(ActionCenter)
+                CList.Add(start)
 
+                Dim _Conditions As New Conditions With {
+                        .AppUnderlineOnly = True,
+                         .StartSearchOnly = True,
+                         .ActionCenterBtn = True
+     }
+
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            Else
+                C = ColorPickerDlg.Pick(CList)
+            End If
+        End If
 
         CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
         If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
@@ -2075,12 +2254,25 @@ Public Class MainFrm
 
         Dim CList As New List(Of Control) From {sender}
 
-        If Not CP.Windows11.WinMode_Light Then
-            CList.Add(taskbar)
-            CList.Add(start)
-            CList.Add(ActionCenter)
+        If ExplorerPatcher.IsAllowed Then
+            If Not CP.Windows11.WinMode_Light Then
+                CList.Add(ActionCenter)
+                CList.Add(taskbar)
+                If Not My.EP.UseStart10 Then
+                    CList.Add(start)
+                End If
+            Else
+                CList.Add(lnk_preview)
+            End If
+
         Else
-            CList.Add(lnk_preview)
+            If Not CP.Windows11.WinMode_Light Then
+                CList.Add(taskbar)
+                CList.Add(start)
+                CList.Add(ActionCenter)
+            Else
+                CList.Add(lnk_preview)
+            End If
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
@@ -2143,6 +2335,7 @@ Public Class MainFrm
 
         CList.Add(sender)
 
+
         CList.Add(setting_icon_preview)
         C = ColorPickerDlg.Pick(CList)
 
@@ -2169,9 +2362,13 @@ Public Class MainFrm
         Dim C As Color
 
         CList.Add(sender)
+        Dim _Conditions As New Conditions
 
-        CList.Add(taskbar)
-        Dim _Conditions As New Conditions With {.AppBackgroundOnly = True}
+        If Not ExplorerPatcher.IsAllowed Then
+            CList.Add(taskbar)
+            _Conditions = New Conditions With {.AppBackgroundOnly = True}
+        End If
+
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows11.Color_Index6 = Color.FromArgb(255, C)
@@ -2245,29 +2442,54 @@ Public Class MainFrm
 
         Dim C As Color
 
+        If ExplorerPatcher.IsAllowed Then
+            If My.EP.UseStart10 Then
+                CList.Add(start)
+                C = ColorPickerDlg.Pick(CList)
 
-        If Not W11_Transparency_Toggle.Checked Then
-            CList.Add(taskbar)
-            CList.Add(start)
-            CList.Add(ActionCenter)
-        End If
+            Else
+                If Not W11_Transparency_Toggle.Checked Then
+                    CList.Add(taskbar)
+                    CList.Add(start)
+                    CList.Add(ActionCenter)
+                End If
 
-        If CP.Windows11.WinMode_Light Then
-            CList.Add(start)
-            CList.Add(ActionCenter)
-            CList.Add(taskbar)
+                If CP.Windows11.WinMode_Light Then
+                    CList.Add(start)
+                    CList.Add(ActionCenter)
 
-            Dim _Conditions As New Conditions With {
-                    .AppUnderlineOnly = True,
-                     .StartSearchOnly = True,
-                     .ActionCenterBtn = True
- }
-
-            C = ColorPickerDlg.Pick(CList, _Conditions)
+                    Dim _Conditions As New Conditions With {.StartSearchOnly = True, .ActionCenterBtn = True}
+                    C = ColorPickerDlg.Pick(CList, _Conditions)
+                Else
+                    Dim _Conditions As New Conditions With {.StartColorOnly = True}
+                    C = ColorPickerDlg.Pick(CList, _Conditions)
+                End If
+            End If
         Else
-            Dim _Conditions As New Conditions With {.StartColorOnly = True}
-            C = ColorPickerDlg.Pick(CList, _Conditions)
+            If Not W11_Transparency_Toggle.Checked Then
+                CList.Add(taskbar)
+                CList.Add(start)
+                CList.Add(ActionCenter)
+            End If
+
+            If CP.Windows11.WinMode_Light Then
+                CList.Add(start)
+                CList.Add(ActionCenter)
+                CList.Add(taskbar)
+
+                Dim _Conditions As New Conditions With {
+                        .AppUnderlineOnly = True,
+                         .StartSearchOnly = True,
+                         .ActionCenterBtn = True
+     }
+
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            Else
+                Dim _Conditions As New Conditions With {.StartColorOnly = True}
+                C = ColorPickerDlg.Pick(CList, _Conditions)
+            End If
         End If
+
 
         CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
         If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
@@ -3940,6 +4162,16 @@ Public Class MainFrm
 
     Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
         WinEffecter.ShowDialog()
+    End Sub
+
+    Dim reg As String = "{056440FD-8568-48e7-A632-72157243B55B}"
+
+    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\" & reg, True).CreateSubKey("InprocServer32", True).SetValue("", "", Microsoft.Win32.RegistryValueKind.String)
+    End Sub
+
+    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
+        My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree(reg, False)
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

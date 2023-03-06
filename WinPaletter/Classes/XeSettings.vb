@@ -46,6 +46,13 @@ Public Class XeSettings
     Public Property Log_Countdown_Enabled As Boolean = True
     Public Property Log_Countdown As Integer = 20
 
+    Public Property EP_Enabled As Boolean = True
+    Public Property EP_Enabled_Force As Boolean = False
+    Public Property EP_UseStart10 As Boolean = False
+    Public Property EP_UseTaskbar10 As Boolean = False
+    Public Property EP_TaskbarButton10 As Boolean = False
+    Public Property EP_StartStyle As ExplorerPatcher.StartStyles
+
 #End Region
 
     Public Enum Nerd_Stats_Type
@@ -127,6 +134,13 @@ Public Class XeSettings
         If Key.GetValue("Log_Countdown_Enabled", Nothing) Is Nothing Then Key.SetValue("Log_Countdown_Enabled", True, RegistryValueKind.DWord)
         If Key.GetValue("Log_Countdown", Nothing) Is Nothing Then Key.SetValue("Log_Countdown", 15, RegistryValueKind.DWord)
 
+        If Key.GetValue("EP_Enabled", Nothing) Is Nothing Then Key.SetValue("EP_Enabled", True, RegistryValueKind.DWord)
+        If Key.GetValue("EP_Enabled_Force", Nothing) Is Nothing Then Key.SetValue("EP_Enabled_Force", False, RegistryValueKind.DWord)
+        If Key.GetValue("EP_UseStart10", Nothing) Is Nothing Then Key.SetValue("EP_UseStart10", False, RegistryValueKind.DWord)
+        If Key.GetValue("EP_UseTaskbar10", Nothing) Is Nothing Then Key.SetValue("EP_UseTaskbar10", False, RegistryValueKind.DWord)
+        If Key.GetValue("EP_TaskbarButton10", Nothing) Is Nothing Then Key.SetValue("EP_TaskbarButton10", False, RegistryValueKind.DWord)
+        If Key.GetValue("EP_StartStyle", Nothing) Is Nothing Then Key.SetValue("EP_StartStyle", ExplorerPatcher.StartStyles.NotRounded, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -199,6 +213,13 @@ Public Class XeSettings
                 Log_Countdown_Enabled = Key.GetValue("Log_Countdown_Enabled", True)
                 Log_Countdown = Key.GetValue("Log_Countdown", 15)
 
+                EP_Enabled = Key.GetValue("EP_Enabled", True)
+                EP_Enabled_Force = Key.GetValue("EP_Enabled_Force", False)
+                EP_UseStart10 = Key.GetValue("EP_UseStart10", False)
+                EP_UseTaskbar10 = Key.GetValue("EP_UseTaskbar10", False)
+                EP_TaskbarButton10 = Key.GetValue("EP_TaskbarButton10", False)
+                EP_StartStyle = Key.GetValue("EP_StartStyle", ExplorerPatcher.StartStyles.NotRounded)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -241,6 +262,12 @@ Public Class XeSettings
                     If x.StartsWith("Log_Countdown_Enabled= ", My._strIgnore) Then Log_Countdown_Enabled = x.Remove(0, "Log_Countdown_Enabled= ".Count)
                     If x.StartsWith("Log_Countdown= ", My._strIgnore) Then Log_Countdown = x.Remove(0, "Log_Countdown= ".Count)
 
+                    If x.StartsWith("EP_Enabled= ", My._strIgnore) Then EP_Enabled = x.Remove(0, "EP_Enabled= ".Count)
+                    If x.StartsWith("EP_Enabled_Force= ", My._strIgnore) Then EP_Enabled_Force = x.Remove(0, "EP_Enabled_Force= ".Count)
+                    If x.StartsWith("EP_UseStart10= ", My._strIgnore) Then EP_UseStart10 = x.Remove(0, "EP_UseStart10= ".Count)
+                    If x.StartsWith("EP_UseTaskbar10= ", My._strIgnore) Then EP_UseTaskbar10 = x.Remove(0, "EP_UseTaskbar10= ".Count)
+                    If x.StartsWith("EP_TaskbarButton10= ", My._strIgnore) Then EP_TaskbarButton10 = x.Remove(0, "EP_TaskbarButton10= ".Count)
+                    If x.StartsWith("EP_StartStyle= ", My._strIgnore) Then EP_StartStyle = x.Remove(0, "EP_StartStyle= ".Count)
                 Next
         End Select
     End Sub
@@ -309,6 +336,13 @@ Public Class XeSettings
                         Key.SetValue("Nerd_Stats_Kind", 3)
                 End Select
 
+                Key.SetValue("EP_Enabled", EP_Enabled, RegistryValueKind.DWord)
+                Key.SetValue("EP_Enabled_Force", EP_Enabled_Force, RegistryValueKind.DWord)
+                Key.SetValue("EP_UseStart10", EP_UseStart10, RegistryValueKind.DWord)
+                Key.SetValue("EP_UseTaskbar10", EP_UseTaskbar10, RegistryValueKind.DWord)
+                Key.SetValue("EP_TaskbarButton10", EP_TaskbarButton10, RegistryValueKind.DWord)
+                Key.SetValue("EP_StartStyle", EP_StartStyle, RegistryValueKind.DWord)
+
             Case Mode.File
                 Dim l As New List(Of String)
                 l.Clear()
@@ -366,6 +400,12 @@ Public Class XeSettings
                         l.Add(String.Format("Nerd_Stats_Kind= {0}", 3))
                 End Select
 
+                l.Add(String.Format("EP_Enabled= {0}", EP_Enabled))
+                l.Add(String.Format("EP_Enabled_Force= {0}", EP_Enabled_Force))
+                l.Add(String.Format("EP_UseStart10= {0}", EP_UseStart10))
+                l.Add(String.Format("EP_UseTaskbar10= {0}", EP_UseTaskbar10))
+                l.Add(String.Format("EP_TaskbarButton10= {0}", EP_TaskbarButton10))
+                l.Add(String.Format("EP_StartStyle= {0}", EP_StartStyle))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

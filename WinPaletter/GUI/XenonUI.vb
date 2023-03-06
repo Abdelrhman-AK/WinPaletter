@@ -2435,10 +2435,12 @@ Public Class XenonSeparator
     <Bindable(True)>
     Public Overrides Property Text As String = ""
 
+    Public Property AlternativeLook As Boolean = False
+
 #Region "Events"
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
-        Size = New Size(Width, 1)
+        Size = New Size(Width, If(Not AlternativeLook, 1, 2))
     End Sub
 #End Region
 
@@ -2455,13 +2457,31 @@ Public Class XenonSeparator
         Dim IdleLine As Color
 
         If Parent IsNot Nothing Then
-            If GetDarkMode() Then IdleLine = Parent.BackColor.CB(0.1) Else IdleLine = Parent.BackColor.CB(-0.1)
+
+            If GetDarkMode() Then
+                If Not AlternativeLook Then
+                    IdleLine = Parent.BackColor.CB(0.1)
+                Else
+                    IdleLine = Color.DarkRed
+                End If
+            Else
+                If Not AlternativeLook Then
+                    IdleLine = Parent.BackColor.CB(-0.1)
+                Else
+                    IdleLine = Color.DarkRed
+                End If
+            End If
+
         Else
             If GetDarkMode() Then IdleLine = Color.FromArgb(76, 76, 76) Else IdleLine = Color.FromArgb(210, 210, 210)
         End If
+
         '################################################################################# Customizer
 
-        Using C As New Pen(IdleLine) : G.DrawLine(C, New Point(0, 0), New Point(Width, 0)) : End Using
+        Using C As New Pen(IdleLine, If(Not AlternativeLook, 1, 2))
+            G.DrawLine(C, New Point(0, 0), New Point(Width, 0))
+            G.DrawLine(C, New Point(0, 1), New Point(Width, 1))
+        End Using
     End Sub
 
 End Class
@@ -2749,12 +2769,14 @@ Public Class XenonSeparatorVertical
     <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
+    Public Property AlternativeLook As Boolean = False
 
 #Region "Events"
 
     Protected Overrides Sub OnResize(e As EventArgs)
         MyBase.OnResize(e)
-        Size = New Size(1, Height)
+
+        Size = New Size(If(Not AlternativeLook, 1, 2), Height)
     End Sub
 
 #End Region
@@ -2771,13 +2793,30 @@ Public Class XenonSeparatorVertical
         '################################################################################# Customizer
         Dim IdleLine As Color
         If Parent IsNot Nothing Then
-            If GetDarkMode() Then IdleLine = Parent.BackColor.CB(0.1) Else IdleLine = Parent.BackColor.CB(-0.1)
+
+            If GetDarkMode() Then
+                If Not AlternativeLook Then
+                    IdleLine = Parent.BackColor.CB(0.1)
+                Else
+                    IdleLine = Color.DarkRed
+                End If
+            Else
+                If Not AlternativeLook Then
+                    IdleLine = Parent.BackColor.CB(-0.1)
+                Else
+                    IdleLine = Color.DarkRed
+                End If
+            End If
+
         Else
             If GetDarkMode() Then IdleLine = Color.FromArgb(60, 60, 60) Else IdleLine = Color.FromArgb(210, 210, 210)
         End If
         '################################################################################# Customizer
 
-        Using C As New Pen(IdleLine) : G.DrawLine(C, New Point(0, 0), New Point(0, Height)) : End Using
+        Using C As New Pen(IdleLine, If(Not AlternativeLook, 1, 2))
+            G.DrawLine(C, New Point(0, 0), New Point(0, Height))
+            G.DrawLine(C, New Point(1, 0), New Point(1, Height))
+        End Using
 
     End Sub
 
@@ -4098,6 +4137,10 @@ Public Class XenonWinElement : Inherits ContainerControl
         End If
     End Sub
 
+    Public Property UseWin11ORB_WithWin10 As Boolean = False
+    Public Property UseWin11RoundedCorners_WithWin10_Level1 As Boolean = False
+    Public Property UseWin11RoundedCorners_WithWin10_Level2 As Boolean = False
+
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -4218,10 +4261,26 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Start10
 #Region "Start 10"
-                If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
-                If Transparency Then G.FillRectangle(Noise, Rect)
-                G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
-                G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
+                If Not UseWin11RoundedCorners_WithWin10_Level1 And Not UseWin11RoundedCorners_WithWin10_Level2 Then
+                    If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+                    If Transparency Then G.FillRectangle(Noise, Rect)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+                    G.DrawImage(If(DarkMode, My.Resources.Start10_Dark, My.Resources.Start10_Light), New Rectangle(0, 0, Width - 1, Height - 1))
+
+                ElseIf UseWin11RoundedCorners_WithWin10_Level1 Then
+                    If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
+                    If Transparency Then G.FillRectangle(Noise, Rect)
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+                    G.DrawImage(If(DarkMode, My.Resources.Start11_EP_Rounded_Dark, My.Resources.Start11_EP_Rounded_Light), New Rectangle(0, 0, Width - 1, Height - 1))
+
+                ElseIf UseWin11RoundedCorners_WithWin10_Level2 Then
+                    If Not DesignMode AndAlso Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                    If Transparency Then G.FillRoundedRect(Noise, Rect, Radius, True)
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect, Radius, True)
+                    G.FillRoundedImg(If(DarkMode, My.Resources.Start11_EP_Rounded_Dark, My.Resources.Start11_EP_Rounded_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+
+                End If
+
 #End Region
 
             Case Styles.ActionCenter10
@@ -4251,7 +4310,14 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
 
                 Dim StartBtnRect As New Rectangle(-1, -1, 42, Height + 2)
-                Dim StartBtnImgRect As New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
+                Dim StartBtnImgRect As New Rectangle
+
+                If Not UseWin11ORB_WithWin10 Then
+                    StartBtnImgRect = New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_10Dark.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_10Dark.Height) / 2, My.Resources.StartBtn_10Dark.Width, My.Resources.StartBtn_10Dark.Height)
+                Else
+                    StartBtnImgRect = New Rectangle(StartBtnRect.X + (StartBtnRect.Width - My.Resources.StartBtn_11_EP.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - My.Resources.StartBtn_11_EP.Height) / 2, My.Resources.StartBtn_11_EP.Width, My.Resources.StartBtn_11_EP.Height)
+                End If
+
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
                 Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2 - 1, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
                 Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
@@ -4260,7 +4326,12 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
                 Dim StartColor As Color = _StartColor
                 G.FillRectangle(New SolidBrush(StartColor), StartBtnRect)
-                G.DrawImage(If(DarkMode, My.Resources.StartBtn_10Dark, My.Resources.StartBtn_10Light), StartBtnImgRect)
+
+                If Not UseWin11ORB_WithWin10 Then
+                    G.DrawImage(If(DarkMode, My.Resources.StartBtn_10Dark, My.Resources.StartBtn_10Light), StartBtnImgRect)
+                Else
+                    G.DrawImage(My.Resources.StartBtn_11_EP, StartBtnImgRect)
+                End If
 
                 Dim AppColor As Color = _AppBackground
                 G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)

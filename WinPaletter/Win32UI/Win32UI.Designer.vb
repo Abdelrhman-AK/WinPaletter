@@ -182,6 +182,7 @@ Partial Class Win32UI
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.pnl_preview = New System.Windows.Forms.Panel()
+        Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
         Me.RetroLabel9 = New WinPaletter.RetroLabel()
@@ -211,7 +212,6 @@ Partial Class Win32UI
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.XenonGroupBox9.SuspendLayout()
         CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -280,6 +280,7 @@ Partial Class Win32UI
         Me.XenonGroupBox8.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_preview.SuspendLayout()
+        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Menu_Window.SuspendLayout()
         Me.menucontainer3.SuspendLayout()
         Me.highlight.SuspendLayout()
@@ -292,7 +293,6 @@ Partial Class Win32UI
         Me.RetroWindow4.SuspendLayout()
         Me.programcontainer.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
-        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenThemeDialog
@@ -494,6 +494,7 @@ Partial Class Win32UI
         '
         'XenonSeparatorVertical1
         '
+        Me.XenonSeparatorVertical1.AlternativeLook = False
         Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(704, 4)
         Me.XenonSeparatorVertical1.Name = "XenonSeparatorVertical1"
         Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(1, 28)
@@ -910,61 +911,68 @@ Partial Class Win32UI
         '
         'XenonSeparatorVertical4
         '
+        Me.XenonSeparatorVertical4.AlternativeLook = True
         Me.XenonSeparatorVertical4.Location = New System.Drawing.Point(200, 185)
         Me.XenonSeparatorVertical4.Name = "XenonSeparatorVertical4"
-        Me.XenonSeparatorVertical4.Size = New System.Drawing.Size(1, 23)
+        Me.XenonSeparatorVertical4.Size = New System.Drawing.Size(2, 23)
         Me.XenonSeparatorVertical4.TabIndex = 86
         Me.XenonSeparatorVertical4.TabStop = False
         '
         'XenonSeparatorVertical3
         '
+        Me.XenonSeparatorVertical3.AlternativeLook = True
         Me.XenonSeparatorVertical3.Location = New System.Drawing.Point(165, 138)
         Me.XenonSeparatorVertical3.Name = "XenonSeparatorVertical3"
-        Me.XenonSeparatorVertical3.Size = New System.Drawing.Size(1, 69)
+        Me.XenonSeparatorVertical3.Size = New System.Drawing.Size(2, 69)
         Me.XenonSeparatorVertical3.TabIndex = 85
         Me.XenonSeparatorVertical3.TabStop = False
         '
         'XenonSeparator3
         '
+        Me.XenonSeparator3.AlternativeLook = True
         Me.XenonSeparator3.Location = New System.Drawing.Point(100, 163)
         Me.XenonSeparator3.Name = "XenonSeparator3"
-        Me.XenonSeparator3.Size = New System.Drawing.Size(35, 1)
+        Me.XenonSeparator3.Size = New System.Drawing.Size(35, 2)
         Me.XenonSeparator3.TabIndex = 84
         Me.XenonSeparator3.TabStop = False
         Me.XenonSeparator3.Text = "XenonSeparator3"
         '
         'XenonSeparator4
         '
-        Me.XenonSeparator4.Location = New System.Drawing.Point(215, 163)
+        Me.XenonSeparator4.AlternativeLook = True
+        Me.XenonSeparator4.Location = New System.Drawing.Point(214, 163)
         Me.XenonSeparator4.Name = "XenonSeparator4"
-        Me.XenonSeparator4.Size = New System.Drawing.Size(35, 1)
+        Me.XenonSeparator4.Size = New System.Drawing.Size(36, 2)
         Me.XenonSeparator4.TabIndex = 39
         Me.XenonSeparator4.TabStop = False
         Me.XenonSeparator4.Text = "XenonSeparator4"
         '
         'XenonSeparator5
         '
+        Me.XenonSeparator5.AlternativeLook = True
         Me.XenonSeparator5.Location = New System.Drawing.Point(99, 102)
         Me.XenonSeparator5.Name = "XenonSeparator5"
-        Me.XenonSeparator5.Size = New System.Drawing.Size(29, 1)
+        Me.XenonSeparator5.Size = New System.Drawing.Size(29, 2)
         Me.XenonSeparator5.TabIndex = 83
         Me.XenonSeparator5.TabStop = False
         Me.XenonSeparator5.Text = "XenonSeparator5"
         '
         'XenonSeparator2
         '
+        Me.XenonSeparator2.AlternativeLook = True
         Me.XenonSeparator2.Location = New System.Drawing.Point(221, 102)
         Me.XenonSeparator2.Name = "XenonSeparator2"
-        Me.XenonSeparator2.Size = New System.Drawing.Size(29, 1)
+        Me.XenonSeparator2.Size = New System.Drawing.Size(29, 2)
         Me.XenonSeparator2.TabIndex = 37
         Me.XenonSeparator2.TabStop = False
         Me.XenonSeparator2.Text = "XenonSeparator2"
         '
         'XenonSeparatorVertical2
         '
+        Me.XenonSeparatorVertical2.AlternativeLook = True
         Me.XenonSeparatorVertical2.Location = New System.Drawing.Point(173, 60)
         Me.XenonSeparatorVertical2.Name = "XenonSeparatorVertical2"
-        Me.XenonSeparatorVertical2.Size = New System.Drawing.Size(1, 50)
+        Me.XenonSeparatorVertical2.Size = New System.Drawing.Size(2, 50)
         Me.XenonSeparatorVertical2.TabIndex = 1
         Me.XenonSeparatorVertical2.TabStop = False
         '
@@ -2315,6 +2323,16 @@ Partial Class Win32UI
         Me.pnl_preview.Size = New System.Drawing.Size(350, 320)
         Me.pnl_preview.TabIndex = 2
         '
+        'RetroShadow1
+        '
+        Me.RetroShadow1.BackColor = System.Drawing.Color.Transparent
+        Me.RetroShadow1.Location = New System.Drawing.Point(14, 247)
+        Me.RetroShadow1.Name = "RetroShadow1"
+        Me.RetroShadow1.Size = New System.Drawing.Size(115, 66)
+        Me.RetroShadow1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.RetroShadow1.TabIndex = 6
+        Me.RetroShadow1.TabStop = False
+        '
         'Menu_Window
         '
         Me.Menu_Window.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2838,6 +2856,7 @@ Partial Class Win32UI
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 498)
@@ -2845,16 +2864,6 @@ Partial Class Win32UI
         Me.XenonSeparator1.Size = New System.Drawing.Size(857, 1)
         Me.XenonSeparator1.TabIndex = 62
         Me.XenonSeparator1.TabStop = False
-        '
-        'RetroShadow1
-        '
-        Me.RetroShadow1.BackColor = System.Drawing.Color.Transparent
-        Me.RetroShadow1.Location = New System.Drawing.Point(14, 247)
-        Me.RetroShadow1.Name = "RetroShadow1"
-        Me.RetroShadow1.Size = New System.Drawing.Size(115, 66)
-        Me.RetroShadow1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.RetroShadow1.TabIndex = 6
-        Me.RetroShadow1.TabStop = False
         '
         'Win32UI
         '
@@ -2952,6 +2961,7 @@ Partial Class Win32UI
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_preview.ResumeLayout(False)
         Me.pnl_preview.PerformLayout()
+        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Menu_Window.ResumeLayout(False)
         Me.menucontainer3.ResumeLayout(False)
         Me.highlight.ResumeLayout(False)
@@ -2965,7 +2975,6 @@ Partial Class Win32UI
         Me.RetroWindow4.ResumeLayout(False)
         Me.programcontainer.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
-        CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

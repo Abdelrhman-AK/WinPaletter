@@ -415,6 +415,8 @@ Partial Class MainFrm
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonButton30 = New WinPaletter.XenonButton()
+        Me.XenonButton31 = New WinPaletter.XenonButton()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -738,6 +740,9 @@ Partial Class MainFrm
         Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
+        Me.ActionCenter.UseWin11ORB_WithWin10 = False
+        Me.ActionCenter.UseWin11RoundedCorners_WithWin10_Level1 = False
+        Me.ActionCenter.UseWin11RoundedCorners_WithWin10_Level2 = False
         Me.ActionCenter.Win7ColorBal = 100
         Me.ActionCenter.Win7GlowBal = 100
         '
@@ -764,6 +769,9 @@ Partial Class MainFrm
         Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
         Me.start.TabIndex = 1
         Me.start.Transparency = True
+        Me.start.UseWin11ORB_WithWin10 = False
+        Me.start.UseWin11RoundedCorners_WithWin10_Level1 = False
+        Me.start.UseWin11RoundedCorners_WithWin10_Level2 = False
         Me.start.Win7ColorBal = 100
         Me.start.Win7GlowBal = 100
         '
@@ -790,6 +798,9 @@ Partial Class MainFrm
         Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
+        Me.taskbar.UseWin11ORB_WithWin10 = False
+        Me.taskbar.UseWin11RoundedCorners_WithWin10_Level1 = False
+        Me.taskbar.UseWin11RoundedCorners_WithWin10_Level2 = False
         Me.taskbar.Win7ColorBal = 100
         Me.taskbar.Win7GlowBal = 100
         '
@@ -3662,6 +3673,7 @@ Partial Class MainFrm
         '
         'XenonSeparatorVertical2
         '
+        Me.XenonSeparatorVertical2.AlternativeLook = False
         Me.XenonSeparatorVertical2.Location = New System.Drawing.Point(253, 39)
         Me.XenonSeparatorVertical2.Name = "XenonSeparatorVertical2"
         Me.XenonSeparatorVertical2.Size = New System.Drawing.Size(1, 90)
@@ -5180,6 +5192,7 @@ Partial Class MainFrm
         '
         'XenonSeparatorVertical3
         '
+        Me.XenonSeparatorVertical3.AlternativeLook = False
         Me.XenonSeparatorVertical3.Location = New System.Drawing.Point(309, 47)
         Me.XenonSeparatorVertical3.Name = "XenonSeparatorVertical3"
         Me.XenonSeparatorVertical3.Size = New System.Drawing.Size(1, 91)
@@ -5449,6 +5462,7 @@ Partial Class MainFrm
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 47)
@@ -5686,6 +5700,7 @@ Partial Class MainFrm
         '
         'XenonSeparatorVertical1
         '
+        Me.XenonSeparatorVertical1.AlternativeLook = False
         Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(349, 10)
         Me.XenonSeparatorVertical1.Name = "XenonSeparatorVertical1"
         Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(1, 40)
@@ -5924,6 +5939,38 @@ Partial Class MainFrm
         Me.OpenFileDialog2.DefaultExt = "wpt"
         Me.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme"
         '
+        'XenonButton30
+        '
+        Me.XenonButton30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton30.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton30.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton30.ForeColor = System.Drawing.Color.White
+        Me.XenonButton30.Image = Nothing
+        Me.XenonButton30.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton30.LineSize = 1
+        Me.XenonButton30.Location = New System.Drawing.Point(664, 501)
+        Me.XenonButton30.Name = "XenonButton30"
+        Me.XenonButton30.Size = New System.Drawing.Size(96, 32)
+        Me.XenonButton30.TabIndex = 35
+        Me.XenonButton30.Text = "add"
+        Me.XenonButton30.UseVisualStyleBackColor = False
+        '
+        'XenonButton31
+        '
+        Me.XenonButton31.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton31.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton31.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton31.ForeColor = System.Drawing.Color.White
+        Me.XenonButton31.Image = Nothing
+        Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton31.LineSize = 1
+        Me.XenonButton31.Location = New System.Drawing.Point(766, 501)
+        Me.XenonButton31.Name = "XenonButton31"
+        Me.XenonButton31.Size = New System.Drawing.Size(96, 32)
+        Me.XenonButton31.TabIndex = 36
+        Me.XenonButton31.Text = "remove"
+        Me.XenonButton31.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -5931,6 +5978,8 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1088, 716)
+        Me.Controls.Add(Me.XenonButton31)
+        Me.Controls.Add(Me.XenonButton30)
         Me.Controls.Add(Me.XenonButton28)
         Me.Controls.Add(Me.previewContainer)
         Me.Controls.Add(Me.TablessControl1)
@@ -6481,4 +6530,6 @@ Partial Class MainFrm
     Friend WithEvents Label80 As Label
     Friend WithEvents WXP_Alert2 As XenonAlertBox
     Friend WithEvents WXP_Alert1 As XenonAlertBox
+    Friend WithEvents XenonButton30 As XenonButton
+    Friend WithEvents XenonButton31 As XenonButton
 End Class

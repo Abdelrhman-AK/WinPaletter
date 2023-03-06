@@ -83,38 +83,27 @@ Public Class DragPreviewer
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
-#Region "Win11"
                 tabs_preview.SelectedIndex = 0
-                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
-                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
-
-                XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
-                XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
-
-                XenonWindow1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
-                XenonWindow2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
-
-                XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
-                XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
-
-                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
-                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
-
-                Label8.ForeColor = If([CP].Windows11.AppMode_Light, Color.Black, Color.White)
-
-                start.DarkMode = Not [CP].Windows11.WinMode_Light
-                taskbar.DarkMode = Not [CP].Windows11.WinMode_Light
-                ActionCenter.DarkMode = Not [CP].Windows11.WinMode_Light
-
-                taskbar.Transparency = [CP].Windows11.Transparency
-                start.Transparency = [CP].Windows11.Transparency
-                ActionCenter.Transparency = [CP].Windows11.Transparency
-
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        taskbar.BackColorAlpha = 75
-                        start.BackColorAlpha = 75
                         ActionCenter.BackColorAlpha = 75
+
+                        If ExplorerPatcher.IsAllowed Then
+                            If My.EP.UseStart10 Then
+                                start.BackColorAlpha = 185
+                            Else
+                                start.BackColorAlpha = 75
+                            End If
+
+                            If My.EP.UseTaskbar10 Then
+                                taskbar.BackColorAlpha = 185
+                            Else
+                                taskbar.BackColorAlpha = 75
+                            End If
+                        Else
+                            taskbar.BackColorAlpha = 75
+                            start.BackColorAlpha = 75
+                        End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
@@ -124,7 +113,13 @@ Public Class DragPreviewer
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
-                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5)
+
+                                If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
+                                    start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4)
+                                Else
+                                    start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index5)
+                                End If
+
                                 ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
@@ -139,13 +134,29 @@ Public Class DragPreviewer
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
                         start.SearchBoxAccent = [CP].Windows11.Color_Index1
                         taskbar.AppUnderline = [CP].Windows11.Color_Index1
+
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index0
 
                     Case False   ''''''''''Light
-                        taskbar.BackColorAlpha = 180
-                        start.BackColorAlpha = 180
                         ActionCenter.BackColorAlpha = 180
+
+                        If ExplorerPatcher.IsAllowed Then
+                            If My.EP.UseStart10 Then
+                                start.BackColorAlpha = 210
+                            Else
+                                start.BackColorAlpha = 180
+                            End If
+
+                            If My.EP.UseTaskbar10 Then
+                                taskbar.BackColorAlpha = 210
+                            Else
+                                taskbar.BackColorAlpha = 180
+                            End If
+                        Else
+                            taskbar.BackColorAlpha = 180
+                            start.BackColorAlpha = 180
+                        End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
@@ -155,7 +166,13 @@ Public Class DragPreviewer
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1)
-                                start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0)
+
+                                If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
+                                    start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4)
+                                Else
+                                    start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index0)
+                                End If
+
                                 ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
@@ -169,11 +186,17 @@ Public Class DragPreviewer
                         ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index5
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
                         start.SearchBoxAccent = [CP].Windows11.Color_Index4
-                        taskbar.AppUnderline = [CP].Windows11.Color_Index4
+
+                        If ExplorerPatcher.IsAllowed And My.EP.UseTaskbar10 Then
+                            taskbar.AppUnderline = [CP].Windows11.Color_Index1
+                        Else
+                            taskbar.AppUnderline = [CP].Windows11.Color_Index4
+                        End If
+
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index5
                 End Select
-#End Region
+
             Case WinVer.W10
 #Region "Win10"
                 tabs_preview.SelectedIndex = 0
@@ -681,7 +704,7 @@ Public Class DragPreviewer
     End Sub
 
     Sub Adjust_Preview()
-        Panel5.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+        Panel3.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
@@ -696,9 +719,29 @@ Public Class DragPreviewer
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
                 ActionCenter.Style = XenonWinElement.Styles.ActionCenter11
-                taskbar.Style = XenonWinElement.Styles.Taskbar11
-                start.Style = XenonWinElement.Styles.Start11
+
+                If ExplorerPatcher.IsAllowed Then
+                    With My.EP
+                        If Not .UseStart10 Then
+                            start.Style = XenonWinElement.Styles.Start11
+                        Else
+                            start.Style = XenonWinElement.Styles.Start10
+                        End If
+
+                        If Not .UseTaskbar10 Then
+                            taskbar.Style = XenonWinElement.Styles.Taskbar11
+                        Else
+                            taskbar.Style = XenonWinElement.Styles.Taskbar10
+                        End If
+
+                    End With
+                Else
+                    taskbar.Style = XenonWinElement.Styles.Taskbar11
+                    start.Style = XenonWinElement.Styles.Start11
+                End If
+
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
+
                 If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W10
@@ -829,21 +872,65 @@ Public Class DragPreviewer
                 ActionCenter.Dock = Nothing
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
-                '########################
-                taskbar.BlurPower = 12
-                '########################
-                start.BlurPower = 7
-                start.NoisePower = 0.2
-                '########################
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
-                '########################
 
-                taskbar.Height = 42
+                If ExplorerPatcher.IsAllowed Then
 
-                start.Size = New Size(135, 200)
-                start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
+                    With My.EP
+                        If Not .UseTaskbar10 Then
+                            taskbar.BlurPower = 12
+                            taskbar.Height = 42
+                        Else
+                            taskbar.BlurPower = 12
+                            taskbar.Height = 35
+                            taskbar.UseWin11ORB_WithWin10 = Not .TaskbarButton10
+                        End If
 
+                        If Not .UseStart10 Then
+                            start.BlurPower = 7
+                            start.NoisePower = 0.2
+                            start.Size = New Size(135, 200)
+                            start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
+                        Else
+                            start.BlurPower = 7
+                            start.NoisePower = 0.2
+
+                            Select Case .StartStyle
+                                Case ExplorerPatcher.StartStyles.NotRounded
+                                    start.Size = New Size(182, 201)
+                                    start.Left = 0
+                                    start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = False
+
+                                Case ExplorerPatcher.StartStyles.RoundedCornersDockedMenu
+                                    start.Size = New Size(182, 201)
+                                    start.Left = 0
+                                    start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = True
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = False
+
+                                Case ExplorerPatcher.StartStyles.RoundedCornersFloatingMenu
+                                    start.Size = New Size(182, 201)
+                                    start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
+                                    start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                                    start.UseWin11RoundedCorners_WithWin10_Level2 = True
+
+                            End Select
+
+                        End If
+                    End With
+
+                Else
+                    taskbar.BlurPower = 12
+                    taskbar.Height = 42
+                    '########################
+                    start.BlurPower = 7
+                    start.NoisePower = 0.2
+                    start.Size = New Size(135, 200)
+                    start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
+                End If
 
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
@@ -857,13 +944,15 @@ Public Class DragPreviewer
                 '########################
 
                 taskbar.Height = 35
-
+                taskbar.UseWin11ORB_WithWin10 = False
                 start.Size = New Size(182, 201)
                 start.Left = 0
                 start.Top = taskbar.Bottom - taskbar.Height - start.Height
+                start.UseWin11RoundedCorners_WithWin10_Level1 = False
+                start.UseWin11RoundedCorners_WithWin10_Level2 = False
 
             Case WinVer.W8
-                Panel5.Visible = False
+                Panel3.Visible = False
                 lnk_preview.Visible = False
                 start.Visible = False
                 ActionCenter.Visible = False
@@ -875,7 +964,7 @@ Public Class DragPreviewer
                 start.Left = 0
 
             Case WinVer.W7
-                Panel5.Visible = False
+                Panel3.Visible = False
                 lnk_preview.Visible = False
                 ActionCenter.Visible = False
 
@@ -903,10 +992,11 @@ Public Class DragPreviewer
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = False
 
             Case WinVer.WVista
-                Panel5.Visible = False
+                Panel3.Visible = False
                 lnk_preview.Visible = False
                 ActionCenter.Visible = False
                 taskbar.Height = 30
@@ -916,8 +1006,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -928,7 +1018,8 @@ Public Class DragPreviewer
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = True
 
             Case WinVer.WXP
                 taskbar.Height = 30
@@ -937,8 +1028,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(16, 16)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(16, 16)
+                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
+                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -949,13 +1040,20 @@ Public Class DragPreviewer
                 RetroButton4.Left = RetroButton3.Right + 3
                 RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
                 RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
-                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton2.Font.Style)
+                RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
+                RetroButton3.HatchBrush = True
 
         End Select
 
         If MainFrm.PreviewConfig = WinVer.W10 Or MainFrm.PreviewConfig = WinVer.W11 Then
-            XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = WinVer.W11, 30, 35)
-            XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = WinVer.W11, 30, 15)
+
+            If My.W11 And My.EP.UseStart10 Then
+                XenonWindow1.Top = start.Top - 35
+                XenonWindow1.Left = start.Right + 15
+            Else
+                XenonWindow1.Top = start.Top - If(MainFrm.PreviewConfig = WinVer.W11, 30, 35)
+                XenonWindow1.Left = start.Right + If(MainFrm.PreviewConfig = WinVer.W11, 30, 15)
+            End If
 
             XenonWindow2.Top = XenonWindow1.Bottom + 1
             XenonWindow2.Left = XenonWindow1.Left

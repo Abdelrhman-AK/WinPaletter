@@ -209,9 +209,14 @@ Public Class ColorPickerDlg
                     If .Style = XenonWinElement.Styles.Taskbar11 Or .Style = XenonWinElement.Styles.Taskbar10 Then
 
                         If _Conditions.AppUnderlineOnly Then
-
                             Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
                             .Refresh()
+
+                        ElseIf _Conditions.AppUnderlineWithTaskbar Then
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
+                            .Refresh()
+
                         ElseIf _Conditions.AppBackgroundOnly Then
 
                             Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
@@ -781,6 +786,7 @@ Public Class Conditions
     Public Property Window_InactiveTitlebar As Boolean = False
     Public Property Window_ActiveTitlebar As Boolean = True
     Public Property AppUnderlineOnly As Boolean = False
+    Public Property AppUnderlineWithTaskbar As Boolean = False
     Public Property AppBackgroundOnly As Boolean = False
     Public Property StartColorOnly As Boolean = False
     Public Property StartSearchOnly As Boolean = False

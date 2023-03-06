@@ -199,14 +199,14 @@ Partial Class Metrics_Fonts
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.RetroScrollBar2 = New WinPaletter.RetroScrollBar()
-        Me.RetroButton12 = New WinPaletter.RetroButton()
-        Me.RetroButton11 = New WinPaletter.RetroButton()
-        Me.RetroButton10 = New WinPaletter.RetroButton()
         Me.RetroScrollBar1 = New WinPaletter.RetroScrollBar()
         Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroButton1 = New WinPaletter.RetroButton()
         Me.RetroButton2 = New WinPaletter.RetroButton()
+        Me.RetroScrollBar2 = New WinPaletter.RetroScrollBar()
+        Me.RetroButton12 = New WinPaletter.RetroButton()
+        Me.RetroButton11 = New WinPaletter.RetroButton()
+        Me.RetroButton10 = New WinPaletter.RetroButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -337,8 +337,8 @@ Partial Class Metrics_Fonts
         Me.RetroWindow5.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RetroScrollBar2.SuspendLayout()
         Me.RetroScrollBar1.SuspendLayout()
+        Me.RetroScrollBar2.SuspendLayout()
         Me.RetroPanel1.SuspendLayout()
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox10.SuspendLayout()
@@ -497,7 +497,7 @@ Partial Class Metrics_Fonts
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(990, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -2571,8 +2571,8 @@ Partial Class Metrics_Fonts
         Me.Panel3.BackColor = System.Drawing.Color.Transparent
         Me.Panel3.Controls.Add(Me.Label13)
         Me.Panel3.Controls.Add(Me.PictureBox36)
-        Me.Panel3.Controls.Add(Me.RetroScrollBar2)
         Me.Panel3.Controls.Add(Me.RetroScrollBar1)
+        Me.Panel3.Controls.Add(Me.RetroScrollBar2)
         Me.Panel3.Controls.Add(Me.Panel1)
         Me.Panel3.Controls.Add(Me.RetroPanel1)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -2588,7 +2588,7 @@ Partial Class Metrics_Fonts
         Me.Label13.ForeColor = System.Drawing.Color.Black
         Me.Label13.Location = New System.Drawing.Point(52, 2)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(315, 141)
+        Me.Label13.Size = New System.Drawing.Size(314, 140)
         Me.Label13.TabIndex = 85
         Me.Label13.Text = "This is a text displayed as a message"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -2598,10 +2598,90 @@ Partial Class Metrics_Fonts
         Me.PictureBox36.Dock = System.Windows.Forms.DockStyle.Left
         Me.PictureBox36.Location = New System.Drawing.Point(2, 2)
         Me.PictureBox36.Name = "PictureBox36"
-        Me.PictureBox36.Size = New System.Drawing.Size(50, 141)
+        Me.PictureBox36.Size = New System.Drawing.Size(50, 140)
         Me.PictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox36.TabIndex = 84
         Me.PictureBox36.TabStop = False
+        '
+        'RetroScrollBar1
+        '
+        Me.RetroScrollBar1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroScrollBar1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroScrollBar1.Controls.Add(Me.RetroButton3)
+        Me.RetroScrollBar1.Controls.Add(Me.RetroButton1)
+        Me.RetroScrollBar1.Controls.Add(Me.RetroButton2)
+        Me.RetroScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.RetroScrollBar1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroScrollBar1.ForeColor = System.Drawing.Color.Black
+        Me.RetroScrollBar1.Location = New System.Drawing.Point(2, 142)
+        Me.RetroScrollBar1.Name = "RetroScrollBar1"
+        Me.RetroScrollBar1.Size = New System.Drawing.Size(364, 17)
+        Me.RetroScrollBar1.TabIndex = 94
+        '
+        'RetroButton3
+        '
+        Me.RetroButton3.AppearsAsPressed = False
+        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RetroButton3.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton3.HatchBrush = False
+        Me.RetroButton3.Image = Nothing
+        Me.RetroButton3.Location = New System.Drawing.Point(0, 0)
+        Me.RetroButton3.Name = "RetroButton3"
+        Me.RetroButton3.Size = New System.Drawing.Size(17, 17)
+        Me.RetroButton3.TabIndex = 5
+        Me.RetroButton3.Text = "3"
+        Me.RetroButton3.UseItAsScrollbar = False
+        Me.RetroButton3.UseVisualStyleBackColor = False
+        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton1
+        '
+        Me.RetroButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
+        Me.RetroButton1.AppearsAsPressed = False
+        Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton1.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.RetroButton1.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton1.HatchBrush = False
+        Me.RetroButton1.Image = Nothing
+        Me.RetroButton1.Location = New System.Drawing.Point(66, 0)
+        Me.RetroButton1.Name = "RetroButton1"
+        Me.RetroButton1.Size = New System.Drawing.Size(96, 17)
+        Me.RetroButton1.TabIndex = 7
+        Me.RetroButton1.UseItAsScrollbar = True
+        Me.RetroButton1.UseVisualStyleBackColor = False
+        Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
+        '
+        'RetroButton2
+        '
+        Me.RetroButton2.AppearsAsPressed = False
+        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.RetroButton2.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
+        Me.RetroButton2.HatchBrush = False
+        Me.RetroButton2.Image = Nothing
+        Me.RetroButton2.Location = New System.Drawing.Point(347, 0)
+        Me.RetroButton2.Name = "RetroButton2"
+        Me.RetroButton2.Size = New System.Drawing.Size(17, 17)
+        Me.RetroButton2.TabIndex = 6
+        Me.RetroButton2.Text = "4"
+        Me.RetroButton2.UseItAsScrollbar = False
+        Me.RetroButton2.UseVisualStyleBackColor = False
+        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
         'RetroScrollBar2
         '
@@ -2613,9 +2693,9 @@ Partial Class Metrics_Fonts
         Me.RetroScrollBar2.Dock = System.Windows.Forms.DockStyle.Right
         Me.RetroScrollBar2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroScrollBar2.ForeColor = System.Drawing.Color.Black
-        Me.RetroScrollBar2.Location = New System.Drawing.Point(367, 2)
+        Me.RetroScrollBar2.Location = New System.Drawing.Point(366, 2)
         Me.RetroScrollBar2.Name = "RetroScrollBar2"
-        Me.RetroScrollBar2.Size = New System.Drawing.Size(16, 141)
+        Me.RetroScrollBar2.Size = New System.Drawing.Size(17, 157)
         Me.RetroScrollBar2.TabIndex = 93
         '
         'RetroButton12
@@ -2635,7 +2715,7 @@ Partial Class Metrics_Fonts
         Me.RetroButton12.Image = Nothing
         Me.RetroButton12.Location = New System.Drawing.Point(0, 29)
         Me.RetroButton12.Name = "RetroButton12"
-        Me.RetroButton12.Size = New System.Drawing.Size(16, 66)
+        Me.RetroButton12.Size = New System.Drawing.Size(17, 82)
         Me.RetroButton12.TabIndex = 7
         Me.RetroButton12.UseItAsScrollbar = True
         Me.RetroButton12.UseVisualStyleBackColor = False
@@ -2654,9 +2734,9 @@ Partial Class Metrics_Fonts
         Me.RetroButton11.ForeColor = System.Drawing.Color.Black
         Me.RetroButton11.HatchBrush = False
         Me.RetroButton11.Image = Nothing
-        Me.RetroButton11.Location = New System.Drawing.Point(0, 125)
+        Me.RetroButton11.Location = New System.Drawing.Point(0, 140)
         Me.RetroButton11.Name = "RetroButton11"
-        Me.RetroButton11.Size = New System.Drawing.Size(16, 16)
+        Me.RetroButton11.Size = New System.Drawing.Size(17, 17)
         Me.RetroButton11.TabIndex = 6
         Me.RetroButton11.Text = "u"
         Me.RetroButton11.UseItAsScrollbar = False
@@ -2678,92 +2758,12 @@ Partial Class Metrics_Fonts
         Me.RetroButton10.Image = Nothing
         Me.RetroButton10.Location = New System.Drawing.Point(0, 0)
         Me.RetroButton10.Name = "RetroButton10"
-        Me.RetroButton10.Size = New System.Drawing.Size(16, 16)
+        Me.RetroButton10.Size = New System.Drawing.Size(17, 17)
         Me.RetroButton10.TabIndex = 5
         Me.RetroButton10.Text = "t"
         Me.RetroButton10.UseItAsScrollbar = False
         Me.RetroButton10.UseVisualStyleBackColor = False
         Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroScrollBar1
-        '
-        Me.RetroScrollBar1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroScrollBar1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroScrollBar1.Controls.Add(Me.RetroButton3)
-        Me.RetroScrollBar1.Controls.Add(Me.RetroButton1)
-        Me.RetroScrollBar1.Controls.Add(Me.RetroButton2)
-        Me.RetroScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RetroScrollBar1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroScrollBar1.ForeColor = System.Drawing.Color.Black
-        Me.RetroScrollBar1.Location = New System.Drawing.Point(2, 143)
-        Me.RetroScrollBar1.Name = "RetroScrollBar1"
-        Me.RetroScrollBar1.Size = New System.Drawing.Size(381, 16)
-        Me.RetroScrollBar1.TabIndex = 94
-        '
-        'RetroButton3
-        '
-        Me.RetroButton3.AppearsAsPressed = False
-        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton3.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroButton3.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
-        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton3.HatchBrush = False
-        Me.RetroButton3.Image = Nothing
-        Me.RetroButton3.Location = New System.Drawing.Point(0, 0)
-        Me.RetroButton3.Name = "RetroButton3"
-        Me.RetroButton3.Size = New System.Drawing.Size(16, 16)
-        Me.RetroButton3.TabIndex = 5
-        Me.RetroButton3.Text = "3"
-        Me.RetroButton3.UseItAsScrollbar = False
-        Me.RetroButton3.UseVisualStyleBackColor = False
-        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton1
-        '
-        Me.RetroButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton1.AppearsAsPressed = False
-        Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton1.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton1.Font = New System.Drawing.Font("Marlett", 6.0!)
-        Me.RetroButton1.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton1.HatchBrush = False
-        Me.RetroButton1.Image = Nothing
-        Me.RetroButton1.Location = New System.Drawing.Point(74, 0)
-        Me.RetroButton1.Name = "RetroButton1"
-        Me.RetroButton1.Size = New System.Drawing.Size(96, 16)
-        Me.RetroButton1.TabIndex = 7
-        Me.RetroButton1.UseItAsScrollbar = True
-        Me.RetroButton1.UseVisualStyleBackColor = False
-        Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
-        '
-        'RetroButton2
-        '
-        Me.RetroButton2.AppearsAsPressed = False
-        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.RetroButton2.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
-        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton2.HatchBrush = False
-        Me.RetroButton2.Image = Nothing
-        Me.RetroButton2.Location = New System.Drawing.Point(365, 0)
-        Me.RetroButton2.Name = "RetroButton2"
-        Me.RetroButton2.Size = New System.Drawing.Size(16, 16)
-        Me.RetroButton2.TabIndex = 6
-        Me.RetroButton2.Text = "4"
-        Me.RetroButton2.UseItAsScrollbar = False
-        Me.RetroButton2.UseVisualStyleBackColor = False
-        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
         'Panel1
         '
@@ -3350,6 +3350,7 @@ Partial Class Metrics_Fonts
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(47, 253)
@@ -3679,8 +3680,8 @@ Partial Class Metrics_Fonts
         Me.RetroWindow5.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RetroScrollBar2.ResumeLayout(False)
         Me.RetroScrollBar1.ResumeLayout(False)
+        Me.RetroScrollBar2.ResumeLayout(False)
         Me.RetroPanel1.ResumeLayout(False)
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox10.ResumeLayout(False)

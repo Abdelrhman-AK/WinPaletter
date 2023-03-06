@@ -18,6 +18,21 @@ Public Class SettingsX
         XenonComboBox2.Items.Add(My.Lang.Beta)
         ApplyDarkMode(Me)
         LoadSettings()
+
+        Dim w As Integer = 19
+        EP_Start_11.Image = My.Resources.Native11.Resize(w, w)
+        EP_Start_10.Image = My.Resources.Native10.Resize(w, w)
+        EP_Taskbar_11.Image = EP_Start_11.Image
+        EP_Taskbar_10.Image = EP_Start_10.Image
+
+        If GetDarkMode() Then
+            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Resize(w, w)
+            EP_ORB_10.Image = My.Resources.StartBtn_10Dark.Resize(w, w)
+        Else
+            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Invert.Resize(w, w)
+            EP_ORB_10.Image = My.Resources.StartBtn_10Light.Resize(w, w)
+        End If
+
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
@@ -62,6 +77,12 @@ Public Class SettingsX
             If .Log_Countdown_Enabled <> XenonCheckBox18.Checked Then Changed = True
             If .Log_Countdown <> XenonNumericUpDown1.Value Then Changed = True
 
+            If .EP_Enabled <> XenonCheckBox20.Checked Then Changed = True
+            If .EP_Enabled_Force <> XenonCheckBox21.Checked Then Changed = True
+            If .EP_UseStart10 <> EP_Start_10.Checked Then Changed = True
+            If .EP_StartStyle <> EP_Start_10_Type.SelectedIndex Then Changed = True
+            If .EP_UseTaskbar10 <> EP_Taskbar_10.Checked Then Changed = True
+            If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -146,6 +167,16 @@ Public Class SettingsX
             XenonCheckBox19.Checked = .Log_ShowApplying
             XenonCheckBox18.Checked = .Log_Countdown_Enabled
             XenonNumericUpDown1.Value = .Log_Countdown
+
+            XenonCheckBox20.Checked = .EP_Enabled
+            XenonCheckBox21.Checked = .EP_Enabled_Force
+            EP_Start_10.Checked = .EP_UseStart10
+            EP_Start_11.Checked = Not .EP_UseStart10
+            EP_Start_10_Type.SelectedIndex = .EP_StartStyle
+            EP_Taskbar_10.Checked = .EP_UseTaskbar10
+            EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
+            EP_ORB_10.Checked = .EP_TaskbarButton10
+            EP_ORB_11.Checked = Not .EP_TaskbarButton10
         End With
 
         With My.Lang
@@ -169,6 +200,7 @@ Public Class SettingsX
         Dim ch_terminal As Boolean = False
         Dim ch_lang As Boolean = False
         Dim ch_appearance As Boolean = False
+        Dim ch_EP As Boolean = False
 
         With My.[Settings]
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_appearance = True
@@ -189,6 +221,13 @@ Public Class SettingsX
 
             If .Language <> XenonCheckBox8.Checked Then ch_lang = True
             If .Language_File <> XenonTextBox3.Text Then ch_lang = True
+
+            If .EP_Enabled <> XenonCheckBox20.Checked Then ch_EP = True
+            If .EP_Enabled_Force <> XenonCheckBox21.Checked Then ch_EP = True
+            If .EP_UseStart10 <> EP_Start_10.Checked Then ch_EP = True
+            If .EP_StartStyle <> EP_Start_10_Type.SelectedIndex Then ch_EP = True
+            If .EP_UseTaskbar10 <> EP_Taskbar_10.Checked Then ch_EP = True
+            If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then ch_EP = True
 
             .AutoAddExt = XenonCheckBox1.Checked
             .DragAndDropPreview = XenonCheckBox3.Checked
@@ -228,6 +267,13 @@ Public Class SettingsX
             .Log_ShowApplying = XenonCheckBox19.Checked
             .Log_Countdown_Enabled = XenonCheckBox18.Checked
             .Log_Countdown = XenonNumericUpDown1.Value
+
+            .EP_Enabled = XenonCheckBox20.Checked
+            .EP_Enabled_Force = XenonCheckBox21.Checked
+            .EP_UseStart10 = EP_Start_10.Checked
+            .EP_StartStyle = EP_Start_10_Type.SelectedIndex
+            .EP_UseTaskbar10 = EP_Taskbar_10.Checked
+            .EP_TaskbarButton10 = EP_ORB_10.Checked
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -290,6 +336,14 @@ Public Class SettingsX
             End If
         End If
 
+        If ch_EP Then
+            My.EP = New ExplorerPatcher
+            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+            MainFrm.ApplyCPValues(MainFrm.CP)
+            MainFrm.Adjust_Preview(False)
+            MainFrm.ReValidateLivePreview(MainFrm.pnl_preview)
+        End If
+
         Cursor = Cursors.Default
 
         MsgBox(My.Lang.SettingsSaved, MsgBoxStyle.Information)
@@ -348,6 +402,13 @@ Public Class SettingsX
                 .Log_ShowApplying = XenonCheckBox19.Checked
                 .Log_Countdown_Enabled = XenonCheckBox18.Checked
                 .Log_Countdown = XenonNumericUpDown1.Value
+
+                .EP_Enabled = XenonCheckBox20.Checked
+                .EP_Enabled_Force = XenonCheckBox21.Checked
+                .EP_UseStart10 = EP_Start_10.Checked
+                .EP_StartStyle = EP_Start_10_Type.SelectedIndex
+                .EP_UseTaskbar10 = EP_Taskbar_10.Checked
+                .EP_TaskbarButton10 = EP_ORB_10.Checked
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -413,6 +474,16 @@ Public Class SettingsX
                 XenonCheckBox19.Checked = .Log_ShowApplying
                 XenonCheckBox18.Checked = .Log_Countdown_Enabled
                 XenonNumericUpDown1.Value = .Log_Countdown
+
+                XenonCheckBox20.Checked = .EP_Enabled
+                XenonCheckBox21.Checked = .EP_Enabled_Force
+                EP_Start_10.Checked = .EP_UseStart10
+                EP_Start_11.Checked = Not .EP_UseStart10
+                EP_Start_10_Type.SelectedIndex = .EP_StartStyle
+                EP_Taskbar_10.Checked = .EP_UseTaskbar10
+                EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
+                EP_ORB_10.Checked = .EP_TaskbarButton10
+                EP_ORB_11.Checked = Not .EP_TaskbarButton10
             End With
         End If
     End Sub
@@ -485,6 +556,16 @@ Public Class SettingsX
             XenonCheckBox19.Checked = .Log_ShowApplying
             XenonCheckBox18.Checked = .Log_Countdown_Enabled
             XenonNumericUpDown1.Value = .Log_Countdown
+
+            XenonCheckBox20.Checked = .EP_Enabled
+            XenonCheckBox21.Checked = .EP_Enabled_Force
+            EP_Start_10.Checked = .EP_UseStart10
+            EP_Start_11.Checked = Not .EP_UseStart10
+            EP_Start_10_Type.SelectedIndex = .EP_StartStyle
+            EP_Taskbar_10.Checked = .EP_UseTaskbar10
+            EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
+            EP_ORB_10.Checked = .EP_TaskbarButton10
+            EP_ORB_11.Checked = Not .EP_TaskbarButton10
         End With
 
         OpenFileDialog1.FileName = files(0)

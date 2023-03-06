@@ -700,7 +700,7 @@ Partial Class WinEffecter
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.Resources.checker_disabled
+        Me.checker_img.Image = My.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(492, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

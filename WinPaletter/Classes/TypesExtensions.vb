@@ -855,6 +855,28 @@ Public Module BitmapExtensions
         Return newBitmap
     End Function
 
+    '''<summary>
+    '''Return Inverted Bitmap
+    '''</summary>
+    <Extension()>
+    Public Function Invert(bmp As Bitmap) As Bitmap
+        Dim bmpDest As Bitmap = Nothing
+
+        Using bmpSource As Bitmap = New Bitmap(bmp)
+            bmpDest = New Bitmap(bmpSource.Width, bmpSource.Height)
+
+            For x As Integer = 0 To bmpSource.Width - 1
+                For y As Integer = 0 To bmpSource.Height - 1
+                    Dim clrPixel As Color = bmpSource.GetPixel(x, y)
+                    clrPixel = Color.FromArgb(clrPixel.A, 255 - clrPixel.R, 255 -
+                       clrPixel.G, 255 - clrPixel.B)
+                    bmpDest.SetPixel(x, y, clrPixel)
+                Next
+            Next
+        End Using
+
+        Return bmpDest
+    End Function
 End Module
 
 Public Module ControlExtentions

@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 
 Public Module Helpers
@@ -191,8 +192,65 @@ Public Class RetroButton : Inherits Button
         If Enabled Then FColor = ForeColor Else FColor = BackColor.CB(-0.2)
 
         If Image Is Nothing Then
-            If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
-            G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
+
+            If TextAlign = ContentAlignment.MiddleCenter Then
+
+                Dim textSize As SizeF = Measure(Text, Font)
+                Dim r As Rectangle = rect
+
+                'Resetting positions to fix layout misadjust
+                'Never modify
+                If Font.Name = "Marlett" Then
+                    Dim x As Integer = (rect.Width - textSize.Width) / 2
+                    Dim y As Integer = (rect.Height - textSize.Height) / 2
+                    Dim w As Integer = textSize.Width
+                    Dim h As Integer = textSize.Height
+
+                    If Font.Size >= CSng(4.4) AndAlso Font.Size < CSng(5.2) Then
+                        h += 2
+
+                    ElseIf Font.Size >= CSng(5.2) AndAlso Font.Size < CSng(5.6) Then
+                        x += 1
+
+                    ElseIf Font.Size >= CSng(5.6) AndAlso Font.Size < CSng(6) Then
+                        w += 1
+                        x += 1
+                        y += 1
+
+                    ElseIf Font.Size >= CSng(6) AndAlso Font.Size < CSng(6.4) Then
+                        x += 1
+                        y += 1
+
+                    ElseIf Font.Size >= CSng(6.4) AndAlso Font.Size < CSng(6.8) Then
+                        y += 1
+
+                    ElseIf Font.Size >= CSng(6.8) AndAlso Font.Size < CSng(7.2) Then
+                        x += 1
+                        y += 2
+
+                    ElseIf Font.Size >= CSng(7.2) AndAlso Font.Size <= CSng(7.6) Then
+                        y += 1
+
+                    ElseIf Font.Size >= CSng(8) AndAlso Font.Size < CSng(8.4) Then
+                        x += 1
+
+                    ElseIf Font.Size >= CSng(8.4) AndAlso Font.Size < CSng(8.8) Then
+                        x += 1
+                        y += 1
+
+                    End If
+
+                    r = New Rectangle(x, y, w, h)
+                End If
+
+                If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(r.X + 1, r.Y + 1, r.Width, r.Height), StringAligner(ContentAlignment.MiddleCenter))
+                G.DrawString(Text, Font, New SolidBrush(FColor), r, StringAligner(ContentAlignment.MiddleCenter))
+
+            Else
+                If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
+                G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, 0, Width - 1, Height - 1), StringAligner(TextAlign))
+            End If
+
         Else
             Select Case Me.ImageAlign
                 Case ContentAlignment.MiddleCenter
@@ -221,7 +279,7 @@ Public Class RetroButton : Inherits Button
                     G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(7, 0, Width, Height), StringAligner(TextAlign))
 
                 Case ContentAlignment.BottomLeft
-                    G.DrawImage(Me.Image, New Rectangle(1, imgY - 1, Image.Width, Image.Height))
+                    G.DrawImage(Me.Image, New Rectangle(1, imgY, Image.Width, Image.Height))
                     If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1 + Image.Width + 2, 1, Width, Height), StringAligner(ContentAlignment.MiddleLeft))
                     G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(Image.Width + 1, 0, Width, Height), StringAligner(ContentAlignment.MiddleLeft))
 
@@ -1084,16 +1142,21 @@ Public Class RetroWindow : Inherits Panel
             End If
 
             Dim RTL As Boolean = (RightToLeft = 1)
-            Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
-            If ColorGradient Then
-                G.FillRectangle(gr, TRect)
 
-                Dim TRectFixer As New Rectangle(TRect.X, TRect.Y, 1, TRect.Height)
-                G.FillRectangle(New SolidBrush(If(RTL, Color2, Color1)), TRectFixer)
+            Try
+                Dim gr As New LinearGradientBrush(TRect, If(RTL, Color2, Color1), If(RTL, Color1, Color2), LinearGradientMode.Horizontal)
+                If ColorGradient Then
+                    G.FillRectangle(gr, TRect)
 
-            Else
-                G.FillRectangle(New SolidBrush(Color1), TRect)
-            End If
+                    Dim TRectFixer As New Rectangle(TRect.X, TRect.Y, 1, TRect.Height)
+                    G.FillRectangle(New SolidBrush(If(RTL, Color2, Color1)), TRectFixer)
+
+                Else
+                    G.FillRectangle(New SolidBrush(Color1), TRect)
+                End If
+            Catch
+            End Try
+
             G.DrawString(TitlebarText, F, New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
         End If
 
