@@ -296,6 +296,7 @@ Partial Class SettingsX
         Me.ImageList1.Images.SetKeyName(5, "ThemeApplyingBehaviour")
         Me.ImageList1.Images.SetKeyName(6, "Terminals")
         Me.ImageList1.Images.SetKeyName(7, "Miscellaneous")
+        Me.ImageList1.Images.SetKeyName(8, "ExplorerPatcher")
         '
         'OpenJSONDlg
         '
@@ -2356,7 +2357,6 @@ Partial Class SettingsX
         Me.EP_ORB_11.ShowText = False
         Me.EP_ORB_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_ORB_11.TabIndex = 45
-        Me.EP_ORB_11.Text = "XenonRadioImage6"
         '
         'EP_ORB_10
         '
@@ -2369,7 +2369,6 @@ Partial Class SettingsX
         Me.EP_ORB_10.ShowText = False
         Me.EP_ORB_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_ORB_10.TabIndex = 46
-        Me.EP_ORB_10.Text = "XenonRadioImage5"
         '
         'Panel2
         '
@@ -2392,7 +2391,6 @@ Partial Class SettingsX
         Me.EP_Taskbar_11.ShowText = False
         Me.EP_Taskbar_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_Taskbar_11.TabIndex = 42
-        Me.EP_Taskbar_11.Text = "XenonRadioImage4"
         '
         'EP_Taskbar_10
         '
@@ -2405,7 +2403,6 @@ Partial Class SettingsX
         Me.EP_Taskbar_10.ShowText = False
         Me.EP_Taskbar_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_Taskbar_10.TabIndex = 43
-        Me.EP_Taskbar_10.Text = "XenonRadioImage3"
         '
         'Panel1
         '
@@ -2428,7 +2425,6 @@ Partial Class SettingsX
         Me.EP_Start_11.ShowText = False
         Me.EP_Start_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_Start_11.TabIndex = 39
-        Me.EP_Start_11.Text = "XenonRadioImage1"
         '
         'EP_Start_10
         '
@@ -2441,7 +2437,6 @@ Partial Class SettingsX
         Me.EP_Start_10.ShowText = False
         Me.EP_Start_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_Start_10.TabIndex = 40
-        Me.EP_Start_10.Text = "XenonRadioImage2"
         '
         'EP_Start_10_Type
         '

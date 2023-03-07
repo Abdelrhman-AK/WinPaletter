@@ -77,6 +77,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
         If Name.ToLower = "VS2Metrics".ToLower Then Return VS2Metrics
         If Name.ToLower = "Uninstall".ToLower Then Return Uninstall
+        If Name.ToLower = "AltTabEditor".ToLower Then Return AltTabEditor
 
     End Function
 
@@ -117,7 +118,8 @@ Public Class Localizer : Implements IDisposable
                         "LogonUIXP",
                         "VS2Win32UI",
                         "VS2Metrics",
-                        "Uninstall"
+                        "Uninstall",
+                        "AltTabEditor"
                         }
 
 #Region "Language Info"
@@ -165,6 +167,7 @@ Public Class Localizer : Implements IDisposable
     Property OS_WinVista As String = "Windows Vista"
     Property OS_WinXP As String = "Windows XP"
     Property OS_WinUndefined As String = "Windows 11 or Higher"
+    Property AltTab_Unsupported As String = "Windows Switcher isn't supported in {0} as it is a classic switcher that can't be changed by registry. Change the preview to another OS and try again."
     Property VistaLogonNotSupported As String = "Editing Windows Vista LogonUI with registry is not supported. Change the preview to another OS and try again."
     Property MonitorIssue As String = "Error occurred during loading registry monitor (Used in real-time-detection of wallpaper\dark mode change from registry). Resetting your wallpaper may fix the issue."
     Property MonitorIssue2 As String = "Anyway, loading will continue without it."
@@ -231,6 +234,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_WallpaperTone As String = "Applying Wallpaper Tone"
     Property CP_Applying_CMD As String = "Applying Command Prompt"
     Property CP_Applying_Metrics As String = "Applying Windows Metrics and Fonts"
+    Property CP_Applying_AltTab As String = "Applying Windows Switcher (Alt+Tab) appearance"
     Property CP_Applying_TerminalPreview As String = "Applying Windows Terminal Preview"
     Property CP_Check_Terminals As String = "Checking if Windows Terminal (Stable & Preview) are installed"
     Property CP_Check_TerminalStable As String = "Checking if Windows Terminal Stable is installed"
@@ -254,6 +258,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_PS32 As String = "Applying PowerShell x86"
     Property CP_Skip_PS32 As String = "Skipping PowerShell x86 as it is disabled"
     Property CP_Skip_Metrics As String = "Skipping Windows Metrics and Fonts as they are disabled"
+    Property CP_Skip_AltTab As String = "Skipping Windows Switcher (Alt+Tab) Appearance as it is disabled"
     Property CP_CMD_Error As String = "Error occurred while applying Command Prompt"
     Property CP_PS32_Error As String = "Error occurred while applying PowerShell x86"
     Property CP_PS64_Error As String = "Error occurred while applying PowerShell x64"
@@ -273,6 +278,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_WXP_Error As String = "Error occurred while applying Windows XP Theme"
     Property CP_Error_Cursors As String = "Error occurred while applying Windows Cursors"
     Property CP_Error_Metrics As String = "Error occurred while applying Windows Metrics and Fonts"
+    Property CP_Error_AltTab As String = "Error occurred while applying Windows Switcher (Alt+Tab) appearance"
     Property CP_Error_TerminalPreview As String = "Error occurred while applying Windows Terminal Preview"
     Property CP_Error_TerminalStable As String = "Error occurred while applying Windows Terminal Stable"
     Property CP_MetricsHighDPIAlert As String = "Please Logoff and Logon after setting Metrics and fonts with a high DPI"

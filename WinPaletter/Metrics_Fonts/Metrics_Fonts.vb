@@ -194,7 +194,9 @@ Public Class Metrics_Fonts
     Sub SetToClassicPanel([Panel] As RetroPanel, [CP] As CP)
         [Panel].BackColor = [CP].Win32.ButtonFace
         [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonLight = [CP].Win32.ButtonLight
         [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ButtonDkShadow = [CP].Win32.ButtonDkShadow
         [Panel].ForeColor = [CP].Win32.TitleText
     End Sub
 

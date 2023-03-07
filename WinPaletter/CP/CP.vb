@@ -83,6 +83,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Fade
         Scroll
     End Enum
+
+    Enum AltTabStyles
+        [Default]
+        ClassicNT
+        Placeholder
+        EP_Win10
+    End Enum
 #End Region
 
     Public Class Structures
@@ -150,6 +157,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public StartMenu_Accent As Color
             Public ApplyAccentonTitlebars As Boolean
             Public ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level
+            Public IncreaseTBTransparency As Boolean
 
             Sub Load(_DefWin As Windows10x, DefColorsBytes As Byte())
                 If My.W10 Or My.W11 Then
@@ -248,6 +256,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End Try
 
                     Try
+                        IncreaseTBTransparency = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", _DefWin.IncreaseTBTransparency)
+                    Catch
+                        IncreaseTBTransparency = _DefWin.IncreaseTBTransparency
+                    End Try
+
+                    Try
                         Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
                             Case 0
                                 ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
@@ -285,6 +299,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Transparency = _DefWin.Transparency
                     ApplyAccentonTaskbar = _DefWin.ApplyAccentonTaskbar
                     ApplyAccentonTitlebars = _DefWin.ApplyAccentonTitlebars
+                    IncreaseTBTransparency = _DefWin.IncreaseTBTransparency
                 End If
 
             End Sub
@@ -329,7 +344,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light.ToInteger)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger)
-
+                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger)
             End Sub
 
             Shared Operator =(First As Windows10x, Second As Windows10x) As Boolean
@@ -362,6 +377,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add(String.Format("*{0}_WinMode_Light= {1}", MiniSignature, WinMode_Light))
                 tx.Add(String.Format("*{0}_AppMode_Light= {1}", MiniSignature, AppMode_Light))
                 tx.Add(String.Format("*{0}_Transparency= {1}", MiniSignature, Transparency))
+                tx.Add(String.Format("*{0}_IncreaseTBTransparency= {1}", MiniSignature, IncreaseTBTransparency))
                 tx.Add(String.Format("*{0}_ApplyAccentonTitlebars= {1}", MiniSignature, ApplyAccentonTitlebars))
                 tx.Add(String.Format("*{0}_AccentOnStartTBAC= {1}", MiniSignature, ApplyAccentonTaskbar))
                 tx.Add(String.Format("</{0}>" & vbCrLf, Signature))
@@ -510,6 +526,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Case AeroTheme.AeroLite
                             Uxtheme.EnableTheming(1)
                             Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String)
+                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", "", RegistryValueKind.String)
+
                     End Select
                 Catch
                 End Try
@@ -1328,6 +1348,70 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
+
+                'If My.W8 Then
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
+                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
+
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ActiveTitle", ActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ButtonFace", ButtonFace.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ButtonText", ButtonText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "GrayText", GrayText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "Hilight", Hilight.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "HilightText", HilightText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "HotTrackingColor", HotTrackingColor.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "InactiveTitle", InactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "InactiveTitleText", InactiveTitleText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "TitleText", TitleText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "Window", Window.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "WindowText", WindowText.Reverse.ToArgb, RegistryValueKind.DWord)
+
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", ActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", ButtonFace.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", ButtonText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", GrayText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Hilight.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", HilightText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", HotTrackingColor.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", InactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", InactiveTitleText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", TitleText.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Window.Reverse.ToArgb, RegistryValueKind.DWord)
+                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", WindowText.Reverse.ToArgb, RegistryValueKind.DWord)
+                'End If
+
             End Sub
 
             Public Function Clone() Implements ICloneable.Clone
@@ -2079,6 +2163,65 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Function Clone() Implements ICloneable.Clone
                 Return MemberwiseClone()
             End Function
+        End Structure
+
+        Structure AltTab : Implements ICloneable
+            Public Enabled As Boolean
+            Public Style As AltTabStyles
+            Public Win10Opacity As Integer
+
+            Sub Load(_DefAltTab As AltTab)
+                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\AltTab")
+                Enabled = rMain_WE.GetValue("", True)
+                rMain_WE.Close()
+
+                Try
+                    Style = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", _DefAltTab.Style)
+                Catch
+                    Style = _DefAltTab.Style
+                End Try
+
+                Try
+                    Win10Opacity = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", _DefAltTab.Win10Opacity)
+                    If Win10Opacity = Nothing Then Win10Opacity = _DefAltTab.Win10Opacity
+                Catch
+                    Win10Opacity = _DefAltTab.Win10Opacity
+                End Try
+            End Sub
+
+            Sub Apply()
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\AltTab")
+                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
+                rMain.Close()
+
+                If Enabled Then
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", Style)
+                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", Win10Opacity)
+                End If
+            End Sub
+
+            Shared Operator =(First As AltTab, Second As AltTab) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As AltTab, Second As AltTab) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<AltTab>")
+                tx.Add("*AltTab_Enabled= " & Enabled)
+                tx.Add("*AltTab_Style= " & Style)
+                tx.Add("*AltTab_Win10Opacity= " & Win10Opacity)
+                tx.Add("</AltTab>" & vbCrLf)
+                Return tx.CString
+            End Function
+
         End Structure
 
         Structure LogonUI10x : Implements ICloneable
@@ -2989,8 +3132,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
-            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None
-            }
+            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
+            .IncreaseTBTransparency = False}
 
     Public Windows10 As New Structures.Windows10x With {
             .Color_Index0 = Color.FromArgb(166, 216, 255),
@@ -3008,8 +3151,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
-            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None
-            }
+            .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
+            .IncreaseTBTransparency = False}
 
     Public LogonUI10x As New Structures.LogonUI10x With {
         .DisableAcrylicBackgroundOnLogon = False, .DisableLogonBackgroundImage = False, .NoLockScreen = False}
@@ -3173,6 +3316,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .StatusFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .FontSubstitute_MSShellDlg = "Microsoft Sans Serif", .FontSubstitute_MSShellDlg2 = "Tahoma",
                 .FontSubstitute_SegoeUI = ""}
+
+    Public AltTab As New Structures.AltTab With {.Enabled = True, .Style = AltTabStyles.Default, .Win10Opacity = 95}
 
     Public CommandPrompt As New Structures.Console With {
                     .Enabled = False,
@@ -4384,6 +4529,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 LogonUIXP.Load(_Def.LogonUIXP)
                 Win32.Load()
                 MetricsFonts.Load(_Def.MetricsFonts)
+                AltTab.Load(_Def.AltTab)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -4583,6 +4729,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Win_11_WinMode_Light= ", My._strIgnore) Then Windows11.WinMode_Light = lin.Remove(0, "*Win_11_WinMode_Light= ".Count)
                     If lin.StartsWith("*Win_11_AppMode_Light= ", My._strIgnore) Then Windows11.AppMode_Light = lin.Remove(0, "*Win_11_AppMode_Light= ".Count)
                     If lin.StartsWith("*Win_11_Transparency= ", My._strIgnore) Then Windows11.Transparency = lin.Remove(0, "*Win_11_Transparency= ".Count)
+                    If lin.StartsWith("*Win_11_IncreaseTBTransparency= ", My._strIgnore) Then Windows11.IncreaseTBTransparency = lin.Remove(0, "*Win_11_IncreaseTBTransparency= ".Count)
                     If lin.StartsWith("*Win_11_Titlebar_Active= ", My._strIgnore) Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Active= ".Count))
                     If lin.StartsWith("*Win_11_Titlebar_Inactive= ", My._strIgnore) Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
                     If lin.StartsWith("*Win_11_StartMenu_Accent= ", My._strIgnore) Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
@@ -4626,6 +4773,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Win_10_WinMode_Light= ", My._strIgnore) Then Windows10.WinMode_Light = lin.Remove(0, "*Win_10_WinMode_Light= ".Count)
                     If lin.StartsWith("*Win_10_AppMode_Light= ", My._strIgnore) Then Windows10.AppMode_Light = lin.Remove(0, "*Win_10_AppMode_Light= ".Count)
                     If lin.StartsWith("*Win_10_Transparency= ", My._strIgnore) Then Windows10.Transparency = lin.Remove(0, "*Win_10_Transparency= ".Count)
+                    If lin.StartsWith("*Win_10_IncreaseTBTransparency= ", My._strIgnore) Then Windows10.IncreaseTBTransparency = lin.Remove(0, "*Win_10_IncreaseTBTransparency= ".Count)
                     If lin.StartsWith("*Win_10_Titlebar_Active= ", My._strIgnore) Then Windows10.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Active= ".Count))
                     If lin.StartsWith("*Win_10_Titlebar_Inactive= ", My._strIgnore) Then Windows10.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
                     If lin.StartsWith("*Win_10_StartMenu_Accent= ", My._strIgnore) Then Windows10.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
@@ -4912,6 +5060,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._strIgnore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
 #End Region
 
+#Region "AltTab"
+                    If lin.StartsWith("*AltTab_Enabled= ", My._strIgnore) Then AltTab.Enabled = lin.Remove(0, "*AltTab_Enabled= ".Count)
+                    If lin.StartsWith("*AltTab_Style= ", My._strIgnore) Then AltTab.Style = lin.Remove(0, "*AltTab_Style= ".Count)
+                    If lin.StartsWith("*AltTab_Win10Opacity= ", My._strIgnore) Then AltTab.Win10Opacity = lin.Remove(0, "*AltTab_Win10Opacity= ".Count)
+#End Region
+
 #Region "Terminals"
 
                     If lin.StartsWith("*Terminal_CMD_Enabled= ", My._strIgnore) Then CommandPrompt.Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
@@ -5174,6 +5328,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                  MetricsFonts.Apply()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Metrics, My.Lang.CP_Error_Metrics, My.Lang.CP_Time_They, sw_all, Not MetricsFonts.Enabled, My.Lang.CP_Skip_Metrics)
 
+                'AltTab
+                Excute(CType(Sub()
+                                 AltTab.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_AltTab, My.Lang.CP_Error_AltTab, My.Lang.CP_Time, sw_all, Not AltTab.Enabled, My.Lang.CP_Skip_AltTab)
+
                 'WallpaperTone
                 Excute(CType(Sub()
                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
@@ -5400,6 +5559,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add(Win32.ToString)
         tx.Add(WindowsEffects.ToString)
         tx.Add(MetricsFonts.ToString)
+        tx.Add(AltTab.ToString)
 
         tx.Add(WallpaperTone_W11.ToString("Win11"))
         tx.Add(WallpaperTone_W10.ToString("Win10"))
@@ -6402,6 +6562,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If Win32 <> DirectCast(obj, CP).Win32 Then _Equals = False
         If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
+        If AltTab <> DirectCast(obj, CP).AltTab Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
         If WallpaperTone_W8 <> DirectCast(obj, CP).WallpaperTone_W8 Then _Equals = False

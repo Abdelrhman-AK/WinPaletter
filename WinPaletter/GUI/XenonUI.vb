@@ -4,6 +4,7 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports MS.Internal.Text.TextInterface
 Imports WinPaletter.XenonCore
 
 Module XenonModule
@@ -3874,18 +3875,25 @@ Public Class XenonWinElement : Inherits ContainerControl
         Start11
         Taskbar11
         ActionCenter11
+        AltTab11
         Start10
         Taskbar10
         ActionCenter10
+        AltTab10
         Start8
         Taskbar8Aero
         Taskbar8Lite
+        AltTab8Aero
+        AltTab8AeroLite
         Start7Aero
         Taskbar7Aero
         Start7Opaque
         Taskbar7Opaque
         Start7Basic
         Taskbar7Basic
+        AltTab7Aero
+        AltTab7Opaque
+        AltTab7Basic
         StartVistaAero
         TaskbarVistaAero
         StartVistaOpaque
@@ -4140,6 +4148,7 @@ Public Class XenonWinElement : Inherits ContainerControl
     Public Property UseWin11ORB_WithWin10 As Boolean = False
     Public Property UseWin11RoundedCorners_WithWin10_Level1 As Boolean = False
     Public Property UseWin11RoundedCorners_WithWin10_Level2 As Boolean = False
+    Public Property Shadow As Boolean = True
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -4259,6 +4268,69 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
 #End Region
 
+            Case Styles.AltTab11
+#Region "Alt+Tab 11"
+                If Not DesignMode Then
+                    G.DrawImage(adaptedBack, Rect)
+                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                End If
+
+                If Transparency Then
+                    If DarkMode Then
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(100, 175, 175, 175)), RRect, Radius, True)
+                    Else
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 185, 185, 185)), RRect, Radius, True)
+                    End If
+
+                    G.FillRoundedRect(Noise, RRect, Radius, True)
+                Else
+                    If DarkMode Then
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(32, 32, 32)), RRect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(65, 65, 65)), RRect, Radius, True)
+                    Else
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(243, 243, 243)), RRect, Radius, True)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(171, 171, 171)), RRect, Radius, True)
+                    End If
+                End If
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding, AppWidth, AppHeight))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding, AppWidth, AppHeight))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    Dim back As Color = If(DarkMode, Color.FromArgb(23, 23, 23), Color.FromArgb(233, 234, 234))
+                    Dim back2 As Color = If(DarkMode, Color.FromArgb(39, 39, 39), Color.FromArgb(255, 255, 255))
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10)
+                        G.DrawRoundedRect(New Pen(Color.FromArgb(75, 182, 237), 3), surround, Radius * 2 + 5 / 2, True)
+                    End If
+
+                    G.FillRoundedRect(New SolidBrush(back), r, Radius * 2, True)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
+
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(150, back2)), New Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4))
+
+                    G.FillRoundedRect(New SolidBrush(back2), New Rectangle(r.X + 1, r.Y + 5 + 20 + 5, r.Width - 2, r.Height - 5 - 20 - 5), Radius * 2, True)
+                Next
+#End Region
+
             Case Styles.Start10
 #Region "Start 10"
                 If Not UseWin11RoundedCorners_WithWin10_Level1 And Not UseWin11RoundedCorners_WithWin10_Level2 Then
@@ -4342,6 +4414,51 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
 #End Region
 
+            Case Styles.AltTab10
+#Region "Alt+Tab 10"
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
+
+                Dim a As Integer = Math.Max(Math.Min(255, (BackColorAlpha / 100) * 255), 0)
+
+                G.FillRectangle(New SolidBrush(Color.FromArgb(a, 23, 23, 23)), RRect)
+
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding, AppWidth, AppHeight))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding, AppWidth, AppHeight))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    Dim back As Color = If(DarkMode, Color.FromArgb(60, 60, 60), Color.FromArgb(255, 255, 255))
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 5, r.Y - 5, r.Width + 10, r.Height + 10)
+                        G.DrawRectangle(New Pen(Color.White, 2), surround)
+                    End If
+
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
+
+                    G.FillRectangle(Brushes.White, New Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4))
+
+                    G.FillRectangle(New SolidBrush(back), New Rectangle(r.X + 1, r.Y + 5 + 20 + 5, r.Width - 2, r.Height - 5 - 20 - 5))
+                Next
+#End Region
+
             Case Styles.Taskbar8Aero
 #Region "Taskbar 8 Aero"
                 If Not DesignMode Then G.DrawImage(adaptedBack, RRect)
@@ -4414,6 +4531,88 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawRectangle(New Pen(Color.FromArgb(100, bc.Dark(0.1))), App2BtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1))), App2BtnRect)
                 G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.AltTab8Aero
+#Region "Alt+Tab 8 Aero"
+                G.FillRectangle(New SolidBrush(BackColor), RRect)
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
+                        G.DrawRectangle(New Pen(Color.White, 2), surround)
+                    End If
+
+                    G.FillRectangle(Brushes.White, r)
+                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                Next
+
+                Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
+                G.DrawString("______", Font, Brushes.White, TextRect, StringAligner(ContentAlignment.MiddleCenter))
+#End Region
+
+            Case Styles.AltTab8AeroLite
+#Region "Alt+Tab 8 Opaque"
+                G.FillRectangle(New SolidBrush(BackColor), RRect)
+
+                G.DrawRectangle(New Pen(LinkColor, 2), RRect)
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
+                        G.DrawRectangle(New Pen(BackColor2, 2), surround)
+                    End If
+
+                    G.FillRectangle(Brushes.White, r)
+                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                Next
+
+                Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
+                G.DrawString("______", Font, New SolidBrush(ForeColor), TextRect, StringAligner(ContentAlignment.MiddleCenter))
 #End Region
 
             Case Styles.Start7Aero
@@ -4562,6 +4761,198 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
                 G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+#End Region
+
+            Case Styles.AltTab7Aero
+#Region "Alt+Tab 7 Aero"
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
+
+                If Shadow And Not DesignMode Then
+                    G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15)
+                End If
+                Dim bk As Bitmap = adaptedBackBlurred
+                Dim inner As New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2)
+                Dim alpha As Single = 1 - BackColorAlpha / 100   'ColorBlurBalance
+                Dim ColBal As Single = Win7ColorBal / 100   'ColorBalance
+                Dim GlowBal As Single = Win7GlowBal / 100   'AfterGlowBalance
+                Dim Color1 As Color = BackColor
+                Dim Color2 As Color = BackColor2
+                G.DrawAeroEffect(RRect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, True)
+                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(200, 25, 25, 25)), RRect, Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(70, 200, 200, 200)), inner, Radius, True)
+
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 200, 200, 200)), surround, 1, True)
+                        G.FillRoundedImg(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
+                        G.FillRoundedImg(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
+
+                        G.DrawRoundedRect(New Pen(Color1), surround, 1, True)
+                        G.DrawRectangle(New Pen(Color.FromArgb(229, 240, 250)), New Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2))
+
+                    End If
+
+                    G.FillRoundedRect(Brushes.White, r, 2, True)
+                    G.DrawRoundedRect(Pens.Black, r, 2, True)
+
+                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+
+                    Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
+
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                Next
+
+                Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
+                G.DrawGlowString(2, "______", Me, Color.Black, Color.FromArgb(185, 225, 225, 225), TextRect, StringAligner(ContentAlignment.MiddleCenter))
+
+#End Region
+
+            Case Styles.AltTab7Opaque
+#Region "Alt+Tab 7 Opaque"
+                If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
+
+                If Shadow And Not DesignMode Then
+                    G.DrawGlow(RRect, Color.FromArgb(150, 0, 0, 0), 5, 15)
+                End If
+                Dim inner As New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2)
+
+                G.FillRoundedRect(New SolidBrush(Color.White), RRect, Radius, True)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * Win7ColorBal / 100, BackColor)), RRect, Radius, True)
+
+                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(200, 25, 25, 25)), RRect, Radius, True)
+                G.DrawRoundedRect(New Pen(Color.FromArgb(70, 200, 200, 200)), inner, Radius, True)
+
+
+                Dim AppHeight As Single = 0.75 * RRect.Height
+                Dim _padding As Integer = (RRect.Height - AppHeight) / 2
+
+                Dim appsNumber As Integer = 3
+                Dim AllAppsWidthWithPadding As Single = RRect.Width - 2 * _padding
+                Dim AppWidth As Single = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + _padding + AppHeight * 2 / 5, AppWidth, AppHeight * 3 / 5))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+
+                    If x = 0 Then
+                        Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
+                        G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 200, 200, 200)), surround, 1, True)
+                        G.FillRoundedImg(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
+                        G.FillRoundedImg(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
+
+                        G.DrawRoundedRect(New Pen(BackColor), surround, 1, True)
+                        G.DrawRectangle(New Pen(Color.FromArgb(229, 240, 250)), New Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2))
+
+                    End If
+
+                    G.FillRoundedRect(Brushes.White, r, 2, True)
+                    G.DrawRoundedRect(Pens.Black, r, 2, True)
+
+                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+
+                    Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
+
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                Next
+
+                Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
+                G.DrawGlowString(2, "______", Me, Color.Black, Color.FromArgb(185, 225, 225, 225), TextRect, StringAligner(ContentAlignment.MiddleCenter))
+
+#End Region
+
+            Case Styles.AltTab7Basic
+#Region "Alt+Tab 7 Basic"
+                Dim Titlebar_Backcolor1 As Color = Color.FromArgb(152, 180, 208)
+                Dim Titlebar_Backcolor2 As Color = Color.FromArgb(186, 210, 234)
+                Dim Titlebar_OuterBorder As Color = Color.FromArgb(52, 52, 52)
+                Dim Titlebar_InnerBorder As Color = Color.FromArgb(255, 255, 255)
+                Dim Titlebar_Turquoise As Color = Color.FromArgb(40, 207, 228)
+                Dim OuterBorder As Color = Color.FromArgb(0, 0, 0)
+                Dim UpperPart As New Rectangle(RRect.X, RRect.Y, RRect.Width + 1, 25)
+                G.SetClip(UpperPart)
+                Dim pth_back As New LinearGradientBrush(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical)
+                Dim pth_line As New LinearGradientBrush(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical)
+                '### Render Titlebar
+                G.FillRectangle(pth_back, RRect)
+                G.DrawRectangle(New Pen(Titlebar_OuterBorder), RRect)
+                G.DrawRectangle(New Pen(Titlebar_InnerBorder), New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2))
+                G.SetClip(New Rectangle(UpperPart.X + UpperPart.Width * 0.75, UpperPart.Y, UpperPart.Width * 0.75, UpperPart.Height))
+                G.DrawRectangle(New Pen(pth_line), New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2))
+                G.ResetClip()
+                G.ExcludeClip(UpperPart)
+                '### Render Rest of Window
+                G.FillRectangle(New SolidBrush(Titlebar_Backcolor2), RRect)
+                G.DrawRectangle(New Pen(Titlebar_Turquoise), New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2))
+                G.DrawRectangle(New Pen(OuterBorder), RRect)
+                G.ResetClip()
+                G.DrawRectangle(New Pen(Color.FromArgb(52, 52, 52)), RRect)
+                G.DrawRectangle(New Pen(Color.FromArgb(255, 225, 225, 225)), New Rectangle(RRect.X + 1, RRect.Y + 1, RRect.Width - 2, RRect.Height - 2))
+
+
+                Dim AppHeight As Single = My.Resources.Win7AltTabBasicButton.Height
+                Dim _padding As Integer = 5
+
+                Dim appsNumber As Integer = 3
+                Dim AppWidth As Single = My.Resources.Win7AltTabBasicButton.Width
+
+                Dim _paddingOuter As Integer = (RRect.Width - AppWidth * appsNumber - _padding * (appsNumber - 1)) / 2
+
+                Dim Rects As New List(Of Rectangle)
+                Rects.Clear()
+
+                For x = 0 To appsNumber - 1
+                    If x = 0 Then
+                        Rects.Add(New Rectangle(RRect.X + _paddingOuter, RRect.Y + RRect.Height - 5 - AppHeight, AppWidth, AppHeight))
+                    Else
+                        Rects.Add(New Rectangle(Rects(x - 1).Right + _padding, RRect.Y + RRect.Height - 5 - AppHeight, AppWidth, AppHeight))
+                    End If
+                Next
+
+                For x = 0 To Rects.Count - 1
+                    Dim r As Rectangle = Rects(x)
+                    If x = 0 Then G.DrawImage(My.Resources.Win7AltTabBasicButton, r)
+
+                    Dim imgrect As New Rectangle(r.X + (r.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, r.Y + (r.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+
+                    G.DrawImage(My.Resources.ActiveApp_Taskbar, imgrect)
+                Next
+
+                Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30)
+                G.DrawString("______", Font, Brushes.Black, TextRect, StringAligner(ContentAlignment.MiddleCenter))
 #End Region
 
             Case Styles.StartVistaAero
@@ -4720,7 +5111,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Catch : End Try
 
         Try
-            If Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Then
+            If Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Or Style = Styles.AltTab7Aero Then
                 adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
@@ -4729,11 +5120,11 @@ Public Class XenonWinElement : Inherits ContainerControl
     Sub BlurBack()
         Try
             If Style = Styles.Taskbar11 Or Style = Styles.Taskbar10 Or Style = Styles.Start11 Or Style = Styles.Start10 Or
-                        Style = Styles.ActionCenter11 Or Style = Styles.ActionCenter10 Then
+                        Style = Styles.ActionCenter11 Or Style = Styles.ActionCenter10 Or Style = Styles.AltTab11 Then
 
                 If Transparency Then adaptedBackBlurred = New Bitmap(adaptedBack).Blur(BlurPower)
 
-            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Then
+            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Or Style = Styles.AltTab7Aero Then
                 adaptedBackBlurred = New Bitmap(adaptedBack).Blur(1)
             End If
         Catch : End Try
@@ -4741,13 +5132,13 @@ Public Class XenonWinElement : Inherits ContainerControl
 
     Sub NoiseBack()
 
-        If Style = Styles.ActionCenter11 Or Style = Styles.Start11 Or Style = Styles.Taskbar11 Then
+        If Style = Styles.ActionCenter11 Or Style = Styles.Start11 Or Style = Styles.Taskbar11 Or Style = Styles.AltTab11 Then
             If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
 
         ElseIf Style = Styles.ActionCenter10 Or Style = Styles.Start10 Or Style = Styles.Taskbar10 Then
             If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
 
-        ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Then
+        ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.AltTab7Aero Or Style = Styles.AltTab7Opaque Then
             Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
             Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
 

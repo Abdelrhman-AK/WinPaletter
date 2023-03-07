@@ -152,11 +152,14 @@ Public Class MainFrm
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 185
+                                taskbar.BlurPower = 12
                             Else
                                 taskbar.BackColorAlpha = 75
+                                taskbar.BlurPower = 12
                             End If
                         Else
                             taskbar.BackColorAlpha = 75
+                            taskbar.BlurPower = 12
                             start.BackColorAlpha = 75
                         End If
 
@@ -205,10 +208,13 @@ Public Class MainFrm
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 210
+                                taskbar.BlurPower = 12
                             Else
                                 taskbar.BackColorAlpha = 180
+                                taskbar.BlurPower = 12
                             End If
                         Else
+                            taskbar.BlurPower = 12
                             taskbar.BackColorAlpha = 180
                             start.BackColorAlpha = 180
                         End If
@@ -418,13 +424,15 @@ Public Class MainFrm
                 start.Transparency = [CP].Windows10.Transparency
                 ActionCenter.Transparency = [CP].Windows10.Transparency
 
+                taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
+
                 If [CP].Windows10.Transparency Then
                     If Not [CP].Windows10.WinMode_Light Then
-                        taskbar.BackColorAlpha = 150
+                        taskbar.BackColorAlpha = If(Not CP.Windows10.IncreaseTBTransparency, 150, 75)
                         start.BackColorAlpha = 150
                         ActionCenter.BackColorAlpha = 150
                     Else
-                        taskbar.BackColorAlpha = 200
+                        taskbar.BackColorAlpha = If(Not CP.Windows10.IncreaseTBTransparency, 200, 125)
                         start.BackColorAlpha = 200
                         ActionCenter.BackColorAlpha = 200
                     End If
@@ -953,7 +961,9 @@ Public Class MainFrm
     Sub SetToClassicRaisedPanel([Panel] As RetroPanelRaised, [CP] As CP)
         [Panel].BackColor = [CP].Win32.ButtonFace
         [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonLight = [CP].Win32.ButtonLight
         [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ButtonDkShadow = [CP].Win32.ButtonDkShadow
         [Panel].ForeColor = [CP].Win32.TitleText
     End Sub
 
@@ -1240,6 +1250,7 @@ Public Class MainFrm
                 If ExplorerPatcher.IsAllowed Then
 
                     With My.EP
+
                         If Not .UseTaskbar10 Then
                             taskbar.BlurPower = 12
                             taskbar.Height = 42
@@ -1299,7 +1310,7 @@ Public Class MainFrm
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
-                taskbar.BlurPower = 12
+                taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
                 '########################
                 start.BlurPower = 7
                 start.NoisePower = 0.2
@@ -1474,6 +1485,7 @@ Public Class MainFrm
         W10_WinMode_Toggle.Checked = Not [CP].Windows10.WinMode_Light
         W10_AppMode_Toggle.Checked = Not [CP].Windows10.AppMode_Light
         W10_Transparency_Toggle.Checked = [CP].Windows10.Transparency
+        W10_TBTransparency_Toggle.Checked = [CP].Windows10.IncreaseTBTransparency
         W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentonTitlebars
         Select Case [CP].Windows10.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
@@ -2624,6 +2636,13 @@ Public Class MainFrm
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
         If _Shown Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
+        End If
+    End Sub
+
+    Private Sub W10_TBTransparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TBTransparency_Toggle.CheckedChanged
+        If _Shown Then
+            CP.Windows10.IncreaseTBTransparency = sender.Checked
             If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
@@ -4164,14 +4183,14 @@ Public Class MainFrm
         WinEffecter.ShowDialog()
     End Sub
 
-    Dim reg As String = "{056440FD-8568-48e7-A632-72157243B55B}"
+    Private Sub XenonButton32_Click(sender As Object, e As EventArgs) Handles XenonButton32.Click
+        If PreviewConfig <> WinVer.WXP AndAlso PreviewConfig <> WinVer.WVista Then
+            AltTabEditor.ShowDialog()
+        Else
+            If PreviewConfig = WinVer.WXP Then MsgBox(String.Format(My.Lang.AltTab_Unsupported, My.Lang.OS_WinXP), MsgBoxStyle.Exclamation)
+            If PreviewConfig = WinVer.WVista Then MsgBox(String.Format(My.Lang.AltTab_Unsupported, My.Lang.OS_WinVista), MsgBoxStyle.Exclamation)
+        End If
 
-    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
-        My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\" & reg, True).CreateSubKey("InprocServer32", True).SetValue("", "", Microsoft.Win32.RegistryValueKind.String)
-    End Sub
-
-    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
-        My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree(reg, False)
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
