@@ -7,6 +7,8 @@ Public Class CursorsStudio
     Private ReadOnly AnimateList As New List(Of CursorControl)
 
     Sub CursorCP_to_Cursor([CursorControl] As CursorControl, [Cursor] As CP.Structures.Cursor)
+        [CursorControl].Prop_ArrowStyle = [Cursor].ArrowStyle
+        [CursorControl].Prop_CircleStyle = [Cursor].CircleStyle
         [CursorControl].Prop_PrimaryColor1 = [Cursor].PrimaryColor1
         [CursorControl].Prop_PrimaryColor2 = [Cursor].PrimaryColor2
         [CursorControl].Prop_PrimaryColorGradient = [Cursor].PrimaryColorGradient
@@ -35,6 +37,8 @@ Public Class CursorsStudio
 
     Function Cursor_to_CursorCP([CursorControl] As CursorControl) As CP.Structures.Cursor
         Dim [Cursor] As CP.Structures.Cursor
+        [Cursor].ArrowStyle = [CursorControl].Prop_ArrowStyle
+        [Cursor].CircleStyle = [CursorControl].Prop_CircleStyle
         [Cursor].PrimaryColor1 = [CursorControl].Prop_PrimaryColor1
         [Cursor].PrimaryColor2 = [CursorControl].Prop_PrimaryColor2
         [Cursor].PrimaryColorGradient = [CursorControl].Prop_PrimaryColorGradient
@@ -173,53 +177,37 @@ Public Class CursorsStudio
     Sub Clicked(sender As Object, e As MouseEventArgs)
         _SelectedControl = DirectCast(sender, CursorControl)
         ApplyColorsFromCursor(_SelectedControl)
-
-        XenonGroupBox2.Enabled = True
-        XenonGroupBox11.Enabled = True
         XenonButton1.Enabled = True
-
-        If _SelectedControl.Prop_Cursor = CursorType.AppLoading Or _SelectedControl.Prop_Cursor = CursorType.Busy Then
-
-            If _SelectedControl.Prop_Cursor = CursorType.Busy Then
-                XenonGroupBox2.Enabled = False
-                XenonGroupBox11.Enabled = False
-            End If
-
-            XenonGroupBox6.Enabled = True
-            XenonGroupBox12.Enabled = True
-        Else
-            XenonGroupBox6.Enabled = False
-            XenonGroupBox12.Enabled = False
-        End If
-
     End Sub
 
     Sub ApplyColorsFromCursor([CursorControl] As CursorControl)
         With [CursorControl]
-            TaskbarFrontAndFoldersOnStart_picker.BackColor = .Prop_PrimaryColor1
-            XenonGroupBox3.BackColor = .Prop_PrimaryColor2
+            XenonComboBox5.SelectedIndex = .Prop_ArrowStyle
+            XenonComboBox6.SelectedIndex = .Prop_CircleStyle
+
+            PrimaryColor1.BackColor = .Prop_PrimaryColor1
+            PrimaryColor2.BackColor = .Prop_PrimaryColor2
             XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
             XenonComboBox1.SelectedItem = ReturnStringFromGradientMode(.Prop_PrimaryColorGradientMode)
             XenonCheckBox5.Checked = .Prop_PrimaryNoise
             XenonNumericUpDown2.Text = .Prop_PrimaryNoiseOpacity * 100
 
-            XenonGroupBox5.BackColor = .Prop_SecondaryColor1
-            XenonGroupBox4.BackColor = .Prop_SecondaryColor2
+            SecondaryColor1.BackColor = .Prop_SecondaryColor1
+            SecondaryColor2.BackColor = .Prop_SecondaryColor2
             XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
             XenonComboBox2.SelectedItem = ReturnStringFromGradientMode(.Prop_SecondaryColorGradientMode)
             XenonCheckBox3.Checked = .Prop_SecondaryNoise
             XenonNumericUpDown1.Text = .Prop_SecondaryNoiseOpacity * 100
-            'XenonNumericUpDown3.Value = .Prop_LineThickness * 10
 
-            XenonGroupBox10.BackColor = .Prop_LoadingCircleBack1
-            XenonGroupBox9.BackColor = .Prop_LoadingCircleBack2
+            CircleColor1.BackColor = .Prop_LoadingCircleBack1
+            CircleColor2.BackColor = .Prop_LoadingCircleBack2
             XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
             XenonComboBox4.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
             XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
             XenonNumericUpDown6.Text = .Prop_LoadingCircleBackNoiseOpacity * 100
 
-            XenonGroupBox8.BackColor = .Prop_LoadingCircleHot1
-            XenonGroupBox7.BackColor = .Prop_LoadingCircleHot2
+            LoadingColor1.BackColor = .Prop_LoadingCircleHot1
+            LoadingColor2.BackColor = .Prop_LoadingCircleHot2
             XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
             XenonComboBox3.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
             XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
@@ -230,30 +218,33 @@ Public Class CursorsStudio
 
     Sub ApplyColorsToPreview([CursorControl] As CursorControl)
         With [CursorControl]
-            .Prop_PrimaryColor1 = TaskbarFrontAndFoldersOnStart_picker.BackColor
-            .Prop_PrimaryColor2 = XenonGroupBox3.BackColor
+            .Prop_ArrowStyle = XenonComboBox5.SelectedIndex
+            .Prop_CircleStyle = XenonComboBox6.SelectedIndex
+
+            .Prop_PrimaryColor1 = PrimaryColor1.BackColor
+            .Prop_PrimaryColor2 = PrimaryColor2.BackColor
             .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
             .Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox1.SelectedItem)
             .Prop_PrimaryNoise = XenonCheckBox5.Checked
             .Prop_PrimaryNoiseOpacity = Val(XenonNumericUpDown2.Text) / 100
 
-            .Prop_SecondaryColor1 = XenonGroupBox5.BackColor
-            .Prop_SecondaryColor2 = XenonGroupBox4.BackColor
+            .Prop_SecondaryColor1 = SecondaryColor1.BackColor
+            .Prop_SecondaryColor2 = SecondaryColor2.BackColor
             .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
             .Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox2.SelectedItem)
             .Prop_SecondaryNoise = XenonCheckBox3.Checked
             .Prop_SecondaryNoiseOpacity = Val(XenonNumericUpDown1.Text) / 100
             '.Prop_LineThickness = XenonNumericUpDown3.Value / 10
 
-            .Prop_LoadingCircleBack1 = XenonGroupBox10.BackColor
-            .Prop_LoadingCircleBack2 = XenonGroupBox9.BackColor
+            .Prop_LoadingCircleBack1 = CircleColor1.BackColor
+            .Prop_LoadingCircleBack2 = CircleColor2.BackColor
             .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
             .Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(XenonComboBox4.SelectedItem)
             .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
             .Prop_LoadingCircleBackNoiseOpacity = Val(XenonNumericUpDown6.Text) / 100
 
-            .Prop_LoadingCircleHot1 = XenonGroupBox8.BackColor
-            .Prop_LoadingCircleHot2 = XenonGroupBox7.BackColor
+            .Prop_LoadingCircleHot1 = LoadingColor1.BackColor
+            .Prop_LoadingCircleHot2 = LoadingColor2.BackColor
             .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
             .Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(XenonComboBox3.SelectedItem)
             .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
@@ -262,7 +253,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles TaskbarFrontAndFoldersOnStart_picker.Click
+    Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles PrimaryColor1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -287,7 +278,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles XenonGroupBox3.Click
+    Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles PrimaryColor2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -311,7 +302,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles XenonGroupBox5.Click
+    Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles SecondaryColor1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -335,7 +326,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles XenonGroupBox4.Click
+    Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles SecondaryColor2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -359,7 +350,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles XenonGroupBox10.Click
+    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles CircleColor1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -404,7 +395,6 @@ Public Class CursorsStudio
 
         _SelectedControl.Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
-
     End Sub
 
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
@@ -485,7 +475,7 @@ Public Class CursorsStudio
         Timer1.Start()
     End Sub
 
-    Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles XenonGroupBox9.Click
+    Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles CircleColor2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -509,7 +499,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles XenonGroupBox8.Click
+    Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles LoadingColor1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -533,7 +523,7 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles XenonGroupBox7.Click
+    Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles LoadingColor2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -701,6 +691,14 @@ Public Class CursorsStudio
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadFromCP(CPx)
             CPx.Dispose()
+
+            For Each x In FlowLayoutPanel1.Controls.OfType(Of CursorControl)
+                If x._Focused Then
+                    ApplyColorsFromCursor(x)
+                    Exit For
+                End If
+            Next
+
         End If
     End Sub
 
@@ -708,6 +706,13 @@ Public Class CursorsStudio
         Dim CPx As New CP(CP.CP_Type.Registry)
         LoadFromCP(CPx)
         CPx.Dispose()
+
+        For Each x In FlowLayoutPanel1.Controls.OfType(Of CursorControl)
+            If x._Focused Then
+                ApplyColorsFromCursor(x)
+                Exit For
+            End If
+        Next
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -730,6 +735,13 @@ Public Class CursorsStudio
 
         LoadFromCP(_Def)
         _Def.Dispose()
+
+        For Each x In FlowLayoutPanel1.Controls.OfType(Of CursorControl)
+            If x._Focused Then
+                ApplyColorsFromCursor(x)
+                Exit For
+            End If
+        Next
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
@@ -756,5 +768,19 @@ Public Class CursorsStudio
 
     Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub XenonComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox5.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
+        _SelectedControl.Prop_ArrowStyle = XenonComboBox5.SelectedIndex
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox6.SelectedIndexChanged
+        If Not _Shown Then Exit Sub
+
+        _SelectedControl.Prop_CircleStyle = XenonComboBox6.SelectedIndex
+        _SelectedControl.Invalidate()
     End Sub
 End Class

@@ -95,16 +95,19 @@ Namespace NativeMethods
         End Function
 
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As UInteger, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Boolean, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Boolean, lpvParam As Integer, fuWinIni As Integer) As Integer
 
         Class Fixer
-
             ''' <summary>
             ''' It is used outside global user32 to fix issue of not remembring settings
             ''' </summary>
             Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Boolean, fuWinIni As Integer) As Integer
+            Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As Integer, fuWinIni As Integer) As Integer
+            Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, ByRef lpvParam As UInteger, fuWinIni As Integer) As Integer
+
         End Class
 
         ''' <summary>
@@ -395,6 +398,24 @@ Namespace NativeMethods
                 ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
                 ''' </summary>
                 SETMENUFADE = &H1013
+
+                ''' <summary>
+                ''' <b>Retrieves the time, in milliseconds, that the system waits before displaying a shortcut menu when the mouse cursor is over a submenu item.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a DWORD variable that receives the time of the delay.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  Not supported.</i>
+                ''' </summary>
+                GETMENUSHOWDELAY = &H6A
+
+                ''' <summary>
+                ''' <b>Sets the time, in milliseconds, that the system waits before displaying a shortcut menu when the mouse cursor is over a submenu item.</b>
+                ''' <br></br>
+                ''' <br></br> • The uiParam parameter must point to a DWORD variable that sets the time of the delay.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  Not supported.</i>
+                ''' </summary>
+                SETMENUSHOWDELAY = &H6B
 
                 ''' <summary>
                 ''' <b>Determines whether the selection fade effect is enabled.</b>

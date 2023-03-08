@@ -102,19 +102,11 @@ Public Module Paths
 
     End Function
 
-    Public Function Draw([Cursor] As CursorType,
-                         [PrimaryColor1] As Color, [PrimaryColor2] As Color, [PrimaryColorGradient] As Boolean, [PrimaryColorGradientMode] As GradientMode,
-                         [SecondaryColor1] As Color, [SecondaryColor2] As Color, [SecondaryColorGradient] As Boolean, [SecondaryColorGradientMode] As GradientMode,
-                         [LoadingCircleBack1] As Color, [LoadingCircleBack2] As Color, [LoadingCircleBackGradient] As Boolean, [LoadingCircleBackGradientMode] As GradientMode,
-                         [LoadingCircleHot1] As Color, [LoadingCircleHot2] As Color, [LoadingCircleHotGradient] As Boolean, [LoadingCircleHotGradientMode] As GradientMode,
-                         [PrimaryNoise] As Boolean, [PrimaryNoiseOpacity] As Single, [SecondaryNoise] As Boolean, [SecondaryNoiseOpacity] As Single,
-                         [LoadingCircleBackNoise] As Boolean, [LoadingCircleBackNoiseOpacity] As Single, [LoadingCircleHotNoise] As Boolean, [LoadingCircleHotNoiseOpacity] As Single,
-                         Optional [LineThickness] As Single = 1, Optional Scale As Single = 1, Optional ByVal _Angle As Single = 180) As Bitmap
-
-
-        Dim b As New Bitmap(32 * Scale, 32 * Scale, PixelFormat.Format32bppPArgb)
+    Public Function Draw([CursorOptions] As CursorOptions) As Bitmap
+        Dim b As New Bitmap(32 * [CursorOptions].Scale, 32 * [CursorOptions].Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
-        G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighQuality
+
         G.Clear(Color.Transparent)
 
 #Region "Rectangles Helpers"
@@ -122,622 +114,645 @@ Public Module Paths
         Dim _Help As New Rectangle(11, 6, b.Width, b.Height)
         Dim _Busy As New Rectangle(0, 0, 22, 22)
         Dim _CurRect As New Rectangle(0, 8, b.Width, b.Height)
-        Dim _LoadRect As New Rectangle(6, 0, 22 * Scale, 22 * Scale)
+        Dim _LoadRect As New Rectangle(6, 0, 22 * [CursorOptions].Scale, 22 * [CursorOptions].Scale)
         Dim _Pin As New Rectangle(15, 11, b.Width, b.Height)
         Dim _Person As New Rectangle(19, 17, b.Width, b.Height)
 #End Region
 
-        Select Case [Cursor]
+        Select Case [CursorOptions].[Cursor]
             Case CursorType.Arrow
 #Region "Arrow"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
 
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, DefaultCursor(_Arrow, Scale))
+                G.FillPath(BB, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, DefaultCursor(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
+                G.DrawPath(PL, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Help
 #Region "Help"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
                 Dim BB_H, BL_H As Brush
-                If [PrimaryColorGradient] Then
-                    BB_H = ReturnGradience(_Help, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB_H = ReturnGradience(_Help, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB_H = New SolidBrush([PrimaryColor1])
+                    BB_H = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL_H = ReturnGradience(_Help, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL_H = ReturnGradience(_Help, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL_H = New SolidBrush([SecondaryColor1])
+                    BL_H = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL_H As New Pen(BL_H, [LineThickness])
+                Dim PL_H As New Pen(BL_H, [CursorOptions].LineThickness)
 
 
-                G.FillPath(BB, DefaultCursor(_Arrow, Scale))
+                G.FillPath(BB, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, DefaultCursor(_Arrow, Scale))
-                End If
-
-
-                G.DrawPath(PL, DefaultCursor(_Arrow, Scale))
-
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
 
-                G.FillPath(BB_H, Help(_Help, Scale))
+                G.DrawPath(PL, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Help(_Help, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL_H, Help(_Help, Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Help(_Help, Scale))
+                G.FillPath(BB_H, Help(_Help, [CursorOptions].Scale))
+
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Help(_Help, [CursorOptions].Scale))
+                End If
+
+                G.DrawPath(PL_H, Help(_Help, [CursorOptions].Scale))
+
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Help(_Help, [CursorOptions].Scale))
                 End If
 
 #End Region
             Case CursorType.Busy
 #Region "Busy"
                 Dim BC, BH As Brush
-                If [LoadingCircleBackGradient] Then
-                    BC = ReturnGradience(_Arrow, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode], _Angle)
+                If [CursorOptions].[LoadingCircleBackGradient] Then
+                    BC = ReturnGradience(_Arrow, [CursorOptions].[LoadingCircleBack1], [CursorOptions].[LoadingCircleBack2], [CursorOptions].[LoadingCircleBackGradientMode], [CursorOptions]._Angle)
                 Else
-                    BC = New SolidBrush([LoadingCircleBack1])
+                    BC = New SolidBrush([CursorOptions].[LoadingCircleBack1])
                 End If
-                If [LoadingCircleHotGradient] Then
-                    BH = ReturnGradience(_Arrow, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode], _Angle)
+                If [CursorOptions].[LoadingCircleHotGradient] Then
+                    BH = ReturnGradience(_Arrow, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
                 Else
-                    BH = New SolidBrush([LoadingCircleHot1])
+                    BH = New SolidBrush([CursorOptions].[LoadingCircleHot1])
                 End If
 
-                G.FillPath(BC, Busy(_Busy, Scale))
+                If [CursorOptions].CircleStyle = CircleStyle.Classic Then
 
-                If [LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleBackNoiseOpacity]))
-                    G.FillPath(Noise, Busy(_Busy, Scale))
+                    Dim Bx As Brush
+                    If [CursorOptions].[LoadingCircleHotGradient] Then
+                        Bx = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
+                    Else
+                        Bx = New SolidBrush([CursorOptions].[LoadingCircleHot1])
+                    End If
+                    Dim PL As New Pen(Bx, [CursorOptions].LineThickness)
+
+                    Dim Bx2 As Brush
+                    If [CursorOptions].[LoadingCircleHotGradient] Then
+                        Bx2 = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
+                    Else
+                        Bx2 = New SolidBrush([CursorOptions].[LoadingCircleHot1])
+                    End If
+                    Dim PL2 As New Pen(Bx2, [CursorOptions].LineThickness)
+
+                    G.FillPath(BC, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PL2, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PL, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                Else
+                    G.FillPath(BC, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.FillPath(BC, BusyLoader(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BH, BusyLoader(_Busy, _Angle, Scale))
+                If [CursorOptions].[LoadingCircleBackNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                    G.FillPath(Noise, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                End If
 
-                If [LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleHotNoiseOpacity]))
-                    G.FillPath(Noise, BusyLoader(_Busy, _Angle, Scale))
+                If [CursorOptions].[LoadingCircleHotNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                    G.FillPath(Noise, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.AppLoading
 #Region "AppLoading"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode], _Angle)
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode], [CursorOptions]._Angle)
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode], _Angle)
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode], [CursorOptions]._Angle)
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
                 Dim BC, BH As Brush
-                If [LoadingCircleBackGradient] Then
-                    BC = ReturnGradience(_LoadRect, [LoadingCircleBack1], [LoadingCircleBack2], [LoadingCircleBackGradientMode], _Angle)
+                If [CursorOptions].[LoadingCircleBackGradient] Then
+                    BC = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleBack1], [CursorOptions].[LoadingCircleBack2], [CursorOptions].[LoadingCircleBackGradientMode], [CursorOptions]._Angle)
                 Else
-                    BC = New SolidBrush([LoadingCircleBack1])
+                    BC = New SolidBrush([CursorOptions].[LoadingCircleBack1])
                 End If
-                If [LoadingCircleHotGradient] Then
-                    BH = ReturnGradience(_LoadRect, [LoadingCircleHot1], [LoadingCircleHot2], [LoadingCircleHotGradientMode], _Angle)
+                If [CursorOptions].[LoadingCircleHotGradient] Then
+                    BH = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
                 Else
-                    BH = New SolidBrush([LoadingCircleHot1])
+                    BH = New SolidBrush([CursorOptions].[LoadingCircleHot1])
                 End If
 
-                G.FillPath(BB, DefaultCursor(_CurRect, Scale))
+                G.FillPath(BB, DefaultCursor(_CurRect, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, DefaultCursor(_CurRect, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, DefaultCursor(_CurRect, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, DefaultCursor(_CurRect, Scale))
+                G.DrawPath(PL, DefaultCursor(_CurRect, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), DefaultCursor(_CurRect, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), DefaultCursor(_CurRect, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BC, AppLoading(_LoadRect, Scale))
+                G.FillPath(BC, AppLoading(_LoadRect, [CursorOptions].CircleStyle, [CursorOptions].Scale))
 
-                If [LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleBackNoiseOpacity]))
-                    G.FillPath(Noise, AppLoading(_LoadRect, Scale))
+                If [CursorOptions].[LoadingCircleBackNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                    G.FillPath(Noise, AppLoading(_LoadRect, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BH, AppLoaderCircle(_LoadRect, _Angle, Scale))
+                G.FillPath(BH, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
 
-                If [LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([LoadingCircleHotNoiseOpacity]))
-                    G.FillPath(Noise, AppLoaderCircle(_LoadRect, _Angle, Scale))
+                If [CursorOptions].[LoadingCircleHotNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                    G.FillPath(Noise, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                 End If
 
 #End Region
             Case CursorType.None
 #Region "None"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
 
-                G.FillPath(BB, NoneBackground(_Arrow, Scale))
+                G.FillPath(BB, NoneBackground(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, NoneBackground(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NoneBackground(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BL, None(_Arrow, Scale))
+                G.FillPath(BL, None(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.FillPath(Noise, None(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.FillPath(Noise, None(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Move
 #Region "Move"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, Move(_Arrow, Scale))
+                G.FillPath(BB, Move(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Move(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Move(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Move(_Arrow, Scale))
+                G.DrawPath(PL, Move(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Move(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Move(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Up
 #Region "Up"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, Up(_Arrow, Scale))
+                G.FillPath(BB, Up(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Up(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Up(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Up(_Arrow, Scale))
+                G.DrawPath(PL, Up(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Up(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Up(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.NS
 #Region "NS"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, NS(_Arrow, Scale))
+                G.FillPath(BB, NS(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, NS(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NS(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, NS(_Arrow, Scale))
+                G.DrawPath(PL, NS(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), NS(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), NS(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.EW
 #Region "EW"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, EW(_Arrow, Scale))
+                G.FillPath(BB, EW(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, EW(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, EW(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, EW(_Arrow, Scale))
+                G.DrawPath(PL, EW(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), EW(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), EW(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.NESW
 #Region "NESW"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, NESW(_Arrow, Scale))
+                G.FillPath(BB, NESW(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, NESW(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NESW(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, NESW(_Arrow, Scale))
+                G.DrawPath(PL, NESW(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), NESW(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), NESW(_Arrow, [CursorOptions].Scale))
                 End If
 
 #End Region
             Case CursorType.NWSE
 #Region "NWSE"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, NWSE(_Arrow, Scale))
+                G.FillPath(BB, NWSE(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, NWSE(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, NWSE(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, NWSE(_Arrow, Scale))
+                G.DrawPath(PL, NWSE(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), NWSE(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), NWSE(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Pen
 #Region "Pen"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, PenBackground(_Arrow, Scale))
+                G.FillPath(BB, PenBackground(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, PenBackground(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, PenBackground(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Pen(_Arrow, Scale))
+                G.DrawPath(PL, Pen(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Pen(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Pen(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Link
 #Region "Link"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Pin
 #Region "Pin"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
                 Dim BB_P, BL_P As Brush
-                If [PrimaryColorGradient] Then
-                    BB_P = ReturnGradience(_Pin, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB_P = ReturnGradience(_Pin, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB_P = New SolidBrush([PrimaryColor1])
+                    BB_P = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL_P = ReturnGradience(_Pin, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL_P = ReturnGradience(_Pin, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL_P = New SolidBrush([SecondaryColor1])
+                    BL_P = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
 
-                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BB_P, Pin(_Pin, Scale))
+                G.FillPath(BB_P, Pin(_Pin, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Pin(_Pin, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Pin(_Pin, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BL_P, Pin_CenterPoint(_Pin, Scale))
+                G.FillPath(BL_P, Pin_CenterPoint(_Pin, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Pin_CenterPoint(_Pin, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Pin_CenterPoint(_Pin, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, Scale))
+                G.DrawPath(New Pen(BL_P, 2), Pin(_Pin, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Pin(_Pin, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Pin(_Pin, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Person
 #Region "Person"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
                 Dim BB_P, BL_P As Brush
-                If [PrimaryColorGradient] Then
-                    BB_P = ReturnGradience(_Person, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB_P = ReturnGradience(_Person, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB_P = New SolidBrush([PrimaryColor1])
+                    BB_P = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL_P = ReturnGradience(_Person, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL_P = ReturnGradience(_Person, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL_P = New SolidBrush([SecondaryColor1])
+                    BL_P = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
 
-                G.FillPath(BB, Hand(_Arrow, Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Hand(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BB_P, Person(_Person, Scale))
+                G.FillPath(BB_P, Person(_Person, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Person(_Person, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Person(_Person, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(New Pen(BL_P, 2), Person(_Person, Scale))
+                G.DrawPath(New Pen(BL_P, 2), Person(_Person, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Person(_Person, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Person(_Person, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.IBeam
 #Region "IBeam"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, IBeam(_Arrow, Scale))
+                G.FillPath(BB, IBeam(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, IBeam(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, IBeam(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, IBeam(_Arrow, Scale))
+                G.DrawPath(PL, IBeam(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), IBeam(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), IBeam(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Cross
 #Region "Cross"
                 Dim BB, BL As Brush
-                If [PrimaryColorGradient] Then
-                    BB = ReturnGradience(_Arrow, [PrimaryColor1], [PrimaryColor2], [PrimaryColorGradientMode])
+                If [CursorOptions].[PrimaryColorGradient] Then
+                    BB = ReturnGradience(_Arrow, [CursorOptions].[PrimaryColor1], [CursorOptions].[PrimaryColor2], [CursorOptions].[PrimaryColorGradientMode])
                 Else
-                    BB = New SolidBrush([PrimaryColor1])
+                    BB = New SolidBrush([CursorOptions].[PrimaryColor1])
                 End If
-                If [SecondaryColorGradient] Then
-                    BL = ReturnGradience(_Arrow, [SecondaryColor1], [SecondaryColor2], [SecondaryColorGradientMode])
+                If [CursorOptions].[SecondaryColorGradient] Then
+                    BL = ReturnGradience(_Arrow, [CursorOptions].[SecondaryColor1], [CursorOptions].[SecondaryColor2], [CursorOptions].[SecondaryColorGradientMode])
                 Else
-                    BL = New SolidBrush([SecondaryColor1])
+                    BL = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
-                Dim PL As New Pen(BL, [LineThickness])
+                Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, Cross(_Arrow, Scale))
+                G.FillPath(BB, Cross(_Arrow, [CursorOptions].Scale))
 
-                If [PrimaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Cross(_Arrow, Scale))
+                If [CursorOptions].[PrimaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
+                    G.FillPath(Noise, Cross(_Arrow, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Cross(_Arrow, Scale))
+                G.DrawPath(PL, Cross(_Arrow, [CursorOptions].Scale))
 
-                If [SecondaryNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, LineThickness), Cross(_Arrow, Scale))
+                If [CursorOptions].[SecondaryNoise] Then
+                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Cross(_Arrow, [CursorOptions].Scale))
                 End If
 #End Region
         End Select
@@ -749,44 +764,113 @@ Public Module Paths
         G.Dispose()
     End Function
 
-    Public Function DefaultCursor([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Enum ArrowStyle
+        Aero
+        Modern
+        Classic
+    End Enum
+    Enum CircleStyle
+        Aero
+        Dot
+        Classic
+    End Enum
+    Public Function DefaultCursor([Rectangle] As Rectangle, Style As ArrowStyle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
         Dim R As New Rectangle([Rectangle].X, [Rectangle].Y, 12, 18)
 
-        '#### Left Border
-        Dim LLine1 As New Point(R.X, R.Y)
-        Dim LLine2 As New Point(R.X, R.Y + R.Height - 2)
-        path.AddLine(LLine1, LLine2)
+        Select Case Style
+            Case ArrowStyle.Aero
+                '#### Left Border
+                Dim LLine1 As New Point(R.X, R.Y)
+                Dim LLine2 As New Point(R.X, R.Y + R.Height - 2)
+                path.AddLine(LLine1, LLine2)
 
-        '#### Left Down Border
-        Dim DLLine1 As Point = LLine2 + New Point(1, 0)
-        Dim DLLine2 As New Point(DLLine1.X + 3, DLLine1.Y - 3)
-        path.AddLine(DLLine1, DLLine2)
+                '#### Left Down Border
+                Dim DLLine1 As Point = LLine2 + New Point(1, 0)
+                Dim DLLine2 As New Point(DLLine1.X + 3, DLLine1.Y - 3)
+                path.AddLine(DLLine1, DLLine2)
 
-        '#### Left Down Handle Border
-        Dim DLHLine1 As Point = DLLine2
-        Dim DLHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y + 5) 'R.Height)
-        path.AddLine(DLHLine1, DLHLine2)
+                '#### Left Down Handle Border
+                Dim DLHLine1 As Point = DLLine2
+                Dim DLHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y + 5)
+                path.AddLine(DLHLine1, DLHLine2)
 
-        '#### Down Handle Border
-        Dim DHLine1 As Point = DLHLine2
-        Dim DHLine2 As New Point(DHLine1.X + 2, DHLine1.Y - 1)
-        'path.AddArc(DHLine1.X, DHLine1.Y, 4, 2, 180, -90)
+                '#### Down Handle Border
+                Dim DHLine1 As Point = DLHLine2
+                Dim DHLine2 As New Point(DHLine1.X + 2, DHLine1.Y - 1)
 
-        '#### Right Down Handle Border
-        Dim DRHLine1 As Point = DHLine2
-        Dim DRHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y - 1)
-        path.AddLine(DRHLine1, DRHLine2)
+                '#### Right Down Handle Border
+                Dim DRHLine1 As Point = DHLine2
+                Dim DRHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y - 1)
+                path.AddLine(DRHLine1, DRHLine2)
 
-        '#### Right Down Border
-        Dim DRLine1 As Point = DRHLine2
-        Dim DRLine2 As New Point(R.X + R.Width - 1, DLHLine1.Y - 1)
-        path.AddLine(DRLine1, DRLine2)
+                '#### Right Down Border
+                Dim DRLine1 As Point = DRHLine2
+                Dim DRLine2 As New Point(R.X + R.Width - 1, DLHLine1.Y - 1)
+                path.AddLine(DRLine1, DRLine2)
 
-        '#### Right Border
-        Dim RLine1 As Point = DRLine2 + New Point(0, -1)
-        Dim RLine2 As Point = LLine1
-        path.AddLine(RLine1, RLine2)
+                '#### Right Border
+                Dim RLine1 As Point = DRLine2 + New Point(0, -1)
+                Dim RLine2 As Point = LLine1
+                path.AddLine(RLine1, RLine2)
+
+            Case ArrowStyle.Classic
+                '#### Left Border
+                Dim LLine1 As New Point(R.X, R.Y)
+                Dim LLine2 As New Point(R.X, R.Y + R.Height - 2)
+                path.AddLine(LLine1, LLine2)
+
+                '#### Left Down Border
+                Dim DLLine1 As Point = LLine2 + New Point(1, -1)
+                Dim DLLine2 As New Point(DLLine1.X + 3, DLLine1.Y - 3)
+                path.AddLine(DLLine1, DLLine2)
+
+                '#### Left Down Handle Border
+                Dim DLHLine1 As Point = DLLine2
+                Dim DLHLine2 As New Point(DLHLine1.X + 4, DLHLine1.Y + 8)
+                path.AddLine(DLHLine1, DLHLine2)
+
+                '#### Down Handle Border
+                Dim DHLine1 As Point = DLHLine2
+                Dim DHLine2 As New Point(DHLine1.X + 2, DHLine1.Y - 1)
+
+                '#### Right Down Handle Border
+                Dim DRHLine1 As Point = DHLine2
+                Dim DRHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y - 1)
+                path.AddLine(DRHLine1, DRHLine2)
+
+                '#### Right Down Border
+                Dim DRLine1 As Point = DRHLine2
+                Dim DRLine2 As New Point(R.X + R.Width - 1, DRLine1.Y)
+                path.AddLine(DRLine1, DRLine2)
+
+                '#### Right Border
+                Dim RLine1 As Point = DRLine2 + New Point(-1, -1)
+                Dim RLine2 As Point = LLine1
+                path.AddLine(RLine1, RLine2)
+
+            Case ArrowStyle.Modern
+                '#### Left Border
+                Dim LLine1 As New Point(R.X, R.Y)
+                Dim LLine2 As New Point(R.X, R.Y + R.Height - 2)
+                path.AddLine(LLine1, LLine2)
+
+                '#### Left Down Border
+                Dim DLLine1 As Point = LLine2 + New Point(1, 0)
+                Dim DLLine2 As New Point(DLLine1.X + 4, DLLine1.Y - 4)
+                path.AddLine(DLLine1, DLLine2)
+
+                '#### Right Down Border
+                Dim DRLine1 As Point = DLLine2
+                Dim DRLine2 As New Point(R.X + R.Width - 1, DRLine1.Y)
+                path.AddLine(DRLine1, DRLine2)
+
+                '#### Right Border
+                Dim RLine1 As Point = DRLine2 + New Point(0, -1)
+                Dim RLine2 As Point = LLine1
+                path.AddLine(RLine1, RLine2)
+
+        End Select
 
         'path.CloseFigure()
 
@@ -798,15 +882,41 @@ Public Module Paths
 
     End Function
 
-    Public Function Busy([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function Busy([Rectangle] As Rectangle, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].Width = 22
         [Rectangle].Height = 22
-
         Dim path As New GraphicsPath
-        path.AddEllipse([Rectangle].X, [Rectangle].Y, 22, 22)
-        Dim R As New Rectangle([Rectangle].X + 5, [Rectangle].Y + 5, 12, 12)
-        path.AddEllipse(R)
-        path.CloseFigure()
+
+        Select Case Style
+            Case CircleStyle.Aero
+                path.AddEllipse([Rectangle].X, [Rectangle].Y, 22, 22)
+                Dim R As New Rectangle([Rectangle].X + 5, [Rectangle].Y + 5, 12, 12)
+                path.AddEllipse(R)
+                path.CloseFigure()
+
+            Case CircleStyle.Classic
+                path.AddLine(New Point([Rectangle].X + 12, [Rectangle].Y + 0), New Point([Rectangle].X + 6, [Rectangle].Y + 0))
+                path.AddLine(New Point([Rectangle].X + 6, [Rectangle].Y + 0), New Point([Rectangle].X + 6, [Rectangle].Y + 2))
+                path.AddLine(New Point([Rectangle].X + 6, [Rectangle].Y + 2), New Point([Rectangle].X + 12, [Rectangle].Y + 2))
+
+                path.AddLine(New Point([Rectangle].X + 7, [Rectangle].Y + 2), New Point([Rectangle].X + 7, [Rectangle].Y + 7))
+                path.AddLine(New Point([Rectangle].X + 7, [Rectangle].Y + 7), New Point([Rectangle].X + 11, [Rectangle].Y + 10))
+                path.AddLine(New Point([Rectangle].X + 11, [Rectangle].Y + 11), New Point([Rectangle].X + 7, [Rectangle].Y + 14))
+                path.AddLine(New Point([Rectangle].X + 7, [Rectangle].Y + 14), New Point([Rectangle].X + 7, [Rectangle].Y + 19))
+
+                path.AddLine(New Point([Rectangle].X + 12, [Rectangle].Y + 19), New Point([Rectangle].X + 6, [Rectangle].Y + 19))
+                path.AddLine(New Point([Rectangle].X + 6, [Rectangle].Y + 19), New Point([Rectangle].X + 6, [Rectangle].Y + 21))
+                path.AddLine(New Point([Rectangle].X + 6, [Rectangle].Y + 21), New Point([Rectangle].X + 12, [Rectangle].Y + 21))
+
+                path.AddPath(MirrorRight(path), False)
+
+            Case CircleStyle.Dot
+                path.AddEllipse([Rectangle].X, [Rectangle].Y, 22, 22)
+                Dim R As New Rectangle([Rectangle].X + 5, [Rectangle].Y + 5, 12, 12)
+                path.AddEllipse(R)
+                path.CloseFigure()
+
+        End Select
 
         Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -816,7 +926,7 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function BusyLoader([Rectangle] As Rectangle, Angle As Single, Optional Scale As Single = 1) As GraphicsPath
+    Public Function BusyLoader([Rectangle] As Rectangle, Angle As Single, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].X += 0
         [Rectangle].Y += 0
 
@@ -832,13 +942,35 @@ Public Module Paths
         Dim arcLength = 70
         Dim outerR = innerR + thickness
 
-        Dim outerRect = [Rectangle]
-        Dim innerRect = R
+        Select Case Style
+            Case CircleStyle.Aero
+                Dim outerRect = [Rectangle]
+                Dim innerRect = R
+                path.AddArc(outerRect, Angle, arcLength)
+                path.AddArc(innerRect, Angle + arcLength, -arcLength)
+                path.CloseFigure()
 
-        path.AddArc(outerRect, Angle, arcLength)
-        path.AddArc(innerRect, Angle + arcLength, -arcLength)
+            Case CircleStyle.Classic
 
-        path.CloseFigure()
+                'path.AddLine(New Point([Rectangle].X + 10, [Rectangle].Y + 13), New Point([Rectangle].X + 13, [Rectangle].Y + 16))
+
+                Dim P1 As New Point([Rectangle].X + 12, [Rectangle].Y + 19)
+                Dim P2 As Point = P1 + New Point(-2, -2)
+
+                path.AddLine(P1, P2)
+
+
+
+                'path.AddPath(MirrorRight(path), False)
+
+            Case CircleStyle.Dot
+                Dim x As Single = 0.8 * CPoint.X + (0.65 * R.Width * CSng(Math.Cos((Angle / 180) * Math.PI)))
+                Dim y As Single = 0.8 * CPoint.Y + (0.65 * R.Height * CSng(Math.Sin((Angle / 180) * Math.PI)))
+                x = Math.Max([Rectangle].Left, Math.Min(x, [Rectangle].Right))
+                y = Math.Max([Rectangle].Top, Math.Min(y, [Rectangle].Bottom))
+                path.AddEllipse(New Rectangle(x, y, 5, 5))
+
+        End Select
 
         Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -848,15 +980,29 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function AppLoading([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function AppLoading([Rectangle] As Rectangle, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].Width = 16
         [Rectangle].Height = 16
-
         Dim path As New GraphicsPath
-        path.AddEllipse([Rectangle])
-        Dim R As New Rectangle([Rectangle].X + 4, [Rectangle].Y + 4, 8, 8)
-        path.AddEllipse(R)
-        path.CloseFigure()
+
+        Select Case Style
+            Case CircleStyle.Aero
+                path.AddEllipse([Rectangle])
+                Dim R As New Rectangle([Rectangle].X + 4, [Rectangle].Y + 4, 8, 8)
+                path.AddEllipse(R)
+                path.CloseFigure()
+
+            Case CircleStyle.Classic
+
+
+            Case CircleStyle.Dot
+                path.AddEllipse([Rectangle])
+                Dim R As New Rectangle([Rectangle].X + 4, [Rectangle].Y + 4, 8, 8)
+                path.AddEllipse(R)
+                path.CloseFigure()
+
+        End Select
+
 
         Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -866,7 +1012,7 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function AppLoaderCircle([Rectangle] As Rectangle, Angle As Single, Optional Scale As Single = 1) As GraphicsPath
+    Public Function AppLoaderCircle([Rectangle] As Rectangle, Angle As Single, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].Width = 16
         [Rectangle].Height = 16
 
@@ -879,11 +1025,25 @@ Public Module Paths
         Dim arcLength = 70
         Dim outerR = innerR + thickness
 
-        Dim outerRect = [Rectangle]
-        Dim innerRect = R
+        Select Case Style
+            Case CircleStyle.Aero
+                Dim outerRect = [Rectangle]
+                Dim innerRect = R
+                path.AddArc(outerRect, Angle, arcLength)
+                path.AddArc(innerRect, Angle + arcLength, -arcLength)
 
-        path.AddArc(outerRect, Angle, arcLength)
-        path.AddArc(innerRect, Angle + arcLength, -arcLength)
+            Case CircleStyle.Classic
+
+
+            Case CircleStyle.Dot
+                Dim x As Single = 0.85 * CPoint.X + (0.65 * R.Width * CSng(Math.Cos((Angle / 180) * Math.PI)))
+                Dim y As Single = 0.85 * CPoint.Y + (0.65 * R.Height * CSng(Math.Sin((Angle / 180) * Math.PI)))
+                x = Math.Max([Rectangle].Left, Math.Min(x, [Rectangle].Right))
+                y = Math.Max([Rectangle].Top, Math.Min(y, [Rectangle].Bottom))
+                path.AddEllipse(New Rectangle(x, y, 5, 5))
+
+        End Select
+
 
         path.CloseFigure()
 
@@ -1555,12 +1715,80 @@ Public Module Paths
 
 End Module
 
+Public Class CursorOptions
+
+    Sub New(Optional Cursor As CP.Structures.Cursor = Nothing)
+        If Cursor <> Nothing Then
+            ArrowStyle = Cursor.ArrowStyle
+            CircleStyle = Cursor.CircleStyle
+            PrimaryColor1 = Cursor.PrimaryColor1
+            PrimaryColor2 = Cursor.PrimaryColor2
+            PrimaryColorGradient = Cursor.PrimaryColorGradient
+            PrimaryColorGradientMode = Cursor.PrimaryColorGradientMode
+            SecondaryColor1 = Cursor.SecondaryColor1
+            SecondaryColor2 = Cursor.SecondaryColor2
+            SecondaryColorGradient = Cursor.SecondaryColorGradient
+            SecondaryColorGradientMode = Cursor.SecondaryColorGradientMode
+            LoadingCircleBack1 = Cursor.LoadingCircleBack1
+            LoadingCircleBack2 = Cursor.LoadingCircleBack2
+            LoadingCircleBackGradient = Cursor.LoadingCircleBackGradient
+            LoadingCircleBackGradientMode = Cursor.LoadingCircleBackGradientMode
+            LoadingCircleHot1 = Cursor.LoadingCircleHot1
+            LoadingCircleHot2 = Cursor.LoadingCircleHot2
+            LoadingCircleHotGradient = Cursor.LoadingCircleHotGradient
+            LoadingCircleHotGradientMode = Cursor.LoadingCircleHotGradientMode
+            PrimaryNoise = Cursor.PrimaryColorNoise
+            PrimaryNoiseOpacity = Cursor.PrimaryColorNoiseOpacity
+            SecondaryNoise = Cursor.SecondaryColorNoise
+            SecondaryNoiseOpacity = Cursor.SecondaryColorNoiseOpacity
+            LoadingCircleBackNoise = Cursor.LoadingCircleBackNoise
+            LoadingCircleBackNoiseOpacity = Cursor.LoadingCircleBackNoiseOpacity
+            LoadingCircleHotNoise = Cursor.LoadingCircleHotNoise
+            LoadingCircleHotNoiseOpacity = Cursor.LoadingCircleHotNoiseOpacity
+        End If
+    End Sub
+
+    Public [Cursor] As CursorType
+    Public ArrowStyle As Paths.ArrowStyle
+    Public CircleStyle As Paths.CircleStyle
+    Public [PrimaryColor1] As Color
+    Public [PrimaryColor2] As Color
+    Public [PrimaryColorGradient] As Boolean
+    Public [PrimaryColorGradientMode] As GradientMode
+    Public [SecondaryColor1] As Color
+    Public [SecondaryColor2] As Color
+    Public [SecondaryColorGradient] As Boolean
+    Public [SecondaryColorGradientMode] As GradientMode
+    Public [LoadingCircleBack1] As Color
+    Public [LoadingCircleBack2] As Color
+    Public [LoadingCircleBackGradient] As Boolean
+    Public [LoadingCircleBackGradientMode] As GradientMode
+    Public [LoadingCircleHot1] As Color
+    Public [LoadingCircleHot2] As Color
+    Public [LoadingCircleHotGradient] As Boolean
+    Public [LoadingCircleHotGradientMode] As GradientMode
+    Public [PrimaryNoise] As Boolean
+    Public [PrimaryNoiseOpacity] As Single
+    Public [SecondaryNoise] As Boolean
+    Public [SecondaryNoiseOpacity] As Single
+    Public [LoadingCircleBackNoise] As Boolean
+    Public [LoadingCircleBackNoiseOpacity] As Single
+    Public [LoadingCircleHotNoise] As Boolean
+    Public [LoadingCircleHotNoiseOpacity] As Single
+    Public [LineThickness] As Single = 1
+    Public Scale As Single = 1
+    Public _Angle As Single = 180
+
+End Class
+
 Public Class CursorControl : Inherits ContainerControl
     Sub New()
 
     End Sub
 
     Public Property Prop_Cursor As Paths.CursorType = CursorType.Arrow
+    Public Property Prop_ArrowStyle As Paths.ArrowStyle = ArrowStyle.Aero
+    Public Property Prop_CircleStyle As Paths.CircleStyle = CircleStyle.Aero
     Public Property Prop_PrimaryColor1 As Color = Color.White
     Public Property Prop_PrimaryColor2 As Color = Color.White
     Public Property Prop_PrimaryColorGradient As Boolean = False
@@ -1593,7 +1821,7 @@ Public Class CursorControl : Inherits ContainerControl
 
     Private _Shown As Boolean = False
 
-    Dim _Focused As Boolean = False
+    Public _Focused As Boolean = False
 
     Dim bmp As Bitmap
 
@@ -1629,16 +1857,41 @@ Public Class CursorControl : Inherits ContainerControl
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
 
+        Dim CurOptions As New CursorOptions With {
+            .Cursor = Prop_Cursor,
+            .ArrowStyle = Prop_ArrowStyle,
+            .CircleStyle = Prop_CircleStyle,
+            .PrimaryColor1 = Prop_PrimaryColor1,
+            .PrimaryColor2 = Prop_PrimaryColor2,
+            .PrimaryColorGradient = Prop_PrimaryColorGradient,
+            .PrimaryColorGradientMode = Prop_PrimaryColorGradientMode,
+            .SecondaryColor1 = Prop_SecondaryColor1,
+            .SecondaryColor2 = Prop_SecondaryColor2,
+            .SecondaryColorGradient = Prop_SecondaryColorGradient,
+            .SecondaryColorGradientMode = Prop_SecondaryColorGradientMode,
+            .LoadingCircleBack1 = Prop_LoadingCircleBack1,
+            .LoadingCircleBack2 = Prop_LoadingCircleBack2,
+            .LoadingCircleBackGradient = Prop_LoadingCircleBackGradient,
+            .LoadingCircleBackGradientMode = Prop_LoadingCircleBackGradientMode,
+            .LoadingCircleHot1 = Prop_LoadingCircleHot1,
+            .LoadingCircleHot2 = Prop_LoadingCircleHot2,
+            .LoadingCircleHotGradient = Prop_LoadingCircleHotGradient,
+            .LoadingCircleHotGradientMode = Prop_LoadingCircleHotGradientMode,
+            .PrimaryNoise = Prop_PrimaryNoise,
+            .PrimaryNoiseOpacity = Prop_PrimaryNoiseOpacity,
+            .SecondaryNoise = Prop_SecondaryNoise,
+            .SecondaryNoiseOpacity = Prop_SecondaryNoiseOpacity,
+            .LoadingCircleBackNoise = Prop_LoadingCircleBackNoise,
+            .LoadingCircleBackNoiseOpacity = Prop_LoadingCircleBackNoiseOpacity,
+            .LoadingCircleHotNoise = Prop_LoadingCircleHotNoise,
+            .LoadingCircleHotNoiseOpacity = Prop_LoadingCircleHotNoiseOpacity,
+            .LineThickness = 1,
+            .Scale = Prop_Scale,
+            ._Angle = Angle}
+
         bmp = New Bitmap(32 * Prop_Scale, 32 * Prop_Scale, PixelFormat.Format32bppPArgb)
 
-        bmp = Draw(Prop_Cursor,
-                   Prop_PrimaryColor1, Prop_PrimaryColor2, Prop_PrimaryColorGradient, Prop_PrimaryColorGradientMode,
-                   Prop_SecondaryColor1, Prop_SecondaryColor2, Prop_SecondaryColorGradient, Prop_SecondaryColorGradientMode,
-                   Prop_LoadingCircleBack1, Prop_LoadingCircleBack2, Prop_LoadingCircleBackGradient, Prop_LoadingCircleBackGradientMode,
-                   Prop_LoadingCircleHot1, Prop_LoadingCircleHot2, Prop_LoadingCircleHotGradient, Prop_LoadingCircleHotGradientMode,
-                   Prop_PrimaryNoise, Prop_PrimaryNoiseOpacity, Prop_SecondaryNoise, Prop_SecondaryNoiseOpacity,
-                   Prop_LoadingCircleBackNoise, Prop_LoadingCircleBackNoiseOpacity, Prop_LoadingCircleHotNoise, Prop_LoadingCircleHotNoiseOpacity,
-                   1, Prop_Scale, Angle)
+        bmp = Draw(CurOptions)
 
         DoubleBuffered = True
 
@@ -1646,7 +1899,7 @@ Public Class CursorControl : Inherits ContainerControl
 
         Dim CenterRect As New Rectangle(MainRect.X + (MainRect.Width - bmp.Width) / 2,
                                         MainRect.Y + (MainRect.Height - bmp.Height) / 2,
-                                         bmp.Width, bmp.Height)
+                                        bmp.Width, bmp.Height)
 
         e.Graphics.Clear(GetParentColor)
         e.Graphics.FillRoundedRect(New SolidBrush(If(_Focused, Style.Colors.Back_Checked, Style.Colors.Back)), MainRect)

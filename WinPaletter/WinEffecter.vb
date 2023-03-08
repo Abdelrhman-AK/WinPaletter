@@ -16,6 +16,7 @@ Public Class WinEffecter
             XenonCheckBox6.Checked = .MenuAnimation
             If .MenuFade = CP.MenuAnimType.Fade Then XenonComboBox1.SelectedIndex = 0 Else XenonComboBox1.SelectedIndex = 1
             XenonCheckBox5.Checked = .MenuSelectionFade
+            XenonTrackbar1.Value = .MenuShowDelay
             XenonCheckBox8.Checked = .ComboboxAnimation
             XenonCheckBox7.Checked = .ListBoxSmoothScrolling
             XenonCheckBox9.Checked = .TooltipAnimation
@@ -35,6 +36,7 @@ Public Class WinEffecter
             .MenuAnimation = XenonCheckBox6.Checked
             If XenonComboBox1.SelectedIndex = 0 Then .MenuFade = CP.MenuAnimType.Fade Else .MenuFade = CP.MenuAnimType.Scroll
             .MenuSelectionFade = XenonCheckBox5.Checked
+            .MenuShowDelay = XenonTrackbar1.Value
             .ComboboxAnimation = XenonCheckBox8.Checked
             .ListBoxSmoothScrolling = XenonCheckBox7.Checked
             .TooltipAnimation = XenonCheckBox9.Checked
@@ -102,5 +104,14 @@ Public Class WinEffecter
 
     Private Sub EffectsEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles EffectsEnabled.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub MD_Click(sender As Object, e As EventArgs) Handles MD.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+        MD.Text = sender.Value
     End Sub
 End Class

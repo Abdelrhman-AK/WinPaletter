@@ -1475,6 +1475,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public MenuAnimation As Boolean
             Public MenuFade As MenuAnimType
             Public MenuSelectionFade As Boolean
+            Public MenuShowDelay As UInteger        'Microsoft uses this as DWORD, which its equivalent is UInteger, not Integer
 
             Public ComboboxAnimation As Boolean
             Public ListBoxSmoothScrolling As Boolean
@@ -1556,6 +1557,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Try
 
                 Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUSHOWDELAY, 0, MenuShowDelay, SPIF.None) <> 1 Then MenuShowDelay = _DefEffects.MenuShowDelay
+                Catch
+                    MenuShowDelay = _DefEffects.MenuShowDelay
+                End Try
+
+                Try
                     If Fixer.SystemParametersInfo(SPI.Effects.GETCOMBOBOXANIMATION, 0, i, SPIF.None) = 1 Then
                         ComboboxAnimation = i
                     Else
@@ -1634,6 +1641,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SendChange) 'use uiParam not pvParam
                     SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.SendChange) 'use uiParam not pvParam
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SendChange)
@@ -1642,6 +1650,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, RegistryValueKind.String)
 
                     'ShowWinContentDrag should be re-written in registry with string format as SystemParametersInfo looses its effect after logoff here
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger, RegistryValueKind.String)
@@ -1671,6 +1680,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_WindowUIEffects= " & WindowUIEffects)
                 tx.Add("*WinEffects_MenuAnimation= " & MenuAnimation)
                 tx.Add("*WinEffects_MenuFade= " & MenuFade)
+                tx.Add("*WinEffects_MenuShowDelay= " & MenuShowDelay)
                 tx.Add("*WinEffects_MenuSelectionFade= " & MenuSelectionFade)
                 tx.Add("*WinEffects_ComboBoxAnimation= " & ComboboxAnimation)
                 tx.Add("*WinEffects_ListboxSmoothScrolling= " & ListBoxSmoothScrolling)
@@ -2922,6 +2932,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End Structure
 
         Structure Cursor : Implements ICloneable
+            Public ArrowStyle As Paths.ArrowStyle
+            Public CircleStyle As Paths.CircleStyle
             Public PrimaryColor1 As Color
             Public PrimaryColor2 As Color
             Public PrimaryColorGradient As Boolean
@@ -2953,6 +2965,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim r As RegistryKey = rMain
                 r.CreateSubKey([subKey])
                 r = r.OpenSubKey([subKey])
+
+                ArrowStyle = r.GetValue("ArrowStyle", Paths.ArrowStyle.Aero)
+                CircleStyle = r.GetValue("CircleStyle", Paths.CircleStyle.Aero)
 
                 PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
                 PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
@@ -2993,6 +3008,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 r = rMain.CreateSubKey(subKey)
                 With r
+                    .SetValue("ArrowStyle", [Cursor].ArrowStyle, RegistryValueKind.QWord)
+                    .SetValue("CircleStyle", [Cursor].CircleStyle, RegistryValueKind.QWord)
+
                     .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.QWord)
                     .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.QWord)
                     .SetValue("PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger, RegistryValueKind.QWord)
@@ -3029,6 +3047,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim [Cursor] As New Cursor
 
                     For Each lin As String In tx
+                        If lin.StartsWith("ArrowStyle= ", My._strIgnore) Then [Cursor].ArrowStyle = lin.Remove(0, "ArrowStyle= ".Count)
+                        If lin.StartsWith("CircleStyle= ", My._strIgnore) Then [Cursor].CircleStyle = lin.Remove(0, "CircleStyle= ".Count)
                         If lin.StartsWith("PrimaryColor1= ", My._strIgnore) Then [Cursor].PrimaryColor1 = Color.FromArgb(lin.Remove(0, "PrimaryColor1= ".Count))
                         If lin.StartsWith("PrimaryColor2= ", My._strIgnore) Then [Cursor].PrimaryColor2 = Color.FromArgb(lin.Remove(0, "PrimaryColor2= ".Count))
                         If lin.StartsWith("PrimaryColorGradient= ", My._strIgnore) Then [Cursor].PrimaryColorGradient = lin.Remove(0, "PrimaryColorGradient= ".Count)
@@ -3063,6 +3083,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add(String.Format("<{0}>", Signature))
+                tx.Add(String.Format("*Cursor_{0}_ArrowStyle= {1}", Signature, ArrowStyle))
+                tx.Add(String.Format("*Cursor_{0}_CircleStyle= {1}", Signature, CircleStyle))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColor1= {1}", Signature, PrimaryColor1.ToArgb))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColor2= {1}", Signature, PrimaryColor2.ToArgb))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColorGradient= {1}", Signature, PrimaryColorGradient))
@@ -3284,6 +3306,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .MenuAnimation = True,
         .MenuSelectionFade = True,
         .MenuFade = MenuAnimType.Fade,
+        .MenuShowDelay = 400,
         .ComboboxAnimation = True,
         .ListBoxSmoothScrolling = True,
         .TooltipAnimation = True,
@@ -5027,6 +5050,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*WinEffects_WindowUIEffects= ", My._strIgnore) Then WindowsEffects.WindowUIEffects = lin.Remove(0, "*WinEffects_WindowUIEffects= ".Count)
                     If lin.StartsWith("*WinEffects_MenuAnimation= ", My._strIgnore) Then WindowsEffects.MenuAnimation = lin.Remove(0, "*WinEffects_MenuAnimation= ".Count)
                     If lin.StartsWith("*WinEffects_MenuFade= ", My._strIgnore) Then WindowsEffects.MenuFade = lin.Remove(0, "*WinEffects_MenuFade= ".Count)
+                    If lin.StartsWith("*WinEffects_MenuShowDelay= ", My._strIgnore) Then WindowsEffects.MenuShowDelay = lin.Remove(0, "*WinEffects_MenuShowDelay= ".Count)
                     If lin.StartsWith("*WinEffects_MenuSelectionFade= ", My._strIgnore) Then WindowsEffects.MenuSelectionFade = lin.Remove(0, "*WinEffects_MenuSelectionFade= ".Count)
                     If lin.StartsWith("*WinEffects_ComboBoxAnimation= ", My._strIgnore) Then WindowsEffects.ComboboxAnimation = lin.Remove(0, "*WinEffects_ComboBoxAnimation= ".Count)
                     If lin.StartsWith("*WinEffects_ListboxSmoothScrolling= ", My._strIgnore) Then WindowsEffects.ListBoxSmoothScrolling = lin.Remove(0, "*WinEffects_ListboxSmoothScrolling= ".Count)
@@ -5975,200 +5999,80 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Select Case [Type]
                     Case CursorType.Arrow
-#Region "Arrow"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Arrow.PrimaryColor1, .Cursor_Arrow.PrimaryColor2, .Cursor_Arrow.PrimaryColorGradient, .Cursor_Arrow.PrimaryColorGradientMode,
-                               .Cursor_Arrow.SecondaryColor1, .Cursor_Arrow.SecondaryColor2, .Cursor_Arrow.SecondaryColorGradient, .Cursor_Arrow.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Arrow.PrimaryColorNoise, .Cursor_Arrow.PrimaryColorNoiseOpacity, .Cursor_Arrow.SecondaryColorNoise, .Cursor_Arrow.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Arrow) With {.Cursor = CursorType.Arrow, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1, 1)
-#End Region
+
                     Case CursorType.Help
-#Region "Help"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Help.PrimaryColor1, .Cursor_Help.PrimaryColor2, .Cursor_Help.PrimaryColorGradient, .Cursor_Help.PrimaryColorGradientMode,
-                               .Cursor_Help.SecondaryColor1, .Cursor_Help.SecondaryColor2, .Cursor_Help.SecondaryColorGradient, .Cursor_Help.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Help.PrimaryColorNoise, .Cursor_Help.PrimaryColorNoiseOpacity, .Cursor_Help.SecondaryColorNoise, .Cursor_Help.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Help) With {.Cursor = CursorType.Help, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1, 1)
-#End Region
+
                     Case CursorType.None
-#Region "None"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_None.PrimaryColor1, .Cursor_None.PrimaryColor2, .Cursor_None.PrimaryColorGradient, .Cursor_None.PrimaryColorGradientMode,
-                               .Cursor_None.SecondaryColor1, .Cursor_None.SecondaryColor2, .Cursor_None.SecondaryColorGradient, .Cursor_None.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_None.PrimaryColorNoise, .Cursor_None.PrimaryColorNoiseOpacity, .Cursor_None.SecondaryColorNoise, .Cursor_None.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_None) With {.Cursor = CursorType.None, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
+
                     Case CursorType.Move
-#Region "Move"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Move.PrimaryColor1, .Cursor_Move.PrimaryColor2, .Cursor_Move.PrimaryColorGradient, .Cursor_Move.PrimaryColorGradientMode,
-                               .Cursor_Move.SecondaryColor1, .Cursor_Move.SecondaryColor2, .Cursor_Move.SecondaryColorGradient, .Cursor_Move.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Move.PrimaryColorNoise, .Cursor_Move.PrimaryColorNoiseOpacity, .Cursor_Move.SecondaryColorNoise, .Cursor_Move.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Move) With {.Cursor = CursorType.Move, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
-#End Region
+
                     Case CursorType.Up
-#Region "Up"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Up.PrimaryColor1, .Cursor_Up.PrimaryColor2, .Cursor_Up.PrimaryColorGradient, .Cursor_Up.PrimaryColorGradientMode,
-                               .Cursor_Up.SecondaryColor1, .Cursor_Up.SecondaryColor2, .Cursor_Up.SecondaryColorGradient, .Cursor_Up.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Up.PrimaryColorNoise, .Cursor_Up.PrimaryColorNoiseOpacity, .Cursor_Up.SecondaryColorNoise, .Cursor_Up.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Up) With {.Cursor = CursorType.Up, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(4 * i), 1)
-#End Region
+
                     Case CursorType.NS
-#Region "NS"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NS.PrimaryColor1, .Cursor_NS.PrimaryColor2, .Cursor_NS.PrimaryColorGradient, .Cursor_NS.PrimaryColorGradientMode,
-                               .Cursor_NS.SecondaryColor1, .Cursor_NS.SecondaryColor2, .Cursor_NS.SecondaryColorGradient, .Cursor_NS.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NS.PrimaryColorNoise, .Cursor_NS.PrimaryColorNoiseOpacity, .Cursor_NS.SecondaryColorNoise, .Cursor_NS.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_NS) With {.Cursor = CursorType.NS, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(11 * i))
-#End Region
+
                     Case CursorType.EW
-#Region "EW"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_EW.PrimaryColor1, .Cursor_EW.PrimaryColor2, .Cursor_EW.PrimaryColorGradient, .Cursor_EW.PrimaryColorGradientMode,
-                               .Cursor_EW.SecondaryColor1, .Cursor_EW.SecondaryColor2, .Cursor_EW.SecondaryColorGradient, .Cursor_EW.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_EW.PrimaryColorNoise, .Cursor_EW.PrimaryColorNoiseOpacity, .Cursor_EW.SecondaryColorNoise, .Cursor_EW.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_EW) With {.Cursor = CursorType.EW, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + 11 * i, 1 + 4 * i)
-#End Region
+
                     Case CursorType.NESW
-#Region "NESW"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NESW.PrimaryColor1, .Cursor_NESW.PrimaryColor2, .Cursor_NESW.PrimaryColorGradient, .Cursor_NESW.PrimaryColorGradientMode,
-                               .Cursor_NESW.SecondaryColor1, .Cursor_NESW.SecondaryColor2, .Cursor_NESW.SecondaryColorGradient, .Cursor_NESW.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NESW.PrimaryColorNoise, .Cursor_NESW.PrimaryColorNoiseOpacity, .Cursor_NESW.SecondaryColorNoise, .Cursor_NESW.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_NESW) With {.Cursor = CursorType.NESW, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
+
                     Case CursorType.NWSE
-#Region "NWSE"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_NWSE.PrimaryColor1, .Cursor_NWSE.PrimaryColor2, .Cursor_NWSE.PrimaryColorGradient, .Cursor_NWSE.PrimaryColorGradientMode,
-                               .Cursor_NWSE.SecondaryColor1, .Cursor_NWSE.SecondaryColor2, .Cursor_NWSE.SecondaryColorGradient, .Cursor_NWSE.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_NWSE.PrimaryColorNoise, .Cursor_NWSE.PrimaryColorNoiseOpacity, .Cursor_NWSE.SecondaryColorNoise, .Cursor_NWSE.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_NWSE) With {.Cursor = CursorType.NWSE, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(8 * i), 1 + CInt(8 * i))
-#End Region
+
                     Case CursorType.Pen
-#Region "Pen"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Pen.PrimaryColor1, .Cursor_Pen.PrimaryColor2, .Cursor_Pen.PrimaryColorGradient, .Cursor_Pen.PrimaryColorGradientMode,
-                               .Cursor_Pen.SecondaryColor1, .Cursor_Pen.SecondaryColor2, .Cursor_Pen.SecondaryColorGradient, .Cursor_Pen.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pen.PrimaryColorNoise, .Cursor_Pen.PrimaryColorNoiseOpacity, .Cursor_Pen.SecondaryColorNoise, .Cursor_Pen.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Pen) With {.Cursor = CursorType.Pen, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1, 1)
-#End Region
+
                     Case CursorType.Link
-#Region "Link"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Link.PrimaryColor1, .Cursor_Link.PrimaryColor2, .Cursor_Link.PrimaryColorGradient, .Cursor_Link.PrimaryColorGradientMode,
-                               .Cursor_Link.SecondaryColor1, .Cursor_Link.SecondaryColor2, .Cursor_Link.SecondaryColorGradient, .Cursor_Link.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Link.PrimaryColorNoise, .Cursor_Link.PrimaryColorNoiseOpacity, .Cursor_Link.SecondaryColorNoise, .Cursor_Link.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Link) With {.Cursor = CursorType.Link, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
+
                     Case CursorType.Pin
-#Region "Pin"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Pin.PrimaryColor1, .Cursor_Pin.PrimaryColor2, .Cursor_Pin.PrimaryColorGradient, .Cursor_Pin.PrimaryColorGradientMode,
-                               .Cursor_Pin.SecondaryColor1, .Cursor_Pin.SecondaryColor2, .Cursor_Pin.SecondaryColorGradient, .Cursor_Pin.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Pin.PrimaryColorNoise, .Cursor_Pin.PrimaryColorNoiseOpacity, .Cursor_Pin.SecondaryColorNoise, .Cursor_Pin.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Pin) With {.Cursor = CursorType.Pin, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
+
                     Case CursorType.Person
-#Region "Person"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Person.PrimaryColor1, .Cursor_Person.PrimaryColor2, .Cursor_Person.PrimaryColorGradient, .Cursor_Person.PrimaryColorGradientMode,
-                               .Cursor_Person.SecondaryColor1, .Cursor_Person.SecondaryColor2, .Cursor_Person.SecondaryColorGradient, .Cursor_Person.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Person.PrimaryColorNoise, .Cursor_Person.PrimaryColorNoiseOpacity, .Cursor_Person.SecondaryColorNoise, .Cursor_Person.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Person) With {.Cursor = CursorType.Person, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(6 * i), 1)
-#End Region
+
                     Case CursorType.IBeam
-#Region "IBeam"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_IBeam.PrimaryColor1, .Cursor_IBeam.PrimaryColor2, .Cursor_IBeam.PrimaryColorGradient, .Cursor_IBeam.PrimaryColorGradientMode,
-                               .Cursor_IBeam.SecondaryColor1, .Cursor_IBeam.SecondaryColor2, .Cursor_IBeam.SecondaryColorGradient, .Cursor_IBeam.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_IBeam.PrimaryColorNoise, .Cursor_IBeam.PrimaryColorNoiseOpacity, .Cursor_IBeam.SecondaryColorNoise, .Cursor_IBeam.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_IBeam) With {.Cursor = CursorType.IBeam, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(4 * i), 1 + CInt(9 * i))
-#End Region
+
                     Case CursorType.Cross
-#Region "Cross"
-                        With [CP]
-                            bmp = Draw([Type],
-                               .Cursor_Cross.PrimaryColor1, .Cursor_Cross.PrimaryColor2, .Cursor_Cross.PrimaryColorGradient, .Cursor_Cross.PrimaryColorGradientMode,
-                               .Cursor_Cross.SecondaryColor1, .Cursor_Cross.SecondaryColor2, .Cursor_Cross.SecondaryColorGradient, .Cursor_Cross.SecondaryColorGradientMode,
-                               Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                               .Cursor_Cross.PrimaryColorNoise, .Cursor_Cross.PrimaryColorNoiseOpacity, .Cursor_Cross.SecondaryColorNoise, .Cursor_Cross.SecondaryColorNoiseOpacity,
-                               Nothing, Nothing, Nothing, Nothing,
-                               1, i, 0)
-                        End With
+                        Dim CurOptions As New CursorOptions(Cursor_Cross) With {.Cursor = CursorType.Cross, .LineThickness = 1, .Scale = i, ._Angle = 0}
+                        bmp = Draw(CurOptions)
                         HotPoint = New Point(1 + CInt(9 * i), 1 + CInt(9 * i))
-#End Region
+
                 End Select
 
                 EO.WriteBitmap(bmp, Nothing, HotPoint)
@@ -6190,25 +6094,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Dim bm As Bitmap
 
                         If [Type] = CursorType.AppLoading Then
-                            bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading.PrimaryColor1, .Cursor_AppLoading.PrimaryColor2, .Cursor_AppLoading.PrimaryColorGradient, .Cursor_AppLoading.PrimaryColorGradientMode,
-                                            .Cursor_AppLoading.SecondaryColor1, .Cursor_AppLoading.SecondaryColor2, .Cursor_AppLoading.SecondaryColorGradient, .Cursor_AppLoading.SecondaryColorGradientMode,
-                                            .Cursor_AppLoading.LoadingCircleBack1, .Cursor_AppLoading.LoadingCircleBack2, .Cursor_AppLoading.LoadingCircleBackGradient, .Cursor_AppLoading.LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading.LoadingCircleHot1, .Cursor_AppLoading.LoadingCircleHot2, .Cursor_AppLoading.LoadingCircleHotGradient, .Cursor_AppLoading.LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading.PrimaryColorNoise, .Cursor_AppLoading.PrimaryColorNoiseOpacity, .Cursor_AppLoading.SecondaryColorNoise, .Cursor_AppLoading.SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading.LoadingCircleBackNoise, .Cursor_AppLoading.LoadingCircleBackNoiseOpacity, .Cursor_AppLoading.LoadingCircleHotNoise, .Cursor_AppLoading.LoadingCircleHotNoiseOpacity,
-                                             1, i, ang))
-
+                            Dim CurOptions As New CursorOptions(Cursor_AppLoading) With {.Cursor = CursorType.AppLoading, .LineThickness = 1, .Scale = i, ._Angle = ang}
+                            bm = New Bitmap(Draw(CurOptions))
                             HotPoint = New Point(1, 1 + CInt(8 * i))
-                        Else
-                            bm = New Bitmap(Draw([Type],
-                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy.LoadingCircleBack1, .Cursor_Busy.LoadingCircleBack2, .Cursor_Busy.LoadingCircleBackGradient, .Cursor_Busy.LoadingCircleBackGradientMode,
-                                            .Cursor_Busy.LoadingCircleHot1, .Cursor_Busy.LoadingCircleHot2, .Cursor_Busy.LoadingCircleHotGradient, .Cursor_Busy.LoadingCircleHotGradientMode,
-                                            Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy.LoadingCircleBackNoise, .Cursor_Busy.LoadingCircleBackNoiseOpacity, .Cursor_Busy.LoadingCircleHotNoise, .Cursor_Busy.LoadingCircleHotNoiseOpacity,
-                                            1, i, ang))
 
+                        Else
+                            Dim CurOptions As New CursorOptions(Cursor_Busy) With {.Cursor = CursorType.Busy, .LineThickness = 1, .Scale = i, ._Angle = ang}
+                            bm = New Bitmap(Draw(CurOptions))
                             HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
                         End If
 
@@ -6219,26 +6111,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Dim bm As Bitmap
 
                         If [Type] = CursorType.AppLoading Then
-                            bm = New Bitmap(Draw([Type],
-                                            .Cursor_AppLoading.PrimaryColor1, .Cursor_AppLoading.PrimaryColor2, .Cursor_AppLoading.PrimaryColorGradient, .Cursor_AppLoading.PrimaryColorGradientMode,
-                                            .Cursor_AppLoading.SecondaryColor1, .Cursor_AppLoading.SecondaryColor2, .Cursor_AppLoading.SecondaryColorGradient, .Cursor_AppLoading.SecondaryColorGradientMode,
-                                            .Cursor_AppLoading.LoadingCircleBack1, .Cursor_AppLoading.LoadingCircleBack2, .Cursor_AppLoading.LoadingCircleBackGradient, .Cursor_AppLoading.LoadingCircleBackGradientMode,
-                                            .Cursor_AppLoading.LoadingCircleHot1, .Cursor_AppLoading.LoadingCircleHot2, .Cursor_AppLoading.LoadingCircleHotGradient, .Cursor_AppLoading.LoadingCircleHotGradientMode,
-                                            .Cursor_AppLoading.PrimaryColorNoise, .Cursor_AppLoading.PrimaryColorNoiseOpacity, .Cursor_AppLoading.SecondaryColorNoise, .Cursor_AppLoading.SecondaryColorNoiseOpacity,
-                                            .Cursor_AppLoading.LoadingCircleBackNoise, .Cursor_AppLoading.LoadingCircleBackNoiseOpacity, .Cursor_AppLoading.LoadingCircleHotNoise, .Cursor_AppLoading.LoadingCircleHotNoiseOpacity,
-                                             1, i, ang))
-
+                            Dim CurOptions As New CursorOptions(Cursor_AppLoading) With {.Cursor = CursorType.AppLoading, .LineThickness = 1, .Scale = i, ._Angle = ang}
+                            bm = New Bitmap(Draw(CurOptions))
                             HotPoint = New Point(1, 1 + CInt(8 * i))
-                        Else
-                            bm = New Bitmap(Draw([Type],
-                                            Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy.LoadingCircleBack1, .Cursor_Busy.LoadingCircleBack2, .Cursor_Busy.LoadingCircleBackGradient, .Cursor_Busy.LoadingCircleBackGradientMode,
-                                            .Cursor_Busy.LoadingCircleHot1, .Cursor_Busy.LoadingCircleHot2, .Cursor_Busy.LoadingCircleHotGradient, .Cursor_Busy.LoadingCircleHotGradientMode,
-                                            Nothing, Nothing, Nothing, Nothing,
-                                            .Cursor_Busy.LoadingCircleBackNoise, .Cursor_Busy.LoadingCircleBackNoiseOpacity, .Cursor_Busy.LoadingCircleHotNoise, .Cursor_Busy.LoadingCircleHotNoiseOpacity,
-                                            1, i, ang))
 
+                        Else
+                            Dim CurOptions As New CursorOptions(Cursor_Busy) With {.Cursor = CursorType.Busy, .LineThickness = 1, .Scale = i, ._Angle = ang}
+                            bm = New Bitmap(Draw(CurOptions))
                             HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+
                         End If
 
                         BMPList.Add(bm)
