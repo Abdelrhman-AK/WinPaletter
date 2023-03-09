@@ -6089,6 +6089,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 BMPList.Clear()
 
 #Region "Add angles bitmaps from 180 deg to 180 deg (Cycle)"
+
                 With [CP]
                     For ang As Integer = 180 To 360 Step +10
                         Dim bm As Bitmap
@@ -6125,6 +6126,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         BMPList.Add(bm)
                     Next
                 End With
+
 #End Region
 
                 Dim Count As Integer = BMPList.Count

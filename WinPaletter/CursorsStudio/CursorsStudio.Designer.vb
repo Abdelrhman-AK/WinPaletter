@@ -483,7 +483,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox7.Controls.Add(Me.CircleColor2)
         Me.XenonGroupBox7.Controls.Add(Me.XenonComboBox4)
         Me.XenonGroupBox7.Controls.Add(Me.XenonCheckBox8)
-        Me.XenonGroupBox7.Location = New System.Drawing.Point(345, 39)
+        Me.XenonGroupBox7.Location = New System.Drawing.Point(139, 39)
         Me.XenonGroupBox7.Name = "XenonGroupBox7"
         Me.XenonGroupBox7.Size = New System.Drawing.Size(203, 86)
         Me.XenonGroupBox7.TabIndex = 71
@@ -590,7 +590,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox8.Controls.Add(Me.XenonCheckBox2)
         Me.XenonGroupBox8.Controls.Add(Me.LoadingColor2)
         Me.XenonGroupBox8.Controls.Add(Me.XenonCheckBox6)
-        Me.XenonGroupBox8.Location = New System.Drawing.Point(139, 39)
+        Me.XenonGroupBox8.Location = New System.Drawing.Point(345, 39)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
         Me.XenonGroupBox8.Size = New System.Drawing.Size(203, 86)
         Me.XenonGroupBox8.TabIndex = 68
@@ -1268,9 +1268,9 @@ Partial Class CursorsStudio
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(42, 6)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(168, 30)
+        Me.Label1.Size = New System.Drawing.Size(259, 30)
         Me.Label1.TabIndex = 8
-        Me.Label1.Text = "Select a cursor to edit it"
+        Me.Label1.Text = "Select a cursor to edit its properties"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1

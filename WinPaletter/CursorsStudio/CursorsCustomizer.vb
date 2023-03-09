@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-
 Public Module Paths
     Enum CursorType
         Arrow
@@ -186,7 +185,6 @@ Public Module Paths
                     G.FillPath(Noise, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-
                 G.DrawPath(PL, DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[SecondaryNoise] Then
@@ -194,19 +192,18 @@ Public Module Paths
                     G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), DefaultCursor(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-
-                G.FillPath(BB_H, Help(_Help, [CursorOptions].Scale))
+                G.FillPath(BB_H, Help(_Help, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[PrimaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Help(_Help, [CursorOptions].Scale))
+                    G.FillPath(Noise, Help(_Help, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL_H, Help(_Help, [CursorOptions].Scale))
+                If [CursorOptions].ArrowStyle <> ArrowStyle.Classic Then G.DrawPath(PL_H, Help(_Help, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[SecondaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Help(_Help, [CursorOptions].Scale))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Help(_Help, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
 #End Region
@@ -225,41 +222,41 @@ Public Module Paths
                 End If
 
                 If [CursorOptions].CircleStyle = CircleStyle.Classic Then
+                    Dim PL As New Pen(BH, [CursorOptions].LineThickness)
 
-                    Dim Bx As Brush
-                    If [CursorOptions].[LoadingCircleHotGradient] Then
-                        Bx = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
-                    Else
-                        Bx = New SolidBrush([CursorOptions].[LoadingCircleHot1])
+                    G.FillPath(BC, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PL, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PL, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                    If [CursorOptions].[LoadingCircleBackNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                        G.FillPath(Noise, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                     End If
-                    Dim PL As New Pen(Bx, [CursorOptions].LineThickness)
 
-                    Dim Bx2 As Brush
-                    If [CursorOptions].[LoadingCircleHotGradient] Then
-                        Bx2 = ReturnGradience(_LoadRect, [CursorOptions].[LoadingCircleHot1], [CursorOptions].[LoadingCircleHot2], [CursorOptions].[LoadingCircleHotGradientMode], [CursorOptions]._Angle)
-                    Else
-                        Bx2 = New SolidBrush([CursorOptions].[LoadingCircleHot1])
+                    If [CursorOptions].[LoadingCircleHotNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                     End If
-                    Dim PL2 As New Pen(Bx2, [CursorOptions].LineThickness)
-
-                    G.FillPath(BC, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                    G.DrawPath(PL2, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                    G.DrawPath(PL, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
 
                 Else
-                    G.FillPath(BC, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                    G.FillPath(BC, BusyLoader(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.FillPath(BC, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                    If [CursorOptions].[LoadingCircleBackNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                        G.FillPath(Noise, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
+
+                    G.FillPath(BC, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                    If [CursorOptions].[LoadingCircleHotNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                        G.FillPath(Noise, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
+
                 End If
 
-                If [CursorOptions].[LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
-                    G.FillPath(Noise, Busy(_Busy, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                End If
 
-                If [CursorOptions].[LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
-                    G.FillPath(Noise, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                End If
 #End Region
             Case CursorType.AppLoading
 #Region "AppLoading"
@@ -302,18 +299,38 @@ Public Module Paths
                     G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), DefaultCursor(_CurRect, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.FillPath(BC, AppLoading(_LoadRect, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                If [CursorOptions].CircleStyle = CircleStyle.Classic Then
+                    Dim PLx As New Pen(BH, [CursorOptions].LineThickness)
 
-                If [CursorOptions].[LoadingCircleBackNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
-                    G.FillPath(Noise, AppLoading(_LoadRect, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                End If
+                    G.FillPath(BC, AppLoading(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PLx, AppLoaderCircle(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.DrawPath(PLx, AppLoading(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
 
-                G.FillPath(BH, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    If [CursorOptions].[LoadingCircleBackNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                        G.FillPath(Noise, AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
 
-                If [CursorOptions].[LoadingCircleHotNoise] Then
-                    Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
-                    G.FillPath(Noise, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    If [CursorOptions].[LoadingCircleHotNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
+
+                Else
+                    G.FillPath(BC, AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                    If [CursorOptions].[LoadingCircleBackNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
+                        G.FillPath(Noise, AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
+
+                    G.FillPath(BH, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+
+                    If [CursorOptions].[LoadingCircleHotNoise] Then
+                        Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
+                        G.FillPath(Noise, AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    End If
                 End If
 
 #End Region
@@ -566,18 +583,18 @@ Public Module Paths
                 End If
                 Dim PL As New Pen(BL, [CursorOptions].LineThickness)
 
-                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[PrimaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[SecondaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 #End Region
             Case CursorType.Pin
@@ -607,18 +624,18 @@ Public Module Paths
                     BL_P = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
 
-                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[PrimaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[SecondaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
                 G.FillPath(BB_P, Pin(_Pin, [CursorOptions].Scale))
@@ -669,18 +686,18 @@ Public Module Paths
                     BL_P = New SolidBrush([CursorOptions].[SecondaryColor1])
                 End If
 
-                G.FillPath(BB, Hand(_Arrow, [CursorOptions].Scale))
+                G.FillPath(BB, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[PrimaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[PrimaryNoiseOpacity]))
-                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].Scale))
+                    G.FillPath(Noise, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
-                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].Scale))
+                G.DrawPath(PL, Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
 
                 If [CursorOptions].[SecondaryNoise] Then
                     Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[SecondaryNoiseOpacity]))
-                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].Scale))
+                    G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), Hand(_Arrow, [CursorOptions].ArrowStyle, [CursorOptions].Scale))
                 End If
 
                 G.FillPath(BB_P, Person(_Person, [CursorOptions].Scale))
@@ -840,7 +857,7 @@ Public Module Paths
                 path.AddLine(DRHLine1, DRHLine2)
 
                 '#### Right Down Border
-                Dim DRLine1 As Point = DRHLine2
+                Dim DRLine1 As Point = DRHLine2 + New Point(1, 0)
                 Dim DRLine2 As New Point(R.X + R.Width - 1, DRLine1.Y)
                 path.AddLine(DRLine1, DRLine2)
 
@@ -882,7 +899,7 @@ Public Module Paths
 
     End Function
 
-    Public Function Busy([Rectangle] As Rectangle, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function Busy([Rectangle] As Rectangle, Angle As Single, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].Width = 22
         [Rectangle].Height = 22
         Dim path As New GraphicsPath
@@ -909,6 +926,12 @@ Public Module Paths
                 path.AddLine(New Point([Rectangle].X + 6, [Rectangle].Y + 21), New Point([Rectangle].X + 12, [Rectangle].Y + 21))
 
                 path.AddPath(MirrorRight(path), False)
+
+                If Angle >= 270 Then
+                    Dim m_rotate As New Matrix()
+                    m_rotate.RotateAt((Angle - 180) * 3, New Point([Rectangle].X + [Rectangle].Width / 2, [Rectangle].Y + [Rectangle].Height / 2))
+                    path.Transform(m_rotate)
+                End If
 
             Case CircleStyle.Dot
                 path.AddEllipse([Rectangle].X, [Rectangle].Y, 22, 22)
@@ -951,21 +974,46 @@ Public Module Paths
                 path.CloseFigure()
 
             Case CircleStyle.Classic
+                Dim PU1 As New Point([Rectangle].X + 12, [Rectangle].Y + 5)
+                Dim PU3 As New Point([Rectangle].X + 10, [Rectangle].Y + 5)
+                Dim PU4 As Point = PU3 + New Point(2, 2)
 
-                'path.AddLine(New Point([Rectangle].X + 10, [Rectangle].Y + 13), New Point([Rectangle].X + 13, [Rectangle].Y + 16))
+                path.AddLine(PU1, PU1)
+                path.CloseFigure()
+                path.AddLine(PU3, PU4)
+                path.CloseFigure()
 
-                Dim P1 As New Point([Rectangle].X + 12, [Rectangle].Y + 19)
-                Dim P2 As Point = P1 + New Point(-2, -2)
+                Dim PL1 As New Point([Rectangle].X + 12, [Rectangle].Y + 17)
+                Dim PL2 As Point = PL1 - New Point(1, -1)
 
-                path.AddLine(P1, P2)
+                Dim PL3 As Point = PL1 - New Point(0, 2)
+                Dim PL4 As Point = PL3 - New Point(3, -3)
 
+                path.AddLine(PL1, PL2)
+                path.CloseFigure()
 
+                path.AddLine(PL3, PL4)
+                path.CloseFigure()
 
-                'path.AddPath(MirrorRight(path), False)
+                path.AddPath(MirrorRight(path), False)
+
+                Dim C1 As Point = PU1 + New Point(0, 4)
+                path.AddLine(C1, C1)
+                path.CloseFigure()
+
+                Dim C2 As Point = C1 + New Point(0, 4)
+                path.AddLine(C2, C2)
+                path.CloseFigure()
+
+                If Angle >= 270 Then
+                    Dim m_rotate As New Matrix()
+                    m_rotate.RotateAt((Angle - 180) * 3, New Point([Rectangle].X + [Rectangle].Width / 2, [Rectangle].Y + [Rectangle].Height / 2))
+                    path.Transform(m_rotate)
+                End If
 
             Case CircleStyle.Dot
-                Dim x As Single = 0.8 * CPoint.X + (0.65 * R.Width * CSng(Math.Cos((Angle / 180) * Math.PI)))
-                Dim y As Single = 0.8 * CPoint.Y + (0.65 * R.Height * CSng(Math.Sin((Angle / 180) * Math.PI)))
+                Dim x As Single = 0.85 * CPoint.X + (0.65 * R.Width * CSng(Math.Cos((Angle / 180) * Math.PI)))
+                Dim y As Single = 0.85 * CPoint.Y + (0.65 * R.Height * CSng(Math.Sin((Angle / 180) * Math.PI)))
                 x = Math.Max([Rectangle].Left, Math.Min(x, [Rectangle].Right))
                 y = Math.Max([Rectangle].Top, Math.Min(y, [Rectangle].Bottom))
                 path.AddEllipse(New Rectangle(x, y, 5, 5))
@@ -980,7 +1028,7 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function AppLoading([Rectangle] As Rectangle, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function AppLoading([Rectangle] As Rectangle, Angle As Single, Style As CircleStyle, Optional Scale As Single = 1) As GraphicsPath
         [Rectangle].Width = 16
         [Rectangle].Height = 16
         Dim path As New GraphicsPath
@@ -993,7 +1041,77 @@ Public Module Paths
                 path.CloseFigure()
 
             Case CircleStyle.Classic
+                Dim UpperRectangle As New Rectangle([Rectangle].X + 12, [Rectangle].Y + 9, 9, 2)
+                Dim LowerRectangle As New Rectangle([Rectangle].X + 12, [Rectangle].Y + 23, 9, 2)
+                Dim Container As New Rectangle(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top)
 
+                Dim pL1 As New Point(UpperRectangle.X + 1, UpperRectangle.Y + UpperRectangle.Height)
+                Dim pL2 As New Point(pL1.X, pL1.Y + 4)
+                path.AddLine(pL1, pL2)
+
+                Dim pL3 As Point = pL2 + New Point(1, 0)
+                Dim pL4 As Point = pL3 + New Point(1, 1)
+                path.AddLine(pL3, pL4)
+
+                Dim pL5 As Point = pL4 + New Point(0, 1)
+                path.AddLine(pL5, pL5)
+
+                Dim pL6 As Point = pL5 + New Point(0, 1)
+                Dim pl7 As Point = pL6 + New Point(-1, 1)
+                path.AddLine(pL6, pl7)
+
+                Dim pL8 As Point = pl7 - New Point(1, 0)
+                Dim pL9 As Point = pL8 + New Point(0, 4)
+                path.AddLine(pL8, pL9)
+
+                Dim pL10 As Point = pL9 + New Point(7, 0)
+                Dim pL11 As Point = pL10 - New Point(0, 4)
+                path.AddLine(pL10, pL11)
+
+                Dim pL12 As Point = pL11 + New Point(-1, 0)
+                Dim pL13 As Point = pL12 + New Point(-1, -1)
+                path.AddLine(pL12, pL13)
+
+                Dim pL14 As Point = pL13 + New Point(0, -1)
+                path.AddLine(pL14, pL14)
+
+                Dim pL15 As Point = pL14 + New Point(0, -1)
+                Dim pl16 As Point = pL15 + New Point(1, -1)
+                path.AddLine(pL15, pl16)
+
+                Dim pL17 As Point = pl16 + New Point(1, 0)
+                Dim pL18 As Point = pL17 + New Point(0, -4)
+                path.AddLine(pL17, pL18)
+
+                path.AddRectangle(UpperRectangle)
+
+                path.AddRectangle(LowerRectangle)
+
+                path.CloseFigure()
+
+                Dim FixerL0 As Point = pL3 + New Point(0, 1)
+                Dim FixerL1 As Point = pL3 + New Point(0, 3)
+
+                Dim FixerR0 As Point = pL12 - New Point(0, 1)
+                Dim FixerR1 As Point = pL12 - New Point(0, 3)
+
+                path.AddLine(FixerL0, FixerL0)
+                path.CloseFigure()
+
+                path.AddLine(FixerL1, FixerL1)
+                path.CloseFigure()
+
+                path.AddLine(FixerR0, FixerR0)
+                path.CloseFigure()
+
+                path.AddLine(FixerR1, FixerR1)
+                path.CloseFigure()
+
+                If Angle >= 270 Then
+                    Dim m_rotate As New Matrix()
+                    m_rotate.RotateAt((Angle - 180) * 3, New Point(Container.X + Container.Width / 2, Container.Y + Container.Height / 2))
+                    path.Transform(m_rotate)
+                End If
 
             Case CircleStyle.Dot
                 path.AddEllipse([Rectangle])
@@ -1033,7 +1151,39 @@ Public Module Paths
                 path.AddArc(innerRect, Angle + arcLength, -arcLength)
 
             Case CircleStyle.Classic
+                Dim UpperRectangle As New Rectangle([Rectangle].X + 12, [Rectangle].Y + 9, 9, 2)
+                Dim LowerRectangle As New Rectangle([Rectangle].X + 12, [Rectangle].Y + 23, 9, 2)
+                Dim Container As New Rectangle(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top)
 
+                Dim PU1 As New Point([Rectangle].X + 17, [Rectangle].Y + 14)
+                Dim PU3 As New Point([Rectangle].X + 14, [Rectangle].Y + 15)
+                Dim PU4 As Point = PU3 + New Point(2, 2)
+
+                path.AddLine(PU1, PU3)
+                path.CloseFigure()
+                path.AddLine(PU3, PU4)
+                path.CloseFigure()
+
+
+                Dim PL1 As New Point([Rectangle].X + 16, [Rectangle].Y + 20)
+                Dim PL2 As Point = PL1 - New Point(2, -2)
+                path.AddLine(PL1, PL2)
+                path.CloseFigure()
+
+                Dim PL3 As Point = PL1 + New Point(1, 1)
+                Dim PL4 As Point = PL3 - New Point(1, -1)
+                path.AddLine(PL3, PL4)
+                path.CloseFigure()
+
+                Dim C1 As Point = PL3 + New Point(1, 1)
+                path.AddLine(C1, C1)
+                path.CloseFigure()
+
+                If Angle >= 270 Then
+                    Dim m_rotate As New Matrix()
+                    m_rotate.RotateAt((Angle - 180) * 3, New Point(Container.X + Container.Width / 2, Container.Y + Container.Height / 2))
+                    path.Transform(m_rotate)
+                End If
 
             Case CircleStyle.Dot
                 Dim x As Single = 0.85 * CPoint.X + (0.65 * R.Width * CSng(Math.Cos((Angle / 180) * Math.PI)))
@@ -1120,7 +1270,7 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function Help([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function Help([Rectangle] As Rectangle, Style As ArrowStyle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
         [Rectangle].Width = 7
         [Rectangle].Height = 11
@@ -1129,16 +1279,26 @@ Public Module Paths
 
         Dim F As FontFamily
 
-        If My.WXP Then
-            F = New FontFamily("Tahoma")
+        Select Case Style
+            Case ArrowStyle.Classic
+                F = New FontFamily("Marlett")
 
-        ElseIf My.W7 Or My.WVista Then
-            F = New FontFamily("Segoe UI")
-        Else
-            F = New FontFamily("Segoe UI Black")
-        End If
+                path.AddString("s", F, FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
 
-        path.AddString("?", F, FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
+            Case Else
+
+                If My.WXP Then
+                    F = New FontFamily("Tahoma")
+
+                ElseIf My.W7 Or My.WVista Then
+                    F = New FontFamily("Segoe UI")
+                Else
+                    F = New FontFamily("Segoe UI Black")
+                End If
+
+                path.AddString("?", F, FontStyle.Bold, 15, [Rectangle], StringFormat.GenericDefault)
+
+        End Select
 
         Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
@@ -1468,58 +1628,104 @@ Public Module Paths
         Return path
     End Function
 
-    Public Function Hand([Rectangle] As Rectangle, Optional Scale As Single = 1) As GraphicsPath
+    Public Function Hand([Rectangle] As Rectangle, Style As ArrowStyle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
         [Rectangle].Width = 18
         [Rectangle].Height = 24
         [Rectangle].X = 0
         [Rectangle].Y = 0
 
-        Dim Index_LB1 As New Point([Rectangle].X + 5, [Rectangle].Y + 14)
-        Dim Index_LB2 As New Point(Index_LB1.X, Index_LB1.Y - 12)
-        path.AddLine(Index_LB1, Index_LB2)
+        Select Case Style
+            Case ArrowStyle.Classic
+                Dim Index_LB1 As New Point([Rectangle].X + 5, [Rectangle].Y + 14)
+                Dim Index_LB2 As New Point(Index_LB1.X, Index_LB1.Y - 11)
+                path.AddLine(Index_LB1, Index_LB2)
 
-        Dim Index_RB1 As New Point(Index_LB1.X + 3, Index_LB1.Y - 4)
-        Dim Index_RB2 As New Point(Index_RB1.X, Index_RB1.Y - 8)
+                Dim Index_RB1 As New Point(Index_LB1.X + 3, Index_LB1.Y - 4)
+                Dim Index_RB2 As New Point(Index_RB1.X, Index_RB1.Y - 8)
+                path.AddArc(Index_LB2.X, Index_LB2.Y - 2, 3, 2, 180, 180)
 
-        path.AddArc(Index_LB2.X, Index_LB2.Y - 2, 3, 2, 180, 180)
+                path.AddLine(Index_RB1, Index_RB2)
+                path.AddArc(Index_RB2.X, Index_LB2.Y + 3, 3, 2, 180, 180)
 
-        path.AddLine(Index_RB1, Index_RB2)
+                Dim Middle_RB1 As New Point(Index_RB1.X + 3, Index_RB1.Y)
+                Dim Middle_RB2 As New Point(Middle_RB1.X, Middle_RB1.Y - 3)
+                path.AddLine(Middle_RB1, Middle_RB2)
+                path.AddArc(Middle_RB2.X, Index_LB2.Y + 4, 3, 2, 180, 180)
 
-        path.AddArc(Index_RB2.X, Index_LB2.Y + 3, 3, 2, 180, 180)
+                Dim Ring_RB1 As New Point(Middle_RB1.X + 3, Middle_RB1.Y + 1)
+                Dim Ring_RB2 As New Point(Ring_RB1.X, Ring_RB1.Y - 2)
+                path.AddLine(Ring_RB1, Ring_RB2)
+                path.AddArc(Ring_RB2.X, Index_LB2.Y + 6, 3, 2, 180, 180)
 
-        Dim Middle_RB1 As New Point(Index_RB1.X + 3, Index_RB1.Y)
-        Dim Middle_RB2 As New Point(Middle_RB1.X, Middle_RB1.Y - 3)
-        path.AddLine(Middle_RB1, Middle_RB2)
+                Dim FreeBorder1 As New Point(Ring_RB1.X + 3, Ring_RB1.Y - 1)
+                Dim FreeBorder2 As New Point(FreeBorder1.X, FreeBorder1.Y + 6)
+                path.AddLine(FreeBorder1, FreeBorder2)
 
-        path.AddArc(Middle_RB2.X, Index_LB2.Y + 4, 3, 2, 180, 180)
+                Dim LW1 As Point = FreeBorder2 + New Point(0, 1)
+                Dim RW1 As New Point(LW1.X - 14, LW1.Y)
+                Dim Btm As New Rectangle(RW1.X + 3, RW1.Y - 8, 9, 13)
+                path.AddLine(FreeBorder2, New Point(Btm.X + Btm.Width, Btm.Y + Btm.Height))
+                path.AddLine(New Point(Btm.X + Btm.Width, Btm.Y + Btm.Height), New Point(Btm.X, Btm.Y + Btm.Height))
 
-        Dim Ring_RB1 As New Point(Middle_RB1.X + 3, Middle_RB1.Y)
-        Dim Ring_RB2 As New Point(Ring_RB1.X, Ring_RB1.Y - 2)
-        path.AddLine(Ring_RB1, Ring_RB2)
+                Dim L1 As Point = RW1 - New Point(0, 1)
+                Dim L2 As New Point(L1.X - 1, L1.Y - 3)
+                Dim Thumb As New Rectangle(L2.X - 1, L2.Y - 3, 2, 3)
+                path.AddArc(Thumb, 90, 180)
 
-        path.AddArc(Ring_RB2.X, Index_LB2.Y + 5, 3, 2, 180, 180)
+                Dim LastBorder1 As New Point(Thumb.X + Thumb.Width, Thumb.Y)
+                Dim LastBorder2 As New Point(LastBorder1.X + 2, LastBorder1.Y + 1)
+                path.AddLine(LastBorder1, LastBorder2)
 
-        Dim FreeBorder1 As New Point(Ring_RB1.X + 3, Ring_RB1.Y - 1)
-        Dim FreeBorder2 As New Point(FreeBorder1.X, FreeBorder1.Y + 8)
-        path.AddLine(FreeBorder1, FreeBorder2)
+                path.CloseFigure()
 
-        Dim LW1 As Point = FreeBorder2 + New Point(0, 1)
-        Dim RW1 As New Point(LW1.X - 14, LW1.Y)
-        Dim Btm As New Rectangle(RW1.X, RW1.Y - 8, 14, 13)
-        path.AddArc(Btm, 0, 180)
+            Case Else
+                Dim Index_LB1 As New Point([Rectangle].X + 5, [Rectangle].Y + 14)
+                Dim Index_LB2 As New Point(Index_LB1.X, Index_LB1.Y - 12)
+                path.AddLine(Index_LB1, Index_LB2)
 
-        Dim L1 As Point = RW1 - New Point(0, 1)
-        Dim L2 As New Point(L1.X - 2, L1.Y - 2)
-        Dim Thumb As New Rectangle(L2.X - 1, L2.Y - 3, 2, 3)
-        path.AddArc(Thumb, 90, 180)
-        'path.AddRectangle(Thumb)
+                Dim Index_RB1 As New Point(Index_LB1.X + 3, Index_LB1.Y - 4)
+                Dim Index_RB2 As New Point(Index_RB1.X, Index_RB1.Y - 8)
 
-        Dim LastBorder1 As New Point(Thumb.X + Thumb.Width, Thumb.Y)
-        Dim LastBorder2 As New Point(LastBorder1.X + 2, LastBorder1.Y + 1)
-        path.AddLine(LastBorder1, LastBorder2)
+                path.AddArc(Index_LB2.X, Index_LB2.Y - 2, 3, 2, 180, 180)
 
-        path.CloseFigure()
+                path.AddLine(Index_RB1, Index_RB2)
+
+                path.AddArc(Index_RB2.X, Index_LB2.Y + 3, 3, 2, 180, 180)
+
+                Dim Middle_RB1 As New Point(Index_RB1.X + 3, Index_RB1.Y)
+                Dim Middle_RB2 As New Point(Middle_RB1.X, Middle_RB1.Y - 3)
+                path.AddLine(Middle_RB1, Middle_RB2)
+
+                path.AddArc(Middle_RB2.X, Index_LB2.Y + 4, 3, 2, 180, 180)
+
+                Dim Ring_RB1 As New Point(Middle_RB1.X + 3, Middle_RB1.Y)
+                Dim Ring_RB2 As New Point(Ring_RB1.X, Ring_RB1.Y - 2)
+                path.AddLine(Ring_RB1, Ring_RB2)
+
+                path.AddArc(Ring_RB2.X, Index_LB2.Y + 5, 3, 2, 180, 180)
+
+                Dim FreeBorder1 As New Point(Ring_RB1.X + 3, Ring_RB1.Y - 1)
+                Dim FreeBorder2 As New Point(FreeBorder1.X, FreeBorder1.Y + 8)
+                path.AddLine(FreeBorder1, FreeBorder2)
+
+                Dim LW1 As Point = FreeBorder2 + New Point(0, 1)
+                Dim RW1 As New Point(LW1.X - 14, LW1.Y)
+                Dim Btm As New Rectangle(RW1.X, RW1.Y - 8, 14, 13)
+                path.AddArc(Btm, 0, 180)
+
+                Dim L1 As Point = RW1 - New Point(0, 1)
+                Dim L2 As New Point(L1.X - 2, L1.Y - 2)
+                Dim Thumb As New Rectangle(L2.X - 1, L2.Y - 3, 2, 3)
+                path.AddArc(Thumb, 90, 180)
+                'path.AddRectangle(Thumb)
+
+                Dim LastBorder1 As New Point(Thumb.X + Thumb.Width, Thumb.Y)
+                Dim LastBorder2 As New Point(LastBorder1.X + 2, LastBorder1.Y + 1)
+                path.AddLine(LastBorder1, LastBorder2)
+
+                path.CloseFigure()
+        End Select
 
         Dim m As New Matrix()
         m.Scale(Scale, Scale, MatrixOrder.Append)
