@@ -974,6 +974,8 @@ Public Class MainFrm
         [Button].ButtonShadow = [CP].Win32.ButtonShadow
         [Button].BackColor = [CP].Win32.ButtonFace
         [Button].ForeColor = [CP].Win32.ButtonText
+        [Button].FocusRectWidth = [CP].WindowsEffects.FocusRectWidth
+        [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
     End Sub
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -4191,10 +4193,6 @@ Public Class MainFrm
             If PreviewConfig = WinVer.WVista Then MsgBox(String.Format(My.Lang.AltTab_Unsupported, My.Lang.OS_WinVista), MsgBoxStyle.Exclamation)
         End If
 
-    End Sub
-
-    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
-        MiscTweaker.ShowDialog()
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

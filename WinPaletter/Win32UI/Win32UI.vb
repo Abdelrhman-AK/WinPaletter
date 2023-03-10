@@ -832,6 +832,10 @@ Public Class Win32UI
         RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
 
         RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
+
+        RetroButton1.FocusRectWidth = CP.WindowsEffects.FocusRectWidth
+        RetroButton1.FocusRectHeight = CP.WindowsEffects.FocusRectHeight
+        RetroButton1.Refresh()
     End Sub
 
     Sub ApplyRetroPreview()
@@ -1120,7 +1124,13 @@ Public Class Win32UI
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        CPx.Win32.Apply()
+        Visible = False
+        Try
+            CPx.Win32.Apply()
+        Catch
+        End Try
+        Threading.Thread.Sleep(500) 'Delay is added as there is a bug occurs when a classic theme applied on classic Windows mode
+        Visible = True
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub

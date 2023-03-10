@@ -95,6 +95,7 @@ Namespace NativeMethods
         End Function
 
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
+        Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As UInteger, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As UInteger, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As String, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Boolean, fuWinIni As Integer) As Integer
@@ -606,22 +607,13 @@ Namespace NativeMethods
                 SETACTIVEWINDOWTRACKING = &H1001
 
                 ''' <summary>
-                ''' <b>Sets active window tracking (activating the window the mouse is on) either on or off.</b>
-                ''' <br></br>
-                ''' <br></br> • Set pvParam to TRUE for on or FALSE for off.
-                ''' <br></br>
-                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
-                ''' </summary>
-                GETACTIVEWNDTRKTIMEOUT = &H2002
-
-                ''' <summary>
                 ''' <b>Retrieves the active window tracking delay, in milliseconds.</b>
                 ''' <br></br>
                 ''' <br></br> • The pvParam parameter must point to a DWORD variable that receives the time.
                 ''' <br></br>
                 ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
                 ''' </summary>
-                SETACTIVEWNDTRKTIMEOUT = &H2003
+                GETACTIVEWNDTRKTIMEOUT = &H2002
 
                 ''' <summary>
                 ''' <b>Sets the active window tracking delay.</b>
@@ -630,10 +622,19 @@ Namespace NativeMethods
                 ''' <br></br>
                 ''' <br></br> <i>(!) Windows NT, Windows 95: This value is not supported.</i>
                 ''' </summary>
-                GETACTIVEWNDTRKZORDER = &H100C
+                SETACTIVEWNDTRKTIMEOUT = &H2003
 
                 ''' <summary>
                 ''' <b>Determines whether or not windows activated through active window tracking should be brought to the top.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE for on Or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETACTIVEWNDTRKZORDER = &H100C
+
+                ''' <summary>
+                ''' <b>Sets if windows activated through active window tracking should be brought to the top.</b>
                 ''' <br></br>
                 ''' <br></br> • Set pvParam to TRUE for on Or FALSE for off.
                 ''' <br></br>
@@ -648,7 +649,7 @@ Namespace NativeMethods
                 ''' <br></br>
                 ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
                 ''' </summary>
-                SPI_GETCARETWIDTH = &H2006
+                GETCARETWIDTH = &H2006
 
                 ''' <summary>
                 ''' <b>Sets the caret width in edit controls.</b>
@@ -658,7 +659,7 @@ Namespace NativeMethods
                 ''' <br></br>
                 ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
                 ''' </summary>
-                SPI_SETCARETWIDTH = &H2007
+                SETCARETWIDTH = &H2007
             End Enum
 
             Enum FocusRect

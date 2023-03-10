@@ -5,6 +5,8 @@ Public Class WinEffecter
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(MainFrm.CP)
+        MainFrm.SetToClassicButton(RetroButton1, MainFrm.CP)
+
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -24,7 +26,26 @@ Public Class WinEffecter
             XenonCheckBox4.Checked = .IconsShadow
             XenonCheckBox10.Checked = .IconsDesktopTranslSel
             XenonCheckBox11.Checked = .ShowWinContentDrag
+            XenonCheckBox12.Checked = .KeyboardUnderline
+            XenonTrackbar5.Value = .NotificationDuration
+            XenonTrackbar2.Value = .FocusRectWidth
+            XenonTrackbar3.Value = .FocusRectHeight
+            XenonTrackbar4.Value = .Caret
+            XenonCheckBox13.Checked = .AWT_Enabled
+            XenonCheckBox14.Checked = .AWT_BringActivatedWindowToTop
+            XenonTrackbar6.Value = .AWT_Delay
+            XenonCheckBox15.Checked = .SnapCursorToDefButton
+            XenonCheckBox16.Checked = .Win11ClassicContextMenu
+            XenonCheckBox17.Checked = .BalloonNotifications
+            XenonCheckBox20.Checked = .SysListView32
+            XenonCheckBox19.Checked = .ShowSecondsInSystemClock
+            XenonCheckBox18.Checked = .PaintDesktopVersion
+            XenonCheckBox21.Checked = .ShakeToMinimize
+
+            Panel2.Width = .Caret
         End With
+
+
     End Sub
 
     Sub ApplyToCP(CP As CP)
@@ -44,6 +65,21 @@ Public Class WinEffecter
             .IconsShadow = XenonCheckBox4.Checked
             .IconsDesktopTranslSel = XenonCheckBox10.Checked
             .ShowWinContentDrag = XenonCheckBox11.Checked
+            .KeyboardUnderline = XenonCheckBox12.Checked
+            .NotificationDuration = XenonTrackbar5.Value
+            .FocusRectWidth = XenonTrackbar2.Value
+            .FocusRectHeight = XenonTrackbar3.Value
+            .Caret = XenonTrackbar4.Value
+            .AWT_Enabled = XenonCheckBox13.Checked
+            .AWT_BringActivatedWindowToTop = XenonCheckBox14.Checked
+            .AWT_Delay = XenonTrackbar6.Value
+            .SnapCursorToDefButton = XenonCheckBox15.Checked
+            .Win11ClassicContextMenu = XenonCheckBox16.Checked
+            .BalloonNotifications = XenonCheckBox17.Checked
+            .SysListView32 = XenonCheckBox20.Checked
+            .ShowSecondsInSystemClock = XenonCheckBox19.Checked
+            .PaintDesktopVersion = XenonCheckBox18.Checked
+            .ShakeToMinimize = XenonCheckBox21.Checked
         End With
     End Sub
 
@@ -113,5 +149,57 @@ Public Class WinEffecter
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         MD.Text = sender.Value
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
+        XenonButton4.Text = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+        XenonButton1.Text = sender.Value
+        RetroButton1.FocusRectWidth = sender.Value : RetroButton1.Refresh()
+    End Sub
+
+    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
+        XenonButton2.Text = sender.Value
+        RetroButton1.FocusRectHeight = sender.Value : RetroButton1.Refresh()
+    End Sub
+
+    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
+        XenonButton3.Text = sender.Value
+        Panel2.Width = sender.Value
+    End Sub
+
+    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
+        XenonButton5.Text = sender.Value
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Panel2.Visible = Not Panel2.Visible
     End Sub
 End Class

@@ -1129,6 +1129,9 @@ Public Class DragPreviewer
         [Button].ButtonShadow = [CP].Win32.ButtonShadow
         [Button].BackColor = [CP].Win32.ButtonFace
         [Button].ForeColor = [CP].Win32.ButtonText
+        [Button].FocusRectWidth = [CP].WindowsEffects.FocusRectWidth
+        [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
+        [Button].Refresh()
     End Sub
 
 

@@ -88,8 +88,8 @@ Public Class CP_Defaults : Implements IDisposable
             .ShellIconSize = 32
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = False
             .BalloonNotifications = False
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False
@@ -172,8 +172,8 @@ Public Class CP_Defaults : Implements IDisposable
             .ShellIconSize = 32
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = True
             .BalloonNotifications = False
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False
@@ -289,9 +289,9 @@ Public Class CP_Defaults : Implements IDisposable
             .SmCaptionFont = New Font("Segoe UI", 11.25, FontStyle.Regular)
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
-            .BalloonNotifications = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = True
+            .BalloonNotifications = True
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False
             .Win11ClassicContextMenu = False
@@ -404,8 +404,8 @@ Public Class CP_Defaults : Implements IDisposable
             .ShellIconSize = 32
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = True
             .BalloonNotifications = True
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False
@@ -561,8 +561,8 @@ Public Class CP_Defaults : Implements IDisposable
             .ShellIconSize = 32
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = False
             .BalloonNotifications = True
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False
@@ -935,8 +935,8 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColorGradient = False
         End With
 
-        With [CP].MiscTweaks
-            .Enabled = False
+        With [CP].WindowsEffects
+            .ShakeToMinimize = False
             .BalloonNotifications = True
             .PaintDesktopVersion = False
             .ShowSecondsInSystemClock = False

@@ -50,6 +50,9 @@ Public Class RetroButton : Inherits Button
     Public Property UseItAsScrollbar As Boolean = False
     Public Property AppearsAsPressed As Boolean = False
     Public Property HatchBrush As Boolean = False
+    Public Property FocusRectWidth As Integer = 1
+    Public Property FocusRectHeight As Integer = 1
+
 #End Region
 
 #Region "Events"
@@ -108,7 +111,9 @@ Public Class RetroButton : Inherits Button
         '################################################################################# Customizer
         Dim rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rectinner As New Rectangle(1, 1, Width - 3, Height - 3)
+
         Dim rectdash As New Rectangle(4, 4, Width - 9, Height - 9)
+
         Dim pendash As New Pen(Color.Black) With {.DashStyle = DashStyle.Dot}
         '#################################################################################
 
@@ -163,15 +168,37 @@ Public Class RetroButton : Inherits Button
                         G.DrawLine(New Pen(ButtonLight), New Point(2, 3), New Point(2, Height - 3))
                         G.DrawLine(New Pen(ButtonShadow), New Point(2, Height - 3), New Point(Width - 3, Height - 3))
                         G.DrawLine(New Pen(ButtonShadow), New Point(Width - 3, 2), New Point(Width - 3, Height - 3))
+
                         If Pressed And Not Font.FontFamily.Name.ToLower = "marlett" Then
-                            G.DrawRectangle(pendash, rectdash)
+                            Dim ur As New Rectangle(rectdash.X, rectdash.Y, rectdash.Width, FocusRectHeight)
+                            Dim dr As New Rectangle(ur.X, rectdash.Y + rectdash.Height - ur.Height, ur.Width, ur.Height)
+                            Dim lr As New Rectangle(rectdash.X, rectdash.Y, FocusRectWidth, rectdash.Height)
+                            Dim rr As New Rectangle(rectdash.X + rectdash.Width - lr.Width, rectdash.Y, FocusRectWidth, rectdash.Height)
+                            Dim hb As New HatchBrush(HatchStyle.Percent50, Color.Black, BackColor)
+                            G.FillRectangle(hb, ur)
+                            G.FillRectangle(hb, dr)
+                            G.FillRectangle(hb, lr)
+                            G.FillRectangle(hb, rr)
                             G.DrawRectangle(New Pen(WindowFrame), rect)
                         End If
+
                     End If
                 Else
                     G.DrawRectangle(New Pen(WindowFrame), rect)
                     G.DrawRectangle(New Pen(ButtonShadow), rectinner)
-                    If Not Font.FontFamily.Name.ToLower = "marlett" Then G.DrawRectangle(pendash, rectdash)
+
+                    If Not Font.FontFamily.Name.ToLower = "marlett" Then
+                        Dim ur As New Rectangle(rectdash.X, rectdash.Y, rectdash.Width, FocusRectHeight)
+                        Dim dr As New Rectangle(ur.X, rectdash.Y + rectdash.Height - ur.Height, ur.Width, ur.Height)
+                        Dim lr As New Rectangle(rectdash.X, rectdash.Y, FocusRectWidth, rectdash.Height)
+                        Dim rr As New Rectangle(rectdash.X + rectdash.Width - lr.Width, rectdash.Y, FocusRectWidth, rectdash.Height)
+                        Dim hb As New HatchBrush(HatchStyle.Percent50, Color.Black, BackColor)
+                        G.FillRectangle(hb, ur)
+                        G.FillRectangle(hb, dr)
+                        G.FillRectangle(hb, lr)
+                        G.FillRectangle(hb, rr)
+                    End If
+
                 End If
             End If
         End If

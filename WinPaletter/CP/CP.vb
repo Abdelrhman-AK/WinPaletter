@@ -379,7 +379,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add(String.Format("*{0}_Transparency= {1}", MiniSignature, Transparency))
                 tx.Add(String.Format("*{0}_IncreaseTBTransparency= {1}", MiniSignature, IncreaseTBTransparency))
                 tx.Add(String.Format("*{0}_ApplyAccentonTitlebars= {1}", MiniSignature, ApplyAccentonTitlebars))
-                tx.Add(String.Format("*{0}_AccentOnStartTBAC= {1}", MiniSignature, ApplyAccentonTaskbar))
+                tx.Add(String.Format("*{0}_AccentOnStartTBAC= {1}", MiniSignature, CInt(ApplyAccentonTaskbar)))
                 tx.Add(String.Format("</{0}>" & vbCrLf, Signature))
                 Return tx.CString
             End Function
@@ -559,10 +559,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metro_StartColor= " & StartColor.ToArgb)
                 tx.Add("*Metro_AccentColor= " & AccentColor.ToArgb)
                 tx.Add("*Metro_Start= " & Start)
-                tx.Add("*Metro_Theme= " & Theme)
+                tx.Add("*Metro_Theme= " & CInt(Theme))
                 tx.Add("*Metro_LogonUI= " & LogonUI)
                 tx.Add("*Metro_NoLockScreen= " & NoLockScreen)
-                tx.Add("*Metro_LockScreenType= " & LockScreenType)
+                tx.Add("*Metro_LockScreenType= " & CInt(LockScreenType))
                 tx.Add("*Metro_LockScreenSystemID= " & LockScreenSystemID)
                 tx.Add("</Metro>" & vbCrLf)
 
@@ -750,7 +750,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Aero_ColorizationGlassReflectionIntensity= " & ColorizationGlassReflectionIntensity)
                 tx.Add("*Aero_EnableAeroPeek= " & EnableAeroPeek)
                 tx.Add("*Aero_AlwaysHibernateThumbnails= " & AlwaysHibernateThumbnails)
-                tx.Add("*Aero_Theme= " & Theme)
+                tx.Add("*Aero_Theme= " & CInt(Theme))
                 tx.Add("</Aero>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -862,7 +862,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("<Vista>")
                 tx.Add("*Vista_ColorizationColor= " & ColorizationColor.ToArgb)
                 tx.Add("*Vista_Alpha= " & Alpha)
-                tx.Add("*Vista_Theme= " & Theme)
+                tx.Add("*Vista_Theme= " & CInt(Theme))
                 tx.Add("</Vista>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -968,7 +968,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add("<WinXP>")
-                tx.Add("*WinXP_Theme= " & Theme)
+                tx.Add("*WinXP_Theme= " & CInt(Theme))
                 tx.Add("*WinXP_ThemeFile= " & ThemeFile)
                 tx.Add("*WinXP_ColorScheme= " & ColorScheme)
                 tx.Add("</WinXP>" & vbCrLf)
@@ -1486,6 +1486,23 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public IconsShadow As Boolean
             Public IconsDesktopTranslSel As Boolean
 
+            Public KeyboardUnderline As Boolean
+            Public FocusRectWidth As UInteger
+            Public FocusRectHeight As UInteger
+            Public Caret As UInteger
+            Public NotificationDuration As Integer
+            Public ShakeToMinimize As Boolean
+            Public AWT_Enabled As Boolean
+            Public AWT_BringActivatedWindowToTop As Boolean
+            Public AWT_Delay As Integer
+            Public SnapCursorToDefButton As Boolean
+
+            Public Win11ClassicContextMenu As Boolean
+            Public SysListView32 As Boolean
+            Public ShowSecondsInSystemClock As Boolean
+            Public BalloonNotifications As Boolean
+            Public PaintDesktopVersion As Boolean
+
             Sub Load(_DefEffects As WinEffects)
                 Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
                 Enabled = rMain_WE.GetValue("", True)
@@ -1626,6 +1643,120 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     IconsDesktopTranslSel = _DefEffects.IconsDesktopTranslSel
                 End Try
 
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUUNDERLINES, 0, i, SPIF.None) = 1 Then
+                        KeyboardUnderline = i
+                    Else
+                        KeyboardUnderline = _DefEffects.KeyboardUnderline
+                    End If
+                Catch
+                    KeyboardUnderline = _DefEffects.KeyboardUnderline
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.None) <> 1 Then
+                        FocusRectWidth = _DefEffects.FocusRectWidth
+                    End If
+                Catch
+                    FocusRectWidth = _DefEffects.FocusRectWidth
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.None) <> 1 Then
+                        FocusRectHeight = _DefEffects.FocusRectHeight
+                    End If
+                Catch
+                    FocusRectHeight = _DefEffects.FocusRectHeight
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETCARETWIDTH, 0, Caret, SPIF.None) <> 1 Then
+                        Caret = _DefEffects.Caret
+                    End If
+                Catch
+                    Caret = _DefEffects.Caret
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWINDOWTRACKING, 0, i, SPIF.None) = 1 Then
+                        AWT_Enabled = i
+                    Else
+                        AWT_Enabled = _DefEffects.AWT_Enabled
+                    End If
+                Catch
+                    AWT_Enabled = _DefEffects.AWT_Enabled
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKZORDER, 0, i, SPIF.None) = 1 Then
+                        AWT_BringActivatedWindowToTop = i
+                    Else
+                        AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop
+                    End If
+                Catch
+                    AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.None) <> 1 Then
+                        AWT_Delay = _DefEffects.AWT_Delay
+                    End If
+                Catch
+                    AWT_Delay = _DefEffects.AWT_Delay
+                End Try
+
+                Try
+                    If Fixer.SystemParametersInfo(SPI.Cursors.GETSNAPTODEFBUTTON, 0, i, SPIF.None) = 1 Then
+                        SnapCursorToDefButton = i
+                    Else
+                        SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton
+                    End If
+                Catch
+                    SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton
+                End Try
+
+                Try
+                    NotificationDuration = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", _DefEffects.NotificationDuration)
+                Catch
+                    NotificationDuration = _DefEffects.NotificationDuration
+                End Try
+
+                Try
+                    Dim temp As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", Not _DefEffects.ShakeToMinimize)
+                    ShakeToMinimize = Not temp
+                Catch
+                    ShakeToMinimize = _DefEffects.ShakeToMinimize
+                End Try
+
+                Try
+                    Win11ClassicContextMenu = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing
+                Catch
+                    Win11ClassicContextMenu = _DefEffects.Win11ClassicContextMenu
+                End Try
+
+                Try
+                    SysListView32 = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") IsNot Nothing
+                Catch
+                    SysListView32 = _DefEffects.SysListView32
+                End Try
+
+                Try
+                    ShowSecondsInSystemClock = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefEffects.ShowSecondsInSystemClock)
+                Catch
+                    ShowSecondsInSystemClock = _DefEffects.ShowSecondsInSystemClock
+                End Try
+
+                Try
+                    BalloonNotifications = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefEffects.BalloonNotifications)
+                Catch
+                    BalloonNotifications = _DefEffects.BalloonNotifications
+                End Try
+
+                Try
+                    PaintDesktopVersion = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefEffects.PaintDesktopVersion)
+                Catch
+                    PaintDesktopVersion = _DefEffects.PaintDesktopVersion
+                End Try
             End Sub
 
             Sub Apply()
@@ -1638,22 +1769,63 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SendChange) 'use uiParam not pvParam
+                    SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SendChange)        'use uiParam not pvParam
                     SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.SendChange) 'use uiParam not pvParam
+                    SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.SendChange)               'use uiParam not pvParam
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.SendChange)
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.SendChange)
+                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.SendChange)
+                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETCARETWIDTH, 0, Caret, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.SendChange)
+                    SystemParametersInfo(SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.SendChange)     'use uiParam not pvParam
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, RegistryValueKind.String)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
 
                     'ShowWinContentDrag should be re-written in registry with string format as SystemParametersInfo looses its effect after logoff here
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger, RegistryValueKind.String)
+
+                    'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
+                    Try
+                        EditReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                    Catch
+                        EditReg_AdministratorDeflector("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                    End Try
+
+                    If My.W11 Then
+                        Try
+                            If Win11ClassicContextMenu Then
+                                My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
+                            Else
+                                My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
+                            End If
+                        Catch
+                        End Try
+                    End If
+
+                    If Not My.WXP AndAlso Not My.WVista Then
+                        Try
+                            If SysListView32 Then
+                                My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
+                            Else
+                                My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
+                            End If
+                        Catch
+                        End Try
+                    End If
 
                     User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
                 End If
@@ -1679,128 +1851,35 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_WindowShadow= " & WindowShadow)
                 tx.Add("*WinEffects_WindowUIEffects= " & WindowUIEffects)
                 tx.Add("*WinEffects_MenuAnimation= " & MenuAnimation)
-                tx.Add("*WinEffects_MenuFade= " & MenuFade)
+                tx.Add("*WinEffects_MenuFade= " & CInt(MenuFade))
                 tx.Add("*WinEffects_MenuShowDelay= " & MenuShowDelay)
                 tx.Add("*WinEffects_MenuSelectionFade= " & MenuSelectionFade)
                 tx.Add("*WinEffects_ComboBoxAnimation= " & ComboboxAnimation)
                 tx.Add("*WinEffects_ListboxSmoothScrolling= " & ListBoxSmoothScrolling)
                 tx.Add("*WinEffects_TooltipAnimation= " & TooltipAnimation)
-                tx.Add("*WinEffects_TooltipFade= " & TooltipFade)
+                tx.Add("*WinEffects_TooltipFade= " & CInt(TooltipFade))
                 tx.Add("*WinEffects_IconsShadow= " & IconsShadow)
                 tx.Add("*WinEffects_IconsDesktopTranslSel= " & IconsDesktopTranslSel)
                 tx.Add("*WinEffects_ShowWinContentDrag= " & ShowWinContentDrag)
+                tx.Add("*WinEffects_KeyboardUnderline= " & KeyboardUnderline)
+                tx.Add("*WinEffects_FocusRectWidth= " & FocusRectWidth)
+                tx.Add("*WinEffects_FocusRectHeight= " & FocusRectHeight)
+                tx.Add("*WinEffects_Caret= " & Caret)
+                tx.Add("*WinEffects_NotificationDuration= " & NotificationDuration)
+                tx.Add("*WinEffects_ShakeToMinimize= " & ShakeToMinimize)
+                tx.Add("*WinEffects_AWT_Enabled= " & AWT_Enabled)
+                tx.Add("*WinEffects_AWT_BringActivatedWindowToTop= " & AWT_BringActivatedWindowToTop)
+                tx.Add("*WinEffects_AWT_Delay= " & AWT_Delay)
+                tx.Add("*WinEffects_SnapCursorToDefButton= " & SnapCursorToDefButton)
+                tx.Add("*WinEffects_Win11ClassicContextMenu= " & Win11ClassicContextMenu)
+                tx.Add("*WinEffects_SysListView32= " & SysListView32)
+                tx.Add("*WinEffects_ShowSecondsInSystemClock= " & ShowSecondsInSystemClock)
+                tx.Add("*WinEffects_BalloonNotifications= " & BalloonNotifications)
+                tx.Add("*WinEffects_PaintDesktopVersion= " & PaintDesktopVersion)
                 tx.Add("</WindowsEffects>" & vbCrLf)
                 Return tx.CString
             End Function
 
-        End Structure
-
-        Structure MiscTweaks : Implements ICloneable
-            Public Enabled As Boolean
-
-            Public Win11ClassicContextMenu As Boolean
-            Public SysListView32 As Boolean
-            Public ShowSecondsInSystemClock As Boolean
-            Public BalloonNotifications As Boolean
-            Public PaintDesktopVersion As Boolean
-
-            Sub Load(_DefMiscTweaks As MiscTweaks)
-                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\MiscTweaks")
-                Enabled = rMain_WE.GetValue("", True)
-                rMain_WE.Close()
-
-                Try
-                    Win11ClassicContextMenu = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing
-                Catch
-                    Win11ClassicContextMenu = _DefMiscTweaks.Win11ClassicContextMenu
-                End Try
-
-                Try
-                    SysListView32 = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") IsNot Nothing
-                Catch
-                    SysListView32 = _DefMiscTweaks.SysListView32
-                End Try
-
-                Try
-                    ShowSecondsInSystemClock = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefMiscTweaks.ShowSecondsInSystemClock)
-                Catch
-                    ShowSecondsInSystemClock = _DefMiscTweaks.ShowSecondsInSystemClock
-                End Try
-
-                Try
-                    BalloonNotifications = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefMiscTweaks.BalloonNotifications)
-                Catch
-                    BalloonNotifications = _DefMiscTweaks.BalloonNotifications
-                End Try
-
-                Try
-                    PaintDesktopVersion = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefMiscTweaks.PaintDesktopVersion)
-                Catch
-                    PaintDesktopVersion = _DefMiscTweaks.PaintDesktopVersion
-                End Try
-
-            End Sub
-
-            Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\MiscTweaks")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
-
-                If Enabled Then
-                    If My.W11 Then
-                        If Win11ClassicContextMenu Then
-                            My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
-                        Else
-                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
-                        End If
-                    End If
-
-                    If Not My.WXP AndAlso Not My.WVista Then
-                        If SysListView32 Then
-                            My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
-                        Else
-                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
-                        End If
-                    End If
-
-                    'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
-                    Try
-                        EditReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
-                    Catch
-                        EditReg_AdministratorDeflector("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
-                    End Try
-
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
-
-                End If
-            End Sub
-
-            Shared Operator =(First As MiscTweaks, Second As MiscTweaks) As Boolean
-                Return First.Equals(Second)
-            End Operator
-
-            Shared Operator <>(First As MiscTweaks, Second As MiscTweaks) As Boolean
-                Return Not First.Equals(Second)
-            End Operator
-
-            Public Function Clone() As Object Implements ICloneable.Clone
-                Return MemberwiseClone()
-            End Function
-
-            Public Overrides Function ToString() As String
-                Dim tx As New List(Of String)
-                tx.Clear()
-                tx.Add("<MiscTweaks>")
-                tx.Add("*MiscTweaks_Enabled= " & Enabled)
-                tx.Add("*MiscTweaks_Win11ClassicContextMenu= " & Win11ClassicContextMenu)
-                tx.Add("*MiscTweaks_SysListView32= " & SysListView32)
-                tx.Add("*MiscTweaks_ShowSecondsInSystemClock= " & ShowSecondsInSystemClock)
-                tx.Add("*MiscTweaks_BalloonNotifications= " & BalloonNotifications)
-                tx.Add("*MiscTweaks_PaintDesktopVersion= " & PaintDesktopVersion)
-                tx.Add("</MiscTweaks>" & vbCrLf)
-                Return tx.CString
-            End Function
         End Structure
 
         Structure MetricsFonts : Implements ICloneable
@@ -2334,7 +2413,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Clear()
                 tx.Add("<AltTab>")
                 tx.Add("*AltTab_Enabled= " & Enabled)
-                tx.Add("*AltTab_Style= " & Style)
+                tx.Add("*AltTab_Style= " & CInt(Style))
                 tx.Add("*AltTab_Win10Opacity= " & Win10Opacity)
                 tx.Add("</AltTab>" & vbCrLf)
                 Return tx.CString
@@ -2517,14 +2596,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Clear()
                 tx.Add("<LogonUI_7_8>")
                 tx.Add("*LogonUI7_Enabled= " & Enabled)
-                tx.Add("*LogonUI7_Mode= " & Mode)
+                tx.Add("*LogonUI7_Mode= " & CInt(Mode))
                 tx.Add("*LogonUI7_ImagePath= " & ImagePath)
                 tx.Add("*LogonUI7_Color= " & Color.ToArgb)
                 tx.Add("*LogonUI7_Effect_Blur= " & Blur)
                 tx.Add("*LogonUI7_Effect_Blur_Intensity= " & Blur_Intensity)
                 tx.Add("*LogonUI7_Effect_Grayscale= " & Grayscale)
                 tx.Add("*LogonUI7_Effect_Noise= " & Noise)
-                tx.Add("*LogonUI7_Effect_Noise_Mode= " & Noise_Mode)
+                tx.Add("*LogonUI7_Effect_Noise_Mode= " & CInt(Noise_Mode))
                 tx.Add("*LogonUI7_Effect_Noise_Intensity= " & Noise_Intensity)
                 tx.Add("</LogonUI_7_8>" & vbCrLf)
                 Return tx.CString
@@ -2609,7 +2688,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Clear()
                 tx.Add("<LogonUI_XP>")
                 tx.Add("*LogonUIXP_Enabled= " & Enabled)
-                tx.Add("*LogonUIXP_Mode= " & Mode)
+                tx.Add("*LogonUIXP_Mode= " & CInt(Mode))
                 tx.Add("*LogonUIXP_BackColor= " & BackColor.ToArgb)
                 tx.Add("*LogonUIXP_ShowMoreOptions= " & ShowMoreOptions)
                 tx.Add("</LogonUI_XP>" & vbCrLf)
@@ -3191,8 +3270,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add(String.Format("<{0}>", Signature))
-                tx.Add(String.Format("*Cursor_{0}_ArrowStyle= {1}", Signature, ArrowStyle))
-                tx.Add(String.Format("*Cursor_{0}_CircleStyle= {1}", Signature, CircleStyle))
+                tx.Add(String.Format("*Cursor_{0}_ArrowStyle= {1}", Signature, CInt(ArrowStyle)))
+                tx.Add(String.Format("*Cursor_{0}_CircleStyle= {1}", Signature, CInt(CircleStyle)))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColor1= {1}", Signature, PrimaryColor1.ToArgb))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColor2= {1}", Signature, PrimaryColor2.ToArgb))
                 tx.Add(String.Format("*Cursor_{0}_PrimaryColorGradient= {1}", Signature, PrimaryColorGradient))
@@ -3376,14 +3455,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Desktop = Color.FromArgb(0, 0, 0)
             }
 
-    Public MiscTweaks As New Structures.MiscTweaks With {
-        .Enabled = False,
-        .BalloonNotifications = False,
-        .PaintDesktopVersion = False,
-        .ShowSecondsInSystemClock = False,
-        .Win11ClassicContextMenu = False,
-        .SysListView32 = False}
-
     Public WallpaperTone_W11 As New Structures.WallpaperTone With {
         .Enabled = False,
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
@@ -3429,7 +3500,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .TooltipFade = MenuAnimType.Fade,
         .IconsShadow = True,
         .IconsDesktopTranslSel = True,
-        .ShowWinContentDrag = True}
+        .ShowWinContentDrag = True,
+        .BalloonNotifications = False,
+        .PaintDesktopVersion = False,
+        .ShowSecondsInSystemClock = False,
+        .Win11ClassicContextMenu = False,
+        .SysListView32 = False,
+        .SnapCursorToDefButton = False,
+        .ShakeToMinimize = True,
+        .NotificationDuration = 5,
+        .FocusRectWidth = 1,
+        .FocusRectHeight = 1,
+        .KeyboardUnderline = False,
+        .Caret = 1,
+        .AWT_Enabled = False,
+        .AWT_Delay = 0,
+        .AWT_BringActivatedWindowToTop = False}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
@@ -4670,7 +4756,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Win32.Load()
                 MetricsFonts.Load(_Def.MetricsFonts)
                 AltTab.Load(_Def.AltTab)
-                MiscTweaks.Load(_Def.MiscTweaks)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -5177,6 +5262,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*WinEffects_IconsShadow= ", My._strIgnore) Then WindowsEffects.IconsShadow = lin.Remove(0, "*WinEffects_IconsShadow= ".Count)
                     If lin.StartsWith("*WinEffects_IconsDesktopTranslSel= ", My._strIgnore) Then WindowsEffects.IconsDesktopTranslSel = lin.Remove(0, "*WinEffects_IconsDesktopTranslSel= ".Count)
                     If lin.StartsWith("*WinEffects_ShowWinContentDrag= ", My._strIgnore) Then WindowsEffects.ShowWinContentDrag = lin.Remove(0, "*WinEffects_ShowWinContentDrag= ".Count)
+                    If lin.StartsWith("*WinEffects_KeyboardUnderline= ", My._strIgnore) Then WindowsEffects.KeyboardUnderline = lin.Remove(0, "*WinEffects_KeyboardUnderline= ".Count)
+                    If lin.StartsWith("*WinEffects_FocusRectWidth= ", My._strIgnore) Then WindowsEffects.FocusRectWidth = lin.Remove(0, "*WinEffects_FocusRectWidth= ".Count)
+                    If lin.StartsWith("*WinEffects_FocusRectHeight= ", My._strIgnore) Then WindowsEffects.FocusRectHeight = lin.Remove(0, "*WinEffects_FocusRectHeight= ".Count)
+                    If lin.StartsWith("*WinEffects_Caret= ", My._strIgnore) Then WindowsEffects.Caret = lin.Remove(0, "*WinEffects_Caret= ".Count)
+                    If lin.StartsWith("*WinEffects_NotificationDuration= ", My._strIgnore) Then WindowsEffects.NotificationDuration = lin.Remove(0, "*WinEffects_NotificationDuration= ".Count)
+                    If lin.StartsWith("*WinEffects_ShakeToMinimize= ", My._strIgnore) Then WindowsEffects.ShakeToMinimize = lin.Remove(0, "*WinEffects_ShakeToMinimize= ".Count)
+                    If lin.StartsWith("*WinEffects_AWT_Enabled= ", My._strIgnore) Then WindowsEffects.AWT_Enabled = lin.Remove(0, "*WinEffects_AWT_Enabled= ".Count)
+                    If lin.StartsWith("*WinEffects_AWT_BringActivatedWindowToTop= ", My._strIgnore) Then WindowsEffects.AWT_BringActivatedWindowToTop = lin.Remove(0, "*WinEffects_AWT_BringActivatedWindowToTop= ".Count)
+                    If lin.StartsWith("*WinEffects_AWT_Delay= ", My._strIgnore) Then WindowsEffects.AWT_Delay = lin.Remove(0, "*WinEffects_AWT_Delay= ".Count)
+                    If lin.StartsWith("*WinEffects_SnapCursorToDefButton= ", My._strIgnore) Then WindowsEffects.SnapCursorToDefButton = lin.Remove(0, "*WinEffects_SnapCursorToDefButton= ".Count)
+                    If lin.StartsWith("*WinEffects_Win11ClassicContextMenu= ", My._strIgnore) Then WindowsEffects.Win11ClassicContextMenu = lin.Remove(0, "*WinEffects_Win11ClassicContextMenu= ".Count)
+                    If lin.StartsWith("*WinEffects_SysListView32= ", My._strIgnore) Then WindowsEffects.SysListView32 = lin.Remove(0, "*WinEffects_SysListView32= ".Count)
+                    If lin.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", My._strIgnore) Then WindowsEffects.ShowSecondsInSystemClock = lin.Remove(0, "*WinEffects_ShowSecondsInSystemClock= ".Count)
+                    If lin.StartsWith("*WinEffects_BalloonNotifications= ", My._strIgnore) Then WindowsEffects.BalloonNotifications = lin.Remove(0, "*WinEffects_BalloonNotifications= ".Count)
+                    If lin.StartsWith("*WinEffects_PaintDesktopVersion= ", My._strIgnore) Then WindowsEffects.PaintDesktopVersion = lin.Remove(0, "*WinEffects_PaintDesktopVersion= ".Count)
 #End Region
 
 #Region "Metrics & Fonts"
@@ -5206,15 +5306,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*AltTab_Enabled= ", My._strIgnore) Then AltTab.Enabled = lin.Remove(0, "*AltTab_Enabled= ".Count)
                     If lin.StartsWith("*AltTab_Style= ", My._strIgnore) Then AltTab.Style = lin.Remove(0, "*AltTab_Style= ".Count)
                     If lin.StartsWith("*AltTab_Win10Opacity= ", My._strIgnore) Then AltTab.Win10Opacity = lin.Remove(0, "*AltTab_Win10Opacity= ".Count)
-#End Region
-
-#Region "Misc Tweaks"
-                    If lin.StartsWith("*MiscTweaks_Enabled= ", My._strIgnore) Then MiscTweaks.Enabled = lin.Remove(0, "*MiscTweaks_Enabled= ".Count)
-                    If lin.StartsWith("*MiscTweaks_Win11ClassicContextMenu= ", My._strIgnore) Then MiscTweaks.Win11ClassicContextMenu = lin.Remove(0, "*MiscTweaks_Win11ClassicContextMenu= ".Count)
-                    If lin.StartsWith("*MiscTweaks_SysListView32= ", My._strIgnore) Then MiscTweaks.SysListView32 = lin.Remove(0, "*MiscTweaks_SysListView32= ".Count)
-                    If lin.StartsWith("*MiscTweaks_ShowSecondsInSystemClock= ", My._strIgnore) Then MiscTweaks.ShowSecondsInSystemClock = lin.Remove(0, "*MiscTweaks_ShowSecondsInSystemClock= ".Count)
-                    If lin.StartsWith("*MiscTweaks_BalloonNotifications= ", My._strIgnore) Then MiscTweaks.BalloonNotifications = lin.Remove(0, "*MiscTweaks_BalloonNotifications= ".Count)
-                    If lin.StartsWith("*MiscTweaks_PaintDesktopVersion= ", My._strIgnore) Then MiscTweaks.PaintDesktopVersion = lin.Remove(0, "*MiscTweaks_PaintDesktopVersion= ".Count)
 #End Region
 
 #Region "Terminals"
@@ -5500,12 +5591,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                  If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
 
-                'MiscTweaks
-                Excute(CType(Sub()
-                                 MiscTweaks.Apply()
-                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_MiscTweaks, My.Lang.CP_Error_MiscTweaks, My.Lang.CP_Time, sw_all, Not MiscTweaks.Enabled, My.Lang.CP_Skip_MiscTweaks)
-
-
 #Region "Consoles"
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
                 rLogX.SetValue("Terminal_CMD_Enabled", CommandPrompt.Enabled.ToInteger)
@@ -5717,7 +5802,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add(WindowsEffects.ToString)
         tx.Add(MetricsFonts.ToString)
         tx.Add(AltTab.ToString)
-        tx.Add(MiscTweaks.ToString)
 
         tx.Add(WallpaperTone_W11.ToString("Win11"))
         tx.Add(WallpaperTone_W10.ToString("Win10"))
@@ -6582,7 +6666,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
         If AltTab <> DirectCast(obj, CP).AltTab Then _Equals = False
-        If MiscTweaks <> DirectCast(obj, CP).MiscTweaks Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
         If WallpaperTone_W8 <> DirectCast(obj, CP).WallpaperTone_W8 Then _Equals = False

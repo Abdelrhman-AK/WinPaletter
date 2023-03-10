@@ -394,12 +394,6 @@
     <Compile Include="Metrics_Fonts\VS2Metrics.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MiscTweaker.Designer.vb">
-      <DependentUpon>MiscTweaker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MiscTweaker.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources1.Designer.vb">
@@ -726,9 +720,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Metrics_Fonts\VS2Metrics.resx">
       <DependentUpon>VS2Metrics.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MiscTweaker.resx">
-      <DependentUpon>MiscTweaker.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
