@@ -190,28 +190,28 @@ Public Class CursorsStudio
             XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
             XenonComboBox1.SelectedItem = ReturnStringFromGradientMode(.Prop_PrimaryColorGradientMode)
             XenonCheckBox5.Checked = .Prop_PrimaryNoise
-            XenonNumericUpDown2.Text = .Prop_PrimaryNoiseOpacity * 100
+            XenonTrackbar3.Value = .Prop_PrimaryNoiseOpacity * 100
 
             SecondaryColor1.BackColor = .Prop_SecondaryColor1
             SecondaryColor2.BackColor = .Prop_SecondaryColor2
             XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
             XenonComboBox2.SelectedItem = ReturnStringFromGradientMode(.Prop_SecondaryColorGradientMode)
             XenonCheckBox3.Checked = .Prop_SecondaryNoise
-            XenonNumericUpDown1.Text = .Prop_SecondaryNoiseOpacity * 100
+            XenonTrackbar4.Value = .Prop_SecondaryNoiseOpacity * 100
 
             CircleColor1.BackColor = .Prop_LoadingCircleBack1
             CircleColor2.BackColor = .Prop_LoadingCircleBack2
             XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
             XenonComboBox4.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
             XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
-            XenonNumericUpDown6.Text = .Prop_LoadingCircleBackNoiseOpacity * 100
+            XenonTrackbar5.Value = .Prop_LoadingCircleBackNoiseOpacity * 100
 
             LoadingColor1.BackColor = .Prop_LoadingCircleHot1
             LoadingColor2.BackColor = .Prop_LoadingCircleHot2
             XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
             XenonComboBox3.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
             XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
-            XenonNumericUpDown4.Text = .Prop_LoadingCircleHotNoiseOpacity * 100
+            XenonTrackbar6.Value = .Prop_LoadingCircleHotNoiseOpacity * 100
         End With
 
     End Sub
@@ -226,14 +226,14 @@ Public Class CursorsStudio
             .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
             .Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox1.SelectedItem)
             .Prop_PrimaryNoise = XenonCheckBox5.Checked
-            .Prop_PrimaryNoiseOpacity = Val(XenonNumericUpDown2.Text) / 100
+            .Prop_PrimaryNoiseOpacity = XenonTrackbar3.Value / 100
 
             .Prop_SecondaryColor1 = SecondaryColor1.BackColor
             .Prop_SecondaryColor2 = SecondaryColor2.BackColor
             .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
             .Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox2.SelectedItem)
             .Prop_SecondaryNoise = XenonCheckBox3.Checked
-            .Prop_SecondaryNoiseOpacity = Val(XenonNumericUpDown1.Text) / 100
+            .Prop_SecondaryNoiseOpacity = XenonTrackbar4.Value / 100
             '.Prop_LineThickness = XenonNumericUpDown3.Value / 10
 
             .Prop_LoadingCircleBack1 = CircleColor1.BackColor
@@ -241,14 +241,14 @@ Public Class CursorsStudio
             .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
             .Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(XenonComboBox4.SelectedItem)
             .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
-            .Prop_LoadingCircleBackNoiseOpacity = Val(XenonNumericUpDown6.Text) / 100
+            .Prop_LoadingCircleBackNoiseOpacity = XenonTrackbar5.Value / 100
 
             .Prop_LoadingCircleHot1 = LoadingColor1.BackColor
             .Prop_LoadingCircleHot2 = LoadingColor2.BackColor
             .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
             .Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(XenonComboBox3.SelectedItem)
             .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
-            .Prop_LoadingCircleHotNoiseOpacity = Val(XenonNumericUpDown4.Text) / 100
+            .Prop_LoadingCircleHotNoiseOpacity = XenonTrackbar6.Value / 100
         End With
 
     End Sub
@@ -619,63 +619,6 @@ Public Class CursorsStudio
         Next
     End Sub
 
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonNumericUpDown2.TextChanged
-        If Not _Shown Then Exit Sub
-
-        Dim valX As Single = Val(sender.Text)
-        If valX > 100 Then
-            valX = 100
-        ElseIf valX < 0 Then
-            valX = 0
-        End If
-
-        _SelectedControl.Prop_PrimaryNoiseOpacity = valX / 100
-        _SelectedControl.Invalidate()
-    End Sub
-
-    Private Sub XenonTextBox1_TextChanged_1(sender As Object, e As EventArgs) Handles XenonNumericUpDown6.TextChanged
-        If Not _Shown Then Exit Sub
-
-        Dim valX As Single = Val(sender.Text)
-        If valX > 100 Then
-            valX = 100
-        ElseIf valX < 0 Then
-            valX = 0
-        End If
-
-        _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = valX / 100
-        _SelectedControl.Invalidate()
-
-    End Sub
-
-    Private Sub XenonTextBox1_TextChanged_2(sender As Object, e As EventArgs) Handles XenonNumericUpDown1.TextChanged
-        If Not _Shown Then Exit Sub
-
-        Dim valX As Single = Val(sender.Text)
-        If valX > 100 Then
-            valX = 100
-        ElseIf valX < 0 Then
-            valX = 0
-        End If
-
-        _SelectedControl.Prop_SecondaryNoiseOpacity = valX / 100
-        _SelectedControl.Invalidate()
-    End Sub
-
-    Private Sub XenonTextBox1_TextChanged_3(sender As Object, e As EventArgs) Handles XenonNumericUpDown4.TextChanged
-        If Not _Shown Then Exit Sub
-
-        Dim valX As Single = Val(sender.Text)
-        If valX > 100 Then
-            valX = 100
-        ElseIf valX < 0 Then
-            valX = 0
-        End If
-
-        _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = valX / 100
-        _SelectedControl.Invalidate()
-
-    End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         Me.Close()
@@ -781,6 +724,90 @@ Public Class CursorsStudio
         If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_CircleStyle = XenonComboBox6.SelectedIndex
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
+        XenonButton12.Text = sender.Value
+
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = sender.Value
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_PrimaryNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
+        XenonButton13.Text = sender.Value
+
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = sender.Value
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_SecondaryNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
+        XenonButton14.Text = sender.Value
+
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = sender.Value
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = valX / 100
+        _SelectedControl.Invalidate()
+    End Sub
+
+    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
+        XenonButton15.Text = sender.Value
+
+        If Not _Shown Then Exit Sub
+
+        Dim valX As Single = sender.Value
+        If valX > 100 Then
+            valX = 100
+        ElseIf valX < 0 Then
+            valX = 0
+        End If
+
+        _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = valX / 100
         _SelectedControl.Invalidate()
     End Sub
 End Class

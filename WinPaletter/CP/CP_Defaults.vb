@@ -1,4 +1,6 @@
-﻿Public Class CP_Defaults : Implements IDisposable
+﻿Imports WinPaletter.CP
+
+Public Class CP_Defaults : Implements IDisposable
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.Windows11.Color_Index0.R, Default_Windows11.Windows11.Color_Index0.G, Default_Windows11.Windows11.Color_Index0.B, 255,
                                                     Default_Windows11.Windows11.Color_Index1.R, Default_Windows11.Windows11.Color_Index1.G, Default_Windows11.Windows11.Color_Index1.B, 255,
@@ -86,6 +88,15 @@
             .ShellIconSize = 32
         End With
 
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = False
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = False
+        End With
+
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].Cursor_Shadow = False
@@ -159,6 +170,15 @@
             .SmCaptionWidth = 22
             .DesktopIconSize = 48
             .ShellIconSize = 32
+        End With
+
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = False
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = False
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
@@ -269,6 +289,15 @@
             .SmCaptionFont = New Font("Segoe UI", 11.25, FontStyle.Regular)
         End With
 
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = False
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = False
+        End With
+
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty)
         [CP].Cursor_Shadow = False
@@ -373,6 +402,15 @@
             .SmCaptionWidth = 17
             .DesktopIconSize = 48
             .ShellIconSize = 32
+        End With
+
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = True
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = False
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
@@ -521,6 +559,15 @@
             .SmCaptionWidth = 17
             .DesktopIconSize = 48
             .ShellIconSize = 32
+        End With
+
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = True
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = True
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
@@ -679,6 +726,222 @@
             .MenuFont = New Font("Tahoma", 8.25, FontStyle.Regular)
             .MessageFont = New Font("Tahoma", 8.25, FontStyle.Regular)
             .StatusFont = New Font("Tahoma", 8.25, FontStyle.Regular)
+        End With
+
+        [CP].Cursor_Shadow = True
+        With [CP].Cursor_Arrow
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Help
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_AppLoading
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Busy
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Up
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_NS
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_EW
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_NESW
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_NWSE
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Move
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_None
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Arrow
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Pen
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_IBeam
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Cross
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Link
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Pin
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].Cursor_Person
+            .ArrowStyle = ArrowStyle.Classic
+            .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.White
+            .PrimaryColor2 = Color.White
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
+            .PrimaryColorGradient = False
+            .SecondaryColorGradient = False
+        End With
+
+        With [CP].MiscTweaks
+            .Enabled = False
+            .BalloonNotifications = True
+            .PaintDesktopVersion = False
+            .ShowSecondsInSystemClock = False
+            .Win11ClassicContextMenu = False
+            .SysListView32 = True
         End With
 
         [CP].Terminal = New WinTerminal("", WinTerminal.Mode.Empty)

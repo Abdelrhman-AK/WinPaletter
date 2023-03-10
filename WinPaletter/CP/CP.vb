@@ -1695,6 +1695,114 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End Structure
 
+        Structure MiscTweaks : Implements ICloneable
+            Public Enabled As Boolean
+
+            Public Win11ClassicContextMenu As Boolean
+            Public SysListView32 As Boolean
+            Public ShowSecondsInSystemClock As Boolean
+            Public BalloonNotifications As Boolean
+            Public PaintDesktopVersion As Boolean
+
+            Sub Load(_DefMiscTweaks As MiscTweaks)
+                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\MiscTweaks")
+                Enabled = rMain_WE.GetValue("", True)
+                rMain_WE.Close()
+
+                Try
+                    Win11ClassicContextMenu = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing
+                Catch
+                    Win11ClassicContextMenu = _DefMiscTweaks.Win11ClassicContextMenu
+                End Try
+
+                Try
+                    SysListView32 = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") IsNot Nothing
+                Catch
+                    SysListView32 = _DefMiscTweaks.SysListView32
+                End Try
+
+                Try
+                    ShowSecondsInSystemClock = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefMiscTweaks.ShowSecondsInSystemClock)
+                Catch
+                    ShowSecondsInSystemClock = _DefMiscTweaks.ShowSecondsInSystemClock
+                End Try
+
+                Try
+                    BalloonNotifications = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefMiscTweaks.BalloonNotifications)
+                Catch
+                    BalloonNotifications = _DefMiscTweaks.BalloonNotifications
+                End Try
+
+                Try
+                    PaintDesktopVersion = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefMiscTweaks.PaintDesktopVersion)
+                Catch
+                    PaintDesktopVersion = _DefMiscTweaks.PaintDesktopVersion
+                End Try
+
+            End Sub
+
+            Sub Apply()
+                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\MiscTweaks")
+                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
+                rMain.Close()
+
+                If Enabled Then
+                    If My.W11 Then
+                        If Win11ClassicContextMenu Then
+                            My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
+                        Else
+                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
+                        End If
+                    End If
+
+                    If Not My.WXP AndAlso Not My.WVista Then
+                        If SysListView32 Then
+                            My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
+                        Else
+                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
+                        End If
+                    End If
+
+                    'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
+                    Try
+                        EditReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                    Catch
+                        EditReg_AdministratorDeflector("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                    End Try
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+
+                End If
+            End Sub
+
+            Shared Operator =(First As MiscTweaks, Second As MiscTweaks) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As MiscTweaks, Second As MiscTweaks) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<MiscTweaks>")
+                tx.Add("*MiscTweaks_Enabled= " & Enabled)
+                tx.Add("*MiscTweaks_Win11ClassicContextMenu= " & Win11ClassicContextMenu)
+                tx.Add("*MiscTweaks_SysListView32= " & SysListView32)
+                tx.Add("*MiscTweaks_ShowSecondsInSystemClock= " & ShowSecondsInSystemClock)
+                tx.Add("*MiscTweaks_BalloonNotifications= " & BalloonNotifications)
+                tx.Add("*MiscTweaks_PaintDesktopVersion= " & PaintDesktopVersion)
+                tx.Add("</MiscTweaks>" & vbCrLf)
+                Return tx.CString
+            End Function
+        End Structure
+
         Structure MetricsFonts : Implements ICloneable
             Public Enabled As Boolean
             Public BorderWidth As Integer
@@ -3268,6 +3376,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Desktop = Color.FromArgb(0, 0, 0)
             }
 
+    Public MiscTweaks As New Structures.MiscTweaks With {
+        .Enabled = False,
+        .BalloonNotifications = False,
+        .PaintDesktopVersion = False,
+        .ShowSecondsInSystemClock = False,
+        .Win11ClassicContextMenu = False,
+        .SysListView32 = False}
+
     Public WallpaperTone_W11 As New Structures.WallpaperTone With {
         .Enabled = False,
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
@@ -3994,6 +4110,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Dim _Value As String
         If RegistryKeyPath.ToUpper.StartsWith("HKEY_LOCAL_MACHINE") Then RegistryKeyPath = "HKLM" & RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count)
+        If RegistryKeyPath.ToUpper.StartsWith("HKEY_CURRENT_USER") Then RegistryKeyPath = "HKCU" & RegistryKeyPath.Remove(0, "HKEY_CURRENT_USER".Count)
 
         '/v = Value Name
         '/t = Registry Value Type (https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types)
@@ -4553,6 +4670,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Win32.Load()
                 MetricsFonts.Load(_Def.MetricsFonts)
                 AltTab.Load(_Def.AltTab)
+                MiscTweaks.Load(_Def.MiscTweaks)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -5090,6 +5208,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*AltTab_Win10Opacity= ", My._strIgnore) Then AltTab.Win10Opacity = lin.Remove(0, "*AltTab_Win10Opacity= ".Count)
 #End Region
 
+#Region "Misc Tweaks"
+                    If lin.StartsWith("*MiscTweaks_Enabled= ", My._strIgnore) Then MiscTweaks.Enabled = lin.Remove(0, "*MiscTweaks_Enabled= ".Count)
+                    If lin.StartsWith("*MiscTweaks_Win11ClassicContextMenu= ", My._strIgnore) Then MiscTweaks.Win11ClassicContextMenu = lin.Remove(0, "*MiscTweaks_Win11ClassicContextMenu= ".Count)
+                    If lin.StartsWith("*MiscTweaks_SysListView32= ", My._strIgnore) Then MiscTweaks.SysListView32 = lin.Remove(0, "*MiscTweaks_SysListView32= ".Count)
+                    If lin.StartsWith("*MiscTweaks_ShowSecondsInSystemClock= ", My._strIgnore) Then MiscTweaks.ShowSecondsInSystemClock = lin.Remove(0, "*MiscTweaks_ShowSecondsInSystemClock= ".Count)
+                    If lin.StartsWith("*MiscTweaks_BalloonNotifications= ", My._strIgnore) Then MiscTweaks.BalloonNotifications = lin.Remove(0, "*MiscTweaks_BalloonNotifications= ".Count)
+                    If lin.StartsWith("*MiscTweaks_PaintDesktopVersion= ", My._strIgnore) Then MiscTweaks.PaintDesktopVersion = lin.Remove(0, "*MiscTweaks_PaintDesktopVersion= ".Count)
+#End Region
+
 #Region "Terminals"
 
                     If lin.StartsWith("*Terminal_CMD_Enabled= ", My._strIgnore) Then CommandPrompt.Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
@@ -5373,6 +5500,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                  If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
 
+                'MiscTweaks
+                Excute(CType(Sub()
+                                 MiscTweaks.Apply()
+                             End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_MiscTweaks, My.Lang.CP_Error_MiscTweaks, My.Lang.CP_Time, sw_all, Not MiscTweaks.Enabled, My.Lang.CP_Skip_MiscTweaks)
+
+
 #Region "Consoles"
                 Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
                 rLogX.SetValue("Terminal_CMD_Enabled", CommandPrompt.Enabled.ToInteger)
@@ -5584,6 +5717,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add(WindowsEffects.ToString)
         tx.Add(MetricsFonts.ToString)
         tx.Add(AltTab.ToString)
+        tx.Add(MiscTweaks.ToString)
 
         tx.Add(WallpaperTone_W11.ToString("Win11"))
         tx.Add(WallpaperTone_W10.ToString("Win10"))
@@ -6051,17 +6185,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Case CursorType.Link
                         Dim CurOptions As New CursorOptions(Cursor_Link) With {.Cursor = CursorType.Link, .LineThickness = 1, .Scale = i, ._Angle = 0}
                         bmp = Draw(CurOptions)
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
+                        HotPoint = New Point(1 + CInt(6 * i), If(CurOptions.ArrowStyle <> ArrowStyle.Classic, 1, 2))
 
                     Case CursorType.Pin
                         Dim CurOptions As New CursorOptions(Cursor_Pin) With {.Cursor = CursorType.Pin, .LineThickness = 1, .Scale = i, ._Angle = 0}
                         bmp = Draw(CurOptions)
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
+                        HotPoint = New Point(1 + CInt(6 * i), If(CurOptions.ArrowStyle <> ArrowStyle.Classic, 1, 2))
 
                     Case CursorType.Person
                         Dim CurOptions As New CursorOptions(Cursor_Person) With {.Cursor = CursorType.Person, .LineThickness = 1, .Scale = i, ._Angle = 0}
                         bmp = Draw(CurOptions)
-                        HotPoint = New Point(1 + CInt(6 * i), 1)
+                        HotPoint = New Point(1 + CInt(6 * i), If(CurOptions.ArrowStyle <> ArrowStyle.Classic, 1, 2))
 
                     Case CursorType.IBeam
                         Dim CurOptions As New CursorOptions(Cursor_IBeam) With {.Cursor = CursorType.IBeam, .LineThickness = 1, .Scale = i, ._Angle = 0}
@@ -6102,7 +6236,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Else
                             Dim CurOptions As New CursorOptions(Cursor_Busy) With {.Cursor = CursorType.Busy, .LineThickness = 1, .Scale = i, ._Angle = ang}
                             bm = New Bitmap(Draw(CurOptions))
-                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+
+                            HotPoint = New Point(If(CurOptions.CircleStyle <> CircleStyle.Classic, 1, 2) + CInt(11 * i), 1 + CInt(11 * i))
+
                         End If
 
                         BMPList.Add(bm)
@@ -6119,7 +6255,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Else
                             Dim CurOptions As New CursorOptions(Cursor_Busy) With {.Cursor = CursorType.Busy, .LineThickness = 1, .Scale = i, ._Angle = ang}
                             bm = New Bitmap(Draw(CurOptions))
-                            HotPoint = New Point(1 + CInt(11 * i), 1 + CInt(11 * i))
+                            HotPoint = New Point(If(CurOptions.CircleStyle <> CircleStyle.Classic, 1, 2) + CInt(11 * i), 1 + CInt(11 * i))
 
                         End If
 
@@ -6446,6 +6582,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WindowsEffects <> DirectCast(obj, CP).WindowsEffects Then _Equals = False
         If MetricsFonts <> DirectCast(obj, CP).MetricsFonts Then _Equals = False
         If AltTab <> DirectCast(obj, CP).AltTab Then _Equals = False
+        If MiscTweaks <> DirectCast(obj, CP).MiscTweaks Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
         If WallpaperTone_W8 <> DirectCast(obj, CP).WallpaperTone_W8 Then _Equals = False
@@ -6490,4 +6627,4 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     End Operator
 #End Region
 
-    End Class
+End Class

@@ -277,6 +277,24 @@ Namespace NativeMethods
                 ''' </summary>
                 SETMOUSESONAR = &H101D
 
+                ''' <summary>
+                ''' <b>Determines whether the snap-to-default-button feature is enabled. If enabled, the mouse cursor automatically moves to the default button, such as OK Or Apply, of a dialog box.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if the feature Is on, Or FALSE if it Is off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  Not supported.</i>
+                ''' </summary>
+                GETSNAPTODEFBUTTON = &H5F
+
+                ''' <summary>
+                ''' <b>Enables or disables the snap-to-default-button feature. If enabled, the mouse cursor automatically moves to the default button, such as OK Or Apply, of a dialog box.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the uiParam parameter to TRUE to enable the feature, or FALSE to disable it.
+                ''' <br></br> • Applications should use the ShowWindow function when displaying a dialog box so the dialog manager can position the mouse cursor.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  Not supported.</i>
+                ''' </summary>
+                SETSNAPTODEFBUTTON = &H60
             End Enum
 
             Enum Titlebars
@@ -551,8 +569,135 @@ Namespace NativeMethods
                 ''' </summary>
                 GETDRAGFULLWINDOWS = &H26
 
+                ''' <summary>
+                ''' <b>Determines whether menu access keys are always underlined.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if menu access keys are always underlined, And FALSE if they are underlined only when the menu Is activated by the keyboard.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETMENUUNDERLINES = &H100A
+
+                ''' <summary>
+                ''' <b>Determines whether menu access keys are always underlined.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE to always underline menu access keys, Or FALSE to underline menu access keys only when the menu Is activated from the keyboard.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETMENUUNDERLINES = &H100B
+
+                ''' <summary>
+                ''' <b>Determines whether active window tracking (activating the window the mouse is on) is on or off.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE for on, Or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETACTIVEWINDOWTRACKING = &H1000
+
+                ''' <summary>
+                ''' <b>Sets active window tracking (activating the window the mouse is on) either on or off.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE for on or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETACTIVEWINDOWTRACKING = &H1001
+
+                ''' <summary>
+                ''' <b>Sets active window tracking (activating the window the mouse is on) either on or off.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE for on or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETACTIVEWNDTRKTIMEOUT = &H2002
+
+                ''' <summary>
+                ''' <b>Retrieves the active window tracking delay, in milliseconds.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a DWORD variable that receives the time.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETACTIVEWNDTRKTIMEOUT = &H2003
+
+                ''' <summary>
+                ''' <b>Sets the active window tracking delay.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to the number of milliseconds to delay before activating the window under the mouse pointer.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95: This value is not supported.</i>
+                ''' </summary>
+                GETACTIVEWNDTRKZORDER = &H100C
+
+                ''' <summary>
+                ''' <b>Determines whether or not windows activated through active window tracking should be brought to the top.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to TRUE for on Or FALSE for off.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETACTIVEWNDTRKZORDER = &H100D
+
+                ''' <summary>
+                ''' <b>Retrieves the caret width in edit controls, in pixels.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a DWORD that receives this value.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SPI_GETCARETWIDTH = &H2006
+
+                ''' <summary>
+                ''' <b>Sets the caret width in edit controls.</b>
+                ''' <br></br>
+                ''' <br></br> • Set pvParam to the desired width, in pixels.
+                ''' <br></br> • The default and minimum value is 1.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SPI_SETCARETWIDTH = &H2007
             End Enum
 
+            Enum FocusRect
+                ''' <summary>
+                ''' <b>Retrieves the width, in pixels, of the left and right edges of the focus rectangle drawn with DrawFocusRect.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a UINT.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                GETFOCUSBORDERWIDTH = &H200E
+
+                ''' <summary>
+                ''' <b>Sets the height of the left and right edges of the focus rectangle drawn with DrawFocusRect</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 2000/NT, Windows Me/98/95:  This value is not supported.</i>
+                ''' </summary>
+                SETFOCUSBORDERWIDTH = &H200F
+
+                ''' <summary>
+                ''' <b>Retrieves the height, in pixels, of the top and bottom edges of the focus rectangle drawn with DrawFocusRect.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a UINT.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                GETFOCUSBORDERHEIGHT = &H2010
+
+                ''' <summary>
+                ''' <b>Sets the height of the top and bottom edges of the focus rectangle drawn with DrawFocusRect to the value of the pvParam parameter.</b>
+                ''' <br></br>
+                ''' <br></br> • Set the pvParam parameter.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows NT, Windows 95:  This value is not supported.</i>
+                ''' </summary>
+                SETFOCUSBORDERHEIGHT = &H2011
+            End Enum
         End Class
 
         <Flags>

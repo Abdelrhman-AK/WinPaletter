@@ -2017,7 +2017,9 @@ Partial Class Metrics_Fonts
         'RetroPanel2
         '
         Me.RetroPanel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroPanel2.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
         Me.RetroPanel2.ButtonHilight = System.Drawing.Color.White
+        Me.RetroPanel2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
         Me.RetroPanel2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RetroPanel2.Flat = False
@@ -2026,6 +2028,7 @@ Partial Class Metrics_Fonts
         Me.RetroPanel2.Location = New System.Drawing.Point(6, 45)
         Me.RetroPanel2.Name = "RetroPanel2"
         Me.RetroPanel2.Size = New System.Drawing.Size(412, 117)
+        Me.RetroPanel2.Style2 = False
         Me.RetroPanel2.TabIndex = 15
         '
         'MenuStrip2
@@ -2730,7 +2733,7 @@ Partial Class Metrics_Fonts
         Me.RetroButton11.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton11.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton11.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 9.0!, System.Drawing.FontStyle.Bold)
         Me.RetroButton11.ForeColor = System.Drawing.Color.Black
         Me.RetroButton11.HatchBrush = False
         Me.RetroButton11.Image = Nothing
@@ -2752,7 +2755,7 @@ Partial Class Metrics_Fonts
         Me.RetroButton10.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton10.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroButton10.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 9.0!, System.Drawing.FontStyle.Bold)
         Me.RetroButton10.ForeColor = System.Drawing.Color.Black
         Me.RetroButton10.HatchBrush = False
         Me.RetroButton10.Image = Nothing
@@ -2776,7 +2779,9 @@ Partial Class Metrics_Fonts
         'RetroPanel1
         '
         Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroPanel1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
         Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroPanel1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
         Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.RetroPanel1.Controls.Add(Me.Label14)
         Me.RetroPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -2786,6 +2791,7 @@ Partial Class Metrics_Fonts
         Me.RetroPanel1.Location = New System.Drawing.Point(2, 164)
         Me.RetroPanel1.Name = "RetroPanel1"
         Me.RetroPanel1.Size = New System.Drawing.Size(381, 20)
+        Me.RetroPanel1.Style2 = False
         Me.RetroPanel1.TabIndex = 95
         '
         'Label14

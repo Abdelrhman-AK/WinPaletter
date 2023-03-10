@@ -247,7 +247,7 @@ Public Module Paths
                         G.FillPath(Noise, Busy(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                     End If
 
-                    G.FillPath(BC, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                    G.FillPath(BH, BusyLoader(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
 
                     If [CursorOptions].[LoadingCircleHotNoise] Then
                         Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
@@ -308,13 +308,13 @@ Public Module Paths
 
                     If [CursorOptions].[LoadingCircleBackNoise] Then
                         Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleBackNoiseOpacity]))
-                        G.FillPath(Noise, AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                        G.FillPath(Noise, AppLoading(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                     End If
 
                     If [CursorOptions].[LoadingCircleHotNoise] Then
                         Noise = New TextureBrush(My.Resources.GaussianBlurOpaque.Fade([CursorOptions].[LoadingCircleHotNoiseOpacity]))
-                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoaderCircle(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
-                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoading(_LoadRect, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoaderCircle(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
+                        G.DrawPath(New Pen(Noise, [CursorOptions].LineThickness), AppLoading(_Busy, [CursorOptions]._Angle, [CursorOptions].CircleStyle, [CursorOptions].Scale))
                     End If
 
                 Else

@@ -411,7 +411,7 @@
   <data name="PictureBox15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAPJJREFUSEu11UkSgjAUBFCcxxXHcrqQ4qwb5YI43iTmE79A0rFikK56LmLshpVB
+        vAAADrwBlbxySQAAAPJJREFUSEu11UkSgjAUBFCcxxXHcrqQ4qwb5YI43iTmE79A0rFikK56LmLshpVB
         GIaVgof/pD7e0b/0VQgfhNM4ksR3Z2UG8HepOEpL83EuIoUyC/1tvItsjAF0qYxKBibkpJQayBfZOA24
         FNkYA95l/CAacwD9WAeKxhbfB+QFBBXZmAPy0KcIkg9pDMCLLmQZ8vsAKGEjQB8YHp9icFD6e/YQvV2m
         u71/dDbsJtrrTGt1TcEBCg1QKhnwfQM9cIDKKFREcX1S0lyyi2hEijEgDyMuspWhIlJfkCRVmyd0Zv7h
@@ -1667,10 +1667,23 @@
         bhbbvhr6rehmkZVVADc7BdnhNfVEeENtks26ejy8VfizH9xfDvAO4g5sdCKWCDsAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="XenonButton30.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAGOSURBVEhLYxgFVAUO+6/yQJlwYH7sYr75sQv/kfA7qBRpwPTIBW2g5hdmRy9MYvj/nxEqzGBx
+        9HwDmgX/oVLEA4vjF82BGt/DDLA4dnGpw/79LGA5Si2wPXRO1PzY+TfohoAMBsmTZAFQEu5KCL6YD3Kp
+        2bELm1DFL3y1OH7eAaTH7PA5fYujF8ph2Pzo+SywYdgAmiFwV4auWsVsfvzCcqj4J8tj563AGkgFyIaD
+        MMwCEPDcdpsdFMGmxy46Q4XAwPjMGRHzoxdigb5cCcTngAmACSqFCfBZgA0AI98PqO4Psh7LYxfMoNKY
+        QHnlht3IWH/H/ilmxy90wLDF8QtFUKVgYHbyghqy4WB8/EIzVBoTSM1e+B8Z627ffwDdAKhSOACK3UaW
+        tzh24RRUChOQZ8HFfqjcZyBeC/RlGFQKE5BjATDMpUERD0oEUCHcgBwLSALohqms3HgA3VJ0NaDMCNVO
+        GKBrJsYCQkkZBaBrHooWnM9GLrg01m7JBRragIyR5UEYVNhBtY8CcgADAwAGDy3NQc6mcwAAAABJRU5E
+        rkJggg==
+</value>
+  </data>
   <data name="XenonButton32.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAuJJREFUSEvtk+tLU2Ecxw+9Kuh1vfKvqITAXhReiigwVlhSujnddK1lQ4ZJ82zu
+        vQAADr0BR/uQrQAAAuJJREFUSEvtk+tLU2Ecxw+9Kuh1vfKvqITAXhReiigwVlhSujnddK1lQ4ZJ82zu
         puYVNVdZKgkhXV4ZGSYj79qFnKK28jI33f2+qSB8e852PEPSXvUuf/DhgfP7Pp8vh8OhDuZg/t1otdrj
         BoOhsbq6eoic43q9fhdkz6HRaDiqqqo41Gr1EKGhsrLyGKtNDHlwlEgsBOh0Og4i4yAyDiLjIMI4KpWK
         g6ZpC+Nk9RRFLgkYyfXuj8h6O4usNzPIZHidIOOVGed7v0H+sA0PtAZcfjnB7s3IYCD79DjTuNgzhnK1

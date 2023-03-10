@@ -4193,6 +4193,10 @@ Public Class MainFrm
 
     End Sub
 
+    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        MiscTweaker.ShowDialog()
+    End Sub
+
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
         If _Shown And Select_WXP.Checked Then
             PreviewConfig = WinVer.WXP

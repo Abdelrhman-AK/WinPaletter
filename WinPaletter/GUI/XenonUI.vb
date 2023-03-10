@@ -5286,8 +5286,9 @@ Public Class XenonWindow : Inherits Panel
         TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
         TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
 
-        If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Or Preview = Preview_Enum.W8 Or Preview = Preview_Enum.W8Lite Then
-            i = FreeMargin + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth
+        If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Or Preview = Preview_Enum.W8 Or Preview = Preview_Enum.W8Lite Or Preview = Preview_Enum.WXP Then
+
+            i = FreeMargin + If(Not Preview = Preview_Enum.WXP, _Metrics_PaddedBorderWidth, 0) + _Metrics_BorderWidth
             iTop = i + TitleTextH_Sum + _Metrics_CaptionHeight
 
             i += 4
