@@ -1,4 +1,6 @@
-﻿Imports Microsoft.Win32
+﻿Imports System.Drawing.Drawing2D
+Imports System.Windows.Interop
+Imports Microsoft.Win32
 Public Class XeSettings
 
 #Region "Settings"
@@ -52,6 +54,8 @@ Public Class XeSettings
     Public Property EP_UseTaskbar10 As Boolean = False
     Public Property EP_TaskbarButton10 As Boolean = False
     Public Property EP_StartStyle As ExplorerPatcher.StartStyles
+
+    Public Property DelayMetrics As Boolean = False
 
 #End Region
 
@@ -141,6 +145,8 @@ Public Class XeSettings
         If Key.GetValue("EP_TaskbarButton10", Nothing) Is Nothing Then Key.SetValue("EP_TaskbarButton10", False, RegistryValueKind.DWord)
         If Key.GetValue("EP_StartStyle", Nothing) Is Nothing Then Key.SetValue("EP_StartStyle", ExplorerPatcher.StartStyles.NotRounded, RegistryValueKind.DWord)
 
+        If Key.GetValue("DelayMetrics", Nothing) Is Nothing Then Key.SetValue("DelayMetrics", False, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -220,6 +226,8 @@ Public Class XeSettings
                 EP_TaskbarButton10 = Key.GetValue("EP_TaskbarButton10", False)
                 EP_StartStyle = Key.GetValue("EP_StartStyle", ExplorerPatcher.StartStyles.NotRounded)
 
+                DelayMetrics = Key.GetValue("DelayMetrics", False)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -268,6 +276,8 @@ Public Class XeSettings
                     If x.StartsWith("EP_UseTaskbar10= ", My._strIgnore) Then EP_UseTaskbar10 = x.Remove(0, "EP_UseTaskbar10= ".Count)
                     If x.StartsWith("EP_TaskbarButton10= ", My._strIgnore) Then EP_TaskbarButton10 = x.Remove(0, "EP_TaskbarButton10= ".Count)
                     If x.StartsWith("EP_StartStyle= ", My._strIgnore) Then EP_StartStyle = x.Remove(0, "EP_StartStyle= ".Count)
+
+                    If x.StartsWith("DelayMetrics= ", My._strIgnore) Then DelayMetrics = x.Remove(0, "DelayMetrics= ".Count)
                 Next
         End Select
     End Sub
@@ -343,6 +353,8 @@ Public Class XeSettings
                 Key.SetValue("EP_TaskbarButton10", EP_TaskbarButton10, RegistryValueKind.DWord)
                 Key.SetValue("EP_StartStyle", EP_StartStyle, RegistryValueKind.DWord)
 
+                Key.SetValue("DelayMetrics", DelayMetrics, RegistryValueKind.DWord)
+
             Case Mode.File
                 Dim l As New List(Of String)
                 l.Clear()
@@ -406,6 +418,8 @@ Public Class XeSettings
                 l.Add(String.Format("EP_UseTaskbar10= {0}", EP_UseTaskbar10))
                 l.Add(String.Format("EP_TaskbarButton10= {0}", EP_TaskbarButton10))
                 l.Add(String.Format("EP_StartStyle= {0}", EP_StartStyle))
+
+                l.Add(String.Format("DelayMetrics= {0}", DelayMetrics))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

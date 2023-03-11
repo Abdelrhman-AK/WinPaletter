@@ -104,6 +104,7 @@ Public Module Paths
     Public Function Draw([CursorOptions] As CursorOptions) As Bitmap
         Dim b As New Bitmap(32 * [CursorOptions].Scale, 32 * [CursorOptions].Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
+
         G.SmoothingMode = SmoothingMode.HighQuality
 
         G.Clear(Color.Transparent)

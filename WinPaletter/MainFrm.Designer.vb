@@ -1036,6 +1036,8 @@ Partial Class MainFrm
         Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
         Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton4.FocusRectHeight = 1
+        Me.RetroButton4.FocusRectWidth = 1
         Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton4.ForeColor = System.Drawing.Color.Black
         Me.RetroButton4.HatchBrush = False
@@ -1058,6 +1060,8 @@ Partial Class MainFrm
         Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
         Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton3.FocusRectHeight = 1
+        Me.RetroButton3.FocusRectWidth = 1
         Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton3.ForeColor = System.Drawing.Color.Black
         Me.RetroButton3.HatchBrush = False
@@ -1080,6 +1084,8 @@ Partial Class MainFrm
         Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
         Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroButton2.FocusRectHeight = 1
+        Me.RetroButton2.FocusRectWidth = 1
         Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RetroButton2.ForeColor = System.Drawing.Color.Black
         Me.RetroButton2.HatchBrush = False

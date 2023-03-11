@@ -128,13 +128,11 @@ Partial Class SettingsX
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.PictureBox35 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox16 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox50 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox22 = New WinPaletter.XenonCheckBox()
         Me.PictureBox37 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox17 = New WinPaletter.XenonCheckBox()
         Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
-        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.XenonSeparator6 = New WinPaletter.XenonSeparator()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -166,17 +164,14 @@ Partial Class SettingsX
         Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
-        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
-        Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
-        Me.PictureBox27 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
-        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
-        Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.PictureBox35 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox16 = New WinPaletter.XenonCheckBox()
+        Me.XenonSeparator11 = New WinPaletter.XenonSeparator()
+        Me.PictureBox52 = New System.Windows.Forms.PictureBox()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
@@ -200,6 +195,17 @@ Partial Class SettingsX
         Me.XenonSeparator9 = New WinPaletter.XenonSeparator()
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
         Me.Label30 = New System.Windows.Forms.Label()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
+        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
+        Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
+        Me.PictureBox27 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox15 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
+        Me.XenonSeparator7 = New WinPaletter.XenonSeparator()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
@@ -247,9 +253,8 @@ Partial Class SettingsX
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
-        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox50, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
@@ -260,10 +265,10 @@ Partial Class SettingsX
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage6.SuspendLayout()
-        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage10.SuspendLayout()
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox52, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
         Me.XenonGroupBox2.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -272,6 +277,10 @@ Partial Class SettingsX
         CType(Me.PictureBox49, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -295,8 +304,9 @@ Partial Class SettingsX
         Me.ImageList1.Images.SetKeyName(4, "Log")
         Me.ImageList1.Images.SetKeyName(5, "ThemeApplyingBehaviour")
         Me.ImageList1.Images.SetKeyName(6, "Terminals")
-        Me.ImageList1.Images.SetKeyName(7, "Miscellaneous")
+        Me.ImageList1.Images.SetKeyName(7, "Cursors")
         Me.ImageList1.Images.SetKeyName(8, "ExplorerPatcher")
+        Me.ImageList1.Images.SetKeyName(9, "Miscellaneous")
         '
         'OpenJSONDlg
         '
@@ -336,12 +346,13 @@ Partial Class SettingsX
         Me.XenonTabControl1.Controls.Add(Me.TabPage8)
         Me.XenonTabControl1.Controls.Add(Me.TabPage5)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage6)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Controls.Add(Me.TabPage9)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage6)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonTabControl1.ImageList = Me.ImageList1
-        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(40, 195)
+        Me.XenonTabControl1.ItemSize = New System.Drawing.Size(37, 195)
         Me.XenonTabControl1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonTabControl1.Location = New System.Drawing.Point(6, 74)
         Me.XenonTabControl1.Multiline = True
@@ -886,7 +897,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator8.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator8.Name = "XenonSeparator8"
-        Me.XenonSeparator8.Size = New System.Drawing.Size(806, 1)
+        Me.XenonSeparator8.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator8.TabIndex = 22
         Me.XenonSeparator8.TabStop = False
         '
@@ -1143,7 +1154,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 205)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(800, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator1.TabIndex = 22
         Me.XenonSeparator1.TabStop = False
         '
@@ -1176,7 +1187,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator5.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator5.Name = "XenonSeparator5"
-        Me.XenonSeparator5.Size = New System.Drawing.Size(800, 1)
+        Me.XenonSeparator5.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator5.TabIndex = 19
         Me.XenonSeparator5.TabStop = False
         '
@@ -1317,7 +1328,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator4.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator4.Name = "XenonSeparator4"
-        Me.XenonSeparator4.Size = New System.Drawing.Size(799, 1)
+        Me.XenonSeparator4.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator4.TabIndex = 19
         Me.XenonSeparator4.TabStop = False
         '
@@ -1553,7 +1564,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator10.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator10.Name = "XenonSeparator10"
-        Me.XenonSeparator10.Size = New System.Drawing.Size(799, 1)
+        Me.XenonSeparator10.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator10.TabIndex = 22
         Me.XenonSeparator10.TabStop = False
         '
@@ -1582,13 +1593,11 @@ Partial Class SettingsX
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage5.Controls.Add(Me.PictureBox35)
-        Me.TabPage5.Controls.Add(Me.XenonCheckBox16)
+        Me.TabPage5.Controls.Add(Me.PictureBox50)
+        Me.TabPage5.Controls.Add(Me.XenonCheckBox22)
         Me.TabPage5.Controls.Add(Me.PictureBox37)
         Me.TabPage5.Controls.Add(Me.XenonCheckBox17)
         Me.TabPage5.Controls.Add(Me.XenonAlertBox6)
-        Me.TabPage5.Controls.Add(Me.PictureBox14)
-        Me.TabPage5.Controls.Add(Me.XenonCheckBox7)
         Me.TabPage5.Controls.Add(Me.XenonSeparator6)
         Me.TabPage5.Controls.Add(Me.PictureBox8)
         Me.TabPage5.Controls.Add(Me.Label2)
@@ -1602,35 +1611,35 @@ Partial Class SettingsX
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Theme Applying Behavior"
         '
-        'PictureBox35
+        'PictureBox50
         '
-        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
-        Me.PictureBox35.Location = New System.Drawing.Point(44, 191)
-        Me.PictureBox35.Name = "PictureBox35"
-        Me.PictureBox35.Size = New System.Drawing.Size(30, 26)
-        Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox35.TabIndex = 25
-        Me.PictureBox35.TabStop = False
+        Me.PictureBox50.Image = CType(resources.GetObject("PictureBox50.Image"), System.Drawing.Image)
+        Me.PictureBox50.Location = New System.Drawing.Point(41, 182)
+        Me.PictureBox50.Name = "PictureBox50"
+        Me.PictureBox50.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox50.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox50.TabIndex = 25
+        Me.PictureBox50.TabStop = False
         '
-        'XenonCheckBox16
+        'XenonCheckBox22
         '
-        Me.XenonCheckBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonCheckBox22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox16.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox16.Checked = False
-        Me.XenonCheckBox16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox16.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox16.Location = New System.Drawing.Point(75, 191)
-        Me.XenonCheckBox16.Name = "XenonCheckBox16"
-        Me.XenonCheckBox16.Size = New System.Drawing.Size(607, 26)
-        Me.XenonCheckBox16.TabIndex = 26
-        Me.XenonCheckBox16.Text = "If Cursors Applying is disabled or skipped, automatic switch the cursors scheme t" &
-    "o Windows Default ""Aero"""
+        Me.XenonCheckBox22.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox22.Checked = False
+        Me.XenonCheckBox22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox22.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox22.Location = New System.Drawing.Point(77, 182)
+        Me.XenonCheckBox22.Name = "XenonCheckBox22"
+        Me.XenonCheckBox22.Size = New System.Drawing.Size(729, 26)
+        Me.XenonCheckBox22.TabIndex = 26
+        Me.XenonCheckBox22.Text = "Make applying Metrics & Fonts having effects only after logoff and logon (To fix " &
+    "its crashing issue)"
         '
         'PictureBox37
         '
         Me.PictureBox37.Image = CType(resources.GetObject("PictureBox37.Image"), System.Drawing.Image)
-        Me.PictureBox37.Location = New System.Drawing.Point(41, 223)
+        Me.PictureBox37.Location = New System.Drawing.Point(41, 150)
         Me.PictureBox37.Name = "PictureBox37"
         Me.PictureBox37.Size = New System.Drawing.Size(30, 26)
         Me.PictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1645,7 +1654,7 @@ Partial Class SettingsX
         Me.XenonCheckBox17.Checked = True
         Me.XenonCheckBox17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox17.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox17.Location = New System.Drawing.Point(77, 223)
+        Me.XenonCheckBox17.Location = New System.Drawing.Point(77, 150)
         Me.XenonCheckBox17.Name = "XenonCheckBox17"
         Me.XenonCheckBox17.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox17.TabIndex = 24
@@ -1670,31 +1679,6 @@ Partial Class SettingsX
         Me.XenonAlertBox6.Text = "It is used to apply accent colors correctly in Windows 10 and 11, Start Menu for " &
     "Windows 8.1"
         '
-        'PictureBox14
-        '
-        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
-        Me.PictureBox14.Location = New System.Drawing.Point(41, 159)
-        Me.PictureBox14.Name = "PictureBox14"
-        Me.PictureBox14.Size = New System.Drawing.Size(30, 26)
-        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox14.TabIndex = 20
-        Me.PictureBox14.TabStop = False
-        '
-        'XenonCheckBox7
-        '
-        Me.XenonCheckBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox7.Checked = True
-        Me.XenonCheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox7.Location = New System.Drawing.Point(77, 159)
-        Me.XenonCheckBox7.Name = "XenonCheckBox7"
-        Me.XenonCheckBox7.Size = New System.Drawing.Size(729, 26)
-        Me.XenonCheckBox7.TabIndex = 21
-        Me.XenonCheckBox7.Text = "Automatic Apply Custom Cursors (Creates new scheme called WinPaletter in Control " &
-    "Panel > Mouse)"
-        '
         'XenonSeparator6
         '
         Me.XenonSeparator6.AlternativeLook = False
@@ -1702,7 +1686,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator6.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator6.Name = "XenonSeparator6"
-        Me.XenonSeparator6.Size = New System.Drawing.Size(800, 1)
+        Me.XenonSeparator6.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator6.TabIndex = 19
         Me.XenonSeparator6.TabStop = False
         '
@@ -2120,7 +2104,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator3.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator3.Name = "XenonSeparator3"
-        Me.XenonSeparator3.Size = New System.Drawing.Size(800, 1)
+        Me.XenonSeparator3.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator3.TabIndex = 21
         Me.XenonSeparator3.TabStop = False
         '
@@ -2146,158 +2130,105 @@ Partial Class SettingsX
         Me.Label7.Text = "Terminals"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'TabPage6
+        'TabPage10
         '
-        Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage6.Controls.Add(Me.XenonAlertBox7)
-        Me.TabPage6.Controls.Add(Me.XenonCheckBox11)
-        Me.TabPage6.Controls.Add(Me.XenonComboBox3)
-        Me.TabPage6.Controls.Add(Me.PictureBox27)
-        Me.TabPage6.Controls.Add(Me.XenonCheckBox10)
-        Me.TabPage6.Controls.Add(Me.PictureBox15)
-        Me.TabPage6.Controls.Add(Me.XenonCheckBox9)
-        Me.TabPage6.Controls.Add(Me.XenonSeparator7)
-        Me.TabPage6.Controls.Add(Me.PictureBox13)
-        Me.TabPage6.Controls.Add(Me.Label6)
-        Me.TabPage6.Location = New System.Drawing.Point(199, 4)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(823, 471)
-        Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "Miscellaneous"
+        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage10.Controls.Add(Me.PictureBox35)
+        Me.TabPage10.Controls.Add(Me.XenonCheckBox16)
+        Me.TabPage10.Controls.Add(Me.XenonSeparator11)
+        Me.TabPage10.Controls.Add(Me.PictureBox52)
+        Me.TabPage10.Controls.Add(Me.Label35)
+        Me.TabPage10.Controls.Add(Me.PictureBox14)
+        Me.TabPage10.Controls.Add(Me.XenonCheckBox7)
+        Me.TabPage10.Location = New System.Drawing.Point(199, 4)
+        Me.TabPage10.Name = "TabPage10"
+        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage10.Size = New System.Drawing.Size(823, 471)
+        Me.TabPage10.TabIndex = 10
+        Me.TabPage10.Text = "Cursors"
         '
-        'XenonAlertBox7
+        'PictureBox35
         '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
+        Me.PictureBox35.Location = New System.Drawing.Point(41, 86)
+        Me.PictureBox35.Name = "PictureBox35"
+        Me.PictureBox35.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox35.TabIndex = 25
+        Me.PictureBox35.TabStop = False
+        '
+        'XenonCheckBox16
+        '
+        Me.XenonCheckBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox7.CenterText = True
-        Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox7.Image = Nothing
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(81, 180)
-        Me.XenonAlertBox7.Name = "XenonAlertBox7"
-        Me.XenonAlertBox7.Size = New System.Drawing.Size(574, 24)
-        Me.XenonAlertBox7.TabIndex = 27
-        Me.XenonAlertBox7.TabStop = False
-        Me.XenonAlertBox7.Text = "Know that if the color info starts with ""D"" and font is underlined, the color is " &
-    "the same as the default one"
+        Me.XenonCheckBox16.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox16.Checked = False
+        Me.XenonCheckBox16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox16.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox16.Location = New System.Drawing.Point(77, 86)
+        Me.XenonCheckBox16.Name = "XenonCheckBox16"
+        Me.XenonCheckBox16.Size = New System.Drawing.Size(607, 26)
+        Me.XenonCheckBox16.TabIndex = 26
+        Me.XenonCheckBox16.Text = "If Cursors Applying is disabled or skipped, automatic switch the cursors scheme t" &
+    "o Windows Default ""Aero"""
         '
-        'XenonCheckBox11
+        'XenonSeparator11
         '
-        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonSeparator11.AlternativeLook = False
+        Me.XenonSeparator11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox11.Checked = False
-        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox11.Location = New System.Drawing.Point(77, 148)
-        Me.XenonCheckBox11.Name = "XenonCheckBox11"
-        Me.XenonCheckBox11.Size = New System.Drawing.Size(728, 26)
-        Me.XenonCheckBox11.TabIndex = 26
-        Me.XenonCheckBox11.Text = "Show Hex Hash (#)"
+        Me.XenonSeparator11.Location = New System.Drawing.Point(6, 47)
+        Me.XenonSeparator11.Name = "XenonSeparator11"
+        Me.XenonSeparator11.Size = New System.Drawing.Size(811, 1)
+        Me.XenonSeparator11.TabIndex = 29
+        Me.XenonSeparator11.TabStop = False
         '
-        'XenonComboBox3
+        'PictureBox52
         '
-        Me.XenonComboBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.PictureBox52.Image = CType(resources.GetObject("PictureBox52.Image"), System.Drawing.Image)
+        Me.PictureBox52.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox52.Name = "PictureBox52"
+        Me.PictureBox52.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox52.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox52.TabIndex = 28
+        Me.PictureBox52.TabStop = False
+        '
+        'Label35
+        '
+        Me.Label35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonComboBox3.CustomFont = False
-        Me.XenonComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox3.FormattingEnabled = True
-        Me.XenonComboBox3.ItemHeight = 20
-        Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB", "HSL", "Decimal"})
-        Me.XenonComboBox3.Location = New System.Drawing.Point(81, 118)
-        Me.XenonComboBox3.Name = "XenonComboBox3"
-        Me.XenonComboBox3.Size = New System.Drawing.Size(282, 26)
-        Me.XenonComboBox3.TabIndex = 25
+        Me.Label35.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label35.Location = New System.Drawing.Point(47, 6)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(759, 35)
+        Me.Label35.TabIndex = 27
+        Me.Label35.Text = "Cursors"
+        Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'PictureBox27
+        'PictureBox14
         '
-        Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
-        Me.PictureBox27.Location = New System.Drawing.Point(41, 86)
-        Me.PictureBox27.Name = "PictureBox27"
-        Me.PictureBox27.Size = New System.Drawing.Size(30, 26)
-        Me.PictureBox27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox27.TabIndex = 23
-        Me.PictureBox27.TabStop = False
+        Me.PictureBox14.Image = CType(resources.GetObject("PictureBox14.Image"), System.Drawing.Image)
+        Me.PictureBox14.Location = New System.Drawing.Point(41, 54)
+        Me.PictureBox14.Name = "PictureBox14"
+        Me.PictureBox14.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox14.TabIndex = 20
+        Me.PictureBox14.TabStop = False
         '
-        'XenonCheckBox10
+        'XenonCheckBox7
         '
-        Me.XenonCheckBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonCheckBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox10.Checked = False
-        Me.XenonCheckBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox10.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox10.Location = New System.Drawing.Point(77, 86)
-        Me.XenonCheckBox10.Name = "XenonCheckBox10"
-        Me.XenonCheckBox10.Size = New System.Drawing.Size(728, 26)
-        Me.XenonCheckBox10.TabIndex = 24
-        Me.XenonCheckBox10.Text = "Nerd color info on color palette item"
-        '
-        'PictureBox15
-        '
-        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
-        Me.PictureBox15.Location = New System.Drawing.Point(41, 54)
-        Me.PictureBox15.Name = "PictureBox15"
-        Me.PictureBox15.Size = New System.Drawing.Size(30, 26)
-        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox15.TabIndex = 20
-        Me.PictureBox15.TabStop = False
-        '
-        'XenonCheckBox9
-        '
-        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox9.Checked = False
-        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox9.Location = New System.Drawing.Point(77, 54)
-        Me.XenonCheckBox9.Name = "XenonCheckBox9"
-        Me.XenonCheckBox9.Size = New System.Drawing.Size(728, 26)
-        Me.XenonCheckBox9.TabIndex = 21
-        Me.XenonCheckBox9.Text = "Preview every change I make to colors and values in real-time (Windows 7 and 8.1)" &
-    ""
-        '
-        'XenonSeparator7
-        '
-        Me.XenonSeparator7.AlternativeLook = False
-        Me.XenonSeparator7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator7.Location = New System.Drawing.Point(6, 47)
-        Me.XenonSeparator7.Name = "XenonSeparator7"
-        Me.XenonSeparator7.Size = New System.Drawing.Size(800, 1)
-        Me.XenonSeparator7.TabIndex = 19
-        Me.XenonSeparator7.TabStop = False
-        '
-        'PictureBox13
-        '
-        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
-        Me.PictureBox13.Location = New System.Drawing.Point(6, 6)
-        Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox13.TabIndex = 3
-        Me.PictureBox13.TabStop = False
-        '
-        'Label6
-        '
-        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(47, 6)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(759, 35)
-        Me.Label6.TabIndex = 2
-        Me.Label6.Text = "Miscellaneous"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox7.Checked = True
+        Me.XenonCheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox7.Location = New System.Drawing.Point(77, 54)
+        Me.XenonCheckBox7.Name = "XenonCheckBox7"
+        Me.XenonCheckBox7.Size = New System.Drawing.Size(729, 26)
+        Me.XenonCheckBox7.TabIndex = 21
+        Me.XenonCheckBox7.Text = "Automatic Apply Custom Cursors (Creates new scheme called WinPaletter in Control " &
+    "Panel > Mouse)"
         '
         'TabPage9
         '
@@ -2543,7 +2474,7 @@ Partial Class SettingsX
         Me.XenonCheckBox20.Name = "XenonCheckBox20"
         Me.XenonCheckBox20.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox20.TabIndex = 25
-        Me.XenonCheckBox20.Text = "Enabled"
+        Me.XenonCheckBox20.Text = "Synchronize preview with Windows 11 if installed"
         '
         'XenonSeparator9
         '
@@ -2552,7 +2483,7 @@ Partial Class SettingsX
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator9.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator9.Name = "XenonSeparator9"
-        Me.XenonSeparator9.Size = New System.Drawing.Size(800, 1)
+        Me.XenonSeparator9.Size = New System.Drawing.Size(811, 1)
         Me.XenonSeparator9.TabIndex = 22
         Me.XenonSeparator9.TabStop = False
         '
@@ -2577,6 +2508,159 @@ Partial Class SettingsX
         Me.Label30.TabIndex = 20
         Me.Label30.Text = "ExplorerPatcher"
         Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TabPage6
+        '
+        Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.XenonAlertBox7)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox11)
+        Me.TabPage6.Controls.Add(Me.XenonComboBox3)
+        Me.TabPage6.Controls.Add(Me.PictureBox27)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox10)
+        Me.TabPage6.Controls.Add(Me.PictureBox15)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox9)
+        Me.TabPage6.Controls.Add(Me.XenonSeparator7)
+        Me.TabPage6.Controls.Add(Me.PictureBox13)
+        Me.TabPage6.Controls.Add(Me.Label6)
+        Me.TabPage6.Location = New System.Drawing.Point(199, 4)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage6.Size = New System.Drawing.Size(823, 471)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "Miscellaneous"
+        '
+        'XenonAlertBox7
+        '
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
+        Me.XenonAlertBox7.CenterText = True
+        Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox7.Image = Nothing
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(81, 180)
+        Me.XenonAlertBox7.Name = "XenonAlertBox7"
+        Me.XenonAlertBox7.Size = New System.Drawing.Size(574, 24)
+        Me.XenonAlertBox7.TabIndex = 27
+        Me.XenonAlertBox7.TabStop = False
+        Me.XenonAlertBox7.Text = "Know that if the color info starts with ""D"" and font is underlined, the color is " &
+    "the same as the default one"
+        '
+        'XenonCheckBox11
+        '
+        Me.XenonCheckBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox11.Checked = False
+        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox11.Location = New System.Drawing.Point(77, 148)
+        Me.XenonCheckBox11.Name = "XenonCheckBox11"
+        Me.XenonCheckBox11.Size = New System.Drawing.Size(728, 26)
+        Me.XenonCheckBox11.TabIndex = 26
+        Me.XenonCheckBox11.Text = "Show Hex Hash (#)"
+        '
+        'XenonComboBox3
+        '
+        Me.XenonComboBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonComboBox3.CustomFont = False
+        Me.XenonComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.XenonComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
+        Me.XenonComboBox3.FormattingEnabled = True
+        Me.XenonComboBox3.ItemHeight = 20
+        Me.XenonComboBox3.Items.AddRange(New Object() {"HEX", "RGB", "HSL", "Decimal"})
+        Me.XenonComboBox3.Location = New System.Drawing.Point(81, 118)
+        Me.XenonComboBox3.Name = "XenonComboBox3"
+        Me.XenonComboBox3.Size = New System.Drawing.Size(282, 26)
+        Me.XenonComboBox3.TabIndex = 25
+        '
+        'PictureBox27
+        '
+        Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
+        Me.PictureBox27.Location = New System.Drawing.Point(41, 86)
+        Me.PictureBox27.Name = "PictureBox27"
+        Me.PictureBox27.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox27.TabIndex = 23
+        Me.PictureBox27.TabStop = False
+        '
+        'XenonCheckBox10
+        '
+        Me.XenonCheckBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox10.Checked = False
+        Me.XenonCheckBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox10.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox10.Location = New System.Drawing.Point(77, 86)
+        Me.XenonCheckBox10.Name = "XenonCheckBox10"
+        Me.XenonCheckBox10.Size = New System.Drawing.Size(728, 26)
+        Me.XenonCheckBox10.TabIndex = 24
+        Me.XenonCheckBox10.Text = "Nerd color info on color palette item"
+        '
+        'PictureBox15
+        '
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(41, 54)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox15.TabIndex = 20
+        Me.PictureBox15.TabStop = False
+        '
+        'XenonCheckBox9
+        '
+        Me.XenonCheckBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox9.Checked = False
+        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox9.Location = New System.Drawing.Point(77, 54)
+        Me.XenonCheckBox9.Name = "XenonCheckBox9"
+        Me.XenonCheckBox9.Size = New System.Drawing.Size(728, 26)
+        Me.XenonCheckBox9.TabIndex = 21
+        Me.XenonCheckBox9.Text = "Preview every change I make to colors and values in real-time (Windows 7 and 8.1)" &
+    ""
+        '
+        'XenonSeparator7
+        '
+        Me.XenonSeparator7.AlternativeLook = False
+        Me.XenonSeparator7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonSeparator7.Location = New System.Drawing.Point(6, 47)
+        Me.XenonSeparator7.Name = "XenonSeparator7"
+        Me.XenonSeparator7.Size = New System.Drawing.Size(811, 1)
+        Me.XenonSeparator7.TabIndex = 19
+        Me.XenonSeparator7.TabStop = False
+        '
+        'PictureBox13
+        '
+        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
+        Me.PictureBox13.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox13.Name = "PictureBox13"
+        Me.PictureBox13.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox13.TabIndex = 3
+        Me.PictureBox13.TabStop = False
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(47, 6)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(759, 35)
+        Me.Label6.TabIndex = 2
+        Me.Label6.Text = "Miscellaneous"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton6
         '
@@ -2781,9 +2865,8 @@ Partial Class SettingsX
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
-        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox50, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
@@ -2794,10 +2877,10 @@ Partial Class SettingsX
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox29, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage6.ResumeLayout(False)
-        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage10.ResumeLayout(False)
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox52, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
         Me.XenonGroupBox2.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
@@ -2806,6 +2889,10 @@ Partial Class SettingsX
         CType(Me.PictureBox49, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonAnimatedBox1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -2996,4 +3083,10 @@ Partial Class SettingsX
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents TabPage10 As TabPage
+    Friend WithEvents XenonSeparator11 As XenonSeparator
+    Friend WithEvents PictureBox52 As PictureBox
+    Friend WithEvents Label35 As Label
+    Friend WithEvents PictureBox50 As PictureBox
+    Friend WithEvents XenonCheckBox22 As XenonCheckBox
 End Class

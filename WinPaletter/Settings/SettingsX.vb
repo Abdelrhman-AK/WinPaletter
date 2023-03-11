@@ -83,6 +83,8 @@ Public Class SettingsX
             If .EP_StartStyle <> EP_Start_10_Type.SelectedIndex Then Changed = True
             If .EP_UseTaskbar10 <> EP_Taskbar_10.Checked Then Changed = True
             If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then Changed = True
+
+            If .DelayMetrics <> XenonCheckBox22.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -177,6 +179,8 @@ Public Class SettingsX
             EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
             EP_ORB_10.Checked = .EP_TaskbarButton10
             EP_ORB_11.Checked = Not .EP_TaskbarButton10
+
+            XenonCheckBox22.Checked = .DelayMetrics
         End With
 
         With My.Lang
@@ -274,6 +278,8 @@ Public Class SettingsX
             .EP_StartStyle = EP_Start_10_Type.SelectedIndex
             .EP_UseTaskbar10 = EP_Taskbar_10.Checked
             .EP_TaskbarButton10 = EP_ORB_10.Checked
+
+            .DelayMetrics = XenonCheckBox22.Checked
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -409,6 +415,7 @@ Public Class SettingsX
                 .EP_StartStyle = EP_Start_10_Type.SelectedIndex
                 .EP_UseTaskbar10 = EP_Taskbar_10.Checked
                 .EP_TaskbarButton10 = EP_ORB_10.Checked
+                .DelayMetrics = XenonCheckBox22.Checked
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -484,6 +491,8 @@ Public Class SettingsX
                 EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
                 EP_ORB_10.Checked = .EP_TaskbarButton10
                 EP_ORB_11.Checked = Not .EP_TaskbarButton10
+
+                XenonCheckBox22.Checked = .DelayMetrics
             End With
         End If
     End Sub
@@ -566,6 +575,8 @@ Public Class SettingsX
             EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
             EP_ORB_10.Checked = .EP_TaskbarButton10
             EP_ORB_11.Checked = Not .EP_TaskbarButton10
+
+            XenonCheckBox22.Checked = .DelayMetrics
         End With
 
         OpenFileDialog1.FileName = files(0)

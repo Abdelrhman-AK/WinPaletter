@@ -9,13 +9,17 @@ Public Class Win32UI
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonComboBox1.PopulateThemes
-        RevalidateEverything(pnl_preview)
         XenonComboBox1.SelectedIndex = 0
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
         LoadCP(MainFrm.CP)
         SetMetics(MainFrm.CP)
+
+
+
+        RevalidateEverything(pnl_preview)
+
     End Sub
 
 

@@ -1747,14 +1747,15 @@
   </data>
   <data name="XenonButton21.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAZVJREFUSEvt
-        k19LwlAUwEcPPUdZOC1SQiHsD6Ezeuytt75KvfQe9S2yErMHg9CwJik4t6APEPVSRKQ2nZu5OygjaGvX
-        jjJHDzbXS/SDw7hn557fvXe7xD99MUNLV7O0sAFD+6EKSHZHy2qAlrYhZS8UizR/SqiQkZI2naltQdo+
-        sGCBaRTJnaL2KxIswOFJVFFb4rNT0hYEctJtSwCSqTObJG2BHupEnH83Srx2SAwC/Wiku44AJJP9SoyC
-        UF5+ce2XVbNknBY3ofznGAU4vKlaqUsAEpdViVkwz8hVMmIS4NjV41Rcg2m9YxbgcB9VG13N9/RjO+Df
-        nEmBg2m9853An32+bzVOCeeutOKAUmuYmtcpVj7Wnyp5yDfJON8kNG0ASq3RaV5A12FW9gYZxaGPmx76
-        6+I5MvV1KLUGXi3FKczSJRqGFBHmUCzEKq/O6NPHWKJSgbQ1KAatBG60QRi2WLyQg3hX5EntAf9RQ6fi
-        MryyD/1bsHN5WcR3YCQp5CBtHyFOWdV38ehIS7HRLPJB+k9CEJ8k0WmACMazcAAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAGVSURBVEhL7ZNfS8JQFMBHDz1HWTgtUkIh7A+hM3rsrbe+Sr30HvUtshKzB4PQsCYpOLegDxD1
+        UkSkNp2buTsoI2hr144yRw8210v0g8O4Z+ee3713u8Q/fTFDS1eztLABQ/uhCkh2R8tqgJa2IWUvFIs0
+        f0qokJGSNp2pbUHaPrBggWkUyZ2i9isSLMDhSVRRW+KzU9IWBHLSbUsAkqkzmyRtgR7qRJx/N0q8dkgM
+        Av1opLuOACST/UqMglBefnHtl1WzZJwWN6H85xgFOLypWqlLABKXVYlZMM/IVTJiEuDY1eNUXINpvWMW
+        4HAfVRtdzff0Yzvg35xJgYNpvfOdwJ99vm81TgnnrrTigFJrmJrXKVY+1p8qecg3yTjfJDRtAEqt0Wle
+        QNdhVvYGGcWhj5se+uviOTL1dSi1Bl4txSnM0iUahhQR5lAsxCqvzujTx1iiUoG0NSgGrQRutEEYtli8
+        kIN4V+RJ7QH/UUOn4jK8sg/9W7BzeVnEd2AkKeQgbR8hTlnVd/HoSEux0SzyQfpPQhCfJNFpgAjGs3AA
+        AAAASUVORK5CYII=
 </value>
   </data>
   <data name="XenonButton16.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

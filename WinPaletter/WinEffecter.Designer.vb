@@ -706,6 +706,8 @@ Partial Class WinEffecter
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.PictureBox27)
+        Me.TabPage1.Controls.Add(Me.XenonCheckBox21)
         Me.TabPage1.Controls.Add(Me.PictureBox15)
         Me.TabPage1.Controls.Add(Me.PictureBox2)
         Me.TabPage1.Controls.Add(Me.XenonCheckBox11)
@@ -1284,8 +1286,6 @@ Partial Class WinEffecter
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage9.Controls.Add(Me.PictureBox27)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox21)
         Me.TabPage9.Controls.Add(Me.PictureBox21)
         Me.TabPage9.Controls.Add(Me.XenonCheckBox15)
         Me.TabPage9.Controls.Add(Me.PictureBox24)
@@ -1425,7 +1425,7 @@ Partial Class WinEffecter
         Me.XenonCheckBox20.Name = "XenonCheckBox20"
         Me.XenonCheckBox20.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox20.TabIndex = 221
-        Me.XenonCheckBox20.Text = "SysView32 view in Explorer (Windows 7 and later)"
+        Me.XenonCheckBox20.Text = "SysView32 view in Explorer (For Windows 7 and later)"
         '
         'Timer1
         '

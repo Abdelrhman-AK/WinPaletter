@@ -250,7 +250,7 @@
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />
-    <Compile Include="Classes\XeSettings.vb" />
+    <Compile Include="Settings\XeSettings.vb" />
     <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </Compile>

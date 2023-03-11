@@ -2088,11 +2088,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 rMain.Close()
 
                 If Enabled Then
-                    Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
-                    Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
-                    SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
-                    SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
-
                     If XenonCore.GetWindowsScreenScalingFactor > 100 Then
                         CaptionFont = New Font(CaptionFont.Name, CaptionFont.SizeInPoints, CaptionFont.Style)
                         IconFont = New Font(IconFont.Name, IconFont.SizeInPoints, IconFont.Style)
@@ -2159,40 +2154,42 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
-                    With NCM
-                        .lfCaptionFont = lfCaptionFont        'Requires LogOff
-                        .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
-                        .lfStatusFont = lfStatusFont          'Requires LogOff
-                        .lfMenuFont = lfMenuFont
-                        .lfMessageFont = lfMessageFont
+                    If Not My.Settings.DelayMetrics Then
+                        Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
+                        Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
+                        SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
+                        SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
-                        .iBorderWidth = BorderWidth
-                        .iScrollWidth = ScrollWidth
-                        .iScrollHeight = ScrollHeight
-                        .iCaptionWidth = CaptionWidth
-                        .iCaptionHeight = CaptionHeight
-                        .iSMCaptionWidth = SmCaptionWidth
-                        .iSMCaptionHeight = SmCaptionHeight
-                        .iMenuWidth = MenuWidth
-                        .iMenuHeight = MenuHeight
-                        .iPaddedBorderWidth = PaddedBorderWidth
-                    End With
+                        With NCM
+                            .lfCaptionFont = lfCaptionFont        'Requires LogOff
+                            .lfSMCaptionFont = lfSMCaptionFont    'Requires LogOff
+                            .lfStatusFont = lfStatusFont          'Requires LogOff
+                            .lfMenuFont = lfMenuFont
+                            .lfMessageFont = lfMessageFont
 
-                    With ICO
-                        .iHorzSpacing = IconSpacing
-                        .iVertSpacing = IconVerticalSpacing
-                        .lfFont = lfIconFont
-                    End With
+                            .iBorderWidth = BorderWidth
+                            .iScrollWidth = ScrollWidth
+                            .iScrollHeight = ScrollHeight
+                            .iCaptionWidth = CaptionWidth
+                            .iCaptionHeight = CaptionHeight
+                            .iSMCaptionWidth = SmCaptionWidth
+                            .iSMCaptionHeight = SmCaptionHeight
+                            .iMenuWidth = MenuWidth
+                            .iMenuHeight = MenuHeight
+                            .iPaddedBorderWidth = PaddedBorderWidth
+                        End With
 
-                    SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SendChange)
-                    User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
+                        With ICO
+                            .iHorzSpacing = IconSpacing
+                            .iVertSpacing = IconVerticalSpacing
+                            .lfFont = lfIconFont
+                        End With
 
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_THEMECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SYSCOLORCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_PALETTECHANGED, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
-                    'Try : SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, MSG_TIMEOUT, RESULT) : Catch : End Try
+                        SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SendChange)
+                        SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SendChange)
+
+                        User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
+                    End If
                 End If
 
             End Sub

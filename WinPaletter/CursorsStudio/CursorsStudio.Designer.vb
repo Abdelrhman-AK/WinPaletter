@@ -388,7 +388,7 @@ Partial Class CursorsStudio
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(509, 35)
         Me.Label7.TabIndex = 71
-        Me.Label7.Text = "Styles"
+        Me.Label7.Text = "Style (For selected cursor)"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonComboBox5
