@@ -2,6 +2,65 @@
 
 ---
 
+### 1.0.7.3
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` |  11 Mar 2023 |
+
+> **What's New?**
+### The same as [1.0.7.1](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1071) and [1.0.7.2](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1072), except for:
+
+### New features:
+#### 1. Synchronize preview of Windows 11 with ExplorerPatcher #28:
+- For example, if you set a Windows 10 taskbar in Windows 11, WinPaletter will adjust the preview to make the taskbar as Windows 10, and so on.
+- If you didn't install ExplorerPatcher or even don't use Windows 11, you can force WinPaletter to pretend that ExplorerPatcher is used; Go to Settings > ExplorerPatcher > Check `Deflect` and save settings.
+
+#### 2. Cursors Studio redesigned:
+- Layout of Cursors studio is changed
+- New Styles for Default Cursor and Loading Cursor are made, it can be `Aero`, `Classic` or `Modern`.
+- If you use a language file, you may see this form incomplete or not perfect, so the translators should work on Cursors' section.
+
+#### 3. Windows Switcher
+- You can change its appearance now (Alt+Tab Switcher), it can be default Windows or Classic. #105
+- You can change Windows 10 background opacity (or Windows 11 + ExplorerPatcher).
+
+#### 4. New items in Windows Effects, including:
+- Shake a window to minimize the others
+- Underline menu items #110
+- Classic Context Menu for Windows 11 #105
+- Balloon notification duration #110 and _force it for Windows 10 (or Windows 11 + ExplorerPatcher)_
+- Focus rectangle width and height (More seen in classic elements) #110
+- Text Cursor (Caret) width #110
+- Active Windows Tracking #110
+- SysView32 #105
+- Snap cursor to default button
+- Show seconds in taskbar of Windows 10 (or Windows 11 + ExplorerPatcher) #105
+- Paint Windows version on desktop #105
+
+#### 5. Windows 10:
+- A new option is made to make the taskbar more transparent.
+
+#### 6. Classic Colors schemes: 
+- Added Windows 1 and 2 classic schemes.
+- Windows 3.1 schemes are improved to have a closer look to Windows 3.1.
+
+### Changes and fixes:
+- UI improvements: #98 #99 #100 #101 #106 #107 #109
+- A new option is added in `Settings` > `Theme Applying Behavior` is made to delay applying the Metrics and Fonts until the user logs-off and logs-on, and this is to escape from the situation of crashing in #102 and #74
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.2`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.2...v1.0.7.3) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.3) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.3) |
+
+---
+
 ### 1.0.7.2
 
 > **Info:**
