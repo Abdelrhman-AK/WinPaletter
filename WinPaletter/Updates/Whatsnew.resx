@@ -190,63 +190,34 @@
 </value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>• In Windows XP, you can change specifically the themes and logonui preferences.
+    <value>• For example, if you set a Windows 10 taskbar in Windows 11, WinPaletter will adjust the preview to make the taskbar as Windows 10, and so on.
 
-• In Windows Vista, you can change specifically Windows colors.
-
-• It is necessary to read their documentation in GitHub</value>
+• If you didn't install ExplorerPatcher or even don't use Windows 11, you can force WinPaletter to pretend that ExplorerPatcher is used; Go to Settings &gt; ExplorerPatcher &gt; Check `Deflect` and save settings.</value>
   </data>
-  <data name="Label23.Text" xml:space="preserve">
-    <value>• Classic Colors’ 3D objects (Formerly Win32UI) redesigned to make it have an illustrative look.
+  <data name="Label21.Text" xml:space="preserve">
+    <value>• Layout of Cursors studio is changed
 
-• Changed some icons in Classic Colors as the previous ones were not obvious in relation to their functions.
+• New Styles for Default Cursor and Loading Cursor are made, it can be `Aero`, `Classic` or `Modern`.
 
-• Main Form Extra Tools buttons are condensed to make their container able to contain new\more features.</value>
+• If you use a language file, you may see this form incomplete or not perfect, so the translators should work on Cursors' section.</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>• Classic Colors and Metrics &amp;&amp; Fonts now have a button that imports preferences from a Visual Styles file.
-
-• Windows Animations toggle is moved from “Windows Metrics and Fonts” to “Windows Effects”.
-
-• Fixed bug in color picker that occurs during picking a color from the screen.
-
-• Fixed issue of Font “Segoe UI”’s substitution not being saved into WinPaletter theme file.
-
-• Fixed issue of Wallpaper Tone, if any value of it changed, WinPaletter couldn’t detect the change happened and so the confirmation dialog didn’t appear when you exit in the previous situation.
-
-• Remove a code caused issue in GUI with high DPIs.
-
-• Fixed an issue during application’s startup when listing monospaced fonts.</value>
+    <value>• Shake a window to minimize the others
+• Underline menu items
+• Classic Context Menu for Windows 11
+• Balloon notification duration and force it for Windows 10 (or Windows 11 + ExplorerPatcher)
+• Focus rectangle width and height (More seen in classic elements)
+• Text Cursor (Caret) width
+• Active Windows Tracking
+• SysView32
+• Snap cursor to default button
+• Show seconds in taskbar of Windows 10 (or Windows 11 + ExplorerPatcher)
+• Paint Windows version on desktop</value>
   </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>• Fixed an issue during rendering LogonUI images for Windows 8.1 &amp;&amp; 7.
+  <data name="Label10.Text" xml:space="preserve">
+    <value>• UI improvements
 
-• Bug reporter improved and will show more details.
-
-• Drag Previewer improved a bit.
-
-• Known issue might occur during application’s startup when monitoring wallpaper\registry changes. If this bug occurred, you will be notified by a message. It is fixable by resetting your desktop wallpaper.
-
-• Now you can control cursors shadow.</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>• Adding Cursor Tracking (Sonar) option and Cursor Trails option in Cursors
-
-• Adding "Show content while dragging" option in Windows Effects
-
-• There was a lag during changing the preview in main form. Now it is improved a bit.
-
-• Improvements in UI
-
-• Making Icons labels in metrics preview follow the preset of shadow in Windows Effects
-
-• Making Menu in Classic Colors follows the preset of shadow in Windows Effects
-
-• Making user in Command Prompt can't choose a font if raster font is checked, and that is to remove the vague preview
-
-• Making Command Prompt have 6x9 &amp; 8x9 raster fonts layouts. They are identical to 6x8 &amp; 8x8 respectively
-
-• Making alert if you are using a classic theme and opened Windows XP preview (as there are limitations in the component used in visual styles previewer)</value>
+• A new option is added in `Settings` &gt; `Theme Applying Behavior` is made to delay applying the Metrics and Fonts until the user logsoff and logson, and this is to escape from the situation of crashing.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

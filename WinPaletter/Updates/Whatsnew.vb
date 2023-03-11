@@ -32,8 +32,4 @@ Public Class Whatsnew
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         Process.Start(My.Resources.Link_Changelog)
     End Sub
-
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Process.Start("https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md")
-    End Sub
 End Class
