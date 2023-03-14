@@ -128,6 +128,16 @@ Partial Class SettingsX
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.XenonRadioButton7 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton8 = New WinPaletter.XenonRadioButton()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.XenonRadioButton6 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton5 = New WinPaletter.XenonRadioButton()
+        Me.XenonCheckBox24 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox23 = New WinPaletter.XenonCheckBox()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.PictureBox51 = New System.Windows.Forms.PictureBox()
         Me.PictureBox50 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox22 = New WinPaletter.XenonCheckBox()
         Me.PictureBox37 = New System.Windows.Forms.PictureBox()
@@ -253,6 +263,9 @@ Partial Class SettingsX
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
+        Me.Panel5.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        CType(Me.PictureBox51, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox50, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1593,6 +1606,12 @@ Partial Class SettingsX
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.Panel5)
+        Me.TabPage5.Controls.Add(Me.Panel4)
+        Me.TabPage5.Controls.Add(Me.XenonCheckBox24)
+        Me.TabPage5.Controls.Add(Me.XenonCheckBox23)
+        Me.TabPage5.Controls.Add(Me.Label36)
+        Me.TabPage5.Controls.Add(Me.PictureBox51)
         Me.TabPage5.Controls.Add(Me.PictureBox50)
         Me.TabPage5.Controls.Add(Me.XenonCheckBox22)
         Me.TabPage5.Controls.Add(Me.PictureBox37)
@@ -1610,6 +1629,135 @@ Partial Class SettingsX
         Me.TabPage5.Size = New System.Drawing.Size(823, 471)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Theme Applying Behavior"
+        '
+        'Panel5
+        '
+        Me.Panel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel5.Controls.Add(Me.XenonRadioButton7)
+        Me.Panel5.Controls.Add(Me.XenonRadioButton8)
+        Me.Panel5.Location = New System.Drawing.Point(89, 374)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(728, 61)
+        Me.Panel5.TabIndex = 36
+        '
+        'XenonRadioButton7
+        '
+        Me.XenonRadioButton7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonRadioButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton7.Checked = True
+        Me.XenonRadioButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton7.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton7.Location = New System.Drawing.Point(19, 33)
+        Me.XenonRadioButton7.Name = "XenonRadioButton7"
+        Me.XenonRadioButton7.Size = New System.Drawing.Size(706, 24)
+        Me.XenonRadioButton7.TabIndex = 1
+        Me.XenonRadioButton7.Text = "Erase"
+        '
+        'XenonRadioButton8
+        '
+        Me.XenonRadioButton8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonRadioButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton8.Checked = False
+        Me.XenonRadioButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton8.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton8.Location = New System.Drawing.Point(19, 3)
+        Me.XenonRadioButton8.Name = "XenonRadioButton8"
+        Me.XenonRadioButton8.Size = New System.Drawing.Size(706, 24)
+        Me.XenonRadioButton8.TabIndex = 0
+        Me.XenonRadioButton8.Text = "Overwrite (Will take time more than usual)"
+        '
+        'Panel4
+        '
+        Me.Panel4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel4.Controls.Add(Me.XenonRadioButton6)
+        Me.Panel4.Controls.Add(Me.XenonRadioButton5)
+        Me.Panel4.Location = New System.Drawing.Point(89, 275)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(728, 61)
+        Me.Panel4.TabIndex = 35
+        '
+        'XenonRadioButton6
+        '
+        Me.XenonRadioButton6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonRadioButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton6.Checked = False
+        Me.XenonRadioButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton6.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton6.Location = New System.Drawing.Point(19, 33)
+        Me.XenonRadioButton6.Name = "XenonRadioButton6"
+        Me.XenonRadioButton6.Size = New System.Drawing.Size(706, 24)
+        Me.XenonRadioButton6.TabIndex = 1
+        Me.XenonRadioButton6.Text = "Erase"
+        '
+        'XenonRadioButton5
+        '
+        Me.XenonRadioButton5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonRadioButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonRadioButton5.Checked = True
+        Me.XenonRadioButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioButton5.Location = New System.Drawing.Point(19, 3)
+        Me.XenonRadioButton5.Name = "XenonRadioButton5"
+        Me.XenonRadioButton5.Size = New System.Drawing.Size(706, 24)
+        Me.XenonRadioButton5.TabIndex = 0
+        Me.XenonRadioButton5.Text = "Overwrite"
+        '
+        'XenonCheckBox24
+        '
+        Me.XenonCheckBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox24.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox24.Checked = True
+        Me.XenonCheckBox24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox24.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox24.Location = New System.Drawing.Point(80, 342)
+        Me.XenonCheckBox24.Name = "XenonCheckBox24"
+        Me.XenonCheckBox24.Size = New System.Drawing.Size(729, 26)
+        Me.XenonCheckBox24.TabIndex = 34
+        Me.XenonCheckBox24.Text = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors" &
+    "\Standard"
+        '
+        'XenonCheckBox23
+        '
+        Me.XenonCheckBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox23.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox23.Checked = True
+        Me.XenonCheckBox23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox23.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox23.Location = New System.Drawing.Point(80, 243)
+        Me.XenonCheckBox23.Name = "XenonCheckBox23"
+        Me.XenonCheckBox23.Size = New System.Drawing.Size(729, 26)
+        Me.XenonCheckBox23.TabIndex = 33
+        Me.XenonCheckBox23.Text = "HKEY_USERS\.DEFAULT\Control Panel\Colors (For all users)"
+        '
+        'Label36
+        '
+        Me.Label36.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label36.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label36.Location = New System.Drawing.Point(77, 214)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(715, 26)
+        Me.Label36.TabIndex = 28
+        Me.Label36.Text = "On applying classic colors:"
+        Me.Label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox51
+        '
+        Me.PictureBox51.Image = CType(resources.GetObject("PictureBox51.Image"), System.Drawing.Image)
+        Me.PictureBox51.Location = New System.Drawing.Point(41, 214)
+        Me.PictureBox51.Name = "PictureBox51"
+        Me.PictureBox51.Size = New System.Drawing.Size(30, 26)
+        Me.PictureBox51.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox51.TabIndex = 27
+        Me.PictureBox51.TabStop = False
         '
         'PictureBox50
         '
@@ -2865,6 +3013,9 @@ Partial Class SettingsX
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
+        Me.Panel5.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
+        CType(Me.PictureBox51, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox50, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox37, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3089,4 +3240,14 @@ Partial Class SettingsX
     Friend WithEvents Label35 As Label
     Friend WithEvents PictureBox50 As PictureBox
     Friend WithEvents XenonCheckBox22 As XenonCheckBox
+    Friend WithEvents Label36 As Label
+    Friend WithEvents PictureBox51 As PictureBox
+    Friend WithEvents XenonCheckBox23 As XenonCheckBox
+    Friend WithEvents XenonCheckBox24 As XenonCheckBox
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents XenonRadioButton7 As XenonRadioButton
+    Friend WithEvents XenonRadioButton8 As XenonRadioButton
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents XenonRadioButton6 As XenonRadioButton
+    Friend WithEvents XenonRadioButton5 As XenonRadioButton
 End Class

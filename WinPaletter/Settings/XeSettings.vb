@@ -57,6 +57,12 @@ Public Class XeSettings
 
     Public Property DelayMetrics As Boolean = False
 
+
+    Public Property ClassicColors_HKU_DEFAULT_AddOrRemove As Boolean = True
+    Public Property ClassicColors_HKU_DEFAULT_Allowed As Boolean = True
+    Public Property ClassicColors_HKLM_AddOrRemove As Boolean = False
+    Public Property ClassicColors_HKLM_Allowed As Boolean = True
+
 #End Region
 
     Public Enum Nerd_Stats_Type
@@ -147,6 +153,10 @@ Public Class XeSettings
 
         If Key.GetValue("DelayMetrics", Nothing) Is Nothing Then Key.SetValue("DelayMetrics", False, RegistryValueKind.DWord)
 
+        If Key.GetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", True, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKU_DEFAULT_Allowed", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_Allowed", True, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKLM_AddOrRemove", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKLM_AddOrRemove", False, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKLM_Allowed", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKLM_Allowed", True, RegistryValueKind.DWord)
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -228,6 +238,11 @@ Public Class XeSettings
 
                 DelayMetrics = Key.GetValue("DelayMetrics", False)
 
+                ClassicColors_HKU_DEFAULT_AddOrRemove = Key.GetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", True)
+                ClassicColors_HKLM_AddOrRemove = Key.GetValue("ClassicColors_HKLM_AddOrRemove", True)
+                ClassicColors_HKLM_Allowed = Key.GetValue("ClassicColors_HKLM_Allowed", False)
+                ClassicColors_HKU_DEFAULT_Allowed = Key.GetValue("ClassicColors_HKU_DEFAULT_Allowed", True)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -278,6 +293,12 @@ Public Class XeSettings
                     If x.StartsWith("EP_StartStyle= ", My._strIgnore) Then EP_StartStyle = x.Remove(0, "EP_StartStyle= ".Count)
 
                     If x.StartsWith("DelayMetrics= ", My._strIgnore) Then DelayMetrics = x.Remove(0, "DelayMetrics= ".Count)
+
+                    If x.StartsWith("ClassicColors_HKU_DEFAULT_AddOrRemove= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_AddOrRemove = x.Remove(0, "ClassicColors_HKU_DEFAULT_AddOrRemove= ".Count)
+                    If x.StartsWith("ClassicColors_HKLM_AddOrRemove= ", My._strIgnore) Then ClassicColors_HKLM_AddOrRemove = x.Remove(0, "ClassicColors_HKLM_AddOrRemove= ".Count)
+                    If x.StartsWith("ClassicColors_HKLM_Allowed= ", My._strIgnore) Then ClassicColors_HKLM_Allowed = x.Remove(0, "ClassicColors_HKLM_Allowed= ".Count)
+                    If x.StartsWith("ClassicColors_HKU_DEFAULT_Allowed= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_Allowed = x.Remove(0, "ClassicColors_HKU_DEFAULT_Allowed= ".Count)
+
                 Next
         End Select
     End Sub
@@ -355,6 +376,12 @@ Public Class XeSettings
 
                 Key.SetValue("DelayMetrics", DelayMetrics, RegistryValueKind.DWord)
 
+                Key.SetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", ClassicColors_HKU_DEFAULT_AddOrRemove, RegistryValueKind.DWord)
+                Key.SetValue("ClassicColors_HKLM_AddOrRemove", ClassicColors_HKLM_AddOrRemove, RegistryValueKind.DWord)
+
+                Key.SetValue("ClassicColors_HKLM_Allowed", ClassicColors_HKLM_Allowed, RegistryValueKind.DWord)
+                Key.SetValue("ClassicColors_HKU_DEFAULT_Allowed", ClassicColors_HKU_DEFAULT_Allowed, RegistryValueKind.DWord)
+
             Case Mode.File
                 Dim l As New List(Of String)
                 l.Clear()
@@ -420,6 +447,11 @@ Public Class XeSettings
                 l.Add(String.Format("EP_StartStyle= {0}", EP_StartStyle))
 
                 l.Add(String.Format("DelayMetrics= {0}", DelayMetrics))
+
+                l.Add(String.Format("ClassicColors_HKU_DEFAULT_AddOrRemove= {0}", ClassicColors_HKU_DEFAULT_AddOrRemove))
+                l.Add(String.Format("ClassicColors_HKLM_AddOrRemove= {0}", ClassicColors_HKLM_AddOrRemove))
+                l.Add(String.Format("ClassicColors_HKLM_Allowed= {0}", ClassicColors_HKLM_Allowed))
+                l.Add(String.Format("ClassicColors_HKU_DEFAULT_Allowed= {0}", ClassicColors_HKU_DEFAULT_Allowed))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

@@ -6,6 +6,8 @@ Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
+Imports System.Security.AccessControl
+Imports System.Management
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -45,6 +47,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     End Function
 
 #Region "Enumerations"
+    Enum Win11ExplorerBar
+        [Default]
+        Ribbon
+        Bar
+    End Enum
+
     Enum ApplyAccentonTaskbar_Level
         None
         Taskbar_Start_AC
@@ -1349,68 +1357,121 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
 
-                'If My.W8 Then
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
-                '    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
 
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ActiveTitle", ActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ButtonFace", ButtonFace.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "ButtonText", ButtonText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "GrayText", GrayText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "Hilight", Hilight.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "HilightText", HilightText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "HotTrackingColor", HotTrackingColor.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "InactiveTitle", InactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "InactiveTitleText", InactiveTitleText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "TitleText", TitleText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "Window", Window.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\HighContrast", "WindowText", WindowText.Reverse.ToArgb, RegistryValueKind.DWord)
+                If My.Settings.ClassicColors_HKU_DEFAULT_Allowed Then
 
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", ActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", ButtonFace.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", ButtonText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", GrayText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Hilight.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", HilightText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", HotTrackingColor.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", InactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", InactiveTitleText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", TitleText.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Window.Reverse.ToArgb, RegistryValueKind.DWord)
-                '    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", WindowText.Reverse.ToArgb, RegistryValueKind.DWord)
-                'End If
+                    If My.Settings.ClassicColors_HKU_DEFAULT_AddOrRemove Then
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
+                    Else
+                        DelReg_AdministratorDeflector("HKEY_USERS\.DEFAULT\Control Panel", "Colors")
+                    End If
+
+                End If
+
+                If My.Settings.ClassicColors_HKLM_Allowed Then
+
+                    If My.Settings.ClassicColors_HKLM_AddOrRemove Then
+                        'EditReg_AdministratorDeflector is used to avoid registry WOW6432Node redirection bug
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveBorder", ActiveBorder.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", ActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "AppWorkspace", AppWorkspace.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Background", Background.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonAlternateFace", ButtonAlternateFace.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonDkShadow", ButtonDkShadow.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", ButtonFace.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonHilight", ButtonHilight.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonLight", ButtonLight.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonShadow", ButtonShadow.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", ButtonText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GradientActiveTitle", GradientActiveTitle.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GradientInactiveTitle", GradientInactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", GrayText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", HilightText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", HotTrackingColor.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveBorder", InactiveBorder.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", InactiveTitle.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", InactiveTitleText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InfoText", InfoText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InfoWindow", InfoWindow.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Menu", Menu.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuBar", MenuBar.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuText", MenuText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Scrollbar", Scrollbar.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", TitleText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Window.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowFrame", WindowFrame.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", WindowText.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Hilight.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                        EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Desktop", Desktop.Reverse.ToArgb, RegistryValueKind.DWord, False)
+                    Else
+                        DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes", "DefaultColors")
+                    End If
+                End If
+
 
             End Sub
 
@@ -1502,6 +1563,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public ShowSecondsInSystemClock As Boolean
             Public BalloonNotifications As Boolean
             Public PaintDesktopVersion As Boolean
+
+            Public Win11BootDots As Boolean
+            Public Win11ExplorerBar As Win11ExplorerBar
 
             Sub Load(_DefEffects As WinEffects)
                 Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
@@ -1757,6 +1821,35 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Catch
                     PaintDesktopVersion = _DefEffects.PaintDesktopVersion
                 End Try
+
+                Try
+                    If My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Nothing) Is Nothing Then
+                        Win11BootDots = If(My.W11, False, True)
+
+                    Else
+                        Select Case My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", If(My.W11, 1, 0))
+                            Case 0
+                                Win11BootDots = True
+
+                            Case 1
+                                Win11BootDots = False
+
+                            Case Else
+                                Win11BootDots = False
+
+                        End Select
+                    End If
+
+                Catch
+                    Win11BootDots = _DefEffects.Win11BootDots
+                End Try
+
+                Try
+                    Win11ExplorerBar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", _DefEffects.Win11ExplorerBar)
+                Catch
+                    Win11ExplorerBar = _DefEffects.Win11ExplorerBar
+                End Try
+
             End Sub
 
             Sub Apply()
@@ -1794,6 +1887,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+                    If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
+                    EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
 
                     'ShowWinContentDrag should be re-written in registry with string format as SystemParametersInfo looses its effect after logoff here
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger, RegistryValueKind.String)
@@ -1876,6 +1971,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_ShowSecondsInSystemClock= " & ShowSecondsInSystemClock)
                 tx.Add("*WinEffects_BalloonNotifications= " & BalloonNotifications)
                 tx.Add("*WinEffects_PaintDesktopVersion= " & PaintDesktopVersion)
+                tx.Add("*WinEffects_Win11BootDots= " & Win11BootDots)
+                tx.Add("*WinEffects_Win11ExplorerBar= " & Win11ExplorerBar)
                 tx.Add("</WindowsEffects>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -3512,7 +3609,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Caret = 1,
         .AWT_Enabled = False,
         .AWT_Delay = 0,
-        .AWT_BringActivatedWindowToTop = False}
+        .AWT_BringActivatedWindowToTop = False,
+        .Win11BootDots = Not My.W11,
+        .Win11ExplorerBar = Win11ExplorerBar.Default}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
@@ -4135,15 +4234,26 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
         Dim R As RegistryKey = Nothing
+
         If KeyName.StartsWith("Computer\", My._strIgnore) Then KeyName = KeyName.Remove(0, "Computer\".Count)
 
         Dim LocalMacine As Boolean = False
 
         If KeyName.ToUpper.Contains("HKEY_CURRENT_USER".ToUpper) Then
-            R = Registry.CurrentUser
+            R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
+            If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
 
-            If Registry.CurrentUser.OpenSubKey(KeyName, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(KeyName, True)
+        ElseIf KeyName.ToUpper.Contains("HKEY_USERS".ToUpper) Then
+
+            If My.isElevated Then
+                R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32)
+                KeyName = KeyName.Remove(0, "HKEY_USERS\".Count)
+                If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
+            Else
+                EditReg_AdministratorDeflector(KeyName, ValueName, Value, RegType, False)
+                Exit Sub
+            End If
 
         ElseIf KeyName.ToUpper.Contains("HKEY_LOCAL_MACHINE".ToUpper) Then
 
@@ -4152,14 +4262,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
 
             If My.isElevated Then
-                If Registry.LocalMachine.OpenSubKey(KeyName, True) Is Nothing Then Registry.LocalMachine.CreateSubKey(KeyName, True)
+                If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
             End If
 
         End If
 
         'Skips setting to registry if the values are the same
         Try
-            If R.OpenSubKey(KeyName).GetValue(ValueName).Equals(Value) Then
+            If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree).GetValue(ValueName, Nothing).Equals(Value) Then
                 Try
                     If R IsNot Nothing Then
                         R.Flush()
@@ -4174,7 +4284,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End Try
 
         If Not LocalMacine Or (LocalMacine And My.isElevated) Then
-            R.OpenSubKey(KeyName, True).SetValue(ValueName, Value, RegType)
+            R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType)
         Else
             EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
         End If
@@ -4187,13 +4297,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Catch
         End Try
 
+
     End Sub
-    Shared Sub EditReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
+    Shared Sub EditReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord, Optional WaitUntilComplete As Boolean = True)
         Dim regTemplate As String
 
         Dim _Value As String
         If RegistryKeyPath.ToUpper.StartsWith("HKEY_LOCAL_MACHINE") Then RegistryKeyPath = "HKLM" & RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count)
         If RegistryKeyPath.ToUpper.StartsWith("HKEY_CURRENT_USER") Then RegistryKeyPath = "HKCU" & RegistryKeyPath.Remove(0, "HKEY_CURRENT_USER".Count)
+        If RegistryKeyPath.ToUpper.StartsWith("HKEY_USERS") Then RegistryKeyPath = "HKU" & RegistryKeyPath.Remove(0, "HKEY_USERS".Count)
 
         '/v = Value Name
         '/t = Registry Value Type (https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types)
@@ -4229,8 +4341,32 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
            .FileName = "reg",
-           .Verb = "runas",
+           .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
            .Arguments = String.Format(regTemplate, RegistryKeyPath, ValueName, _Value),
+           .WindowStyle = ProcessWindowStyle.Hidden,
+           .CreateNoWindow = True,
+           .UseShellExecute = True
+        }}
+
+        process.Start()
+        If WaitUntilComplete Then process.WaitForExit()
+    End Sub
+
+    Shared Sub DelReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String)
+        Dim regTemplate As String
+
+        If RegistryKeyPath.ToUpper.StartsWith("HKEY_LOCAL_MACHINE") Then RegistryKeyPath = "HKLM" & RegistryKeyPath.Remove(0, "HKEY_LOCAL_MACHINE".Count)
+        If RegistryKeyPath.ToUpper.StartsWith("HKEY_CURRENT_USER") Then RegistryKeyPath = "HKCU" & RegistryKeyPath.Remove(0, "HKEY_CURRENT_USER".Count)
+
+        '/f = Disable prompt
+        regTemplate = "delete ""{0}\{1}"" /f"
+
+        Clipboard.SetText(String.Format(regTemplate, RegistryKeyPath, ValueName))
+
+        Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+           .FileName = "reg",
+           .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
+           .Arguments = String.Format(regTemplate, RegistryKeyPath, ValueName),
            .WindowStyle = ProcessWindowStyle.Hidden,
            .CreateNoWindow = True,
            .UseShellExecute = True
@@ -4239,6 +4375,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         process.Start()
         process.WaitForExit()
     End Sub
+
     Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
         Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
         bArray.CopyTo(newArray, 1)
@@ -5274,6 +5411,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", My._strIgnore) Then WindowsEffects.ShowSecondsInSystemClock = lin.Remove(0, "*WinEffects_ShowSecondsInSystemClock= ".Count)
                     If lin.StartsWith("*WinEffects_BalloonNotifications= ", My._strIgnore) Then WindowsEffects.BalloonNotifications = lin.Remove(0, "*WinEffects_BalloonNotifications= ".Count)
                     If lin.StartsWith("*WinEffects_PaintDesktopVersion= ", My._strIgnore) Then WindowsEffects.PaintDesktopVersion = lin.Remove(0, "*WinEffects_PaintDesktopVersion= ".Count)
+                    If lin.StartsWith("*WinEffects_Win11BootDots= ", My._strIgnore) Then WindowsEffects.Win11BootDots = lin.Remove(0, "*WinEffects_Win11BootDots= ".Count)
+                    If lin.StartsWith("*WinEffects_Win11ExplorerBar= ", My._strIgnore) Then WindowsEffects.Win11ExplorerBar = lin.Remove(0, "*WinEffects_Win11ExplorerBar= ".Count)
 #End Region
 
 #Region "Metrics & Fonts"
@@ -5424,7 +5563,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Cursor_Cross = Structures.Cursor.Load_Cursor_From_ListOfString(CUR_Cross_List)
 #End Region
 
-
 #Region "Windows Terminal"
                 CommandPrompt = Structures.Console.Load_Console_From_ListOfString(cmdList)
                 PowerShellx86 = Structures.Console.Load_Console_From_ListOfString(PS86List)
@@ -5439,7 +5577,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
                 End If
 #End Region
-
 
 #End Region
 

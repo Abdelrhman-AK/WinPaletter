@@ -222,14 +222,14 @@ Public Class RetroButton : Inherits Button
 
             If TextAlign = ContentAlignment.MiddleCenter Then
 
-                Dim textSize As SizeF = Measure(Text, Font)
                 Dim r As Rectangle = rect
 
                 'Resetting positions to fix layout misadjust
                 'Never modify
-                If Font.Name = "Marlett" Then
-                    Dim x As Integer = (rect.Width - textSize.Width) / 2
-                    Dim y As Integer = (rect.Height - textSize.Height) / 2
+                If Font.Name = "Marlett" And Text.Count = 1 Then
+                    Dim textSize As SizeF = Measure(Text, Font)
+                    Dim x As Integer = rect.X + (rect.Width - textSize.Width) / 2
+                    Dim y As Integer = rect.Y + (rect.Height - textSize.Height) / 2
                     Dim w As Integer = textSize.Width
                     Dim h As Integer = textSize.Height
 
@@ -265,6 +265,15 @@ Public Class RetroButton : Inherits Button
                         x += 1
                         y += 1
 
+                    ElseIf Font.Size = CSng(8.8) Then
+
+                        If Text = "3" Then
+                            x += 1
+                            y += 1
+                        ElseIf Text <> "u" Then
+                            y += 1
+                        End If
+
                     End If
 
                     r = New Rectangle(x, y, w, h)
@@ -272,7 +281,6 @@ Public Class RetroButton : Inherits Button
 
                 If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(r.X + 1, r.Y + 1, r.Width, r.Height), StringAligner(ContentAlignment.MiddleCenter))
                 G.DrawString(Text, Font, New SolidBrush(FColor), r, StringAligner(ContentAlignment.MiddleCenter))
-
             Else
                 If Not Enabled Then G.DrawString(Text, Font, New SolidBrush(BackColor.CB(0.8)), New Rectangle(1, 1, Width, Height), StringAligner(TextAlign))
                 G.DrawString(Text, Font, New SolidBrush(FColor), New Rectangle(0, 0, Width - 1, Height - 1), StringAligner(TextAlign))
@@ -775,8 +783,10 @@ Public Class RetroPanel : Inherits Panel
                     G.DrawLine(New Pen(ButtonShadow), New Point(.X, .Y), New Point(.X, .Height))
                     G.DrawLine(New Pen(ButtonDkShadow), New Point(.X + 1, .Y + 1), New Point(.Width - 1, .Y + 1))
                     G.DrawLine(New Pen(ButtonDkShadow), New Point(.X + 1, .Y + 1), New Point(.X + 1, .Height - 1))
-                    G.DrawLine(New Pen(ButtonLight), New Point(.Width, .X + 1), New Point(.Width, .Height))
-                    G.DrawLine(New Pen(ButtonLight), New Point(.X + 1, .Height), New Point(.Width, .Height))
+                    G.DrawLine(New Pen(ButtonHilight), New Point(.Width, .Y + 1), New Point(.Width, .Height))
+                    G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Height), New Point(.Width, .Height))
+                    G.DrawLine(New Pen(ButtonLight), New Point(.Width - 1, .Y + 2), New Point(.Width - 1, .Height - 1))
+                    G.DrawLine(New Pen(ButtonLight), New Point(.X + 2, .Height - 1), New Point(.Width - 1, .Height - 1))
                 End With
             End If
 
@@ -831,6 +841,9 @@ Public Class RetroPanelRaised : Inherits Panel
 
                         G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.Width - 1, .Y))
                         G.DrawLine(New Pen(ButtonLight), New Point(.X, .Y), New Point(.X, .Height - 1))
+
+                        G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.Width - 2, .Y + 1))
+                        G.DrawLine(New Pen(ButtonHilight), New Point(.X + 1, .Y + 1), New Point(.X + 1, .Height - 2))
                     End With
                 End If
 
@@ -1267,4 +1280,70 @@ Public Class TransparentPictureBox
             Next
         End If
     End Sub
+End Class
+
+Public Class Retro3DPreview : Inherits Control
+    Public Property WindowFrame As Color = Color.Black
+    Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+    Public Property ButtonDkShadow As Color = Color.Black
+    Public Property ButtonHilight As Color = Color.White
+    Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
+
+    Public Property LineSize As Integer = 6
+
+    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+        Dim B As New Bitmap(Width, Height)
+        Dim G As Graphics = Graphics.FromImage(B)
+        G.SmoothingMode = SmoothingMode.HighSpeed
+        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        DoubleBuffered = True
+
+        '################################################################################# Customizer
+        Dim BrushDkShadow As New SolidBrush(ButtonDkShadow)
+        Dim BrushShadow As New SolidBrush(ButtonShadow)
+        Dim BrushHilight As New SolidBrush(ButtonHilight)
+        Dim BrushLight As New SolidBrush(ButtonLight)
+
+        Dim HilightTopRect As New Rectangle(LineSize, LineSize, Width - LineSize * 2, LineSize)
+        Dim HilightLeftRect As New Rectangle(LineSize, LineSize, LineSize, Height - LineSize * 2)
+
+        Dim LightTopRect As New Rectangle(LineSize * 2, LineSize * 2, Width - LineSize * 4, LineSize)
+        Dim LightLeftRect As New Rectangle(LineSize * 2, LineSize * 2, LineSize, Height - LineSize * 4)
+
+        Dim DkShadowRightRect As New Rectangle(Width - LineSize * 2, LineSize, LineSize, Height - LineSize * 2)
+        Dim DkShadowBottomRect As New Rectangle(LineSize, Height - LineSize * 2, Width - LineSize * 2, LineSize)
+
+        Dim ShadowRightRect As New Rectangle(Width - LineSize * 3, LineSize * 2, LineSize, Height - LineSize * 4)
+        Dim ShadowBottomRect As New Rectangle(LineSize * 2, Height - LineSize * 3, Width - LineSize * 4, LineSize)
+
+        Dim Filling As New Rectangle(LightLeftRect.Right, LightTopRect.Bottom, ShadowRightRect.Left - LightLeftRect.Right, ShadowBottomRect.Top - LightTopRect.Bottom)
+
+        Dim tw As Integer = Filling.Width / 2
+        Dim th As Integer = LineSize * 1.75
+        Dim TextRect As New Rectangle(Filling.X + (Filling.Width - tw) / 2, Filling.Y + (Filling.Height - th) / 2, tw, th)
+
+        '#################################################################################
+
+        G.Clear(WindowFrame)
+
+        G.FillRectangle(BrushHilight, HilightTopRect)
+        G.FillRectangle(BrushHilight, HilightLeftRect)
+
+        G.FillRectangle(BrushLight, LightTopRect)
+        G.FillRectangle(BrushLight, LightLeftRect)
+
+        G.FillRectangle(BrushDkShadow, DkShadowRightRect)
+        G.FillRectangle(BrushDkShadow, DkShadowBottomRect)
+
+        G.FillRectangle(BrushShadow, ShadowRightRect)
+        G.FillRectangle(BrushShadow, ShadowBottomRect)
+
+        G.FillRectangle(New SolidBrush(BackColor), Filling)
+
+        G.FillRectangle(New SolidBrush(ForeColor), TextRect)
+
+        e.Graphics.DrawImage(B, New Point(0, 0))
+        G.Dispose() : B.Dispose()
+    End Sub
+
 End Class

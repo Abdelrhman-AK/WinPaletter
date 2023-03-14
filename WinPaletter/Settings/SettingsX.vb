@@ -85,6 +85,13 @@ Public Class SettingsX
             If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then Changed = True
 
             If .DelayMetrics <> XenonCheckBox22.Checked Then Changed = True
+
+            If .ClassicColors_HKU_DEFAULT_Allowed <> XenonCheckBox23.Checked Then Changed = True
+            If .ClassicColors_HKLM_Allowed <> XenonCheckBox24.Checked Then Changed = True
+
+            If .ClassicColors_HKU_DEFAULT_AddOrRemove <> XenonRadioButton5.Checked Then Changed = True
+            If .ClassicColors_HKLM_AddOrRemove <> XenonRadioButton8.Checked Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -181,6 +188,12 @@ Public Class SettingsX
             EP_ORB_11.Checked = Not .EP_TaskbarButton10
 
             XenonCheckBox22.Checked = .DelayMetrics
+
+            XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
+            XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
+            If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
+            If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
+
         End With
 
         With My.Lang
@@ -280,6 +293,11 @@ Public Class SettingsX
             .EP_TaskbarButton10 = EP_ORB_10.Checked
 
             .DelayMetrics = XenonCheckBox22.Checked
+
+            .ClassicColors_HKU_DEFAULT_Allowed = XenonCheckBox23.Checked
+            .ClassicColors_HKLM_Allowed = XenonCheckBox24.Checked
+            .ClassicColors_HKU_DEFAULT_AddOrRemove = XenonRadioButton5.Checked
+            .ClassicColors_HKLM_AddOrRemove = XenonRadioButton8.Checked
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -417,6 +435,11 @@ Public Class SettingsX
                 .EP_TaskbarButton10 = EP_ORB_10.Checked
                 .DelayMetrics = XenonCheckBox22.Checked
 
+                .ClassicColors_HKU_DEFAULT_Allowed = XenonCheckBox23.Checked
+                .ClassicColors_HKLM_Allowed = XenonCheckBox24.Checked
+                .ClassicColors_HKU_DEFAULT_AddOrRemove = XenonRadioButton5.Checked
+                .ClassicColors_HKLM_AddOrRemove = XenonRadioButton8.Checked
+
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -493,6 +516,11 @@ Public Class SettingsX
                 EP_ORB_11.Checked = Not .EP_TaskbarButton10
 
                 XenonCheckBox22.Checked = .DelayMetrics
+
+                XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
+                XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
+                If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
+                If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
             End With
         End If
     End Sub
@@ -577,6 +605,11 @@ Public Class SettingsX
             EP_ORB_11.Checked = Not .EP_TaskbarButton10
 
             XenonCheckBox22.Checked = .DelayMetrics
+
+            XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
+            XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
+            If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
+            If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -723,5 +756,13 @@ Public Class SettingsX
                 appearance_backcolor.BackColor = Color.FromArgb(255, 255, 255)
 
         End Select
+    End Sub
+
+    Private Sub XenonCheckBox23_CheckedChanged(sender As Object) Handles XenonCheckBox23.CheckedChanged
+        Panel4.Enabled = XenonCheckBox23.Checked
+    End Sub
+
+    Private Sub XenonCheckBox24_CheckedChanged(sender As Object) Handles XenonCheckBox24.CheckedChanged
+        Panel5.Enabled = XenonCheckBox24.Checked
     End Sub
 End Class

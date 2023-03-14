@@ -990,8 +990,8 @@ Public Class DragPreviewer
                 RetroButton3.Text = ""
                 RetroButton4.Text = ""
                 RetroButton4.Left = RetroButton3.Right + 3
-                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
-                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = False
 
@@ -1016,8 +1016,8 @@ Public Class DragPreviewer
                 RetroButton3.Text = ClassicWindow1.TitlebarText
                 RetroButton4.Text = ClassicWindow2.TitlebarText
                 RetroButton4.Left = RetroButton3.Right + 3
-                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
-                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = True
 
@@ -1038,8 +1038,8 @@ Public Class DragPreviewer
                 RetroButton3.Text = ClassicWindow1.TitlebarText
                 RetroButton4.Text = ClassicWindow2.TitlebarText
                 RetroButton4.Left = RetroButton3.Right + 3
-                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton3.Font.Style)
-                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 9, RetroButton4.Font.Style)
+                RetroButton3.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton3.Font.Style)
+                RetroButton4.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, RetroButton4.Font.Style)
                 RetroButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8.5, RetroButton2.Font.Style)
                 RetroButton3.HatchBrush = True
 

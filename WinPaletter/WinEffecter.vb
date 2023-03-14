@@ -41,6 +41,11 @@ Public Class WinEffecter
             XenonCheckBox19.Checked = .ShowSecondsInSystemClock
             XenonCheckBox18.Checked = .PaintDesktopVersion
             XenonCheckBox21.Checked = .ShakeToMinimize
+            XenonCheckBox22.Checked = .Win11BootDots
+
+            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Default)
+            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Ribbon)
+            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Bar)
 
             Panel2.Width = .Caret
         End With
@@ -80,6 +85,19 @@ Public Class WinEffecter
             .ShowSecondsInSystemClock = XenonCheckBox19.Checked
             .PaintDesktopVersion = XenonCheckBox18.Checked
             .ShakeToMinimize = XenonCheckBox21.Checked
+            .Win11BootDots = XenonCheckBox22.Checked
+
+            If XenonRadioButton1.Checked Then
+                .Win11ExplorerBar = CP.Win11ExplorerBar.Default
+
+            ElseIf XenonRadioButton2.Checked Then
+                .Win11ExplorerBar = CP.Win11ExplorerBar.Ribbon
+
+            ElseIf XenonRadioButton3.Checked Then
+                .Win11ExplorerBar = CP.Win11ExplorerBar.Bar
+
+            End If
+
         End With
     End Sub
 

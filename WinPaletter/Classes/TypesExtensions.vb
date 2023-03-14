@@ -383,9 +383,9 @@ Public Module IntegerExtensions
                 s &= "0"
             Next
             s &= int
-            Return s
+            Return s.Replace("-", "")
         Else
-            Return int.ToString
+            Return int.ToString.Replace("-", "")
         End If
 
     End Function
