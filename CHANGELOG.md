@@ -35,7 +35,7 @@
 - Focus rectangle width and height (More seen in classic elements) #110
 - Text Cursor (Caret) width #110
 - Active Windows Tracking #110
-- SysView32 #105
+- SysListView32 #105
 - Snap cursor to default button
 - Show seconds in taskbar of Windows 10 (or Windows 11 + ExplorerPatcher) #105
 - Paint Windows version on desktop #105
