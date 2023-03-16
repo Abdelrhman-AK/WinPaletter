@@ -2,6 +2,38 @@
 
 ---
 
+### 1.0.7.4
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` |  16 Mar 2023 |
+
+> **What's New?**
+#### The same as [1.0.7.3](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1073), except for:
+
+#### 1. Windows Effects new items (For Windows 11 only):
+- Change Explorer Bar for Windows 11 (Requires [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)) #117
+- Switch between Circle/Spinning Dots in Windows 11 boot screen
+
+#### 2. Classic Colors schemes: 
+- The illustrator has been updated, it will follow the colors you choose.
+- You can change the scope in which classic colors can be applied. Go to `Settings > Theme Applying Behavior` to change its preferences. #114
+
+#### 3. Changes and fixes:
+- UI improvements: #120 #119 #118 #116  #115 #113
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.3`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.3...v1.0.7.4) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.4) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.4) |
+
+---
+
 ### 1.0.7.3
 
 > **Info:**
