@@ -419,8 +419,8 @@ Namespace My
                 Try
                     Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
                     If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-                    WallpaperType = R2.GetValue("BackgroundType")
-                    If R2 IsNot Nothing Then R2.Close()
+                WallpaperType = R2.GetValue("BackgroundType")
+                If R2 IsNot Nothing Then R2.Close()
                 Catch
                 End Try
             End If

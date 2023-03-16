@@ -189,6 +189,15 @@
         s8G+j39vWFjYvwD6pNp+6eQ0EwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>• Added Windows 1 and 2 classic schemes.
+
+• Windows 3.1 schemes are improved to have a closer look to Windows 3.1.
+
+• The illustrator has been updated, it will follow the colors you choose.
+
+• You can change the scoope in which classic colors can be applied. Go to "Settings &gt; Theme Applying Behavior" to change its preferences.</value>
+  </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>• For example, if you set a Windows 10 taskbar in Windows 11, WinPaletter will adjust the preview to make the taskbar as Windows 10, and so on.
 
@@ -212,7 +221,9 @@
 • SysListView32
 • Snap cursor to default button
 • Show seconds in taskbar of Windows 10 (or Windows 11 + ExplorerPatcher)
-• Paint Windows version on desktop</value>
+• Paint Windows version on desktop
+• Use spinning dots in Windows 11 boot screen
+• Change Windows 11 Explorer bar (Dependent on ExplorerPatcher)</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>• UI improvements

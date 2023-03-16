@@ -173,6 +173,17 @@ Public Class Updates
             My.Animator.ShowSync(XenonButton1, True)
         End If
 
+        If My.WXP Then
+            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+            XenonAlertBox2.Visible = True
+            XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
+
+        ElseIf My.WVista Then
+            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+            XenonAlertBox2.Visible = True
+            XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
+        End If
+
     End Sub
 
     Private Sub Label3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Label3.LinkClicked

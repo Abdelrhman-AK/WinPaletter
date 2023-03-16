@@ -17,8 +17,7 @@ Public Class MainFrm
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
 
-#Region "CP Subs"
-
+#Region "Preview Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
         Dim AnimX1 As Integer = 15
         Dim AnimX2 As Integer = 1
@@ -902,82 +901,6 @@ Public Class MainFrm
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()
     End Sub
-
-    Sub AdjustClassicPreview()
-        SetToClassicWindow(ClassicWindow1, CP)
-        SetToClassicWindow(ClassicWindow2, CP, False)
-
-        SetClassicMetrics(ClassicWindow1, CP)
-        SetClassicMetrics(ClassicWindow2, CP)
-        SetToClassicButton(RetroButton2, CP)
-        SetToClassicButton(RetroButton3, CP)
-        SetToClassicButton(RetroButton4, CP)
-        SetToClassicRaisedPanel(ClassicTaskbar, CP)
-
-        ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
-        ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
-    End Sub
-
-    Sub SetClassicMetrics([Window] As RetroWindow, [CP] As CP)
-        [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
-        [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
-        [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-        [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
-        [Window].Font = CP.MetricsFonts.CaptionFont
-        [Window].Refresh()
-    End Sub
-
-    Sub ApplyMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
-        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
-        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
-        XenonWindow.Invalidate()
-    End Sub
-
-    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
-        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Window].BackColor = [CP].Win32.ButtonFace
-        [Window].ButtonHilight = [CP].Win32.ButtonHilight
-        [Window].ButtonLight = [CP].Win32.ButtonLight
-        [Window].ButtonShadow = [CP].Win32.ButtonShadow
-        [Window].ButtonText = [CP].Win32.ButtonText
-
-        If Active Then
-            [Window].ColorBorder = [CP].Win32.ActiveBorder
-            [Window].ForeColor = [CP].Win32.TitleText
-            [Window].Color1 = [CP].Win32.ActiveTitle
-            [Window].Color2 = [CP].Win32.GradientActiveTitle
-        Else
-            [Window].ColorBorder = [CP].Win32.InactiveBorder
-            [Window].ForeColor = [CP].Win32.InactiveTitleText
-            [Window].Color1 = [CP].Win32.InactiveTitle
-            [Window].Color2 = [CP].Win32.GradientInactiveTitle
-        End If
-
-        [Window].ColorGradient = [CP].Win32.EnableGradient
-    End Sub
-
-    Sub SetToClassicRaisedPanel([Panel] As RetroPanelRaised, [CP] As CP)
-        [Panel].BackColor = [CP].Win32.ButtonFace
-        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
-        [Panel].ButtonLight = [CP].Win32.ButtonLight
-        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
-        [Panel].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Panel].ForeColor = [CP].Win32.TitleText
-    End Sub
-
-    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
-        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Button].ButtonHilight = [CP].Win32.ButtonHilight
-        [Button].ButtonLight = [CP].Win32.ButtonLight
-        [Button].ButtonShadow = [CP].Win32.ButtonShadow
-        [Button].BackColor = [CP].Win32.ButtonFace
-        [Button].ForeColor = [CP].Win32.ButtonText
-        [Button].FocusRectWidth = [CP].WindowsEffects.FocusRectWidth
-        [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
-    End Sub
-
     Sub ReValidateLivePreview(ByVal Parent As Control)
         Parent.Refresh()
 
@@ -990,56 +913,6 @@ Public Class MainFrm
             End If
         Next
     End Sub
-
-    Sub DoubleBufferAll(ByVal Parent As Control)
-        MakeItDoubleBuffered(Parent)
-
-        For Each ctrl As Control In Parent.Controls
-            MakeItDoubleBuffered(ctrl)
-            If ctrl.HasChildren Then
-                For Each c As Control In ctrl.Controls
-                    ReValidateLivePreview(c)
-                Next
-            End If
-        Next
-    End Sub
-
-    Public Sub Update_Wallpaper_Preview()
-        Cursor = Cursors.AppStarting
-
-        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
-
-        Select Case PreviewConfig
-            Case WinVer.W11
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W10
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W8
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.W7
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.WVista
-                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
-
-            Case WinVer.WXP
-                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
-        End Select
-
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
-
-        ApplyLivePreviewFromCP(CP)
-        ApplyCPValues(CP)
-        Adjust_Preview(False)
-        ReValidateLivePreview(pnl_preview)
-        ReValidateLivePreview(pnl_preview_classic)
-
-        Cursor = Cursors.Default
-    End Sub
-
     Sub Adjust_Preview(Optional AnimateThePreview As Boolean = True)
         If AnimateThePreview Then
             If _Shown Then
@@ -1452,7 +1325,6 @@ Public Class MainFrm
             End If
         End If
     End Sub
-
     Sub ApplyCPValues([CP] As CP)
         themename_lbl.Text = String.Format("{0} ({1})", Me.[CP].Info.PaletteName, Me.[CP].Info.PaletteVersion)
         author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, Me.[CP].Info.Author)
@@ -1592,7 +1464,6 @@ Public Class MainFrm
         ApplyMetroStartToButton([CP])
         ApplyBackLogonUI([CP])
     End Sub
-
     Sub ApplyDefaultCPValues()
         Dim DefCP As CP
 
@@ -1649,7 +1520,90 @@ Public Class MainFrm
 
         CP.Dispose()
     End Sub
+    Sub AdjustClassicPreview()
+        SetToClassicWindow(ClassicWindow1, CP)
+        SetToClassicWindow(ClassicWindow2, CP, False)
 
+        SetClassicMetrics(ClassicWindow1, CP)
+        SetClassicMetrics(ClassicWindow2, CP)
+        SetToClassicButton(RetroButton2, CP)
+        SetToClassicButton(RetroButton3, CP)
+        SetToClassicButton(RetroButton4, CP)
+        SetToClassicRaisedPanel(ClassicTaskbar, CP)
+
+        ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
+        ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
+    End Sub
+#End Region
+
+#Region "CP Subs"
+    Sub SetClassicMetrics([Window] As RetroWindow, [CP] As CP)
+        [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+        [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+        [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+        [Window].Font = CP.MetricsFonts.CaptionFont
+        [Window].Refresh()
+    End Sub
+    Sub ApplyMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
+        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
+        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
+        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
+        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
+        XenonWindow.Invalidate()
+    End Sub
+    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
+        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Window].BackColor = [CP].Win32.ButtonFace
+        [Window].ButtonHilight = [CP].Win32.ButtonHilight
+        [Window].ButtonLight = [CP].Win32.ButtonLight
+        [Window].ButtonShadow = [CP].Win32.ButtonShadow
+        [Window].ButtonText = [CP].Win32.ButtonText
+
+        If Active Then
+            [Window].ColorBorder = [CP].Win32.ActiveBorder
+            [Window].ForeColor = [CP].Win32.TitleText
+            [Window].Color1 = [CP].Win32.ActiveTitle
+            [Window].Color2 = [CP].Win32.GradientActiveTitle
+        Else
+            [Window].ColorBorder = [CP].Win32.InactiveBorder
+            [Window].ForeColor = [CP].Win32.InactiveTitleText
+            [Window].Color1 = [CP].Win32.InactiveTitle
+            [Window].Color2 = [CP].Win32.GradientInactiveTitle
+        End If
+
+        [Window].ColorGradient = [CP].Win32.EnableGradient
+    End Sub
+    Sub SetToClassicRaisedPanel([Panel] As RetroPanelRaised, [CP] As CP)
+        [Panel].BackColor = [CP].Win32.ButtonFace
+        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
+        [Panel].ButtonLight = [CP].Win32.ButtonLight
+        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
+        [Panel].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Panel].ForeColor = [CP].Win32.TitleText
+    End Sub
+    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
+        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        [Button].ButtonHilight = [CP].Win32.ButtonHilight
+        [Button].ButtonLight = [CP].Win32.ButtonLight
+        [Button].ButtonShadow = [CP].Win32.ButtonShadow
+        [Button].BackColor = [CP].Win32.ButtonFace
+        [Button].ForeColor = [CP].Win32.ButtonText
+        [Button].FocusRectWidth = [CP].WindowsEffects.FocusRectWidth
+        [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
+    End Sub
+    Sub DoubleBufferAll(ByVal Parent As Control)
+        MakeItDoubleBuffered(Parent)
+
+        For Each ctrl As Control In Parent.Controls
+            MakeItDoubleBuffered(ctrl)
+            If ctrl.HasChildren Then
+                For Each c As Control In ctrl.Controls
+                    ReValidateLivePreview(c)
+                Next
+            End If
+        Next
+    End Sub
     Sub ApplyMetroStartToButton(ColorPalette As CP)
         Select Case ColorPalette.Windows8.Start
             Case 1
@@ -1696,7 +1650,6 @@ Public Class MainFrm
                 W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
         End Select
     End Sub
-
     Sub ApplyBackLogonUI(ColorPalette As CP)
 
         Select Case ColorPalette.Windows8.LogonUI
@@ -1782,7 +1735,41 @@ Public Class MainFrm
 
 
     End Sub
+    Public Sub Update_Wallpaper_Preview()
+        Cursor = Cursors.AppStarting
 
+        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
+
+        Select Case PreviewConfig
+            Case WinVer.W11
+                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W10
+                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W8
+                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.W7
+                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WVista
+                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+
+            Case WinVer.WXP
+                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
+        End Select
+
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
+
+        ApplyLivePreviewFromCP(CP)
+        ApplyCPValues(CP)
+        Adjust_Preview(False)
+        ReValidateLivePreview(pnl_preview)
+        ReValidateLivePreview(pnl_preview_classic)
+
+        Cursor = Cursors.Default
+    End Sub
     Function GetTintedWallpaper(WT As CP.Structures.WallpaperTone) As Bitmap
         Dim HSL As New HSLFilter With {
             .Hue = WT.H,
@@ -1858,6 +1845,8 @@ Public Class MainFrm
 #End Region
 
     Sub AutoUpdatesCheck()
+        If My.WXP OrElse My.WVista Then Exit Sub
+
         StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
         If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
         If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1

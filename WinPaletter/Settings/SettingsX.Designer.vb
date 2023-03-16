@@ -1781,8 +1781,8 @@ Partial Class SettingsX
         Me.XenonCheckBox22.Name = "XenonCheckBox22"
         Me.XenonCheckBox22.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox22.TabIndex = 26
-        Me.XenonCheckBox22.Text = "Make applying Metrics & Fonts having effects only after logoff and logon (To fix " &
-    "its crashing issue)"
+        Me.XenonCheckBox22.Text = "Make applying Metrics & Fonts have effects only after logoff and logon (To fix it" &
+    "s crashing issue)"
         '
         'PictureBox37
         '
@@ -2622,7 +2622,7 @@ Partial Class SettingsX
         Me.XenonCheckBox20.Name = "XenonCheckBox20"
         Me.XenonCheckBox20.Size = New System.Drawing.Size(729, 26)
         Me.XenonCheckBox20.TabIndex = 25
-        Me.XenonCheckBox20.Text = "Synchronize preview with Windows 11 if installed"
+        Me.XenonCheckBox20.Text = "Synchronize with Windows 11 preview if installed"
         '
         'XenonSeparator9
         '

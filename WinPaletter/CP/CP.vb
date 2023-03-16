@@ -1468,7 +1468,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", MenuHilight.Reverse.ToArgb, RegistryValueKind.DWord, False)
                         EditReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Desktop", Desktop.Reverse.ToArgb, RegistryValueKind.DWord, False)
                     Else
-                        DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes", "DefaultColors")
+                        DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard")
                     End If
                 End If
 

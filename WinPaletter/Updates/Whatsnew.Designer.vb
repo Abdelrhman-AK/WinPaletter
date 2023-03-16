@@ -325,8 +325,7 @@ Partial Class Whatsnew
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(656, 285)
         Me.Label8.TabIndex = 32
-        Me.Label8.Text = "• Added Windows 1 and 2 classic schemes." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Windows 3.1 schemes are improved to" &
-    " have a closer look to Windows 3.1."
+        Me.Label8.Text = resources.GetString("Label8.Text")
         '
         'Label9
         '
@@ -337,7 +336,7 @@ Partial Class Whatsnew
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(661, 45)
         Me.Label9.TabIndex = 31
-        Me.Label9.Text = "Classic Colors schemes"
+        Me.Label9.Text = "Classic Colors"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage5

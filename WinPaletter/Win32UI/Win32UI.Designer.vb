@@ -1949,7 +1949,7 @@ Partial Class Win32UI
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(207, 16)
         Me.Label13.TabIndex = 3
-        Me.Label13.Text = "Hyperlinks"
+        Me.Label13.Text = "Hyperlinks and selection rectangles"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'hottracking_pick
