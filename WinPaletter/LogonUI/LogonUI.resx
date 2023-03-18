@@ -146,7 +146,7 @@
   <data name="PictureBox15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAZtJREFUSEvlVc0uQ0EYnVbGzFx9BQkJD8AjiIUFidiIEM8hEQ2t9ra3v9hUY2Vl
+        wAAADsABataJCQAAAZtJREFUSEvlVc0uQ0EYnVbGzFx9BQkJD8AjiIUFidiIEM8hEQ2t9ra3v9hUY2Vl
         6R1sRJBc5ErpbS+VVCzsrWrOdEgkrRAGiZN8yXfOnPPNzf2ZS/4HrK3bhCjezGlK0EPT9OtgaU/Q6AHV
         lKCHpunnQFddxjNXM2zdG9SS3KAyzp3KqKYEPTRNCbzIIKul7rA2gulI+bElCs09cJa8HBLF+ydrs+nR
         +CFDoYeGNXjgRQZZ8HfBEhcDzPb3Wbo6q3jStVjKL0ttRRkk0CtNrikuvSojs8rwu5gohWj0fJjGziKg
@@ -213,6 +213,16 @@
   <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
+        oBlY53nVaY3X1T8gDGJDhYkHq72vhgI1/wfhdUA2VJh4ADNgrTcFBoA0k20ASNMQNWBd4HXh/wz/Gcky
+        ABTfQA3f1/pcnbze62oYsgETjfZ7TDTYu3WS4SFRqHJMsNr7SjlME9CQrTD2EqezLZP0930HGvB/ov7e
+        Pqhy7GCN59UWmEagzf/X+Vz9P9vq2O9JBvv+Aw042W+wXwCqFDdY7XWlGW4IxID/QANOzjTezQ9Vgh+A
+        AnGV++VpMEPm25162mO8XwQqTTxY6nT+5Aq3S18WOB1VhgpRGzAwAAAVer8KFxeKpgAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAQAEBAAAAEAIABoBAAARgAAACAgAAABACAAqBAAAK4EAAAwMAAAAQAgAKglAABWFQAAQEAAAAEA

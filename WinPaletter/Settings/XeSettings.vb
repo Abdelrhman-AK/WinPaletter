@@ -54,16 +54,24 @@ Public Class XeSettings
     Public Property EP_UseTaskbar10 As Boolean = False
     Public Property EP_TaskbarButton10 As Boolean = False
     Public Property EP_StartStyle As ExplorerPatcher.StartStyles
-
     Public Property DelayMetrics As Boolean = False
-
-
-    Public Property ClassicColors_HKU_DEFAULT_AddOrRemove As Boolean = True
-    Public Property ClassicColors_HKU_DEFAULT_Allowed As Boolean = True
-    Public Property ClassicColors_HKLM_AddOrRemove As Boolean = False
-    Public Property ClassicColors_HKLM_Allowed As Boolean = True
+    Public Property ClassicColors_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.Overwrite
+    Public Property ClassicColors_HKLM_Prefs As OverwriteOptions = OverwriteOptions.Erase
+    Public Property ClassicColors_HKU_DEFAULT_UPM As Boolean = True
+    Public Property Metrics_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
+    Public Property Cursors_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
+    Public Property CMD_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
+    Public Property PS86_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
+    Public Property PS64_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
 
 #End Region
+
+    Public Enum OverwriteOptions
+        DontChange
+        Overwrite
+        RestoreDefaults
+        [Erase]
+    End Enum
 
     Public Enum Nerd_Stats_Type
         HEX
@@ -152,11 +160,15 @@ Public Class XeSettings
         If Key.GetValue("EP_StartStyle", Nothing) Is Nothing Then Key.SetValue("EP_StartStyle", ExplorerPatcher.StartStyles.NotRounded, RegistryValueKind.DWord)
 
         If Key.GetValue("DelayMetrics", Nothing) Is Nothing Then Key.SetValue("DelayMetrics", False, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKLM_Prefs", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKLM_Prefs", OverwriteOptions.Erase, RegistryValueKind.DWord)
+        If Key.GetValue("ClassicColors_HKU_DEFAULT_UPM", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_UPM", True, RegistryValueKind.DWord)
+        If Key.GetValue("Metrics_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
+        If Key.GetValue("Cursors_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
+        If Key.GetValue("CMD_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
+        If Key.GetValue("PS86_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
+        If Key.GetValue("PS64_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
 
-        If Key.GetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", True, RegistryValueKind.DWord)
-        If Key.GetValue("ClassicColors_HKU_DEFAULT_Allowed", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKU_DEFAULT_Allowed", True, RegistryValueKind.DWord)
-        If Key.GetValue("ClassicColors_HKLM_AddOrRemove", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKLM_AddOrRemove", False, RegistryValueKind.DWord)
-        If Key.GetValue("ClassicColors_HKLM_Allowed", Nothing) Is Nothing Then Key.SetValue("ClassicColors_HKLM_Allowed", True, RegistryValueKind.DWord)
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -238,10 +250,14 @@ Public Class XeSettings
 
                 DelayMetrics = Key.GetValue("DelayMetrics", False)
 
-                ClassicColors_HKU_DEFAULT_AddOrRemove = Key.GetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", True)
-                ClassicColors_HKLM_AddOrRemove = Key.GetValue("ClassicColors_HKLM_AddOrRemove", True)
-                ClassicColors_HKLM_Allowed = Key.GetValue("ClassicColors_HKLM_Allowed", False)
-                ClassicColors_HKU_DEFAULT_Allowed = Key.GetValue("ClassicColors_HKU_DEFAULT_Allowed", True)
+                ClassicColors_HKU_DEFAULT_Prefs = Key.GetValue("ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite)
+                ClassicColors_HKLM_Prefs = Key.GetValue("ClassicColors_HKLM_Prefs", OverwriteOptions.Erase)
+                ClassicColors_HKU_DEFAULT_UPM = Key.GetValue("ClassicColors_HKU_DEFAULT_UPM", True)
+                Metrics_HKU_DEFAULT_Prefs = Key.GetValue("Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
+                Cursors_HKU_DEFAULT_Prefs = Key.GetValue("Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
+                CMD_HKU_DEFAULT_Prefs = Key.GetValue("CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
+                PS86_HKU_DEFAULT_Prefs = Key.GetValue("PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
+                PS64_HKU_DEFAULT_Prefs = Key.GetValue("PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
 
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
@@ -294,10 +310,15 @@ Public Class XeSettings
 
                     If x.StartsWith("DelayMetrics= ", My._strIgnore) Then DelayMetrics = x.Remove(0, "DelayMetrics= ".Count)
 
-                    If x.StartsWith("ClassicColors_HKU_DEFAULT_AddOrRemove= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_AddOrRemove = x.Remove(0, "ClassicColors_HKU_DEFAULT_AddOrRemove= ".Count)
-                    If x.StartsWith("ClassicColors_HKLM_AddOrRemove= ", My._strIgnore) Then ClassicColors_HKLM_AddOrRemove = x.Remove(0, "ClassicColors_HKLM_AddOrRemove= ".Count)
-                    If x.StartsWith("ClassicColors_HKLM_Allowed= ", My._strIgnore) Then ClassicColors_HKLM_Allowed = x.Remove(0, "ClassicColors_HKLM_Allowed= ".Count)
-                    If x.StartsWith("ClassicColors_HKU_DEFAULT_Allowed= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_Allowed = x.Remove(0, "ClassicColors_HKU_DEFAULT_Allowed= ".Count)
+                    If x.StartsWith("ClassicColors_HKU_DEFAULT_Prefs= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_Prefs = x.Remove(0, "ClassicColors_HKU_DEFAULT_Prefs= ".Count)
+                    If x.StartsWith("ClassicColors_HKLM_Prefs= ", My._strIgnore) Then ClassicColors_HKLM_Prefs = x.Remove(0, "ClassicColors_HKLM_Prefs= ".Count)
+                    If x.StartsWith("ClassicColors_HKU_DEFAULT_UPM= ", My._strIgnore) Then ClassicColors_HKU_DEFAULT_UPM = x.Remove(0, "ClassicColors_HKU_DEFAULT_UPM= ".Count)
+                    If x.StartsWith("Metrics_HKU_DEFAULT_Prefs= ", My._strIgnore) Then Metrics_HKU_DEFAULT_Prefs = x.Remove(0, "Metrics_HKU_DEFAULT_Prefs= ".Count)
+                    If x.StartsWith("Cursors_HKU_DEFAULT_Prefs= ", My._strIgnore) Then Cursors_HKU_DEFAULT_Prefs = x.Remove(0, "Cursors_HKU_DEFAULT_Prefs= ".Count)
+
+                    If x.StartsWith("CMD_HKU_DEFAULT_Prefs= ", My._strIgnore) Then CMD_HKU_DEFAULT_Prefs = x.Remove(0, "CMD_HKU_DEFAULT_Prefs= ".Count)
+                    If x.StartsWith("PS86_HKU_DEFAULT_Prefs= ", My._strIgnore) Then PS86_HKU_DEFAULT_Prefs = x.Remove(0, "PS86_HKU_DEFAULT_Prefs= ".Count)
+                    If x.StartsWith("PS64_HKU_DEFAULT_Prefs= ", My._strIgnore) Then PS64_HKU_DEFAULT_Prefs = x.Remove(0, "PS64_HKU_DEFAULT_Prefs= ".Count)
 
                 Next
         End Select
@@ -376,11 +397,16 @@ Public Class XeSettings
 
                 Key.SetValue("DelayMetrics", DelayMetrics, RegistryValueKind.DWord)
 
-                Key.SetValue("ClassicColors_HKU_DEFAULT_AddOrRemove", ClassicColors_HKU_DEFAULT_AddOrRemove, RegistryValueKind.DWord)
-                Key.SetValue("ClassicColors_HKLM_AddOrRemove", ClassicColors_HKLM_AddOrRemove, RegistryValueKind.DWord)
+                Key.SetValue("ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
+                Key.SetValue("ClassicColors_HKLM_Prefs", ClassicColors_HKLM_Prefs, RegistryValueKind.DWord)
+                Key.SetValue("ClassicColors_HKU_DEFAULT_UPM", ClassicColors_HKU_DEFAULT_UPM, RegistryValueKind.DWord)
+                Key.SetValue("Metrics_HKU_DEFAULT_Prefs", Metrics_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
+                Key.SetValue("Cursors_HKU_DEFAULT_Prefs", Cursors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
 
-                Key.SetValue("ClassicColors_HKLM_Allowed", ClassicColors_HKLM_Allowed, RegistryValueKind.DWord)
-                Key.SetValue("ClassicColors_HKU_DEFAULT_Allowed", ClassicColors_HKU_DEFAULT_Allowed, RegistryValueKind.DWord)
+                Key.SetValue("CMD_HKU_DEFAULT_Prefs", CMD_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
+                Key.SetValue("PS86_HKU_DEFAULT_Prefs", PS86_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
+                Key.SetValue("PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
+
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -447,11 +473,15 @@ Public Class XeSettings
                 l.Add(String.Format("EP_StartStyle= {0}", EP_StartStyle))
 
                 l.Add(String.Format("DelayMetrics= {0}", DelayMetrics))
+                l.Add(String.Format("ClassicColors_HKU_DEFAULT_Prefs= {0}", ClassicColors_HKU_DEFAULT_Prefs))
+                l.Add(String.Format("ClassicColors_HKLM_Prefs= {0}", ClassicColors_HKLM_Prefs))
+                l.Add(String.Format("ClassicColors_HKU_DEFAULT_UPM= {0}", ClassicColors_HKU_DEFAULT_UPM))
+                l.Add(String.Format("Metrics_HKU_DEFAULT_Prefs= {0}", Metrics_HKU_DEFAULT_Prefs))
+                l.Add(String.Format("Cursors_HKU_DEFAULT_Prefs= {0}", Cursors_HKU_DEFAULT_Prefs))
 
-                l.Add(String.Format("ClassicColors_HKU_DEFAULT_AddOrRemove= {0}", ClassicColors_HKU_DEFAULT_AddOrRemove))
-                l.Add(String.Format("ClassicColors_HKLM_AddOrRemove= {0}", ClassicColors_HKLM_AddOrRemove))
-                l.Add(String.Format("ClassicColors_HKLM_Allowed= {0}", ClassicColors_HKLM_Allowed))
-                l.Add(String.Format("ClassicColors_HKU_DEFAULT_Allowed= {0}", ClassicColors_HKU_DEFAULT_Allowed))
+                l.Add(String.Format("CMD_HKU_DEFAULT_Prefs= {0}", CMD_HKU_DEFAULT_Prefs))
+                l.Add(String.Format("PS86_HKU_DEFAULT_Prefs= {0}", PS86_HKU_DEFAULT_Prefs))
+                l.Add(String.Format("PS64_HKU_DEFAULT_Prefs= {0}", PS64_HKU_DEFAULT_Prefs))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

@@ -56,12 +56,10 @@ Partial Class Lang_JSON_Update
         '
         'Label1
         '
-        Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(42, 12)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(151, 24)
+        Me.Label1.Size = New System.Drawing.Size(106, 24)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "Old JSON File:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -78,12 +76,10 @@ Partial Class Lang_JSON_Update
         '
         'Label2
         '
-        Me.Label2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(42, 42)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(151, 24)
+        Me.Label2.Size = New System.Drawing.Size(106, 24)
         Me.Label2.TabIndex = 14
         Me.Label2.Text = "New JSON File:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -94,7 +90,6 @@ Partial Class Lang_JSON_Update
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(154, 12)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -116,7 +111,6 @@ Partial Class Lang_JSON_Update
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox2.Hint = Nothing
         Me.XenonTextBox2.Location = New System.Drawing.Point(154, 42)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = False
@@ -176,7 +170,7 @@ Partial Class Lang_JSON_Update
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(157, 24)
         Me.XenonButton5.TabIndex = 113
-        Me.XenonButton5.Text = "Generate New (English)"
+        Me.XenonButton5.Text = "Generate new (English)"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonAlertBox7
@@ -185,20 +179,20 @@ Partial Class Lang_JSON_Update
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox7.CenterText = True
+        Me.XenonAlertBox7.CenterText = False
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox7.Image = Nothing
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 145)
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 138)
         Me.XenonAlertBox7.Name = "XenonAlertBox7"
-        Me.XenonAlertBox7.Size = New System.Drawing.Size(703, 52)
+        Me.XenonAlertBox7.Size = New System.Drawing.Size(703, 40)
         Me.XenonAlertBox7.TabIndex = 114
         Me.XenonAlertBox7.TabStop = False
         Me.XenonAlertBox7.Text = resources.GetString("XenonAlertBox7.Text")
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 72)
@@ -237,7 +231,7 @@ Partial Class Lang_JSON_Update
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(108, 29)
         Me.XenonButton3.TabIndex = 202
-        Me.XenonButton3.Text = "Save As ..."
+        Me.XenonButton3.Text = "Save as ..."
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'SaveJSONDlg
@@ -254,14 +248,13 @@ Partial Class Lang_JSON_Update
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox1.CenterText = True
+        Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
         Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 110)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(703, 29)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(703, 22)
         Me.XenonAlertBox1.TabIndex = 204
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "This feature is experimental, always create backups before starting. If any abnor" &
@@ -277,7 +270,7 @@ Partial Class Lang_JSON_Update
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(703, 23)
         Me.XenonCheckBox1.TabIndex = 205
-        Me.XenonCheckBox1.Text = "Exclude Global Strings not found in the new file (Not Recommended in backward com" &
+        Me.XenonCheckBox1.Text = "Exclude global strings not found in the new file (Not recommended in backward com" &
     "ptability)"
         '
         'Lang_JSON_Update
@@ -309,7 +302,7 @@ Partial Class Lang_JSON_Update
         Me.MinimizeBox = False
         Me.Name = "Lang_JSON_Update"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Update Language JSON File"
+        Me.Text = "Update language JSON file"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

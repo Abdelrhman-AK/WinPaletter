@@ -116,7 +116,7 @@ Partial Class LogonUI8_Pics
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(358, 35)
         Me.Label1.TabIndex = 35
-        Me.Label1.Text = "Default Backgrounds"
+        Me.Label1.Text = "Default backgrounds"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'img5
@@ -183,13 +183,12 @@ Partial Class LogonUI8_Pics
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "LogonUI8_Pics"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "LogonUI - Windows 8 Defaults"
+        Me.Text = "LogonUI - Windows 8 defaults"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

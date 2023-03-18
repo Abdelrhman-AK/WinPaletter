@@ -155,7 +155,6 @@ Partial Class AltTabEditor
         Me.EP_Alert.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.EP_Alert.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.EP_Alert.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.EP_Alert.CenterText = True
         Me.EP_Alert.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.EP_Alert.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -218,7 +217,7 @@ Partial Class AltTabEditor
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(287, 35)
         Me.Label4.TabIndex = 0
-        Me.Label4.Text = "Opacity (For Windows 10)"
+        Me.Label4.Text = "Opacity (for Windows 10)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroPanel1
@@ -500,7 +499,7 @@ Partial Class AltTabEditor
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 210
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton7
@@ -580,7 +579,7 @@ Partial Class AltTabEditor
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(75, 31)
         Me.Label12.TabIndex = 111
-        Me.Label12.Text = "Open From:"
+        Me.Label12.Text = "Open from:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton11
@@ -598,7 +597,7 @@ Partial Class AltTabEditor
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton11.TabIndex = 110
-        Me.XenonButton11.Text = "WinPaletter Theme"
+        Me.XenonButton11.Text = "WinPaletter theme"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -648,7 +647,6 @@ Partial Class AltTabEditor
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = True
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -666,7 +664,6 @@ Partial Class AltTabEditor
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)

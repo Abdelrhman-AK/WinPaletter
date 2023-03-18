@@ -51,12 +51,12 @@ Partial Class About
         Me.LinkLabel10 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonLinkLabel3 = New WinPaletter.XenonLinkLabel()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.XenonLinkLabel2 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.XenonLinkLabel1 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.XenonLinkLabel3 = New WinPaletter.XenonLinkLabel()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,9 +68,9 @@ Partial Class About
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonAnimatedBox1.SuspendLayout()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox1
@@ -179,7 +179,7 @@ Partial Class About
         Me.LinkLabel2.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel2.TabIndex = 12
         Me.LinkLabel2.TabStop = True
-        Me.LinkLabel2.Text = "Color Picking Controls by Cyotek"
+        Me.LinkLabel2.Text = "Color picking controls by Cyotek"
         Me.LinkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'LinkLabel3
@@ -195,7 +195,7 @@ Partial Class About
         Me.LinkLabel3.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel3.TabIndex = 13
         Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "Image to Palette Mechanism by ColorThief; KSemenenko"
+        Me.LinkLabel3.Text = "Image to palette mechanism by ColorThief; KSemenenko"
         Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label3
@@ -206,9 +206,9 @@ Partial Class About
         Me.Label3.ForeColor = System.Drawing.Color.Gray
         Me.Label3.Location = New System.Drawing.Point(9, 553)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(258, 15)
+        Me.Label3.Size = New System.Drawing.Size(252, 15)
         Me.Label3.TabIndex = 15
-        Me.Label3.Text = "Abdelrhman-AK, 2022-2023, All Rights Reserved"
+        Me.Label3.Text = "Abdelrhman-AK, 2022-2023, All rights reserved"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton1
@@ -274,7 +274,7 @@ Partial Class About
         Me.LinkLabel4.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel4.TabIndex = 20
         Me.LinkLabel4.TabStop = True
-        Me.LinkLabel4.Text = "Animation for Controls by Pavel Torgashov"
+        Me.LinkLabel4.Text = "Animation for controls by Pavel Torgashov"
         Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5
@@ -314,7 +314,7 @@ Partial Class About
         Me.LinkLabel5.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel5.TabIndex = 23
         Me.LinkLabel5.TabStop = True
-        Me.LinkLabel5.Text = "Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit"
+        Me.LinkLabel5.Text = "Modifying Modern Windows Elements inspired by u/aveyo and u/Egg-Tricky on Reddit"
         Me.LinkLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox6
@@ -340,8 +340,8 @@ Partial Class About
         Me.LinkLabel6.Size = New System.Drawing.Size(471, 63)
         Me.LinkLabel6.TabIndex = 25
         Me.LinkLabel6.TabStop = True
-        Me.LinkLabel6.Text = "The following items are by Microsoft:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Classic Colors Schemes" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Luna Theme pre" &
-    "view (Luna.msstyles)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Command Prompt and PowerShell Raster Fonts previews"
+        Me.LinkLabel6.Text = "The following items are by Microsoft:" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Classic colors schemes" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Luna theme pre" &
+    "view (Luna.msstyles)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Command Prompt and PowerShell raster fonts previews"
         '
         'PictureBox7
         '
@@ -366,7 +366,7 @@ Partial Class About
         Me.LinkLabel7.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel7.TabIndex = 27
         Me.LinkLabel7.TabStop = True
-        Me.LinkLabel7.Text = "Bitmaps to Cursors Conversion Mechanism by Evan Olds"
+        Me.LinkLabel7.Text = "Bitmaps to cursors conversion mechanism by Evan Olds"
         Me.LinkLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox8
@@ -392,7 +392,7 @@ Partial Class About
         Me.LinkLabel8.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel8.TabIndex = 29
         Me.LinkLabel8.TabStop = True
-        Me.LinkLabel8.Text = "JetBrainsMono Font for Nerd Color Info"
+        Me.LinkLabel8.Text = "JetBrainsMono font for nerd color info"
         Me.LinkLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox9
@@ -418,7 +418,7 @@ Partial Class About
         Me.LinkLabel10.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel10.TabIndex = 33
         Me.LinkLabel10.TabStop = True
-        Me.LinkLabel10.Text = "Handling JSON Files by Newtonsoft JSON; James Newton-King"
+        Me.LinkLabel10.Text = "Handling JSON files by Newtonsoft JSON; James Newton-King"
         Me.LinkLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox11
@@ -472,60 +472,6 @@ Partial Class About
         Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 34
         '
-        'XenonLinkLabel2
-        '
-        Me.XenonLinkLabel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonLinkLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.XenonLinkLabel2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XenonLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.XenonLinkLabel2.LinkColor = System.Drawing.Color.White
-        Me.XenonLinkLabel2.Location = New System.Drawing.Point(42, 398)
-        Me.XenonLinkLabel2.Name = "XenonLinkLabel2"
-        Me.XenonLinkLabel2.Size = New System.Drawing.Size(471, 24)
-        Me.XenonLinkLabel2.TabIndex = 37
-        Me.XenonLinkLabel2.TabStop = True
-        Me.XenonLinkLabel2.Text = "Changing Image HSL Filter by Miran Uhan (Used in Wallpaper Tone Changer)"
-        Me.XenonLinkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox12
-        '
-        Me.PictureBox12.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(12, 398)
-        Me.PictureBox12.Name = "PictureBox12"
-        Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox12.TabIndex = 36
-        Me.PictureBox12.TabStop = False
-        '
-        'XenonLinkLabel1
-        '
-        Me.XenonLinkLabel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonLinkLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.XenonLinkLabel1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XenonLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.XenonLinkLabel1.LinkColor = System.Drawing.Color.White
-        Me.XenonLinkLabel1.Location = New System.Drawing.Point(42, 368)
-        Me.XenonLinkLabel1.Name = "XenonLinkLabel1"
-        Me.XenonLinkLabel1.Size = New System.Drawing.Size(471, 24)
-        Me.XenonLinkLabel1.TabIndex = 35
-        Me.XenonLinkLabel1.TabStop = True
-        Me.XenonLinkLabel1.Text = "Modern Dialogs Design by Ookii.Dialogs.WinForms"
-        Me.XenonLinkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox10
-        '
-        Me.PictureBox10.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
-        Me.PictureBox10.Location = New System.Drawing.Point(12, 368)
-        Me.PictureBox10.Name = "PictureBox10"
-        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox10.TabIndex = 34
-        Me.PictureBox10.TabStop = False
-        '
         'XenonLinkLabel3
         '
         Me.XenonLinkLabel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -552,6 +498,60 @@ Partial Class About
         Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox13.TabIndex = 38
         Me.PictureBox13.TabStop = False
+        '
+        'XenonLinkLabel2
+        '
+        Me.XenonLinkLabel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonLinkLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.XenonLinkLabel2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.XenonLinkLabel2.LinkColor = System.Drawing.Color.White
+        Me.XenonLinkLabel2.Location = New System.Drawing.Point(42, 398)
+        Me.XenonLinkLabel2.Name = "XenonLinkLabel2"
+        Me.XenonLinkLabel2.Size = New System.Drawing.Size(471, 24)
+        Me.XenonLinkLabel2.TabIndex = 37
+        Me.XenonLinkLabel2.TabStop = True
+        Me.XenonLinkLabel2.Text = "Changing image HSL filter by Miran Uhan (Used in Wallpaper Tone Changer)"
+        Me.XenonLinkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox12
+        '
+        Me.PictureBox12.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
+        Me.PictureBox12.Location = New System.Drawing.Point(12, 398)
+        Me.PictureBox12.Name = "PictureBox12"
+        Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox12.TabIndex = 36
+        Me.PictureBox12.TabStop = False
+        '
+        'XenonLinkLabel1
+        '
+        Me.XenonLinkLabel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonLinkLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.XenonLinkLabel1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.XenonLinkLabel1.LinkColor = System.Drawing.Color.White
+        Me.XenonLinkLabel1.Location = New System.Drawing.Point(42, 368)
+        Me.XenonLinkLabel1.Name = "XenonLinkLabel1"
+        Me.XenonLinkLabel1.Size = New System.Drawing.Size(471, 24)
+        Me.XenonLinkLabel1.TabIndex = 35
+        Me.XenonLinkLabel1.TabStop = True
+        Me.XenonLinkLabel1.Text = "Modern dialogs design by Ookii.Dialogs.WinForms"
+        Me.XenonLinkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox10
+        '
+        Me.PictureBox10.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
+        Me.PictureBox10.Location = New System.Drawing.Point(12, 368)
+        Me.PictureBox10.Name = "PictureBox10"
+        Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox10.TabIndex = 34
+        Me.PictureBox10.TabStop = False
         '
         'About
         '
@@ -587,9 +587,9 @@ Partial Class About
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonAnimatedBox1.ResumeLayout(False)
         Me.XenonAnimatedBox1.PerformLayout()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

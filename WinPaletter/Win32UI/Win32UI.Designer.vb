@@ -344,11 +344,13 @@ Partial Class Win32UI
         '
         'Label16
         '
+        Me.Label16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.BackColor = System.Drawing.Color.Transparent
         Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(44, 4)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(146, 31)
+        Me.Label16.Size = New System.Drawing.Size(443, 31)
         Me.Label16.TabIndex = 83
         Me.Label16.Text = "User Preference Mask:"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -396,13 +398,15 @@ Partial Class Win32UI
         '
         'Label30
         '
+        Me.Label30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label30.BackColor = System.Drawing.Color.Transparent
         Me.Label30.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label30.Location = New System.Drawing.Point(80, 38)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(241, 16)
+        Me.Label30.Size = New System.Drawing.Size(361, 16)
         Me.Label30.TabIndex = 3
-        Me.Label30.Text = "Gradient Titlebar for classic apps"
+        Me.Label30.Text = "Gradient titlebar for classic apps"
         Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonToggle2
@@ -418,13 +422,15 @@ Partial Class Win32UI
         '
         'Label31
         '
+        Me.Label31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label31.BackColor = System.Drawing.Color.Transparent
         Me.Label31.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label31.Location = New System.Drawing.Point(80, 68)
         Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(241, 16)
+        Me.Label31.Size = New System.Drawing.Size(361, 16)
         Me.Label31.TabIndex = 3
-        Me.Label31.Text = "Flat Menus"
+        Me.Label31.Text = "Flat menus"
         Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton10
@@ -441,7 +447,7 @@ Partial Class Win32UI
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 81
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonAlertBox1
@@ -450,7 +456,6 @@ Partial Class Win32UI
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -460,7 +465,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.Size = New System.Drawing.Size(857, 32)
         Me.XenonAlertBox1.TabIndex = 71
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "These are applicable only for some Elements (Dialogs Background, Forecolors, ...)" &
+        Me.XenonAlertBox1.Text = "These are applicable only for some Elements (dialogs background, forecolors, ...)" &
     " and classic/unthemed apps (such as VB6, CPU-Z, ...)"
         '
         'XenonGroupBox2
@@ -490,7 +495,7 @@ Partial Class Win32UI
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(157, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(256, 4)
+        Me.XenonButton8.Location = New System.Drawing.Point(405, 4)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(141, 28)
         Me.XenonButton8.TabIndex = 86
@@ -550,11 +555,11 @@ Partial Class Win32UI
         Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(399, 4)
+        Me.XenonButton7.Location = New System.Drawing.Point(110, 4)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(147, 28)
         Me.XenonButton7.TabIndex = 69
-        Me.XenonButton7.Text = "WinPaletter Theme"
+        Me.XenonButton7.Text = "WinPaletter theme"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'Label5
@@ -563,7 +568,7 @@ Partial Class Win32UI
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(3, 4)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(103, 28)
+        Me.Label5.Size = New System.Drawing.Size(101, 28)
         Me.Label5.TabIndex = 4
         Me.Label5.Text = "Open from:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -577,7 +582,7 @@ Partial Class Win32UI
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(151, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(91, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(110, 4)
+        Me.XenonButton3.Location = New System.Drawing.Point(259, 4)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(144, 28)
         Me.XenonButton3.TabIndex = 66
@@ -857,7 +862,7 @@ Partial Class Win32UI
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(88, 16)
         Me.Label25.TabIndex = 3
-        Me.Label25.Text = "Frame Button"
+        Me.Label25.Text = "Frame button"
         Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Frame_pick
@@ -927,7 +932,7 @@ Partial Class Win32UI
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(88, 16)
         Me.Label3.TabIndex = 3
-        Me.Label3.Text = "Dark Shadow"
+        Me.Label3.Text = "Dark shadow"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'btndkshadow_pick
@@ -1045,10 +1050,12 @@ Partial Class Win32UI
         '
         'Retro3DPreview1
         '
+        Me.Retro3DPreview1.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Retro3DPreview1.ButtonDkShadow = System.Drawing.Color.Black
-        Me.Retro3DPreview1.ButtonHilight = System.Drawing.Color.White
-        Me.Retro3DPreview1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Retro3DPreview1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.Retro3DPreview1.ButtonHilight = System.Drawing.SystemColors.ButtonHighlight
+        Me.Retro3DPreview1.ButtonLight = System.Drawing.SystemColors.ControlLight
+        Me.Retro3DPreview1.ButtonShadow = System.Drawing.SystemColors.ButtonShadow
+        Me.Retro3DPreview1.ForeColor = System.Drawing.Color.Black
         Me.Retro3DPreview1.LineSize = 6
         Me.Retro3DPreview1.Location = New System.Drawing.Point(116, 61)
         Me.Retro3DPreview1.Name = "Retro3DPreview1"
@@ -1110,7 +1117,7 @@ Partial Class Win32UI
         Me.lbl10.Name = "lbl10"
         Me.lbl10.Size = New System.Drawing.Size(115, 16)
         Me.lbl10.TabIndex = 3
-        Me.lbl10.Text = "Active Titlebar"
+        Me.lbl10.Text = "Active titlebar"
         Me.lbl10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'GActivetitle_pick
@@ -1174,7 +1181,7 @@ Partial Class Win32UI
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(207, 16)
         Me.Label27.TabIndex = 3
-        Me.Label27.Text = "Active Titlebar Text"
+        Me.Label27.Text = "Active titlebar text"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TitleText_pick
@@ -1226,7 +1233,7 @@ Partial Class Win32UI
         Me.lbl9.Name = "lbl9"
         Me.lbl9.Size = New System.Drawing.Size(207, 16)
         Me.lbl9.TabIndex = 3
-        Me.lbl9.Text = "Active Border"
+        Me.lbl9.Text = "Active border"
         Me.lbl9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ActiveBorder_pick
@@ -1278,7 +1285,7 @@ Partial Class Win32UI
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(207, 16)
         Me.Label10.TabIndex = 3
-        Me.Label10.Text = "Inactive Titlebar Text"
+        Me.Label10.Text = "Inactive titlebar text"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'InactivetitleText_pick
@@ -1343,7 +1350,7 @@ Partial Class Win32UI
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(115, 16)
         Me.Label11.TabIndex = 3
-        Me.Label11.Text = "Inactive Titlebar"
+        Me.Label11.Text = "Inactive titlebar"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'InactiveTitle_pick
@@ -1395,7 +1402,7 @@ Partial Class Win32UI
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(214, 16)
         Me.Label12.TabIndex = 3
-        Me.Label12.Text = "Inactive Border"
+        Me.Label12.Text = "Inactive border"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'InactiveBorder_pick
@@ -1515,7 +1522,7 @@ Partial Class Win32UI
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(207, 16)
         Me.Label22.TabIndex = 3
-        Me.Label22.Text = "Menu Bar (Only for Flat Menus mode)"
+        Me.Label22.Text = "Menu bar (only for flat menus mode)"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menubar_pick
@@ -1567,7 +1574,7 @@ Partial Class Win32UI
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(207, 16)
         Me.Label18.TabIndex = 3
-        Me.Label18.Text = "Menu Hilight"
+        Me.Label18.Text = "Menu hilight"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menuhilight_pick
@@ -1619,7 +1626,7 @@ Partial Class Win32UI
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(207, 16)
         Me.Label14.TabIndex = 3
-        Me.Label14.Text = "Hilight Text"
+        Me.Label14.Text = "Hilight text"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'hilighttext_pick
@@ -1723,7 +1730,7 @@ Partial Class Win32UI
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(207, 16)
         Me.Label21.TabIndex = 3
-        Me.Label21.Text = "Menu Text"
+        Me.Label21.Text = "Menu text"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menutext_pick
@@ -1845,7 +1852,7 @@ Partial Class Win32UI
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(207, 16)
         Me.Label24.TabIndex = 3
-        Me.Label24.Text = "Tooltip Background"
+        Me.Label24.Text = "Tooltip background"
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'InfoWindow_pick
@@ -1897,7 +1904,7 @@ Partial Class Win32UI
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(207, 16)
         Me.Label9.TabIndex = 3
-        Me.Label9.Text = "Tooltip Text"
+        Me.Label9.Text = "Tooltip text"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'InfoText_pick
@@ -2001,7 +2008,7 @@ Partial Class Win32UI
         Me.lbl11.Name = "lbl11"
         Me.lbl11.Size = New System.Drawing.Size(207, 16)
         Me.lbl11.TabIndex = 3
-        Me.lbl11.Text = "App Workspace"
+        Me.lbl11.Text = "App workspace"
         Me.lbl11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'AppWorkspace_pick
@@ -2105,7 +2112,7 @@ Partial Class Win32UI
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(207, 16)
         Me.Label15.TabIndex = 3
-        Me.Label15.Text = "Disabled Text"
+        Me.Label15.Text = "Disabled text"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'GrayText_pick
@@ -2157,7 +2164,7 @@ Partial Class Win32UI
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(207, 16)
         Me.Label20.TabIndex = 3
-        Me.Label20.Text = "Window Text"
+        Me.Label20.Text = "Window text"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'WindowText_pick
@@ -2233,7 +2240,7 @@ Partial Class Win32UI
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(207, 16)
         Me.Label4.TabIndex = 3
-        Me.Label4.Text = "Alternate Face (Unknown usage)"
+        Me.Label4.Text = "Alternate face (unknown usage)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox33
@@ -2273,7 +2280,7 @@ Partial Class Win32UI
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(207, 16)
         Me.Label17.TabIndex = 3
-        Me.Label17.Text = "Desktop (Unknown usage)"
+        Me.Label17.Text = "Desktop (unknown usage)"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'desktop_pick
@@ -2325,7 +2332,7 @@ Partial Class Win32UI
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(207, 16)
         Me.Label28.TabIndex = 3
-        Me.Label28.Text = "Scrollbar (Used in Win98)"
+        Me.Label28.Text = "Scrollbar (used in Win98)"
         Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Scrollbar_pick

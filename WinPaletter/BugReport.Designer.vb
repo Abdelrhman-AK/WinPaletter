@@ -108,7 +108,7 @@ Partial Class BugReport
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(164, 24)
         Me.Label5.TabIndex = 89
-        Me.Label5.Text = "WinPaletter Version:"
+        Me.Label5.Text = "WinPaletter version:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label7
@@ -166,7 +166,7 @@ Partial Class BugReport
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(164, 24)
         Me.Label1.TabIndex = 86
-        Me.Label1.Text = "OS Information:"
+        Me.Label1.Text = "OS information:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton5
@@ -182,7 +182,7 @@ Partial Class BugReport
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton5.TabIndex = 120
-        Me.XenonButton5.Text = "Github Issues"
+        Me.XenonButton5.Text = "Github issues"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -198,7 +198,7 @@ Partial Class BugReport
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton2.TabIndex = 117
-        Me.XenonButton2.Text = "Exit Application"
+        Me.XenonButton2.Text = "Exit application"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
         'XenonButton1
@@ -219,6 +219,7 @@ Partial Class BugReport
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 118)
@@ -313,7 +314,7 @@ Partial Class BugReport
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(424, 24)
         Me.Label4.TabIndex = 86
-        Me.Label4.Text = "Error Details:"
+        Me.Label4.Text = "Error details:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox4

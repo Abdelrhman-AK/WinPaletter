@@ -431,7 +431,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton13.Name = "XenonButton13"
         Me.XenonButton13.Size = New System.Drawing.Size(189, 29)
         Me.XenonButton13.TabIndex = 85
-        Me.XenonButton13.Text = "Toggle Modern\Classic Preview"
+        Me.XenonButton13.Text = "Toggle modern\classic preview"
         Me.XenonButton13.UseVisualStyleBackColor = False
         '
         'Label12
@@ -462,7 +462,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton11.TabIndex = 110
-        Me.XenonButton11.Text = "WinPaletter Theme"
+        Me.XenonButton11.Text = "WinPaletter theme"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -548,7 +548,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox3.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox3.CenterText = False
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -605,7 +604,7 @@ Partial Class Metrics_Fonts
         Me.Label39.Name = "Label39"
         Me.Label39.Size = New System.Drawing.Size(132, 24)
         Me.Label39.TabIndex = 87
-        Me.Label39.Text = "Tool Window Caption:"
+        Me.Label39.Text = "Tool window titlebar:"
         Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton5
@@ -795,7 +794,7 @@ Partial Class Metrics_Fonts
         Me.Label44.Name = "Label44"
         Me.Label44.Size = New System.Drawing.Size(344, 31)
         Me.Label44.TabIndex = 84
-        Me.Label44.Text = "Tool Window Titlebars:"
+        Me.Label44.Text = "Tool window titlebars:"
         Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar14
@@ -818,7 +817,7 @@ Partial Class Metrics_Fonts
         Me.Label45.Name = "Label45"
         Me.Label45.Size = New System.Drawing.Size(138, 24)
         Me.Label45.TabIndex = 87
-        Me.Label45.Text = "Classic Button Width:"
+        Me.Label45.Text = "Classic button width:"
         Me.Label45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label48
@@ -881,7 +880,6 @@ Partial Class Metrics_Fonts
         '
         Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox11.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox11.CenterText = True
         Me.XenonAlertBox11.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1265,7 +1263,7 @@ Partial Class Metrics_Fonts
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(138, 24)
         Me.Label10.TabIndex = 87
-        Me.Label10.Text = "Classic Button Width:"
+        Me.Label10.Text = "Classic button width:"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar3
@@ -1327,7 +1325,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1359,7 +1356,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1417,7 +1413,7 @@ Partial Class Metrics_Fonts
         Me.XenonFakeIcon1.Name = "XenonFakeIcon1"
         Me.XenonFakeIcon1.Size = New System.Drawing.Size(76, 70)
         Me.XenonFakeIcon1.TabIndex = 3
-        Me.XenonFakeIcon1.Title = "New Folder"
+        Me.XenonFakeIcon1.Title = "New folder"
         '
         'XenonFakeIcon2
         '
@@ -1431,7 +1427,7 @@ Partial Class Metrics_Fonts
         Me.XenonFakeIcon2.Name = "XenonFakeIcon2"
         Me.XenonFakeIcon2.Size = New System.Drawing.Size(76, 70)
         Me.XenonFakeIcon2.TabIndex = 6
-        Me.XenonFakeIcon2.Title = "New Folder"
+        Me.XenonFakeIcon2.Title = "New folder"
         '
         'XenonFakeIcon3
         '
@@ -1445,7 +1441,7 @@ Partial Class Metrics_Fonts
         Me.XenonFakeIcon3.Name = "XenonFakeIcon3"
         Me.XenonFakeIcon3.Size = New System.Drawing.Size(76, 70)
         Me.XenonFakeIcon3.TabIndex = 5
-        Me.XenonFakeIcon3.Title = "New Folder"
+        Me.XenonFakeIcon3.Title = "New folder"
         '
         'XenonGroupBox5
         '
@@ -1843,7 +1839,6 @@ Partial Class Metrics_Fonts
         '
         Me.XenonAlertBox12.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox12.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox12.CenterText = True
         Me.XenonAlertBox12.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1908,18 +1903,18 @@ Partial Class Metrics_Fonts
         Me.MenuParentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Item0ToolStripMenuItem, Me.Item1ToolStripMenuItem})
         Me.MenuParentToolStripMenuItem.Name = "MenuParentToolStripMenuItem"
         Me.MenuParentToolStripMenuItem.Size = New System.Drawing.Size(96, 19)
-        Me.MenuParentToolStripMenuItem.Text = "Menu Parent 1"
+        Me.MenuParentToolStripMenuItem.Text = "Menu parent 1"
         '
         'Item0ToolStripMenuItem
         '
         Me.Item0ToolStripMenuItem.Name = "Item0ToolStripMenuItem"
-        Me.Item0ToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.Item0ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.Item0ToolStripMenuItem.Text = "Item 0"
         '
         'Item1ToolStripMenuItem
         '
         Me.Item1ToolStripMenuItem.Name = "Item1ToolStripMenuItem"
-        Me.Item1ToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.Item1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.Item1ToolStripMenuItem.Text = "Item 1"
         '
         'MenuParent2ToolStripMenuItem
@@ -1927,25 +1922,25 @@ Partial Class Metrics_Fonts
         Me.MenuParent2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ItemXToolStripMenuItem, Me.ItemYToolStripMenuItem, Me.ItemZToolStripMenuItem})
         Me.MenuParent2ToolStripMenuItem.Name = "MenuParent2ToolStripMenuItem"
         Me.MenuParent2ToolStripMenuItem.Size = New System.Drawing.Size(96, 19)
-        Me.MenuParent2ToolStripMenuItem.Text = "Menu Parent 2"
+        Me.MenuParent2ToolStripMenuItem.Text = "Menu parent 2"
         '
         'ItemXToolStripMenuItem
         '
         Me.ItemXToolStripMenuItem.Name = "ItemXToolStripMenuItem"
-        Me.ItemXToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
+        Me.ItemXToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ItemXToolStripMenuItem.Text = "Item X"
         '
         'ItemYToolStripMenuItem
         '
         Me.ItemYToolStripMenuItem.Name = "ItemYToolStripMenuItem"
-        Me.ItemYToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
+        Me.ItemYToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ItemYToolStripMenuItem.Text = "Item Y"
         '
         'ItemZToolStripMenuItem
         '
         Me.ItemZToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Item4ToolStripMenuItem, Me.Item3ToolStripMenuItem})
         Me.ItemZToolStripMenuItem.Name = "ItemZToolStripMenuItem"
-        Me.ItemZToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
+        Me.ItemZToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ItemZToolStripMenuItem.Text = "Item Z"
         '
         'Item4ToolStripMenuItem
@@ -2050,18 +2045,18 @@ Partial Class Metrics_Fonts
         Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripMenuItem3})
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(96, 19)
-        Me.ToolStripMenuItem1.Text = "Menu Parent 1"
+        Me.ToolStripMenuItem1.Text = "Menu parent 1"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(107, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem2.Text = "Item 0"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(107, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem3.Text = "Item 1"
         '
         'ToolStripMenuItem4
@@ -2069,25 +2064,25 @@ Partial Class Metrics_Fonts
         Me.ToolStripMenuItem4.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7})
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
         Me.ToolStripMenuItem4.Size = New System.Drawing.Size(96, 19)
-        Me.ToolStripMenuItem4.Text = "Menu Parent 2"
+        Me.ToolStripMenuItem4.Text = "Menu parent 2"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(108, 22)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem5.Text = "Item X"
         '
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(108, 22)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem6.Text = "Item Y"
         '
         'ToolStripMenuItem7
         '
         Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
         Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(108, 22)
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(180, 22)
         Me.ToolStripMenuItem7.Text = "Item Z"
         '
         'ToolStripMenuItem8
@@ -2340,7 +2335,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox4.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox4.CenterText = False
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2402,7 +2396,6 @@ Partial Class Metrics_Fonts
         '
         Me.XenonAlertBox13.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox13.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox13.CenterText = True
         Me.XenonAlertBox13.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2928,7 +2921,7 @@ Partial Class Metrics_Fonts
         Me.Label51.Name = "Label51"
         Me.Label51.Size = New System.Drawing.Size(348, 31)
         Me.Label51.TabIndex = 84
-        Me.Label51.Text = "Scrollbar Metrics:"
+        Me.Label51.Text = "Scrollbar metrics:"
         Me.Label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar10
@@ -3121,7 +3114,7 @@ Partial Class Metrics_Fonts
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage11.Size = New System.Drawing.Size(958, 439)
         Me.TabPage11.TabIndex = 5
-        Me.TabPage11.Text = "Fonts Substitutes"
+        Me.TabPage11.Text = "Fonts substitutes"
         '
         'XenonGroupBox16
         '
@@ -3163,7 +3156,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox9.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox9.CenterText = False
         Me.XenonAlertBox9.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -3173,7 +3165,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox9.Size = New System.Drawing.Size(894, 30)
         Me.XenonAlertBox9.TabIndex = 223
         Me.XenonAlertBox9.TabStop = False
-        Me.XenonAlertBox9.Text = "Only Start Menu of Windows 10 cannot be changed. It will stay with ""Segoe UI"" eve" &
+        Me.XenonAlertBox9.Text = "Only start menu of Windows 10 cannot be changed. It will stay with ""Segoe UI"" eve" &
     "n if it is substituted correctly"
         '
         'XenonAlertBox7
@@ -3182,7 +3174,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox7.CenterText = False
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -3245,7 +3236,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(38, Byte), Integer))
-        Me.XenonAlertBox8.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox8.CenterText = False
         Me.XenonAlertBox8.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -3264,7 +3254,6 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox3.Hint = Nothing
         Me.XenonTextBox3.Location = New System.Drawing.Point(214, 326)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = False
@@ -3312,7 +3301,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox6.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox6.CenterText = False
         Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -3330,7 +3318,6 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(214, 266)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -3393,7 +3380,6 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox2.Hint = Nothing
         Me.XenonTextBox2.Location = New System.Drawing.Point(214, 296)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = False
@@ -3435,7 +3421,7 @@ Partial Class Metrics_Fonts
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(900, 31)
         Me.Label15.TabIndex = 85
-        Me.Label15.Text = "Fonts Substitutes:"
+        Me.Label15.Text = "Fonts substitutes:"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton14
@@ -3460,7 +3446,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonAlertBox5.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox5.CenterText = False
         Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -3546,7 +3531,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 84
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton7
@@ -3588,7 +3573,6 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonAlertBox10.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox10.CenterText = False
         Me.XenonAlertBox10.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)

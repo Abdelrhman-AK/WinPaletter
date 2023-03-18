@@ -57,7 +57,6 @@ Partial Class VS2Metrics
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(87, 12)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -125,7 +124,7 @@ Partial Class VS2Metrics
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(171, 30)
         Me.XenonButton8.TabIndex = 208
-        Me.XenonButton8.Text = "Load into Metrics\Fonts"
+        Me.XenonButton8.Text = "Load into metrics\fonts"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'OpenFileDialog2
@@ -158,7 +157,7 @@ Partial Class VS2Metrics
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(486, 23)
         Me.XenonCheckBox1.TabIndex = 211
-        Me.XenonCheckBox1.Text = "Include Metrics"
+        Me.XenonCheckBox1.Text = "Include metrics"
         '
         'XenonCheckBox2
         '
@@ -172,7 +171,7 @@ Partial Class VS2Metrics
         Me.XenonCheckBox2.Name = "XenonCheckBox2"
         Me.XenonCheckBox2.Size = New System.Drawing.Size(486, 23)
         Me.XenonCheckBox2.TabIndex = 212
-        Me.XenonCheckBox2.Text = "Include Fonts"
+        Me.XenonCheckBox2.Text = "Include fonts"
         '
         'VS2Metrics
         '
@@ -197,7 +196,7 @@ Partial Class VS2Metrics
         Me.MinimizeBox = False
         Me.Name = "VS2Metrics"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Theme\Visual Styles to Metrics\Fonts"
+        Me.Text = "Theme\Visual styles to metrics\fonts"
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

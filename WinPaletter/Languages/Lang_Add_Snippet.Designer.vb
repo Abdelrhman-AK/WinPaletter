@@ -53,7 +53,7 @@ Partial Class Lang_Add_Snippet
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(75, 23)
         Me.XenonButton3.TabIndex = 4
-        Me.XenonButton3.Text = "Add Layout"
+        Me.XenonButton3.Text = "Add layout"
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -85,9 +85,10 @@ Partial Class Lang_Add_Snippet
         Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.IntegralHeight = False
+        Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Location = New System.Drawing.Point(96, 82)
         Me.XenonComboBox2.Name = "XenonComboBox2"
-        Me.XenonComboBox2.Size = New System.Drawing.Size(230, 24)
+        Me.XenonComboBox2.Size = New System.Drawing.Size(230, 26)
         Me.XenonComboBox2.TabIndex = 2
         '
         'XenonButton1
@@ -119,9 +120,10 @@ Partial Class Lang_Add_Snippet
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox1.FormattingEnabled = True
         Me.XenonComboBox1.IntegralHeight = False
+        Me.XenonComboBox1.ItemHeight = 20
         Me.XenonComboBox1.Location = New System.Drawing.Point(96, 12)
         Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(314, 24)
+        Me.XenonComboBox1.Size = New System.Drawing.Size(314, 26)
         Me.XenonComboBox1.TabIndex = 0
         '
         'PictureBox2
@@ -170,14 +172,13 @@ Partial Class Lang_Add_Snippet
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.XenonAlertBox7.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox7.CenterText = True
         Me.XenonAlertBox7.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox7.Image = Nothing
-        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 181)
+        Me.XenonAlertBox7.Location = New System.Drawing.Point(12, 182)
         Me.XenonAlertBox7.Name = "XenonAlertBox7"
-        Me.XenonAlertBox7.Size = New System.Drawing.Size(479, 31)
+        Me.XenonAlertBox7.Size = New System.Drawing.Size(479, 22)
         Me.XenonAlertBox7.TabIndex = 28
         Me.XenonAlertBox7.TabStop = False
         Me.XenonAlertBox7.Text = "These are just snippets to help you input correct data"
@@ -199,8 +200,8 @@ Partial Class Lang_Add_Snippet
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(446, 56)
         Me.Label4.TabIndex = 31
-        Me.Label4.Text = "Codes's correct place is (Information\langcode)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add Layout's correct place is (I" &
-    "nformation\righttoleft)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add Layout will insert ""True"" if language code layout i" &
+        Me.Label4.Text = "Codes's correct place is (Information\langcode)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add layout's correct place is (I" &
+    "nformation\righttoleft)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add layout will insert ""True"" if language code layout i" &
     "s right to left"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -210,14 +211,13 @@ Partial Class Lang_Add_Snippet
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = True
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 218)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 210)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(479, 31)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(479, 22)
         Me.XenonAlertBox1.TabIndex = 29
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "It should be in its correct place before pressing ""Add"" or ""Add Layout"""
@@ -227,7 +227,7 @@ Partial Class Lang_Add_Snippet
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(503, 261)
+        Me.ClientSize = New System.Drawing.Size(503, 244)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.XenonAlertBox1)
@@ -251,7 +251,7 @@ Partial Class Lang_Add_Snippet
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Add Language Snippets"
+        Me.Text = "Add language snippets"
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

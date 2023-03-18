@@ -469,7 +469,6 @@ Partial Class LogonUI7
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(98, 155)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -497,7 +496,7 @@ Partial Class LogonUI7
         Me.XenonRadioButton3.Name = "XenonRadioButton3"
         Me.XenonRadioButton3.Size = New System.Drawing.Size(139, 25)
         Me.XenonRadioButton3.TabIndex = 85
-        Me.XenonRadioButton3.Text = "Solid Color"
+        Me.XenonRadioButton3.Text = "Solid color"
         '
         'XenonRadioButton2
         '
@@ -511,7 +510,7 @@ Partial Class LogonUI7
         Me.XenonRadioButton2.Name = "XenonRadioButton2"
         Me.XenonRadioButton2.Size = New System.Drawing.Size(243, 25)
         Me.XenonRadioButton2.TabIndex = 83
-        Me.XenonRadioButton2.Text = "Current Wallpaper"
+        Me.XenonRadioButton2.Text = "Current wallpaper"
         '
         'XenonButton7
         '
@@ -541,7 +540,7 @@ Partial Class LogonUI7
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
         Me.XenonRadioButton1.Size = New System.Drawing.Size(139, 25)
         Me.XenonRadioButton1.TabIndex = 82
-        Me.XenonRadioButton1.Text = "System Default"
+        Me.XenonRadioButton1.Text = "System default"
         '
         'PictureBox2
         '
@@ -565,7 +564,7 @@ Partial Class LogonUI7
         Me.XenonRadioButton4.Name = "XenonRadioButton4"
         Me.XenonRadioButton4.Size = New System.Drawing.Size(243, 25)
         Me.XenonRadioButton4.TabIndex = 84
-        Me.XenonRadioButton4.Text = "Custom Image"
+        Me.XenonRadioButton4.Text = "Custom image"
         '
         'Label1
         '
@@ -619,7 +618,7 @@ Partial Class LogonUI7
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(75, 31)
         Me.Label12.TabIndex = 111
-        Me.Label12.Text = "Open From:"
+        Me.Label12.Text = "Open from:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton11
@@ -635,7 +634,7 @@ Partial Class LogonUI7
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton11.TabIndex = 110
-        Me.XenonButton11.Text = "WinPaletter Theme"
+        Me.XenonButton11.Text = "WinPaletter theme"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -657,7 +656,7 @@ Partial Class LogonUI7
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(774, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

@@ -1132,7 +1132,7 @@ Public Class Win32UI
             CPx.Win32.Apply()
         Catch
         End Try
-        Threading.Thread.Sleep(500) 'Delay is added as there is a bug occurs when a classic theme applied on classic Windows mode
+        Threading.Thread.Sleep(200) 'Delay is added as there is a bug occurs when a classic theme applied on classic Windows mode
         Visible = True
         CPx.Dispose()
         Cursor = Cursors.Default

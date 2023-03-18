@@ -56,7 +56,7 @@ Partial Class Saving_ex_list
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(290, 30)
         Me.XenonButton2.TabIndex = 2
-        Me.XenonButton2.Text = "Elicit selected error (Show Exception Error Details)"
+        Me.XenonButton2.Text = "Elicit selected error (Show exception error details)"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
         'TreeView1

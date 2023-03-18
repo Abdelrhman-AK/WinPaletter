@@ -3,8 +3,6 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
-Imports MS.Internal.Text.TextInterface
 Imports WinPaletter.XenonCore
 
 Module XenonModule
@@ -23,14 +21,14 @@ Module XenonModule
 
     <Extension()>
     Public Sub DrawGlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
-        Dim bm As Bitmap = New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
+        Dim bm As New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
         Dim g2 As Graphics = Graphics.FromImage(bm)
-        Dim pth As GraphicsPath = New GraphicsPath()
+        Dim pth As New GraphicsPath()
         pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
         Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
         g2.SmoothingMode = SmoothingMode.AntiAlias
         g2.Transform = mx
-        Dim p As Pen = New Pen(GlowColor, GlowSize)
+        Dim p As New Pen(GlowColor, GlowSize)
         g2.DrawPath(p, pth)
         g2.FillPath(New SolidBrush(GlowColor), pth)
         G.InterpolationMode = InterpolationMode.HighQualityBicubic
@@ -151,13 +149,7 @@ Module XenonModule
                     ElseIf My.W10 Or My.W8 Then
                         Return False
                     ElseIf My.W7 OrElse My.WXP OrElse My.WVista Then
-                        Try
-                            Dim stringThemeName As New System.Text.StringBuilder(260)
-                            NativeMethods.Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
-                            Return Not (String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString))
-                        Catch
-                            Return True
-                        End Try
+                        Return Not My.StartedWithClassicTheme
                     Else
                         Return False
                     End If
@@ -428,7 +420,7 @@ Public Class TablessControl
     Inherits TabControl
 
     Public Sub New()
-        SetStyle(ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.ResizeRedraw, True)
         Me.DoubleBuffered = True
     End Sub
 
@@ -445,7 +437,7 @@ Public Class XenonTabControl : Inherits TabControl
     Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
 
     Sub New()
-        SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.Opaque, True)
+        SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.Opaque, True)
         ItemSize = New Size(40, 150)
         DrawMode = TabDrawMode.OwnerDrawFixed
         SizeMode = TabSizeMode.Fixed
@@ -586,7 +578,6 @@ Public Class XenonToggle
     Dim WasMoving As Boolean = False
 
     Sub New()
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         DoubleBuffered = True
         Size = New Size(40, 20)
         Text = ""
@@ -1618,7 +1609,7 @@ End Class
 Public Class XenonGroupBox : Inherits Panel
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
         Text = ""
     End Sub
@@ -1653,7 +1644,7 @@ End Class
 Public Class XenonAnimatedBox : Inherits Panel
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
         Text = ""
     End Sub
@@ -1808,7 +1799,7 @@ Public Class XenonCP
     Inherits Panel
 
     Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
         Text = ""
     End Sub
@@ -2825,7 +2816,7 @@ End Class
 <DefaultEvent("TextChanged")> Public Class XenonTextBox : Inherits Control
     Sub New()
         SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or
-                 ControlStyles.ResizeRedraw Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.SupportsTransparentBackColor, True)
+                 ControlStyles.ResizeRedraw Or ControlStyles.SupportsTransparentBackColor, True)
         DoubleBuffered = True
 
         ForeColor = Color.White
@@ -3031,8 +3022,6 @@ End Class
 #End Region
 
 #Region "Other Properties"
-
-
     Private _Scrollbars As Windows.Forms.ScrollBars = ScrollBars.None
     Public Property Scrollbars As Windows.Forms.ScrollBars
         Get
@@ -3054,7 +3043,6 @@ End Class
             TB.WordWrap = value
         End Set
     End Property
-
 
     Public Property SelectionStart As Integer
         Get
@@ -3123,6 +3111,34 @@ End Class
         Invalidate()
     End Sub
 
+    Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
+        State = MouseState.Down
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
+        State = MouseState.Over
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
+        State = MouseState.None
+        _Shown = True
+        Tmr.Enabled = True
+        Tmr.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
+        State = MouseState.None
+        Invalidate()
+    End Sub
 #End Region
 
 #Region "Animator"
@@ -3166,17 +3182,10 @@ End Class
     End Sub
 #End Region
 
-    Private Const EM_SETCUEBANNER As Integer = &H1501
-    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
-    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer,
-        ByVal wParam As Integer, ByVal lParam As String) As Int32
-    End Function
-
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
         Try
             If Not DesignMode Then
                 MyBase.OnHandleCreated(e)
-                If Not String.IsNullOrEmpty(Hint) Then UpdateHint()
                 alpha = 0
                 If Not DesignMode Then
                     Try
@@ -3190,26 +3199,12 @@ End Class
         End Try
     End Sub
 
-    Private m_Hint As String
-    Public Property Hint As String
-        Get
-            Return m_Hint
-        End Get
-        Set(ByVal value As String)
-            m_Hint = value
-            UpdateHint()
-        End Set
-    End Property
-
-    Private Sub UpdateHint()
-        SendMessage(TB.Handle, EM_SETCUEBANNER, 1, Hint)
-    End Sub
-
-
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
         G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = TextRenderingHint.SystemDefault
+
         MyBase.OnPaint(e)
 
         If GetDarkMode() Then
@@ -3252,35 +3247,6 @@ End Class
         End If
 
 
-    End Sub
-
-    Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
-        State = MouseState.Down
-        _Shown = True
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-    End Sub
-
-    Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
-        State = MouseState.Over
-        _Shown = True
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-    End Sub
-
-    Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
-        State = MouseState.None
-        _Shown = True
-        Tmr.Enabled = True
-        Tmr.Start()
-        Invalidate()
-    End Sub
-
-    Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
-        State = MouseState.None
-        Invalidate()
     End Sub
 
     Private Sub XenonTextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
@@ -3611,11 +3577,10 @@ Public Class XenonAlertBox
 
     Sub New()
         TabStop = False
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
         DoubleBuffered = True
         Font = New Font("Segoe UI", 9)
         Size = New Size(200, 40)
-        CanClose = Close.No
         CenterText = False
         CustomColor = Color.FromArgb(0, 81, 210)
     End Sub
@@ -3627,7 +3592,7 @@ Public Class XenonAlertBox
         Success
         Notice
         Warning
-        Informations
+        Information
         Indigo
         Custom
     End Enum
@@ -3647,18 +3612,7 @@ Public Class XenonAlertBox
         End Set
     End Property
 
-    Public Property CanClose As Close
-        Get
-            Return _Close
-        End Get
-        Set(ByVal value As Close)
-            _Close = value
-            Invalidate()
-        End Set
-    End Property
-
     Private _alertStyle As Style
-    Private _Close As Close
 
     Public Property Image As Image
     Public Property CustomColor As Color
@@ -3672,37 +3626,11 @@ Public Class XenonAlertBox
     Public Overrides Property Text As String
 #End Region
 
-#Region "Events"
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
-        MyBase.OnMouseEnter(e)
-    End Sub
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
-        MyBase.OnMouseLeave(e)
-    End Sub
-    Protected Overrides Sub OnMouseMove(ByVal e As System.Windows.Forms.MouseEventArgs)
-        MyBase.OnMouseMove(e)
-
-        If e.X >= Width - 26 AndAlso e.X <= Width - 12 AndAlso e.Y > exitLocation.Y AndAlso e.Y < exitLocation.Y + 12 Then
-            If CanClose = Close.Yes And Cursor <> Cursors.Hand Then Cursor = Cursors.Hand
-            overExit = True
-        Else
-            If Cursor <> Cursors.Arrow Then Cursor = Cursors.Arrow
-            overExit = False
-        End If
-
-        Invalidate()
-    End Sub
-    Protected Overrides Sub OnMouseDown(ByVal e As System.Windows.Forms.MouseEventArgs)
-        MyBase.OnMouseDown(e)
-        If overExit And CanClose = Close.Yes Then Me.Visible = False
-    End Sub
-#End Region
-
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+        G.TextRenderingHint = TextRenderingHint.SystemDefault
         DoubleBuffered = True
         Dim RTL As Boolean = (RightToLeft = 1)
         Dim DM As Boolean = GetDarkMode()
@@ -3752,7 +3680,7 @@ Public Class XenonAlertBox
                     textColor = Color.FromArgb(255, 175, 175)
                 End If
 
-            Case Style.Informations
+            Case Style.Information
                 If DM Then
                     borderColor = Color.FromArgb(133, 133, 71)
                     innerColor = Color.FromArgb(120, 120, 71)
@@ -3823,14 +3751,13 @@ Public Class XenonAlertBox
         G.DrawRoundedRect_LikeW11(New Pen(borderColor), New Rectangle(0, 0, Width - 1, Height - 1))
 
         Dim textY As Integer = CInt((Height - Text.Measure(Font).Height) / 2)
-        Dim TextX As Integer
-        Dim ExitX As Integer
+        Dim TextX As Integer = 5
 
         If Image IsNot Nothing Then G.DrawImage(Image, New Rectangle(If(Not RTL, 5, Width - 5 - Image.Width), 5, Image.Width, Image.Height))
 
         If Not CenterText Then
             If Image Is Nothing Then
-                G.DrawString(Text, Font, New SolidBrush(textColor), New Point(TextX, textY), If(RTL, New StringFormat(StringFormatFlags.DirectionRightToLeft), New StringFormat()))
+                G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(TextX, 0, Width, Height), StringAligner(ContentAlignment.MiddleLeft, RTL))
             Else
                 If Not RTL Then
                     G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), StringAligner(ContentAlignment.TopLeft))
@@ -3840,13 +3767,6 @@ Public Class XenonAlertBox
             End If
         Else
             G.DrawString(Text, Font, New SolidBrush(textColor), New Rectangle(1, 0, Width, Height), StringAligner(ContentAlignment.MiddleCenter, RTL))
-        End If
-
-        If CanClose = Close.Yes Then
-            Dim exitFont As New Font("Marlett", 6)
-            Dim exitY As Integer = CInt(((Me.Height - 1) / 2) - (G.MeasureString("r", exitFont).Height / 2) + 1)
-            exitLocation = New Point(ExitX, exitY - 3)
-            G.DrawString("r", exitFont, New SolidBrush(textColor), New Point(Width - 23, exitY))
         End If
 
     End Sub
@@ -5966,7 +5886,21 @@ Public Class XenonWindow : Inherits Panel
                 G.DrawString("", New Font("Segoe MDL2 Assets", 7, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
             Else
                 Dim XXRect As New Rectangle(Rect.X + Rect.Width - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12)
+
                 G.FillRectangle(New SolidBrush(Color.FromArgb(199, 80, 80)), XXRect)
+
+                If XXRect.Width >= 12 Then
+                    If XXRect.Width Mod 2 = 0 Then
+                        XXRect.X += 1
+                        XXRect.Y += 1
+                    End If
+                Else
+                    XXRect.X += 1
+                End If
+
+
+                Metrics_Fonts.Text = XXRect.Width
+
                 G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), New Rectangle(XXRect.X + 1, XXRect.Y + 1, XXRect.Width, XXRect.Height), StringAligner(ContentAlignment.MiddleCenter))
             End If
 
@@ -6029,7 +5963,6 @@ Public Class XenonIcon : Inherits Panel
         SetStyle(ControlStyles.SupportsTransparentBackColor, True)
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         SetStyle(ControlStyles.UserPaint, True)
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
     End Sub
 
     Protected Overrides ReadOnly Property CreateParams As CreateParams
@@ -7565,8 +7498,7 @@ Public Class XenonColorBar
         Dim Dark As Boolean = GetDarkMode()
         Dim c_back As Color = If(Dark, Color.FromArgb(60, 60, 60), Color.FromArgb(210, 210, 210))
         Dim c_btn As Color = If(Dark, Color.FromArgb(165, 165, 165), Color.FromArgb(100, 100, 100))
-
-        Dim C As Color = _AccentColor
+        Dim C As Color
 
         Dim middleRect As New Rectangle(0, (Height - (Height * 0.25)) / 2, Width - 1, Height * 0.25)
 

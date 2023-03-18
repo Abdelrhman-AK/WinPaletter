@@ -92,7 +92,7 @@ Partial Class LogonUIXP
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(269, 25)
         Me.XenonCheckBox1.TabIndex = 115
-        Me.XenonCheckBox1.Text = "Show More Options (e.g. Shutdown button)"
+        Me.XenonCheckBox1.Text = "Show more options (e.g. shutdown button)"
         '
         'PictureBox2
         '
@@ -112,7 +112,7 @@ Partial Class LogonUIXP
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(109, 25)
         Me.Label3.TabIndex = 113
-        Me.Label3.Text = "Background Color:"
+        Me.Label3.Text = "Background color:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
@@ -242,7 +242,7 @@ Partial Class LogonUIXP
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(536, 35)
         Me.Label13.TabIndex = 0
-        Me.Label13.Text = "LogonUI Screen Type"
+        Me.Label13.Text = "LogonUI screen type"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton10
@@ -259,7 +259,7 @@ Partial Class LogonUIXP
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 210
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton7
@@ -347,7 +347,7 @@ Partial Class LogonUIXP
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(75, 31)
         Me.Label12.TabIndex = 111
-        Me.Label12.Text = "Open From:"
+        Me.Label12.Text = "Open from:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton11
@@ -363,7 +363,7 @@ Partial Class LogonUIXP
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton11.TabIndex = 110
-        Me.XenonButton11.Text = "WinPaletter Theme"
+        Me.XenonButton11.Text = "WinPaletter theme"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -385,7 +385,7 @@ Partial Class LogonUIXP
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(497, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

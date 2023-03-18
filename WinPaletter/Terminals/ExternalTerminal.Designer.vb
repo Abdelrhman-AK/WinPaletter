@@ -268,6 +268,7 @@ Partial Class ExternalTerminal
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 72)
@@ -285,7 +286,7 @@ Partial Class ExternalTerminal
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(72, 25)
         Me.Label4.TabIndex = 116
-        Me.Label4.Text = "Open From:"
+        Me.Label4.Text = "Open from:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton3
@@ -319,7 +320,7 @@ Partial Class ExternalTerminal
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(138, 25)
         Me.XenonButton8.TabIndex = 114
-        Me.XenonButton8.Text = "WinPaletter Theme"
+        Me.XenonButton8.Text = "WinPaletter theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonButton4
@@ -428,8 +429,8 @@ Partial Class ExternalTerminal
         Me.Label102.Name = "Label102"
         Me.Label102.Size = New System.Drawing.Size(841, 37)
         Me.Label102.TabIndex = 98
-        Me.Label102.Text = "This is a single session modification for another unmentioned terminal (Not autom" &
-    "ated\Not modified every time you apply a palette theme\i.e. you modify it manual" &
+        Me.Label102.Text = "This is a single session modification for another unmentioned terminal (not autom" &
+    "ated\not modified every time you apply a palette theme\i.e. you modify it manual" &
     "ly from here)."
         '
         'XenonButton10
@@ -446,7 +447,7 @@ Partial Class ExternalTerminal
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 124
-        Me.XenonButton10.Text = "Manual Apply"
+        Me.XenonButton10.Text = "Manual apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -476,11 +477,12 @@ Partial Class ExternalTerminal
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(656, 24)
         Me.XenonCheckBox1.TabIndex = 125
-        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong font renderering in Enhanced terminal, wo" &
+        Me.XenonCheckBox1.Text = "Allow non monospace Fonts (causes wrong font renderering in enhanced terminal, wo" &
     "n't be used in legacy terminal)"
         '
         'XenonSeparator2
         '
+        Me.XenonSeparator2.AlternativeLook = False
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator2.Location = New System.Drawing.Point(11, 128)
@@ -564,6 +566,7 @@ Partial Class ExternalTerminal
         '
         'XenonSeparator3
         '
+        Me.XenonSeparator3.AlternativeLook = False
         Me.XenonSeparator3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator3.Location = New System.Drawing.Point(9, 136)
@@ -685,7 +688,7 @@ Partial Class ExternalTerminal
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(231, 22)
         Me.Label18.TabIndex = 85
-        Me.Label18.Text = "Pop-up Background:"
+        Me.Label18.Text = "Pop-up background:"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label17
@@ -698,7 +701,7 @@ Partial Class ExternalTerminal
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(231, 22)
         Me.Label17.TabIndex = 83
-        Me.Label17.Text = "Pop-up Foreground:"
+        Me.Label17.Text = "Pop-up foreground:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label49
@@ -1240,7 +1243,7 @@ Partial Class ExternalTerminal
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(108, 24)
         Me.Label58.TabIndex = 94
-        Me.Label58.Text = "Raster Font ?"
+        Me.Label58.Text = "Raster font ?"
         Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ExtTerminal_FontsBox
@@ -1681,7 +1684,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_LineSelection.Name = "ExtTerminal_LineSelection"
         Me.ExtTerminal_LineSelection.Size = New System.Drawing.Size(155, 24)
         Me.ExtTerminal_LineSelection.TabIndex = 122
-        Me.ExtTerminal_LineSelection.Text = "Line Selection"
+        Me.ExtTerminal_LineSelection.Text = "Line selection"
         '
         'ExtTerminal_EnhancedTerminal
         '
@@ -1693,7 +1696,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_EnhancedTerminal.Name = "ExtTerminal_EnhancedTerminal"
         Me.ExtTerminal_EnhancedTerminal.Size = New System.Drawing.Size(155, 24)
         Me.ExtTerminal_EnhancedTerminal.TabIndex = 118
-        Me.ExtTerminal_EnhancedTerminal.Text = "Enhanced Terminal"
+        Me.ExtTerminal_EnhancedTerminal.Text = "Enhanced terminal"
         '
         'PictureBox12
         '
@@ -1715,7 +1718,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_TerminalScrolling.Name = "ExtTerminal_TerminalScrolling"
         Me.ExtTerminal_TerminalScrolling.Size = New System.Drawing.Size(155, 24)
         Me.ExtTerminal_TerminalScrolling.TabIndex = 123
-        Me.ExtTerminal_TerminalScrolling.Text = "Terminal Scrolling"
+        Me.ExtTerminal_TerminalScrolling.Text = "Terminal scrolling"
         '
         'ExtTerminal_OpacityBar
         '
@@ -1749,7 +1752,7 @@ Partial Class ExternalTerminal
         Me.Label57.Name = "Label57"
         Me.Label57.Size = New System.Drawing.Size(104, 24)
         Me.Label57.TabIndex = 119
-        Me.Label57.Text = "Window Opacity:"
+        Me.Label57.Text = "Window opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ExternalTerminal

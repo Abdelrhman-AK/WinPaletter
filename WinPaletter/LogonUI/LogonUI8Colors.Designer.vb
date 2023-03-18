@@ -75,7 +75,7 @@ Partial Class LogonUI8Colors
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(360, 35)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Background Color (Only for Windows 8, not 8.1)"
+        Me.Label1.Text = "Background color (Only for Windows 8, not 8.1)"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton2
@@ -455,7 +455,7 @@ Partial Class LogonUI8Colors
         Me.MinimizeBox = False
         Me.Name = "LogonUI8Colors"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "LogonUI Color"
+        Me.Text = "LogonUI color"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

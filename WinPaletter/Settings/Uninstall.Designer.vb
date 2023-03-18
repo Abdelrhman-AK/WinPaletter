@@ -63,8 +63,7 @@ Partial Class Uninstall
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(603, 24)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "This wizard will help you delete WinPaletter with its application data made durin" &
-    "g your usage"
+        Me.Label2.Text = "This wizard will help you delete WinPaletter's data made during your usage"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label1
@@ -77,7 +76,7 @@ Partial Class Uninstall
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(445, 35)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "WinPaletter Uninstaller"
+        Me.Label1.Text = "WinPaletter uninstaller"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
@@ -102,7 +101,7 @@ Partial Class Uninstall
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(421, 28)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Choose Operations to be done:"
+        Me.Label3.Text = "Choose operations to be done:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox6
@@ -125,7 +124,7 @@ Partial Class Uninstall
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(178, 24)
         Me.XenonCheckBox1.TabIndex = 8
-        Me.XenonCheckBox1.Text = "Delete Registry associations"
+        Me.XenonCheckBox1.Text = "Delete registry associations"
         '
         'PictureBox2
         '
@@ -147,7 +146,7 @@ Partial Class Uninstall
         Me.XenonCheckBox2.Name = "XenonCheckBox2"
         Me.XenonCheckBox2.Size = New System.Drawing.Size(411, 24)
         Me.XenonCheckBox2.TabIndex = 10
-        Me.XenonCheckBox2.Text = "Delete Application Data: %localappdata%\Abdelrhman-AK\WinPaletter"
+        Me.XenonCheckBox2.Text = "Delete application data: %localappdata%\Abdelrhman-AK\WinPaletter"
         '
         'PictureBox3
         '
@@ -196,7 +195,7 @@ Partial Class Uninstall
         Me.XenonRadioImage3.ShowText = True
         Me.XenonRadioImage3.Size = New System.Drawing.Size(280, 24)
         Me.XenonRadioImage3.TabIndex = 14
-        Me.XenonRadioImage3.Text = "Restore to Default Windows"
+        Me.XenonRadioImage3.Text = "Restore to default Windows"
         '
         'Label4
         '
@@ -205,11 +204,12 @@ Partial Class Uninstall
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(91, 24)
         Me.Label4.TabIndex = 15
-        Me.Label4.Text = "Theme Restore:"
+        Me.Label4.Text = "Theme restore:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 379)
@@ -255,8 +255,7 @@ Partial Class Uninstall
         '
         Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox4.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.XenonAlertBox4.CenterText = True
+        Me.XenonAlertBox4.CenterText = False
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox4.Image = Nothing
@@ -278,7 +277,7 @@ Partial Class Uninstall
         Me.XenonCheckBox3.Name = "XenonCheckBox3"
         Me.XenonCheckBox3.Size = New System.Drawing.Size(188, 24)
         Me.XenonCheckBox3.TabIndex = 25
-        Me.XenonCheckBox3.Text = "Delete WinPaletter's Settings"
+        Me.XenonCheckBox3.Text = "Delete WinPaletter's settings"
         '
         'PictureBox4
         '
@@ -296,7 +295,6 @@ Partial Class Uninstall
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = True
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)

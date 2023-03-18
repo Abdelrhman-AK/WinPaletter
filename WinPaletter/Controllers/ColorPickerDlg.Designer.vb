@@ -218,7 +218,7 @@ Partial Class ColorPickerDlg
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(367, 24)
         Me.XenonCheckBox1.TabIndex = 9
-        Me.XenonCheckBox1.Text = "Ignore White Colors"
+        Me.XenonCheckBox1.Text = "Ignore white colors"
         '
         'Label6
         '
@@ -227,7 +227,7 @@ Partial Class ColorPickerDlg
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(265, 24)
         Me.Label6.TabIndex = 23
-        Me.Label6.Text = "Maximum Colors"
+        Me.Label6.Text = "Maximum colors"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
@@ -336,6 +336,7 @@ Partial Class ColorPickerDlg
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 133)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(447, 1)
@@ -361,7 +362,6 @@ Partial Class ColorPickerDlg
         '
         Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TextBox1.ForeColor = System.Drawing.Color.White
-        Me.TextBox1.Hint = Nothing
         Me.TextBox1.Location = New System.Drawing.Point(80, 104)
         Me.TextBox1.MaxLength = 32767
         Me.TextBox1.Multiline = False
@@ -399,7 +399,7 @@ Partial Class ColorPickerDlg
         Me.XenonRadioButton1.Name = "XenonRadioButton1"
         Me.XenonRadioButton1.Size = New System.Drawing.Size(370, 24)
         Me.XenonRadioButton1.TabIndex = 7
-        Me.XenonRadioButton1.Text = "Current Wallpaper"
+        Me.XenonRadioButton1.Text = "Current wallpaper"
         '
         'PictureBox2
         '
@@ -564,6 +564,7 @@ Partial Class ColorPickerDlg
         '
         'XenonSeparator2
         '
+        Me.XenonSeparator2.AlternativeLook = False
         Me.XenonSeparator2.Location = New System.Drawing.Point(6, 270)
         Me.XenonSeparator2.Name = "XenonSeparator2"
         Me.XenonSeparator2.Size = New System.Drawing.Size(447, 1)
@@ -605,6 +606,7 @@ Partial Class ColorPickerDlg
         '
         'XenonSeparator3
         '
+        Me.XenonSeparator3.AlternativeLook = False
         Me.XenonSeparator3.Location = New System.Drawing.Point(17, 78)
         Me.XenonSeparator3.Name = "XenonSeparator3"
         Me.XenonSeparator3.Size = New System.Drawing.Size(434, 1)
@@ -619,7 +621,7 @@ Partial Class ColorPickerDlg
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(89, 24)
         Me.Label8.TabIndex = 79
-        Me.Label8.Text = "Theme File:"
+        Me.Label8.Text = "Theme file:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton9
@@ -671,7 +673,7 @@ Partial Class ColorPickerDlg
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(89, 24)
         Me.Label29.TabIndex = 75
-        Me.Label29.Text = "Choose Preset:"
+        Me.Label29.Text = "Choose preset:"
         Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton5
@@ -695,7 +697,6 @@ Partial Class ColorPickerDlg
         '
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(142, 48)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False

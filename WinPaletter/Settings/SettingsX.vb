@@ -33,6 +33,15 @@ Public Class SettingsX
             EP_ORB_10.Image = My.Resources.StartBtn_10Light.Resize(w, w)
         End If
 
+        If My.WXP Then
+            XenonAlertBox17.Visible = True
+            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
+
+        ElseIf My.WVista Then
+            XenonAlertBox17.Visible = True
+            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
+        End If
+
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
@@ -86,12 +95,24 @@ Public Class SettingsX
 
             If .DelayMetrics <> XenonCheckBox22.Checked Then Changed = True
 
-            If .ClassicColors_HKU_DEFAULT_Allowed <> XenonCheckBox23.Checked Then Changed = True
-            If .ClassicColors_HKLM_Allowed <> XenonCheckBox24.Checked Then Changed = True
+            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton5.Checked Then Changed = True
+            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton6.Checked Then Changed = True
 
-            If .ClassicColors_HKU_DEFAULT_AddOrRemove <> XenonRadioButton5.Checked Then Changed = True
-            If .ClassicColors_HKLM_AddOrRemove <> XenonRadioButton8.Checked Then Changed = True
-
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton8.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton10.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton9.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase And Not XenonRadioButton7.Checked Then Changed = True
+            If .ClassicColors_HKU_DEFAULT_UPM <> XenonCheckBox25.Checked Then Changed = True
+            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton12.Checked Then Changed = True
+            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton11.Checked Then Changed = True
+            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton14.Checked Then Changed = True
+            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton13.Checked Then Changed = True
+            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton16.Checked Then Changed = True
+            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton15.Checked Then Changed = True
+            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton18.Checked Then Changed = True
+            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton17.Checked Then Changed = True
+            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton20.Checked Then Changed = True
+            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton19.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -189,11 +210,23 @@ Public Class SettingsX
 
             XenonCheckBox22.Checked = .DelayMetrics
 
-            XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
-            XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
-            If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
-            If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
-
+            XenonRadioButton5.Checked = .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton6.Checked = Not (.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton8.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+            XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+            XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+            XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton13.Checked = Not (.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton16.Checked = .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton15.Checked = Not (.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton18.Checked = .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
         End With
 
         With My.Lang
@@ -294,10 +327,17 @@ Public Class SettingsX
 
             .DelayMetrics = XenonCheckBox22.Checked
 
-            .ClassicColors_HKU_DEFAULT_Allowed = XenonCheckBox23.Checked
-            .ClassicColors_HKLM_Allowed = XenonCheckBox24.Checked
-            .ClassicColors_HKU_DEFAULT_AddOrRemove = XenonRadioButton5.Checked
-            .ClassicColors_HKLM_AddOrRemove = XenonRadioButton8.Checked
+            If XenonRadioButton5.Checked Then .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton8.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+            If XenonRadioButton10.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton9.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+            If XenonRadioButton7.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+            .ClassicColors_HKU_DEFAULT_UPM = XenonCheckBox25.Checked
+            If XenonRadioButton12.Checked Then .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton14.Checked Then .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton16.Checked Then .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton18.Checked Then .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton20.Checked Then .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -435,10 +475,17 @@ Public Class SettingsX
                 .EP_TaskbarButton10 = EP_ORB_10.Checked
                 .DelayMetrics = XenonCheckBox22.Checked
 
-                .ClassicColors_HKU_DEFAULT_Allowed = XenonCheckBox23.Checked
-                .ClassicColors_HKLM_Allowed = XenonCheckBox24.Checked
-                .ClassicColors_HKU_DEFAULT_AddOrRemove = XenonRadioButton5.Checked
-                .ClassicColors_HKLM_AddOrRemove = XenonRadioButton8.Checked
+                If XenonRadioButton5.Checked Then .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton8.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+                If XenonRadioButton10.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton9.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+                If XenonRadioButton7.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+                .ClassicColors_HKU_DEFAULT_UPM = XenonCheckBox25.Checked
+                If XenonRadioButton12.Checked Then .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton14.Checked Then .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton16.Checked Then .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton18.Checked Then .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton20.Checked Then .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -517,10 +564,23 @@ Public Class SettingsX
 
                 XenonCheckBox22.Checked = .DelayMetrics
 
-                XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
-                XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
-                If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
-                If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
+                XenonRadioButton5.Checked = .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton6.Checked = Not (.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton8.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+                XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+                XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+                XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+                XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton13.Checked = Not (.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton16.Checked = .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton15.Checked = Not (.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton18.Checked = .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
             End With
         End If
     End Sub
@@ -606,10 +666,23 @@ Public Class SettingsX
 
             XenonCheckBox22.Checked = .DelayMetrics
 
-            XenonCheckBox23.Checked = .ClassicColors_HKU_DEFAULT_Allowed
-            XenonCheckBox24.Checked = .ClassicColors_HKLM_Allowed
-            If .ClassicColors_HKU_DEFAULT_AddOrRemove Then XenonRadioButton5.Checked = True Else XenonRadioButton6.Checked = True
-            If .ClassicColors_HKLM_AddOrRemove Then XenonRadioButton8.Checked = True Else XenonRadioButton7.Checked = True
+            XenonRadioButton5.Checked = .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton6.Checked = Not (.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton8.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+            XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+            XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+            XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton13.Checked = Not (.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton16.Checked = .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton15.Checked = Not (.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton18.Checked = .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -675,7 +748,7 @@ Public Class SettingsX
         Lang_Dashboard.ShowDialog()
     End Sub
 
-    Private Sub appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
+    Private Sub Appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             appearance_accent.BackColor = SubMenu.ShowMenu(appearance_accent)
             Exit Sub
@@ -719,13 +792,13 @@ Public Class SettingsX
                 appearance_accent.BackColor = DefaultAccent
                 appearance_backcolor.BackColor = Color.White
 
-            Case "Github Dark".ToLower
+            Case "GitHub Dark".ToLower
                 appearance_dark.Checked = True
                 appearance_rounded.Checked = True
                 appearance_accent.BackColor = Color.FromArgb(19, 35, 58)
                 appearance_backcolor.BackColor = Color.FromArgb(13, 17, 23)
 
-            Case "Github Light".ToLower
+            Case "GitHub Light".ToLower
                 appearance_dark.Checked = False
                 appearance_rounded.Checked = True
                 appearance_accent.BackColor = Color.FromArgb(31, 111, 235)
@@ -756,13 +829,5 @@ Public Class SettingsX
                 appearance_backcolor.BackColor = Color.FromArgb(255, 255, 255)
 
         End Select
-    End Sub
-
-    Private Sub XenonCheckBox23_CheckedChanged(sender As Object) Handles XenonCheckBox23.CheckedChanged
-        Panel4.Enabled = XenonCheckBox23.Checked
-    End Sub
-
-    Private Sub XenonCheckBox24_CheckedChanged(sender As Object) Handles XenonCheckBox24.CheckedChanged
-        Panel5.Enabled = XenonCheckBox24.Checked
     End Sub
 End Class

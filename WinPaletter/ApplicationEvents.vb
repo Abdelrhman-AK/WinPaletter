@@ -393,8 +393,12 @@ Namespace My
                 IO.Directory.Delete(Application.appData, True)
                 If Not My.WXP Then
                     CP.ResetCursorsToAero()
+                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+
                 Else
                     CP.ResetCursorsToNone_XP()
+                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+
                 End If
             End If
 

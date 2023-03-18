@@ -702,7 +702,6 @@ Partial Class MainFrm
         Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.WXP_Alert2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.WXP_Alert2.CenterText = True
         Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -712,8 +711,8 @@ Partial Class MainFrm
         Me.WXP_Alert2.Size = New System.Drawing.Size(135, 36)
         Me.WXP_Alert2.TabIndex = 54
         Me.WXP_Alert2.TabStop = False
-        Me.WXP_Alert2.Text = "Classic Theme is enabled. The preview won't work for other themes due to some lim" &
-    "itations in Visual Styles Previewer. Apply another theme first then reopen WinPa" &
+        Me.WXP_Alert2.Text = "Classic theme is enabled. The preview won't work for other themes due to some lim" &
+    "itations in visual styles Previewer. Apply another theme first then reopen WinPa" &
     "letter."
         Me.WXP_Alert2.Visible = False
         '
@@ -917,7 +916,7 @@ Partial Class MainFrm
         Me.lnk_preview.Name = "lnk_preview"
         Me.lnk_preview.Size = New System.Drawing.Size(181, 25)
         Me.lnk_preview.TabIndex = 16
-        Me.lnk_preview.Text = "Settings Link Preview"
+        Me.lnk_preview.Text = "Settings link preview"
         Me.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage7
@@ -1982,7 +1981,7 @@ Partial Class MainFrm
         Me.W11_Accent_StartTaskbar.ShowText = True
         Me.W11_Accent_StartTaskbar.Size = New System.Drawing.Size(186, 23)
         Me.W11_Accent_StartTaskbar.TabIndex = 22
-        Me.W11_Accent_StartTaskbar.Text = "Start, Taskbar & Action Center"
+        Me.W11_Accent_StartTaskbar.Text = "Start, taskbar & action Center"
         '
         'W11_Accent_None
         '
@@ -2021,7 +2020,7 @@ Partial Class MainFrm
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(144, 22)
         Me.Label19.TabIndex = 3
-        Me.Label19.Text = "Apply Accent Color on:"
+        Me.Label19.Text = "Apply accent color on:"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox4
@@ -2061,7 +2060,7 @@ Partial Class MainFrm
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(171, 20)
         Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Windows Mode"
+        Me.Label2.Text = "Windows mode"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W11_WinMode_Toggle
@@ -2171,7 +2170,7 @@ Partial Class MainFrm
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(163, 20)
         Me.Label7.TabIndex = 10
-        Me.Label7.Text = "App Mode"
+        Me.Label7.Text = "App mode"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox17
@@ -2276,7 +2275,7 @@ Partial Class MainFrm
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(123, 20)
         Me.Label11.TabIndex = 3
-        Me.Label11.Text = "Inactive Titlebar"
+        Me.Label11.Text = "Inactive titlebar"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W11_InactiveTitlebar_pick
@@ -2352,7 +2351,7 @@ Partial Class MainFrm
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(129, 19)
         Me.Label5.TabIndex = 3
-        Me.Label5.Text = "Active Titlebar"
+        Me.Label5.Text = "Active titlebar"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W11_ActiveTitlebar_pick
@@ -3096,7 +3095,7 @@ Partial Class MainFrm
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(171, 20)
         Me.Label22.TabIndex = 13
-        Me.Label22.Text = "Increase Taskbar Transparency"
+        Me.Label22.Text = "Increase taskbar transparency"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox38
@@ -3160,7 +3159,7 @@ Partial Class MainFrm
         Me.W10_Accent_StartTaskbar.ShowText = True
         Me.W10_Accent_StartTaskbar.Size = New System.Drawing.Size(186, 23)
         Me.W10_Accent_StartTaskbar.TabIndex = 22
-        Me.W10_Accent_StartTaskbar.Text = "Start, Taskbar & Action Center"
+        Me.W10_Accent_StartTaskbar.Text = "Start, taskbar & action Center"
         '
         'W10_Accent_None
         '
@@ -3199,7 +3198,7 @@ Partial Class MainFrm
         Me.Label52.Name = "Label52"
         Me.Label52.Size = New System.Drawing.Size(113, 22)
         Me.Label52.TabIndex = 3
-        Me.Label52.Text = "Accent Color on:"
+        Me.Label52.Text = "Accent color on:"
         Me.Label52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox40
@@ -3239,7 +3238,7 @@ Partial Class MainFrm
         Me.Label53.Name = "Label53"
         Me.Label53.Size = New System.Drawing.Size(171, 20)
         Me.Label53.TabIndex = 7
-        Me.Label53.Text = "Windows Mode"
+        Me.Label53.Text = "Windows mode"
         Me.Label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W10_WinMode_Toggle
@@ -3349,7 +3348,7 @@ Partial Class MainFrm
         Me.Label55.Name = "Label55"
         Me.Label55.Size = New System.Drawing.Size(163, 20)
         Me.Label55.TabIndex = 10
-        Me.Label55.Text = "App Mode"
+        Me.Label55.Text = "App mode"
         Me.Label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox31
@@ -3455,7 +3454,7 @@ Partial Class MainFrm
         Me.Label57.Name = "Label57"
         Me.Label57.Size = New System.Drawing.Size(123, 20)
         Me.Label57.TabIndex = 3
-        Me.Label57.Text = "Inactive Titlebar"
+        Me.Label57.Text = "Inactive titlebar"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W10_InactiveTitlebar_pick
@@ -3531,7 +3530,7 @@ Partial Class MainFrm
         Me.Label59.Name = "Label59"
         Me.Label59.Size = New System.Drawing.Size(129, 19)
         Me.Label59.TabIndex = 3
-        Me.Label59.Text = "Active Titlebar"
+        Me.Label59.Text = "Active titlebar"
         Me.Label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'W10_ActiveTitlebar_pick
@@ -3791,7 +3790,7 @@ Partial Class MainFrm
         Me.Foregrounds.Name = "Foregrounds"
         Me.Foregrounds.Size = New System.Drawing.Size(358, 20)
         Me.Foregrounds.TabIndex = 3
-        Me.Foregrounds.Text = "Foregrounds (Primary: Accents)"
+        Me.Foregrounds.Text = "Foregrounds (primary: accents)"
         Me.Foregrounds.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox41
@@ -3842,7 +3841,7 @@ Partial Class MainFrm
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(358, 20)
         Me.Label33.TabIndex = 3
-        Me.Label33.Text = "Backgrounds (Primary: Start, LogonUI)"
+        Me.Label33.Text = "Backgrounds (primary: start, LogonUI)"
         Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox15
@@ -3893,7 +3892,7 @@ Partial Class MainFrm
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(363, 20)
         Me.Label20.TabIndex = 3
-        Me.Label20.Text = "Backgrounds (Secondary: Start, LogonUI)"
+        Me.Label20.Text = "Backgrounds (secondary: start, LogonUI)"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox33
@@ -3975,7 +3974,7 @@ Partial Class MainFrm
         Me.Label39.Name = "Label39"
         Me.Label39.Size = New System.Drawing.Size(358, 20)
         Me.Label39.TabIndex = 3
-        Me.Label39.Text = "Windows Colors (Titlebars && Taskbar)"
+        Me.Label39.Text = "Windows colors (titlebars && taskbar)"
         Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox29
@@ -4026,7 +4025,7 @@ Partial Class MainFrm
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(363, 20)
         Me.Label29.TabIndex = 3
-        Me.Label29.Text = "Foregrounds (Secondary: Accents)"
+        Me.Label29.Text = "Foregrounds (secondary: accents)"
         Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox32
@@ -4050,7 +4049,7 @@ Partial Class MainFrm
         Me.Label41.Name = "Label41"
         Me.Label41.Size = New System.Drawing.Size(466, 35)
         Me.Label41.TabIndex = 0
-        Me.Label41.Text = "Main Colors"
+        Me.Label41.Text = "Colors"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage4
@@ -4304,7 +4303,7 @@ Partial Class MainFrm
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(149, 20)
         Me.Label26.TabIndex = 3
-        Me.Label26.Text = "Glass Reflection Intensity"
+        Me.Label26.Text = "Glass reflection intensity"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox39
@@ -4386,7 +4385,7 @@ Partial Class MainFrm
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(149, 20)
         Me.Label15.TabIndex = 3
-        Me.Label15.Text = "Colorization Blur Balance"
+        Me.Label15.Text = "Colorization blur balance"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label38
@@ -4399,7 +4398,7 @@ Partial Class MainFrm
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(465, 35)
         Me.Label38.TabIndex = 0
-        Me.Label38.Text = "Aero Tweaks"
+        Me.Label38.Text = "Aero tweaks"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox10
@@ -4451,7 +4450,7 @@ Partial Class MainFrm
         Me.Aero_EnableAeroPeek_lbl.Name = "Aero_EnableAeroPeek_lbl"
         Me.Aero_EnableAeroPeek_lbl.Size = New System.Drawing.Size(423, 20)
         Me.Aero_EnableAeroPeek_lbl.TabIndex = 13
-        Me.Aero_EnableAeroPeek_lbl.Text = "Aero Peek"
+        Me.Aero_EnableAeroPeek_lbl.Text = "Aero peek"
         Me.Aero_EnableAeroPeek_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox7
@@ -4504,7 +4503,7 @@ Partial Class MainFrm
         Me.Aero_AlwaysHibernateThumbnails_lbl.Name = "Aero_AlwaysHibernateThumbnails_lbl"
         Me.Aero_AlwaysHibernateThumbnails_lbl.Size = New System.Drawing.Size(423, 19)
         Me.Aero_AlwaysHibernateThumbnails_lbl.TabIndex = 3
-        Me.Aero_AlwaysHibernateThumbnails_lbl.Text = "Hibernate Thumbnails"
+        Me.Aero_AlwaysHibernateThumbnails_lbl.Text = "Hibernate thumbnails"
         Me.Aero_AlwaysHibernateThumbnails_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox30
@@ -4599,7 +4598,7 @@ Partial Class MainFrm
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(134, 20)
         Me.Label16.TabIndex = 3
-        Me.Label16.Text = "Colorization Color"
+        Me.Label16.Text = "Colorization color"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox26
@@ -4679,7 +4678,7 @@ Partial Class MainFrm
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(134, 20)
         Me.Label21.TabIndex = 3
-        Me.Label21.Text = "After Glow Color"
+        Me.Label21.Text = "After glow color"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox25
@@ -4703,7 +4702,7 @@ Partial Class MainFrm
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(462, 35)
         Me.Label27.TabIndex = 0
-        Me.Label27.Text = "Main Colors"
+        Me.Label27.Text = "Main colors"
         Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage8
@@ -4795,7 +4794,7 @@ Partial Class MainFrm
         Me.Label80.Name = "Label80"
         Me.Label80.Size = New System.Drawing.Size(462, 35)
         Me.Label80.TabIndex = 0
-        Me.Label80.Text = "Colorization Color (Main Color)"
+        Me.Label80.Text = "Colorization color (main color)"
         Me.Label80.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox49
@@ -4963,8 +4962,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WXP_Alert1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.WXP_Alert1.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.WXP_Alert1.CenterText = True
+        Me.WXP_Alert1.CenterText = False
         Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert1.Image = Nothing
@@ -4973,7 +4971,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
         Me.WXP_Alert1.TabIndex = 53
         Me.WXP_Alert1.TabStop = False
-        Me.WXP_Alert1.Text = "External Theme\Visual Styles require a UX-Theme-Patched Windows"
+        Me.WXP_Alert1.Text = "External theme\visual styles require a UX-theme-patched Windows"
         '
         'Label76
         '
@@ -4997,7 +4995,7 @@ Partial Class MainFrm
         Me.WXP_VS_ReplaceFonts.Name = "WXP_VS_ReplaceFonts"
         Me.WXP_VS_ReplaceFonts.Size = New System.Drawing.Size(129, 23)
         Me.WXP_VS_ReplaceFonts.TabIndex = 51
-        Me.WXP_VS_ReplaceFonts.Text = "System Fonts"
+        Me.WXP_VS_ReplaceFonts.Text = "System fonts"
         '
         'WXP_VS_ReplaceMetrics
         '
@@ -5009,7 +5007,7 @@ Partial Class MainFrm
         Me.WXP_VS_ReplaceMetrics.Name = "WXP_VS_ReplaceMetrics"
         Me.WXP_VS_ReplaceMetrics.Size = New System.Drawing.Size(150, 23)
         Me.WXP_VS_ReplaceMetrics.TabIndex = 50
-        Me.WXP_VS_ReplaceMetrics.Text = "Metrics Values"
+        Me.WXP_VS_ReplaceMetrics.Text = "Metrics values"
         '
         'WXP_VS_ReplaceColors
         '
@@ -5021,7 +5019,7 @@ Partial Class MainFrm
         Me.WXP_VS_ReplaceColors.Name = "WXP_VS_ReplaceColors"
         Me.WXP_VS_ReplaceColors.Size = New System.Drawing.Size(150, 23)
         Me.WXP_VS_ReplaceColors.TabIndex = 49
-        Me.WXP_VS_ReplaceColors.Text = "Colors in Classic Colors"
+        Me.WXP_VS_ReplaceColors.Text = "Colors in classic colors"
         '
         'WXP_Alert3
         '
@@ -5029,8 +5027,7 @@ Partial Class MainFrm
         Me.WXP_Alert3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WXP_Alert3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.WXP_Alert3.CanClose = WinPaletter.XenonAlertBox.Close.No
-        Me.WXP_Alert3.CenterText = True
+        Me.WXP_Alert3.CenterText = False
         Me.WXP_Alert3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert3.Image = Nothing
@@ -5118,7 +5115,7 @@ Partial Class MainFrm
         Me.Label71.Name = "Label71"
         Me.Label71.Size = New System.Drawing.Size(465, 35)
         Me.Label71.TabIndex = 0
-        Me.Label71.Text = "External Theme"
+        Me.Label71.Text = "External theme"
         Me.Label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox41
@@ -5173,7 +5170,6 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WXP_VS_textbox.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.WXP_VS_textbox.ForeColor = System.Drawing.Color.White
-        Me.WXP_VS_textbox.Hint = Nothing
         Me.WXP_VS_textbox.Location = New System.Drawing.Point(93, 43)
         Me.WXP_VS_textbox.MaxLength = 32767
         Me.WXP_VS_textbox.Multiline = False
@@ -5399,7 +5395,7 @@ Partial Class MainFrm
         Me.XenonButton25.Name = "XenonButton25"
         Me.XenonButton25.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton25.TabIndex = 22
-        Me.XenonButton25.Text = "Stop Timer"
+        Me.XenonButton25.Text = "Stop timer"
         Me.XenonButton25.UseVisualStyleBackColor = False
         Me.XenonButton25.Visible = False
         '
@@ -5416,7 +5412,7 @@ Partial Class MainFrm
         Me.XenonButton22.Name = "XenonButton22"
         Me.XenonButton22.Size = New System.Drawing.Size(85, 34)
         Me.XenonButton22.TabIndex = 21
-        Me.XenonButton22.Text = "Export Details"
+        Me.XenonButton22.Text = "Export details"
         Me.XenonButton22.UseVisualStyleBackColor = False
         Me.XenonButton22.Visible = False
         '
@@ -5431,7 +5427,7 @@ Partial Class MainFrm
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
         Me.log_lbl.Size = New System.Drawing.Size(510, 28)
         Me.log_lbl.TabIndex = 20
-        Me.log_lbl.Text = "Error\s happened. Press on Show Errors for details"
+        Me.log_lbl.Text = "Error\s happened. Press on 'Show errors' for details"
         Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.log_lbl.Visible = False
         '
@@ -5448,7 +5444,7 @@ Partial Class MainFrm
         Me.XenonButton14.Name = "XenonButton14"
         Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
         Me.XenonButton14.TabIndex = 7
-        Me.XenonButton14.Text = "Show Errors"
+        Me.XenonButton14.Text = "Show errors"
         Me.XenonButton14.UseVisualStyleBackColor = False
         Me.XenonButton14.Visible = False
         '
@@ -5607,7 +5603,7 @@ Partial Class MainFrm
         Me.XenonButton20.Name = "XenonButton20"
         Me.XenonButton20.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton20.TabIndex = 22
-        Me.XenonButton20.Tag = "Create New Theme File based on Native Windows"
+        Me.XenonButton20.Tag = "Create new WinPaletter theme File based on native Windows preferences"
         Me.XenonButton20.UseVisualStyleBackColor = False
         '
         'XenonButton18
@@ -5623,7 +5619,7 @@ Partial Class MainFrm
         Me.XenonButton18.Name = "XenonButton18"
         Me.XenonButton18.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton18.TabIndex = 21
-        Me.XenonButton18.Tag = "Reload First Theme"
+        Me.XenonButton18.Tag = "Reload first theme"
         Me.XenonButton18.UseVisualStyleBackColor = False
         '
         'XenonButton17
@@ -5639,7 +5635,7 @@ Partial Class MainFrm
         Me.XenonButton17.Name = "XenonButton17"
         Me.XenonButton17.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton17.TabIndex = 20
-        Me.XenonButton17.Tag = "Reload Previous Theme (Similar to Undo)"
+        Me.XenonButton17.Tag = "Reload previous theme (similar to undo)"
         Me.XenonButton17.UseVisualStyleBackColor = False
         '
         'XenonButton12
@@ -5687,7 +5683,7 @@ Partial Class MainFrm
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton6.TabIndex = 11
-        Me.XenonButton6.Tag = "What's New"
+        Me.XenonButton6.Tag = "What's new"
         Me.XenonButton6.UseVisualStyleBackColor = False
         '
         'XenonButton10
@@ -5703,7 +5699,7 @@ Partial Class MainFrm
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton10.TabIndex = 8
-        Me.XenonButton10.Tag = "Edit Information of current Theme"
+        Me.XenonButton10.Tag = "Edit information of current WinPaletter theme"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonButton11
@@ -5756,7 +5752,7 @@ Partial Class MainFrm
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton7.TabIndex = 3
-        Me.XenonButton7.Tag = "Save Theme File"
+        Me.XenonButton7.Tag = "Save WinPaletter theme file"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'XenonButton9
@@ -5772,7 +5768,7 @@ Partial Class MainFrm
         Me.XenonButton9.Name = "XenonButton9"
         Me.XenonButton9.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton9.TabIndex = 4
-        Me.XenonButton9.Tag = "Save Theme File as ..."
+        Me.XenonButton9.Tag = "Save WinPaletter theme file as ..."
         Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'XenonButton3
@@ -5788,7 +5784,7 @@ Partial Class MainFrm
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton3.TabIndex = 2
-        Me.XenonButton3.Tag = "Create New Theme File based on the current applied preferences"
+        Me.XenonButton3.Tag = "Create new WinPaletter theme file based on the current applied preferences"
         Me.XenonButton3.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -5804,7 +5800,7 @@ Partial Class MainFrm
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(40, 40)
         Me.XenonButton2.TabIndex = 2
-        Me.XenonButton2.Tag = "Open a Theme File"
+        Me.XenonButton2.Tag = "Open a WinPaletter theme file"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
         'XenonGroupBox3

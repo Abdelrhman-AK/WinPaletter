@@ -55,7 +55,6 @@ Partial Class TerminalInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTabTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerTabTitle.ForeColor = System.Drawing.Color.White
-        Me.TerTabTitle.Hint = Nothing
         Me.TerTabTitle.Location = New System.Drawing.Point(120, 42)
         Me.TerTabTitle.MaxLength = 32767
         Me.TerTabTitle.Multiline = False
@@ -89,7 +88,7 @@ Partial Class TerminalInfo
         Me.Label174.Name = "Label174"
         Me.Label174.Size = New System.Drawing.Size(54, 24)
         Me.Label174.TabIndex = 193
-        Me.Label174.Text = "Tab Title:"
+        Me.Label174.Text = "Tab title:"
         Me.Label174.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TerName
@@ -98,7 +97,6 @@ Partial Class TerminalInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerName.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerName.ForeColor = System.Drawing.Color.White
-        Me.TerName.Hint = Nothing
         Me.TerName.Location = New System.Drawing.Point(120, 12)
         Me.TerName.MaxLength = 32767
         Me.TerName.Multiline = False
@@ -153,7 +151,7 @@ Partial Class TerminalInfo
         Me.Label153.Name = "Label153"
         Me.Label153.Size = New System.Drawing.Size(62, 24)
         Me.Label153.TabIndex = 186
-        Me.Label153.Text = "Tab Icon:"
+        Me.Label153.Text = "Tab icon:"
         Me.Label153.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton11
@@ -177,7 +175,6 @@ Partial Class TerminalInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTabIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerTabIcon.ForeColor = System.Drawing.Color.White
-        Me.TerTabIcon.Hint = Nothing
         Me.TerTabIcon.Location = New System.Drawing.Point(120, 72)
         Me.TerTabIcon.MaxLength = 32767
         Me.TerTabIcon.Multiline = False
@@ -201,7 +198,7 @@ Partial Class TerminalInfo
         Me.Label166.Name = "Label166"
         Me.Label166.Size = New System.Drawing.Size(75, 24)
         Me.Label166.TabIndex = 197
-        Me.Label166.Text = "Tab Color:"
+        Me.Label166.Text = "Tab color:"
         Me.Label166.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox36
@@ -245,7 +242,7 @@ Partial Class TerminalInfo
         Me.TerAcrylic.Name = "TerAcrylic"
         Me.TerAcrylic.Size = New System.Drawing.Size(184, 24)
         Me.TerAcrylic.TabIndex = 202
-        Me.TerAcrylic.Text = "Acrylic Titlebar (All Profiles)"
+        Me.TerAcrylic.Text = "Acrylic titlebar (All profiles)"
         '
         'XenonButton2
         '
@@ -282,6 +279,7 @@ Partial Class TerminalInfo
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 164)
@@ -296,7 +294,6 @@ Partial Class TerminalInfo
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -342,7 +339,7 @@ Partial Class TerminalInfo
         Me.Name = "TerminalInfo"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Terminal Info"
+        Me.Text = "Terminal info"
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()

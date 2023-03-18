@@ -93,7 +93,7 @@ Partial Class Lang_Dashboard
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(414, 19)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Create\Modify Language Files"
+        Me.Label1.Text = "Create\Modify language files"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
@@ -158,7 +158,7 @@ Partial Class Lang_Dashboard
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(414, 19)
         Me.Label4.TabIndex = 2
-        Me.Label4.Text = "Update JSON Language File"
+        Me.Label4.Text = "Update JSON language file"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox2
@@ -204,7 +204,7 @@ Partial Class Lang_Dashboard
         Me.MinimizeBox = False
         Me.Name = "Lang_Dashboard"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Language Dashboard"
+        Me.Text = "Language dashboard"
         Me.XenonGroupBox1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)

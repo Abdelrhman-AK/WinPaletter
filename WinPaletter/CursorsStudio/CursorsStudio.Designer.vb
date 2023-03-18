@@ -276,7 +276,7 @@ Partial Class CursorsStudio
         Me.XenonCheckBox9.Name = "XenonCheckBox9"
         Me.XenonCheckBox9.Size = New System.Drawing.Size(200, 24)
         Me.XenonCheckBox9.TabIndex = 83
-        Me.XenonCheckBox9.Text = "Make Cursors have a shadow"
+        Me.XenonCheckBox9.Text = "Make cursors have a shadow"
         '
         'PictureBox21
         '
@@ -311,7 +311,7 @@ Partial Class CursorsStudio
         Me.XenonCheckBox10.Name = "XenonCheckBox10"
         Me.XenonCheckBox10.Size = New System.Drawing.Size(200, 24)
         Me.XenonCheckBox10.TabIndex = 131
-        Me.XenonCheckBox10.Text = "Cursor Tracking (Sonar)"
+        Me.XenonCheckBox10.Text = "Cursor tracking (Sonar)"
         '
         'XenonGroupBox6
         '
@@ -473,7 +473,7 @@ Partial Class CursorsStudio
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(203, 24)
         Me.Label4.TabIndex = 72
-        Me.Label4.Text = "Rotating Part"
+        Me.Label4.Text = "Rotating part"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'XenonGroupBox7
@@ -772,7 +772,7 @@ Partial Class CursorsStudio
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(124, 35)
         Me.XenonButton11.TabIndex = 82
-        Me.XenonButton11.Text = "Quick Apply"
+        Me.XenonButton11.Text = "Quick apply"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonGroupBox13

@@ -13,8 +13,15 @@ Public Module ColorsExtensions
     '''Reverse Color From RGB To BGR
     '''</summary>
     <Extension()>
-    Public Function Reverse([Color] As Color) As Color
-        Return Color.FromArgb([Color].B, [Color].G, [Color].R)
+    Public Function Reverse([Color] As Color, Optional Alpha As Boolean = False) As Color
+        If Not Alpha Then
+            Return Color.FromArgb([Color].B, [Color].G, [Color].R)
+
+        Else
+            Return Color.FromArgb([Color].A, [Color].B, [Color].G, [Color].R)
+
+        End If
+
     End Function
 
     '''<summary>

@@ -55,7 +55,6 @@ Partial Class VS2Win32UI
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(87, 12)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -123,7 +122,7 @@ Partial Class VS2Win32UI
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(171, 30)
         Me.XenonButton8.TabIndex = 208
-        Me.XenonButton8.Text = "Load into Classic Colors"
+        Me.XenonButton8.Text = "Load into classic colors"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'OpenFileDialog2
@@ -165,7 +164,7 @@ Partial Class VS2Win32UI
         Me.MinimizeBox = False
         Me.Name = "VS2Win32UI"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Theme\Visual Styles to Classic Colors"
+        Me.Text = "Theme\Visual styles to classic colors"
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

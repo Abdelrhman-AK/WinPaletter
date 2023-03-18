@@ -187,6 +187,7 @@ Partial Class CMD
         '
         'XenonSeparator2
         '
+        Me.XenonSeparator2.AlternativeLook = False
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator2.Location = New System.Drawing.Point(12, 57)
@@ -240,7 +241,7 @@ Partial Class CMD
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(75, 31)
         Me.Label4.TabIndex = 111
-        Me.Label4.Text = "Open From:"
+        Me.Label4.Text = "Open from:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton8
@@ -258,7 +259,7 @@ Partial Class CMD
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(135, 29)
         Me.XenonButton8.TabIndex = 110
-        Me.XenonButton8.Text = "WinPaletter Theme"
+        Me.XenonButton8.Text = "WinPaletter theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonButton6
@@ -293,7 +294,7 @@ Partial Class CMD
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(804, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -338,6 +339,7 @@ Partial Class CMD
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(9, 136)
@@ -459,7 +461,7 @@ Partial Class CMD
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(231, 22)
         Me.Label18.TabIndex = 85
-        Me.Label18.Text = "Pop-up Background:"
+        Me.Label18.Text = "Pop-up background:"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label17
@@ -472,7 +474,7 @@ Partial Class CMD
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(231, 22)
         Me.Label17.TabIndex = 83
-        Me.Label17.Text = "Pop-up Foreground:"
+        Me.Label17.Text = "Pop-up foreground:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label49
@@ -526,7 +528,7 @@ Partial Class CMD
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(603, 24)
         Me.XenonCheckBox1.TabIndex = 100
-        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong renderering in Enhanced terminal, not use" &
+        Me.XenonCheckBox1.Text = "Allow non monospace fonts (causes wrong renderering in enhanced terminal, not use" &
     "d in legacy terminal)"
         '
         'XenonGroupBox12
@@ -594,7 +596,7 @@ Partial Class CMD
         Me.CMD_LineSelection.Name = "CMD_LineSelection"
         Me.CMD_LineSelection.Size = New System.Drawing.Size(155, 24)
         Me.CMD_LineSelection.TabIndex = 122
-        Me.CMD_LineSelection.Text = "Line Selection"
+        Me.CMD_LineSelection.Text = "Line selection"
         '
         'CMD_EnhancedTerminal
         '
@@ -606,7 +608,7 @@ Partial Class CMD
         Me.CMD_EnhancedTerminal.Name = "CMD_EnhancedTerminal"
         Me.CMD_EnhancedTerminal.Size = New System.Drawing.Size(155, 24)
         Me.CMD_EnhancedTerminal.TabIndex = 118
-        Me.CMD_EnhancedTerminal.Text = "Enhanced Terminal"
+        Me.CMD_EnhancedTerminal.Text = "Enhanced terminal"
         '
         'PictureBox12
         '
@@ -628,7 +630,7 @@ Partial Class CMD
         Me.CMD_TerminalScrolling.Name = "CMD_TerminalScrolling"
         Me.CMD_TerminalScrolling.Size = New System.Drawing.Size(155, 24)
         Me.CMD_TerminalScrolling.TabIndex = 123
-        Me.CMD_TerminalScrolling.Text = "Terminal Scrolling"
+        Me.CMD_TerminalScrolling.Text = "Terminal scrolling"
         '
         'CMD_OpacityBar
         '
@@ -662,7 +664,7 @@ Partial Class CMD
         Me.Label57.Name = "Label57"
         Me.Label57.Size = New System.Drawing.Size(104, 24)
         Me.Label57.TabIndex = 119
-        Me.Label57.Text = "Window Opacity:"
+        Me.Label57.Text = "Window opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label5
@@ -867,7 +869,7 @@ Partial Class CMD
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 82
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonGroupBox4
@@ -939,7 +941,7 @@ Partial Class CMD
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(108, 24)
         Me.Label58.TabIndex = 94
-        Me.Label58.Text = "Raster Font ?"
+        Me.Label58.Text = "Raster font ?"
         Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'CMD_FontsBox

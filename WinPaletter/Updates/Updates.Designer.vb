@@ -95,7 +95,7 @@ Partial Class Updates
         Me.LinkLabel3.Size = New System.Drawing.Size(376, 24)
         Me.LinkLabel3.TabIndex = 33
         Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "• What's New?"
+        Me.LinkLabel3.Text = "• What's new?"
         Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.LinkLabel3.Visible = False
         '
@@ -125,7 +125,7 @@ Partial Class Updates
         Me.XenonRadioButton3.Name = "XenonRadioButton3"
         Me.XenonRadioButton3.Size = New System.Drawing.Size(389, 23)
         Me.XenonRadioButton3.TabIndex = 1
-        Me.XenonRadioButton3.Text = "Just Download from the browser"
+        Me.XenonRadioButton3.Text = "Just download from the browser"
         '
         'XenonRadioButton1
         '
@@ -161,7 +161,7 @@ Partial Class Updates
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(104, 24)
         Me.Label1.TabIndex = 20
-        Me.Label1.Text = "Current Version:"
+        Me.Label1.Text = "Current version:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox2
@@ -189,7 +189,7 @@ Partial Class Updates
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(104, 24)
         Me.Label6.TabIndex = 26
-        Me.Label6.Text = "Update Size:"
+        Me.Label6.Text = "Update size:"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label7
@@ -219,7 +219,7 @@ Partial Class Updates
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(104, 24)
         Me.Label8.TabIndex = 29
-        Me.Label8.Text = "Release Date:"
+        Me.Label8.Text = "Release date:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label9
@@ -261,7 +261,7 @@ Partial Class Updates
         Me.Label3.Size = New System.Drawing.Size(93, 24)
         Me.Label3.TabIndex = 17
         Me.Label3.TabStop = True
-        Me.Label3.Text = "Stable Channel"
+        Me.Label3.Text = "Stable channel"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PictureBox1
@@ -306,7 +306,6 @@ Partial Class Updates
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox2.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -316,11 +315,12 @@ Partial Class Updates
         Me.XenonAlertBox2.Size = New System.Drawing.Size(395, 31)
         Me.XenonAlertBox2.TabIndex = 12
         Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "Update Available"
+        Me.XenonAlertBox2.Text = "Update available"
         Me.XenonAlertBox2.Visible = False
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 198)

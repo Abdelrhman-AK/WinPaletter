@@ -19,11 +19,6 @@ Public Class LogonUI
         ColorPalette.LogonUI10x.NoLockScreen = Not LogonUI_Lockscreen_Toggle.Checked
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Save(MainFrm.CP)
-        Me.Close()
-    End Sub
-
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
     End Sub
@@ -62,5 +57,10 @@ Public Class LogonUI
         End Select
         Load_FromCP(CPx)
         CPx.Dispose()
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Save(MainFrm.CP)
+        Me.Close()
     End Sub
 End Class

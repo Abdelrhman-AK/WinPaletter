@@ -100,11 +100,12 @@ Partial Class TerminalsDashboard
         Me.XenonButton9.Name = "XenonButton9"
         Me.XenonButton9.Size = New System.Drawing.Size(151, 28)
         Me.XenonButton9.TabIndex = 101
-        Me.XenonButton9.Text = "Read Documentation"
+        Me.XenonButton9.Text = "Read documentation"
         Me.XenonButton9.UseVisualStyleBackColor = False
         '
         'XenonSeparator4
         '
+        Me.XenonSeparator4.AlternativeLook = False
         Me.XenonSeparator4.Location = New System.Drawing.Point(172, 123)
         Me.XenonSeparator4.Name = "XenonSeparator4"
         Me.XenonSeparator4.Size = New System.Drawing.Size(149, 1)
@@ -145,6 +146,7 @@ Partial Class TerminalsDashboard
         '
         'XenonSeparator3
         '
+        Me.XenonSeparator3.AlternativeLook = False
         Me.XenonSeparator3.Location = New System.Drawing.Point(173, 30)
         Me.XenonSeparator3.Name = "XenonSeparator3"
         Me.XenonSeparator3.Size = New System.Drawing.Size(149, 1)
@@ -218,6 +220,7 @@ Partial Class TerminalsDashboard
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Location = New System.Drawing.Point(7, 30)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(149, 1)
@@ -226,9 +229,10 @@ Partial Class TerminalsDashboard
         '
         'XenonSeparatorVertical1
         '
+        Me.XenonSeparatorVertical1.AlternativeLook = False
         Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(162, 7)
         Me.XenonSeparatorVertical1.Name = "XenonSeparatorVertical1"
-        Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(2, 149)
+        Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(1, 149)
         Me.XenonSeparatorVertical1.TabIndex = 102
         Me.XenonSeparatorVertical1.TabStop = False
         '

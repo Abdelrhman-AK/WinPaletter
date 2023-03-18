@@ -67,7 +67,7 @@ Partial Class EditInfo
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(124, 18)
         Me.Label2.TabIndex = 9
-        Me.Label2.Text = "Theme Name:"
+        Me.Label2.Text = "Theme name:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
@@ -89,7 +89,7 @@ Partial Class EditInfo
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(124, 18)
         Me.Label1.TabIndex = 11
-        Me.Label1.Text = "Theme Version:"
+        Me.Label1.Text = "Theme version:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox3
@@ -111,7 +111,7 @@ Partial Class EditInfo
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(124, 18)
         Me.Label3.TabIndex = 13
-        Me.Label3.Text = "Theme Description:"
+        Me.Label3.Text = "Theme description:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTextBox1
@@ -120,7 +120,6 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Hint = Nothing
         Me.XenonTextBox1.Location = New System.Drawing.Point(176, 13)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -142,7 +141,6 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox2.Hint = Nothing
         Me.XenonTextBox2.Location = New System.Drawing.Point(176, 45)
         Me.XenonTextBox2.MaxLength = 12
         Me.XenonTextBox2.Multiline = False
@@ -164,7 +162,6 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox3.Hint = Nothing
         Me.XenonTextBox3.Location = New System.Drawing.Point(176, 77)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = True
@@ -182,6 +179,7 @@ Partial Class EditInfo
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 232)
@@ -196,7 +194,6 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox4.Hint = Nothing
         Me.XenonTextBox4.Location = New System.Drawing.Point(176, 240)
         Me.XenonTextBox4.MaxLength = 32767
         Me.XenonTextBox4.Multiline = False
@@ -218,7 +215,6 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox5.Hint = Nothing
         Me.XenonTextBox5.Location = New System.Drawing.Point(176, 272)
         Me.XenonTextBox5.MaxLength = 32767
         Me.XenonTextBox5.Multiline = False
@@ -253,7 +249,7 @@ Partial Class EditInfo
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(124, 18)
         Me.Label4.TabIndex = 21
-        Me.Label4.Text = "Social Media Link:"
+        Me.Label4.Text = "Social media link:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5
@@ -345,7 +341,7 @@ Partial Class EditInfo
         Me.Name = "EditInfo"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Edit Info"
+        Me.Text = "Edit info"
         Me.TopMost = True
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

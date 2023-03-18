@@ -238,6 +238,7 @@ Partial Class WindowsTerminal
         '
         'XenonSeparator1
         '
+        Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(12, 98)
@@ -292,7 +293,7 @@ Partial Class WindowsTerminal
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(136, 29)
         Me.XenonButton8.TabIndex = 110
-        Me.XenonButton8.Text = "WinPaletter Theme"
+        Me.XenonButton8.Text = "WinPaletter theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
         'XenonAlertBox1
@@ -301,7 +302,6 @@ Partial Class WindowsTerminal
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox1.CanClose = WinPaletter.XenonAlertBox.Close.No
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -311,7 +311,7 @@ Partial Class WindowsTerminal
         Me.XenonAlertBox1.Size = New System.Drawing.Size(600, 30)
         Me.XenonAlertBox1.TabIndex = 198
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "You should create a backup to Terminal Settings File ""settings.json"" to avoid und" &
+        Me.XenonAlertBox1.Text = "You should create a backup to Terminal settings file ""settings.json"" to avoid und" &
     "esired actions or errors."
         '
         'XenonButton7
@@ -327,7 +327,7 @@ Partial Class WindowsTerminal
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(85, 29)
         Me.XenonButton7.TabIndex = 109
-        Me.XenonButton7.Text = "JSON File"
+        Me.XenonButton7.Text = "JSON file"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'TerEnabled
@@ -469,7 +469,7 @@ Partial Class WindowsTerminal
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(253, 24)
         Me.Label1.TabIndex = 224
-        Me.Label1.Text = "Dark\Light Mode"
+        Me.Label1.Text = "Dark\Light mode"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
@@ -526,7 +526,7 @@ Partial Class WindowsTerminal
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(202, 24)
         Me.Label6.TabIndex = 197
-        Me.Label6.Text = "Active Title"
+        Me.Label6.Text = "Active title"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TerTabActive
@@ -593,7 +593,7 @@ Partial Class WindowsTerminal
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(202, 24)
         Me.Label5.TabIndex = 199
-        Me.Label5.Text = "Inactive Title"
+        Me.Label5.Text = "Inactive title"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label10
@@ -606,7 +606,7 @@ Partial Class WindowsTerminal
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(202, 24)
         Me.Label10.TabIndex = 202
-        Me.Label10.Text = "Active Tab"
+        Me.Label10.Text = "Active tab"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label9
@@ -619,7 +619,7 @@ Partial Class WindowsTerminal
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(202, 24)
         Me.Label9.TabIndex = 204
-        Me.Label9.Text = "Inactive Tab"
+        Me.Label9.Text = "Inactive tab"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton2
@@ -809,7 +809,7 @@ Partial Class WindowsTerminal
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(116, 25)
         Me.XenonButton5.TabIndex = 197
-        Me.XenonButton5.Text = "Set To Wallpaper"
+        Me.XenonButton5.Text = "Set as wallpaper"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'TerAcrylic
@@ -845,7 +845,6 @@ Partial Class WindowsTerminal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBackImage.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.TerBackImage.ForeColor = System.Drawing.Color.White
-        Me.TerBackImage.Hint = Nothing
         Me.TerBackImage.Location = New System.Drawing.Point(122, 6)
         Me.TerBackImage.MaxLength = 32767
         Me.TerBackImage.Multiline = False
@@ -897,7 +896,7 @@ Partial Class WindowsTerminal
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(332, 24)
         Me.XenonCheckBox1.TabIndex = 104
-        Me.XenonCheckBox1.Text = "Allow Non Monospace Fonts (Causes wrong renderering)"
+        Me.XenonCheckBox1.Text = "Allow non monospace fonts (causes wrong renderering)"
         '
         'XenonButton20
         '
@@ -1422,7 +1421,7 @@ Partial Class WindowsTerminal
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
         Me.XenonButton10.TabIndex = 107
-        Me.XenonButton10.Text = "Quick Apply"
+        Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
         '
         'XenonGroupBox13
@@ -1627,6 +1626,7 @@ Partial Class WindowsTerminal
         '
         'XenonSeparator2
         '
+        Me.XenonSeparator2.AlternativeLook = False
         Me.XenonSeparator2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator2.Location = New System.Drawing.Point(4, 40)
@@ -1643,13 +1643,13 @@ Partial Class WindowsTerminal
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(75, 32)
         Me.Label11.TabIndex = 111
-        Me.Label11.Text = "Open From:"
+        Me.Label11.Text = "Open from:"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(891, 5)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -1834,6 +1834,7 @@ Partial Class WindowsTerminal
         '
         'XenonSeparator3
         '
+        Me.XenonSeparator3.AlternativeLook = False
         Me.XenonSeparator3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator3.Location = New System.Drawing.Point(6, 184)

@@ -43,9 +43,10 @@ Public Class WinEffecter
             XenonCheckBox21.Checked = .ShakeToMinimize
             XenonCheckBox22.Checked = .Win11BootDots
 
-            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Default)
-            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Ribbon)
-            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.Win11ExplorerBar.Bar)
+            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Default)
+            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Ribbon)
+            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Bar)
+            XenonCheckBox23.Checked = .DisableNavBar
 
             Panel2.Width = .Caret
         End With
@@ -88,15 +89,17 @@ Public Class WinEffecter
             .Win11BootDots = XenonCheckBox22.Checked
 
             If XenonRadioButton1.Checked Then
-                .Win11ExplorerBar = CP.Win11ExplorerBar.Default
+                .Win11ExplorerBar = CP.ExplorerBar.Default
 
             ElseIf XenonRadioButton2.Checked Then
-                .Win11ExplorerBar = CP.Win11ExplorerBar.Ribbon
+                .Win11ExplorerBar = CP.ExplorerBar.Ribbon
 
             ElseIf XenonRadioButton3.Checked Then
-                .Win11ExplorerBar = CP.Win11ExplorerBar.Bar
+                .Win11ExplorerBar = CP.ExplorerBar.Bar
 
             End If
+
+            .DisableNavBar = XenonCheckBox23.Checked
 
         End With
     End Sub

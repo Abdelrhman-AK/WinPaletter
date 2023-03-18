@@ -66,7 +66,7 @@ Partial Class ComplexSave
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(418, 35)
         Me.Label17.TabIndex = 1
-        Me.Label17.Text = "Current Theme Changed. Choose what you want:"
+        Me.Label17.Text = "Current theme changed. Choose what you want:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox1

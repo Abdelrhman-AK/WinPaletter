@@ -373,7 +373,7 @@ Partial Class Start8Selector
         Me.Label41.Name = "Label41"
         Me.Label41.Size = New System.Drawing.Size(297, 35)
         Me.Label41.TabIndex = 2
-        Me.Label41.Text = "Start Background"
+        Me.Label41.Text = "Start background"
         Me.Label41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Start8Selector
@@ -394,7 +394,7 @@ Partial Class Start8Selector
         Me.MinimizeBox = False
         Me.Name = "Start8Selector"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Windows 8.1 Start"
+        Me.Text = "Windows 8.1 start"
         Me.XenonGroupBox1.ResumeLayout(False)
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

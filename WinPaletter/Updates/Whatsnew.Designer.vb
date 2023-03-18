@@ -89,7 +89,7 @@ Partial Class Whatsnew
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(746, 48)
         Me.Label2.TabIndex = 26
-        Me.Label2.Text = "What's New!"
+        Me.Label2.Text = "What's new!"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1
