@@ -507,7 +507,7 @@ Namespace NativeMethods
                 ''' <summary>
                 ''' <b>Enables or disables flat menu appearance for native User menus.</b>
                 ''' <br></br>
-                ''' <br></br> • Set pvParam to 1 to enable flat menu appearance or 0 to disable it.
+                ''' <br></br> • Set pvParam to TRUE to enable flat menu appearance or FALSE to disable it.
                 ''' <br></br> • When enabled, the menu bar uses COLOR_MENUBAR for the menubar background, COLOR_MENU for the menu-popup background, COLOR_MENUHILIGHT for the fill of the current menu selection, and COLOR_HILIGHT for the outline of the current menu selection.
                 ''' <br></br> • If disabled, menus are drawn using the same metrics and colors as in Windows 2000 and earlier.
                 ''' <br></br>
@@ -704,9 +704,22 @@ Namespace NativeMethods
         <Flags>
         Enum SPIF
             None = &H0
-            UpdateINIFile = &H1                 ' Writes the new system-wide parameter setting to the user profile.
-            SendChange = &H2                    ' Broadcasts the WM_SETTINGCHANGE message after updating the user profile.
-            SendWinINIChange = SendChange       ' Same as SENDCHANGE.
+
+            ''' <summary>
+            ''' Writes the new system-wide parameter setting to the user profile.
+            ''' </summary>
+            UpdateINIFile = &H1
+
+            ''' <summary>
+            ''' Broadcasts the WM_SETTINGCHANGE message after updating the user profile, but it is temporary until you logoff.
+            ''' </summary>
+            SendChange = &H2
+
+            ''' <summary>
+            ''' Same as SENDCHANGE
+            ''' <br></br> Broadcasts the WM_SETTINGCHANGE message after updating the user profile, but it is temporary until you logoff.
+            ''' </summary>
+            SendWinINIChange = SendChange
         End Enum
 
         Friend Declare Function SetWindowCompositionAttribute Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef data As WindowCompositionAttributeData) As Integer

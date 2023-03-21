@@ -203,6 +203,7 @@ Partial Class MainFrm
         Me.W10_lbl5 = New System.Windows.Forms.Label()
         Me.W10_Color_Index3 = New WinPaletter.XenonCP()
         Me.XenonGroupBox37 = New WinPaletter.XenonGroupBox()
+        Me.W10_TB_Blur = New WinPaletter.XenonToggle()
         Me.XenonGroupBox23 = New WinPaletter.XenonGroupBox()
         Me.W10_TBTransparency_Toggle = New WinPaletter.XenonToggle()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
@@ -1263,7 +1264,7 @@ Partial Class MainFrm
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage1.Size = New System.Drawing.Size(523, 567)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "W11"
         '
@@ -1276,7 +1277,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W11.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W11.Name = "PaletteContainer_W11"
-        Me.PaletteContainer_W11.Size = New System.Drawing.Size(517, 526)
+        Me.PaletteContainer_W11.Size = New System.Drawing.Size(517, 561)
         Me.PaletteContainer_W11.TabIndex = 17
         '
         'XenonGroupBox13
@@ -3049,6 +3050,17 @@ Partial Class MainFrm
         Me.XenonGroupBox37.Size = New System.Drawing.Size(514, 133)
         Me.XenonGroupBox37.TabIndex = 11
         '
+        'W10_TB_Blur
+        '
+        Me.W10_TB_Blur.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.W10_TB_Blur.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.W10_TB_Blur.Checked = True
+        Me.W10_TB_Blur.DarkLight_Toggler = False
+        Me.W10_TB_Blur.Location = New System.Drawing.Point(213, 4)
+        Me.W10_TB_Blur.Name = "W10_TB_Blur"
+        Me.W10_TB_Blur.Size = New System.Drawing.Size(40, 20)
+        Me.W10_TB_Blur.TabIndex = 16
+        '
         'XenonGroupBox23
         '
         Me.XenonGroupBox23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -3257,6 +3269,7 @@ Partial Class MainFrm
         Me.XenonGroupBox42.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox42.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox42.Controls.Add(Me.W10_TB_Blur)
         Me.XenonGroupBox42.Controls.Add(Me.W10_Transparency_Toggle)
         Me.XenonGroupBox42.Controls.Add(Me.PictureBox26)
         Me.XenonGroupBox42.Controls.Add(Me.Label54)
@@ -3272,7 +3285,7 @@ Partial Class MainFrm
         Me.W10_Transparency_Toggle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.W10_Transparency_Toggle.Checked = False
         Me.W10_Transparency_Toggle.DarkLight_Toggler = False
-        Me.W10_Transparency_Toggle.Location = New System.Drawing.Point(213, 4)
+        Me.W10_Transparency_Toggle.Location = New System.Drawing.Point(170, 4)
         Me.W10_Transparency_Toggle.Name = "W10_Transparency_Toggle"
         Me.W10_Transparency_Toggle.Size = New System.Drawing.Size(40, 20)
         Me.W10_Transparency_Toggle.TabIndex = 16
@@ -3297,9 +3310,9 @@ Partial Class MainFrm
         Me.Label54.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label54.Location = New System.Drawing.Point(30, 4)
         Me.Label54.Name = "Label54"
-        Me.Label54.Size = New System.Drawing.Size(177, 20)
+        Me.Label54.Size = New System.Drawing.Size(134, 20)
         Me.Label54.TabIndex = 13
-        Me.Label54.Text = "Transparency (Acrylic)"
+        Me.Label54.Text = "Transparency, TB blur"
         Me.Label54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox43
@@ -3553,7 +3566,7 @@ Partial Class MainFrm
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage3.Size = New System.Drawing.Size(523, 567)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "W8.1"
         '
@@ -3565,7 +3578,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W8.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W8.Name = "PaletteContainer_W8"
-        Me.PaletteContainer_W8.Size = New System.Drawing.Size(517, 526)
+        Me.PaletteContainer_W8.Size = New System.Drawing.Size(517, 561)
         Me.PaletteContainer_W8.TabIndex = 31
         '
         'XenonGroupBox17
@@ -4059,7 +4072,7 @@ Partial Class MainFrm
         Me.TabPage4.Location = New System.Drawing.Point(4, 24)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage4.Size = New System.Drawing.Size(523, 567)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "W7"
         '
@@ -4072,7 +4085,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W7.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W7.Name = "PaletteContainer_W7"
-        Me.PaletteContainer_W7.Size = New System.Drawing.Size(517, 526)
+        Me.PaletteContainer_W7.Size = New System.Drawing.Size(517, 561)
         Me.PaletteContainer_W7.TabIndex = 30
         '
         'XenonGroupBox11
@@ -4712,7 +4725,7 @@ Partial Class MainFrm
         Me.TabPage8.Controls.Add(Me.XenonGroupBox49)
         Me.TabPage8.Location = New System.Drawing.Point(4, 24)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage8.Size = New System.Drawing.Size(523, 567)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "WVista"
         '
@@ -4952,7 +4965,7 @@ Partial Class MainFrm
         Me.TabPage9.Controls.Add(Me.XenonGroupBox47)
         Me.TabPage9.Location = New System.Drawing.Point(4, 24)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage9.Size = New System.Drawing.Size(523, 567)
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
@@ -5378,7 +5391,7 @@ Partial Class MainFrm
         Me.TabPage5.Location = New System.Drawing.Point(4, 24)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(523, 532)
+        Me.TabPage5.Size = New System.Drawing.Size(523, 567)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Log"
         '
@@ -6536,4 +6549,5 @@ Partial Class MainFrm
     Friend WithEvents W10_TBTransparency_Toggle As XenonToggle
     Friend WithEvents PictureBox15 As PictureBox
     Friend WithEvents Label22 As Label
+    Friend WithEvents W10_TB_Blur As XenonToggle
 End Class

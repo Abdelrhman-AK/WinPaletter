@@ -420,10 +420,14 @@ Public Class MainFrm
                 ActionCenter.DarkMode = Not [CP].Windows10.WinMode_Light
 
                 taskbar.Transparency = [CP].Windows10.Transparency
-                start.Transparency = [CP].Windows10.Transparency
-                ActionCenter.Transparency = [CP].Windows10.Transparency
+                start.Transparency = [CP].Windows10.Transparency AndAlso [CP].Windows10.TB_Blur
+                ActionCenter.Transparency = [CP].Windows10.Transparency AndAlso [CP].Windows10.TB_Blur
 
-                taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
+                If Not [CP].Windows10.TB_Blur Then
+                    taskbar.BlurPower = 0
+                Else
+                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 12, 6)
+                End If
 
                 If [CP].Windows10.Transparency Then
                     If Not [CP].Windows10.WinMode_Light Then
@@ -1360,6 +1364,7 @@ Public Class MainFrm
         W10_AppMode_Toggle.Checked = Not [CP].Windows10.AppMode_Light
         W10_Transparency_Toggle.Checked = [CP].Windows10.Transparency
         W10_TBTransparency_Toggle.Checked = [CP].Windows10.IncreaseTBTransparency
+        W10_TB_Blur.Checked = [CP].Windows10.TB_Blur
         W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentonTitlebars
         Select Case [CP].Windows10.ApplyAccentonTaskbar
             Case ApplyAccentonTaskbar_Level.None
@@ -1934,6 +1939,7 @@ Public Class MainFrm
         Select_W7.Image = My.Resources.Native7
         Select_WVista.Image = My.Resources.NativeVista
         Select_WXP.Image = My.Resources.NativeXP
+        If Not My.isElevated Then apply_btn.Image = My.Resources.WP_Admin
 
         If PreviewConfig = WinVer.W11 Then
             TablessControl1.SelectedIndex = 0
@@ -3585,6 +3591,7 @@ Public Class MainFrm
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
+        Saving_ex_list.ex_List = My.Saving_Exceptions
         Saving_ex_list.ShowDialog()
     End Sub
 
@@ -4182,6 +4189,13 @@ Public Class MainFrm
             If PreviewConfig = WinVer.WVista Then MsgBox(String.Format(My.Lang.AltTab_Unsupported, My.Lang.OS_WinVista), MsgBoxStyle.Exclamation)
         End If
 
+    End Sub
+
+    Private Sub W10_TB_Blur_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TB_Blur.CheckedChanged
+        If _Shown Then
+            CP.Windows10.TB_Blur = sender.Checked
+            If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
+        End If
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

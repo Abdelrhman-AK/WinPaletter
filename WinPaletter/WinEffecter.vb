@@ -149,6 +149,7 @@ Public Class WinEffecter
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         CPx.WindowsEffects.Apply()
+        CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub

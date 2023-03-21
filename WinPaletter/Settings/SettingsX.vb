@@ -102,7 +102,7 @@ Public Class SettingsX
             If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton10.Checked Then Changed = True
             If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton9.Checked Then Changed = True
             If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase And Not XenonRadioButton7.Checked Then Changed = True
-            If .ClassicColors_HKU_DEFAULT_UPM <> XenonCheckBox25.Checked Then Changed = True
+            If .UPM_HKU_DEFAULT <> XenonCheckBox25.Checked Then Changed = True
             If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton12.Checked Then Changed = True
             If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton11.Checked Then Changed = True
             If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton14.Checked Then Changed = True
@@ -113,6 +113,10 @@ Public Class SettingsX
             If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton17.Checked Then Changed = True
             If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton20.Checked Then Changed = True
             If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton19.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton22.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton23.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton21.Checked Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -216,7 +220,7 @@ Public Class SettingsX
             XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
             XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
             XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-            XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+            XenonCheckBox25.Checked = .UPM_HKU_DEFAULT
             XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
             XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
@@ -227,6 +231,9 @@ Public Class SettingsX
             XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
             XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
         End With
 
         With My.Lang
@@ -332,12 +339,15 @@ Public Class SettingsX
             If XenonRadioButton10.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
             If XenonRadioButton9.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
             If XenonRadioButton7.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-            .ClassicColors_HKU_DEFAULT_UPM = XenonCheckBox25.Checked
+            .UPM_HKU_DEFAULT = XenonCheckBox25.Checked
             If XenonRadioButton12.Checked Then .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
             If XenonRadioButton14.Checked Then .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
             If XenonRadioButton16.Checked Then .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
             If XenonRadioButton18.Checked Then .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
             If XenonRadioButton20.Checked Then .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+            If XenonRadioButton22.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+            If XenonRadioButton23.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+            If XenonRadioButton21.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -480,12 +490,15 @@ Public Class SettingsX
                 If XenonRadioButton10.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
                 If XenonRadioButton9.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
                 If XenonRadioButton7.Checked Then .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-                .ClassicColors_HKU_DEFAULT_UPM = XenonCheckBox25.Checked
+                .UPM_HKU_DEFAULT = XenonCheckBox25.Checked
                 If XenonRadioButton12.Checked Then .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
                 If XenonRadioButton14.Checked Then .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
                 If XenonRadioButton16.Checked Then .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
                 If XenonRadioButton18.Checked Then .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
                 If XenonRadioButton20.Checked Then .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Else .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange
+                If XenonRadioButton22.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+                If XenonRadioButton23.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+                If XenonRadioButton21.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
 
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
@@ -570,7 +583,7 @@ Public Class SettingsX
                 XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
                 XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
                 XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-                XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+                XenonCheckBox25.Checked = .UPM_HKU_DEFAULT
                 XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
                 XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
                 XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
@@ -581,6 +594,9 @@ Public Class SettingsX
                 XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
                 XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
                 XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+                XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+                XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+                XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
             End With
         End If
     End Sub
@@ -672,7 +688,7 @@ Public Class SettingsX
             XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
             XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
             XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-            XenonCheckBox25.Checked = .ClassicColors_HKU_DEFAULT_UPM
+            XenonCheckBox25.Checked = .UPM_HKU_DEFAULT
             XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
             XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
@@ -683,6 +699,9 @@ Public Class SettingsX
             XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
             XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
         End With
 
         OpenFileDialog1.FileName = files(0)

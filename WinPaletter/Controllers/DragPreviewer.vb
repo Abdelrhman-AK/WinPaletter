@@ -83,6 +83,7 @@ Public Class DragPreviewer
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
+#Region "Win11"
                 tabs_preview.SelectedIndex = 0
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
@@ -196,7 +197,7 @@ Public Class DragPreviewer
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index5
                 End Select
-
+#End Region
             Case WinVer.W10
 #Region "Win10"
                 tabs_preview.SelectedIndex = 0
@@ -222,8 +223,14 @@ Public Class DragPreviewer
                 ActionCenter.DarkMode = Not [CP].Windows10.WinMode_Light
 
                 taskbar.Transparency = [CP].Windows10.Transparency
-                start.Transparency = [CP].Windows10.Transparency
-                ActionCenter.Transparency = [CP].Windows10.Transparency
+                start.Transparency = [CP].Windows10.Transparency AndAlso [CP].Windows10.TB_Blur
+                ActionCenter.Transparency = [CP].Windows10.Transparency AndAlso [CP].Windows10.TB_Blur
+
+                If Not [CP].Windows10.TB_Blur Then
+                    taskbar.BlurPower = 0
+                Else
+                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 12, 6)
+                End If
 
                 If [CP].Windows10.Transparency Then
                     If Not [CP].Windows10.WinMode_Light Then
@@ -937,12 +944,15 @@ Public Class DragPreviewer
                 ActionCenter.BlurPower = 7
                 ActionCenter.NoisePower = 0.2
                 '########################
-                taskbar.BlurPower = 12
+                If Not [CP].Windows10.TB_Blur Then
+                    taskbar.BlurPower = 0
+                Else
+                    taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
+                End If
                 '########################
                 start.BlurPower = 7
                 start.NoisePower = 0.2
                 '########################
-
                 taskbar.Height = 35
                 taskbar.UseWin11ORB_WithWin10 = False
                 start.Size = New Size(182, 201)

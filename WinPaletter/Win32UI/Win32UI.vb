@@ -1130,6 +1130,7 @@ Public Class Win32UI
         Visible = False
         Try
             CPx.Win32.Apply()
+            CPx.Win32.Update_UPM_DEFAULT()
         Catch
         End Try
         Threading.Thread.Sleep(200) 'Delay is added as there is a bug occurs when a classic theme applied on classic Windows mode

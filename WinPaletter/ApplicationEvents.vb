@@ -97,6 +97,11 @@ Namespace My
         Public Saving_Exceptions As New List(Of Tuple(Of String, Exception))
 
         ''' <summary>
+        ''' List of exceptions thrown during theme loading
+        ''' </summary>
+        Public Loading_Exceptions As New List(Of Tuple(Of String, Exception))
+
+        ''' <summary>
         ''' Class Represents Resources (PNGs, Icons, ...) from Windows extracted from System DLLs (Loaded at application startup)
         ''' </summary>
         Public WinRes As WinResources
@@ -716,6 +721,7 @@ Namespace My
             Try : WinRes = New WinResources : Catch : End Try
 
             Saving_Exceptions.Clear()
+            Loading_Exceptions.Clear()
 
             If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 

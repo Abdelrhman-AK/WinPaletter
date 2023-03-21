@@ -523,6 +523,7 @@
     <Content Include="Resources\AeroPeek.png" />
     <Content Include="Resources\Animator.dll" />
     <Content Include="Resources\BasicTaskbar.png" />
+    <None Include="Resources\WP_Admin.png" />
     <None Include="Resources\checker_enabled.png" />
     <None Include="Resources\checker_disabled.png" />
     <None Include="Resources\checker_enabled.png" />

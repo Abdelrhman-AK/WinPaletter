@@ -165,6 +165,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public ApplyAccentonTitlebars As Boolean
             Public ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level
             Public IncreaseTBTransparency As Boolean
+            Public TB_Blur As Boolean
 
             Sub Load(_DefWin As Windows10x, DefColorsBytes As Byte())
                 If My.W10 Or My.W11 Then
@@ -174,121 +175,54 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim x As Byte()
                     Dim y As Object
 
-                    Try
-                        x = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes)
-                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
-                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
-                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
-                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
-                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
-                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
-                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
-                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+                    x = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes)
+                    Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
+                    Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
+                    Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
+                    Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
+                    Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
+                    Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
+                    Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
+                    Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+                    Color_Index0 = Colors(0)
+                    Color_Index1 = Colors(1)
+                    Color_Index2 = Colors(2)
+                    Color_Index3 = Colors(3)
+                    Color_Index4 = Colors(4)
+                    Color_Index5 = Colors(5)
+                    Color_Index6 = Colors(6)
+                    Color_Index7 = Colors(7)
 
-                        Color_Index0 = Colors(0)
-                        Color_Index1 = Colors(1)
-                        Color_Index2 = Colors(2)
-                        Color_Index3 = Colors(3)
-                        Color_Index4 = Colors(4)
-                        Color_Index5 = Colors(5)
-                        Color_Index6 = Colors(6)
-                        Color_Index7 = Colors(7)
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", _DefWin.StartMenu_Accent.Reverse.ToArgb)
+                    StartMenu_Accent = Color.FromArgb(y).Reverse
 
-                    Catch
-                        x = DefColorsBytes
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", _DefWin.Titlebar_Active.Reverse.ToArgb)
+                    Titlebar_Active = Color.FromArgb(y).Reverse
 
-                        Colors.Add(Color.FromArgb(255, x(0), x(1), x(2)))
-                        Colors.Add(Color.FromArgb(255, x(4), x(5), x(6)))
-                        Colors.Add(Color.FromArgb(255, x(8), x(9), x(10)))
-                        Colors.Add(Color.FromArgb(255, x(12), x(13), x(14)))
-                        Colors.Add(Color.FromArgb(255, x(16), x(17), x(18)))
-                        Colors.Add(Color.FromArgb(255, x(20), x(21), x(22)))
-                        Colors.Add(Color.FromArgb(255, x(24), x(25), x(26)))
-                        Colors.Add(Color.FromArgb(255, x(28), x(29), x(30)))
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", _DefWin.Titlebar_Active.Reverse.ToArgb)
+                    Titlebar_Active = Color.FromArgb(y).Reverse
 
-                        Color_Index0 = Colors(0)
-                        Color_Index1 = Colors(1)
-                        Color_Index2 = Colors(2)
-                        Color_Index3 = Colors(3)
-                        Color_Index4 = Colors(4)
-                        Color_Index5 = Colors(5)
-                        Color_Index6 = Colors(6)
-                        Color_Index7 = Colors(7)
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", _DefWin.Titlebar_Inactive.Reverse.ToArgb)
+                    Titlebar_Inactive = Color.FromArgb(y).Reverse
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", _DefWin.StartMenu_Accent.Reverse.ToArgb)
-                        StartMenu_Accent = Color.FromArgb(y).Reverse
-                    Catch
-                        StartMenu_Accent = _DefWin.StartMenu_Accent
-                    End Try
+                    WinMode_Light = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", _DefWin.WinMode_Light)
+                    AppMode_Light = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", _DefWin.AppMode_Light)
+                    Transparency = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", _DefWin.Transparency)
+                    IncreaseTBTransparency = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", _DefWin.IncreaseTBTransparency)
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", _DefWin.Titlebar_Active.Reverse.ToArgb)
-                        Titlebar_Active = Color.FromArgb(y).Reverse
-                    Catch
-                        Titlebar_Active = _DefWin.Titlebar_Active
-                    End Try
+                    Select Case GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", _DefWin.ApplyAccentonTaskbar)
+                        Case 0
+                            ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                        Case 1
+                            ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                        Case 2
+                            ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                        Case Else
+                            ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                    End Select
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", _DefWin.Titlebar_Active.Reverse.ToArgb)
-                        Titlebar_Active = Color.FromArgb(y).Reverse
-                    Catch
-                        Titlebar_Active = _DefWin.Titlebar_Active
-                    End Try
-
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", _DefWin.Titlebar_Inactive.Reverse.ToArgb)
-                        Titlebar_Inactive = Color.FromArgb(y).Reverse
-                    Catch
-                        Titlebar_Inactive = _DefWin.Titlebar_Inactive
-                    End Try
-
-                    Try
-                        WinMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", _DefWin.WinMode_Light)
-                    Catch
-                        WinMode_Light = _DefWin.WinMode_Light
-                    End Try
-
-                    Try
-                        AppMode_Light = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", _DefWin.AppMode_Light)
-                    Catch
-                        AppMode_Light = _DefWin.AppMode_Light
-                    End Try
-
-                    Try
-                        Transparency = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", _DefWin.Transparency)
-                    Catch
-                        Transparency = _DefWin.Transparency
-                    End Try
-
-                    Try
-                        IncreaseTBTransparency = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", _DefWin.IncreaseTBTransparency)
-                    Catch
-                        IncreaseTBTransparency = _DefWin.IncreaseTBTransparency
-                    End Try
-
-                    Try
-                        Select Case My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
-                            Case 0
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-                            Case 1
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                            Case 2
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
-                            Case Else
-                                ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-                        End Select
-
-                    Catch
-                        ApplyAccentonTaskbar = _DefWin.ApplyAccentonTaskbar
-                    End Try
-
-                    Try
-                        ApplyAccentonTitlebars = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", _DefWin.ApplyAccentonTitlebars)
-                    Catch
-                        ApplyAccentonTitlebars = _DefWin.ApplyAccentonTitlebars
-                    End Try
+                    ApplyAccentonTitlebars = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", _DefWin.ApplyAccentonTitlebars)
+                    TB_Blur = Not CInt(GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (Not _DefWin.TB_Blur).ToInteger)).ToBoolean
 
                 Else
                     Color_Index0 = _DefWin.Color_Index0
@@ -310,7 +244,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
             End Sub
-
             Sub Apply()
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
@@ -351,7 +284,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light.ToInteger)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger)
                 EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger)
+
+                If My.W10 Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (Not TB_Blur).ToInteger)
+                End If
+
             End Sub
 
             Shared Operator =(First As Windows10x, Second As Windows10x) As Boolean
@@ -361,11 +299,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Shared Operator <>(First As Windows10x, Second As Windows10x) As Boolean
                 Return Not First.Equals(Second)
             End Operator
-
             Public Function Clone() Implements ICloneable.Clone
                 Return MemberwiseClone()
             End Function
-
             Public Overloads Function ToString(Signature As String, MiniSignature As String) As String
                 Dim tx As New List(Of String)
                 tx.Clear()
@@ -385,6 +321,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add(String.Format("*{0}_AppMode_Light= {1}", MiniSignature, AppMode_Light))
                 tx.Add(String.Format("*{0}_Transparency= {1}", MiniSignature, Transparency))
                 tx.Add(String.Format("*{0}_IncreaseTBTransparency= {1}", MiniSignature, IncreaseTBTransparency))
+                tx.Add(String.Format("*{0}_TB_Blur= {1}", MiniSignature, TB_Blur))
                 tx.Add(String.Format("*{0}_ApplyAccentonTitlebars= {1}", MiniSignature, ApplyAccentonTitlebars))
                 tx.Add(String.Format("*{0}_AccentOnStartTBAC= {1}", MiniSignature, CInt(ApplyAccentonTaskbar)))
                 tx.Add(String.Format("</{0}>" & vbCrLf, Signature))
@@ -430,84 +367,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Theme = AeroTheme.Aero
                     End If
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
-                        ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
-                    Catch
-                        ColorizationColor = _DefWin.ColorizationColor
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
+                    ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance)
-                        ColorizationColorBalance = y
-                    Catch
-                        ColorizationColorBalance = _DefWin.ColorizationColorBalance
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance)
+                    ColorizationColorBalance = y
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
-                        StartColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
-                    Catch
-                        StartColor = Color.FromArgb(84, 0, 30)
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb)
+                    StartColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
-                        AccentColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
-                    Catch
-                        AccentColor = Color.FromArgb(178, 29, 72)
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb)
+                    AccentColor = Color.FromArgb(255, Color.FromArgb(y)).Reverse
 
                     Dim S As String
 
-                    Try
-                        S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#1e0054")
-                        PersonalColors_Background = S.FromHEXToColor
-                    Catch
-                        PersonalColors_Background = _DefWin.PersonalColors_Background
-                    End Try
+                    S = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", _DefWin.PersonalColors_Background.HEX(False, True))
+                    PersonalColors_Background = S.FromHEXToColor
 
-                    Try
-                        S = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#481db2")
-                        PersonalColors_Accent = S.FromHEXToColor
-                    Catch
-                        PersonalColors_Accent = _DefWin.PersonalColors_Accent
-                    End Try
+                    S = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", _DefWin.PersonalColors_Accent.HEX(False, True))
+                    PersonalColors_Accent = S.FromHEXToColor
 
-                    Try
-                        Start = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
-                    Catch
-                        Start = 0
-                    End Try
-
-                    Try
-                        LogonUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
-                    Catch
-                        LogonUI = 0
-                    End Try
-
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-
-                    Try
-                        LockScreenType = rLog.GetValue("Mode", LogonUI_Modes.Default_)
-                    Catch
-                        LockScreenType = LogonUI_Modes.Default_
-                    End Try
-
-                    Try
-                        LockScreenSystemID = rLog.GetValue("Metro_LockScreenSystemID", 0)
-                    Catch
-                        LockScreenSystemID = 0
-                    End Try
-
-                    rLog.Close()
-
-                    Try
-                        NoLockScreen = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", False)
-                    Catch
-                        NoLockScreen = False
-                    End Try
-
+                    Start = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0)
+                    LogonUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0)
+                    LockScreenType = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", LogonUI_Modes.Default_)
+                    LockScreenSystemID = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", 0)
+                    NoLockScreen = GetReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", False)
                 Else
                     Theme = _DefWin.Theme
                     StartColor = _DefWin.StartColor
@@ -600,57 +484,29 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If My.W7 Or My.W8 Then
                     Dim y As Object
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
-                        ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
-                    Catch
-                        ColorizationColor = _DefWin.ColorizationColor
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
+                    ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance)
-                        ColorizationColorBalance = y
-                    Catch
-                        ColorizationColorBalance = _DefWin.ColorizationColorBalance
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance)
+                    ColorizationColorBalance = y
 
                     If Not My.W8 Then
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", _DefWin.ColorizationAfterglow.ToArgb)
-                            ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
-                        Catch
-                            ColorizationAfterglow = _DefWin.ColorizationAfterglow
-                        End Try
+                        y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", _DefWin.ColorizationAfterglow.ToArgb)
+                        ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
 
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", _DefWin.ColorizationAfterglowBalance)
-                            ColorizationAfterglowBalance = y
-                        Catch
-                            ColorizationAfterglowBalance = _DefWin.ColorizationAfterglowBalance
-                        End Try
+                        y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", _DefWin.ColorizationAfterglowBalance)
+                        ColorizationAfterglowBalance = y
 
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", _DefWin.ColorizationBlurBalance)
-                            ColorizationBlurBalance = y
-                        Catch
-                            ColorizationBlurBalance = _DefWin.ColorizationBlurBalance
-                        End Try
+                        y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", _DefWin.ColorizationBlurBalance)
+                        ColorizationBlurBalance = y
 
-                        Try
-                            y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", _DefWin.ColorizationGlassReflectionIntensity)
-                            ColorizationGlassReflectionIntensity = y
-                        Catch
-                            ColorizationGlassReflectionIntensity = _DefWin.ColorizationGlassReflectionIntensity
-                        End Try
+                        y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", _DefWin.ColorizationGlassReflectionIntensity)
+                        ColorizationGlassReflectionIntensity = y
 
                         Dim Com, Opaque As Boolean
                         Dwmapi.DwmIsCompositionEnabled(Com)
 
-                        Try
-                            Opaque = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
-                        Catch
-                            Opaque = False
-                        End Try
+                        Opaque = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
                         Dim Classic As Boolean = False
 
@@ -672,17 +528,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     End If
 
-                    Try
-                        EnableAeroPeek = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", _DefWin.EnableAeroPeek)
-                    Catch
-                        EnableAeroPeek = _DefWin.EnableAeroPeek
-                    End Try
+                    EnableAeroPeek = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", _DefWin.EnableAeroPeek)
 
-                    Try
-                        AlwaysHibernateThumbnails = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", _DefWin.AlwaysHibernateThumbnails)
-                    Catch
-                        AlwaysHibernateThumbnails = _DefWin.AlwaysHibernateThumbnails
-                    End Try
+                    AlwaysHibernateThumbnails = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", _DefWin.AlwaysHibernateThumbnails)
 
                 Else
                     ColorizationColor = _DefWin.ColorizationColor
@@ -781,23 +629,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If My.WVista Then
                     Dim y As Object
 
-                    Try
-                        y = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
-                        ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
-                        Alpha = Color.FromArgb(y).A
-                    Catch
-                        ColorizationColor = _DefWin.ColorizationColor
-                        Alpha = _DefWin.Alpha
-                    End Try
+                    y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
+                    ColorizationColor = Color.FromArgb(255, Color.FromArgb(y))
+                    Alpha = Color.FromArgb(y).A
 
                     Dim Com, Opaque As Boolean
                     Dwmapi.DwmIsCompositionEnabled(Com)
 
-                    Try
-                        Opaque = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
-                    Catch
-                        Opaque = False
-                    End Try
+                    Opaque = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", False)
 
                     Dim Classic As Boolean = False
 
@@ -1027,153 +866,142 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Shared Operator <>(First As Win32UI, Second As Win32UI) As Boolean
                 Return Not First.Equals(Second)
             End Operator
-
             Enum Method
                 Registry
                 File
                 VisualStyles
             End Enum
-
             Public Sub Load(Optional Method As Method = Method.Registry, Optional vs As VisualStyleMetrics = Nothing)
                 Select Case Method
                     Case Method.Registry
-                        Try
-                            EnableTheming = GetUserPreferencesMask(17, "HKEY_CURRENT_USER")
-                        Catch
-                            EnableTheming = True
-                        End Try
+                        User32.Fixer.SystemParametersInfo(SPI.Effects.GETFLATMENU, 0, EnableTheming, SPIF.None)
+                        User32.Fixer.SystemParametersInfo(SPI.Titlebars.GETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.None)
 
-                        Try
-                            EnableGradient = GetUserPreferencesMask(4, "HKEY_CURRENT_USER")
-                        Catch
-                            EnableGradient = True
-                        End Try
-
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", "153 180 209")
                             If .ToString.Split(" ").Count = 3 Then ActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", "171 171 171")
                             If .ToString.Split(" ").Count = 3 Then AppWorkspace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then Background = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then ButtonAlternateFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", "105 105 105")
                             If .ToString.Split(" ").Count = 3 Then ButtonDkShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", "240 240 240")
                             If .ToString.Split(" ").Count = 3 Then ButtonFace = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", "255 255 255")
                             If .ToString.Split(" ").Count = 3 Then ButtonHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", "227 227 227")
                             If .ToString.Split(" ").Count = 3 Then ButtonLight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", "160 160 160")
                             If .ToString.Split(" ").Count = 3 Then ButtonShadow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then ButtonText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", "185 209 234")
                             If .ToString.Split(" ").Count = 3 Then GradientActiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", "215 228 242")
                             If .ToString.Split(" ").Count = 3 Then GradientInactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", "109 109 109")
                             If .ToString.Split(" ").Count = 3 Then GrayText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", "255 255 255")
                             If .ToString.Split(" ").Count = 3 Then HilightText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", "0 102 204")
                             If .ToString.Split(" ").Count = 3 Then HotTrackingColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", "244 247 252")
                             If .ToString.Split(" ").Count = 3 Then ActiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", "244 247 252")
                             If .ToString.Split(" ").Count = 3 Then InactiveBorder = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", "191 205 219")
                             If .ToString.Split(" ").Count = 3 Then InactiveTitle = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then InactiveTitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then InfoText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", "255 255 225")
                             If .ToString.Split(" ").Count = 3 Then InfoWindow = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", "240 240 240")
                             If .ToString.Split(" ").Count = 3 Then Menu = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", "240 240 240")
                             If .ToString.Split(" ").Count = 3 Then MenuBar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then MenuText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", "200 200 200")
                             If .ToString.Split(" ").Count = 3 Then Scrollbar = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then TitleText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", "255 255 255")
                             If .ToString.Split(" ").Count = 3 Then Window = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", "100 100 100")
                             If .ToString.Split(" ").Count = 3 Then WindowFrame = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then WindowText = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", "0 120 215")
                             If .ToString.Split(" ").Count = 3 Then Hilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", "0 120 215")
                             If .ToString.Split(" ").Count = 3 Then MenuHilight = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
-                        With My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
+                        With GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", "0 0 0")
                             If .ToString.Split(" ").Count = 3 Then Desktop = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
                         End With
 
@@ -1215,6 +1043,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Select
             End Sub
 
+            'Never change their orders
             Enum ColorsNumbers
                 Scrollbar
                 Background
@@ -1351,11 +1180,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 User32.SetSysColors(C1.Count, C1.ToArray(), C2.ToArray())
 
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, EnableTheming, "HKEY_CURRENT_USER"), RegistryValueKind.Binary)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, EnableGradient, "HKEY_CURRENT_USER"), RegistryValueKind.Binary)
-
-                User32.SystemParametersInfo(SPI.Effects.SETFLATMENU, 0, EnableTheming.ToInteger, 0)
-                User32.SystemParametersInfo(SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient.ToInteger, 0)
+                User32.SystemParametersInfo(SPI.Effects.SETFLATMENU, 0, EnableTheming, SPIF.UpdateINIFile)
+                User32.SystemParametersInfo(SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.UpdateINIFile)
 
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.Win32_RegColor, RegistryValueKind.String)
@@ -1459,25 +1285,20 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
                 End If
 
-                If My.Settings.ClassicColors_HKU_DEFAULT_UPM Then
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(17, EnableTheming, "HKEY_USERS\.DEFAULT"), RegistryValueKind.Binary)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", SetUserPreferenceMask(4, EnableGradient, "HKEY_USERS\.DEFAULT"), RegistryValueKind.Binary)
-                End If
-
                 If My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(True).ToArgb, RegistryValueKind.DWord)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(True).ToArgb)
 
                 ElseIf My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults Then
                     Dim _DefWin32 As Structures.Win32UI
@@ -1497,25 +1318,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
                     End If
 
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, _DefWin32.ButtonFace).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, _DefWin32.ButtonText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, _DefWin32.GrayText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, _DefWin32.Hilight).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, _DefWin32.HilightText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, _DefWin32.HotTrackingColor).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, _DefWin32.InactiveTitle).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, _DefWin32.InactiveTitleText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, _DefWin32.MenuHilight).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, _DefWin32.TitleText).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(True).ToArgb, RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(True).ToArgb, RegistryValueKind.DWord)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, _DefWin32.ButtonFace).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, _DefWin32.ButtonText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, _DefWin32.GrayText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, _DefWin32.Hilight).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, _DefWin32.HilightText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, _DefWin32.HotTrackingColor).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, _DefWin32.InactiveTitle).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, _DefWin32.InactiveTitleText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, _DefWin32.MenuHilight).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, _DefWin32.TitleText).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(True).ToArgb)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(True).ToArgb)
 
                 ElseIf My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase Then
                     DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard")
-
                 End If
 
+            End Sub
+
+            Public Sub Update_UPM_DEFAULT()
+                If My.Settings.UPM_HKU_DEFAULT Then
+                    Dim source As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                    If source IsNot Nothing Then EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
+                End If
             End Sub
 
             Public Function Clone() Implements ICloneable.Clone
@@ -1612,229 +1439,56 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public DisableNavBar As Boolean
 
             Sub Load(_DefEffects As WinEffects)
-                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
-                Enabled = rMain_WE.GetValue("", True)
-                rMain_WE.Close()
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", True)
 
-                Dim i As Boolean
-                Dim x As Boolean
+                If Fixer.SystemParametersInfo(SPI.Effects.GETDROPSHADOW, 0, WindowShadow, SPIF.None) = 0 Then WindowShadow = _DefEffects.WindowShadow
+                If Fixer.SystemParametersInfo(SPI.Effects.GETUIEFFECTS, 0, WindowUIEffects, SPIF.None) = 0 Then WindowUIEffects = _DefEffects.WindowUIEffects
+                If Fixer.SystemParametersInfo(SPI.Effects.GETMENUANIMATION, 0, MenuAnimation, SPIF.None) = 0 Then MenuAnimation = _DefEffects.MenuAnimation
+                If Fixer.SystemParametersInfo(SPI.Effects.GETSELECTIONFADE, 0, MenuSelectionFade, SPIF.None) = 0 Then MenuSelectionFade = _DefEffects.MenuSelectionFade
+                If Fixer.SystemParametersInfo(SPI.Effects.GETMENUSHOWDELAY, 0, MenuShowDelay, SPIF.None) = 0 Then MenuShowDelay = _DefEffects.MenuShowDelay
+                If Fixer.SystemParametersInfo(SPI.Effects.GETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.None) = 0 Then ComboboxAnimation = _DefEffects.ComboboxAnimation
+                If Fixer.SystemParametersInfo(SPI.Effects.GETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.None) = 0 Then ListBoxSmoothScrolling = _DefEffects.ListBoxSmoothScrolling
+                If Fixer.SystemParametersInfo(SPI.Effects.GETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.None) = 0 Then TooltipAnimation = _DefEffects.TooltipAnimation
+                If Fixer.SystemParametersInfo(SPI.Effects.GETDRAGFULLWINDOWS, 0, ShowWinContentDrag, SPIF.None) = 0 Then ShowWinContentDrag = _DefEffects.ShowWinContentDrag
+                If Fixer.SystemParametersInfo(SPI.Effects.GETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.None) = 0 Then KeyboardUnderline = _DefEffects.KeyboardUnderline
+                If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.None) = 0 Then FocusRectWidth = _DefEffects.FocusRectWidth
+                If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.None) = 0 Then FocusRectHeight = _DefEffects.FocusRectHeight
+                If Fixer.SystemParametersInfo(SPI.Effects.GETCARETWIDTH, 0, Caret, SPIF.None) = 0 Then Caret = _DefEffects.Caret
+                If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.None) = 0 Then AWT_Enabled = _DefEffects.AWT_Enabled
+                If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.None) = 0 Then AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop
+                If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.None) = 0 Then AWT_Delay = _DefEffects.AWT_Delay
+                If Fixer.SystemParametersInfo(SPI.Cursors.GETSNAPTODEFBUTTON, 0, SnapCursorToDefButton, SPIF.None) = 0 Then SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton
 
                 Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim)}
-
-                Try
-                    If SystemParametersInfo(SPI.Effects.GETANIMATION, anim.cbSize, anim, SPIF.None) = 1 Then
-                        WindowAnimation = anim.IMinAnimate.ToBoolean
-                    Else
-                        WindowAnimation = _DefEffects.WindowAnimation
-                    End If
-                Catch
+                If SystemParametersInfo(SPI.Effects.GETANIMATION, anim.cbSize, anim, SPIF.None) = 1 Then
+                    WindowAnimation = anim.IMinAnimate.ToBoolean
+                Else
                     WindowAnimation = _DefEffects.WindowAnimation
-                End Try
+                End If
 
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETDROPSHADOW, 0, i, SPIF.None) = 1 Then
-                        WindowShadow = i
-                    Else
-                        WindowShadow = _DefEffects.WindowShadow
-                    End If
-                Catch
-                    WindowShadow = _DefEffects.WindowShadow
-                End Try
+                Dim x As Boolean
 
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETUIEFFECTS, 0, i, SPIF.None) = 1 Then
-                        WindowUIEffects = i
-                    Else
-                        WindowUIEffects = _DefEffects.WindowUIEffects
-                    End If
-                Catch
-                    WindowUIEffects = _DefEffects.WindowUIEffects
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUANIMATION, 0, i, SPIF.None) = 1 Then
-                        MenuAnimation = i
-                    Else
-                        MenuAnimation = _DefEffects.MenuAnimation
-                    End If
-                Catch
-                    MenuAnimation = _DefEffects.MenuAnimation
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUFADE, 0, x, SPIF.None) = 1 Then
-                        MenuFade = If(x, MenuAnimType.Fade, MenuAnimType.Scroll)
-                    Else
-                        MenuFade = _DefEffects.MenuFade
-                    End If
-                Catch
+                If Fixer.SystemParametersInfo(SPI.Effects.GETMENUFADE, 0, x, SPIF.None) = 1 Then
+                    MenuFade = If(x, MenuAnimType.Fade, MenuAnimType.Scroll)
+                Else
                     MenuFade = _DefEffects.MenuFade
-                End Try
+                End If
 
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETSELECTIONFADE, 0, i, SPIF.None) = 1 Then
-                        MenuSelectionFade = i
-                    Else
-                        MenuSelectionFade = _DefEffects.MenuSelectionFade
-                    End If
-                Catch
-                    MenuSelectionFade = _DefEffects.MenuSelectionFade
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUSHOWDELAY, 0, MenuShowDelay, SPIF.None) <> 1 Then MenuShowDelay = _DefEffects.MenuShowDelay
-                Catch
-                    MenuShowDelay = _DefEffects.MenuShowDelay
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETCOMBOBOXANIMATION, 0, i, SPIF.None) = 1 Then
-                        ComboboxAnimation = i
-                    Else
-                        ComboboxAnimation = _DefEffects.ComboboxAnimation
-                    End If
-                Catch
-                    ComboboxAnimation = _DefEffects.ComboboxAnimation
-                End Try
-
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETLISTBOXSMOOTHSCROLLING, 0, i, SPIF.None) = 1 Then
-                        ListBoxSmoothScrolling = i
-                    Else
-                        ListBoxSmoothScrolling = _DefEffects.ListBoxSmoothScrolling
-                    End If
-                Catch
-                    ListBoxSmoothScrolling = _DefEffects.ListBoxSmoothScrolling
-                End Try
-
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETTOOLTIPANIMATION, 0, i, SPIF.None) = 1 Then
-                        TooltipAnimation = i
-                    Else
-                        TooltipAnimation = _DefEffects.TooltipAnimation
-                    End If
-                Catch
-                    TooltipAnimation = _DefEffects.TooltipAnimation
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETTOOLTIPFADE, 0, x, SPIF.None) = 1 Then
-                        TooltipFade = If(x, MenuAnimType.Fade, MenuAnimType.Scroll)
-                    Else
-                        TooltipFade = _DefEffects.TooltipFade
-                    End If
-                Catch
+                If Fixer.SystemParametersInfo(SPI.Effects.GETTOOLTIPFADE, 0, x, SPIF.None) = 1 Then
+                    TooltipFade = If(x, MenuAnimType.Fade, MenuAnimType.Scroll)
+                Else
                     TooltipFade = _DefEffects.TooltipFade
-                End Try
+                End If
 
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETDRAGFULLWINDOWS, 0, i, SPIF.None) = 1 Then
-                        ShowWinContentDrag = i
-                    Else
-                        ShowWinContentDrag = _DefEffects.ShowWinContentDrag
-                    End If
-                Catch
-                    ShowWinContentDrag = _DefEffects.ShowWinContentDrag
-                End Try
+                IconsShadow = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", _DefEffects.IconsShadow)
+                IconsDesktopTranslSel = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", _DefEffects.IconsDesktopTranslSel)
+                NotificationDuration = GetReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", _DefEffects.NotificationDuration)
+                ShowSecondsInSystemClock = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefEffects.ShowSecondsInSystemClock)
+                BalloonNotifications = GetReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefEffects.BalloonNotifications)
+                PaintDesktopVersion = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefEffects.PaintDesktopVersion)
 
-                Try
-                    IconsShadow = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", _DefEffects.IconsShadow)
-                Catch
-                    IconsShadow = _DefEffects.IconsShadow
-                End Try
-
-                Try
-                    IconsDesktopTranslSel = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", _DefEffects.IconsDesktopTranslSel)
-                Catch
-                    IconsDesktopTranslSel = _DefEffects.IconsDesktopTranslSel
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETMENUUNDERLINES, 0, i, SPIF.None) = 1 Then
-                        KeyboardUnderline = i
-                    Else
-                        KeyboardUnderline = _DefEffects.KeyboardUnderline
-                    End If
-                Catch
-                    KeyboardUnderline = _DefEffects.KeyboardUnderline
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.None) <> 1 Then
-                        FocusRectWidth = _DefEffects.FocusRectWidth
-                    End If
-                Catch
-                    FocusRectWidth = _DefEffects.FocusRectWidth
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.FocusRect.GETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.None) <> 1 Then
-                        FocusRectHeight = _DefEffects.FocusRectHeight
-                    End If
-                Catch
-                    FocusRectHeight = _DefEffects.FocusRectHeight
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETCARETWIDTH, 0, Caret, SPIF.None) <> 1 Then
-                        Caret = _DefEffects.Caret
-                    End If
-                Catch
-                    Caret = _DefEffects.Caret
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWINDOWTRACKING, 0, i, SPIF.None) = 1 Then
-                        AWT_Enabled = i
-                    Else
-                        AWT_Enabled = _DefEffects.AWT_Enabled
-                    End If
-                Catch
-                    AWT_Enabled = _DefEffects.AWT_Enabled
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKZORDER, 0, i, SPIF.None) = 1 Then
-                        AWT_BringActivatedWindowToTop = i
-                    Else
-                        AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop
-                    End If
-                Catch
-                    AWT_BringActivatedWindowToTop = _DefEffects.AWT_BringActivatedWindowToTop
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Effects.GETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.None) <> 1 Then
-                        AWT_Delay = _DefEffects.AWT_Delay
-                    End If
-                Catch
-                    AWT_Delay = _DefEffects.AWT_Delay
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Cursors.GETSNAPTODEFBUTTON, 0, i, SPIF.None) = 1 Then
-                        SnapCursorToDefButton = i
-                    Else
-                        SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton
-                    End If
-                Catch
-                    SnapCursorToDefButton = _DefEffects.SnapCursorToDefButton
-                End Try
-
-                Try
-                    NotificationDuration = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", _DefEffects.NotificationDuration)
-                Catch
-                    NotificationDuration = _DefEffects.NotificationDuration
-                End Try
-
-                Try
-                    Dim temp As Boolean = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", Not _DefEffects.ShakeToMinimize)
-                    ShakeToMinimize = Not temp
-                Catch
-                    ShakeToMinimize = _DefEffects.ShakeToMinimize
-                End Try
+                Dim temp As Boolean = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", Not _DefEffects.ShakeToMinimize)
+                ShakeToMinimize = Not temp
 
                 Try
                     Win11ClassicContextMenu = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing
@@ -1848,58 +1502,33 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     SysListView32 = _DefEffects.SysListView32
                 End Try
 
-                Try
-                    ShowSecondsInSystemClock = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefEffects.ShowSecondsInSystemClock)
-                Catch
-                    ShowSecondsInSystemClock = _DefEffects.ShowSecondsInSystemClock
-                End Try
+                If GetReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Nothing) Is Nothing Then
+                    Win11BootDots = If(My.W11, False, True)
 
-                Try
-                    BalloonNotifications = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefEffects.BalloonNotifications)
-                Catch
-                    BalloonNotifications = _DefEffects.BalloonNotifications
-                End Try
+                Else
+                    Select Case GetReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", If(My.W11, 1, 0))
+                        Case 0
+                            Win11BootDots = True
 
-                Try
-                    PaintDesktopVersion = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefEffects.PaintDesktopVersion)
-                Catch
-                    PaintDesktopVersion = _DefEffects.PaintDesktopVersion
-                End Try
+                        Case 1
+                            Win11BootDots = False
 
-                Try
-                    If My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Nothing) Is Nothing Then
-                        Win11BootDots = If(My.W11, False, True)
+                        Case Else
+                            Win11BootDots = False
 
-                    Else
-                        Select Case My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", If(My.W11, 1, 0))
-                            Case 0
-                                Win11BootDots = True
+                    End Select
+                End If
 
-                            Case 1
-                                Win11BootDots = False
+                If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
+                    Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", _DefEffects.Win11ExplorerBar)
 
-                            Case Else
-                                Win11BootDots = False
+                ElseIf My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
+                    Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", _DefEffects.Win11ExplorerBar)
 
-                        End Select
-                    End If
-
-                Catch
-                    Win11BootDots = _DefEffects.Win11BootDots
-                End Try
-
-                Try
-                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
-                        Win11ExplorerBar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", _DefEffects.Win11ExplorerBar)
-
-                    ElseIf My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
-                        Win11ExplorerBar = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", _DefEffects.Win11ExplorerBar)
-
-                    End If
-
-                Catch
+                Else
                     Win11ExplorerBar = _DefEffects.Win11ExplorerBar
-                End Try
+
+                End If
 
                 Try
                     DisableNavBar = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") IsNot Nothing
@@ -1910,32 +1539,30 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Sub
 
             Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WindowsEffects")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", Enabled)
 
                 If Enabled Then
                     Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim), .IMinAnimate = WindowAnimation.ToInteger}
-                    SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.SendChange)        'use uiParam not pvParam
-                    SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.SendChange)               'use uiParam not pvParam
-                    SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.SendChange)
-                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.SendChange)
-                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETCARETWIDTH, 0, Caret, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.SendChange)
-                    SystemParametersInfo(SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.SendChange)     'use uiParam not pvParam
+                    SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.UpdateINIFile)        'use uiParam not pvParam
+                    SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.UpdateINIFile)               'use uiParam not pvParam
+                    SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboboxAnimation, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETCARETWIDTH, 0, Caret, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.UpdateINIFile)
+                    SystemParametersInfo(SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.UpdateINIFile)     'use uiParam not pvParam
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
@@ -1944,9 +1571,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
-                    If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
+
+                    If My.Settings.UPM_HKU_DEFAULT Then
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton.ToInteger)
+
+                    End If
+
                     EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
                     EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
+                    If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
 
                     If My.W8 OrElse My.W10 Then
                         Select Case Win11ExplorerBar
@@ -1967,9 +1603,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         End Select
                     End If
-
-                    'ShowWinContentDrag should be re-written in registry with string format as SystemParametersInfo looses its effect after logoff here
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "DragFullWindows", ShowWinContentDrag.ToInteger, RegistryValueKind.String)
 
                     'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     Try
@@ -2123,154 +1756,36 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Sub
 
             Public Sub Load(_DefMetricsFonts As MetricsFonts)
-                Dim rMain_M As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
-                Enabled = rMain_M.GetValue("", True)
-                rMain_M.Close()
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", _DefMetricsFonts.Enabled)
 
-                Try
-                    BorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", _DefMetricsFonts.BorderWidth * -15) / -15
-                Catch
-                    BorderWidth = _DefMetricsFonts.BorderWidth
-                End Try
+                BorderWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", _DefMetricsFonts.BorderWidth * -15) / -15
+                CaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", _DefMetricsFonts.CaptionHeight * -15) / -15
+                CaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", _DefMetricsFonts.CaptionWidth * -15) / -15
+                IconSpacing = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", _DefMetricsFonts.IconSpacing * -15) / -15
+                IconVerticalSpacing = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", _DefMetricsFonts.IconVerticalSpacing * -15) / -15
+                MenuHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", _DefMetricsFonts.MenuHeight * -15) / -15
+                MenuWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", _DefMetricsFonts.MenuWidth * -15) / -15
+                PaddedBorderWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", _DefMetricsFonts.PaddedBorderWidth * -15) / -15
+                ScrollHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", _DefMetricsFonts.ScrollHeight * -15) / -15
+                ScrollWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", _DefMetricsFonts.ScrollWidth * -15) / -15
+                SmCaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
+                SmCaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
+                ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+                DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
+                CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
+                IconFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", _DefMetricsFonts.IconFont.ToByte), Byte()).ToFont
+                MenuFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", _DefMetricsFonts.MenuFont.ToByte), Byte()).ToFont
+                MessageFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", _DefMetricsFonts.MessageFont.ToByte), Byte()).ToFont
+                SmCaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", _DefMetricsFonts.SmCaptionFont.ToByte), Byte()).ToFont
+                StatusFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", _DefMetricsFonts.StatusFont.ToByte), Byte()).ToFont
+                FontSubstitute_MSShellDlg = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", _DefMetricsFonts.FontSubstitute_MSShellDlg)
+                FontSubstitute_MSShellDlg2 = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
+                FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
-                Try
-                    CaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", _DefMetricsFonts.CaptionHeight * -15) / -15
-                Catch
-                    CaptionHeight = _DefMetricsFonts.CaptionHeight
-                End Try
-
-                Try
-                    CaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", _DefMetricsFonts.CaptionWidth * -15) / -15
-                Catch
-                    CaptionWidth = _DefMetricsFonts.CaptionWidth
-                End Try
-
-                Try
-                    IconSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", _DefMetricsFonts.IconSpacing * -15) / -15
-                Catch
-                    IconSpacing = _DefMetricsFonts.IconSpacing
-                End Try
-
-                Try
-                    IconVerticalSpacing = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", _DefMetricsFonts.IconVerticalSpacing * -15) / -15
-                Catch
-                    IconVerticalSpacing = _DefMetricsFonts.IconVerticalSpacing
-                End Try
-
-                Try
-                    MenuHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", _DefMetricsFonts.MenuHeight * -15) / -15
-                Catch
-                    MenuHeight = _DefMetricsFonts.MenuHeight
-                End Try
-
-                Try
-                    MenuWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", _DefMetricsFonts.MenuWidth * -15) / -15
-                Catch
-                    MenuWidth = _DefMetricsFonts.MenuWidth
-                End Try
-
-                Try
-                    PaddedBorderWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", _DefMetricsFonts.PaddedBorderWidth * -15) / -15
-                Catch
-                    PaddedBorderWidth = _DefMetricsFonts.PaddedBorderWidth
-                End Try
-
-                Try
-                    ScrollHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", _DefMetricsFonts.ScrollHeight * -15) / -15
-                Catch
-                    ScrollHeight = _DefMetricsFonts.ScrollHeight
-                End Try
-
-                Try
-                    ScrollWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", _DefMetricsFonts.ScrollWidth * -15) / -15
-                Catch
-                    ScrollWidth = _DefMetricsFonts.ScrollWidth
-                End Try
-
-                Try
-                    SmCaptionHeight = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
-                Catch
-                    SmCaptionHeight = _DefMetricsFonts.SmCaptionHeight
-                End Try
-
-                Try
-                    SmCaptionWidth = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
-                Catch
-                    SmCaptionWidth = _DefMetricsFonts.SmCaptionWidth
-                End Try
-
-                Try
-                    ShellIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
-                Catch
-                    ShellIconSize = _DefMetricsFonts.ShellIconSize
-                End Try
-
-                Try
-                    DesktopIconSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
-                Catch
-                    DesktopIconSize = _DefMetricsFonts.DesktopIconSize
-                End Try
-
-
-                Try
-                    CaptionFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
-                Catch
-                    CaptionFont = _DefMetricsFonts.CaptionFont
-                End Try
-
-                Try
-                    IconFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", _DefMetricsFonts.IconFont.ToByte), Byte()).ToFont
-                Catch
-                    IconFont = _DefMetricsFonts.IconFont
-                End Try
-
-                Try
-                    MenuFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", _DefMetricsFonts.MenuFont.ToByte), Byte()).ToFont
-                Catch
-                    MenuFont = _DefMetricsFonts.MenuFont
-                End Try
-
-                Try
-                    MessageFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", _DefMetricsFonts.MessageFont.ToByte), Byte()).ToFont
-                Catch
-                    MessageFont = _DefMetricsFonts.MessageFont
-                End Try
-
-                Try
-                    SmCaptionFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", _DefMetricsFonts.SmCaptionFont.ToByte), Byte()).ToFont
-                Catch
-                    SmCaptionFont = _DefMetricsFonts.SmCaptionFont
-                End Try
-
-                Try
-                    StatusFont = DirectCast(My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", _DefMetricsFonts.StatusFont.ToByte), Byte()).ToFont
-                Catch
-                    StatusFont = _DefMetricsFonts.StatusFont
-                End Try
-
-                Try
-                    FontSubstitute_MSShellDlg = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", _DefMetricsFonts.FontSubstitute_MSShellDlg)
-                Catch
-                    FontSubstitute_MSShellDlg = _DefMetricsFonts.FontSubstitute_MSShellDlg
-                End Try
-
-                Try
-                    FontSubstitute_MSShellDlg2 = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
-                Catch
-                    FontSubstitute_MSShellDlg2 = _DefMetricsFonts.FontSubstitute_MSShellDlg2
-                End Try
-
-                Try
-                    FontSubstitute_SegoeUI = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
-                Catch
-                    FontSubstitute_SegoeUI = _DefMetricsFonts.FontSubstitute_SegoeUI
-                End Try
             End Sub
 
             Public Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Metrics")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
 
                 If Enabled Then
                     If XenonCore.GetWindowsScreenScalingFactor > 100 Then
@@ -2392,10 +1907,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             .lfFont = lfIconFont
                         End With
 
-                        SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.SendChange)
-                        SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.SendChange)
-
-                        User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("WindowMetrics"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
+                        SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.UpdateINIFile)
+                        SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.UpdateINIFile)
                     End If
                 End If
 
@@ -2441,13 +1954,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public H, S, L As Integer
 
             Public Sub Load(SubKey As String)
-
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WallpaperTone")
-
-                Dim r As RegistryKey = rMain
-                r.CreateSubKey(SubKey)
-                r = r.OpenSubKey(SubKey)
-
                 Dim wallpaper As String
 
                 If SubKey.ToLower = "winxp" Then
@@ -2456,36 +1962,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     wallpaper = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
                 End If
 
-                If Not IO.File.Exists(wallpaper) Then
-                    Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-                    wallpaper = R1.GetValue("Wallpaper").ToString()
-                    If R1 IsNot Nothing Then R1.Close()
-                End If
+                If Not IO.File.Exists(wallpaper) Then wallpaper = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper)
 
-                Enabled = r.GetValue("Enabled", False)
-                Image = r.GetValue("Image", wallpaper)
-                H = r.GetValue("H", 0)
-                S = r.GetValue("S", 50)
-                L = r.GetValue("L", 50)
-
-                r.Close()
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "Enabled", False)
+                Image = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "Image", wallpaper)
+                H = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "H", 0)
+                S = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "S", 50)
+                L = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "L", 50)
             End Sub
 
             Public Shared Sub Save_To_Registry(WT As WallpaperTone, SubKey As String)
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\WallpaperTone")
-                Dim r As RegistryKey
-
-                r = rMain.CreateSubKey(SubKey)
-                With r
-                    .SetValue("Enabled", WT.Enabled, RegistryValueKind.QWord)
-                    .SetValue("Image", WT.Image, RegistryValueKind.String)
-                    .SetValue("H", WT.H, RegistryValueKind.QWord)
-                    .SetValue("S", WT.S, RegistryValueKind.QWord)
-                    .SetValue("L", WT.L, RegistryValueKind.QWord)
-                End With
-
-                r.Close()
-                rMain.Close()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "Enabled", WT.Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "Image", WT.Image, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "H", WT.H)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "S", WT.S)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone", "L", WT.L)
             End Sub
 
             Public Sub Apply()
@@ -2513,7 +2004,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 End If
 
-                User32.SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.SendChange Or SPIF.UpdateINIFile)
+                User32.SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
                 Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True).SetValue("Wallpaper", path)
 
                 MainFrm.Update_Wallpaper_Preview()
@@ -2572,28 +2063,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Win10Opacity As Integer
 
             Sub Load(_DefAltTab As AltTab)
-                Dim rMain_WE As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\AltTab")
-                Enabled = rMain_WE.GetValue("", True)
-                rMain_WE.Close()
-
-                Try
-                    Style = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", _DefAltTab.Style)
-                Catch
-                    Style = _DefAltTab.Style
-                End Try
-
-                Try
-                    Win10Opacity = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", _DefAltTab.Win10Opacity)
-                    If Win10Opacity = Nothing Then Win10Opacity = _DefAltTab.Win10Opacity
-                Catch
-                    Win10Opacity = _DefAltTab.Win10Opacity
-                End Try
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", _DefAltTab.Enabled)
+                Style = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", _DefAltTab.Style)
+                Win10Opacity = GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", _DefAltTab.Win10Opacity)
+                If Win10Opacity = Nothing Then Win10Opacity = _DefAltTab.Win10Opacity
             End Sub
 
             Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\AltTab")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", Enabled)
 
                 If Enabled Then
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", Style)
@@ -2646,25 +2123,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If My.W10 Or My.W11 Then
                     Dim Def As CP = If(My.W11, New CP_Defaults().Default_Windows11, New CP_Defaults().Default_Windows10)
 
-                    Try
-                        DisableAcrylicBackgroundOnLogon = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", _DefLogonUI.DisableAcrylicBackgroundOnLogon)
-                    Catch
-                        DisableAcrylicBackgroundOnLogon = _DefLogonUI.DisableAcrylicBackgroundOnLogon
-                    End Try
+                    DisableAcrylicBackgroundOnLogon = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", _DefLogonUI.DisableAcrylicBackgroundOnLogon)
+                    DisableLogonBackgroundImage = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", _DefLogonUI.DisableLogonBackgroundImage)
+                    NoLockScreen = GetReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", _DefLogonUI.NoLockScreen)
 
-                    Try
-                        DisableLogonBackgroundImage = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", _DefLogonUI.DisableLogonBackgroundImage)
-                    Catch
-                        DisableLogonBackgroundImage = _DefLogonUI.DisableLogonBackgroundImage
-                    End Try
-
-                    Try
-                        NoLockScreen = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", _DefLogonUI.NoLockScreen)
-                    Catch
-                        NoLockScreen = _DefLogonUI.NoLockScreen
-                    End Try
                 Else
-
                     DisableAcrylicBackgroundOnLogon = _DefLogonUI.DisableAcrylicBackgroundOnLogon
                     DisableLogonBackgroundImage = _DefLogonUI.DisableLogonBackgroundImage
                     NoLockScreen = _DefLogonUI.NoLockScreen
@@ -2715,71 +2178,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Public Sub Load(_DefLogonUI As LogonUI7)
                 If My.W7 Or My.W8 Then
-                    Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
 
-                    Try
-                        ImagePath = rLog.GetValue("ImagePath", "")
-                    Catch
-                        ImagePath = ""
-                    End Try
-
-                    Try
-                        Color = Color.FromArgb(rLog.GetValue("Color", Color.Black.ToArgb))
-                    Catch
-                        Color = Color.Black
-                    End Try
-
-                    Try
-                        Blur = rLog.GetValue("Blur", False)
-                    Catch
-                        Blur = False
-                    End Try
-
-                    Try
-                        Blur_Intensity = rLog.GetValue("Blur_Intensity", 0)
-                    Catch
-                        Blur_Intensity = 0
-                    End Try
-
-                    Try
-                        Grayscale = rLog.GetValue("Grayscale", False)
-                    Catch
-                        Grayscale = False
-                    End Try
-
-                    Try
-                        Noise = rLog.GetValue("Noise", False)
-                    Catch
-                        Noise = False
-                    End Try
-
-                    Try
-                        Noise_Mode = rLog.GetValue("Noise_Mode", NoiseMode.Acrylic)
-                    Catch
-                        Noise_Mode = NoiseMode.Acrylic
-                    End Try
-
-                    Try
-                        Noise_Intensity = rLog.GetValue("Noise_Intensity", 0)
-                    Catch
-                        Noise_Intensity = 0
-                    End Try
+                    ImagePath = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", "")
+                    Color = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Color", Color.Black.ToArgb))
+                    Blur = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur", False)
+                    Blur_Intensity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur_Intensity", 0)
+                    Grayscale = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Grayscale", False)
+                    Noise = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise", False)
+                    Noise_Mode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Mode", NoiseMode.Acrylic)
+                    Noise_Intensity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Intensity", 0)
 
                     If My.W7 Then
-                        Dim b1 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
-                        Dim b2 As Boolean = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
+                        Dim b1 As Boolean = GetReg("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", False)
+                        Dim b2 As Boolean = GetReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", False)
                         Enabled = b1 Or b2
-
-                        rLog = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-
-                        Try
-                            Mode = rLog.GetValue("Mode", LogonUI_Modes.Default_)
-                        Catch
-                            Mode = LogonUI_Modes.Default_
-                        End Try
+                        Mode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", LogonUI_Modes.Default_)
                     End If
-
-                    rLog.Close()
 
                 Else
                     Enabled = _DefLogonUI.Enabled
@@ -2823,38 +2237,25 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Public Sub Load(_DefLogonUI As LogonUIXP)
                 If My.WXP Then
-                    Dim rMain_LXP As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI\WinXP")
-                    Enabled = rMain_LXP.GetValue("", _DefLogonUI.Enabled)
-                    rMain_LXP.Close()
 
-                    Try
-                        Select Case My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", _DefLogonUI.Mode)
-                            Case 1
-                                Mode = LogonUIXP_Modes.Default
-                            Case Else
-                                Mode = LogonUIXP_Modes.Win2000
-                        End Select
-                    Catch
-                        Mode = _DefLogonUI.Mode
-                    End Try
+                    Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", _DefLogonUI.Enabled)
 
-                    Try
-                        With My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0")
-                            If .ToString.Split(" ").Count = 3 Then
-                                BackColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
-                            Else
-                                BackColor = _DefLogonUI.BackColor
-                            End If
-                        End With
-                    Catch
-                        BackColor = _DefLogonUI.BackColor
-                    End Try
+                    Select Case GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", _DefLogonUI.Mode)
+                        Case 1
+                            Mode = LogonUIXP_Modes.Default
+                        Case Else
+                            Mode = LogonUIXP_Modes.Win2000
+                    End Select
 
-                    Try
-                        ShowMoreOptions = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", _DefLogonUI.ShowMoreOptions)
-                    Catch
-                        ShowMoreOptions = _DefLogonUI.ShowMoreOptions
-                    End Try
+                    With GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0")
+                        If .ToString.Split(" ").Count = 3 Then
+                            BackColor = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2))
+                        Else
+                            BackColor = _DefLogonUI.BackColor
+                        End If
+                    End With
+
+                    ShowMoreOptions = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", _DefLogonUI.ShowMoreOptions)
 
                 Else
                     Mode = _DefLogonUI.Mode
@@ -2864,16 +2265,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Sub
 
             Sub Apply()
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI\WinXP")
-                rMain.SetValue("", Enabled, RegistryValueKind.DWord)
-                rMain.Close()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled)
 
                 If Enabled And My.WXP Then
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", If(Mode = LogonUIXP_Modes.Default, 1, 0), RegistryValueKind.DWord)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.Win32_RegColor, RegistryValueKind.String)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions.ToInteger, RegistryValueKind.DWord)
                 End If
-
             End Sub
 
             Shared Operator =(First As LogonUIXP, Second As LogonUIXP) As Boolean
@@ -2939,238 +2337,97 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim y_cmd As Object
                 Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable00", [Defaults].ColorTable00.Reverse.ToArgb)
-                    ColorTable00 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable00 = [Defaults].ColorTable00
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable00", [Defaults].ColorTable00.Reverse.ToArgb)
+                ColorTable00 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable01", [Defaults].ColorTable01.Reverse.ToArgb)
-                    ColorTable01 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable01 = [Defaults].ColorTable01
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable01", [Defaults].ColorTable01.Reverse.ToArgb)
+                ColorTable01 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable02", [Defaults].ColorTable02.Reverse.ToArgb)
-                    ColorTable02 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable02 = [Defaults].ColorTable02
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable02", [Defaults].ColorTable02.Reverse.ToArgb)
+                ColorTable02 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable03", [Defaults].ColorTable03.Reverse.ToArgb)
-                    ColorTable03 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable03 = [Defaults].ColorTable03
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable03", [Defaults].ColorTable03.Reverse.ToArgb)
+                ColorTable03 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable04", [Defaults].ColorTable04.Reverse.ToArgb)
-                    ColorTable04 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable04 = [Defaults].ColorTable04
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable04", [Defaults].ColorTable04.Reverse.ToArgb)
+                ColorTable04 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable05", [Defaults].ColorTable05.Reverse.ToArgb)
-                    ColorTable05 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable05 = [Defaults].ColorTable05
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable05", [Defaults].ColorTable05.Reverse.ToArgb)
+                ColorTable05 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable06", [Defaults].ColorTable06.Reverse.ToArgb)
-                    ColorTable06 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable06 = [Defaults].ColorTable06
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable06", [Defaults].ColorTable06.Reverse.ToArgb)
+                ColorTable06 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable07", [Defaults].ColorTable07.Reverse.ToArgb)
-                    ColorTable07 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable07 = [Defaults].ColorTable07
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable07", [Defaults].ColorTable07.Reverse.ToArgb)
+                ColorTable07 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable08", [Defaults].ColorTable08.Reverse.ToArgb)
-                    ColorTable08 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable08 = [Defaults].ColorTable08
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable08", [Defaults].ColorTable08.Reverse.ToArgb)
+                ColorTable08 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable09", [Defaults].ColorTable09.Reverse.ToArgb)
-                    ColorTable09 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable09 = [Defaults].ColorTable09
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable09", [Defaults].ColorTable09.Reverse.ToArgb)
+                ColorTable09 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable10", [Defaults].ColorTable10.Reverse.ToArgb)
-                    ColorTable10 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable10 = [Defaults].ColorTable10
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable10", [Defaults].ColorTable10.Reverse.ToArgb)
+                ColorTable10 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable11", [Defaults].ColorTable11.Reverse.ToArgb)
-                    ColorTable11 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable11 = [Defaults].ColorTable11
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable11", [Defaults].ColorTable11.Reverse.ToArgb)
+                ColorTable11 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable12", [Defaults].ColorTable12.Reverse.ToArgb)
-                    ColorTable12 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable12 = [Defaults].ColorTable12
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable12", [Defaults].ColorTable12.Reverse.ToArgb)
+                ColorTable12 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable13", [Defaults].ColorTable13.Reverse.ToArgb)
-                    ColorTable13 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable13 = [Defaults].ColorTable13
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable13", [Defaults].ColorTable13.Reverse.ToArgb)
+                ColorTable13 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable14", [Defaults].ColorTable14.Reverse.ToArgb)
-                    ColorTable14 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable14 = [Defaults].ColorTable14
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable14", [Defaults].ColorTable14.Reverse.ToArgb)
+                ColorTable14 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ColorTable15", [Defaults].ColorTable15.Reverse.ToArgb)
-                    ColorTable15 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                Catch
-                    ColorTable15 = [Defaults].ColorTable15
-                End Try
+                y_cmd = GetReg(RegAddress, "ColorTable15", [Defaults].ColorTable15.Reverse.ToArgb)
+                ColorTable15 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "PopupColors", Convert.ToInt32([Defaults].PopupBackground.ToString("X") & [Defaults].PopupForeground.ToString("X"), 16))
-                    Dim d As String = CInt(y_cmd).ToString("X")
+                y_cmd = GetReg(RegAddress, "PopupColors", Convert.ToInt32([Defaults].PopupBackground.ToString("X") & [Defaults].PopupForeground.ToString("X"), 16))
+                Dim d As String = CInt(y_cmd).ToString("X")
+                If d.Count = 1 Then d = 0 & d
+                PopupBackground = Convert.ToInt32(d.Chars(0), 16)
+                PopupForeground = Convert.ToInt32(d.Chars(1), 16)
 
-                    If d.Count = 1 Then d = 0 & d
-                    PopupBackground = Convert.ToInt32(d.Chars(0), 16)
-                    PopupForeground = Convert.ToInt32(d.Chars(1), 16)
-                Catch
-                    PopupBackground = [Defaults].PopupBackground
-                    PopupForeground = [Defaults].PopupForeground
-                End Try
+                y_cmd = GetReg(RegAddress, "ScreenColors", Convert.ToInt32([Defaults].ScreenColorsBackground.ToString("X") & [Defaults].ScreenColorsForeground.ToString("X"), 16))
+                d = CInt(y_cmd).ToString("X")
+                If d.Count = 1 Then d = 0 & d
+                ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
+                ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "ScreenColors", Convert.ToInt32([Defaults].ScreenColorsBackground.ToString("X") & [Defaults].ScreenColorsForeground.ToString("X"), 16))
-                    Dim d As String = CInt(y_cmd).ToString("X")
 
-                    If d.Count = 1 Then d = 0 & d
-                    ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
-                    ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
-                Catch
-                    ScreenColorsBackground = [Defaults].ScreenColorsBackground
-                    ScreenColorsForeground = [Defaults].ScreenColorsForeground
-                End Try
+                CursorSize = GetReg(RegAddress, "CursorSize", 25)
 
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorSize", 25)
-                    CursorSize = y_cmd
-                Catch
-                    CursorSize = 25
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "FaceName", [Defaults].FaceName)
-
-                    If IsFontInstalled(y_cmd) Then
-                        FaceName = y_cmd
-                    Else
-                        FaceName = [Defaults].FaceName
-                    End If
-
-                Catch
+                y_cmd = GetReg(RegAddress, "FaceName", [Defaults].FaceName)
+                If IsFontInstalled(y_cmd) Then
+                    FaceName = y_cmd
+                Else
                     FaceName = [Defaults].FaceName
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontFamily", If(Not [Defaults].FontRaster, 54, 1))
-                    FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
-                    If FaceName.ToLower = "terminal" Then FontRaster = True
-                Catch
-                    FontRaster = [Defaults].FontRaster
-                End Try
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontSize", [Defaults].FontSize)
-                    If y_cmd = 0 And Not FontRaster Then FontSize = [Defaults].FontSize Else FontSize = y_cmd
-                Catch
-                    FontSize = [Defaults].FontSize
-                End Try
-
-
-                Try
-                    y_cmd = My.Computer.Registry.GetValue(RegAddress, "FontWeight", 400)
-                    FontWeight = y_cmd
-                Catch
-                    FontWeight = 400
-                End Try
-
-                If My.W10_1909 Then
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorColor", Color.White.Reverse.ToArgb)
-                        W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
-                    Catch
-                        W10_1909_CursorColor = Color.White
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "CursorType", 1)
-                        W10_1909_CursorType = y_cmd
-                    Catch
-                        W10_1909_CursorType = 1
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "ForceV2", True)
-                        W10_1909_ForceV2 = y_cmd
-                    Catch
-                        W10_1909_ForceV2 = True
-                    End Try
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "LineSelection", False)
-                        W10_1909_LineSelection = y_cmd
-                    Catch
-                        W10_1909_LineSelection = False
-                    End Try
-
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "TerminalScrolling", False)
-                        W10_1909_TerminalScrolling = y_cmd
-                    Catch
-                        W10_1909_TerminalScrolling = False
-                    End Try
-
-
-                    Try
-                        y_cmd = My.Computer.Registry.GetValue(RegAddress, "WindowAlpha", 255)
-                        W10_1909_WindowAlpha = y_cmd
-                    Catch
-                        W10_1909_WindowAlpha = 255
-                    End Try
                 End If
 
-                Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
+                y_cmd = GetReg(RegAddress, "FontFamily", If(Not [Defaults].FontRaster, 54, 1))
+                FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                If FaceName.ToLower = "terminal" Then FontRaster = True
 
-                Try
-                    Enabled = CInt(rLogX.GetValue(Signature_Of_Enable, 0)).ToBoolean
-                Catch
-                    Enabled = False
-                End Try
+                y_cmd = GetReg(RegAddress, "FontSize", [Defaults].FontSize)
+                If y_cmd = 0 And Not FontRaster Then FontSize = [Defaults].FontSize Else FontSize = y_cmd
+
+                FontWeight = GetReg(RegAddress, "FontWeight", 400)
+
+
+                If My.W10_1909 Then
+                    y_cmd = GetReg(RegAddress, "CursorColor", Color.White.Reverse.ToArgb)
+                    W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                    W10_1909_CursorType = GetReg(RegAddress, "CursorType", 1)
+                    W10_1909_ForceV2 = GetReg(RegAddress, "ForceV2", True)
+                    W10_1909_LineSelection = GetReg(RegAddress, "LineSelection", False)
+                    W10_1909_TerminalScrolling = GetReg(RegAddress, "TerminalScrolling", False)
+                    W10_1909_WindowAlpha = GetReg(RegAddress, "WindowAlpha", 255)
+                End If
+
+                Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)).ToBoolean
 
             End Sub
             Shared Sub Save_Console_To_Registry(scopeReg As String, [RegKey] As String, [Console] As Console)
@@ -3389,6 +2646,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
 
                 r.Close()
+                rMain.Close()
             End Sub
 
             Shared Sub Save_Cursors_To_Registry(subKey As String, [Cursor] As Cursor)
@@ -3545,7 +2803,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
             .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-            .IncreaseTBTransparency = False}
+            .IncreaseTBTransparency = False,
+            .TB_Blur = True}
 
     Public Windows10 As New Structures.Windows10x With {
             .Color_Index0 = Color.FromArgb(166, 216, 255),
@@ -3564,7 +2823,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Transparency = True,
             .ApplyAccentonTitlebars = False,
             .ApplyAccentonTaskbar = CP.ApplyAccentonTaskbar_Level.None,
-            .IncreaseTBTransparency = False}
+            .IncreaseTBTransparency = False,
+            .TB_Blur = True}
 
     Public LogonUI10x As New Structures.LogonUI10x With {
         .DisableAcrylicBackgroundOnLogon = False, .DisableLogonBackgroundImage = False, .NoLockScreen = False}
@@ -4311,37 +3571,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
 #Region "Functions"
-#Region "UserPreferenceMask"
-    Shared Function GetUserPreferencesMask(Bit As Integer, regScope As String) As Boolean
-
-        Try
-            Dim hexstring As Byte() = My.Computer.Registry.GetValue(regScope & "\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-            Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-            Return If(binarystring(binarystring.Count - 1 - Bit) = CChar("1"), True, False)
-        Catch
-            Return False
-        End Try
-
-    End Function
-
-    Shared Function SetUserPreferenceMask(Bit As Integer, Value As Boolean, regScope As String) As Byte()
-        Dim hexstring As Byte() = My.Computer.Registry.GetValue(regScope & "\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-        Dim binarystring As String = String.Join("", hexstring.Reverse().[Select](Function(xb) Convert.ToString(xb, 2).PadLeft(8, "0"c)))
-        Dim EnableThemeIndex As Integer = binarystring.Count - 1 - Bit
-        binarystring = binarystring.Remove(EnableThemeIndex, 1).Insert(EnableThemeIndex, Value.ToInteger)
-        Dim binaryStr As String = binarystring
-        Dim ar As Byte()
-        ar = StringToBytesArray(binaryStr)
-        If ar.Count < 8 Then
-            For i = 0 To 7 - ar.Count
-                ar = AddByteToArray(ar, 0)
-            Next
-        End If
-        ar = ar.Reverse.ToArray
-        Return ar
-    End Function
-#End Region
-
     Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
         Dim R As RegistryKey = Nothing
 
@@ -4406,10 +3635,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             If R IsNot Nothing Then
                 R.Flush()
                 R.Close()
+                R.Dispose()
             End If
         Catch
         End Try
-
 
     End Sub
     Shared Sub EditReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord, Optional WaitUntilComplete As Boolean = True)
@@ -4464,6 +3693,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         process.Start()
         If WaitUntilComplete Then process.WaitForExit()
     End Sub
+    Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False) As Object
+        Try
+            Return My.Computer.Registry.GetValue(KeyName, ValueName, DefaultValue)
+        Catch ex As Exception
+            My.Loading_Exceptions.Add(New Tuple(Of String, Exception)(KeyName & " : " & ValueName, ex))
+            If RaiseExceptions Then BugReport.ThrowError(ex)
+            Return DefaultValue
+        End Try
+    End Function
     Shared Sub DelReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String)
         Dim regTemplate As String
 
@@ -4509,12 +3747,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Try
         End If
     End Sub
-    Shared Sub Move(File1 As String, File2 As String)
-        If IO.File.Exists(File1) Then
+    Shared Sub Move(source As String, destination As String)
+        If IO.File.Exists(source) Then
             Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
                     .FileName = "cmd",
                     .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
-                    .Arguments = String.Format("/c move ""{0}"" ""{1}""", File1, File2),
+                    .Arguments = String.Format("/c move ""{0}"" ""{1}""", source, destination),
                     .WindowStyle = ProcessWindowStyle.Hidden,
                     .CreateNoWindow = True,
                     .UseShellExecute = True
@@ -4525,30 +3763,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         End If
     End Sub
-
-    Shared Function AddByteToArray(ByVal bArray As Byte(), ByVal newByte As Byte) As Byte()
-        Dim newArray As Byte() = New Byte(bArray.Length + 1 - 1) {}
-        bArray.CopyTo(newArray, 1)
-        newArray(0) = newByte
-        Return newArray
-    End Function
-    Shared Function StringToBytesArray(ByVal str As String) As Byte()
-        Dim bitsToPad = 8 - str.Length Mod 8
-
-        If bitsToPad <> 8 Then
-            Dim neededLength = bitsToPad + str.Length
-            str = str.PadLeft(neededLength, "0"c)
-        End If
-
-        Dim size As Integer = str.Length / 8
-        Dim arr As Byte() = New Byte(size - 1) {}
-
-        For a As Integer = 0 To size - 1
-            arr(a) = Convert.ToByte(str.Substring(a * 8, 8), 2)
-        Next
-
-        Return arr
-    End Function
     Public Shared Function GetPaletteFromMSTheme(Filename As String) As List(Of Color)
         If IO.File.Exists(Filename) Then
 
@@ -4961,7 +4175,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         End If
 
     End Function
-
     Sub Excute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
                Optional TimeStr As String = "", Optional overallstopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "")
 
@@ -5025,6 +4238,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     _Def = New CP_Defaults().Default_Windows11
                 End If
 
+                My.Loading_Exceptions.Clear()
+
 #Region "Registry"
                 Info.Load()
                 Windows11.Load(New CP_Defaults().Default_Windows11.Windows11, New CP_Defaults().Default_Windows11Accents_Bytes)
@@ -5064,21 +4279,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 
 #Region "Windows Terminal"
-                Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-
-                Try
-                    Terminal.Enabled = CInt(rLogX.GetValue("Terminal_Stable_Enabled", 0)).ToBoolean
-                Catch
-                    Terminal.Enabled = False
-                End Try
-
-                Try
-                    TerminalPreview.Enabled = CInt(rLogX.GetValue("Terminal_Preview_Enabled", 0)).ToBoolean
-                Catch
-                    TerminalPreview.Enabled = False
-                End Try
-
-                rLogX.Close()
+                Terminal.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean
+                TerminalPreview.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)).ToBoolean
 
                 If My.W10 Or My.W11 Then
                     Dim TerDir As String
@@ -5121,36 +4323,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
 #Region "Cursors"
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-                Cursor_Enabled = rMain.GetValue("", False)
-                rMain.Close()
-                Dim ii As Boolean
+                Cursor_Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", False)
 
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, ii, SPIF.None) = 1 Then
-                        Cursor_Shadow = ii
-                    Else
-                        Cursor_Shadow = _Def.Cursor_Shadow
-                    End If
-                Catch
-                    Cursor_Shadow = _Def.Cursor_Shadow
-                End Try
-
-                Try
-                    Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSETRAILS, 0, Cursor_Trails, SPIF.None)
-                Catch
-                    Cursor_Trails = _Def.Cursor_Trails
-                End Try
-
-                Try
-                    If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSESONAR, 0, ii, SPIF.None) = 1 Then
-                        Cursor_Sonar = ii
-                    Else
-                        Cursor_Sonar = _Def.Cursor_Sonar
-                    End If
-                Catch
-                    Cursor_Sonar = _Def.Cursor_Sonar
-                End Try
+                If Fixer.SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, Cursor_Shadow, SPIF.None) = 0 Then Cursor_Shadow = _Def.Cursor_Shadow
+                If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSETRAILS, 0, Cursor_Trails, SPIF.None) = 0 Then Cursor_Trails = _Def.Cursor_Trails
+                If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSESONAR, 0, Cursor_Sonar, SPIF.None) = 0 Then Cursor_Sonar = _Def.Cursor_Sonar
 
                 Cursor_Arrow.Load("Arrow")
                 Cursor_Help.Load("Help")
@@ -5171,6 +4348,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Cursor_Cross.Load("Cross")
 #End Region
 
+                If My.Loading_Exceptions.Count > 0 Then
+                    Saving_ex_list.ex_List = My.Loading_Exceptions
+                    Saving_ex_list.ShowDialog()
+                End If
 #End Region
 
                 _Def.Dispose()
@@ -5240,6 +4421,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Win_11_AppMode_Light= ", My._strIgnore) Then Windows11.AppMode_Light = lin.Remove(0, "*Win_11_AppMode_Light= ".Count)
                     If lin.StartsWith("*Win_11_Transparency= ", My._strIgnore) Then Windows11.Transparency = lin.Remove(0, "*Win_11_Transparency= ".Count)
                     If lin.StartsWith("*Win_11_IncreaseTBTransparency= ", My._strIgnore) Then Windows11.IncreaseTBTransparency = lin.Remove(0, "*Win_11_IncreaseTBTransparency= ".Count)
+                    If lin.StartsWith("*Win_11_TB_Blur= ", My._strIgnore) Then Windows11.TB_Blur = lin.Remove(0, "*Win_11_TB_Blur= ".Count)
                     If lin.StartsWith("*Win_11_Titlebar_Active= ", My._strIgnore) Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Active= ".Count))
                     If lin.StartsWith("*Win_11_Titlebar_Inactive= ", My._strIgnore) Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
                     If lin.StartsWith("*Win_11_StartMenu_Accent= ", My._strIgnore) Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
@@ -5284,6 +4466,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Win_10_AppMode_Light= ", My._strIgnore) Then Windows10.AppMode_Light = lin.Remove(0, "*Win_10_AppMode_Light= ".Count)
                     If lin.StartsWith("*Win_10_Transparency= ", My._strIgnore) Then Windows10.Transparency = lin.Remove(0, "*Win_10_Transparency= ".Count)
                     If lin.StartsWith("*Win_10_IncreaseTBTransparency= ", My._strIgnore) Then Windows10.IncreaseTBTransparency = lin.Remove(0, "*Win_10_IncreaseTBTransparency= ".Count)
+                    If lin.StartsWith("*Win_10_TB_Blur= ", My._strIgnore) Then Windows10.TB_Blur = lin.Remove(0, "*Win_10_TB_Blur= ".Count)
                     If lin.StartsWith("*Win_10_Titlebar_Active= ", My._strIgnore) Then Windows10.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Active= ".Count))
                     If lin.StartsWith("*Win_10_Titlebar_Inactive= ", My._strIgnore) Then Windows10.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
                     If lin.StartsWith("*Win_10_StartMenu_Accent= ", My._strIgnore) Then Windows10.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
@@ -5877,12 +5060,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
 
 #Region "Consoles"
-                Dim rLogX As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Terminals")
-                rLogX.SetValue("Terminal_CMD_Enabled", CommandPrompt.Enabled.ToInteger)
-                rLogX.SetValue("Terminal_PS_32_Enabled", PowerShellx86.Enabled.ToInteger)
-                rLogX.SetValue("Terminal_PS_64_Enabled", PowerShellx64.Enabled.ToInteger)
-                rLogX.SetValue("Terminal_Stable_Enabled", Terminal.Enabled.ToInteger)
-                rLogX.SetValue("Terminal_Preview_Enabled", TerminalPreview.Enabled.ToInteger)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled)
 
                 Excute(CType(Sub()
                                  Apply_CommandPrompt()
@@ -6011,6 +5193,35 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Excute(CType(Sub()
                                  Apply_Cursors([TreeView])
                              End Sub, MethodInvoker), [TreeView], "", My.Lang.CP_Error_Cursors, My.Lang.CP_Time_Cursors, sw_all)
+
+                'Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
+                If My.Settings.Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite Then
+
+                    Excute(CType(Sub()
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String)
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_DesktopAllUsers, My.Lang.CP_Error_SetDesktop, My.Lang.CP_Time)
+
+                ElseIf My.Settings.Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults Then
+
+                    Excute(CType(Sub()
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String)
+                                 End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_DesktopAllUsers, My.Lang.CP_Error_SetDesktop, My.Lang.CP_Time)
+
+                End If
+
+                'Update User Preference Mask for HKEY_USERS\.DEFAULT
+                'Always make it the last operation
+                Try
+                    Win32.Update_UPM_DEFAULT()
+                Catch
+                End Try
+
 
                 If ReportProgress Then
                     If Not _ErrorHappened Then
@@ -6142,40 +5353,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", [LogonElement].Enabled.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", [LogonElement].Enabled.ToInteger)
 
-        Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\" & RegEntryHint)
-
-        Select Case [LogonElement].Mode
-            Case LogonUI_Modes.Default_
-                rLog.SetValue("Mode", 0)
-
-            Case LogonUI_Modes.Wallpaper
-                rLog.SetValue("Mode", 1)
-
-            Case LogonUI_Modes.CustomImage
-                rLog.SetValue("Mode", 2)
-
-            Case LogonUI_Modes.SolidColor
-                rLog.SetValue("Mode", 3)
-        End Select
-
-        rLog.SetValue("ImagePath", [LogonElement].ImagePath)
-        rLog.SetValue("Color", [LogonElement].Color.ToArgb)
-        rLog.SetValue("Blur", [LogonElement].Blur.ToInteger)
-        rLog.SetValue("Blur_Intensity", [LogonElement].Blur_Intensity)
-        rLog.SetValue("Grayscale", [LogonElement].Grayscale.ToInteger)
-        rLog.SetValue("Noise", [LogonElement].Noise.ToInteger)
-
-        Select Case [LogonElement].Noise_Mode
-            Case NoiseMode.Aero
-                rLog.SetValue("Noise_Mode", 0)
-
-            Case NoiseMode.Acrylic
-                rLog.SetValue("Noise_Mode", 1)
-        End Select
-
-        rLog.SetValue("Noise_Intensity", [LogonElement].Noise_Intensity)
-        rLog.Flush()
-        rLog.Close()
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Mode", CInt([LogonElement].Mode))
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "ImagePath", [LogonElement].ImagePath, RegistryValueKind.String)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Color", [LogonElement].Color.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Blur", [LogonElement].Blur.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Blur_Intensity", [LogonElement].Blur_Intensity)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Grayscale", [LogonElement].Grayscale.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Noise", [LogonElement].Noise.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Noise_Mode", CInt([LogonElement].Noise_Mode))
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\" & RegEntryHint, "Noise_Intensity", [LogonElement].Noise_Intensity)
 
         If [LogonElement].Enabled Then
             Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
@@ -6241,41 +5427,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows8.NoLockScreen.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String)
 
-        Dim rLog As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\LogonUI")
-
-        Select Case Windows8.LockScreenType
-            Case LogonUI_Modes.Default_
-                rLog.SetValue("Mode", 0)
-
-            Case LogonUI_Modes.Wallpaper
-                rLog.SetValue("Mode", 1)
-
-            Case LogonUI_Modes.CustomImage
-                rLog.SetValue("Mode", 2)
-
-            Case LogonUI_Modes.SolidColor
-                rLog.SetValue("Mode", 3)
-        End Select
-
-        rLog.SetValue("Metro_LockScreenSystemID", Windows8.LockScreenSystemID)
-        rLog.SetValue("ImagePath", LogonUI7.ImagePath)
-        rLog.SetValue("Color", LogonUI7.Color.ToArgb)
-        rLog.SetValue("Blur", LogonUI7.Blur.ToInteger)
-        rLog.SetValue("Blur_Intensity", LogonUI7.Blur_Intensity)
-        rLog.SetValue("Grayscale", LogonUI7.Grayscale.ToInteger)
-        rLog.SetValue("Noise", LogonUI7.Noise.ToInteger)
-
-        Select Case LogonUI7.Noise_Mode
-            Case NoiseMode.Aero
-                rLog.SetValue("Noise_Mode", 0)
-
-            Case NoiseMode.Acrylic
-                rLog.SetValue("Noise_Mode", 1)
-        End Select
-
-        rLog.SetValue("Noise_Intensity", LogonUI7.Noise_Intensity)
-        rLog.Flush()
-        rLog.Close()
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", CInt(Windows8.LockScreenType))
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", Windows8.LockScreenSystemID)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", LogonUI7.ImagePath, RegistryValueKind.String)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Color", LogonUI7.Color.ToArgb)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur", LogonUI7.Blur.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur_Intensity", LogonUI7.Blur_Intensity)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Grayscale", LogonUI7.Grayscale.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise", LogonUI7.Noise.ToInteger)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Mode", CInt(LogonUI7.Noise_Mode))
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Intensity", LogonUI7.Noise_Intensity)
 
         If Not Windows8.NoLockScreen Then
 
@@ -6331,7 +5492,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             If My.Settings.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "", CommandPrompt)
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
-
             End If
         End If
     End Sub
@@ -6361,12 +5521,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     End Sub
 
     Public Sub Apply_Cursors(Optional ByVal [TreeView] As TreeView = Nothing)
-
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
-        Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-        rMain.SetValue("", Cursor_Enabled, RegistryValueKind.DWord)
-        rMain.Close()
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled)
 
         Dim sw As New Stopwatch
         If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_SavingCursorsColors, Now.ToLongTimeString), "info")
@@ -6402,13 +5559,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             If My.[Settings].AutoApplyCursors Then
                 Excute(CType(Sub()
-
-                                 SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.SendChange)
-                                 SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.SendChange)
-                                 SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.SendChange)
-
+                                 SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile)
+                                 SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile)
+                                 SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile)
                                  ApplyCursorsToReg()
-                                 If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then ApplyCursorsToReg("HKEY_USERS\.DEFAULT")
+
+                                 If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+                                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails)
+                                     ApplyCursorsToReg("HKEY_USERS\.DEFAULT")
+                                 End If
 
                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_ApplyingCursors, My.Lang.CP_CursorsApplying_Error, My.Lang.CP_Time)
             Else
@@ -6779,7 +5938,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-        SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.SendChange)
+        SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
     End Sub
 
     Shared Sub ResetCursorsToAero(Optional scopeReg As String = "HKEY_CURRENT_USER")
@@ -6866,7 +6025,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-            SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.SendChange)
+            SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception
 
@@ -6936,7 +6095,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-            SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.SendChange)
+            SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception
 

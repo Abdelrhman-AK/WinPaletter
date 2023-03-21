@@ -1,5 +1,8 @@
 ﻿Imports WinPaletter.XenonCore
 Public Class Saving_ex_list
+
+    Public ex_List As List(Of Tuple(Of String, Exception))
+
     Private Sub Saving_exceptions_list_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         Icon = BugReport.Icon
@@ -7,7 +10,7 @@ Public Class Saving_ex_list
         TreeView1.ImageList = My.Notifications_IL
         TreeView1.Nodes.Clear()
 
-        For Each x In My.Saving_Exceptions
+        For Each x In ex_List
             With TreeView1.Nodes.Add(x.Item1)
                 .ImageKey = "error" : .SelectedImageKey = "error"
             End With

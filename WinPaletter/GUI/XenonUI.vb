@@ -5898,9 +5898,6 @@ Public Class XenonWindow : Inherits Panel
                     XXRect.X += 1
                 End If
 
-
-                Metrics_Fonts.Text = XXRect.Width
-
                 G.DrawString("r", New Font("Marlett", 6.35, FontStyle.Regular), New SolidBrush(Color.White), New Rectangle(XXRect.X + 1, XXRect.Y + 1, XXRect.Width, XXRect.Height), StringAligner(ContentAlignment.MiddleCenter))
             End If
 

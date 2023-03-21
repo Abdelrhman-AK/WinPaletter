@@ -696,6 +696,7 @@ Public Class CursorsStudio
         Dim CPx As New CP(CP.CP_Type.Registry)
         SaveToCP(CPx)
         CPx.Apply_Cursors()
+        CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
