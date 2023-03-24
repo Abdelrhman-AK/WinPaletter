@@ -379,12 +379,31 @@ Public Module IntegerExtensions
     End Function
 
     '''<summary>
-    '''Return String in the format of xxxxxxxx, useful for registry handling
+    '''Return string in the format of XXXXXXXX, useful for registry handling
     '''</summary>
     <Extension()>
-    Public Function To8Digits(int As Integer) As String
+    Public Function DWORD(int As Integer) As String
         If int.ToString.Count <= 8 Then
             Dim i As Integer = 8 - int.ToString.Count
+            Dim s As String = ""
+            For i = 1 To i
+                s &= "0"
+            Next
+            s &= int
+            Return s.Replace("-", "")
+        Else
+            Return int.ToString.Replace("-", "")
+        End If
+
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XXXXXXXXXXXXXXXX, useful for registry handling
+    '''</summary>
+    <Extension()>
+    Public Function QWORD(int As Integer) As String
+        If int.ToString.Count <= 16 Then
+            Dim i As Integer = 16 - int.ToString.Count
             Dim s As String = ""
             For i = 1 To i
                 s &= "0"

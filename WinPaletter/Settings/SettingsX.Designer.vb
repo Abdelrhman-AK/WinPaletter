@@ -2658,7 +2658,7 @@ Partial Class SettingsX
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(723, 26)
         Me.Label35.TabIndex = 56
-        Me.Label35.Text = "HKEY_USERS\.DEFAULT\Console\ (For all users && LogonUI)"
+        Me.Label35.Text = "HKEY_USERS\.DEFAULT\Console (For all users && LogonUI)"
         Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Panel8

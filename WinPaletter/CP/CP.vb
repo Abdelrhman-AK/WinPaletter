@@ -2338,92 +2338,91 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public W10_1909_WindowAlpha As Integer
 
             Public Sub Load([RegKey] As String, Signature_Of_Enable As String, [Defaults] As Console)
-                Dim y_cmd As Object
+                Dim temp As Object
                 Dim RegAddress As String = "HKEY_CURRENT_USER\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
 
-                y_cmd = GetReg(RegAddress, "ColorTable00", [Defaults].ColorTable00.Reverse.ToArgb)
-                ColorTable00 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable00", [Defaults].ColorTable00.Reverse.ToArgb)
+                ColorTable00 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable01", [Defaults].ColorTable01.Reverse.ToArgb)
-                ColorTable01 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable01", [Defaults].ColorTable01.Reverse.ToArgb)
+                ColorTable01 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable02", [Defaults].ColorTable02.Reverse.ToArgb)
-                ColorTable02 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable02", [Defaults].ColorTable02.Reverse.ToArgb)
+                ColorTable02 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable03", [Defaults].ColorTable03.Reverse.ToArgb)
-                ColorTable03 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable03", [Defaults].ColorTable03.Reverse.ToArgb)
+                ColorTable03 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable04", [Defaults].ColorTable04.Reverse.ToArgb)
-                ColorTable04 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable04", [Defaults].ColorTable04.Reverse.ToArgb)
+                ColorTable04 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable05", [Defaults].ColorTable05.Reverse.ToArgb)
-                ColorTable05 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable05", [Defaults].ColorTable05.Reverse.ToArgb)
+                ColorTable05 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable06", [Defaults].ColorTable06.Reverse.ToArgb)
-                ColorTable06 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable06", [Defaults].ColorTable06.Reverse.ToArgb)
+                ColorTable06 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable07", [Defaults].ColorTable07.Reverse.ToArgb)
-                ColorTable07 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable07", [Defaults].ColorTable07.Reverse.ToArgb)
+                ColorTable07 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable08", [Defaults].ColorTable08.Reverse.ToArgb)
-                ColorTable08 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable08", [Defaults].ColorTable08.Reverse.ToArgb)
+                ColorTable08 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable09", [Defaults].ColorTable09.Reverse.ToArgb)
-                ColorTable09 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable09", [Defaults].ColorTable09.Reverse.ToArgb)
+                ColorTable09 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable10", [Defaults].ColorTable10.Reverse.ToArgb)
-                ColorTable10 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable10", [Defaults].ColorTable10.Reverse.ToArgb)
+                ColorTable10 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable11", [Defaults].ColorTable11.Reverse.ToArgb)
-                ColorTable11 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable11", [Defaults].ColorTable11.Reverse.ToArgb)
+                ColorTable11 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable12", [Defaults].ColorTable12.Reverse.ToArgb)
-                ColorTable12 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable12", [Defaults].ColorTable12.Reverse.ToArgb)
+                ColorTable12 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable13", [Defaults].ColorTable13.Reverse.ToArgb)
-                ColorTable13 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable13", [Defaults].ColorTable13.Reverse.ToArgb)
+                ColorTable13 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable14", [Defaults].ColorTable14.Reverse.ToArgb)
-                ColorTable14 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable14", [Defaults].ColorTable14.Reverse.ToArgb)
+                ColorTable14 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "ColorTable15", [Defaults].ColorTable15.Reverse.ToArgb)
-                ColorTable15 = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                temp = GetReg(RegAddress, "ColorTable15", [Defaults].ColorTable15.Reverse.ToArgb)
+                ColorTable15 = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
 
-                y_cmd = GetReg(RegAddress, "PopupColors", Convert.ToInt32([Defaults].PopupBackground.ToString("X") & [Defaults].PopupForeground.ToString("X"), 16))
-                Dim d As String = CInt(y_cmd).ToString("X")
+                temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32([Defaults].PopupBackground.ToString("X") & [Defaults].PopupForeground.ToString("X"), 16))
+                Dim d As String = CInt(temp).ToString("X")
                 If d.Count = 1 Then d = 0 & d
                 PopupBackground = Convert.ToInt32(d.Chars(0), 16)
                 PopupForeground = Convert.ToInt32(d.Chars(1), 16)
 
-                y_cmd = GetReg(RegAddress, "ScreenColors", Convert.ToInt32([Defaults].ScreenColorsBackground.ToString("X") & [Defaults].ScreenColorsForeground.ToString("X"), 16))
-                d = CInt(y_cmd).ToString("X")
+                temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32([Defaults].ScreenColorsBackground.ToString("X") & [Defaults].ScreenColorsForeground.ToString("X"), 16))
+                d = CInt(temp).ToString("X")
                 If d.Count = 1 Then d = 0 & d
                 ScreenColorsBackground = Convert.ToInt32(d.Chars(0), 16)
                 ScreenColorsForeground = Convert.ToInt32(d.Chars(1), 16)
 
-
                 CursorSize = GetReg(RegAddress, "CursorSize", 25)
 
-                y_cmd = GetReg(RegAddress, "FaceName", [Defaults].FaceName)
-                If IsFontInstalled(y_cmd) Then
-                    FaceName = y_cmd
+                temp = GetReg(RegAddress, "FaceName", [Defaults].FaceName)
+                If IsFontInstalled(temp) Then
+                    FaceName = temp
                 Else
                     FaceName = [Defaults].FaceName
                 End If
 
-                y_cmd = GetReg(RegAddress, "FontFamily", If(Not [Defaults].FontRaster, 54, 1))
-                FontRaster = If(y_cmd = 1 Or y_cmd = 0 Or y_cmd = 48, True, False)
+                temp = GetReg(RegAddress, "FontFamily", If(Not [Defaults].FontRaster, 54, 1))
+                FontRaster = If(temp = 1 Or temp = 0 Or temp = 48, True, False)
                 If FaceName.ToLower = "terminal" Then FontRaster = True
 
-                y_cmd = GetReg(RegAddress, "FontSize", [Defaults].FontSize)
-                If y_cmd = 0 And Not FontRaster Then FontSize = [Defaults].FontSize Else FontSize = y_cmd
+                temp = GetReg(RegAddress, "FontSize", [Defaults].FontSize)
+                If temp = 0 And Not FontRaster Then FontSize = [Defaults].FontSize Else FontSize = temp
 
                 FontWeight = GetReg(RegAddress, "FontWeight", 400)
 
 
                 If My.W10_1909 Then
-                    y_cmd = GetReg(RegAddress, "CursorColor", Color.White.Reverse.ToArgb)
-                    W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(y_cmd).Reverse)
+                    temp = GetReg(RegAddress, "CursorColor", Color.White.Reverse.ToArgb)
+                    W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(temp).Reverse)
                     W10_1909_CursorType = GetReg(RegAddress, "CursorType", 1)
                     W10_1909_ForceV2 = GetReg(RegAddress, "ForceV2", True)
                     W10_1909_LineSelection = GetReg(RegAddress, "LineSelection", False)

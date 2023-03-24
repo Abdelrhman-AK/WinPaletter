@@ -201,32 +201,14 @@
 
 • If you use a language file, you may see this form incomplete or not perfect, so the translators should work on Cursors' section.</value>
   </data>
-  <data name="Label3.Text" xml:space="preserve">
-    <value>• Shake a window to minimize the others
-• Underline menu items
-• Classic Context Menu for Windows 11
-• Balloon notification duration and force it for Windows 10 (or Windows 11 + ExplorerPatcher)
-• Focus rectangle width and height (More seen in classic elements)
-• Text Cursor (Caret) width
-• Active Windows Tracking
-• SysListView32
-• Snap cursor to default button
-• Show seconds in taskbar of Windows 10 (or Windows 11 + ExplorerPatcher)
-• Paint Windows version on desktop
-• Use spinning dots in Windows 11 boot screen
-• Change Windows 11 Explorer bar (Dependent on ExplorerPatcher)</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>• Added Windows 1 and 2 classic schemes.
-
-• Windows 3.1 schemes are improved to have a closer look to Windows 3.1.
-
-• The illustrator has been updated, it will follow the colors you choose.
-
-• You can change the scope in which classic colors can be applied. Go to "Settings &gt; Theme Applying Behavior" to change its preferences.</value>
-  </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>• UI improvements
+
+• Some options in Windows Effects and cursors lose their effects after logoff. Now they are fixed.
+
+• Mechanism of reading from\writing to registry improved a bit
+
+• New options are added in `Settings` &gt; `Theme Applying Behavior` to extend their applying scope in registry (All users). The options are for User Preference Mask, Logoff Wallpaper (Tested in Windows XP), Classic Colors, Metrics and Fonts, Cursors and Consoles.
 
 • A new option is added in `Settings` &gt; `Theme Applying Behavior` is made to delay applying the Metrics and Fonts until the user logsoff and logson, and this is to escape from the situation of crashing.</value>
   </data>

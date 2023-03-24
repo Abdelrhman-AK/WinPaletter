@@ -71,13 +71,10 @@ Public Class Reg_IO
         'Skips setting to registry if the values are the same
         Try
             If R.OpenSubKey(KeyName).GetValue(ValueName, Nothing).Equals(Value) Then
-                Try
-                    If R IsNot Nothing Then
-                        R.Flush()
-                        R.Close()
-                    End If
-                Catch
-                End Try
+                If R IsNot Nothing Then
+                    R.Flush()
+                    R.Close()
+                End If
 
                 Exit Sub
             End If
@@ -115,7 +112,7 @@ Public Class Reg_IO
         If RegistryKeyPath.StartsWith("HKEY_CURRENT_CONFIG", My._ignore) Then RegistryKeyPath = "HKCC" & RegistryKeyPath.Remove(0, "HKEY_CURRENT_CONFIG".Count)
 
         '/v = Value Name
-        '/t = Registry Value Type (https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types)
+        '/t = Registry Value Type
         '/d = Value
         '/f = Disable prompt
         If Value IsNot Nothing Then
@@ -126,11 +123,11 @@ Public Class Reg_IO
 
                 Case RegistryValueKind.DWord
                     regTemplate = "add ""{0}"" /v ""{1}"" /t REG_DWORD /d {2} /f"
-                    _Value = CInt(Value).To8Digits
+                    _Value = CInt(Value).DWORD
 
                 Case RegistryValueKind.QWord
                     regTemplate = "add ""{0}"" /v ""{1}"" /t REG_QWORD /d {2} /f"
-                    _Value = CInt(Value).To8Digits
+                    _Value = CInt(Value).QWORD
 
                 Case RegistryValueKind.Binary
                     regTemplate = "add ""{0}"" /v ""{1}"" /t REG_BINARY /d {2} /f"
@@ -142,7 +139,8 @@ Public Class Reg_IO
 
                 Case RegistryValueKind.MultiString
                     regTemplate = "add ""{0}"" /v ""{1}"" /t REG_MULTI_SZ /d ""{2}"" /f"
-                    _Value = Value.ToString
+                    _Value = Value.ToString.Replace(vbCrLf, "\0") & "\0\0"
+                    'A sequence of null-terminated strings, terminated by an empty string (\0). The following is an example: String1\0String2\0String3\0LastString\0\0. The first \0 terminates the first string, the second-from-last \0 terminates the last string, and the final \0 terminates the sequence. Note that the final terminator must be factored into the length of the string.
 
                 Case RegistryValueKind.None
                     regTemplate = "add ""{0}"" /v ""{1}"" /t REG_NONE /d ""{2}"" /f"

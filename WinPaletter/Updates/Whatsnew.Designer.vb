@@ -251,11 +251,12 @@ Partial Class Whatsnew
         Me.Label3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(6, 46)
+        Me.Label3.Location = New System.Drawing.Point(6, 48)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(656, 320)
+        Me.Label3.Size = New System.Drawing.Size(656, 318)
         Me.Label3.TabIndex = 28
-        Me.Label3.Text = resources.GetString("Label3.Text")
+        Me.Label3.Text = "• Change Windows Explorer bar (New for Windows 10 and 8.1)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Disable navigatio" &
+    "n bar"
         '
         'Label1
         '
@@ -286,11 +287,13 @@ Partial Class Whatsnew
         Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(6, 46)
+        Me.Label5.Location = New System.Drawing.Point(6, 48)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(656, 320)
+        Me.Label5.Size = New System.Drawing.Size(656, 318)
         Me.Label5.TabIndex = 30
-        Me.Label5.Text = "A new option is made to make the taskbar more transparent"
+        Me.Label5.Text = "• A new option is made to make the taskbar more transparent" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• A new option is " &
+    "made to control Windows elements blur (Its toggle is located beside transparency" &
+    "'s toggle)"
         '
         'Label7
         '
@@ -321,11 +324,13 @@ Partial Class Whatsnew
         Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(6, 46)
+        Me.Label8.Location = New System.Drawing.Point(6, 48)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(656, 285)
         Me.Label8.TabIndex = 32
-        Me.Label8.Text = resources.GetString("Label8.Text")
+        Me.Label8.Text = "• Added Windows 1 and 2 classic schemes." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Windows 3.1 schemes are improved to" &
+    " have a closer look to Windows 3.1." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• The illustrator has been updated, it wi" &
+    "ll follow the colors you choose."
         '
         'Label9
         '
@@ -356,9 +361,9 @@ Partial Class Whatsnew
         Me.Label10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(6, 46)
+        Me.Label10.Location = New System.Drawing.Point(6, 48)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(656, 320)
+        Me.Label10.Size = New System.Drawing.Size(656, 318)
         Me.Label10.TabIndex = 32
         Me.Label10.Text = resources.GetString("Label10.Text")
         '
