@@ -1114,7 +1114,7 @@ Partial Class WinEffecter
         '
         Me.Panel2.BackColor = System.Drawing.SystemColors.WindowText
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Panel2.Location = New System.Drawing.Point(236, 3)
+        Me.Panel2.Location = New System.Drawing.Point(235, 3)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(5, 15)
         Me.Panel2.TabIndex = 141
@@ -1127,7 +1127,7 @@ Partial Class WinEffecter
         Me.Label7.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Label7.Location = New System.Drawing.Point(1, 3)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(235, 15)
+        Me.Label7.Size = New System.Drawing.Size(234, 15)
         Me.Label7.TabIndex = 0
         Me.Label7.Text = "This is a text inside a textbox followed by a caret"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

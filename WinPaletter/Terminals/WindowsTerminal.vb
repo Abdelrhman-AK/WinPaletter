@@ -1164,7 +1164,7 @@ Public Class WindowsTerminal
                     Dim ls_stable As New List(Of String)
                     ls_stable.Clear()
                     For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.StartsWith("terminal.", My._strIgnore) Then ls_stable.Add(lin)
+                        If lin.StartsWith("terminal.", My._ignore) Then ls_stable.Add(lin)
                     Next
                     _Terminal = New WinTerminal(ls_stable.CString, WinTerminal.Mode.WinPaletterFile)
                     Load_FromTerminal()
@@ -1174,7 +1174,7 @@ Public Class WindowsTerminal
                     Dim ls_preview As New List(Of String)
                     ls_preview.Clear()
                     For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.StartsWith("terminalpreview.", My._strIgnore) Then ls_preview.Add(lin)
+                        If lin.StartsWith("terminalpreview.", My._ignore) Then ls_preview.Add(lin)
                     Next
                     _Terminal = New WinTerminal(ls_preview.CString, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
                     Load_FromTerminal()

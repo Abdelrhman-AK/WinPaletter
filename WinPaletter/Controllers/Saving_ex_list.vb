@@ -19,7 +19,7 @@ Public Class Saving_ex_list
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
 
-        If TreeView1.SelectedNode IsNot Nothing Then BugReport.ThrowError(My.Saving_Exceptions.Item(TreeView1.SelectedNode.Index).Item2)
+        If TreeView1.SelectedNode IsNot Nothing Then BugReport.ThrowError(ex_List.Item(TreeView1.SelectedNode.Index).Item2)
 
     End Sub
 

@@ -131,8 +131,8 @@ Public Class XenonCore
         For Each ni As NetworkInterface In NetworkInterface.GetAllNetworkInterfaces()
             If (ni.OperationalStatus <> OperationalStatus.Up) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Loopback) OrElse (ni.NetworkInterfaceType = NetworkInterfaceType.Tunnel) Then Continue For
             If ni.Speed < minimumSpeed Then Continue For
-            If (ni.Description.IndexOf("virtual", My._strIgnore) >= 0) OrElse (ni.Name.IndexOf("virtual", My._strIgnore) >= 0) Then Continue For
-            If ni.Description.Equals("Microsoft Loopback Adapter", My._strIgnore) Then Continue For
+            If (ni.Description.IndexOf("virtual", My._ignore) >= 0) OrElse (ni.Name.IndexOf("virtual", My._ignore) >= 0) Then Continue For
+            If ni.Description.Equals("Microsoft Loopback Adapter", My._ignore) Then Continue For
             Return True
         Next
 

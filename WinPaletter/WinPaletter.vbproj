@@ -247,6 +247,7 @@
     <Compile Include="Classes\ExplorerPatcher.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
+    <Compile Include="Classes\Reg_IO.vb" />
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />

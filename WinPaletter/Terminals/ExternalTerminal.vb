@@ -1,5 +1,7 @@
 ﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports WinPaletter.Reg_IO
+
 Public Class ExternalTerminal
     Private _Shown As Boolean = False
     Dim f_extterminal As New Font("Consolas", 18, FontStyle.Regular)
@@ -361,94 +363,94 @@ Public Class ExternalTerminal
 
     Sub SetToExtTerminal(RegKey As String)
         Try
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "EnableColorSelection", 1)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", Color.FromArgb(0, ExtTerminal_ColorTable00.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", Color.FromArgb(0, ExtTerminal_ColorTable01.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", Color.FromArgb(0, ExtTerminal_ColorTable02.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", Color.FromArgb(0, ExtTerminal_ColorTable03.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", Color.FromArgb(0, ExtTerminal_ColorTable04.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", Color.FromArgb(0, ExtTerminal_ColorTable05.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", Color.FromArgb(0, ExtTerminal_ColorTable06.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", Color.FromArgb(0, ExtTerminal_ColorTable07.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", Color.FromArgb(0, ExtTerminal_ColorTable08.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", Color.FromArgb(0, ExtTerminal_ColorTable09.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", Color.FromArgb(0, ExtTerminal_ColorTable10.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", Color.FromArgb(0, ExtTerminal_ColorTable11.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", Color.FromArgb(0, ExtTerminal_ColorTable12.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", Color.FromArgb(0, ExtTerminal_ColorTable13.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", Color.FromArgb(0, ExtTerminal_ColorTable14.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", Color.FromArgb(0, ExtTerminal_ColorTable15.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "EnableColorSelection", 1)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable00", Color.FromArgb(0, ExtTerminal_ColorTable00.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable01", Color.FromArgb(0, ExtTerminal_ColorTable01.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable02", Color.FromArgb(0, ExtTerminal_ColorTable02.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable03", Color.FromArgb(0, ExtTerminal_ColorTable03.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable04", Color.FromArgb(0, ExtTerminal_ColorTable04.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable05", Color.FromArgb(0, ExtTerminal_ColorTable05.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable06", Color.FromArgb(0, ExtTerminal_ColorTable06.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable07", Color.FromArgb(0, ExtTerminal_ColorTable07.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable08", Color.FromArgb(0, ExtTerminal_ColorTable08.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable09", Color.FromArgb(0, ExtTerminal_ColorTable09.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable10", Color.FromArgb(0, ExtTerminal_ColorTable10.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable11", Color.FromArgb(0, ExtTerminal_ColorTable11.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable12", Color.FromArgb(0, ExtTerminal_ColorTable12.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable13", Color.FromArgb(0, ExtTerminal_ColorTable13.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable14", Color.FromArgb(0, ExtTerminal_ColorTable14.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ColorTable15", Color.FromArgb(0, ExtTerminal_ColorTable15.BackColor.Reverse).ToArgb)
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "PopupColors", Convert.ToInt32(ExtTerminal_PopupBackgroundBar.Value.ToString("X") & ExtTerminal_PopupForegroundBar.Value.ToString("X"), 16))
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", Convert.ToInt32(ExtTerminal_AccentBackgroundBar.Value.ToString("X") & ExtTerminal_AccentForegroundBar.Value.ToString("X"), 16))
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorSize", ExtTerminal_CursorSizeBar.Value)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "PopupColors", Convert.ToInt32(ExtTerminal_PopupBackgroundBar.Value.ToString("X") & ExtTerminal_PopupForegroundBar.Value.ToString("X"), 16))
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ScreenColors", Convert.ToInt32(ExtTerminal_AccentBackgroundBar.Value.ToString("X") & ExtTerminal_AccentForegroundBar.Value.ToString("X"), 16))
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorSize", ExtTerminal_CursorSizeBar.Value)
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, ExtTerminal_CursorColor.BackColor.Reverse).ToArgb)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", ExtTerminal_CursorStyle.SelectedIndex)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "WindowAlpha", ExtTerminal_OpacityBar.Value)
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", If(ExtTerminal_EnhancedTerminal.Checked, 1, 0))
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", If(ExtTerminal_LineSelection.Checked, 1, 0))
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorColor", Color.FromArgb(0, ExtTerminal_CursorColor.BackColor.Reverse).ToArgb)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "CursorType", ExtTerminal_CursorStyle.SelectedIndex)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "WindowAlpha", ExtTerminal_OpacityBar.Value)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "ForceV2", If(ExtTerminal_EnhancedTerminal.Checked, 1, 0))
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", If(ExtTerminal_LineSelection.Checked, 1, 0))
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
 
-            CP.EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
 
             If Not ExtTerminal_RasterToggle.Checked Then
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
             Else
                 Select Case RasterList.SelectedItem
                     Case "4x6"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 393220)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 393220)
 
                     Case "6x8"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
 
                     Case "6x9"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524294)
 
                     Case "8x8"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
 
                     Case "8x9"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524296)
 
                     Case "16x8"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524304)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 524304)
 
                     Case "5x12"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786437)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786437)
 
                     Case "7x12"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786439)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786439)
 
                     Case "8x12"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
 
                     Case "16x12"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786448)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 786448)
 
                     Case "12x16"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1048588)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1048588)
 
                     Case "10x18"
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1179658)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 1179658)
 
                     Case Else
-                        CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
+                        EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", 0)
 
                 End Select
             End If
 
             If ExtTerminal_RasterToggle.Checked Then
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", 48)
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", 48)
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", RegistryValueKind.String)
             Else
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
-                CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
             End If
 
 
 
-            CP.EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
+            EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100)
 
             MsgBox(My.Lang.ExtTer_Set, MsgBoxStyle.Information)
         Catch ex As Exception

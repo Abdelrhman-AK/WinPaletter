@@ -186,12 +186,12 @@ Public Class WinTerminal : Implements ICloneable
 
                     Select Case [Version]
                         Case Version.Stable
-                            If lin.StartsWith("terminal.", My._strIgnore) And Not lin.StartsWith("terminalpreview.", My._strIgnore) Then
+                            If lin.StartsWith("terminal.", My._ignore) And Not lin.StartsWith("terminalpreview.", My._ignore) Then
                                 Collected.Add(lin.Remove(0, "terminal.".Count))
                             End If
 
                         Case Version.Preview
-                            If lin.StartsWith("terminalpreview.", My._strIgnore) And Not lin.StartsWith("terminal.", My._strIgnore) Then
+                            If lin.StartsWith("terminalpreview.", My._ignore) And Not lin.StartsWith("terminal.", My._ignore) Then
                                 Collected.Add(lin.Remove(0, "terminalpreview.".Count))
                             End If
 
@@ -221,14 +221,14 @@ Public Class WinTerminal : Implements ICloneable
                 Themes = New List(Of ThemesList)
 
                 For Each lin As String In Collected
-                    If lin.StartsWith("theme= ", My._strIgnore) Then Theme = lin.Remove(0, "theme= ".Count)
-                    If lin.StartsWith("useacrylicintabrow= ", My._strIgnore) Then UseAcrylicInTabRow = lin.Remove(0, "useAcrylicInTabRow= ".Count)
-                    If lin.StartsWith("enabled= ", My._strIgnore) Then Enabled = lin.Remove(0, "enabled= ".Count)
+                    If lin.StartsWith("theme= ", My._ignore) Then Theme = lin.Remove(0, "theme= ".Count)
+                    If lin.StartsWith("useacrylicintabrow= ", My._ignore) Then UseAcrylicInTabRow = lin.Remove(0, "useAcrylicInTabRow= ".Count)
+                    If lin.StartsWith("enabled= ", My._ignore) Then Enabled = lin.Remove(0, "enabled= ".Count)
 
-                    If lin.StartsWith("default.", My._strIgnore) Then Defs.Add(lin.Remove(0, "default.".Count))
-                    If lin.StartsWith("schemes.", My._strIgnore) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
-                    If lin.StartsWith("profiles.", My._strIgnore) Then CollectedProfiles.Add(lin.Remove(0, "profiles.".Count))
-                    If lin.StartsWith("themes.", My._strIgnore) Then CollectedThemes.Add(lin.Remove(0, "themes.".Count))
+                    If lin.StartsWith("default.", My._ignore) Then Defs.Add(lin.Remove(0, "default.".Count))
+                    If lin.StartsWith("schemes.", My._ignore) Then CollectedColors.Add(lin.Remove(0, "schemes.".Count))
+                    If lin.StartsWith("profiles.", My._ignore) Then CollectedProfiles.Add(lin.Remove(0, "profiles.".Count))
+                    If lin.StartsWith("themes.", My._ignore) Then CollectedThemes.Add(lin.Remove(0, "themes.".Count))
                 Next
 
                 For Each lin As String In Defs

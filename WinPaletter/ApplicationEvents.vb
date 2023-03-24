@@ -20,9 +20,13 @@ Namespace My
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_AccessibilityCursors As String = PATH_UserProfile & "\AppData\Local\Microsoft\Windows\Cursors"
+        Public ReadOnly PATH_PS86_reg As String = "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
+        Public ReadOnly PATH_PS86_app As String = PATH_Windows & "\System32\WindowsPowerShell\v1.0"
+        Public ReadOnly PATH_PS64_reg As String = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
+        Public ReadOnly PATH_PS64_app As String = PATH_Windows & "\SysWOW64\WindowsPowerShell\v1.0"
 
-        Public ReadOnly _strIgnore As StringComparison = StringComparison.OrdinalIgnoreCase
-        Public VS As String = My.Application.appData & "\VisualStyles\Luna\luna.theme"
+        Public ReadOnly _ignore As StringComparison = StringComparison.OrdinalIgnoreCase
+        Public VS As String = Application.appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
