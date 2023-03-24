@@ -2,6 +2,40 @@
 
 ---
 
+### 1.0.7.5
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` |  24 Mar 2023 |
+
+> **What's New?**
+## The same as [1.0.7.4](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1074), except for:
+
+### 1. Windows Effects new items:
+- Change Explorer Bar for Windows 11 (Requires [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)) #117, Windows 10 and 8.1 #123
+- Disable Navigation bar #122 #105
+
+### 2. Windows 10
+- A new option is made to control Windows elements blur (Its toggle is located beside transparency's toggle)
+
+### 3. Changes and fixes:
+- UI improvements: #124
+- Some options in Windows Effects and cursors lose their effects after logoff. Now they are fixed.
+- Mechanism of reading from\writing to registry improved a bit
+- New options are added in `Settings` > `Theme Applying Behavior` to extend their applying scope in registry (All users). The options are for User Preference Mask, Logoff Wallpaper (Tested in Windows XP), Classic Colors, Metrics and Fonts, Cursors and Consoles.
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.4...v1.0.7.5) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.5) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.5) |
+
+---
+
 ### 1.0.7.4
 
 > **Info:**
