@@ -124,7 +124,7 @@ Partial Class Whatsnew
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(825, 377)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(825, 376)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 4
         '
@@ -136,7 +136,7 @@ Partial Class Whatsnew
         Me.TabPage1.Location = New System.Drawing.Point(154, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage1.Size = New System.Drawing.Size(667, 368)
         Me.TabPage1.TabIndex = 5
         Me.TabPage1.Text = "ExplorerPatcher"
         '
@@ -171,7 +171,7 @@ Partial Class Whatsnew
         Me.TabPage10.Location = New System.Drawing.Point(154, 4)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage10.Size = New System.Drawing.Size(667, 368)
         Me.TabPage10.TabIndex = 14
         Me.TabPage10.Text = "Cursors"
         '
@@ -206,7 +206,7 @@ Partial Class Whatsnew
         Me.TabPage11.Location = New System.Drawing.Point(154, 4)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage11.Size = New System.Drawing.Size(667, 368)
         Me.TabPage11.TabIndex = 15
         Me.TabPage11.Text = "Windows Switcher"
         '
@@ -242,7 +242,7 @@ Partial Class Whatsnew
         Me.TabPage2.Location = New System.Drawing.Point(154, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage2.Size = New System.Drawing.Size(667, 368)
         Me.TabPage2.TabIndex = 6
         Me.TabPage2.Text = "Windows Effects"
         '
@@ -278,7 +278,7 @@ Partial Class Whatsnew
         Me.TabPage3.Location = New System.Drawing.Point(154, 4)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage3.Size = New System.Drawing.Size(667, 368)
         Me.TabPage3.TabIndex = 16
         Me.TabPage3.Text = "Windows 10"
         '
@@ -315,7 +315,7 @@ Partial Class Whatsnew
         Me.TabPage4.Location = New System.Drawing.Point(154, 4)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage4.Size = New System.Drawing.Size(667, 368)
         Me.TabPage4.TabIndex = 17
         Me.TabPage4.Text = "Classic Colors"
         '
@@ -352,7 +352,7 @@ Partial Class Whatsnew
         Me.TabPage5.Location = New System.Drawing.Point(154, 4)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(667, 369)
+        Me.TabPage5.Size = New System.Drawing.Size(667, 368)
         Me.TabPage5.TabIndex = 18
         Me.TabPage5.Text = "Changes and fixes"
         '
@@ -390,7 +390,7 @@ Partial Class Whatsnew
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(12, 457)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(135, 35)
+        Me.XenonButton3.Size = New System.Drawing.Size(100, 34)
         Me.XenonButton3.TabIndex = 3
         Me.XenonButton3.Text = "Changelog"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -405,9 +405,9 @@ Partial Class Whatsnew
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(627, 457)
+        Me.XenonButton2.Location = New System.Drawing.Point(647, 457)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(90, 35)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 2
         Me.XenonButton2.Text = "Back"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -421,9 +421,9 @@ Partial Class Whatsnew
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(723, 457)
+        Me.XenonButton1.Location = New System.Drawing.Point(733, 457)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(90, 35)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 1
         Me.XenonButton1.Text = "Next"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -433,7 +433,7 @@ Partial Class Whatsnew
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(825, 504)
+        Me.ClientSize = New System.Drawing.Size(825, 503)
         Me.Controls.Add(Me.XenonAnimatedBox1)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonButton3)

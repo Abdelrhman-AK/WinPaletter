@@ -1221,7 +1221,7 @@ Public Class Win32UI
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
         If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
 
-        Dim condition0 As Boolean = (XenonComboBox1.SelectedIndex = 0)
+        Dim condition0 As Boolean = (XenonComboBox1.SelectedIndex <= 3)
         Dim condition1 As Boolean = XenonComboBox1.SelectedItem.ToString.StartsWith("Windows Classic (3.1)")
         Dim condition2 As Boolean = XenonComboBox1.SelectedItem.ToString.StartsWith("Windows 3.1 - ")
 

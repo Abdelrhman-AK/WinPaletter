@@ -631,9 +631,9 @@ Partial Class WindowsTerminal
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(701, 602)
+        Me.XenonButton2.Location = New System.Drawing.Point(700, 600)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 106
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -765,9 +765,9 @@ Partial Class WindowsTerminal
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(917, 602)
+        Me.XenonButton1.Location = New System.Drawing.Point(916, 600)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(79, 30)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 105
         Me.XenonButton1.Text = "Load"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -1417,9 +1417,9 @@ Partial Class WindowsTerminal
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(787, 602)
+        Me.XenonButton10.Location = New System.Drawing.Point(786, 600)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(124, 34)
         Me.XenonButton10.TabIndex = 107
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -1675,7 +1675,7 @@ Partial Class WindowsTerminal
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(471, 451)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(471, 454)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 201
         '
@@ -1686,7 +1686,7 @@ Partial Class WindowsTerminal
         Me.TabPage1.Location = New System.Drawing.Point(104, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(363, 443)
+        Me.TabPage1.Size = New System.Drawing.Size(363, 446)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Colors"
         '
@@ -1911,7 +1911,7 @@ Partial Class WindowsTerminal
         Me.TabPage5.Location = New System.Drawing.Point(104, 4)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(363, 443)
+        Me.TabPage5.Size = New System.Drawing.Size(363, 446)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Theme"
         '
@@ -1961,7 +1961,7 @@ Partial Class WindowsTerminal
         Me.TabPage2.Location = New System.Drawing.Point(104, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(363, 443)
+        Me.TabPage2.Size = New System.Drawing.Size(363, 446)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Fonts"
         '
@@ -2070,7 +2070,7 @@ Partial Class WindowsTerminal
         Me.TabPage3.Location = New System.Drawing.Point(104, 4)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(363, 443)
+        Me.TabPage3.Size = New System.Drawing.Size(363, 446)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Cursor"
         '
@@ -2155,7 +2155,7 @@ Partial Class WindowsTerminal
         Me.TabPage4.Location = New System.Drawing.Point(104, 4)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(363, 443)
+        Me.TabPage4.Size = New System.Drawing.Size(363, 446)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Background"
         '
@@ -2248,7 +2248,7 @@ Partial Class WindowsTerminal
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1008, 643)
+        Me.ClientSize = New System.Drawing.Size(1008, 646)
         Me.Controls.Add(Me.XenonGroupBox22)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonGroupBox3)

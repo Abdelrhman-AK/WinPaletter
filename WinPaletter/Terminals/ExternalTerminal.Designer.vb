@@ -443,9 +443,9 @@ Partial Class ExternalTerminal
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(765, 691)
+        Me.XenonButton10.Location = New System.Drawing.Point(774, 685)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 124
         Me.XenonButton10.Text = "Manual apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -459,9 +459,9 @@ Partial Class ExternalTerminal
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(679, 691)
+        Me.XenonButton2.Location = New System.Drawing.Point(688, 685)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 123
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -473,9 +473,9 @@ Partial Class ExternalTerminal
         Me.XenonCheckBox1.Checked = False
         Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(14, 694)
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(14, 690)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(656, 24)
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(668, 24)
         Me.XenonCheckBox1.TabIndex = 125
         Me.XenonCheckBox1.Text = "Allow non monospace Fonts (causes wrong font renderering in enhanced terminal, wo" &
     "n't be used in legacy terminal)"
@@ -513,7 +513,7 @@ Partial Class ExternalTerminal
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(421, 556)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(421, 558)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 201
         '
@@ -525,7 +525,7 @@ Partial Class ExternalTerminal
         Me.TabPage1.Location = New System.Drawing.Point(104, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(313, 548)
+        Me.TabPage1.Size = New System.Drawing.Size(313, 550)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Colors"
         '
@@ -1170,7 +1170,7 @@ Partial Class ExternalTerminal
         Me.TabPage2.Location = New System.Drawing.Point(104, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(313, 548)
+        Me.TabPage2.Size = New System.Drawing.Size(313, 550)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Fonts"
         '
@@ -1401,7 +1401,7 @@ Partial Class ExternalTerminal
         Me.TabPage3.Location = New System.Drawing.Point(104, 4)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(313, 548)
+        Me.TabPage3.Size = New System.Drawing.Size(313, 550)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Cursor"
         '
@@ -1601,7 +1601,7 @@ Partial Class ExternalTerminal
         Me.TabPage4.Location = New System.Drawing.Point(104, 4)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(313, 548)
+        Me.TabPage4.Size = New System.Drawing.Size(313, 550)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Tweaks"
         '
@@ -1760,7 +1760,7 @@ Partial Class ExternalTerminal
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(901, 729)
+        Me.ClientSize = New System.Drawing.Size(901, 731)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonSeparator2)
         Me.Controls.Add(Me.XenonCheckBox1)

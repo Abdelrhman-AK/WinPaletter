@@ -351,9 +351,17 @@ Public Class Metrics_Fonts
             Label1.Font = FontDialog1.Font
             XenonWindow1.Font = FontDialog1.Font
             RetroWindow1.Font = FontDialog1.Font
+            XenonWindow4.Font = FontDialog1.Font
+            RetroWindow3.Font = FontDialog1.Font
+            XenonWindow6.Font = FontDialog1.Font
+            RetroWindow5.Font = FontDialog1.Font
             Label1.Text = FontDialog1.Font.Name
             XenonWindow1.Refresh()
             RetroWindow1.Refresh()
+            XenonWindow4.Refresh()
+            RetroWindow3.Refresh()
+            XenonWindow6.Refresh()
+            RetroWindow5.Refresh()
         End If
     End Sub
 

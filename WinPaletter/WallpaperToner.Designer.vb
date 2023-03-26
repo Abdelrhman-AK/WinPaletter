@@ -85,7 +85,7 @@ Partial Class WallpaperToner
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 545)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 548)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(619, 27)
         Me.XenonAlertBox1.TabIndex = 206
@@ -102,9 +102,9 @@ Partial Class WallpaperToner
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(313, 583)
+        Me.XenonButton10.Location = New System.Drawing.Point(330, 583)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 205
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -118,9 +118,9 @@ Partial Class WallpaperToner
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(227, 583)
+        Me.XenonButton7.Location = New System.Drawing.Point(244, 583)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 204
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -135,9 +135,9 @@ Partial Class WallpaperToner
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(443, 583)
+        Me.XenonButton8.Location = New System.Drawing.Point(451, 583)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
+        Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 203
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -603,7 +603,7 @@ Partial Class WallpaperToner
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(643, 625)
+        Me.ClientSize = New System.Drawing.Size(643, 629)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton7)

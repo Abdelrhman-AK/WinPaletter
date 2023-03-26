@@ -210,9 +210,9 @@ Partial Class Lang_JSON_Update
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(505, 246)
+        Me.XenonButton7.Location = New System.Drawing.Point(534, 241)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(96, 29)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 203
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -227,9 +227,9 @@ Partial Class Lang_JSON_Update
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(607, 246)
+        Me.XenonButton3.Location = New System.Drawing.Point(620, 241)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(108, 29)
+        Me.XenonButton3.Size = New System.Drawing.Size(95, 34)
         Me.XenonButton3.TabIndex = 202
         Me.XenonButton3.Text = "Save as ..."
         Me.XenonButton3.UseVisualStyleBackColor = False

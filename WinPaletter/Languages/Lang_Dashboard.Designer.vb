@@ -180,9 +180,9 @@ Partial Class Lang_Dashboard
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(527, 246)
+        Me.XenonButton7.Location = New System.Drawing.Point(543, 241)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(96, 29)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 202
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False

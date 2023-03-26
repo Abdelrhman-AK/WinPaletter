@@ -143,7 +143,6 @@ Public Class Localizer : Implements IDisposable
     Property CollapseNote As String = "Collapse note"
     Property Bug_NoReport As String = "There is no previous saved report in ""{0}"""
     Property NewUpdate As String = "A new update is available"
-    Property OpenForActions As String = "Open updates form for actions."
     Property By As String = "By"
     Property Done As String = "Done"
     Property Show As String = "Show"
@@ -177,38 +176,38 @@ Public Class Localizer : Implements IDisposable
     Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in Main Form"
     Property KillingExplorer As String = "Killing Explorer (To be restarted)"
     Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"
-    Property ErrorExplorerRestart As String = "Error in restarting explorer. Relaunch it in Task Manager (Open Task Manager > Run New Task > Type Explorer.exe and launch)"
+    Property ErrorExplorerRestart As String = "Error in restarting explorer. Relaunch it in Task Manager (Open Task Manager > Run new task > Type ""Explorer.exe"" and launch)"
     Property Scaling As String = "Scaling"
     Property LanguageRestart As String = "To apply this language, save settings and restart WinPaletter."
     Property WPTH_OldGen_LoadError As String = "Couldn't load preferences saved in the theme file made by old version of WinPaletter. Anyway, loading will continue without it."
     Property WPTH_OldGen_SaveError As String = "Couldn't save preferences to be suitable for old version of WinPaletter. Anyway, saving will continue without it."
     Property CP_11_StartMenu_Taskbar_AC As String = "Start Menu, Taskbar && Action Center"
-    Property CP_11_ACHover_Links As String = "Action Center Hover && Links"
-    Property CP_EP_ACButton_TaskbarAppLine As String = "Action Center Buttons && Taskbar App Underline"
-    Property CP_11_Lines_Toggles_Buttons As String = "Lines, Toggles && Buttons"
-    Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, Toggles, Buttons && Taskbar Tray (Overflow)"
-    Property CP_11_OverflowTray As String = "Taskbar Tray Overflow (Requires 22H2, Accent on Taskbar Enabled)"
-    Property CP_11_StartMenu_AC As String = "Start Menu && Action Center Colors"
-    Property CP_11_Taskbar As String = "Taskbar Color"
-    Property CP_11_Settings As String = "Settings Icons, Text Selection, Focus Dots && Some Pressed Buttons"
-    Property CP_11_SomePressedButtons As String = "Some Pressed Buttons"
-    Property CP_UWPBackground As String = "UWP Dialogs Background (Windows 8.1 remnants in {0})"
-    Property CP_10_ACLinks As String = "Action Center Links"
-    Property CP_10_TaskbarAppUnderline As String = "Taskbar App Underline"
-    Property CP_10_StartMenuIconHover As String = "Start Menu Icon Hover"
-    Property CP_10_Settings_Links_SomeBtns As String = "Settings Icons, Links && Some Pressed Buttons"
-    Property CP_10_Settings_Links_Taskbar_SomeBtns As String = "Settings Icons, Links, Taskbar Focused App && Some Pressed Buttons"
-    Property CP_10_Settings_Links_TaskbarUndeline_SomeBtns As String = "Settings Icons, Links, Taskbar App Underline && Some Pressed Buttons"
-    Property CP_10_Hamburger As String = "Sliding Hamburger Menu"
+    Property CP_11_ACHover_Links As String = "Action Center hover && links"
+    Property CP_EP_ACButton_TaskbarAppLine As String = "Action Center buttons && Taskbar app underline"
+    Property CP_11_Lines_Toggles_Buttons As String = "Lines, toggles && buttons"
+    Property CP_11_Lines_Toggles_Buttons_Overflow As String = "Lines, toggles, buttons && Taskbar tray (overflow)"
+    Property CP_11_OverflowTray As String = "Taskbar tray overflow (requires 22H2, accent on taskbar enabled)"
+    Property CP_11_StartMenu_AC As String = "Start Menu && Action Center colors"
+    Property CP_11_Taskbar As String = "Taskbar color"
+    Property CP_11_Settings As String = "Settings icons, text selection, focus dots && some pressed buttons"
+    Property CP_11_SomePressedButtons As String = "Some pressed buttons"
+    Property CP_UWPBackground As String = "UWP dialogs background (Windows 8.1 remnants in {0})"
+    Property CP_10_ACLinks As String = "Action Center links"
+    Property CP_10_TaskbarAppUnderline As String = "Taskbar app underline"
+    Property CP_10_StartMenuIconHover As String = "Start Menu icon hover"
+    Property CP_10_Settings_Links_SomeBtns As String = "Settings icons, links && some pressed buttons"
+    Property CP_10_Settings_Links_Taskbar_SomeBtns As String = "Settings icons, links, taskbar focused app && some pressed buttons"
+    Property CP_10_Settings_Links_TaskbarUndeline_SomeBtns As String = "Settings icons, links, taskbar app underline && some pressed buttons"
+    Property CP_10_Hamburger As String = "Sliding hamburger menu"
     Property CP_10_StartMenu_AC As String = "Start Menu && Action Center"
-    Property CP_EP_StartMenu_OverflowMenus As String = "Start Menu && Overflow Menus"
-    Property CP_EP_StartMenu_ActionCenterButtons As String = "Start Menu && Action Center Buttons"
-    Property CP_EP_ActionCenterBackground As String = "Action Center Background"
-    Property CP_10_StartMenu_AC_TaskbarActiveApp As String = "Start Menu, Action Center && Taskbar Active App"
+    Property CP_EP_StartMenu_OverflowMenus As String = "Start Menu && overflow menus"
+    Property CP_EP_StartMenu_ActionCenterButtons As String = "Start Menu && Action Center buttons"
+    Property CP_EP_ActionCenterBackground As String = "Action Center background"
+    Property CP_10_StartMenu_AC_TaskbarActiveApp As String = "Start Menu, Action Center && Taskbar active app"
     Property CP_10_Taskbar As String = "Taskbar"
-    Property CP_EP_Taskbar_AppUnderline As String = "Taskbar && App Underline"
-    Property CP_10_Taskbar_ACLinks As String = "Taskbar Background Color && Action Center Links"
-    Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar Focused App && Start Menu Button Hover"
+    Property CP_EP_Taskbar_AppUnderline As String = "Taskbar && app underline"
+    Property CP_10_Taskbar_ACLinks As String = "Taskbar background color && Action Center links"
+    Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar focused app && Start Menu button hover"
     Property CP_Undefined As String = "Undefined"
     Property CP_AccentOnTaskbarTib As String = "Applying accent on taskbar only isn't effective only for Windows 10 2015 versions, but it is effective for higher versions."
     Property CP_Time As String = "It took {0} seconds"
@@ -245,14 +244,10 @@ Public Class Localizer : Implements IDisposable
     Property CP_Skip_Terminals As String = "Skipping Windows Terminal Stable & Preview as they are disabled"
     Property CP_Skip_Terminals_NotSupported As String = "Skipping Windows Terminal Stable, Preview. Not supported in this OS"
     Property CP_Skip_TerminalPreview_NotInstalled As String = "Skipping Windows Terminal Preview as it isn't installed"
-    Property CP_Skip_TerminalPreview_DeflectionNotFound As String = "Skipping Windows Terminal Preview as deflected JSON isn't found"
+    Property CP_Skip_TerminalPreview_DeflectionNotFound As String = "Skipping Windows Terminal Preview as deflected JSON doesn't exist"
     Property CP_Skip_TerminalStable_NotInstalled As String = "Skipping Windows Terminal Stable as it isn't installed"
-    Property CP_Skip_TerminalStable_DeflectionNotFound As String = "Skipping Windows Stable Preview as deflected JSON isn't found"
+    Property CP_Skip_TerminalStable_DeflectionNotFound As String = "Skipping Windows Stable Preview as deflected JSON doesn't exist"
     Property CP_Skip_Cursors As String = "Skipping Windows Cursors as it is disabled"
-    Property CP_Restricted_Cursors As String = "Modifying Windows Cursors is restricted from settings"
-    Property CP_Applying_TerminalStable As String = "Applying Windows Terminal Stable"
-    Property CP_AppliedWithErrors As String = "Applying theme done but with error/s. It took {0} seconds"
-    Property CP_Applied As String = "Applying theme done. It took {0} seconds"
     Property CP_Skip_CMD As String = "Skipping Command Prompt as it is disabled"
     Property CP_Applying_PS64 As String = "Applying PowerShell x64"
     Property CP_Skip_PS64 As String = "Skipping PowerShell x64 as it is disabled"
@@ -276,18 +271,22 @@ Public Class Localizer : Implements IDisposable
     Property CP_W7_Error As String = "Error occurred during applying Windows 7 theme"
     Property CP_WVista_Error As String = "Error occurred during applying Windows Vista theme"
     Property CP_W8_Error As String = "Error occurred during applying Windows 8.1 scheme"
-    Property CP_WXP_Error As String = "Error occurred during applying Windows XP themr"
+    Property CP_WXP_Error As String = "Error occurred during applying Windows XP theme"
     Property CP_Error_Cursors As String = "Error occurred during applying Windows Cursors"
     Property CP_Error_SetDesktop As String = "Error occurred during applying Desktop for all users"
     Property CP_Error_Metrics As String = "Error occurred during applying Windows Metrics and Fonts"
     Property CP_Error_AltTab As String = "Error occurred during applying Windows Switcher (Alt+Tab) appearance"
     Property CP_Error_TerminalPreview As String = "Error occurred during applying Windows Terminal Preview"
     Property CP_Error_TerminalStable As String = "Error occurred during applying Windows Terminal Stable"
-    Property CP_MetricsHighDPIAlert As String = "Please Logoff and Logon after setting Metrics and fonts with a high DPI"
+    Property CP_MetricsHighDPIAlert As String = "Please Logoff and Logon after setting Metrics and Fonts with a high DPI"
+    Property CP_Restricted_Cursors As String = "Modifying Windows Cursors is restricted from settings"
+    Property CP_Applying_TerminalStable As String = "Applying Windows Terminal Stable"
+    Property CP_AppliedWithErrors As String = "Applying theme done but with error/s. It took {0} seconds"
+    Property CP_Applied As String = "Applying theme done. It took {0} seconds"
     Property CP_AllDone As String = "All operations are done"
     Property CP_ErrorHappened As String = "Error\s happened. Press on ""Show Errors"" for details"
     Property CP_LogWillClose As String = "This log will close after {0} second\s"
-    Property CP_RestoreCursorsError As String = "Error occurred during resetting cursors to aero. Anyway, uninstallation will continue."
+    Property CP_RestoreCursorsError As String = "Error occurred during resetting cursors to aero. Anyway, process will continue."
     Property CP_RestoreCursorsErrorPressOK As String = "Pressing OK will show details of exception error."
     Property CP_RestoreCursorsTip As String = "If you want to restore default cursors, go to Control Panel > Mouse > Pointers"
     Property Lang_HasLeftToRight As String = "It has left to right layout"
@@ -314,7 +313,6 @@ Public Class Localizer : Implements IDisposable
     Property EmptyVer As String = "You can't leave theme version empty. Please type a version to it in this style (x.x.x.x), replacing (x) by numbers"
     Property WrongVerFormat As String = "Wrong version format. Please type the version to it in this style (x.x.x.x), replacing (x) by numbers."
     Property Extracting As String = "Extracting palette from image depends on your device's performance, maximum palette colors number, image quality and its resolution ..."
-    Property Sorting As String = "Sorting colors in a palette ..."
     Property Version As String = "Version"
     Property Checking As String = "Checking ..."
     Property DoAction_Update As String = "Do action"
@@ -369,50 +367,6 @@ Public Class Localizer : Implements IDisposable
     Property OldMSTheme_ThemeVersion As String = "Theme version: {0}"
 
 #End Region
-
-    Public Sub AdjustFonts()
-        Exit Sub
-
-        Dim f As String = "Segoe UI"
-
-        If My.W11 And Not My.Lang.RightToLeft Then
-            f = "Segoe UI Variable Display"
-
-            With MainFrm.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.Label10 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.themename_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With MainFrm.author_lbl : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-            With ColorPickerDlg.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ColorPickerDlg.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-            With About.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With About.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With About.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-            With ComplexSave.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ComplexSave.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With ComplexSave.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-            With SettingsX.Label17 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label2 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label3 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label5 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label6 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With SettingsX.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-
-            With Whatsnew.Label4 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label22 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label24 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label1 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-            With Whatsnew.Label7 : .Font = New Font(f, .Font.Size, .Font.Style) : End With
-        End If
-
-    End Sub
 
     Public Sub ExportJSON(File As String)
         Dim JSON_Overall As New JObject()
@@ -613,7 +567,7 @@ Public Class Localizer : Implements IDisposable
                     End With
 
                 Next
-                LoadInternal()
+
             Else
                 If [_Form].Visible Then
                     [_Form].Visible = False
@@ -621,9 +575,6 @@ Public Class Localizer : Implements IDisposable
                 End If
                 Populate(PopCtrlList, [_Form])
             End If
-
-
-            AdjustFonts()
 
             PopCtrlList.Clear()
 
@@ -633,10 +584,6 @@ Public Class Localizer : Implements IDisposable
 
             FList.Clear()
         End If
-    End Sub
-
-    Sub LoadInternal()
-        AdjustFonts()
     End Sub
 
     Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)

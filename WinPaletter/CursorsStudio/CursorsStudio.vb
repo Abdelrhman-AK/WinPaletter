@@ -178,6 +178,10 @@ Public Class CursorsStudio
         _SelectedControl = DirectCast(sender, CursorControl)
         ApplyColorsFromCursor(_SelectedControl)
         XenonButton1.Enabled = True
+        XenonGroupBox9.Enabled = True
+        XenonGroupBox6.Enabled = True
+        XenonGroupBox5.Enabled = True
+        XenonGroupBox2.Enabled = True
     End Sub
 
     Sub ApplyColorsFromCursor([CursorControl] As CursorControl)

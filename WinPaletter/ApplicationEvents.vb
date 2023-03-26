@@ -31,7 +31,7 @@ Namespace My
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows XP
+        ''' Boolean Represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
         ''' </summary>
         Public StartedWithClassicTheme As Boolean = False
 
@@ -627,7 +627,7 @@ Namespace My
                 Try
                     Lang.LoadLanguageFromJSON([Settings].Language_File)
                 Catch ex As Exception
-                    MsgBox("There is an error occured during loading language.", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
+                    MsgBox("There is an error occurred during loading language", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
                 End Try
             End If
 

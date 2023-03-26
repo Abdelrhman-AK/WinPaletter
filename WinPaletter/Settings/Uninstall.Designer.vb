@@ -228,9 +228,9 @@ Partial Class Uninstall
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(88, Byte), Integer), CType(CType(59, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(567, 391)
+        Me.XenonButton6.Location = New System.Drawing.Point(578, 392)
         Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(116, 35)
+        Me.XenonButton6.Size = New System.Drawing.Size(105, 34)
         Me.XenonButton6.TabIndex = 21
         Me.XenonButton6.Text = "Uninstall"
         Me.XenonButton6.UseVisualStyleBackColor = False
@@ -244,9 +244,9 @@ Partial Class Uninstall
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(445, 391)
+        Me.XenonButton2.Location = New System.Drawing.Point(492, 392)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(116, 35)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 22
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -299,9 +299,9 @@ Partial Class Uninstall
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 396)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 397)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(424, 24)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(474, 24)
         Me.XenonAlertBox1.TabIndex = 26
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "WinPaletter won't be able to delete itself, so delete the exe file after uninstal" &

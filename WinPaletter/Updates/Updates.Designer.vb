@@ -338,9 +338,9 @@ Partial Class Updates
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(150, 382)
+        Me.XenonButton3.Location = New System.Drawing.Point(162, 382)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(90, 28)
+        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton3.TabIndex = 2
         Me.XenonButton3.Text = "Cancel"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -355,9 +355,9 @@ Partial Class Updates
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(246, 382)
+        Me.XenonButton1.Location = New System.Drawing.Point(248, 382)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(161, 28)
+        Me.XenonButton1.Size = New System.Drawing.Size(161, 34)
         Me.XenonButton1.TabIndex = 0
         Me.XenonButton1.Text = "Check for updates"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -367,7 +367,7 @@ Partial Class Updates
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(421, 422)
+        Me.ClientSize = New System.Drawing.Size(421, 428)
         Me.Controls.Add(Me.XenonAnimatedBox1)
         Me.Controls.Add(Me.XenonCheckBox1)
         Me.Controls.Add(Me.PictureBox5)

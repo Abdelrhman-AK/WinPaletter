@@ -36,9 +36,9 @@ Partial Class Saving_ex_list
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(435, 375)
+        Me.XenonButton1.Location = New System.Drawing.Point(485, 375)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(130, 30)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 30)
         Me.XenonButton1.TabIndex = 1
         Me.XenonButton1.Text = "Close"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -52,7 +52,7 @@ Partial Class Saving_ex_list
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(139, 375)
+        Me.XenonButton2.Location = New System.Drawing.Point(189, 375)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(290, 30)
         Me.XenonButton2.TabIndex = 2

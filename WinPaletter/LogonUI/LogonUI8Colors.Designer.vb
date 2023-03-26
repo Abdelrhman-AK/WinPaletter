@@ -73,7 +73,7 @@ Partial Class LogonUI8Colors
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(53, 12)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(360, 35)
+        Me.Label1.Size = New System.Drawing.Size(359, 35)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Background color (Only for Windows 8, not 8.1)"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -87,9 +87,9 @@ Partial Class LogonUI8Colors
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(117, 336)
+        Me.XenonButton2.Location = New System.Drawing.Point(146, 315)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 36)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 70
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -104,9 +104,9 @@ Partial Class LogonUI8Colors
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(203, 336)
+        Me.XenonButton1.Location = New System.Drawing.Point(232, 315)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(210, 36)
+        Me.XenonButton1.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton1.TabIndex = 69
         Me.XenonButton1.Text = "Load into current theme"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -417,7 +417,7 @@ Partial Class LogonUI8Colors
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(425, 384)
+        Me.ClientSize = New System.Drawing.Size(424, 361)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonButton1)
         Me.Controls.Add(Me.color24)

@@ -3840,6 +3840,7 @@ Public Class MainFrm
 
             ApplyCPValues(CP)
             ApplyLivePreviewFromCP(CP)
+            AdjustClassicPreview()
         End If
     End Sub
 
@@ -3900,6 +3901,7 @@ Public Class MainFrm
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
+        AdjustClassicPreview()
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick

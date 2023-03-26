@@ -3915,13 +3915,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Dim F As New Font(Font.Name, Font.Size, Font.Style)
 
         Select Case PropName.ToLower
-            Case "Name", My._ignore
+            Case "Name".ToLower
                 F = New Font(PropValue, Font.Size, Font.Style)
 
-            Case "Size", My._ignore
+            Case "Size".ToLower
                 F = New Font(Font.Name, CSng(PropValue), Font.Style)
 
-            Case "Style", My._ignore
+            Case "Style".ToLower
                 F = New Font(Font.Name, Font.Size, ReturnFontStyle(PropValue))
 
         End Select
@@ -3933,19 +3933,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If Not [Value].Contains(",") Then
 
             Select Case [Value].ToLower
-                Case "Bold", My._ignore
+                Case "Bold".ToLower
                     Return FontStyle.Bold
 
-                Case "Italic", My._ignore
+                Case "Italic".ToLower
                     Return FontStyle.Italic
 
-                Case "Regular", My._ignore
+                Case "Regular".ToLower
                     Return FontStyle.Regular
 
-                Case "Strikeout", My._ignore
+                Case "Strikeout".ToLower
                     Return FontStyle.Strikeout
 
-                Case "Underline", My._ignore
+                Case "Underline".ToLower
                     Return FontStyle.Underline
 
                 Case Else
@@ -3960,19 +3960,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim val As String = x.Trim
 
                 Select Case val.ToLower
-                    Case "Bold", My._ignore
+                    Case "Bold".ToLower
                         Collection += FontStyle.Bold
 
-                    Case "Italic", My._ignore
+                    Case "Italic".ToLower
                         Collection += FontStyle.Italic
 
-                    Case "Regular", My._ignore
+                    Case "Regular".ToLower
                         Collection += FontStyle.Regular
 
-                    Case "Strikeout", My._ignore
+                    Case "Strikeout".ToLower
                         Collection += FontStyle.Strikeout
 
-                    Case "Underline", My._ignore
+                    Case "Underline".ToLower
                         Collection += FontStyle.Underline
 
                     Case Else
@@ -4575,7 +4575,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If lin.StartsWith("*FontSubstitute_MSShellDlg= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
                     If lin.StartsWith("*FontSubstitute_MSShellDlg2= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
-                    If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
+                    If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._ignore) Then MetricsFonts.FontSubstitute_SegoeUI = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
 #End Region
 
 #Region "AltTab"
@@ -4649,22 +4649,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Dim Prop As String = x.Split("=")(0).ToString.Split("_")(1)
 
                         Select Case FontName.ToLower
-                            Case "Caption", My._ignore
+                            Case "Caption".ToLower
                                 MetricsFonts.CaptionFont = SetToFont(Prop, Value, MetricsFonts.CaptionFont)
 
-                            Case "Icon", My._ignore
+                            Case "Icon".ToLower
                                 MetricsFonts.IconFont = SetToFont(Prop, Value, MetricsFonts.IconFont)
 
-                            Case "Menu", My._ignore
+                            Case "Menu".ToLower
                                 MetricsFonts.MenuFont = SetToFont(Prop, Value, MetricsFonts.MenuFont)
 
-                            Case "Message", My._ignore
+                            Case "Message".ToLower
                                 MetricsFonts.MessageFont = SetToFont(Prop, Value, MetricsFonts.MessageFont)
 
-                            Case "SmCaption", My._ignore
+                            Case "SmCaption".ToLower
                                 MetricsFonts.SmCaptionFont = SetToFont(Prop, Value, MetricsFonts.SmCaptionFont)
 
-                            Case "Status", My._ignore
+                            Case "Status".ToLower
                                 MetricsFonts.StatusFont = SetToFont(Prop, Value, MetricsFonts.StatusFont)
 
                         End Select

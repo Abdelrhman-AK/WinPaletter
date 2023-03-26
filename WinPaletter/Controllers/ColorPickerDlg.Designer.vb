@@ -145,9 +145,9 @@ Partial Class ColorPickerDlg
         '
         Me.ScreenColorPicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ScreenColorPicker1.Color = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ScreenColorPicker1.Location = New System.Drawing.Point(12, 559)
+        Me.ScreenColorPicker1.Location = New System.Drawing.Point(12, 560)
         Me.ScreenColorPicker1.Name = "ScreenColorPicker1"
-        Me.ScreenColorPicker1.Size = New System.Drawing.Size(234, 34)
+        Me.ScreenColorPicker1.Size = New System.Drawing.Size(267, 33)
         Me.ScreenColorPicker1.Text = "Drag me and release to pick a color"
         '
         'BackgroundWorker1
@@ -424,10 +424,10 @@ Partial Class ColorPickerDlg
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(253, 559)
+        Me.XenonButton3.Location = New System.Drawing.Point(286, 560)
         Me.XenonButton3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(99, 34)
+        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton3.TabIndex = 5
         Me.XenonButton3.Text = "Cancel"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -441,10 +441,10 @@ Partial Class ColorPickerDlg
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(355, 559)
+        Me.XenonButton2.Location = New System.Drawing.Point(374, 559)
         Me.XenonButton2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(99, 34)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 4
         Me.XenonButton2.Text = "Select"
         Me.XenonButton2.UseVisualStyleBackColor = False

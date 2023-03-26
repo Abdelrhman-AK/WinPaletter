@@ -255,9 +255,9 @@ Partial Class LogonUIXP
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(277, 433)
+        Me.XenonButton10.Location = New System.Drawing.Point(294, 429)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 210
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -271,9 +271,9 @@ Partial Class LogonUIXP
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(191, 433)
+        Me.XenonButton7.Location = New System.Drawing.Point(208, 429)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 209
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -288,9 +288,9 @@ Partial Class LogonUIXP
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(407, 433)
+        Me.XenonButton8.Location = New System.Drawing.Point(415, 429)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
+        Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 208
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False

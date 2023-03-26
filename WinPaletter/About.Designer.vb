@@ -221,9 +221,9 @@ Partial Class About
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(87, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(276, 544)
+        Me.XenonButton1.Location = New System.Drawing.Point(276, 543)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(80, 33)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 16
         Me.XenonButton1.Text = "Github"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -238,9 +238,9 @@ Partial Class About
         Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(362, 544)
+        Me.XenonButton2.Location = New System.Drawing.Point(362, 543)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(79, 33)
+        Me.XenonButton2.Size = New System.Drawing.Size(79, 34)
         Me.XenonButton2.TabIndex = 17
         Me.XenonButton2.Text = "Reddit"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -254,9 +254,9 @@ Partial Class About
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(447, 544)
+        Me.XenonButton3.Location = New System.Drawing.Point(447, 543)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(66, 33)
+        Me.XenonButton3.Size = New System.Drawing.Size(66, 34)
         Me.XenonButton3.TabIndex = 18
         Me.XenonButton3.Text = "OK"
         Me.XenonButton3.UseVisualStyleBackColor = False

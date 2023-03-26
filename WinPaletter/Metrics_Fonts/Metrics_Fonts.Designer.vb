@@ -1908,13 +1908,13 @@ Partial Class Metrics_Fonts
         'Item0ToolStripMenuItem
         '
         Me.Item0ToolStripMenuItem.Name = "Item0ToolStripMenuItem"
-        Me.Item0ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.Item0ToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.Item0ToolStripMenuItem.Text = "Item 0"
         '
         'Item1ToolStripMenuItem
         '
         Me.Item1ToolStripMenuItem.Name = "Item1ToolStripMenuItem"
-        Me.Item1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.Item1ToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.Item1ToolStripMenuItem.Text = "Item 1"
         '
         'MenuParent2ToolStripMenuItem
@@ -1927,20 +1927,20 @@ Partial Class Metrics_Fonts
         'ItemXToolStripMenuItem
         '
         Me.ItemXToolStripMenuItem.Name = "ItemXToolStripMenuItem"
-        Me.ItemXToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ItemXToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
         Me.ItemXToolStripMenuItem.Text = "Item X"
         '
         'ItemYToolStripMenuItem
         '
         Me.ItemYToolStripMenuItem.Name = "ItemYToolStripMenuItem"
-        Me.ItemYToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ItemYToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
         Me.ItemYToolStripMenuItem.Text = "Item Y"
         '
         'ItemZToolStripMenuItem
         '
         Me.ItemZToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Item4ToolStripMenuItem, Me.Item3ToolStripMenuItem})
         Me.ItemZToolStripMenuItem.Name = "ItemZToolStripMenuItem"
-        Me.ItemZToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ItemZToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
         Me.ItemZToolStripMenuItem.Text = "Item Z"
         '
         'Item4ToolStripMenuItem
@@ -2050,13 +2050,13 @@ Partial Class Metrics_Fonts
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(107, 22)
         Me.ToolStripMenuItem2.Text = "Item 0"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(107, 22)
         Me.ToolStripMenuItem3.Text = "Item 1"
         '
         'ToolStripMenuItem4
@@ -2069,20 +2069,20 @@ Partial Class Metrics_Fonts
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(108, 22)
         Me.ToolStripMenuItem5.Text = "Item X"
         '
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(108, 22)
         Me.ToolStripMenuItem6.Text = "Item Y"
         '
         'ToolStripMenuItem7
         '
         Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
         Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(180, 22)
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(108, 22)
         Me.ToolStripMenuItem7.Text = "Item Z"
         '
         'ToolStripMenuItem8
@@ -3527,9 +3527,9 @@ Partial Class Metrics_Fonts
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(772, 539)
+        Me.XenonButton10.Location = New System.Drawing.Point(789, 539)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 84
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -3543,9 +3543,9 @@ Partial Class Metrics_Fonts
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(686, 539)
+        Me.XenonButton7.Location = New System.Drawing.Point(703, 539)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 83
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -3560,9 +3560,9 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(902, 539)
+        Me.XenonButton8.Location = New System.Drawing.Point(910, 539)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
+        Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 82
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False

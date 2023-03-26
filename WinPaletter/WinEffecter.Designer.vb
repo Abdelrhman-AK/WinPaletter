@@ -194,9 +194,9 @@ Partial Class WinEffecter
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(457, 412)
+        Me.XenonButton10.Location = New System.Drawing.Point(480, 415)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 207
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -210,9 +210,9 @@ Partial Class WinEffecter
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(371, 412)
+        Me.XenonButton7.Location = New System.Drawing.Point(394, 415)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 206
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -227,9 +227,9 @@ Partial Class WinEffecter
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(587, 412)
+        Me.XenonButton8.Location = New System.Drawing.Point(601, 415)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
+        Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 205
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -720,7 +720,7 @@ Partial Class WinEffecter
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(769, 349)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(769, 352)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 209
         '
@@ -740,7 +740,7 @@ Partial Class WinEffecter
         Me.TabPage1.Location = New System.Drawing.Point(174, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage1.Size = New System.Drawing.Size(591, 344)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Window"
         '
@@ -779,7 +779,7 @@ Partial Class WinEffecter
         Me.TabPage2.Location = New System.Drawing.Point(174, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage2.Size = New System.Drawing.Size(591, 344)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Icons"
         '
@@ -800,7 +800,7 @@ Partial Class WinEffecter
         Me.TabPage3.Location = New System.Drawing.Point(174, 4)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage3.Size = New System.Drawing.Size(591, 344)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Menus"
         '
@@ -839,7 +839,7 @@ Partial Class WinEffecter
         Me.TabPage4.Location = New System.Drawing.Point(174, 4)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage4.Size = New System.Drawing.Size(591, 344)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Selection controls"
         '
@@ -858,7 +858,7 @@ Partial Class WinEffecter
         Me.TabPage5.Location = New System.Drawing.Point(174, 4)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage5.Size = New System.Drawing.Size(591, 344)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Tooltips & notifications"
         '
@@ -954,7 +954,7 @@ Partial Class WinEffecter
         Me.TabPage6.Location = New System.Drawing.Point(174, 4)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage6.Size = New System.Drawing.Size(591, 344)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Focus rectangle"
         '
@@ -1094,7 +1094,7 @@ Partial Class WinEffecter
         Me.TabPage7.Location = New System.Drawing.Point(174, 4)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage7.Size = New System.Drawing.Size(591, 344)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Text cursor (caret)"
         '
@@ -1197,7 +1197,7 @@ Partial Class WinEffecter
         Me.TabPage8.Location = New System.Drawing.Point(174, 4)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage8.Size = New System.Drawing.Size(591, 344)
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "Active Windows tracking"
         '
@@ -1314,7 +1314,7 @@ Partial Class WinEffecter
         Me.TabPage9.Location = New System.Drawing.Point(174, 4)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage9.Size = New System.Drawing.Size(591, 344)
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "Miscellaneous"
         '
@@ -1412,7 +1412,7 @@ Partial Class WinEffecter
         Me.TabPage11.Location = New System.Drawing.Point(174, 4)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage11.Size = New System.Drawing.Size(591, 344)
         Me.TabPage11.TabIndex = 10
         Me.TabPage11.Text = "Explorer (controls options)"
         '
@@ -1589,7 +1589,7 @@ Partial Class WinEffecter
         Me.TabPage10.Location = New System.Drawing.Point(174, 4)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(591, 341)
+        Me.TabPage10.Size = New System.Drawing.Size(591, 344)
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "For Windows 11 only"
         '
@@ -1653,7 +1653,7 @@ Partial Class WinEffecter
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(793, 454)
+        Me.ClientSize = New System.Drawing.Size(793, 461)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton7)

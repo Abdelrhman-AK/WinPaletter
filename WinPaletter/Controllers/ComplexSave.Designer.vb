@@ -198,9 +198,9 @@ Partial Class ComplexSave
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(390, 340)
+        Me.XenonButton1.Location = New System.Drawing.Point(390, 342)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(80, 36)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 5
         Me.XenonButton1.Text = "Start"
         Me.XenonButton1.UseVisualStyleBackColor = False
@@ -214,9 +214,9 @@ Partial Class ComplexSave
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(304, 340)
+        Me.XenonButton2.Location = New System.Drawing.Point(304, 342)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 36)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 6
         Me.XenonButton2.Text = "Close"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -230,9 +230,9 @@ Partial Class ComplexSave
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(218, 340)
+        Me.XenonButton3.Location = New System.Drawing.Point(218, 342)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(80, 36)
+        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton3.TabIndex = 7
         Me.XenonButton3.Text = "Cancel"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -254,7 +254,7 @@ Partial Class ComplexSave
         Me.XenonCheckBox2.Checked = True
         Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox2.Location = New System.Drawing.Point(12, 347)
+        Me.XenonCheckBox2.Location = New System.Drawing.Point(12, 348)
         Me.XenonCheckBox2.Name = "XenonCheckBox2"
         Me.XenonCheckBox2.Size = New System.Drawing.Size(200, 23)
         Me.XenonCheckBox2.TabIndex = 9

@@ -146,7 +146,7 @@ Partial Class AltTabEditor
         Me.XenonGroupBox4.Location = New System.Drawing.Point(12, 167)
         Me.XenonGroupBox4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(330, 128)
+        Me.XenonGroupBox4.Size = New System.Drawing.Size(330, 116)
         Me.XenonGroupBox4.TabIndex = 213
         '
         'EP_Alert
@@ -155,13 +155,13 @@ Partial Class AltTabEditor
         Me.EP_Alert.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.EP_Alert.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.EP_Alert.CenterText = True
+        Me.EP_Alert.CenterText = False
         Me.EP_Alert.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.EP_Alert.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.EP_Alert.Image = Nothing
         Me.EP_Alert.Location = New System.Drawing.Point(4, 72)
         Me.EP_Alert.Name = "EP_Alert"
-        Me.EP_Alert.Size = New System.Drawing.Size(322, 52)
+        Me.EP_Alert.Size = New System.Drawing.Size(322, 40)
         Me.EP_Alert.TabIndex = 214
         Me.EP_Alert.TabStop = False
         Me.EP_Alert.Text = "Opacity controling can be allowed in Windows 11 too if ExplorerPatcher is install" &
@@ -495,9 +495,9 @@ Partial Class AltTabEditor
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(563, 405)
+        Me.XenonButton10.Location = New System.Drawing.Point(580, 405)
         Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(124, 30)
+        Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 210
         Me.XenonButton10.Text = "Quick apply"
         Me.XenonButton10.UseVisualStyleBackColor = False
@@ -511,9 +511,9 @@ Partial Class AltTabEditor
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(477, 405)
+        Me.XenonButton7.Location = New System.Drawing.Point(494, 405)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(80, 30)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 209
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -528,9 +528,9 @@ Partial Class AltTabEditor
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(693, 405)
+        Me.XenonButton8.Location = New System.Drawing.Point(701, 405)
         Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(188, 30)
+        Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 208
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
@@ -642,18 +642,18 @@ Partial Class AltTabEditor
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = True
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(16, 405)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(15, 413)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(455, 30)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(324, 20)
         Me.XenonAlertBox1.TabIndex = 215
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "Applying in Windows 7 may require a device restart"
@@ -664,13 +664,13 @@ Partial Class AltTabEditor
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CenterText = True
+        Me.XenonAlertBox2.CenterText = False
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(16, 301)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(16, 289)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(322, 30)
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(322, 20)
         Me.XenonAlertBox2.TabIndex = 216
         Me.XenonAlertBox2.TabStop = False
         Me.XenonAlertBox2.Text = "Sometimes, you should logoff and logon to apply effects"
@@ -680,7 +680,7 @@ Partial Class AltTabEditor
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(893, 447)
+        Me.ClientSize = New System.Drawing.Size(893, 451)
         Me.Controls.Add(Me.XenonAlertBox2)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonGroupBox4)

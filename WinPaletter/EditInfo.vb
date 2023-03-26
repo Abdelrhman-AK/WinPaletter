@@ -4,8 +4,6 @@ Public Class EditInfo
 
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-
-
         'Load_Info(MainFrm.CP)
     End Sub
 

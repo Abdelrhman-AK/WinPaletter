@@ -75,9 +75,9 @@ Partial Class Lang_JSON_Manage
         Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(13, 581)
+        Me.Label5.Location = New System.Drawing.Point(13, 579)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(616, 29)
+        Me.Label5.Size = New System.Drawing.Size(645, 29)
         Me.Label5.TabIndex = 202
         Me.Label5.Text = "Numbers in curly brackets should be left unchanged, for example: {0}"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -91,9 +91,9 @@ Partial Class Lang_JSON_Manage
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(635, 581)
+        Me.XenonButton7.Location = New System.Drawing.Point(664, 576)
         Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(96, 29)
+        Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 201
         Me.XenonButton7.Text = "Cancel"
         Me.XenonButton7.UseVisualStyleBackColor = False
@@ -108,9 +108,9 @@ Partial Class Lang_JSON_Manage
         Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(737, 581)
+        Me.XenonButton2.Location = New System.Drawing.Point(750, 576)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(108, 29)
+        Me.XenonButton2.Size = New System.Drawing.Size(95, 34)
         Me.XenonButton2.TabIndex = 200
         Me.XenonButton2.Text = "Save as ..."
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -124,7 +124,7 @@ Partial Class Lang_JSON_Manage
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton8)
         Me.XenonGroupBox3.Controls.Add(Me.XenonButton4)
-        Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 13)
+        Me.XenonGroupBox3.Location = New System.Drawing.Point(12, 13)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(833, 41)
         Me.XenonGroupBox3.TabIndex = 199
@@ -190,7 +190,7 @@ Partial Class Lang_JSON_Manage
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(223, 29)
         Me.XenonButton4.TabIndex = 111
-        Me.XenonButton4.Text = "Generate new (English) and Open It"
+        Me.XenonButton4.Text = "Generate new (English) and open It"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
         'XenonGroupBox1
@@ -217,7 +217,7 @@ Partial Class Lang_JSON_Manage
         Me.XenonGroupBox1.Controls.Add(Me.Label2)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.TreeView1)
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 60)
+        Me.XenonGroupBox1.Location = New System.Drawing.Point(12, 60)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(833, 504)
         Me.XenonGroupBox1.TabIndex = 7

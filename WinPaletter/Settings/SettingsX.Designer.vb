@@ -421,9 +421,9 @@ Partial Class SettingsX
         Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(73, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(888, 559)
+        Me.XenonButton12.Location = New System.Drawing.Point(897, 560)
         Me.XenonButton12.Name = "XenonButton12"
-        Me.XenonButton12.Size = New System.Drawing.Size(135, 35)
+        Me.XenonButton12.Size = New System.Drawing.Size(130, 34)
         Me.XenonButton12.TabIndex = 24
         Me.XenonButton12.Text = "Save and close"
         Me.XenonButton12.UseVisualStyleBackColor = False
@@ -644,7 +644,7 @@ Partial Class SettingsX
         Me.XenonAlertBox2.Size = New System.Drawing.Size(500, 24)
         Me.XenonAlertBox2.TabIndex = 41
         Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "WinPaletter Language Files (*.wplng) are not supported now, JSON is the new forma" &
+        Me.XenonAlertBox2.Text = "WinPaletter language files (*.wplng) are not supported now, JSON is the new forma" &
     "t"
         '
         'XenonButton11
@@ -660,7 +660,7 @@ Partial Class SettingsX
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(244, 24)
         Me.XenonButton11.TabIndex = 40
-        Me.XenonButton11.Text = "Language Developing Tools"
+        Me.XenonButton11.Text = "Language development tools"
         Me.XenonButton11.UseVisualStyleBackColor = False
         '
         'XenonTextBox3
@@ -781,7 +781,7 @@ Partial Class SettingsX
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(458, 24)
         Me.Label22.TabIndex = 43
-        Me.Label22.Text = "It has Left to Right Layout"
+        Me.Label22.Text = "It has left to right layout"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label15
@@ -791,7 +791,7 @@ Partial Class SettingsX
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(143, 24)
         Me.Label15.TabIndex = 34
-        Me.Label15.Text = "For App Version:"
+        Me.Label15.Text = "For app version:"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox26
@@ -843,7 +843,7 @@ Partial Class SettingsX
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(143, 24)
         Me.Label18.TabIndex = 40
-        Me.Label18.Text = "Language Code:"
+        Me.Label18.Text = "Language code:"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label13
@@ -853,7 +853,7 @@ Partial Class SettingsX
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(143, 24)
         Me.Label13.TabIndex = 31
-        Me.Label13.Text = "Translation Version:"
+        Me.Label13.Text = "Translation version:"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox24
@@ -915,7 +915,7 @@ Partial Class SettingsX
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(143, 24)
         Me.Label10.TabIndex = 28
-        Me.Label10.Text = "Translator Name:"
+        Me.Label10.Text = "Translator name:"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox25
@@ -1405,7 +1405,7 @@ Partial Class SettingsX
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(823, 471)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Theme File Management"
+        Me.TabPage3.Text = "Theme file management"
         '
         'XenonCheckBox4
         '
@@ -1460,7 +1460,7 @@ Partial Class SettingsX
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(758, 35)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Theme File Type Management"
+        Me.Label1.Text = "Theme file type management"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonCheckBox3
@@ -1566,7 +1566,7 @@ Partial Class SettingsX
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Size = New System.Drawing.Size(823, 471)
         Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "Theme Applying Behavior"
+        Me.TabPage5.Text = "Theme applying behavior"
         '
         'XenonTabControl2
         '
@@ -1819,7 +1819,7 @@ Partial Class SettingsX
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(767, 35)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Theme Applying Behavior"
+        Me.Label2.Text = "Theme applying behavior"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonSeparator6
@@ -2748,7 +2748,7 @@ Partial Class SettingsX
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage8.Size = New System.Drawing.Size(823, 471)
         Me.TabPage8.TabIndex = 8
-        Me.TabPage8.Text = "Theme Logging"
+        Me.TabPage8.Text = "Theme logging"
         '
         'XenonAlertBox_Themelog
         '
@@ -2870,7 +2870,7 @@ Partial Class SettingsX
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(758, 35)
         Me.Label26.TabIndex = 20
-        Me.Label26.Text = "Theme Logging"
+        Me.Label26.Text = "Theme logging"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TabPage2
@@ -3682,9 +3682,9 @@ Partial Class SettingsX
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(88, Byte), Integer), CType(CType(59, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(226, 559)
+        Me.XenonButton6.Location = New System.Drawing.Point(213, 560)
         Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(103, 35)
+        Me.XenonButton6.Size = New System.Drawing.Size(100, 34)
         Me.XenonButton6.TabIndex = 20
         Me.XenonButton6.Text = "Uninstall"
         Me.XenonButton6.UseVisualStyleBackColor = False
@@ -3696,12 +3696,12 @@ Partial Class SettingsX
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
-        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(152, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(51, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(12, 559)
+        Me.XenonButton5.Location = New System.Drawing.Point(12, 560)
         Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(208, 35)
+        Me.XenonButton5.Size = New System.Drawing.Size(195, 34)
         Me.XenonButton5.TabIndex = 19
         Me.XenonButton5.Text = "De-associate files extensions"
         Me.XenonButton5.UseVisualStyleBackColor = False
@@ -3716,9 +3716,9 @@ Partial Class SettingsX
         Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(54, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(335, 559)
+        Me.XenonButton4.Location = New System.Drawing.Point(319, 560)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(96, 35)
+        Me.XenonButton4.Size = New System.Drawing.Size(90, 34)
         Me.XenonButton4.TabIndex = 17
         Me.XenonButton4.Text = "Import"
         Me.XenonButton4.UseVisualStyleBackColor = False
@@ -3733,9 +3733,9 @@ Partial Class SettingsX
         Me.XenonButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(54, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(437, 559)
+        Me.XenonButton3.Location = New System.Drawing.Point(415, 560)
         Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(96, 35)
+        Me.XenonButton3.Size = New System.Drawing.Size(90, 34)
         Me.XenonButton3.TabIndex = 16
         Me.XenonButton3.Text = "Export"
         Me.XenonButton3.UseVisualStyleBackColor = False
@@ -3749,9 +3749,9 @@ Partial Class SettingsX
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(644, 559)
+        Me.XenonButton2.Location = New System.Drawing.Point(725, 560)
         Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(116, 35)
+        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 15
         Me.XenonButton2.Text = "Cancel"
         Me.XenonButton2.UseVisualStyleBackColor = False
@@ -3766,9 +3766,9 @@ Partial Class SettingsX
         Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(73, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(766, 559)
+        Me.XenonButton1.Location = New System.Drawing.Point(811, 560)
         Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(116, 35)
+        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 14
         Me.XenonButton1.Text = "Save"
         Me.XenonButton1.UseVisualStyleBackColor = False
