@@ -4,7 +4,7 @@
 
 ---
 
-# This new method has been made instead of the older one, being dependent on JSON
+# This new method has been made instead of the old one, being dependent on JSON
 
 to try to minimize errors as much as possible, increase functionality and make it easier to modify.
 
