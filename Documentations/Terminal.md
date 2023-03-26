@@ -42,10 +42,10 @@
 
 ## Q1) Which terminals can be customized?
 
-| OS             | Component                                                                                  |
-|:--------------:|:------------------------------------------------------------------------------------------:|
-| Windows 7, 8.1 | Command Prompt, PowerShell                                                                 |
-| Windows 10, 11 | Command Prompt, PowerShell and Windows Terminal (*It can be installed from Windows Store*) |
+| OS                        | Component                                                                                  |
+|:-------------------------:|:------------------------------------------------------------------------------------------:|
+| Windows XP, Vista, 7, 8.1 | Command Prompt, PowerShell                                                                 |
+| Windows 10, 11            | Command Prompt, PowerShell and Windows Terminal (*It can be installed from Windows Store*) |
 
 | OS         | Windows Terminal                                                              |
 |:----------:|:-----------------------------------------------------------------------------:|
@@ -83,7 +83,7 @@ All Terminals (Command Prompt\PowerShell\Windows Terminal) have a specific lock 
 
 ### Q2-C) I can't colorize or change cursor style. What is the issue?
 
-* **Windows 7, 8.1 and 10 less than 19H2 (1909):** can't colorize or change cursor style as the terminal doesn't support that.
+* **Windows XP, Vista, 7, 8.1 and 10 less than 19H2 (1909):** can't colorize or change cursor style as the terminal doesn't support that.
 
 * **Windows 10 19H2 (1909) and Later:** You should enable enhanced terminal to colorize and change cursor style. 
 
