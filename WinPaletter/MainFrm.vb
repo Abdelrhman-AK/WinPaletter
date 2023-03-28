@@ -47,7 +47,6 @@ Public Class MainFrm
 
                 Visual.FadeColor(Label8, "ForeColor", Label8.ForeColor, If([CP].Windows11.AppMode_Light, Color.Black, Color.White), AnimX1, AnimX2)
 
-                W11_lbl5.Text = My.Lang.CP_11_Settings
                 W11_lbl6.Text = My.Lang.CP_11_SomePressedButtons
                 W11_lbl7.Text = String.Format(My.Lang.CP_UWPBackground, My.Lang.OS_Win11)
                 W11_lbl8.Text = My.Lang.CP_Undefined
@@ -64,19 +63,22 @@ Public Class MainFrm
                         W11_lbl2.Text = My.Lang.CP_11_ACHover_Links
                         W11_lbl3.Text = My.Lang.CP_11_Lines_Toggles_Buttons
                         W11_lbl4.Text = My.Lang.CP_11_OverflowTray
+                        W11_lbl5.Text = My.Lang.CP_11_Settings
 
                         W11_pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                         W11_pic2.Image = My.Resources.Mini_ACHover_Links
                         W11_pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons
                         W11_pic4.Image = My.Resources.Mini_Overflow
                     Case False   ''''''''''Light
-                        W11_lbl1.Text = My.Lang.CP_11_ACHover_Links
+                        W11_lbl1.Text = My.Lang.CP_11_Taskbar_ACHover_Links
                         W11_lbl2.Text = My.Lang.CP_11_StartMenu_AC
-                        W11_lbl3.Text = My.Lang.CP_11_Taskbar
+                        W11_lbl3.Text = My.Lang.CP_11_UnreadBadge
                         W11_lbl4.Text = My.Lang.CP_11_Lines_Toggles_Buttons_Overflow
-                        W11_pic1.Image = My.Resources.Mini_ACHover_Links
+                        W11_lbl5.Text = My.Lang.CP_11_SettingsAndTaskbarAppUnderline
+
+                        W11_pic1.Image = My.Resources.Mini_Taskbar
                         W11_pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC
-                        W11_pic3.Image = My.Resources.Mini_Taskbar
+                        W11_pic3.Image = My.Resources.Mini_Badge
                         W11_pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons
                 End Select
 
@@ -140,33 +142,33 @@ Public Class MainFrm
 
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        ActionCenter.BackColorAlpha = 75
+                        ActionCenter.BackColorAlpha = 90
 
                         If ExplorerPatcher.IsAllowed Then
                             If My.EP.UseStart10 Then
                                 start.BackColorAlpha = 185
                             Else
-                                start.BackColorAlpha = 75
+                                start.BackColorAlpha = 90
                             End If
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 185
-                                taskbar.BlurPower = 12
+                                taskbar.BlurPower = 8
                             Else
-                                taskbar.BackColorAlpha = 75
-                                taskbar.BlurPower = 12
+                                taskbar.BackColorAlpha = 105
+                                taskbar.BlurPower = 8
                             End If
                         Else
-                            taskbar.BackColorAlpha = 75
-                            taskbar.BlurPower = 12
-                            start.BackColorAlpha = 75
+                            taskbar.BackColorAlpha = 105
+                            taskbar.BlurPower = 8
+                            start.BackColorAlpha = 90
                         End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(28, 28, 28), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(28, 28, 28), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(28, 28, 28), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
@@ -181,15 +183,14 @@ Public Class MainFrm
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
                                 Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
-                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(40, 40, 40), AnimX1, AnimX2)
-                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(55, 55, 55), AnimX1, AnimX2)
+                                Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(28, 28, 28), AnimX1, AnimX2)
+                                Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(28, 28, 28), AnimX1, AnimX2)
 
                         End Select
 
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows11.Color_Index0, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows11.Color_Index2, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
                         Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
 
                         Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
@@ -207,13 +208,13 @@ Public Class MainFrm
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 210
-                                taskbar.BlurPower = 12
+                                taskbar.BlurPower = 8
                             Else
                                 taskbar.BackColorAlpha = 180
-                                taskbar.BlurPower = 12
+                                taskbar.BlurPower = 8
                             End If
                         Else
-                            taskbar.BlurPower = 12
+                            taskbar.BlurPower = 8
                             taskbar.BackColorAlpha = 180
                             start.BackColorAlpha = 180
                         End If
@@ -225,7 +226,7 @@ Public Class MainFrm
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
                                     Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4), AnimX1, AnimX2)
@@ -236,7 +237,7 @@ Public Class MainFrm
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0), AnimX1, AnimX2)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1), AnimX1, AnimX2)
+                                Visual.FadeColor(taskbar, "BackColor", taskbar.BackColor, Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5), AnimX1, AnimX2)
                                 Visual.FadeColor(start, "BackColor", start.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
                                 Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, Color.FromArgb(255, 255, 255), AnimX1, AnimX2)
 
@@ -245,12 +246,11 @@ Public Class MainFrm
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, [CP].Windows11.Color_Index5, AnimX1, AnimX2)
                         Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, [CP].Windows11.Color_Index2, AnimX1, AnimX2)
-                        Visual.FadeColor(start, "SearchBoxAccent", start.SearchBoxAccent, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
 
                         If ExplorerPatcher.IsAllowed And My.EP.UseTaskbar10 Then
                             Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index1, AnimX1, AnimX2)
                         Else
-                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index4, AnimX1, AnimX2)
+                            Visual.FadeColor(taskbar, "AppUnderline", taskbar.AppUnderline, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
                         End If
 
                         Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, [CP].Windows11.Color_Index3, AnimX1, AnimX2)
@@ -426,7 +426,7 @@ Public Class MainFrm
                 If Not [CP].Windows10.TB_Blur Then
                     taskbar.BlurPower = 0
                 Else
-                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 12, 6)
+                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 8, 6)
                 End If
 
                 If [CP].Windows10.Transparency Then
@@ -941,6 +941,8 @@ Public Class MainFrm
 
         ApplyMetrics([CP], XenonWindow1)
         ApplyMetrics([CP], XenonWindow2)
+        SetClassicMetrics(ClassicWindow1, CP)
+        SetClassicMetrics(ClassicWindow2, CP)
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -1121,8 +1123,8 @@ Public Class MainFrm
         Select Case PreviewConfig
             Case WinVer.W11
                 ActionCenter.Dock = Nothing
-                ActionCenter.BlurPower = 7
-                ActionCenter.NoisePower = 0.2
+                ActionCenter.BlurPower = 6
+                ActionCenter.NoisePower = 0.3
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
 
@@ -1131,22 +1133,22 @@ Public Class MainFrm
                     With My.EP
 
                         If Not .UseTaskbar10 Then
-                            taskbar.BlurPower = 12
+                            taskbar.BlurPower = 8
                             taskbar.Height = 42
                         Else
-                            taskbar.BlurPower = 12
+                            taskbar.BlurPower = 8
                             taskbar.Height = 35
                             taskbar.UseWin11ORB_WithWin10 = Not .TaskbarButton10
                         End If
 
                         If Not .UseStart10 Then
-                            start.BlurPower = 7
-                            start.NoisePower = 0.2
+                            start.BlurPower = 6
+                            start.NoisePower = 0.3
                             start.Size = New Size(135, 200)
                             start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
                         Else
                             start.BlurPower = 7
-                            start.NoisePower = 0.2
+                            start.NoisePower = 0.3
 
                             Select Case .StartStyle
                                 Case ExplorerPatcher.StartStyles.NotRounded
@@ -1175,11 +1177,11 @@ Public Class MainFrm
                     End With
 
                 Else
-                    taskbar.BlurPower = 12
+                    taskbar.BlurPower = 8
                     taskbar.Height = 42
                     '########################
-                    start.BlurPower = 7
-                    start.NoisePower = 0.2
+                    start.BlurPower = 6
+                    start.NoisePower = 0.3
                     start.Size = New Size(135, 200)
                     start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
                 End If
@@ -1187,12 +1189,12 @@ Public Class MainFrm
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.BlurPower = 7
-                ActionCenter.NoisePower = 0.2
+                ActionCenter.NoisePower = 0.3
                 '########################
                 taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
                 '########################
                 start.BlurPower = 7
-                start.NoisePower = 0.2
+                start.NoisePower = 0.3
                 '########################
 
                 taskbar.Height = 35
@@ -2214,9 +2216,9 @@ Public Class MainFrm
         Dim C As Color
         CList.Add(sender)
 
-        CList.Add(taskbar)
-
         If ExplorerPatcher.IsAllowed Then
+            CList.Add(taskbar)
+
             If Not CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True, .ActionCenterBtn = True}
@@ -2228,14 +2230,9 @@ Public Class MainFrm
         Else
             If Not CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
-                CList.Add(start)
+                CList.Add(taskbar)
 
-                Dim _Conditions As New Conditions With {
-                        .AppUnderlineOnly = True,
-                         .StartSearchOnly = True,
-                         .ActionCenterBtn = True
-     }
-
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True, .ActionCenterBtn = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
             Else
                 C = ColorPickerDlg.Pick(CList)
@@ -2280,6 +2277,7 @@ Public Class MainFrm
                 CList.Add(start)
                 CList.Add(ActionCenter)
             Else
+                CList.Add(taskbar)
                 CList.Add(lnk_preview)
             End If
         End If
@@ -2343,10 +2341,11 @@ Public Class MainFrm
         Dim C As Color
 
         CList.Add(sender)
-
-
+        CList.Add(taskbar)
         CList.Add(setting_icon_preview)
-        C = ColorPickerDlg.Pick(CList)
+
+        Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
+        C = ColorPickerDlg.Pick(CList, _Conditions)
 
         CP.Windows11.Color_Index3 = Color.FromArgb(255, C)
         If PreviewConfig = WinVer.W11 Then ApplyLivePreviewFromCP(CP)
@@ -2457,46 +2456,34 @@ Public Class MainFrm
                 C = ColorPickerDlg.Pick(CList)
 
             Else
-                If Not W11_Transparency_Toggle.Checked Then
-                    CList.Add(taskbar)
-                    CList.Add(start)
-                    CList.Add(ActionCenter)
-                End If
-
                 If CP.Windows11.WinMode_Light Then
-                    CList.Add(start)
                     CList.Add(ActionCenter)
 
-                    Dim _Conditions As New Conditions With {.StartSearchOnly = True, .ActionCenterBtn = True}
+                    Dim _Conditions As New Conditions With {.ActionCenterBtn = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
                 Else
+                    CList.Add(start)
+
                     Dim _Conditions As New Conditions With {.StartColorOnly = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
                 End If
             End If
         Else
-            If Not W11_Transparency_Toggle.Checked Then
-                CList.Add(taskbar)
-                CList.Add(start)
-                CList.Add(ActionCenter)
-            End If
 
             If CP.Windows11.WinMode_Light Then
-                CList.Add(start)
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
 
-                Dim _Conditions As New Conditions With {
-                        .AppUnderlineOnly = True,
-                         .StartSearchOnly = True,
-                         .ActionCenterBtn = True
-     }
+                Dim _Conditions As New Conditions With {.AppUnderlineOnly = True, .ActionCenterBtn = True}
 
                 C = ColorPickerDlg.Pick(CList, _Conditions)
             Else
+                CList.Add(start)
+
                 Dim _Conditions As New Conditions With {.StartColorOnly = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
+
         End If
 
 
@@ -4198,6 +4185,10 @@ Public Class MainFrm
             CP.Windows10.TB_Blur = sender.Checked
             If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
+    End Sub
+
+    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

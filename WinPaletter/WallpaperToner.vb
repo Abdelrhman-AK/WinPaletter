@@ -206,6 +206,28 @@ Public Class WallpaperToner
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Cursor = Cursors.WaitCursor
         ApplyToWT().Apply()
+
+
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                MainFrm.CP.WallpaperTone_W11 = ApplyToWT()
+            Case MainFrm.WinVer.W10
+                MainFrm.CP.WallpaperTone_W10 = ApplyToWT()
+            Case MainFrm.WinVer.W8
+                MainFrm.CP.WallpaperTone_W8 = ApplyToWT()
+            Case MainFrm.WinVer.W7
+                MainFrm.CP.WallpaperTone_W7 = ApplyToWT()
+            Case MainFrm.WinVer.WVista
+                MainFrm.CP.WallpaperTone_WVista = ApplyToWT()
+            Case MainFrm.WinVer.WXP
+                MainFrm.CP.WallpaperTone_WXP = ApplyToWT()
+            Case Else
+                MainFrm.CP.WallpaperTone_W11 = ApplyToWT()
+
+        End Select
+
+        MainFrm.Adjust_Preview()
+
         Cursor = Cursors.Default
     End Sub
 

@@ -72,6 +72,7 @@ Partial Class MainFrm
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.PaletteContainer_W11 = New System.Windows.Forms.Panel()
         Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton30 = New WinPaletter.XenonButton()
         Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.W11_pic9 = New System.Windows.Forms.PictureBox()
@@ -739,7 +740,6 @@ Partial Class MainFrm
         Me.ActionCenter.Name = "ActionCenter"
         Me.ActionCenter.NoisePower = 0.2!
         Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
-        Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
         Me.ActionCenter.Shadow = True
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
@@ -769,7 +769,6 @@ Partial Class MainFrm
         Me.start.Name = "start"
         Me.start.NoisePower = 0.2!
         Me.start.Padding = New System.Windows.Forms.Padding(2)
-        Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.start.Shadow = True
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
@@ -799,7 +798,6 @@ Partial Class MainFrm
         Me.taskbar.Location = New System.Drawing.Point(0, 255)
         Me.taskbar.Name = "taskbar"
         Me.taskbar.NoisePower = 0.2!
-        Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
         Me.taskbar.Shadow = True
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
@@ -1290,6 +1288,7 @@ Partial Class MainFrm
         Me.XenonGroupBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox13.Controls.Add(Me.XenonButton30)
         Me.XenonGroupBox13.Controls.Add(Me.XenonGroupBox14)
         Me.XenonGroupBox13.Controls.Add(Me.pnl8)
         Me.XenonGroupBox13.Controls.Add(Me.pnl7)
@@ -1306,6 +1305,22 @@ Partial Class MainFrm
         Me.XenonGroupBox13.Name = "XenonGroupBox13"
         Me.XenonGroupBox13.Size = New System.Drawing.Size(520, 313)
         Me.XenonGroupBox13.TabIndex = 6
+        '
+        'XenonButton30
+        '
+        Me.XenonButton30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton30.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton30.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton30.ForeColor = System.Drawing.Color.White
+        Me.XenonButton30.Image = Nothing
+        Me.XenonButton30.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton30.LineSize = 1
+        Me.XenonButton30.Location = New System.Drawing.Point(423, 11)
+        Me.XenonButton30.Name = "XenonButton30"
+        Me.XenonButton30.Size = New System.Drawing.Size(90, 20)
+        Me.XenonButton30.TabIndex = 28
+        Me.XenonButton30.Text = "Important tip"
+        Me.XenonButton30.UseVisualStyleBackColor = False
         '
         'XenonGroupBox14
         '
@@ -1789,7 +1804,7 @@ Partial Class MainFrm
         Me.Label10.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label10.Location = New System.Drawing.Point(40, 3)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(477, 35)
+        Me.Label10.Size = New System.Drawing.Size(377, 35)
         Me.Label10.TabIndex = 0
         Me.Label10.Text = "Accents"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -2380,7 +2395,7 @@ Partial Class MainFrm
         Me.TabPage2.Location = New System.Drawing.Point(4, 24)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage2.Size = New System.Drawing.Size(529, 518)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "W10"
         '
@@ -2393,7 +2408,7 @@ Partial Class MainFrm
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(523, 518)
+        Me.Panel1.Size = New System.Drawing.Size(523, 512)
         Me.Panel1.TabIndex = 19
         '
         'XenonGroupBox2
@@ -3571,7 +3586,7 @@ Partial Class MainFrm
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage3.Size = New System.Drawing.Size(529, 518)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "W8.1"
         '
@@ -3583,7 +3598,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W8.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W8.Name = "PaletteContainer_W8"
-        Me.PaletteContainer_W8.Size = New System.Drawing.Size(523, 518)
+        Me.PaletteContainer_W8.Size = New System.Drawing.Size(523, 512)
         Me.PaletteContainer_W8.TabIndex = 31
         '
         'XenonGroupBox17
@@ -4077,7 +4092,7 @@ Partial Class MainFrm
         Me.TabPage4.Location = New System.Drawing.Point(4, 24)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage4.Size = New System.Drawing.Size(529, 518)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "W7"
         '
@@ -4090,7 +4105,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W7.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W7.Name = "PaletteContainer_W7"
-        Me.PaletteContainer_W7.Size = New System.Drawing.Size(523, 518)
+        Me.PaletteContainer_W7.Size = New System.Drawing.Size(523, 512)
         Me.PaletteContainer_W7.TabIndex = 30
         '
         'XenonGroupBox11
@@ -4730,7 +4745,7 @@ Partial Class MainFrm
         Me.TabPage8.Controls.Add(Me.XenonGroupBox49)
         Me.TabPage8.Location = New System.Drawing.Point(4, 24)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage8.Size = New System.Drawing.Size(529, 518)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "WVista"
         '
@@ -4970,7 +4985,7 @@ Partial Class MainFrm
         Me.TabPage9.Controls.Add(Me.XenonGroupBox47)
         Me.TabPage9.Location = New System.Drawing.Point(4, 24)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage9.Size = New System.Drawing.Size(529, 518)
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
@@ -4984,7 +4999,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert1.Image = Nothing
-        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 426)
+        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 427)
         Me.WXP_Alert1.Name = "WXP_Alert1"
         Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
         Me.WXP_Alert1.TabIndex = 53
@@ -5049,7 +5064,7 @@ Partial Class MainFrm
         Me.WXP_Alert3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert3.Image = Nothing
-        Me.WXP_Alert3.Location = New System.Drawing.Point(3, 457)
+        Me.WXP_Alert3.Location = New System.Drawing.Point(3, 458)
         Me.WXP_Alert3.Name = "WXP_Alert3"
         Me.WXP_Alert3.Size = New System.Drawing.Size(513, 64)
         Me.WXP_Alert3.TabIndex = 48
@@ -5396,7 +5411,7 @@ Partial Class MainFrm
         Me.TabPage5.Location = New System.Drawing.Point(4, 24)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(529, 524)
+        Me.TabPage5.Size = New System.Drawing.Size(529, 518)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Log"
         '
@@ -5409,7 +5424,7 @@ Partial Class MainFrm
         Me.XenonButton25.Image = Nothing
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(291, 484)
+        Me.XenonButton25.Location = New System.Drawing.Point(291, 485)
         Me.XenonButton25.Name = "XenonButton25"
         Me.XenonButton25.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton25.TabIndex = 22
@@ -5426,7 +5441,7 @@ Partial Class MainFrm
         Me.XenonButton22.Image = Nothing
         Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(372, 484)
+        Me.XenonButton22.Location = New System.Drawing.Point(372, 485)
         Me.XenonButton22.Name = "XenonButton22"
         Me.XenonButton22.Size = New System.Drawing.Size(85, 34)
         Me.XenonButton22.TabIndex = 21
@@ -5440,7 +5455,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.log_lbl.BackColor = System.Drawing.Color.Transparent
         Me.log_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.log_lbl.Location = New System.Drawing.Point(7, 453)
+        Me.log_lbl.Location = New System.Drawing.Point(7, 454)
         Me.log_lbl.Name = "log_lbl"
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
         Me.log_lbl.Size = New System.Drawing.Size(510, 28)
@@ -5458,7 +5473,7 @@ Partial Class MainFrm
         Me.XenonButton14.Image = Nothing
         Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(208, 484)
+        Me.XenonButton14.Location = New System.Drawing.Point(208, 485)
         Me.XenonButton14.Name = "XenonButton14"
         Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
         Me.XenonButton14.TabIndex = 7
@@ -5475,7 +5490,7 @@ Partial Class MainFrm
         Me.XenonButton8.Image = Nothing
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(459, 484)
+        Me.XenonButton8.Location = New System.Drawing.Point(459, 485)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(59, 34)
         Me.XenonButton8.TabIndex = 6
@@ -5495,7 +5510,7 @@ Partial Class MainFrm
         Me.TreeView1.Location = New System.Drawing.Point(6, 54)
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.ShowLines = False
-        Me.TreeView1.Size = New System.Drawing.Size(512, 396)
+        Me.TreeView1.Size = New System.Drawing.Size(512, 397)
         Me.TreeView1.TabIndex = 5
         '
         'XenonSeparator1
@@ -6550,4 +6565,5 @@ Partial Class MainFrm
     Friend WithEvents PictureBox15 As PictureBox
     Friend WithEvents Label22 As Label
     Friend WithEvents W10_TB_Blur As XenonToggle
+    Friend WithEvents XenonButton30 As XenonButton
 End Class

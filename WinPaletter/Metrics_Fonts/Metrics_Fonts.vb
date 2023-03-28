@@ -435,6 +435,12 @@ Public Class Metrics_Fonts
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
+        ApplyToCP(MainFrm.CP)
+        MainFrm.ApplyMetrics(CPx, MainFrm.XenonWindow1)
+        MainFrm.ApplyMetrics(CPx, MainFrm.XenonWindow2)
+        MainFrm.SetClassicMetrics(MainFrm.ClassicWindow1, CPx)
+        MainFrm.SetClassicMetrics(MainFrm.ClassicWindow2, CPx)
+
         CPx.MetricsFonts.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default

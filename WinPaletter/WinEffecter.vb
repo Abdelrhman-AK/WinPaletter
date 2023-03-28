@@ -148,6 +148,8 @@ Public Class WinEffecter
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
+        ApplyToCP(MainFrm.CP)
+        MainFrm.ApplyLivePreviewFromCP(CPx)
         CPx.WindowsEffects.Apply()
         CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()

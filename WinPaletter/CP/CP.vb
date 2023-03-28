@@ -872,6 +872,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Sub Load(Optional Method As Method = Method.Registry, Optional vs As VisualStyleMetrics = Nothing)
                 Select Case Method
                     Case Method.Registry
+
                         User32.Fixer.SystemParametersInfo(SPI.Effects.GETFLATMENU, 0, EnableTheming, SPIF.None)
                         User32.Fixer.SystemParametersInfo(SPI.Titlebars.GETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.None)
 
@@ -1077,6 +1078,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Enum
 
             Public Sub Apply()
+                'Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
+                Dim vsFile As New Text.StringBuilder(260)
+                Dim colorName As New Text.StringBuilder(260)
+                Dim sizeName As New Text.StringBuilder(260)
+                Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+                Dim isClassic As Boolean = String.IsNullOrEmpty(vsFile.ToString)
+
+                Dim fl As New List(Of Form) : fl.Clear()
+                If isClassic Then
+                    For Each f As Form In My.Application.OpenForms
+                        If f.Visible Then fl.Add(f)
+                        f.SuspendLayout()
+                        f.Visible = False
+                    Next
+                End If
+
                 Dim C1 As New List(Of Integer)
                 Dim C2 As New List(Of UInteger)
 
@@ -1247,6 +1264,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.Win32_RegColor, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.Win32_RegColor, RegistryValueKind.String)
 
+                If isClassic Then
+                    If fl.Count > 0 Then
+                        Threading.Thread.Sleep(100)
+                        For i = 0 To fl.Count - 1
+                            fl(i).Visible = True
+                            fl(i).ResumeLayout()
+                            fl(i).Refresh()
+                        Next
+                    End If
+                End If
 
                 If My.Settings.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.Win32_RegColor, RegistryValueKind.String)
@@ -1517,16 +1544,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End Select
                 End If
 
-                If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
-                    Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", _DefEffects.Win11ExplorerBar)
-
-                ElseIf My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
-                    Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", _DefEffects.Win11ExplorerBar)
-
-                Else
-                    Win11ExplorerBar = _DefEffects.Win11ExplorerBar
-
-                End If
+                Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", _DefEffects.Win11ExplorerBar)
 
                 Try
                     DisableNavBar = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") IsNot Nothing
@@ -1578,8 +1596,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     End If
 
-                    EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
-                    EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
+                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
+                        EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
+                    End If
+
+                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
+                        EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
+                    End If
+
+                    EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar)
+
                     If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
 
                     If My.W8 OrElse My.W10 Then

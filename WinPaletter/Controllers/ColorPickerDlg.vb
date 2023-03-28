@@ -240,10 +240,6 @@ Public Class ColorPickerDlg
                             .Refresh()
                         End If
 
-                    ElseIf .Style = XenonWinElement.Styles.Start11 And _Conditions.StartSearchOnly Then
-                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "SearchBoxAccent", .SearchBoxAccent, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                        .Refresh()
-
                     ElseIf .Style = XenonWinElement.Styles.ActionCenter11 And _Conditions.ActionCenterBtn Then
                         Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Refresh()
@@ -855,7 +851,6 @@ Public Class Conditions
     Public Property AppUnderlineWithTaskbar As Boolean = False
     Public Property AppBackgroundOnly As Boolean = False
     Public Property StartColorOnly As Boolean = False
-    Public Property StartSearchOnly As Boolean = False
     Public Property ActionCenterBtn As Boolean = False
     Public Property ActionCenterLink As Boolean = False
     Public Property RetroWindowColor1 As Boolean = False

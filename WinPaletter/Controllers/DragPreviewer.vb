@@ -108,9 +108,9 @@ Public Class DragPreviewer
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
                             Case ApplyAccentonTaskbar_Level.None
-                                taskbar.BackColor = Color.FromArgb(55, 55, 55)
-                                start.BackColor = Color.FromArgb(40, 40, 40)
-                                ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
+                                taskbar.BackColor = Color.FromArgb(28, 28, 28)
+                                start.BackColor = Color.FromArgb(28, 28, 28)
+                                ActionCenter.BackColor = Color.FromArgb(28, 28, 28)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
                                 taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
@@ -125,15 +125,14 @@ Public Class DragPreviewer
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
                                 taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
-                                start.BackColor = Color.FromArgb(40, 40, 40)
-                                ActionCenter.BackColor = Color.FromArgb(55, 55, 55)
+                                start.BackColor = Color.FromArgb(28, 28, 28)
+                                ActionCenter.BackColor = Color.FromArgb(28, 28, 28)
 
                         End Select
 
                         ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index1
                         ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index0
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
-                        start.SearchBoxAccent = [CP].Windows11.Color_Index1
                         taskbar.AppUnderline = [CP].Windows11.Color_Index1
 
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
@@ -166,7 +165,7 @@ Public Class DragPreviewer
                                 ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
                                     start.BackColor = Color.FromArgb(start.BackColor.A, [CP].Windows11.Color_Index4)
@@ -177,7 +176,7 @@ Public Class DragPreviewer
                                 ActionCenter.BackColor = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0)
 
                             Case ApplyAccentonTaskbar_Level.Taskbar
-                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index1)
+                                taskbar.BackColor = Color.FromArgb(taskbar.BackColor.A, [CP].Windows11.Color_Index5)
                                 start.BackColor = Color.FromArgb(255, 255, 255)
                                 ActionCenter.BackColor = Color.FromArgb(255, 255, 255)
 
@@ -186,12 +185,11 @@ Public Class DragPreviewer
                         ActionCenter.ActionCenterButton_Normal = [CP].Windows11.Color_Index4
                         ActionCenter.ActionCenterButton_Hover = [CP].Windows11.Color_Index5
                         ActionCenter.ActionCenterButton_Pressed = [CP].Windows11.Color_Index2
-                        start.SearchBoxAccent = [CP].Windows11.Color_Index4
 
                         If ExplorerPatcher.IsAllowed And My.EP.UseTaskbar10 Then
                             taskbar.AppUnderline = [CP].Windows11.Color_Index1
                         Else
-                            taskbar.AppUnderline = [CP].Windows11.Color_Index4
+                            taskbar.AppUnderline = [CP].Windows11.Color_Index3
                         End If
 
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3

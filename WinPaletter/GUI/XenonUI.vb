@@ -166,7 +166,7 @@ Module XenonModule
 
 
         If RoundedCorners Then
-            G.FillRoundedImg(BackgroundBlurred, Rect, Radius, True)
+            G.DrawRoundImage(BackgroundBlurred, Rect, Radius, True)
 
             G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)), Rect, Radius, True)
 
@@ -233,7 +233,7 @@ Module XenonModule
     End Sub
 
     <Extension()>
-    Public Sub FillRoundedImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub DrawRoundImage(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 5
 
@@ -550,7 +550,11 @@ Public Class XenonTabControl : Inherits TabControl
             Else
 
                 If Not RTL Then
-                    G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+                    If (Alignment = TabAlignment.Right Or Alignment = TabAlignment.Left) Then
+                        G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), New Rectangle(TabRect.X + SideTape.Right + 2, TabRect.Y + 1, TabRect.Width - SideTape.Right - 2, TabRect.Height), StringAligner(ContentAlignment.MiddleLeft))
+                    Else
+                        G.DrawString(TabPages(i).Text, Font, New SolidBrush(TextColor), TabRect, StringAligner(ContentAlignment.MiddleCenter))
+                    End If
                 Else
                     Dim b As New Bitmap(TabRect.Width, TabRect.Height)
                     Dim gx As Graphics = Graphics.FromImage(b)
@@ -3571,8 +3575,6 @@ End Class
 Public Class XenonAlertBox
     Inherits ContainerControl
 
-    Private exitLocation As Point
-    Private overExit As Boolean
     Private borderColor, innerColor, textColor As Color
 
     Sub New()
@@ -3914,17 +3916,6 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Set
     End Property
 
-    Private _SearchBoxAccent As Color
-    Public Property SearchBoxAccent() As Color
-        Get
-            Return _SearchBoxAccent
-        End Get
-        Set(ByVal value As Color)
-            _SearchBoxAccent = value
-            Try : Refresh() : Catch : End Try
-        End Set
-    End Property
-
     Private _ActionCenterButton_Normal As Color
     Public Property ActionCenterButton_Normal() As Color
         Get
@@ -4086,20 +4077,33 @@ Public Class XenonWinElement : Inherits ContainerControl
 #Region "Start 11"
                 If Not DesignMode Then
                     G.DrawImage(adaptedBack, Rect)
-                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                    If Transparency Then G.DrawRoundImage(adaptedBackBlurred, RRect, Radius, True)
                 End If
 
-                G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
+                If DarkMode Then
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(85, 28, 28, 28)), RRect, Radius, True)
+                Else
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 255, 255, 255)), RRect, Radius, True)
+                End If
+
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
                 If Transparency Then G.FillRoundedRect(Noise, RRect, Radius, True)
-                Dim SearchRect As New Rectangle(7, 10, 120, 18)
-                Dim SearchRectFixer As New Rectangle(7, 21, 120, 5)
-                Dim SearchRectTop As New Rectangle(7, 10, 120, 16)
-                G.FillRoundedImg(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), RRect, Radius, True)
-                G.FillRoundedRect(New SolidBrush(SearchBoxAccent), SearchRect, Radius, True)
-                G.FillRoundedRect(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectTop, Radius, True)
-                G.FillRectangle(New SolidBrush(If(DarkMode, Color.FromArgb(30, 30, 30), Color.FromArgb(230, 230, 230))), SearchRectFixer)
-                G.DrawRoundedRect(New Pen(If(DarkMode, Color.FromArgb(50, 50, 50), Color.FromArgb(200, 200, 200))), SearchRect, Radius, True)
+                Dim SearchRect As New Rectangle(8, 10, Width - (8) * 2, 15)
+
+                G.DrawRoundImage(If(DarkMode, My.Resources.Start11_Dark, My.Resources.Start11_Light), RRect, Radius, True)
+
+                Dim SearchColor, SearchBorderColor As Color
+                If DarkMode Then
+                    SearchColor = Color.FromArgb(150, 28, 28, 28)
+                    SearchBorderColor = Color.FromArgb(150, 65, 65, 65)
+                Else
+                    SearchColor = Color.FromArgb(175, 255, 255, 255)
+                    SearchBorderColor = Color.FromArgb(175, 200, 200, 200)
+                End If
+
+                G.FillRoundedRect(New SolidBrush(SearchColor), SearchRect, 8, True)
+                G.DrawRoundedRect(New Pen(SearchBorderColor), SearchRect, 8, True)
+
                 G.DrawRoundedRect(New Pen(Color.FromArgb(150, 90, 90, 90)), RRect, Radius, True)
 #End Region
 
@@ -4107,16 +4111,21 @@ Public Class XenonWinElement : Inherits ContainerControl
 #Region "Action Center 11"
                 If Not DesignMode Then
                     G.DrawImage(adaptedBack, Rect)
-                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                    If Transparency Then G.DrawRoundImage(adaptedBackBlurred, RRect, Radius, True)
                 End If
 
-                G.FillRoundedRect(New SolidBrush(Color.FromArgb(120, 70, 70, 70)), RRect, Radius, True)
+                If DarkMode Then
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(85, 28, 28, 28)), RRect, Radius, True)
+                Else
+                    G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 255, 255, 255)), RRect, Radius, True)
+                End If
+
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), RRect, Radius, True)
                 If Transparency Then G.FillRoundedRect(Noise, RRect, Radius, True)
                 Button1 = New Rectangle(8, 8, 49, 20)
                 Button2 = New Rectangle(62, 8, 49, 20)
 
-                G.FillRoundedImg(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), RRect, Radius, True)
+                G.DrawRoundImage(If(DarkMode, My.Resources.AC_11_Dark, My.Resources.AC_11_Light), RRect, Radius, True)
 
                 Dim Cx1, Cx2 As Color
 
@@ -4149,6 +4158,12 @@ Public Class XenonWinElement : Inherits ContainerControl
 #Region "Taskbar 11"
                 If Not DesignMode AndAlso Transparency Then G.DrawImage(adaptedBackBlurred, Rect)
 
+                If DarkMode Then
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(110, 28, 28, 28)), Rect)
+                Else
+                    G.FillRectangle(New SolidBrush(Color.FromArgb(90, 255, 255, 255)), Rect)
+                End If
+
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
 
                 Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
@@ -4160,7 +4175,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 Dim AppBtnRect As New Rectangle(App2BtnRect.Right + 5, 3, 36, 36)
                 Dim AppImgRect As New Rectangle(App2BtnRect.Right + 5, 3, 37, 37)
-                Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 16) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 16, 3)
+                Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - 18) / 2, AppBtnRect.Y + AppBtnRect.Height - 3, 18, 3)
 
                 Dim BackC As Color
                 Dim BorderC As Color
@@ -4169,8 +4184,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                     BackC = Color.FromArgb(45, 130, 130, 130)
                     BorderC = Color.FromArgb(45, 130, 130, 130)
                 Else
-                    BackC = Color.FromArgb(225, 255, 255, 255)
-                    BorderC = Color.FromArgb(200, 230, 230, 230)
+                    BackC = Color.FromArgb(35, 255, 255, 255)
+                    BorderC = Color.FromArgb(35, 255, 255, 255)
                 End If
 
                 G.FillRoundedRect(New SolidBrush(BackC), StartBtnRect, 3, True)
@@ -4192,7 +4207,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 #Region "Alt+Tab 11"
                 If Not DesignMode Then
                     G.DrawImage(adaptedBack, Rect)
-                    If Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                    If Transparency Then G.DrawRoundImage(adaptedBackBlurred, Rect, Radius, True)
                 End If
 
                 If Transparency Then
@@ -4266,10 +4281,10 @@ Public Class XenonWinElement : Inherits ContainerControl
                     G.DrawImage(If(DarkMode, My.Resources.Start11_EP_Rounded_Dark, My.Resources.Start11_EP_Rounded_Light), New Rectangle(0, 0, Width - 1, Height - 1))
 
                 ElseIf UseWin11RoundedCorners_WithWin10_Level2 Then
-                    If Not DesignMode AndAlso Transparency Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                    If Not DesignMode AndAlso Transparency Then G.DrawRoundImage(adaptedBackBlurred, Rect, Radius, True)
                     If Transparency Then G.FillRoundedRect(Noise, Rect, Radius, True)
                     G.FillRoundedRect(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect, Radius, True)
-                    G.FillRoundedImg(If(DarkMode, My.Resources.Start11_EP_Rounded_Dark, My.Resources.Start11_EP_Rounded_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
+                    G.DrawRoundImage(If(DarkMode, My.Resources.Start11_EP_Rounded_Dark, My.Resources.Start11_EP_Rounded_Light), New Rectangle(0, 0, Width - 1, Height - 1), Radius, True)
 
                 End If
 
@@ -4554,9 +4569,9 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 G.DrawAeroEffect(RestRect, bk, Color1, ColBal, Color2, GlowBal, alphaX, 5, True)
 
-                G.FillRoundedImg(Noise7Start, Rect, 5, True)
+                G.DrawRoundImage(Noise7Start, Rect, 5, True)
 
-                G.FillRoundedImg(My.Resources.Start7, Rect, 5, True)
+                G.DrawRoundImage(My.Resources.Start7, Rect, 5, True)
 #End Region
 
             Case Styles.Start7Opaque
@@ -4565,8 +4580,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                 If Not DesignMode Then G.DrawImage(adaptedBack, Rect)
                 G.FillRoundedRect(New SolidBrush(Color.White), RestRect, 5, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), RestRect, 5, True)
-                G.FillRoundedImg(Noise7Start, Rect, 5, True)
-                G.FillRoundedImg(My.Resources.Start7, Rect, 5, True)
+                G.DrawRoundImage(Noise7Start, Rect, 5, True)
+                G.DrawRoundImage(My.Resources.Start7, Rect, 5, True)
 #End Region
 
             Case Styles.Start7Basic
@@ -4577,7 +4592,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.Taskbar7Aero
 #Region "Taskbar 7 Aero"
-                If Not DesignMode Then G.FillRoundedImg(adaptedBackBlurred, Rect, Radius, True)
+                If Not DesignMode Then G.DrawRoundImage(adaptedBackBlurred, Rect, Radius, True)
 
                 Dim bk As Bitmap = adaptedBackBlurred
                 Dim alphaX As Single = 1 - BackColorAlpha / 100  'ColorBlurBalance
@@ -4594,7 +4609,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
-                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
 
                 G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
                 G.DrawLine(New Pen(Color.FromArgb(80, 255, 255, 255)), New Point(0, 1), New Point(Width - 1, 1))
@@ -4628,7 +4643,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.FillRectangle(New SolidBrush(Color.FromArgb(255 * BackColorAlpha / 100, BackColor)), Rect)
                 G.DrawImage(My.Resources.Win7TaskbarSides, Rect)
 
-                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
 
                 G.DrawLine(New Pen(Color.FromArgb(80, 0, 0, 0)), New Point(0, 0), New Point(Width - 1, 0))
                 G.DrawLine(New Pen(Color.FromArgb(80, 255, 255, 255)), New Point(0, 1), New Point(Width - 1, 1))
@@ -4698,7 +4713,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim Color1 As Color = BackColor
                 Dim Color2 As Color = BackColor2
                 G.DrawAeroEffect(RRect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, True)
-                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
+                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
                 G.DrawRoundedRect(New Pen(Color.FromArgb(200, 25, 25, 25)), RRect, Radius, True)
                 G.DrawRoundedRect(New Pen(Color.FromArgb(70, 200, 200, 200)), inner, Radius, True)
 
@@ -4727,8 +4742,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                     If x = 0 Then
                         Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
                         G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 200, 200, 200)), surround, 1, True)
-                        G.FillRoundedImg(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
-                        G.FillRoundedImg(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
+                        G.DrawRoundImage(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
+                        G.DrawRoundImage(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
 
                         G.DrawRoundedRect(New Pen(Color1), surround, 1, True)
                         G.DrawRectangle(New Pen(Color.FromArgb(229, 240, 250)), New Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2))
@@ -4762,7 +4777,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.FillRoundedRect(New SolidBrush(Color.White), RRect, Radius, True)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 * Win7ColorBal / 100, BackColor)), RRect, Radius, True)
 
-                G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
+                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), RRect, Radius, True)
                 G.DrawRoundedRect(New Pen(Color.FromArgb(200, 25, 25, 25)), RRect, Radius, True)
                 G.DrawRoundedRect(New Pen(Color.FromArgb(70, 200, 200, 200)), inner, Radius, True)
 
@@ -4791,8 +4806,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                     If x = 0 Then
                         Dim surround As New Rectangle(r.X - 10, r.Y - 10, r.Width + 20, r.Height + 20)
                         G.FillRoundedRect(New SolidBrush(Color.FromArgb(75, 200, 200, 200)), surround, 1, True)
-                        G.FillRoundedImg(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
-                        G.FillRoundedImg(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
+                        G.DrawRoundImage(My.Resources.Win7_TitleTopL.Fade(0.35), surround, 2, True)
+                        G.DrawRoundImage(My.Resources.Win7_TitleTopR.Fade(0.35), surround, 2, True)
 
                         G.DrawRoundedRect(New Pen(BackColor), surround, 1, True)
                         G.DrawRectangle(New Pen(Color.FromArgb(229, 240, 250)), New Rectangle(surround.X + 1, surround.Y + 1, surround.Width - 2, surround.Height - 2))
@@ -5039,8 +5054,19 @@ Public Class XenonWinElement : Inherits ContainerControl
 
     Sub BlurBack()
         Try
-            If Style = Styles.Taskbar11 Or Style = Styles.Taskbar10 Or Style = Styles.Start11 Or Style = Styles.Start10 Or
-                        Style = Styles.ActionCenter11 Or Style = Styles.ActionCenter10 Or Style = Styles.AltTab11 Then
+            If Style = Styles.Taskbar11 Or Style = Styles.Start11 Or Style = Styles.ActionCenter11 Or Style = Styles.AltTab11 Then
+
+                If Transparency Then
+                    Dim b As Bitmap = New Bitmap(adaptedBack).Blur(BlurPower)
+                    If DarkMode Then
+                        Dim hsl As New HSLFilter With {.Saturation = 60}
+                        adaptedBackBlurred = hsl.ExecuteFilter(b)
+                    Else
+                        adaptedBackBlurred = b
+                    End If
+                End If
+
+            ElseIf Style = Styles.Taskbar10 Or Style = Styles.Start10 Or Style = Styles.ActionCenter10 Then
 
                 If Transparency Then adaptedBackBlurred = New Bitmap(adaptedBack).Blur(BlurPower)
 
@@ -5305,11 +5331,19 @@ Public Class XenonWindow : Inherits Panel
                 G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15)
             End If
 
+            If Not AccentColor_Enabled AndAlso Active Then
+                G.SetClip(TitlebarRect)
+                G.DrawRoundImage(AdaptedBackBlurred, Rect, Radius, True)
+                G.ResetClip()
+            End If
+
+            G.ExcludeClip(TitlebarRect)
             If DarkMode Then
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(20, 20, 20)), Rect, Radius, True)
             Else
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(240, 240, 240)), Rect, Radius, True)
             End If
+            G.ResetClip()
 
             If AccentColor_Enabled Then
                 If Active Then
@@ -5334,7 +5368,12 @@ Public Class XenonWindow : Inherits Panel
                     G.DrawLine(New Pen(AccentColor_Inactive), New Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), New Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height))
                 End If
             Else
-                FillSemiRect(G, Brushes.White, TitlebarRect, Radius)
+                Dim a As Integer = If(Active, If(DarkMode, 180, 245), 255)
+                If DarkMode Then
+                    FillSemiRect(G, New SolidBrush(Color.FromArgb(a, 32, 32, 32)), TitlebarRect, Radius)
+                Else
+                    FillSemiRect(G, New SolidBrush(Color.FromArgb(a, 245, 245, 245)), TitlebarRect, Radius)
+                End If
             End If
 #End Region
 
@@ -5541,7 +5580,7 @@ Public Class XenonWindow : Inherits Panel
                 Dim inner As New Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)
 
                 If Not ToolWindow Then
-                    G.FillRoundedImg(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
+                    G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, True)
                     G.DrawRoundedRect(New Pen(Color.FromArgb(If(Active, 130, 100), 25, 25, 25)), Rect, Radius, True)
                     G.DrawRoundedRect(New Pen(Color.FromArgb(100, 255, 255, 255)), inner, Radius, True)
                     'DrawRect(G, New Pen(Color.FromArgb(255 - 255 * Win7Alpha / 300, BackColor, 0.2))), Rect, Radius, True)
@@ -5871,7 +5910,11 @@ Public Class XenonWindow : Inherits Panel
             End If
         Else
             If Active Then
-                ForeColorX = Color.Black
+                If Preview = Preview_Enum.W11 Then
+                    ForeColorX = If(DarkMode, Color.White, Color.Black)
+                Else
+                    ForeColorX = Color.Black
+                End If
             Else
                 ForeColorX = Color.FromArgb(115, 115, 115)
             End If
@@ -5927,7 +5970,6 @@ Public Class XenonWindow : Inherits Panel
 
         End If
 
-
     End Sub
 
     Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
@@ -5948,7 +5990,22 @@ Public Class XenonWindow : Inherits Panel
         Dim Wallpaper As Bitmap
         If Parent.BackgroundImage Is Nothing Then Wallpaper = My.Wallpaper Else Wallpaper = Parent.BackgroundImage
         Try : AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat) : Catch : End Try
-        Try : AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1) : Catch : End Try
+        Try
+            If Preview = Preview_Enum.W11 Then
+                Dim b As Bitmap = New Bitmap(AdaptedBack).Blur(15)
+                If DarkMode Then
+                    Dim hsl As New HSLFilter
+                    hsl.Saturation = 35
+                    hsl.Lightness = -50
+                    AdaptedBackBlurred = hsl.ExecuteFilter(b)
+                Else
+                    AdaptedBackBlurred = b
+                End If
+            Else
+                AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1)
+            End If
+        Catch
+        End Try
         Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
     End Sub
 End Class
@@ -7059,14 +7116,14 @@ Public Class XenonTerminal
         Dim Rect_ConsoleCursor As New Rectangle(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y, 50, Rect_ConsoleText2.Height - 1)
 
         If UseAcrylic Then
-            G.FillRoundedImg(adaptedBackBlurred, Rect)
+            G.DrawRoundImage(adaptedBackBlurred, Rect)
             G.FillRoundedRect(Noise, Rect)
             G.FillRoundedRect(New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
-            If BackImage IsNot Nothing Then G.FillRoundedImg(img, Rect)
+            If BackImage IsNot Nothing Then G.DrawRoundImage(img, Rect)
         Else
-            G.FillRoundedImg(adaptedBack, Rect)
+            G.DrawRoundImage(adaptedBack, Rect)
             G.FillRoundedRect(New SolidBrush(Color.FromArgb((_Opacity / 100) * 255, Color_Background)), Rect)
-            If BackImage IsNot Nothing Then G.FillRoundedImg(img, Rect)
+            If BackImage IsNot Nothing Then G.DrawRoundImage(img, Rect)
         End If
 
         If UseAcrylicOnTitlebar And Not DesignMode Then

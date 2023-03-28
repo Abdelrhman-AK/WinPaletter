@@ -699,6 +699,7 @@ Public Class CursorsStudio
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         SaveToCP(CPx)
+        SaveToCP(MainFrm.CP)
         CPx.Apply_Cursors()
         CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()

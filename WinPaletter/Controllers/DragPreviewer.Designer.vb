@@ -143,7 +143,6 @@ Partial Class DragPreviewer
         Me.ActionCenter.Name = "ActionCenter"
         Me.ActionCenter.NoisePower = 0.2!
         Me.ActionCenter.Padding = New System.Windows.Forms.Padding(2)
-        Me.ActionCenter.SearchBoxAccent = System.Drawing.Color.Empty
         Me.ActionCenter.Shadow = True
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
@@ -286,7 +285,6 @@ Partial Class DragPreviewer
         Me.start.Name = "start"
         Me.start.NoisePower = 0.2!
         Me.start.Padding = New System.Windows.Forms.Padding(2)
-        Me.start.SearchBoxAccent = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.start.Shadow = True
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
@@ -316,7 +314,6 @@ Partial Class DragPreviewer
         Me.taskbar.Location = New System.Drawing.Point(0, 255)
         Me.taskbar.Name = "taskbar"
         Me.taskbar.NoisePower = 0.2!
-        Me.taskbar.SearchBoxAccent = System.Drawing.Color.Empty
         Me.taskbar.Shadow = True
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty

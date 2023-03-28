@@ -76,6 +76,7 @@ Public Class LogonUIXP
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
+        ApplyToCP(MainFrm.CP)
         CPx.LogonUIXP.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default

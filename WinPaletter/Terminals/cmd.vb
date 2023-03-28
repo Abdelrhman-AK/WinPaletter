@@ -84,6 +84,7 @@ Public Class CMD
             Cursor = Cursors.WaitCursor
             Dim CPx As New CP(CP.CP_Type.Registry)
             ApplyToCP(CPx, _Edition)
+            ApplyToCP(MainFrm.CP, _Edition)
 
             Select Case _Edition
                 Case Edition.CMD

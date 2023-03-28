@@ -214,6 +214,7 @@
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
+    <None Include="Resources\AC_11.pdn" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\luna.zip" />
     <None Include="Resources\RetroThemesDB.wpdb" />
@@ -514,6 +515,7 @@
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\AC_11_Dark.png" />
     <Content Include="Resources\add_win10.png" />
     <Content Include="Resources\add_win11.png" />
     <Content Include="Resources\add_win7.png" />
@@ -568,6 +570,7 @@
     <Content Include="Resources\Luna_Start_Silver.png" />
     <None Include="Resources\Mini_AC.png" />
     <Content Include="Resources\Mini_ACHover_Links.png" />
+    <None Include="Resources\Mini_Badge.png" />
     <Content Include="Resources\Mini_Hamburger.png" />
     <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
     <Content Include="Resources\Mini_Overflow.png" />
@@ -601,16 +604,18 @@
     <Content Include="Resources\PS_7x12.png" />
     <Content Include="Resources\PS_8x12.png" />
     <Content Include="Resources\PS_8x8.png" />
-    <Content Include="Resources\Start11_Dark.png" />
     <None Include="Resources\Start11_EP_Rounded_Dark.png" />
     <None Include="Resources\Start11_EP_Rounded_Light.png" />
     <None Include="Resources\Start11_Light.png" />
+    <None Include="Resources\Start11_Dark.png" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
     <Content Include="Resources\StartBtn_10Dark.png" />
     <Content Include="Resources\StartBtn_10Light.png" />
     <None Include="Resources\StartBtn_11_EP.png" />
+    <None Include="Resources\StartBtn_11Dark.png" />
+    <None Include="Resources\StartBtn_11Light.png" />
     <Content Include="Resources\System.Buffers.dll" />
     <Content Include="Resources\System.Memory.dll" />
     <Content Include="Resources\System.Numerics.Vectors.dll" />

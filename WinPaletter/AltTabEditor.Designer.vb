@@ -397,7 +397,6 @@ Partial Class AltTabEditor
         Me.XenonWinElement1.Location = New System.Drawing.Point(39, 73)
         Me.XenonWinElement1.Name = "XenonWinElement1"
         Me.XenonWinElement1.NoisePower = 0.15!
-        Me.XenonWinElement1.SearchBoxAccent = System.Drawing.Color.Empty
         Me.XenonWinElement1.Shadow = True
         Me.XenonWinElement1.Size = New System.Drawing.Size(450, 150)
         Me.XenonWinElement1.StartColor = System.Drawing.Color.Empty
