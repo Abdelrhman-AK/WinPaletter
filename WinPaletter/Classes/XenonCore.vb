@@ -813,6 +813,8 @@ Public Module FormDWMEffects
 
 End Module
 
+
+
 ' Class implementing image filter interface and base filter class.
 '
 ' Copyright (c) 2007 Miran Uhan
@@ -1134,6 +1136,8 @@ Public Class HSLFilter
     End Function
 
 End Class
+
+
 
 Public Class Visual
     '' FILENAME:        Visual.vb

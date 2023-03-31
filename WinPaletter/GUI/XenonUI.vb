@@ -175,13 +175,6 @@ Module XenonModule
             Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
             Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
 
-            'Dim bk1 As Bitmap = FadeBitmap(ColorTint(BackgroundBlurred, C1), ColorBalance * (1 - alpha))
-            'bk1 = FadeBitmap(bk1, 0.5)
-            'G.FillRoundedImg( bk1, Rect, Radius, True)
-
-            'Dim bk2 As Bitmap = FadeBitmap(Gray-scale(BackgroundBlurred), alpha * GlowBalance)
-            'bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
-            'G.FillRoundedImg( bk2, Rect, Radius, True)
 
             G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect, Radius, True)
             G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))), Rect, Radius, True)
@@ -194,14 +187,6 @@ Module XenonModule
 
             Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
             Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
-
-            'Dim bk1 As Bitmap = FadeBitmap(ColorTint(BackgroundBlurred, C1), ColorBalance * (1 - alpha))
-            'bk1 = FadeBitmap(bk1, 0.5)
-            'G.DrawImage(bk1, Rect)
-
-            'Dim bk2 As Bitmap = FadeBitmap(Gray-scale(BackgroundBlurred), alpha * GlowBalance)
-            'bk2 = FadeBitmap(bk2, (1 - alpha) * 0.5)
-            'G.DrawImage(bk2, Rect)
 
             G.FillRectangle(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect)
             G.FillRectangle(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))), Rect)
@@ -4165,6 +4150,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 End If
 
                 G.FillRectangle(New SolidBrush(Color.FromArgb(If(Transparency, BackColorAlpha, 255), BackColor)), Rect)
+                If Transparency Then G.FillRoundedRect(Noise, RRect, Radius, True)
 
                 Dim StartBtnRect As New Rectangle(8, 3, 36, 36)
                 Dim StartImgRect As New Rectangle(8, 3, 37, 37)
@@ -5552,8 +5538,9 @@ Public Class XenonWindow : Inherits Panel
 
                     Dim Color1 As Color = If(Active, AccentColor_Active, AccentColor_Inactive)
                     Dim Color2 As Color = If(Active, AccentColor2_Active, AccentColor2_Inactive)
-
+                    G.ExcludeClip(InnerWindow_1)
                     G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, Not ToolWindow)
+                    G.ResetClip()
                 Else
 
                     If Not ToolWindow Then

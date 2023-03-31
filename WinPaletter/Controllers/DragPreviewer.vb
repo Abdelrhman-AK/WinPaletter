@@ -923,10 +923,12 @@ Public Class DragPreviewer
                         If Not .UseTaskbar10 Then
                             taskbar.BlurPower = 8
                             taskbar.Height = 42
+                            taskbar.NoisePower = 0.3
                         Else
                             taskbar.BlurPower = 8
                             taskbar.Height = 35
                             taskbar.UseWin11ORB_WithWin10 = Not .TaskbarButton10
+                            taskbar.NoisePower = 0
                         End If
 
                         If Not .UseStart10 Then
@@ -967,6 +969,7 @@ Public Class DragPreviewer
                 Else
                     taskbar.BlurPower = 8
                     taskbar.Height = 42
+                    taskbar.NoisePower = 0.3
                     '########################
                     start.BlurPower = 6
                     start.NoisePower = 0.3
