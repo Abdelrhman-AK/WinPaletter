@@ -4148,9 +4148,9 @@ Public Class XenonWinElement : Inherits ContainerControl
                 End Select
 
                 G.FillRoundedRect(New SolidBrush(Cx1), Button1, Radius, True)
-                G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius)
+                G.DrawRoundedRect_LikeW11(New Pen(Cx1.Light(0.15)), Button1, Radius, True)
                 G.FillRoundedRect(New SolidBrush(Cx2), Button2, Radius, True)
-                G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius)
+                G.DrawRoundedRect(New Pen(Cx2.CB(If(DarkMode, 0.05, -0.05))), Button2, Radius, True)
                 G.DrawRoundedRect(New Pen(Color.FromArgb(150, 90, 90, 90)), RRect, Radius, True)
 #End Region
 
@@ -5320,7 +5320,7 @@ Public Class XenonWindow : Inherits Panel
         Dim LabelRect As New Rectangle(IconRect.Right + 4, Rect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height)
         If ToolWindow Then LabelRect.X = IconRect.X
         Dim LabelRect8 As New Rectangle(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3)
-        Dim XRect As New Rectangle(Rect.Right - 20, Rect.Y, 20, TitlebarRect.Height)
+        Dim XRect As New Rectangle(Rect.Right - 35, Rect.Y, 35, TitlebarRect.Height)
 
         'G.Clear(Color.Transparent)
 
@@ -5902,21 +5902,29 @@ Public Class XenonWindow : Inherits Panel
         End If
 
         Dim ForeColorX As Color
+        Dim closeImg As Bitmap
+
         If AccentColor_Enabled Then
             If Active Then
                 ForeColorX = If(AccentColor_Active.IsDark, Color.White, Color.Black)
+                closeImg = If(AccentColor_Active.IsDark, My.Resources.Win10x_Close_Dark, My.Resources.Win10x_Close_Light)
             Else
                 ForeColorX = If(AccentColor_Inactive.IsDark, Color.FromArgb(115, 115, 115), Color.Black)
+                closeImg = If(AccentColor_Inactive.IsDark, My.Resources.Win10x_Close_Dark, My.Resources.Win10x_Close_Light)
             End If
+
         Else
             If Active Then
                 If Preview = Preview_Enum.W11 Then
                     ForeColorX = If(DarkMode, Color.White, Color.Black)
+                    closeImg = If(DarkMode, My.Resources.Win10x_Close_Dark, My.Resources.Win10x_Close_Light)
                 Else
                     ForeColorX = Color.Black
+                    closeImg = My.Resources.Win10x_Close_Light
                 End If
             Else
                 ForeColorX = Color.FromArgb(115, 115, 115)
+                closeImg = If(DarkMode, My.Resources.Win10x_Close_Dark, My.Resources.Win10x_Close_Light)
             End If
         End If
 
@@ -5926,7 +5934,8 @@ Public Class XenonWindow : Inherits Panel
             G.DrawString(Text, Font, New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
 
             If Not ToolWindow Then
-                G.DrawString("", New Font("Segoe MDL2 Assets", 7, FontStyle.Regular), New SolidBrush(ForeColorX), XRect, StringAligner(ContentAlignment.MiddleLeft))
+                Dim r As New Rectangle(XRect.X + (XRect.Width - closeImg.Width) / 2, XRect.Y + (XRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height)
+                G.DrawImage(closeImg, r)
             Else
                 Dim XXRect As New Rectangle(Rect.X + Rect.Width - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12)
 
@@ -5976,10 +5985,10 @@ Public Class XenonWindow : Inherits Panel
 
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler FindForm.Load, AddressOf ProcessBack : Catch : End Try
+            'Try : AddHandler FindForm.Load, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
-            Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
+            'Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
         End If
 

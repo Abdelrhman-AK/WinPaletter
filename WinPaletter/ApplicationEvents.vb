@@ -972,6 +972,11 @@ Namespace My
             Try : If e.Name.ToUpper.Contains("Devcorp.Controls.VisualStyles".ToUpper) Then Return Assembly.Load(Resources.Devcorp_Controls_VisualStyles)
             Catch : End Try
 
+            Try : If e.Name.ToUpper.Contains("ImageProcessor".ToUpper) Then Return Assembly.Load(Resources.ImageProcessor)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("System.ValueTuple".ToUpper) Then Return Assembly.Load(Resources.System_ValueTuple)
+            Catch : End Try
         End Function
 
         Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)

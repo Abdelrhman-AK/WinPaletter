@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+
 Public Module Paths
     Enum CursorType
         Arrow
@@ -104,9 +105,7 @@ Public Module Paths
     Public Function Draw([CursorOptions] As CursorOptions) As Bitmap
         Dim b As New Bitmap(32 * [CursorOptions].Scale, 32 * [CursorOptions].Scale, PixelFormat.Format32bppPArgb)
         Dim G As Graphics = Graphics.FromImage(b)
-
         G.SmoothingMode = SmoothingMode.HighQuality
-
         G.Clear(Color.Transparent)
 
 #Region "Rectangles Helpers"
@@ -777,7 +776,31 @@ Public Module Paths
 
         G.Flush()
         G.Save()
-        Return New Bitmap(b)
+
+
+        Dim B_Final As New Bitmap(b.Width, b.Height)
+        Dim G_Final As Graphics = Graphics.FromImage(B_Final)
+
+        If [CursorOptions].Shadow_Enabled Then
+            Dim shadowedBMP As New Bitmap(b)
+
+            For x As Integer = 0 To b.Width - 1
+                For y As Integer = 0 To b.Height - 1
+                    shadowedBMP.SetPixel(x, y, Color.FromArgb(b.GetPixel(x, y).A, [CursorOptions].Shadow_Color))
+                Next
+            Next
+
+            Dim ImgF As New ImageProcessor.ImageFactory
+            ImgF.Load(shadowedBMP)
+            ImgF.GaussianBlur([CursorOptions].Shadow_Blur)
+            ImgF.Alpha([CursorOptions].Shadow_Opacity * 100)
+            G_Final.DrawImage(ImgF.Image, New Rectangle(0 + [CursorOptions].Shadow_OffsetX, 0 + [CursorOptions].Shadow_OffsetY, b.Width, b.Height))
+            ImgF.Dispose()
+        End If
+
+        G_Final.DrawImage(b, New Rectangle(0, 0, b.Width, b.Height))
+
+        Return New Bitmap(B_Final)
         b.Dispose()
         G.Dispose()
     End Function
@@ -787,11 +810,13 @@ Public Module Paths
         Modern
         Classic
     End Enum
+
     Enum CircleStyle
         Aero
         Dot
         Classic
     End Enum
+
     Public Function DefaultCursor([Rectangle] As Rectangle, Style As ArrowStyle, Optional Scale As Single = 1) As GraphicsPath
         Dim path As New GraphicsPath
         Dim R As New Rectangle([Rectangle].X, [Rectangle].Y, 12, 18)
@@ -854,11 +879,11 @@ Public Module Paths
 
                 '#### Right Down Handle Border
                 Dim DRHLine1 As Point = DHLine2
-                Dim DRHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y - 1)
+                Dim DRHLine2 As New Point(DLHLine1.X + 3, DLHLine1.Y)
                 path.AddLine(DRHLine1, DRHLine2)
 
                 '#### Right Down Border
-                Dim DRLine1 As Point = DRHLine2 + New Point(1, 0)
+                Dim DRLine1 As Point = DRHLine2 + New Point(0, -1)
                 Dim DRLine2 As New Point(R.X + R.Width - 1, DRLine1.Y)
                 path.AddLine(DRLine1, DRLine2)
 
@@ -1952,6 +1977,12 @@ Public Class CursorOptions
             LoadingCircleBackNoiseOpacity = Cursor.LoadingCircleBackNoiseOpacity
             LoadingCircleHotNoise = Cursor.LoadingCircleHotNoise
             LoadingCircleHotNoiseOpacity = Cursor.LoadingCircleHotNoiseOpacity
+            Shadow_Enabled = Cursor.Shadow_Enabled
+            Shadow_Color = Cursor.Shadow_Color
+            Shadow_Blur = Cursor.Shadow_Blur
+            Shadow_Opacity = Cursor.Shadow_Opacity
+            Shadow_OffsetX = Cursor.Shadow_OffsetX
+            Shadow_OffsetY = Cursor.Shadow_OffsetY
         End If
     End Sub
 
@@ -1985,6 +2016,12 @@ Public Class CursorOptions
     Public [LineThickness] As Single = 1
     Public Scale As Single = 1
     Public _Angle As Single = 180
+    Public Shadow_Enabled As Boolean = False
+    Public Shadow_Color As Color = Color.Black
+    Public Shadow_Blur As Integer = 5
+    Public Shadow_Opacity As Single = 0.3
+    Public Shadow_OffsetX As Integer = 2
+    Public Shadow_OffsetY As Integer = 2
 
 End Class
 
@@ -2023,6 +2060,14 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_LoadingCircleHotGradientMode As GradientMode = GradientMode.Vertical
     Public Property Prop_LoadingCircleHotNoise As Boolean = False
     Public Property Prop_LoadingCircleHotNoiseOpacity As Single = 0.25
+
+    Public Property Prop_Shadow_Enabled As Boolean = False
+    Public Property Prop_Shadow_Color As Color = Color.Black
+    Public Property Prop_Shadow_Blur As Integer = 5
+    Public Property Prop_Shadow_Opacity As Single = 0.3
+    Public Property Prop_Shadow_OffsetX As Integer = 2
+    Public Property Prop_Shadow_OffsetY As Integer = 2
+
 
     Public Property Prop_Scale As Single = 1
 
@@ -2094,7 +2139,13 @@ Public Class CursorControl : Inherits ContainerControl
             .LoadingCircleHotNoiseOpacity = Prop_LoadingCircleHotNoiseOpacity,
             .LineThickness = 1,
             .Scale = Prop_Scale,
-            ._Angle = Angle}
+            ._Angle = Angle,
+            .Shadow_Enabled = Prop_Shadow_Enabled,
+            .Shadow_Blur = Prop_Shadow_Blur,
+            .Shadow_Color = Prop_Shadow_Color,
+            .Shadow_Opacity = Prop_Shadow_Opacity,
+            .Shadow_OffsetX = Prop_Shadow_OffsetX,
+            .Shadow_OffsetY = Prop_Shadow_OffsetY}
 
         bmp = New Bitmap(32 * Prop_Scale, 32 * Prop_Scale, PixelFormat.Format32bppPArgb)
 

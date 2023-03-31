@@ -571,6 +571,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property ImageProcessor() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ImageProcessor", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property InactiveApp_Taskbar() As System.Drawing.Bitmap
@@ -1395,6 +1405,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property System_ValueTuple() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("System_ValueTuple", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property Taskbar_ActiveApp7() As System.Drawing.Bitmap
@@ -1510,6 +1530,26 @@ Namespace My.Resources
         Public ReadOnly Property Vista_Taskbar() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Vista_Taskbar", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property Win10x_Close_Dark() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Win10x_Close_Dark", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property Win10x_Close_Light() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Win10x_Close_Light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

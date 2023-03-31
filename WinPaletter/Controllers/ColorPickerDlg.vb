@@ -489,6 +489,9 @@ Public Class ColorPickerDlg
                         .Prop_LoadingCircleHot1 = ColorEditorManager1.Color
                     ElseIf _Conditions.CursorCircleHot2 Then
                         .Prop_LoadingCircleHot2 = ColorEditorManager1.Color
+                    ElseIf _Conditions.CursorShadow Then
+                        .Prop_Shadow_Color = ColorEditorManager1.Color
+
                     End If
 
                     .Refresh()
@@ -876,6 +879,7 @@ Public Class Conditions
     Public Property CursorCircle2 As Boolean = False
     Public Property CursorCircleHot1 As Boolean = False
     Public Property CursorCircleHot2 As Boolean = False
+    Public Property CursorShadow As Boolean = False
 
 End Class
 

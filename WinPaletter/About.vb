@@ -68,4 +68,8 @@ Public Class About
     Private Sub XenonLinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel3.LinkClicked
         Process.Start("https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper")
     End Sub
+
+    Private Sub XenonLinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel4.LinkClicked
+        Process.Start("https://imageprocessor.org")
+    End Sub
 End Class

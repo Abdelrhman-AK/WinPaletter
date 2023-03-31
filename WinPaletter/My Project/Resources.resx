@@ -176,7 +176,7 @@
   <data name="AC_11_Dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAHgAAABVCAYAAACCViA6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAl5JREFUeF7tmTFrWlEcR1+mfIAmX8U97diUtJlEEGm/goWCbcGxYCEEikNHaelS
+        wAAADsABataJCQAAAl5JREFUeF7tmTFrWlEcR1+mfIAmX8U97diUtJlEEGm/goWCbcGxYCEEikNHaelS
         KHQSOkgpOro5OImDFkSddbL/K7cg4WKe7+Wlrz/OgUO47/2vyDvcKBgVi8Uz1JXA4hJYXAKLS2BxCSwu
         gcUlsLgEFpfA4hJYXAKLS2BxCSwugcUlsLgEFpfA4hJYXAKLS2BxCSwugcUlsLgEFpfA4hJYXAKLS2Bx
         CSwugcUlsLgEFpfA4hJY3HsJvLkDQq/7r/VvLRWh171LOcHiElhcAotLYHEJLC6BxSWwuAQWl8DiElhc
@@ -10140,6 +10140,9 @@
         AA==
 </value>
   </data>
+  <data name="ImageProcessor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageProcessor.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="InactiveApp_Taskbar" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -14850,7 +14853,7 @@
   <data name="Start11_Dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIcAAADICAYAAADC6fKzAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAABkFJREFUeF7t3D+PVHUUxvG1UCgsNDQokpCovAQsbKQhMZDoFptQ0JBIjJWYEP8k
+        wAAADsABataJCQAABkFJREFUeF7t3D+PVHUUxvG1UCgsNDQokpCovAQsbKQhMZDoFptQ0JBIjJWYEP8k
         FiR0SjR2NFssESU2vBASJfHloDueA7+NPy/Pc8/uMHeW636f5JNl5845d+/Mw8wuChuXL18+DyiUAxbl
         gEU5YFEOWJQDFuWARTlgUQ5YlAMW5YBFOWBRDliUAxblgEU5YFEOWJQDFuWARTlgUQ5YlAMW5YBFOWBR
         DliUAxblgEU5YFEOWJQDFuWARTlgUQ5YlAMW5YBFOWBRjkO2tbW1feXKld+vXr36aCq5P8+jzj+Gchyi
@@ -15594,7 +15597,7 @@
   <data name="StartBtn_11Dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAA2VJREFUWEfNletPzmEYx/sDjNnMbDajoWVJpiUkh6Slac0QOUsOj6RE/glvbN6a
+        vAAADrwBlbxySQAAA2VJREFUWEfNletPzmEYx/sDjNnMbDajoWVJpiUkh6Slac0QOUsOj6RE/glvbN6a
         2cyclnKItJZyTiOa8yn1K0loP4Z5Hr+v63ru585Trtvudz8vPm+++27PZ9d13b8nBsB/hxj6jRj6jRj6
         jRj6jRj6jRj6jRhqAjfasN8FKoh9nzyU94ZQ9j6E0p4gSrqDKO4KItAZxPaOINURs/41sOYlsPoFsPIp
         sOIJsOwRkNcGLH0A5NwHsu8BaQfPhfsmxFCjhfb2A+WfgbJPwO4+YNcHoLgXCPQA294BRV3Upr6NUFYL
@@ -15653,6 +15656,9 @@
   </data>
   <data name="System_Runtime_CompilerServices_Unsafe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\System.Runtime.CompilerServices.Unsafe.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="System_ValueTuple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\System.ValueTuple.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Taskbar_ActiveApp7" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -16137,6 +16143,20 @@
         vAAADrwBlbxySQAAAHlJREFUGFc1xDEOgjAABdB/BzHSFvA6YGJYqi5KYpiABRzARQZJJCJX+LeQ+wlN
         fcOD1pr4ThPxGUfiPQzEq++JZ9cRj7Yl6uZOlNWNyPKCuKYpcb4kxOF4IvZxTITRjlD+dimwSc/k24Qy
         eTZXmtQ/MbcRklg5a/4AGQgq+j6/xVIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="Win10x_Close_Dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAAExJREFUKFONjdsJADAIA52t+w+h/51Bah9CRIUeKJIcSKoqNoMadmfDfsxKTl0K
+        jCo7YIH3qyMg9NLmSwSpf10VKUsBEDpbXEnOlVUWW/y1S4/V+WsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="Win10x_Close_Light" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wAAADsABataJCQAAAE5JREFUKFOVzbENACAIBEBYzf2HgN4dUGIwiG9h8QnwZyRm1plmZoTi3YzE0BHO
+        3XVAyHf4Os/Rb1jwgTz/MKH316ioN4gQ9kUQiizMOgC9i6qPIJS9ewAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Win7AltTabBasicButton" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

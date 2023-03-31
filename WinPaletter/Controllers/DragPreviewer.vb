@@ -65,6 +65,11 @@ Public Class DragPreviewer
         XenonAlertBox11.Size = XenonAlertBox11.Parent.Size - New Size(40, 40)
         XenonAlertBox11.Location = New Point(20, 20)
 
+        If Not IsFontInstalled("Segoe MDL2 Assets") Then
+            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
+            setting_icon_preview.Text = "♣"
+        End If
+
         ResumeLayout()
     End Sub
 
@@ -85,25 +90,53 @@ Public Class DragPreviewer
             Case WinVer.W11
 #Region "Win11"
                 tabs_preview.SelectedIndex = 0
+                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
+
+                XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
+                XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
+
+                XenonWindow1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+                XenonWindow2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+
+                XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
+                XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
+
+                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
+                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+
+                Label8.ForeColor = If([CP].Windows11.AppMode_Light, Color.Black, Color.White)
+
+                start.DarkMode = Not [CP].Windows11.WinMode_Light
+                taskbar.DarkMode = Not [CP].Windows11.WinMode_Light
+                ActionCenter.DarkMode = Not [CP].Windows11.WinMode_Light
+
+                taskbar.Transparency = [CP].Windows11.Transparency
+                start.Transparency = [CP].Windows11.Transparency
+                ActionCenter.Transparency = [CP].Windows11.Transparency
+
                 Select Case Not [CP].Windows11.WinMode_Light
                     Case True   ''''''''''Dark
-                        ActionCenter.BackColorAlpha = 75
+                        ActionCenter.BackColorAlpha = 90
 
                         If ExplorerPatcher.IsAllowed Then
                             If My.EP.UseStart10 Then
                                 start.BackColorAlpha = 185
                             Else
-                                start.BackColorAlpha = 75
+                                start.BackColorAlpha = 90
                             End If
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 185
+                                taskbar.BlurPower = 8
                             Else
-                                taskbar.BackColorAlpha = 75
+                                taskbar.BackColorAlpha = 105
+                                taskbar.BlurPower = 8
                             End If
                         Else
-                            taskbar.BackColorAlpha = 75
-                            start.BackColorAlpha = 75
+                            taskbar.BackColorAlpha = 105
+                            taskbar.BlurPower = 8
+                            start.BackColorAlpha = 90
                         End If
 
                         Select Case [CP].Windows11.ApplyAccentonTaskbar
@@ -150,10 +183,13 @@ Public Class DragPreviewer
 
                             If My.EP.UseTaskbar10 Then
                                 taskbar.BackColorAlpha = 210
+                                taskbar.BlurPower = 8
                             Else
                                 taskbar.BackColorAlpha = 180
+                                taskbar.BlurPower = 8
                             End If
                         Else
+                            taskbar.BlurPower = 8
                             taskbar.BackColorAlpha = 180
                             start.BackColorAlpha = 180
                         End If
@@ -227,16 +263,16 @@ Public Class DragPreviewer
                 If Not [CP].Windows10.TB_Blur Then
                     taskbar.BlurPower = 0
                 Else
-                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 12, 6)
+                    taskbar.BlurPower = If(Not [CP].Windows10.IncreaseTBTransparency, 8, 6)
                 End If
 
                 If [CP].Windows10.Transparency Then
                     If Not [CP].Windows10.WinMode_Light Then
-                        taskbar.BackColorAlpha = 150
+                        taskbar.BackColorAlpha = If(Not CP.Windows10.IncreaseTBTransparency, 150, 75)
                         start.BackColorAlpha = 150
                         ActionCenter.BackColorAlpha = 150
                     Else
-                        taskbar.BackColorAlpha = 200
+                        taskbar.BackColorAlpha = If(Not CP.Windows10.IncreaseTBTransparency, 200, 125)
                         start.BackColorAlpha = 200
                         ActionCenter.BackColorAlpha = 200
                     End If
@@ -875,31 +911,32 @@ Public Class DragPreviewer
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
                 ActionCenter.Dock = Nothing
-                ActionCenter.BlurPower = 7
-                ActionCenter.NoisePower = 0.2
+                ActionCenter.BlurPower = 6
+                ActionCenter.NoisePower = 0.3
                 ActionCenter.Size = New Size(120, 85)
                 ActionCenter.Location = New Point(398, 161)
 
                 If ExplorerPatcher.IsAllowed Then
 
                     With My.EP
+
                         If Not .UseTaskbar10 Then
-                            taskbar.BlurPower = 12
+                            taskbar.BlurPower = 8
                             taskbar.Height = 42
                         Else
-                            taskbar.BlurPower = 12
+                            taskbar.BlurPower = 8
                             taskbar.Height = 35
                             taskbar.UseWin11ORB_WithWin10 = Not .TaskbarButton10
                         End If
 
                         If Not .UseStart10 Then
-                            start.BlurPower = 7
-                            start.NoisePower = 0.2
+                            start.BlurPower = 6
+                            start.NoisePower = 0.3
                             start.Size = New Size(135, 200)
                             start.Location = New Point(9, taskbar.Bottom - taskbar.Height - start.Height - 9)
                         Else
                             start.BlurPower = 7
-                            start.NoisePower = 0.2
+                            start.NoisePower = 0.3
 
                             Select Case .StartStyle
                                 Case ExplorerPatcher.StartStyles.NotRounded
@@ -928,11 +965,11 @@ Public Class DragPreviewer
                     End With
 
                 Else
-                    taskbar.BlurPower = 12
+                    taskbar.BlurPower = 8
                     taskbar.Height = 42
                     '########################
-                    start.BlurPower = 7
-                    start.NoisePower = 0.2
+                    start.BlurPower = 6
+                    start.NoisePower = 0.3
                     start.Size = New Size(135, 200)
                     start.Location = New Point(9, taskbar.Bottom - 42 - start.Height - 9)
                 End If
@@ -940,17 +977,14 @@ Public Class DragPreviewer
             Case WinVer.W10
                 ActionCenter.Dock = DockStyle.Right
                 ActionCenter.BlurPower = 7
-                ActionCenter.NoisePower = 0.2
+                ActionCenter.NoisePower = 0.3
                 '########################
-                If Not [CP].Windows10.TB_Blur Then
-                    taskbar.BlurPower = 0
-                Else
-                    taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
-                End If
+                taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
                 '########################
                 start.BlurPower = 7
-                start.NoisePower = 0.2
+                start.NoisePower = 0.3
                 '########################
+
                 taskbar.Height = 35
                 taskbar.UseWin11ORB_WithWin10 = False
                 start.Size = New Size(182, 201)

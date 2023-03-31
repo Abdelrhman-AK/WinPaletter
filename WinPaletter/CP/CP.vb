@@ -488,7 +488,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", _DefWin.ColorizationColorBalance)
                     ColorizationColorBalance = y
 
-                    If Not My.W8 Then
+                    If My.W7 Then
                         y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", _DefWin.ColorizationAfterglow.ToArgb)
                         ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(y))
 
@@ -2634,6 +2634,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public LoadingCircleHotGradientMode As GradientMode
             Public LoadingCircleHotNoise As Boolean
             Public LoadingCircleHotNoiseOpacity As Single
+            Public Shadow_Enabled As Boolean
+            Public Shadow_Color As Color
+            Public Shadow_Blur As Integer
+            Public Shadow_Opacity As Single
+            Public Shadow_OffsetX As Integer
+            Public Shadow_OffsetY As Integer
 
             Public Sub Load([subKey] As String)
                 Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
@@ -2674,6 +2680,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
                 LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
 
+                Shadow_Enabled = r.GetValue("Shadow_Enabled", False)
+                Shadow_Color = Color.FromArgb(r.GetValue("Shadow_Color", Color.Black.ToArgb))
+                Shadow_Blur = r.GetValue("Shadow_Blur", 5)
+                Shadow_Opacity = r.GetValue("Shadow_Opacity", 30) / 100
+                Shadow_OffsetX = r.GetValue("Shadow_OffsetX", 2)
+                Shadow_OffsetY = r.GetValue("Shadow_OffsetY", 2)
+
                 r.Close()
                 rMain.Close()
             End Sub
@@ -2685,33 +2698,39 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 r = rMain.CreateSubKey(subKey)
                 With r
-                    .SetValue("ArrowStyle", [Cursor].ArrowStyle, RegistryValueKind.QWord)
-                    .SetValue("CircleStyle", [Cursor].CircleStyle, RegistryValueKind.QWord)
+                    .SetValue("ArrowStyle", [Cursor].ArrowStyle, RegistryValueKind.DWord)
+                    .SetValue("CircleStyle", [Cursor].CircleStyle, RegistryValueKind.DWord)
 
-                    .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger, RegistryValueKind.DWord)
                     .SetValue("PrimaryColorGradientMode", [Cursor].PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", [Cursor].PrimaryColorNoise.ToInteger, RegistryValueKind.QWord)
-                    .SetValue("PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor1", [Cursor].SecondaryColor1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColor2", [Cursor].SecondaryColor2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorGradient", [Cursor].SecondaryColorGradient.ToInteger, RegistryValueKind.QWord)
+                    .SetValue("PrimaryColorNoise", [Cursor].PrimaryColorNoise.ToInteger, RegistryValueKind.DWord)
+                    .SetValue("PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100, RegistryValueKind.DWord)
+                    .SetValue("SecondaryColor1", [Cursor].SecondaryColor1.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("SecondaryColor2", [Cursor].SecondaryColor2.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("SecondaryColorGradient", [Cursor].SecondaryColorGradient.ToInteger, RegistryValueKind.DWord)
                     .SetValue("SecondaryColorGradientMode", [Cursor].SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", [Cursor].SecondaryColorNoise.ToInteger, RegistryValueKind.QWord)
-                    .SetValue("SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackGradient", [Cursor].LoadingCircleBackGradient.ToInteger, RegistryValueKind.QWord)
+                    .SetValue("SecondaryColorNoise", [Cursor].SecondaryColorNoise.ToInteger, RegistryValueKind.DWord)
+                    .SetValue("SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleBackGradient", [Cursor].LoadingCircleBackGradient.ToInteger, RegistryValueKind.DWord)
                     .SetValue("LoadingCircleBackGradientMode", [Cursor].LoadingCircleBackGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleBackNoise", [Cursor].LoadingCircleBackNoise.ToInteger, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotGradient", [Cursor].LoadingCircleHotGradient.ToInteger, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleBackNoise", [Cursor].LoadingCircleBackNoise.ToInteger, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleHotGradient", [Cursor].LoadingCircleHotGradient.ToInteger, RegistryValueKind.DWord)
                     .SetValue("LoadingCircleHotGradientMode", [Cursor].LoadingCircleHotGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleHotNoise", [Cursor].LoadingCircleHotNoise.ToInteger, RegistryValueKind.QWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.QWord)
+                    .SetValue("LoadingCircleHotNoise", [Cursor].LoadingCircleHotNoise.ToInteger, RegistryValueKind.DWord)
+                    .SetValue("LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.DWord)
+                    .SetValue("Shadow_Enabled", [Cursor].Shadow_Enabled, RegistryValueKind.DWord)
+                    .SetValue("Shadow_Color", [Cursor].Shadow_Color.ToArgb, RegistryValueKind.DWord)
+                    .SetValue("Shadow_Blur", [Cursor].Shadow_Blur, RegistryValueKind.DWord)
+                    .SetValue("Shadow_Opacity", [Cursor].Shadow_Opacity * 100, RegistryValueKind.DWord)
+                    .SetValue("Shadow_OffsetX", [Cursor].Shadow_OffsetX, RegistryValueKind.DWord)
+                    .SetValue("Shadow_OffsetY", [Cursor].Shadow_OffsetY, RegistryValueKind.DWord)
                 End With
 
                 r.Close()
@@ -2750,6 +2769,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If lin.StartsWith("LoadingCircleHotGradientMode= ", My._ignore) Then [Cursor].LoadingCircleHotGradientMode = ReturnGradientModeFromString(lin.Remove(0, "LoadingCircleHotGradientMode= ".Count))
                         If lin.StartsWith("LoadingCircleHotNoise= ", My._ignore) Then [Cursor].LoadingCircleHotNoise = lin.Remove(0, "LoadingCircleHotNoise= ".Count)
                         If lin.StartsWith("LoadingCircleHotNoiseOpacity= ", My._ignore) Then [Cursor].LoadingCircleHotNoiseOpacity = lin.Remove(0, "LoadingCircleHotNoiseOpacity= ".Count)
+                        If lin.StartsWith("Shadow_Enabled= ", My._ignore) Then [Cursor].Shadow_Enabled = lin.Remove(0, "Shadow_Enabled= ".Count)
+                        If lin.StartsWith("Shadow_Color= ", My._ignore) Then [Cursor].Shadow_Color = Color.FromArgb(lin.Remove(0, "Shadow_Color= ".Count))
+                        If lin.StartsWith("Shadow_Blur= ", My._ignore) Then [Cursor].Shadow_Blur = lin.Remove(0, "Shadow_Blur= ".Count)
+                        If lin.StartsWith("Shadow_Opacity= ", My._ignore) Then [Cursor].Shadow_Opacity = lin.Remove(0, "Shadow_Opacity= ".Count) / 100
+                        If lin.StartsWith("Shadow_OffsetX= ", My._ignore) Then [Cursor].Shadow_OffsetX = lin.Remove(0, "Shadow_OffsetX= ".Count)
+                        If lin.StartsWith("Shadow_OffsetY= ", My._ignore) Then [Cursor].Shadow_OffsetY = lin.Remove(0, "Shadow_OffsetY= ".Count)
                     Next
 
                     Return [Cursor]
@@ -2786,6 +2811,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotGradientMode= {1}", Signature, ReturnStringFromGradientMode(LoadingCircleHotGradientMode)))
                 tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotNoise= {1}", Signature, LoadingCircleHotNoise))
                 tx.Add(String.Format("*Cursor_{0}_LoadingCircleHotNoiseOpacity= {1}", Signature, LoadingCircleHotNoiseOpacity))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_Enabled= {1}", Signature, Shadow_Enabled))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_Color= {1}", Signature, Shadow_Color.ToArgb))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_Blur= {1}", Signature, Shadow_Blur))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_Opacity= {1}", Signature, Shadow_Opacity * 100))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_OffsetX= {1}", Signature, Shadow_OffsetX))
+                tx.Add(String.Format("*Cursor_{0}_Shadow_OffsetY= {1}", Signature, Shadow_OffsetY))
                 tx.Add(String.Format("</{0}>", Signature) & vbCrLf)
                 Return tx.CString
             End Function
@@ -3178,7 +3209,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_AppLoading As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3204,7 +3242,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Busy As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3230,7 +3275,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Help As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3256,7 +3308,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Move As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3282,7 +3341,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_NS As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3308,7 +3374,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_EW As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3334,7 +3407,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_NESW As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3360,7 +3440,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_NWSE As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3386,7 +3473,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Up As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3412,7 +3506,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Pen As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3438,7 +3539,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_None As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3464,7 +3572,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Link As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3490,7 +3605,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Pin As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3516,7 +3638,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Person As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3542,7 +3671,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_IBeam As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3568,7 +3704,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 
     Public Cursor_Cross As New Structures.Cursor With {
                     .PrimaryColor1 = Color.White,
@@ -3594,7 +3737,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .LoadingCircleHotGradient = False,
                     .LoadingCircleHotGradientMode = GradientMode.Circle,
                     .LoadingCircleHotNoise = False,
-                    .LoadingCircleHotNoiseOpacity = 0.25}
+                    .LoadingCircleHotNoiseOpacity = 0.25,
+                    .ArrowStyle = ArrowStyle.Aero,
+                    .CircleStyle = CircleStyle.Aero,
+                    .Shadow_Enabled = False,
+                    .Shadow_Color = Color.Black,
+                    .Shadow_Blur = 5,
+                    .Shadow_Opacity = 0.3,
+                    .Shadow_OffsetX = 2, .Shadow_OffsetY = 2}
 #End Region
 
 #End Region
@@ -4013,7 +4163,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     End Function
     Sub Execute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
-               Optional TimeStr As String = "", Optional overallstopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "")
+               Optional TimeStr As String = "", Optional overallStopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "")
 
         Dim ReportProgress As Boolean = [TreeView] IsNot Nothing
         Dim sw As New Stopwatch
@@ -4027,7 +4177,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 [Sub]()
                 If ReportProgress And Not String.IsNullOrWhiteSpace(TimeStr) Then AddNode([TreeView], String.Format(TimeStr, sw.ElapsedMilliseconds / 1000), "time")
             Catch ex As Exception
-                sw.Stop() : overallstopwatch.Stop()
+                sw.Stop() : overallStopwatch.Stop()
                 _ErrorHappened = True
                 If ReportProgress Then
                     If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, ErrorStr), "error")
@@ -4035,7 +4185,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Else
                     BugReport.ThrowError(ex)
                 End If
-                sw.Start() : overallstopwatch.Start()
+                sw.Start() : overallStopwatch.Start()
             End Try
         Else
             If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, SkipStr), "skip")

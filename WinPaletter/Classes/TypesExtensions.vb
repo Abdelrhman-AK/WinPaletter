@@ -6,6 +6,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
+Imports StackBlur.Extensions
 
 Public Module ColorsExtensions
 
@@ -561,9 +562,10 @@ Public Module BitmapExtensions
     '''</summary>
     <Extension()>
     Public Function Blur(ByRef image As Bitmap, Optional ByVal BlurForce As Integer = 2) As Bitmap
-        Dim img As Bitmap = image
+        Dim img As New Bitmap(image)
         Dim G As Graphics = Graphics.FromImage(img)
-        G.SmoothingMode = SmoothingMode.HighQuality
+        G.SmoothingMode = SmoothingMode.AntiAlias
+
         Dim att As New ImageAttributes
         Dim m As New ColorMatrix With {.Matrix33 = 0.4F}
         att.SetColorMatrix(m)
@@ -571,17 +573,16 @@ Public Module BitmapExtensions
         BlurForce += 1
 
         For x = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(img, New Rectangle(x, 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
+            G.DrawImage(img, New Rectangle(x, 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
         Next
 
         For y = -BlurForce To BlurForce Step 0.5
-            g.DrawImage(img, New Rectangle(0, y, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
+            G.DrawImage(img, New Rectangle(0, y, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
         Next
 
-        g.Save()
+        G.Save()
         att.Dispose()
-        g.Dispose()
-
+        G.Dispose()
         Return img
     End Function
 

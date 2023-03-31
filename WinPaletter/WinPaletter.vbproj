@@ -93,12 +93,16 @@
       <HintPath>..\References\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
       <Private>False</Private>
     </Reference>
     <Reference Include="Ookii.Dialogs.WinForms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
@@ -158,6 +162,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.ServiceProcess">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
@@ -558,6 +566,7 @@
     <Content Include="Resources\icons8_command_line.ico" />
     <Content Include="Resources\icons8_PowerShell.ico" />
     <Content Include="Resources\Icon_Uninstall.ico" />
+    <None Include="Resources\ImageProcessor.dll" />
     <Content Include="Resources\LangNode_JSON.png" />
     <Content Include="Resources\LangNode_Main.png" />
     <Content Include="Resources\LangNode_Value.png" />
@@ -588,7 +597,7 @@
     <Content Include="Resources\Native8.png" />
     <Content Include="Resources\NativeVista.png" />
     <Content Include="Resources\NativeXP.png" />
-    <Content Include="Resources\Newtonsoft.Json.dll" />
+    <None Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\notify_administrator.png" />
     <Content Include="Resources\notify_skip.png" />
     <Content Include="Resources\notify_success.png" />
@@ -621,6 +630,7 @@
     <Content Include="Resources\System.Numerics.Vectors.dll" />
     <Content Include="Resources\System.Resources.Extensions.dll" />
     <Content Include="Resources\System.Runtime.CompilerServices.Unsafe.dll" />
+    <None Include="Resources\System.ValueTuple.dll" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <Content Include="Resources\Update.png" />
@@ -634,6 +644,8 @@
     <Content Include="Resources\Vista_StartLowerORB.png" />
     <Content Include="Resources\Vista_Taskbar.png" />
     <None Include="Resources\Win7AltTabBasicButton.png" />
+    <None Include="Resources\Win10x_Close_Light.png" />
+    <None Include="Resources\Win10x_Close_Dark.png" />
     <Content Include="Resources\Win7Logo.png" />
     <Content Include="Resources\Win7ORB.png" />
     <Content Include="Resources\Win7Sides.png" />

@@ -902,7 +902,7 @@ Partial Class MainFrm
         '
         Me.setting_icon_preview.BackColor = System.Drawing.Color.Transparent
         Me.setting_icon_preview.Dock = System.Windows.Forms.DockStyle.Top
-        Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
+        Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
         Me.setting_icon_preview.Size = New System.Drawing.Size(179, 45)
@@ -2395,7 +2395,7 @@ Partial Class MainFrm
         Me.TabPage2.Location = New System.Drawing.Point(4, 24)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage2.Size = New System.Drawing.Size(529, 517)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "W10"
         '
@@ -2408,7 +2408,7 @@ Partial Class MainFrm
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(523, 512)
+        Me.Panel1.Size = New System.Drawing.Size(523, 511)
         Me.Panel1.TabIndex = 19
         '
         'XenonGroupBox2
@@ -3586,7 +3586,7 @@ Partial Class MainFrm
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage3.Size = New System.Drawing.Size(529, 517)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "W8.1"
         '
@@ -3598,7 +3598,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W8.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W8.Name = "PaletteContainer_W8"
-        Me.PaletteContainer_W8.Size = New System.Drawing.Size(523, 512)
+        Me.PaletteContainer_W8.Size = New System.Drawing.Size(523, 511)
         Me.PaletteContainer_W8.TabIndex = 31
         '
         'XenonGroupBox17
@@ -4092,7 +4092,7 @@ Partial Class MainFrm
         Me.TabPage4.Location = New System.Drawing.Point(4, 24)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage4.Size = New System.Drawing.Size(529, 517)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "W7"
         '
@@ -4105,7 +4105,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W7.Location = New System.Drawing.Point(3, 3)
         Me.PaletteContainer_W7.Name = "PaletteContainer_W7"
-        Me.PaletteContainer_W7.Size = New System.Drawing.Size(523, 512)
+        Me.PaletteContainer_W7.Size = New System.Drawing.Size(523, 511)
         Me.PaletteContainer_W7.TabIndex = 30
         '
         'XenonGroupBox11
@@ -4745,7 +4745,7 @@ Partial Class MainFrm
         Me.TabPage8.Controls.Add(Me.XenonGroupBox49)
         Me.TabPage8.Location = New System.Drawing.Point(4, 24)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage8.Size = New System.Drawing.Size(529, 517)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "WVista"
         '
@@ -4985,7 +4985,7 @@ Partial Class MainFrm
         Me.TabPage9.Controls.Add(Me.XenonGroupBox47)
         Me.TabPage9.Location = New System.Drawing.Point(4, 24)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage9.Size = New System.Drawing.Size(529, 517)
         Me.TabPage9.TabIndex = 6
         Me.TabPage9.Text = "WXP"
         '
@@ -5411,7 +5411,7 @@ Partial Class MainFrm
         Me.TabPage5.Location = New System.Drawing.Point(4, 24)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(529, 518)
+        Me.TabPage5.Size = New System.Drawing.Size(529, 517)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Log"
         '

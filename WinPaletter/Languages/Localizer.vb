@@ -427,6 +427,7 @@ Public Class Localizer : Implements IDisposable
                     If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
                         j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
                     End If
+
                 Next
 
                 If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)

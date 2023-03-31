@@ -738,6 +738,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Help
@@ -749,6 +761,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_AppLoading
@@ -766,6 +790,12 @@ Public Class CP_Defaults : Implements IDisposable
             .LoadingCircleHotGradient = False
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Busy
@@ -783,6 +813,12 @@ Public Class CP_Defaults : Implements IDisposable
             .LoadingCircleHotGradient = False
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Up
@@ -794,6 +830,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_NS
@@ -805,6 +853,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_EW
@@ -816,6 +876,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_NESW
@@ -827,6 +899,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_NWSE
@@ -838,6 +922,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Move
@@ -849,13 +945,41 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_None
             .ArrowStyle = ArrowStyle.Classic
             .CircleStyle = CircleStyle.Classic
+            .PrimaryColor1 = Color.Transparent
+            .PrimaryColor2 = Color.Transparent
+            .SecondaryColor1 = Color.Black
+            .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Arrow
@@ -867,6 +991,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Pen
@@ -878,6 +1014,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_IBeam
@@ -889,6 +1037,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Cross
@@ -900,6 +1060,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Link
@@ -911,6 +1083,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Pin
@@ -922,6 +1106,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].Cursor_Person
@@ -933,6 +1129,18 @@ Public Class CP_Defaults : Implements IDisposable
             .SecondaryColor2 = Color.Black
             .PrimaryColorGradient = False
             .SecondaryColorGradient = False
+            .LoadingCircleBack1 = Color.White
+            .LoadingCircleBack2 = Color.White
+            .LoadingCircleHot1 = Color.Black
+            .LoadingCircleHot2 = Color.Black
+            .LoadingCircleBackGradient = False
+            .LoadingCircleHotGradient = False
+            .Shadow_Enabled = False
+            .Shadow_Color = Color.Black
+            .Shadow_Blur = 5
+            .Shadow_Opacity = 0.3
+            .Shadow_OffsetX = 2
+            .Shadow_OffsetY = 2
         End With
 
         With [CP].WindowsEffects
