@@ -124,6 +124,8 @@
 
 - [Getting elements of visual styles file (*.msstyles) by Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
 
+- [Bitmap effects by ImageProcessor](https://imageprocessor.org/)
+
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
 Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
 
