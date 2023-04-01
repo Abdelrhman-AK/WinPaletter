@@ -8,6 +8,48 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
+| `Stable` |  01 Apr 2023 |
+
+> **What's New?**
+## The same as [1.0.7.5](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1075), except for:
+
+### 1. Windows 11 preview and description labels
+- Windows 11 preview is redesigned to make it closer to the latest stable builds.
+- Description labels are re-written, they are dependent on the latest stable Windows 11. If your Windows is outdated, these labels might not be the same as your current system.
+- If you installed ExplorerPatcher and uninstalled it, WinPaletter will detect ExplorerPatcher is still installed (due do ExplorerPatcher registry remnants) and so the descriptions will be different. You can solve this by going to Settings > ExplorerPatcher and then disable preview synchronization.
+
+### 2. Cursors Shadow:
+- Now you can modify cursors shadow. You can control its color, blur power, opacity and its offset (X, Y).
+- Each cursor has its own separate shadow.
+- Shadow in "Miscellaneous" part is rendered by Windows, while custom shadow is rendered by WinPaletter itself.
+- The more you enable custom shadow, the more WinPaletter will take to render the cursor.
+
+### 3. Improvements and fixes:
+- Fixing classic cursor main arrow to make it matches the classic NT cursor outline.
+- Improvements in Windows 7/Vista preview speed while customizing titlebar height in metrics. (There was a lag)
+- Fixing crashing bug during applying a classic color with classic theme enabled or applying classic colors with switching from a theme to classic mode in Windows XP, Vista & 7
+- Making a visual-styles change in Windows XP being applied to login screen too.
+- Fixing bug in reading "Fonts Substitutes" from theme file.
+- Fixing bug in reading and saving "Fonts" from\to theme file.
+- Mechanism of detecting internet connection becomes quicker than before.
+- UI improvements.
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.5`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.5...v1.0.7.6) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.6.9...v1.0.7.6) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.6) |
+
+---
+
+### 1.0.7.5
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
 | `Stable` |  24 Mar 2023 |
 
 > **What's New?**
