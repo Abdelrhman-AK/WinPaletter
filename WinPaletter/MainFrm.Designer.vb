@@ -4999,7 +4999,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert1.Image = Nothing
-        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 427)
+        Me.WXP_Alert1.Location = New System.Drawing.Point(3, 419)
         Me.WXP_Alert1.Name = "WXP_Alert1"
         Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
         Me.WXP_Alert1.TabIndex = 53
@@ -5064,7 +5064,7 @@ Partial Class MainFrm
         Me.WXP_Alert3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Alert3.Image = Nothing
-        Me.WXP_Alert3.Location = New System.Drawing.Point(3, 458)
+        Me.WXP_Alert3.Location = New System.Drawing.Point(3, 450)
         Me.WXP_Alert3.Name = "WXP_Alert3"
         Me.WXP_Alert3.Size = New System.Drawing.Size(513, 64)
         Me.WXP_Alert3.TabIndex = 48

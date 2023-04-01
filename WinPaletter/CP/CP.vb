@@ -7,6 +7,8 @@ Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
+Imports System.IO
+
 Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "IDisposable Support"
@@ -791,6 +793,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             End If
 
                     End Select
+
+                    Dim vsFile As New Text.StringBuilder(260)
+                    Dim colorName As New Text.StringBuilder(260)
+                    Dim sizeName As New Text.StringBuilder(260)
+
+                    Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+
+                    EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", vsFile.ToString, RegistryValueKind.String)
+                    EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", colorName.ToString, RegistryValueKind.String)
+
                 Catch
                 End Try
             End Sub

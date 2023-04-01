@@ -22,13 +22,17 @@ Public Class BugReport
 
         DrawCustomTitlebar(c1)
 
+        For Each lbl In XenonAnimatedBox1.Controls.OfType(Of Label)
+            lbl.ForeColor = Color.White
+        Next
+
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
     End Sub
 
     Sub AddData(str As String, Exception As Exception, [Treeview] As TreeView)
 
         Try
-            With [Treeview].Nodes.Add(str & " Data").Nodes
+            With [Treeview].Nodes.Add(str & " data").Nodes
                 If Exception.Data.Keys.Count > 0 Then
                     For Each x As DictionaryEntry In Exception.Data
                         .Add(String.Format("{0} = {1}", x.Key.ToString, x.Value.ToString))
@@ -42,26 +46,26 @@ Public Class BugReport
         End Try
     End Sub
 
-    Sub AddException(str As String, Exception As Exception, [Treeview] As TreeView)
+    Sub AddException(str As String, Exception As Exception, [TreeView] As TreeView)
 
         Try
             If Not String.IsNullOrWhiteSpace(Exception.Message) Then
 
-                [Treeview].Nodes.Add(str & " Message").Nodes.Add(Exception.Message)
+                [TreeView].Nodes.Add(str & " message").Nodes.Add(Exception.Message)
 
-                Dim n As TreeNode = [Treeview].Nodes.Add(str & " StackTrace")
+                Dim n As TreeNode = [TreeView].Nodes.Add(str & " stack trace")
 
                 For Each x In Exception.StackTrace.CList
                     n.Nodes.Add(x)
                 Next
 
-                AddData(str, Exception, [Treeview])
+                AddData(str, Exception, [TreeView])
 
-                [Treeview].Nodes.Add(str & " Target Sub\Function").Nodes.Add(Exception.TargetSite.Name & " @ " & Exception.Source)
-                [Treeview].Nodes.Add(str & " Assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName)
-                [Treeview].Nodes.Add(str & " Assembly's File").Nodes.Add(Exception.TargetSite.Module.Assembly.Location)
-                [Treeview].Nodes.Add(str & " HRESULT").Nodes.Add(Exception.HResult)
-                If Not String.IsNullOrWhiteSpace(Exception.HelpLink) Then [Treeview].Nodes.Add(str & " Microsoft Help Link").Nodes.Add(Exception.HelpLink)
+                [TreeView].Nodes.Add(str & " target sub\function").Nodes.Add(Exception.TargetSite.Name & " @ " & Exception.Source)
+                [TreeView].Nodes.Add(str & " assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName)
+                [TreeView].Nodes.Add(str & " assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location)
+                [TreeView].Nodes.Add(str & " HRESULT").Nodes.Add(Exception.HResult)
+                If Not String.IsNullOrWhiteSpace(Exception.HelpLink) Then [TreeView].Nodes.Add(str & " Microsoft help link").Nodes.Add(Exception.HelpLink)
 
             End If
 
@@ -87,8 +91,8 @@ Public Class BugReport
         XenonTreeView1.Nodes.Clear()
         AddException("Exception", Exception, XenonTreeView1)
         Dim x As Exception = Exception.InnerException
-        AddException("Inner Exception", x, XenonTreeView1)
-        'AddException("Base Exception", Exception.GetBaseException, XenonTreeView1)
+        AddException("Inner exception", x, XenonTreeView1)
+        'AddException("Base exception", Exception.GetBaseException, XenonTreeView1)
 
         XenonTreeView1.ExpandAll()
 
@@ -135,14 +139,14 @@ Public Class BugReport
         Dim SB As New StringBuilder
         SB.Clear()
         SB.AppendLine("```vbnet")
-        SB.AppendLine("'General Information")
+        SB.AppendLine("'General information")
         SB.AppendLine("'-----------------------------------------------------------")
         SB.AppendLine(String.Format("Report.Date = ""{0}""", Now.ToLongDateString & " " & Now.ToLongTimeString))
         SB.AppendLine(String.Format("OS = ""{0}""", Label2.Text))
         SB.AppendLine(String.Format("WinPaletter.Version = ""{0}""", Label3.Text))
         SB.AppendLine()
 
-        SB.AppendLine("'Error Details")
+        SB.AppendLine("'Error details")
         SB.AppendLine("'-----------------------------------------------------------")
 
         For Each x As TreeNode In XenonTreeView1.Nodes

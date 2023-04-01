@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.IO
+Imports WinPaletter.XenonCore
 
 Public Class Lang_JSON_Manage
     Private Sub LangJSON_Manage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -7,8 +8,10 @@ Public Class Lang_JSON_Manage
         Label6.Font = My.Application.ConsoleFontMedium
         TreeView1.ImageList = My.Lang_IL
 
+
+
         If My.Settings.Language And IO.File.Exists(My.Settings.Language_File) Then
-            TreeView1.FromJSON(My.Settings.Language_File, My.Computer.FileSystem.GetFileInfo(My.Settings.Language_File).Name)
+            TreeView1.FromJSON(My.Settings.Language_File, Path.GetFileName(My.Settings.Language_File))
             OpenJSONDlg.FileName = My.Settings.Language_File
             SaveJSONDlg.FileName = My.Settings.Language_File
         End If
@@ -56,7 +59,7 @@ Public Class Lang_JSON_Manage
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
 
         If OpenJSONDlg.ShowDialog = DialogResult.OK Then
-            TreeView1.FromJSON(OpenJSONDlg.FileName, My.Computer.FileSystem.GetFileInfo(OpenJSONDlg.FileName).Name)
+            TreeView1.FromJSON(OpenJSONDlg.FileName, Path.GetFileName(OpenJSONDlg.FileName))
         End If
 
     End Sub
@@ -122,7 +125,7 @@ Public Class Lang_JSON_Manage
             Dim Lang As New Localizer
             Lang.ExportJSON(SaveJSONDlg.FileName)
             Lang.Dispose()
-            TreeView1.FromJSON(SaveJSONDlg.FileName, My.Computer.FileSystem.GetFileInfo(SaveJSONDlg.FileName).Name)
+            TreeView1.FromJSON(SaveJSONDlg.FileName, Path.GetFileName(SaveJSONDlg.FileName))
             Cursor = Cursors.Default
         End If
     End Sub

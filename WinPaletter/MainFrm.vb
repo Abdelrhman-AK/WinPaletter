@@ -3668,7 +3668,7 @@ Public Class MainFrm
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         Dropped = False
 
-        If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpth" Then
+        If Path.GetExtension(files(0)).ToLower = ".wpth" Then
             wpth_or_wpsf = True
             e.Effect = DragDropEffects.Copy
 
@@ -3680,7 +3680,7 @@ Public Class MainFrm
                 DragPreviewer.Show()
             End If
 
-        ElseIf My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpsf" Then
+        ElseIf Path.GetExtension(files(0)).ToLower = ".wpsf" Then
             wpth_or_wpsf = False
             DragAccepted = True
             e.Effect = DragDropEffects.Copy

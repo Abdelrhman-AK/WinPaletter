@@ -1481,6 +1481,17 @@ Namespace NativeMethods
         End Function
     End Class
 
+    Public Class Wininet
+        <DllImport("wininet.dll")>
+        Private Shared Function InternetGetConnectedState(<Out> ByRef Description As Integer, ByVal ReservedValue As Integer) As Boolean
+        End Function
+
+        Public Shared Function CheckNet() As Boolean
+            Dim desc As Integer
+            Return InternetGetConnectedState(desc, 0)
+        End Function
+    End Class
+
     ''' <summary>
     ''' Functions not found internally in system DLLs, but uses the functions in DLLs to do something DLLs Functions cannot do alone.
     ''' </summary>

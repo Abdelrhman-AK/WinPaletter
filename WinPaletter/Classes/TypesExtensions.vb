@@ -6,7 +6,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
-Imports StackBlur.Extensions
 
 Public Module ColorsExtensions
 
@@ -185,7 +184,7 @@ Public Module ColorsExtensions
     End Function
 
     '''<summary>
-    '''Get Color As String in the format you choose
+    '''Get Color as string in the format you choose
     '''</summary>
     <Extension()>
     Public Function ReturnFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
@@ -906,7 +905,7 @@ Public Module BitmapExtensions
     End Function
 End Module
 
-Public Module ControlExtentions
+Public Module ControlExtensions
     '''<summary>
     '''Return graphical state of a control to a bitmap
     '''</summary>
@@ -918,22 +917,15 @@ Public Module ControlExtentions
     End Function
 End Module
 
-Public Module ComboBoxExtenstions
+Public Module ComboBoxExtensions
 
     '''<summary>
-    '''Add classic themes names to a Combobox
+    '''Add classic themes names to a ComboBox
     '''</summary>
     <Extension()>
     Public Sub PopulateThemes([ComboBox] As ComboBox)
-
         [ComboBox].Items.Clear()
-        Dim ls As New List(Of String)
-        ls = My.Resources.RetroThemesDB.CList
-
-        For Each x As String In ls
-            [ComboBox].Items.Add(x.Split("|")(0))
-        Next
-
+        [ComboBox].Items.AddRange(My.Resources.RetroThemesDB.CList.[Select](Function(f) f.Split("|")(0)).ToArray())
     End Sub
 End Module
 
@@ -1000,7 +992,7 @@ Public Module TreeViewExtensions
 
 
     '''<summary>
-    '''Serialize a node to JSON Formated String
+    '''Serialize a node to JSON Formatted String
     '''</summary>
     <Extension()>
     Public Function ToJSON([TreeNode] As TreeNode) As String

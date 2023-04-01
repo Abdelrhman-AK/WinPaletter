@@ -191,9 +191,6 @@ Module XenonModule
             G.FillRectangle(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)), Rect)
             G.FillRectangle(New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))), Rect)
         End If
-
-
-
     End Sub
 
 #Region "Rounded Rectangle System"

@@ -8,6 +8,7 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.IO.Compression
+Imports System.IO
 
 Namespace My
     Module Env
@@ -432,8 +433,8 @@ Namespace My
                 Try
                     Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
                     If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-                WallpaperType = R2.GetValue("BackgroundType")
-                If R2 IsNot Nothing Then R2.Close()
+                    WallpaperType = R2.GetValue("BackgroundType")
+                    If R2 IsNot Nothing Then R2.Close()
                 Catch
                 End Try
             End If
@@ -631,18 +632,18 @@ Namespace My
                 End Try
             End If
 
-            ExternalLink = False
-            ExternalLink_File = ""
-
             If Not [Settings].LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
+            ExternalLink = False
+            ExternalLink_File = ""
+
             For Each arg As String In ArgsList
 
-                If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
+                If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) Then
 
-                    If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                    If Path.GetExtension(arg).ToLower = ".wpth" Then
                         If [Settings].OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True
                             ExternalLink_File = arg
@@ -654,7 +655,7 @@ Namespace My
                         End If
                     End If
 
-                    If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                    If Path.GetExtension(arg).ToLower = ".wpsf" Then
                         SettingsX._External = True
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
@@ -662,7 +663,7 @@ Namespace My
                     End If
 
                 Else
-                    If arg.ToLower.StartsWith("/apply:") Then
+                    If arg.StartsWith("/apply:", _ignore) Then
                         Dim File As String = arg.Remove(0, "/apply:".Count)
                         File = File.Replace("""", "")
                         If IO.File.Exists(File) Then
@@ -673,7 +674,7 @@ Namespace My
                         End If
                     End If
 
-                    If arg.ToLower.StartsWith("/edit:") Then
+                    If arg.StartsWith("/edit:", _ignore) Then
                         Dim File As String = arg.Remove(0, "/edit:".Count)
                         File = File.Replace("""", "")
                         ExternalLink = True
@@ -790,9 +791,9 @@ Namespace My
                     ElseIf arg.ToLower = "/uninstall-quiet" Then
                         Uninstall_Quiet()
                     Else
-                        If Not arg.ToLower.StartsWith("/apply:") And Not arg.ToLower.StartsWith("/edit:") Then
+                        If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) Then
 
-                            If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpth" Then
+                            If Path.GetExtension(arg).ToLower = ".wpth" Then
                                 If MainFrm.CP <> MainFrm.CP_Original Then
                                     If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
@@ -850,14 +851,14 @@ Namespace My
                                 End If
                             End If
 
-                            If Computer.FileSystem.GetFileInfo(arg).Extension.ToLower = ".wpsf" Then
+                            If Path.GetExtension(arg).ToLower = ".wpsf" Then
                                 SettingsX._External = True
                                 SettingsX._File = arg
                                 SettingsX.ShowDialog()
                             End If
 
                         Else
-                            If arg.ToLower.StartsWith("/apply:") Then
+                            If arg.StartsWith("/apply:", _ignore) Then
                                 Dim File As String = arg.Remove(0, "/apply:".Count)
                                 File = File.Replace("""", "")
                                 If IO.File.Exists(File) Then
@@ -867,7 +868,7 @@ Namespace My
                                 End If
                             End If
 
-                            If arg.ToLower.StartsWith("/edit:") Then
+                            If arg.StartsWith("/edit:", _ignore) Then
                                 Dim File As String = arg.Remove(0, "/edit:".Count)
                                 File = File.Replace("""", "")
 

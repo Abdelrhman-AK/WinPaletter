@@ -83,7 +83,7 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(215, 78)
+        Me.Label3.Location = New System.Drawing.Point(217, 78)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(567, 24)
         Me.Label3.TabIndex = 90
@@ -93,7 +93,7 @@ Partial Class BugReport
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(9, 12)
+        Me.PictureBox1.Location = New System.Drawing.Point(6, 7)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(35, 35)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -104,7 +104,7 @@ Partial Class BugReport
         '
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(45, 79)
+        Me.Label5.Location = New System.Drawing.Point(47, 79)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(164, 24)
         Me.Label5.TabIndex = 89
@@ -117,18 +117,18 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(50, 12)
+        Me.Label7.Location = New System.Drawing.Point(47, 7)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(732, 35)
+        Me.Label7.Size = New System.Drawing.Size(737, 35)
         Me.Label7.TabIndex = 85
-        Me.Label7.Text = "There is an exception error. Please Try again or report this in GitHub issues."
+        Me.Label7.Text = "There is an exception error. Please try again or report this in GitHub issues."
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5
         '
         Me.PictureBox5.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
-        Me.PictureBox5.Location = New System.Drawing.Point(15, 79)
+        Me.PictureBox5.Location = New System.Drawing.Point(17, 79)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -139,7 +139,7 @@ Partial Class BugReport
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(15, 52)
+        Me.PictureBox2.Location = New System.Drawing.Point(17, 49)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -152,7 +152,7 @@ Partial Class BugReport
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(215, 51)
+        Me.Label2.Location = New System.Drawing.Point(217, 48)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(567, 24)
         Me.Label2.TabIndex = 87
@@ -162,7 +162,7 @@ Partial Class BugReport
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(45, 52)
+        Me.Label1.Location = New System.Drawing.Point(47, 49)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(164, 24)
         Me.Label1.TabIndex = 86

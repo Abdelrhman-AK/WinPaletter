@@ -604,7 +604,7 @@ Public Class SettingsX
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
-        If My.Computer.FileSystem.GetFileInfo(files(0)).Extension.ToLower = ".wpsf" Then
+        If Path.GetExtension(files(0)).ToLower = ".wpsf" Then
             e.Effect = DragDropEffects.Copy
         Else
             e.Effect = DragDropEffects.None

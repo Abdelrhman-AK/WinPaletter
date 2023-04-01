@@ -61,9 +61,9 @@ Partial Class Updates
         Me.Label2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(152, 78)
+        Me.Label2.Location = New System.Drawing.Point(174, 78)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(255, 24)
+        Me.Label2.Size = New System.Drawing.Size(233, 24)
         Me.Label2.TabIndex = 16
         Me.Label2.Text = "0.0.0.0"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -159,7 +159,7 @@ Partial Class Updates
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(42, 78)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(104, 24)
+        Me.Label1.Size = New System.Drawing.Size(126, 24)
         Me.Label1.TabIndex = 20
         Me.Label1.Text = "Current version:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -187,7 +187,7 @@ Partial Class Updates
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(42, 108)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(104, 24)
+        Me.Label6.Size = New System.Drawing.Size(126, 24)
         Me.Label6.TabIndex = 26
         Me.Label6.Text = "Update size:"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -197,9 +197,9 @@ Partial Class Updates
         Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(152, 108)
+        Me.Label7.Location = New System.Drawing.Point(174, 108)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(255, 24)
+        Me.Label7.Size = New System.Drawing.Size(233, 24)
         Me.Label7.TabIndex = 25
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -217,7 +217,7 @@ Partial Class Updates
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(42, 138)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(104, 24)
+        Me.Label8.Size = New System.Drawing.Size(126, 24)
         Me.Label8.TabIndex = 29
         Me.Label8.Text = "Release date:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -227,9 +227,9 @@ Partial Class Updates
         Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(152, 138)
+        Me.Label9.Location = New System.Drawing.Point(174, 138)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(255, 24)
+        Me.Label9.Size = New System.Drawing.Size(233, 24)
         Me.Label9.TabIndex = 28
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
