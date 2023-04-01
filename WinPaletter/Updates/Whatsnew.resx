@@ -189,28 +189,38 @@
         s8G+j39vWFjYvwD6pNp+6eQ0EwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>• For example, if you set a Windows 10 taskbar in Windows 11, WinPaletter will adjust the preview to make the taskbar as Windows 10, and so on.
+  <data name="Label5.Text" xml:space="preserve">
+    <value>• Windows 11 preview is redesigned to make it closer to the latest stable builds.
 
-• If you didn't install ExplorerPatcher or even don't use Windows 11, you can force WinPaletter to pretend that ExplorerPatcher is used; Go to Settings &gt; ExplorerPatcher &gt; Check `Deflect` and save settings.</value>
+• Description labels are re-written, they are dependent on the latest stable Windows 11. If your Windows is outdated, these labels might not be the same as your current system.
+
+• If you installed ExplorerPatcher and uninstalled it, WinPaletter will detect ExplorerPatcher is still installed (due do ExplorerPatcher registry remnants) and so the descriptions will be different. You can solve this by going to Settings &gt; ExplorerPatcher and then disable preview synchronization.</value>
   </data>
   <data name="Label21.Text" xml:space="preserve">
-    <value>• Layout of Cursors studio is changed
+    <value>• Now you can modify cursors shadow. You can control its color, blur power, opacity and its offset (X, Y).
 
-• New Styles for Default Cursor and Loading Cursor are made, it can be `Aero`, `Classic` or `Modern`.
+• Each cursor has its own separate shadow.
 
-• If you use a language file, you may see this form incomplete or not perfect, so the translators should work on Cursors' section.</value>
+• Shadow in "Miscellaneous" part is rendered by Windows, while custom shadow is rendered by WinPaletter itself.
+
+• The more you enable custom shadow, the more WinPaletter will take to render the cursor.</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
-    <value>• UI improvements
+    <value>• Fixing classic cursor main arrow to make it matches the classic NT cursor outline.
 
-• Some options in Windows Effects and cursors lose their effects after logoff. Now they are fixed.
+• Improvements in Windows 7/Vista preview speed while customizing titlebar height in metrics. (There was a lag)
 
-• Mechanism of reading from\writing to registry improved a bit
+• Fixing crashing bug during applying a classic color with classic theme enabled or applying classic colors with switching from a theme to classic mode in Windows XP, Vista &amp;&amp; 7
 
-• New options are added in `Settings` &gt; `Theme Applying Behavior` to extend their applying scope in registry (All users). The options are for User Preference Mask, Logoff Wallpaper (Tested in Windows XP), Classic Colors, Metrics and Fonts, Cursors and Consoles.
+• Making a visual-styles change in Windows XP being applied to login screen too.
 
-• A new option is added in `Settings` &gt; `Theme Applying Behavior` is made to delay applying the Metrics and Fonts until the user logsoff and logson, and this is to escape from the situation of crashing.</value>
+• Fixing bug in reading "Fonts Substitutes" from theme file.
+
+• Fixing bug in reading and saving "Fonts" from\to theme file.
+
+• Mechanism of detecting internet connection becomes quicker than before.
+
+• UI improvements.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
