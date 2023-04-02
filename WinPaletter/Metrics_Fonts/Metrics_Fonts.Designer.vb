@@ -903,7 +903,6 @@ Partial Class Metrics_Fonts
         Me.XenonWindow2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.XenonWindow2.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow2.DarkMode = True
-        Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow2.Location = New System.Drawing.Point(317, 47)
         Me.XenonWindow2.Metrics_BorderWidth = 1
@@ -935,7 +934,6 @@ Partial Class Metrics_Fonts
         Me.XenonWindow1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.XenonWindow1.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow1.DarkMode = True
-        Me.XenonWindow1.DropShadow = True
         Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow1.Location = New System.Drawing.Point(92, 47)
         Me.XenonWindow1.Metrics_BorderWidth = 1
@@ -1863,7 +1861,6 @@ Partial Class Metrics_Fonts
         Me.XenonWindow4.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow4.Controls.Add(Me.MenuStrip1)
         Me.XenonWindow4.DarkMode = True
-        Me.XenonWindow4.DropShadow = True
         Me.XenonWindow4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow4.Location = New System.Drawing.Point(44, 61)
         Me.XenonWindow4.Metrics_BorderWidth = 1
@@ -2420,7 +2417,6 @@ Partial Class Metrics_Fonts
         Me.XenonWindow6.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow6.Controls.Add(Me.Panel2)
         Me.XenonWindow6.DarkMode = True
-        Me.XenonWindow6.DropShadow = True
         Me.XenonWindow6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow6.Location = New System.Drawing.Point(62, 32)
         Me.XenonWindow6.Metrics_BorderWidth = 1

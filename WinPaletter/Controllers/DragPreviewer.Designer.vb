@@ -167,7 +167,6 @@ Partial Class DragPreviewer
         Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
-        Me.XenonWindow1.DropShadow = True
         Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow1.Location = New System.Drawing.Point(177, 11)
         Me.XenonWindow1.Metrics_BorderWidth = 1
@@ -247,7 +246,6 @@ Partial Class DragPreviewer
         Me.XenonWindow2.Active = False
         Me.XenonWindow2.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow2.DarkMode = True
-        Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow2.Location = New System.Drawing.Point(177, 165)
         Me.XenonWindow2.Metrics_BorderWidth = 1

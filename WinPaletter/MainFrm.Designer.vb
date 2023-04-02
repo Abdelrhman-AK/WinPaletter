@@ -395,6 +395,7 @@ Partial Class MainFrm
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.MainToolbar = New WinPaletter.XenonGroupBox()
+        Me.XenonButton31 = New WinPaletter.XenonButton()
         Me.XenonButton20 = New WinPaletter.XenonButton()
         Me.XenonButton18 = New WinPaletter.XenonButton()
         Me.XenonButton17 = New WinPaletter.XenonButton()
@@ -820,7 +821,6 @@ Partial Class MainFrm
         Me.XenonWindow2.Active = False
         Me.XenonWindow2.BackColor = System.Drawing.Color.Transparent
         Me.XenonWindow2.DarkMode = True
-        Me.XenonWindow2.DropShadow = True
         Me.XenonWindow2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonWindow2.Location = New System.Drawing.Point(172, 160)
         Me.XenonWindow2.Metrics_BorderWidth = 1
@@ -853,7 +853,6 @@ Partial Class MainFrm
         Me.XenonWindow1.Controls.Add(Me.Panel3)
         Me.XenonWindow1.Controls.Add(Me.lnk_preview)
         Me.XenonWindow1.DarkMode = True
-        Me.XenonWindow1.DropShadow = True
         Me.XenonWindow1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonWindow1.Location = New System.Drawing.Point(172, 13)
         Me.XenonWindow1.Metrics_BorderWidth = 1
@@ -5603,6 +5602,7 @@ Partial Class MainFrm
         Me.MainToolbar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.MainToolbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.MainToolbar.Controls.Add(Me.XenonButton31)
         Me.MainToolbar.Controls.Add(Me.XenonButton20)
         Me.MainToolbar.Controls.Add(Me.XenonButton18)
         Me.MainToolbar.Controls.Add(Me.XenonButton17)
@@ -5622,6 +5622,22 @@ Partial Class MainFrm
         Me.MainToolbar.Name = "MainToolbar"
         Me.MainToolbar.Size = New System.Drawing.Size(1070, 60)
         Me.MainToolbar.TabIndex = 1
+        '
+        'XenonButton31
+        '
+        Me.XenonButton31.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton31.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton31.ForeColor = System.Drawing.Color.White
+        Me.XenonButton31.Image = CType(resources.GetObject("XenonButton31.Image"), System.Drawing.Image)
+        Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(8, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(133, Byte), Integer))
+        Me.XenonButton31.LineSize = 1
+        Me.XenonButton31.Location = New System.Drawing.Point(420, 3)
+        Me.XenonButton31.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonButton31.Name = "XenonButton31"
+        Me.XenonButton31.Size = New System.Drawing.Size(40, 54)
+        Me.XenonButton31.TabIndex = 23
+        Me.XenonButton31.Tag = "Store - Under Construction"
+        Me.XenonButton31.UseVisualStyleBackColor = False
         '
         'XenonButton20
         '
@@ -5679,7 +5695,7 @@ Partial Class MainFrm
         Me.XenonButton12.Image = CType(resources.GetObject("XenonButton12.Image"), System.Drawing.Image)
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(94, Byte), Integer), CType(CType(130, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(461, 3)
+        Me.XenonButton12.Location = New System.Drawing.Point(502, 3)
         Me.XenonButton12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton12.Name = "XenonButton12"
         Me.XenonButton12.Size = New System.Drawing.Size(40, 54)
@@ -5711,7 +5727,7 @@ Partial Class MainFrm
         Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(137, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(420, 3)
+        Me.XenonButton6.Location = New System.Drawing.Point(461, 3)
         Me.XenonButton6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(40, 54)
@@ -5765,10 +5781,10 @@ Partial Class MainFrm
         '
         Me.status_lbl.BackColor = System.Drawing.Color.Transparent
         Me.status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.status_lbl.Location = New System.Drawing.Point(508, 5)
+        Me.status_lbl.Location = New System.Drawing.Point(546, 5)
         Me.status_lbl.Name = "status_lbl"
         Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.status_lbl.Size = New System.Drawing.Size(551, 50)
+        Me.status_lbl.Size = New System.Drawing.Size(519, 50)
         Me.status_lbl.TabIndex = 19
         Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -6566,4 +6582,5 @@ Partial Class MainFrm
     Friend WithEvents Label22 As Label
     Friend WithEvents W10_TB_Blur As XenonToggle
     Friend WithEvents XenonButton30 As XenonButton
+    Friend WithEvents XenonButton31 As XenonButton
 End Class

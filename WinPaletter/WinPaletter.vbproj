@@ -424,6 +424,18 @@
     <Compile Include="Settings\Uninstall.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Store\Store.Designer.vb">
+      <DependentUpon>Store.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\StoreItem.Designer.vb">
+      <DependentUpon>StoreItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\StoreItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Terminals\CMD.Designer.vb">
       <DependentUpon>CMD.vb</DependentUpon>
     </Compile>
@@ -750,6 +762,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\Uninstall.resx">
       <DependentUpon>Uninstall.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store.resx">
+      <DependentUpon>Store.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\CMD.resx">
       <DependentUpon>CMD.vb</DependentUpon>

@@ -560,29 +560,31 @@ Public Module BitmapExtensions
     '''Return Blurred Bitmap
     '''</summary>
     <Extension()>
-    Public Function Blur(ByRef image As Bitmap, Optional ByVal BlurForce As Integer = 2) As Bitmap
-        Dim img As New Bitmap(image)
-        Dim G As Graphics = Graphics.FromImage(img)
-        G.SmoothingMode = SmoothingMode.AntiAlias
+    Public Function Blur(ByRef image As Bitmap, Optional BlurForce As Integer = 2) As Bitmap
+        Using img As New Bitmap(DirectCast(image.Clone, Bitmap))
+            Using G As Graphics = Graphics.FromImage(img)
+                G.SmoothingMode = SmoothingMode.AntiAlias
 
-        Dim att As New ImageAttributes
-        Dim m As New ColorMatrix With {.Matrix33 = 0.4F}
-        att.SetColorMatrix(m)
+                Dim att As New ImageAttributes
+                Dim m As New ColorMatrix With {.Matrix33 = 0.4F}
+                att.SetColorMatrix(m)
 
-        BlurForce += 1
+                BlurForce += 1
 
-        For x = -BlurForce To BlurForce Step 0.5
-            G.DrawImage(img, New Rectangle(x, 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
-        Next
+                For x = -BlurForce To BlurForce Step 0.5
+                    G.DrawImage(img, New Rectangle(x, 0, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
+                Next
 
-        For y = -BlurForce To BlurForce Step 0.5
-            G.DrawImage(img, New Rectangle(0, y, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
-        Next
+                For y = -BlurForce To BlurForce Step 0.5
+                    G.DrawImage(img, New Rectangle(0, y, img.Width - 1, img.Height - 1), 0, 0, img.Width - 1, img.Height - 1, GraphicsUnit.Pixel, att)
+                Next
 
-        G.Save()
-        att.Dispose()
-        G.Dispose()
-        Return img
+                G.Save()
+                att.Dispose()
+                G.Dispose()
+                Return img.Clone
+            End Using
+        End Using
     End Function
 
     '''<summary>
@@ -912,8 +914,12 @@ Public Module ControlExtensions
     <Extension()>
     Public Function ToBitmap([Control] As Control) As Bitmap
         Dim bm As New Bitmap([Control].Width, [Control].Height)
-        [Control].DrawToBitmap(bm, New Rectangle(0, 0, [Control].Width, [Control].Height))
-        Return bm
+
+        SyncLock [Control]
+            [Control].DrawToBitmap(bm, New Rectangle(0, 0, [Control].Width, [Control].Height))
+            Return bm.Clone
+        End SyncLock
+
     End Function
 End Module
 

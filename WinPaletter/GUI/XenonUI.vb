@@ -3763,6 +3763,7 @@ Public Class XenonWinElement : Inherits ContainerControl
     Dim adaptedBack As Bitmap
     Dim adaptedBackBlurred As Bitmap
 
+#Region "Properties"
     Private _Style As Styles = Styles.Start11
     Public Property Style As Styles
         Get
@@ -3808,7 +3809,6 @@ Public Class XenonWinElement : Inherits ContainerControl
         TaskbarXP
     End Enum
 
-#Region "Properties"
     Private _BackColorAlpha As Byte = 130
     Public Property BackColorAlpha() As Integer
         Get
@@ -3985,6 +3985,44 @@ Public Class XenonWinElement : Inherits ContainerControl
             Refresh()
         End Set
     End Property
+
+    Public Property UseWin11ORB_WithWin10 As Boolean = False
+    Public Property UseWin11RoundedCorners_WithWin10_Level1 As Boolean = False
+    Public Property UseWin11RoundedCorners_WithWin10_Level2 As Boolean = False
+    Public Property Shadow As Boolean = True
+
+    Public Sub CopycatFrom(element As XenonWinElement)
+        Style = element.Style
+        _NoisePower = element.NoisePower
+        _BlurPower = element.BlurPower
+        _Transparency = element.Transparency
+        _DarkMode = element.DarkMode
+        _AppUnderline = element.AppUnderline
+        _AppBackground = element.AppBackground
+        _ActionCenterButton_Normal = element.ActionCenterButton_Normal
+        _ActionCenterButton_Hover = element.ActionCenterButton_Hover
+        _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed
+        _StartColor = element.StartColor
+        _LinkColor = element.LinkColor
+        _BackColorAlpha = element.BackColorAlpha
+        BackColor = element.BackColor
+        _BackColor2 = element.BackColor2
+        _Win7ColorBal = element.Win7ColorBal
+        _Win7GlowBal = element.Win7GlowBal
+        UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10
+        UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1
+        UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2
+        Shadow = element.Shadow
+
+        Dock = element.Dock
+        Size = element.Size
+        Location = element.Location
+        Text = element.Text
+
+        ProcessBack()
+        Try : Refresh() : Catch : End Try
+    End Sub
+
 #End Region
 
     Sub New()
@@ -4038,10 +4076,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End If
     End Sub
 
-    Public Property UseWin11ORB_WithWin10 As Boolean = False
-    Public Property UseWin11RoundedCorners_WithWin10_Level1 As Boolean = False
-    Public Property UseWin11RoundedCorners_WithWin10_Level2 As Boolean = False
-    Public Property Shadow As Boolean = True
+
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -5131,17 +5166,6 @@ Public Class XenonWindow : Inherits Panel
         End Set
     End Property
 
-    Private _DropShadow As Boolean = True
-    Public Property DropShadow() As Boolean
-        Get
-            Return _DropShadow
-        End Get
-        Set(ByVal value As Boolean)
-            _DropShadow = value
-            Refresh()
-        End Set
-    End Property
-
     Private _Win7Noise As Single = 1
     Public Property Win7Noise() As Single
         Get
@@ -5194,6 +5218,33 @@ Public Class XenonWindow : Inherits Panel
             RaiseEvent MetricsChanged()
         End Set
     End Property
+
+    Public Sub CopycatFrom(Window As XenonWindow)
+        Shadow = Window.Shadow
+        Radius = Window.Radius
+        AccentColor_Active = Window.AccentColor_Active
+        AccentColor_Inactive = Window.AccentColor_Inactive
+        AccentColor2_Active = Window.AccentColor2_Active
+        AccentColor2_Inactive = Window.AccentColor2_Inactive
+        Active = Window.Active
+        Preview = Window.Preview
+        Win7Alpha = Window.Win7Alpha
+        Win7ColorBal = Window.Win7ColorBal
+        Win7GlowBal = Window.Win7GlowBal
+        ToolWindow = Window.ToolWindow
+        WinVista = Window.WinVista
+        _DarkMode = Window.DarkMode
+        _AccentColor_Enabled = Window.AccentColor_Enabled
+        _Win7Noise = Window.Win7Noise
+
+        Dock = Window.Dock
+        Size = Window.Size
+        Location = Window.Location
+        Text = Window.Text
+
+        ProcessBack()
+        Try : Refresh() : Catch : End Try
+    End Sub
 #End Region
 
 #Region "Helpers"

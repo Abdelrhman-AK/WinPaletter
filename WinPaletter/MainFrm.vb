@@ -4199,6 +4199,10 @@ Public Class MainFrm
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
 
+    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
+        Store.ShowDialog()
+    End Sub
+
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
         If _Shown And Select_WXP.Checked Then
             PreviewConfig = WinVer.WXP

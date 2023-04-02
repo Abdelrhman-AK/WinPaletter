@@ -876,7 +876,6 @@ Public Class RetroWindow : Inherits Panel
     Public Property UseItAsMenu As Boolean = False
     Public Property Flat As Boolean = False
 
-
     Private _ButtonShadow As Color = Color.FromArgb(128, 128, 128)
     Public Property ButtonShadow As Color
         Get
