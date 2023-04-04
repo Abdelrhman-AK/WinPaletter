@@ -3855,7 +3855,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return ls.Distinct.ToList
     End Function
-    Public Function ListColors() As List(Of Color)
+    Public Function ListColors(Optional DontMergeRepeatedColors As Boolean = False) As List(Of Color)
 
         Dim CL As New List(Of Color)
         CL.Clear()
@@ -4027,7 +4027,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
         Next
 
-        CL = CL.Distinct.ToList
+        If Not DontMergeRepeatedColors Then CL = CL.Distinct.ToList
+
+        CL.Sort(New RGBColorComparer())
+
+        If CL.Contains(Color.FromArgb(0, 0, 0, 0)) Then
+            Do Until Not CL.Contains(Color.FromArgb(0, 0, 0, 0))
+                CL.Remove(Color.FromArgb(0, 0, 0, 0))
+            Loop
+        End If
 
         Return CL
     End Function

@@ -1366,3 +1366,20 @@ Public Class Visual
     End Structure
 
 End Class
+
+Public Class RGBColorComparer
+    Implements IComparer(Of Color)
+    Public Function Compare(a As Color, b As Color) As Integer Implements IComparer(Of Color).Compare
+        ' Compare hue values
+        Dim hueComparison As Integer = a.GetHue().CompareTo(b.GetHue())
+        If hueComparison <> 0 Then Return hueComparison
+
+        ' Compare brightness values
+        Dim brightnessComparison As Integer = a.GetBrightness().CompareTo(b.GetBrightness())
+        If brightnessComparison <> 0 Then Return brightnessComparison
+
+        ' Compare saturation values
+        Dim saturationComparison As Integer = a.GetSaturation().CompareTo(b.GetSaturation())
+        Return saturationComparison
+    End Function
+End Class

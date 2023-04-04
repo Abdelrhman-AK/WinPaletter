@@ -2237,7 +2237,7 @@ Public Class XenonButton : Inherits Button
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+        G.TextRenderingHint = TextRenderingHint.SystemDefault
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -2302,9 +2302,9 @@ Public Class XenonButton : Inherits Button
 
                     Try : If Image IsNot Nothing Then
                             If Text = Nothing Then
-                                G.DrawImage(Me.Image, New Rectangle(imgX, imgY, Image.Width, Image.Height))
+                                G.DrawImage(Me.Image.Clone, New Rectangle(imgX, imgY, Image.Width, Image.Height))
                             Else
-                                G.DrawImage(Me.Image, New Rectangle(imgX, alx, Image.Width, Image.Height))
+                                G.DrawImage(Me.Image.Clone, New Rectangle(imgX, alx, Image.Width, Image.Height))
                             End If
                         End If
                         G.DrawString(Text, Font, New SolidBrush(Me.ForeColor), New Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString)
@@ -2327,7 +2327,7 @@ Public Class XenonButton : Inherits Button
                     End If
 
 
-                    G.DrawImage(Me.Image, Rec)
+                    G.DrawImage(Me.Image.Clone, Rec)
                     G.DrawString(Text, Font, New SolidBrush(ForeColor), RecText, ButtonString)
 
                 Case ContentAlignment.MiddleRight
@@ -2345,7 +2345,7 @@ Public Class XenonButton : Inherits Button
                         RecText.X = u.Right - RecText.Width - Rec.Width - innerSpace
                     End If
 
-                    G.DrawImage(Me.Image, Rec)
+                    G.DrawImage(Me.Image.Clone, Rec)
                     G.DrawString(Text, Font, New SolidBrush(ForeColor), RecText, ButtonString)
             End Select
         End If

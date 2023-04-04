@@ -222,7 +222,6 @@
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
-    <None Include="Resources\AC_11.pdn" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\luna.zip" />
     <None Include="Resources\RetroThemesDB.wpdb" />

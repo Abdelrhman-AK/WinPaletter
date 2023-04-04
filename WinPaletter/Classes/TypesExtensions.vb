@@ -514,35 +514,36 @@ Public Module BitmapExtensions
     <Extension()>
     Public Function AverageColor(ByVal [Bitmap] As Bitmap) As Color
         Try
-            Dim bmp As Bitmap = [Bitmap]
-            Dim totalR As Integer = 0
-            Dim totalG As Integer = 0
-            Dim totalB As Integer = 0
+            Using bmp As Bitmap = [Bitmap].Clone
+                Dim totalR As Integer = 0
+                Dim totalG As Integer = 0
+                Dim totalB As Integer = 0
 
-            Try
-                If bmp IsNot Nothing Then
-                    For x As Integer = 0 To bmp.Width - 1
-                        For y As Integer = 0 To bmp.Height - 1
-                            Dim pixel As Color = bmp.GetPixel(x, y)
-                            totalR += pixel.R
-                            totalG += pixel.G
-                            totalB += pixel.B
+                Try
+                    If bmp IsNot Nothing Then
+                        For x As Integer = 0 To bmp.Width - 1
+                            For y As Integer = 0 To bmp.Height - 1
+                                Dim pixel As Color = bmp.GetPixel(x, y)
+                                totalR += pixel.R
+                                totalG += pixel.G
+                                totalB += pixel.B
+                            Next
                         Next
-                    Next
+                    End If
+                Catch
+
+                End Try
+
+                If bmp IsNot Nothing Then
+                    Dim totalPixels As Integer = bmp.Height * bmp.Width
+                    Dim averageR As Integer = totalR \ totalPixels
+                    Dim averageg As Integer = totalG \ totalPixels
+                    Dim averageb As Integer = totalB \ totalPixels
+                    Return Color.FromArgb(averageR, averageg, averageb)
+                Else
+                    Return Color.FromArgb(80, 80, 80)
                 End If
-            Catch
-
-            End Try
-
-            If bmp IsNot Nothing Then
-                Dim totalPixels As Integer = bmp.Height * bmp.Width
-                Dim averageR As Integer = totalR \ totalPixels
-                Dim averageg As Integer = totalG \ totalPixels
-                Dim averageb As Integer = totalB \ totalPixels
-                Return Color.FromArgb(averageR, averageg, averageb)
-            Else
-                Return Color.FromArgb(80, 80, 80)
-            End If
+            End Using
         Catch
             Return Color.Empty
         End Try
@@ -830,20 +831,18 @@ Public Module BitmapExtensions
     <Extension()>
     Public Function Fade(ByVal originalBitmap As Bitmap, ByVal opacity As Double) As Bitmap
         Try
-            Dim bmp As Bitmap = New Bitmap(originalBitmap.Width, originalBitmap.Height)
+            Using bmp As New Bitmap(originalBitmap.Width, originalBitmap.Height)
 
-            Using gfx As Graphics = Graphics.FromImage(bmp)
-                Dim matrix As ColorMatrix = New ColorMatrix With {
-                    .Matrix33 = opacity
-                }
-                Dim attributes As ImageAttributes = New ImageAttributes()
-                attributes.SetColorMatrix(matrix, ColorMatrixFlag.[Default], ColorAdjustType.Bitmap)
-                gfx.DrawImage(originalBitmap, New Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes)
+                Using gfx As Graphics = Graphics.FromImage(bmp)
+                    Dim matrix As New ColorMatrix With {.Matrix33 = opacity}
+                    Dim attributes As New ImageAttributes()
+                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.[Default], ColorAdjustType.Bitmap)
+                    gfx.DrawImage(originalBitmap, New Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes)
+                End Using
+
+                Return bmp.Clone
             End Using
-
-            Return bmp
         Catch ex As Exception
-            BugReport.ThrowError(ex)
             Return Nothing
         End Try
     End Function

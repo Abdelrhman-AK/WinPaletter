@@ -49,6 +49,7 @@ Partial Class Store
         Me.RetroButton4 = New WinPaletter.RetroButton()
         Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroButton2 = New WinPaletter.RetroButton()
+        Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -106,7 +107,7 @@ Partial Class Store
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "TabPage3"
         '
-        'XenonButton33
+        'XenonButton1
         '
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -115,7 +116,7 @@ Partial Class Store
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
         Me.XenonButton1.Location = New System.Drawing.Point(8, 6)
-        Me.XenonButton1.Name = "XenonButton33"
+        Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(103, 35)
         Me.XenonButton1.TabIndex = 36
         Me.XenonButton1.Text = "Back"
@@ -567,6 +568,11 @@ Partial Class Store
         Me.RetroButton2.UseVisualStyleBackColor = False
         Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
         '
+        'FilesFetcher
+        '
+        Me.FilesFetcher.WorkerReportsProgress = True
+        Me.FilesFetcher.WorkerSupportsCancellation = True
+        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -623,4 +629,5 @@ Partial Class Store
     Friend WithEvents container As FlowLayoutPanel
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
 End Class

@@ -20,15 +20,19 @@ Public Class StoreItem : Inherits Panel
         Set(value As CP)
             If value IsNot Nothing Then
                 _CP = value.Clone
+                With _CP.ListColors()
+                    MostColor = .ToArray.GetValue(New Random().Next(.Count))
+                End With
                 RaiseEvent CPChanged(Me, New EventArgs())
-                Invalidate()
+                Refresh()
             End If
         End Set
     End Property
 
     Public MD5 As String
     Public URL As String
-
+    Public Property FileName As String
+    Public MostColor As Color
 #Region "Events"
     Enum MouseState
         None
@@ -72,7 +76,7 @@ Public Class StoreItem : Inherits Panel
 
 #Region "Animator"
     Dim alpha As Integer
-    ReadOnly Factor As Integer = 25
+    ReadOnly Factor As Integer = 40
     Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
 
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
@@ -109,11 +113,11 @@ Public Class StoreItem : Inherits Panel
     End Sub
 #End Region
 
-    Private BackgroundImageBlurred As Image
-    ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
+    Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
+
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.SystemDefault
         DoubleBuffered = True
@@ -121,21 +125,19 @@ Public Class StoreItem : Inherits Panel
         Dim rect_outer As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 
-
-        Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
+        Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, MostColor)'Style.Colors.Back)
         Dim bkCC As Color = Color.FromArgb(alpha, Style.Colors.Back_Checked)
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
-        'Work here to add loading indicator
-        ''
-        ''
 
-        If BackgroundImage IsNot Nothing Then
-            G.DrawRoundImage(BackgroundImage, rect_inner)
-        Else
-            'TextRenderer.DrawText(G, "Generating preview", New Font("Segoe UI", 12, FontStyle.Regular), rect_inner, Color.White, Color.Transparent, TextFormatFlags.WordEllipsis Or TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
-        End If
+
+        Dim w As Single = Width
+        Dim h As Single = Height
+
+        If State <> MouseState.None Then G.FillRoundedRect(Noise, rect_inner)
+
+        TextRenderer.DrawText(G, MostColor.ToString, New Font("Segoe UI", 12, FontStyle.Regular), rect_inner, Color.White, Color.Transparent, TextFormatFlags.WordEllipsis Or TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
 
         Dim lC As Color = Color.FromArgb(255 - alpha, If(State <> MouseState.None, Style.Colors.Border_Checked, Style.Colors.Border))
         Dim lCC As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
@@ -143,26 +145,20 @@ Public Class StoreItem : Inherits Panel
         G.DrawRoundedRect_LikeW11(New Pen(lC), rect_inner)
         G.DrawRoundedRect_LikeW11(New Pen(lCC), rect_outer)
 
-
-        If State <> MouseState.None Then
-            If BackgroundImageBlurred IsNot Nothing Then G.DrawRoundImage(BackgroundImageBlurred.Fade(alpha / 255), rect_inner)
-            G.FillRoundedRect(Noise, rect_inner)
-        End If
-
-        Dim ThemeName_Rect As New Rectangle(rect_inner.X + 5, rect_inner.Y + 5, rect_inner.Width - 10, 30)
-        Dim Author_Rect As New Rectangle(ThemeName_Rect.X + 5, ThemeName_Rect.Bottom, ThemeName_Rect.Width - 5, 15)
+        Dim ThemeName_Rect As New Rectangle(rect_inner.X, rect_inner.Y, rect_inner.Width - 10, 25)
+        Dim Author_Rect As New Rectangle(ThemeName_Rect.X, ThemeName_Rect.Bottom - 5, ThemeName_Rect.Width, 15)
 
         If CP IsNot Nothing Then
-            TextRenderer.DrawText(G, CP.Info.PaletteName, New Font("Segoe UI", 12, FontStyle.Bold), ThemeName_Rect, Color.White, Color.Transparent, TextFormatFlags.WordEllipsis)
-            TextRenderer.DrawText(G, My.Lang.By & " " & CP.Info.Author, New Font("Segoe UI", 9, FontStyle.Regular), Author_Rect, Color.White, Color.Transparent, TextFormatFlags.WordEllipsis)
-
+            Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
+            G.DrawString(CP.Info.PaletteName, New Font("Segoe UI", 10, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
+            G.DrawString(My.Lang.By & " " & CP.Info.Author, New Font("Segoe UI", 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
         End If
-
     End Sub
 
 
-    Private Sub StoreItem_BackgroundImageChanged(sender As Object, e As EventArgs) Handles Me.BackgroundImageChanged
-        If BackgroundImage IsNot Nothing Then BackgroundImageBlurred = BackgroundImage.Blur(2)
-        Invalidate()
-    End Sub
+
+
 End Class
+
+
+

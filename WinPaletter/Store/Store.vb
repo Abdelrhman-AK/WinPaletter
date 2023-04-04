@@ -7,13 +7,10 @@ Imports System.Threading
 
 Public Class Store
     Private FinishedLoadingInitialCPs As Boolean
+    Dim CPList As New Dictionary(Of String, CP)
 
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
         ApplyDarkMode(Me)
-
-        MainFrm.MakeItDoubleBuffered(Me)
-        MainFrm.MakeItDoubleBuffered(TablessControl1)
-        MainFrm.DoubleBufferAll(tabs_preview)
 
         start.CopycatFrom(MainFrm.start)
         taskbar.CopycatFrom(MainFrm.taskbar)
@@ -31,47 +28,63 @@ Public Class Store
         container.CheckForIllegalCrossThreadCalls = False
     End Sub
 
-    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Dim thread As New Thread(AddressOf Start_Loading_Themes)
-        thread.IsBackground = True
-        Thread.Start()
+    Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Visible = False
+        FilesFetcher.CancelAsync()
+        RemoveAllStoreItems()
     End Sub
 
-    Sub Start_Loading_Themes()
-        Populate_StoreItems(My.Themes_Storage)
+    Sub RemoveAllStoreItems()
+        For x = 0 To container.Controls.Count - 1
 
-        For Each St_Itm As StoreItem In container.Controls.OfType(Of StoreItem)
+            If TypeOf container.Controls(0) Is StoreItem Then
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
+            End If
 
-            Adjust_Preview(St_Itm.CP)
-            AdjustClassicPreview(St_Itm.CP)
-
-            BeginInvoke(CType(Sub()
-                                  St_Itm.BackgroundImage = tabs_preview.ToBitmap
-                                  St_Itm.Refresh()
-
-                              End Sub, MethodInvoker))
-
+            container.Controls(0).Dispose()
         Next
+        container.Controls.Clear()
     End Sub
 
-    Sub Populate_StoreItems(Repos_Storage As String)
-        container.Controls.Clear()
 
-        For Each file As String In Directory.GetFiles(Repos_Storage)
+    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        RemoveAllStoreItems()
+        FilesFetcher.RunWorkerAsync()
+    End Sub
+
+
+    Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
+
+        For Each file As String In Directory.GetFiles(My.Themes_Storage)
             If Path.GetExtension(file) = ".wpth" Then
-                Dim ctrl As New StoreItem With {.CP = New CP(CP.CP_Type.File, file), .MD5 = CalculateMD5(file), .Size = New Size(528 / 1.25, 297 / 1.25), .BackgroundImageLayout = ImageLayout.Stretch}
-                AddHandler ctrl.Click, AddressOf StoreItem_Clicked
-                AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
-
-                BeginInvoke(CType(Sub()
-                                      container.Controls.Add(ctrl)
-                                  End Sub, MethodInvoker))
-
-                ctrl.Refresh()
+                Using CPx As New CP(CP.CP_Type.File, file)
+                    CPList.Add(file, CPx)
+                End Using
             End If
         Next
 
+        Dim w As Integer = 300
+        Dim h As Integer = 100
+
+        For Each StoreItem In CPList
+            Dim ctrl As New StoreItem With {.FileName = StoreItem.Key, .CP = StoreItem.Value, .MD5 = CalculateMD5(StoreItem.Key), .Size = New Size(w, h), .BackgroundImageLayout = ImageLayout.Stretch}
+            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+
+            BeginInvoke(CType(Sub()
+                                  container.Controls.Add(ctrl)
+                              End Sub, MethodInvoker))
+        Next
+
+        CPList.Clear()
+
         FinishedLoadingInitialCPs = True
+
+    End Sub
+
+    Private Sub FilesFetcher_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles FilesFetcher.RunWorkerCompleted
+
     End Sub
 
     Private Function CalculateMD5(ByVal path As String) As String
@@ -95,7 +108,6 @@ Public Class Store
             End With
         End If
     End Sub
-
 
     Public Sub StoreItem_Clicked(sender As Object, e As EventArgs)
         My.Animator.HideSync(TablessControl1)
@@ -938,10 +950,6 @@ Public Class Store
         [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
         [Button].Refresh()
     End Sub
-
-
-
-
 
 #End Region
 End Class
