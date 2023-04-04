@@ -10,6 +10,7 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
+| WinPaletter Store for themes                           | :yellow_square: Working on it, It is not guaranteed that it will be done   |
 | Sync. preview between ExplorerPatcher & Windows 11     | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Customize Windows Switcher (Alt+Tab) Types             | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Windows Effects & Animations                           | :white_check_mark: Done (Version 1.0.7.1)                              | 
@@ -20,7 +21,6 @@
 | Extended Support to Windows 7 & 8.1                    | :white_check_mark: Done (Version 1.0.5.0)                              |
 | Right Click menus for colors to increase functionality | :white_check_mark: Done (Version 1.0.5.1)                              |
 | Colorizing Command Prompt/Windows Terminal             | :white_check_mark: Done (Beta: 1.0.5.9, Stable: 1.0.6.0)               |
-| Mini-Store for themes                                  | :yellow_square: Postponed, May not be done                             |
 | Windows Accessibility                                  | :yellow_square: Postponed, May not be done                             |
 
 * :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
