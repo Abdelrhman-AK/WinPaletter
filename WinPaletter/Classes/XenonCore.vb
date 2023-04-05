@@ -735,7 +735,7 @@ Public Module FormDWMEffects
     ''' Sets Titlebar Backcolor, Forecolor and border color (Only for Windows 11 and Higher)
     ''' </summary>
     <Extension()>
-    Sub DrawCustomTitlebar([Form] As Form, Optional BackColor As Color = Nothing, Optional ForeColor As Color = Nothing, Optional BorderColor As Color = Nothing)
+    Sub DrawCustomTitlebar([Form] As Form, Optional BackColor As Color = Nothing, Optional BorderColor As Color = Nothing, Optional ForeColor As Color = Nothing)
 
         If My.W11 Then
             Try

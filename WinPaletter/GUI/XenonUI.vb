@@ -225,7 +225,6 @@ Module XenonModule
                 Using path As GraphicsPath = Rectangle.Round(Radius)
                     Dim reg As New Region(path)
                     [Graphics].Clip = reg
-                    [Graphics].SmoothingMode = SmoothingMode.AntiAlias
                     [Graphics].DrawImage([Image], [Rectangle])
                     [Graphics].ResetClip()
                 End Using

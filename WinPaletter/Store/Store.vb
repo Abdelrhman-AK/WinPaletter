@@ -3,130 +3,19 @@ Imports WinPaletter.XenonCore
 Imports System.Security.Cryptography
 Imports WinPaletter.MainFrm
 Imports WinPaletter.CP
-Imports System.Threading
 
 Public Class Store
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
+    Dim w As Integer = 528 * 0.6
+    Dim h As Integer = 297 * 0.6
 
-    Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
-        ApplyDarkMode(Me)
+    Private elapsedSeconds As Integer = 0
+    Private SwitchAfterSecs As Integer = 1
 
-        start.CopycatFrom(MainFrm.start)
-        taskbar.CopycatFrom(MainFrm.taskbar)
-        ActionCenter.CopycatFrom(MainFrm.ActionCenter)
-
-        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
-        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
-
-        pnl_preview.BackgroundImage = My.Wallpaper
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
-
-        FinishedLoadingInitialCPs = False
-
-        'Prevent exception error of cross-thread
-        container.CheckForIllegalCrossThreadCalls = False
-    End Sub
-
-    Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Visible = False
-        FilesFetcher.CancelAsync()
-        RemoveAllStoreItems()
-    End Sub
-
-    Sub RemoveAllStoreItems()
-        For x = 0 To container.Controls.Count - 1
-
-            If TypeOf container.Controls(0) Is StoreItem Then
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
-            End If
-
-            container.Controls(0).Dispose()
-        Next
-        container.Controls.Clear()
-    End Sub
-
-
-    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        RemoveAllStoreItems()
-        FilesFetcher.RunWorkerAsync()
-    End Sub
-
-
-    Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
-
-        For Each file As String In Directory.GetFiles(My.Themes_Storage)
-            If Path.GetExtension(file) = ".wpth" Then
-                Using CPx As New CP(CP.CP_Type.File, file)
-                    CPList.Add(file, CPx)
-                End Using
-            End If
-        Next
-
-        Dim w As Integer = 300
-        Dim h As Integer = 100
-
-        For Each StoreItem In CPList
-            Dim ctrl As New StoreItem With {.FileName = StoreItem.Key, .CP = StoreItem.Value, .MD5 = CalculateMD5(StoreItem.Key), .Size = New Size(w, h), .BackgroundImageLayout = ImageLayout.Stretch}
-            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
-            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
-
-            BeginInvoke(CType(Sub()
-                                  container.Controls.Add(ctrl)
-                              End Sub, MethodInvoker))
-        Next
-
-        CPList.Clear()
-
-        FinishedLoadingInitialCPs = True
-
-    End Sub
-
-    Private Sub FilesFetcher_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles FilesFetcher.RunWorkerCompleted
-
-    End Sub
-
-    Private Function CalculateMD5(ByVal path As String) As String
-
-        Using md5 As MD5 = MD5.Create()
-            Dim txt = IO.File.ReadAllText(path)
-            Dim hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(txt))
-            Dim result = BitConverter.ToString(hash).Replace("-", "")
-            Return result
-        End Using
-
-    End Function
-
-    Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
-        If FinishedLoadingInitialCPs Then
-            With DirectCast(sender, StoreItem)
-                Adjust_Preview(.CP)
-                AdjustClassicPreview(.CP)
-                .BackgroundImage = tabs_preview.ToBitmap
-                .Refresh()
-            End With
-        End If
-    End Sub
-
-    Public Sub StoreItem_Clicked(sender As Object, e As EventArgs)
-        My.Animator.HideSync(TablessControl1)
-
-        TablessControl1.SelectedIndex = 1
-
-        My.Animator.ShowSync(TablessControl1)
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-
-        My.Animator.HideSync(TablessControl1)
-
-        TablessControl1.SelectedIndex = 0
-
-        My.Animator.ShowSync(TablessControl1)
-
-    End Sub
-
+    Private hoveredItem As StoreItem
+    Private ModernOrClassic As Integer = 0
+    Private SwitchedByMouseWheel As Boolean = False
 #Region "Preview Subs"
 
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -146,12 +35,15 @@ Public Class Store
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
         Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, ModernOrClassic)
 
         Panel3.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
+
+        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
+        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -298,6 +190,8 @@ Public Class Store
                         setting_icon_preview.ForeColor = [CP].Windows11.Color_Index3
                         lnk_preview.ForeColor = [CP].Windows11.Color_Index5
                 End Select
+
+                RetroButton2.Image = My.Resources.Native11.Resize(18, 16)
 #End Region
 
             Case WinVer.W10
@@ -523,6 +417,8 @@ Public Class Store
 
                         End If
                 End Select
+
+                RetroButton2.Image = My.Resources.Native10.Resize(18, 16)
 #End Region
 
             Case WinVer.W8
@@ -549,6 +445,8 @@ Public Class Store
 
                 taskbar.BackColor = [CP].Windows8.ColorizationColor
                 taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
+
+                RetroButton2.Image = My.Resources.Native8.Resize(18, 16)
 #End Region
 
             Case WinVer.W7
@@ -664,8 +562,6 @@ Public Class Store
                 End Select
 
                 ClassicTaskbar.Height = 44
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
@@ -951,5 +847,215 @@ Public Class Store
         [Button].Refresh()
     End Sub
 
+
+
 #End Region
+
+    Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ApplyDarkMode(Me)
+
+        Panel1.BackColor = Style.Colors.Back
+
+        If Not IsFontInstalled("Segoe MDL2 Assets") Then
+            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
+            setting_icon_preview.Text = "♣"
+        End If
+
+        start.CopycatFrom(MainFrm.start)
+        taskbar.CopycatFrom(MainFrm.taskbar)
+        ActionCenter.CopycatFrom(MainFrm.ActionCenter)
+
+        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
+        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
+
+        pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
+
+        FinishedLoadingInitialCPs = False
+
+        'Prevent exception error of cross-thread
+        container.CheckForIllegalCrossThreadCalls = False
+    End Sub
+
+    Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Visible = False
+        FilesFetcher.CancelAsync()
+        RemoveAllStoreItems()
+    End Sub
+
+    Sub RemoveAllStoreItems()
+        For x = 0 To container.Controls.Count - 1
+
+            If TypeOf container.Controls(0) Is StoreItem Then
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
+                RemoveHandler DirectCast(container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
+            End If
+
+            container.Controls(0).Dispose()
+        Next
+        container.Controls.Clear()
+    End Sub
+
+    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        RemoveAllStoreItems()
+        FilesFetcher.RunWorkerAsync()
+    End Sub
+
+    Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
+
+        For Each file As String In Directory.GetFiles(My.Themes_Storage)
+            If Path.GetExtension(file) = ".wpth" Then
+                Try
+                    Using CPx As New CP(CP.CP_Type.File, file)
+                        CPList.Add(file, CPx)
+                    End Using
+                Catch ex As Exception
+
+                End Try
+            End If
+        Next
+
+        BeginInvoke(CType(Sub()
+                              container.Visible = False
+                          End Sub, MethodInvoker))
+
+        For Each StoreItem In CPList
+            Dim ctrl As New StoreItem With {
+                .FileName = StoreItem.Key,
+                .CP = StoreItem.Value,
+                .MD5 = CalculateMD5(StoreItem.Key),
+                .DoneByWinPaletter = True,
+                .Size = New Size(w, h),
+                .BackgroundImageLayout = ImageLayout.Stretch}
+
+            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+            AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
+            AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
+            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
+
+            BeginInvoke(CType(Sub()
+                                  container.Controls.Add(ctrl)
+                              End Sub, MethodInvoker))
+        Next
+
+        BeginInvoke(CType(Sub()
+                              container.Visible = True
+                          End Sub, MethodInvoker))
+
+        CPList.Clear()
+
+        FinishedLoadingInitialCPs = True
+
+    End Sub
+
+    Private Sub FilesFetcher_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles FilesFetcher.RunWorkerCompleted
+
+    End Sub
+
+    Private Function CalculateMD5(ByVal path As String) As String
+
+        Using md5 As MD5 = MD5.Create()
+            Dim txt = IO.File.ReadAllText(path)
+            Dim hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(txt))
+            Dim result = BitConverter.ToString(hash).Replace("-", "")
+            Return result
+        End Using
+
+    End Function
+
+    Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
+        If FinishedLoadingInitialCPs Then
+            With DirectCast(sender, StoreItem)
+                Adjust_Preview(.CP)
+                AdjustClassicPreview(.CP)
+                .BackgroundImage = tabs_preview.ToBitmap
+                .Refresh()
+            End With
+        End If
+    End Sub
+
+    Public Sub StoreItem_Clicked(sender As Object, e As MouseEventArgs)
+
+        Select Case e.Button
+            Case MouseButtons.Right
+                SwitchedByMouseWheel = False
+                SwitchStoreItemPreview(DirectCast(sender, StoreItem))
+
+            Case Else
+                My.Animator.HideSync(TablessControl1)
+                TablessControl1.SelectedIndex = 1
+                With DirectCast(sender, StoreItem)
+                    Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, .CP.StoreInfo.Color2, 10, 15)
+                End With
+                My.Animator.ShowSync(TablessControl1)
+        End Select
+    End Sub
+
+    Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
+        SwitchedByMouseWheel = False
+        hoveredItem = DirectCast(sender, StoreItem)
+        Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, hoveredItem.CP.StoreInfo.Color1, 10, 15)
+        Timer1.Enabled = True
+        Timer1.Start()
+    End Sub
+
+    Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
+        elapsedSeconds = 0
+        Timer1.Enabled = False
+        Timer1.Stop()
+        SwitchedByMouseWheel = False
+        If hoveredItem.BackgroundImage IsNot Nothing Then SwitchStoreItemPreview(hoveredItem)
+        If TablessControl1.SelectedIndex = 0 Then Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
+    End Sub
+
+    Public Sub StoreItem_MouseWheel(sender As Object, e As MouseEventArgs)
+        If ModernOrClassic = 0 Then ModernOrClassic = 1 Else ModernOrClassic = 0
+        SwitchedByMouseWheel = True
+        SwitchStoreItemPreview(hoveredItem)
+    End Sub
+
+    Sub SwitchStoreItemPreview(St_itm As StoreItem)
+        If St_itm.BackgroundImage Is Nothing Or SwitchedByMouseWheel Then
+            Adjust_Preview(St_itm.CP)
+            AdjustClassicPreview(St_itm.CP)
+            St_itm.BackgroundImage = tabs_preview.ToBitmap
+
+        ElseIf Not SwitchedByMouseWheel Then
+            St_itm.BackgroundImage = Nothing
+
+        End If
+
+        St_itm.Refresh()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        If elapsedSeconds < SwitchAfterSecs - 1 Then
+            elapsedSeconds += 1
+        Else
+            elapsedSeconds = 0
+            SwitchedByMouseWheel = False
+            If hoveredItem.BackgroundImage Is Nothing Then SwitchStoreItemPreview(hoveredItem)
+            Timer1.Enabled = False
+            Timer1.Stop()
+        End If
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+
+        My.Animator.HideSync(TablessControl1)
+
+        TablessControl1.SelectedIndex = 0
+
+        My.Animator.ShowSync(TablessControl1)
+
+        Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
+    End Sub
+
+    Private Sub Panel1_BackColorChanged(sender As Object, e As EventArgs) Handles Panel1.BackColorChanged
+        DrawCustomTitlebar(Panel1.BackColor, Panel1.BackColor)
+    End Sub
 End Class

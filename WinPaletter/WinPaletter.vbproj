@@ -636,6 +636,14 @@
     <None Include="Resources\StartBtn_11_EP.png" />
     <None Include="Resources\StartBtn_11Dark.png" />
     <None Include="Resources\StartBtn_11Light.png" />
+    <None Include="Resources\Store_DoneByWinPaletter.png" />
+    <None Include="Resources\Store_DoneByUser.png" />
+    <None Include="Resources\Store_DesignedForXP.png" />
+    <None Include="Resources\Store_DesignedFor7.png" />
+    <None Include="Resources\Store_DesignedFor8.png" />
+    <None Include="Resources\Store_DesignedFor10.png" />
+    <None Include="Resources\Store_DesignedFor11.png" />
+    <None Include="Resources\Store_DesignedForVista.png" />
     <Content Include="Resources\System.Buffers.dll" />
     <Content Include="Resources\System.Memory.dll" />
     <Content Include="Resources\System.Numerics.Vectors.dll" />

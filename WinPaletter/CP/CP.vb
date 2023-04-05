@@ -7,7 +7,6 @@ Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
-Imports System.IO
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -143,6 +142,45 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Author= " & Author)
                 tx.Add("*AuthorSocialMediaLink= " & AuthorSocialMediaLink)
                 tx.Add("</General>" & vbCrLf)
+                Return tx.CString
+            End Function
+        End Structure
+
+        Structure StoreInfo : Implements ICloneable
+            Public Color1 As Color
+            Public Color2 As Color
+            Public DesignedFor_Win11 As Boolean
+            Public DesignedFor_Win10 As Boolean
+            Public DesignedFor_Win8 As Boolean
+            Public DesignedFor_Win7 As Boolean
+            Public DesignedFor_WinVista As Boolean
+            Public DesignedFor_WinXP As Boolean
+
+            Shared Operator =(First As StoreInfo, Second As StoreInfo) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As StoreInfo, Second As StoreInfo) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<StoreInfo>")
+                tx.Add("*Color1= " & Color1.ToArgb)
+                tx.Add("*Color2= " & Color2.ToArgb)
+                tx.Add("*DesignedFor_Win11= " & DesignedFor_Win11)
+                tx.Add("*DesignedFor_Win10= " & DesignedFor_Win10)
+                tx.Add("*DesignedFor_Win8= " & DesignedFor_Win8)
+                tx.Add("*DesignedFor_Win7= " & DesignedFor_Win7)
+                tx.Add("*DesignedFor_WinVista= " & DesignedFor_WinVista)
+                tx.Add("*DesignedFor_WinXP= " & DesignedFor_WinXP)
+                tx.Add("</StoreInfo>" & vbCrLf)
                 Return tx.CString
             End Function
         End Structure
@@ -1810,7 +1848,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ScrollWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", _DefMetricsFonts.ScrollWidth * -15) / -15
                 SmCaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
                 SmCaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
-                ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+
+                'Try is a must here, "ShellIconSize" is sometimes empty and VB won't be able to convert it to integer
+                Try
+                    ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+                Catch
+                    ShellIconSize = _DefMetricsFonts.ShellIconSize
+                End Try
+
                 DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
                 CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
                 IconFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", _DefMetricsFonts.IconFont.ToByte), Byte()).ToFont
@@ -2856,6 +2901,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .PaletteVersion = "1.0.0.0",
             .Author = Environment.UserName,
             .AuthorSocialMediaLink = ""
+    }
+
+    Public StoreInfo As New Structures.StoreInfo With {
+            .Color1 = Color.FromArgb(0, 81, 210),
+            .Color2 = Color.FromArgb(199, 49, 61),
+            .DesignedFor_Win11 = True,
+            .DesignedFor_Win10 = True,
+            .DesignedFor_Win8 = True,
+            .DesignedFor_Win7 = True,
+            .DesignedFor_WinVista = True,
+            .DesignedFor_WinXP = True
     }
 
     Public Windows11 As New Structures.Windows10x With {
@@ -4410,6 +4466,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
+#Region "Store Info"
+                    If lin.StartsWith("*Color1= ", My._ignore) Then StoreInfo.Color1 = Color.FromArgb(lin.Remove(0, "*Color1= ".Count))
+                    If lin.StartsWith("*Color2= ", My._ignore) Then StoreInfo.Color2 = Color.FromArgb(lin.Remove(0, "*Color2= ".Count))
+                    If lin.StartsWith("*DesignedFor_Win11= ", My._ignore) Then StoreInfo.DesignedFor_Win11 = lin.Remove(0, "*DesignedFor_Win11= ".Count)
+                    If lin.StartsWith("*DesignedFor_Win10= ", My._ignore) Then StoreInfo.DesignedFor_Win10 = lin.Remove(0, "*DesignedFor_Win10= ".Count)
+                    If lin.StartsWith("*DesignedFor_Win8= ", My._ignore) Then StoreInfo.DesignedFor_Win8 = lin.Remove(0, "*DesignedFor_Win8= ".Count)
+                    If lin.StartsWith("*DesignedFor_Win7= ", My._ignore) Then StoreInfo.DesignedFor_Win7 = lin.Remove(0, "*DesignedFor_Win7= ".Count)
+                    If lin.StartsWith("*DesignedFor_WinVista= ", My._ignore) Then StoreInfo.DesignedFor_WinVista = lin.Remove(0, "*DesignedFor_WinVista= ".Count)
+                    If lin.StartsWith("*DesignedFor_WinXP= ", My._ignore) Then StoreInfo.DesignedFor_WinXP = lin.Remove(0, "*DesignedFor_WinXP= ".Count)
+#End Region
+
 #Region "Windows 11"
                     If lin.StartsWith("*Win_11_Color_Index0= ", My._ignore) Then Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index0= ".Count))
                     If lin.StartsWith("*Win_11_Color_Index1= ", My._ignore) Then Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index1= ".Count))
@@ -5255,6 +5322,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add("*Last Modified by App Version= " & My.Application.Info.Version.ToString & vbCrLf)
 
         tx.Add(Info.ToString)
+        tx.Add(StoreInfo.ToString)
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
         If Info.AppVersion < "1.0.6.9" Or My.[Settings].SaveForLegacyWP Then

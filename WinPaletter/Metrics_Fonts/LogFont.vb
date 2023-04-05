@@ -152,34 +152,43 @@ Module LogFontHelpers
 
     <Extension()>
     Public Function ToLogFont(ByVal fontBytes As Byte()) As LogFont
-        Dim lOGFONT As New LogFont With {
-            .lfHeight = BitConverter.ToInt32(fontBytes, 0),
-            .lfWidth = 0,
-            .lfEscapement = 0,
-            .lfOrientation = 0,
-            .lfWeight = BitConverter.ToInt32(fontBytes, 16),
-            .lfItalic = fontBytes(20),
-            .lfUnderline = fontBytes(21),
-            .lfStrikeOut = fontBytes(22),
-            .lfCharSet = fontBytes(23),
-            .lfOutPrecision = fontBytes(24),
-            .lfClipPrecision = fontBytes(25),
-            .lfQuality = fontBytes(26)
-        }
-        lOGFONT.lfClipPrecision = fontBytes(27)
-        Dim array As Byte() = New Byte(63) {}
+        If fontBytes IsNot Nothing Then
+            Dim lOGFONT As New LogFont With {
+          .lfHeight = BitConverter.ToInt32(fontBytes, 0),
+          .lfWidth = 0,
+          .lfEscapement = 0,
+          .lfOrientation = 0,
+          .lfWeight = BitConverter.ToInt32(fontBytes, 16),
+          .lfItalic = fontBytes(20),
+          .lfUnderline = fontBytes(21),
+          .lfStrikeOut = fontBytes(22),
+          .lfCharSet = fontBytes(23),
+          .lfOutPrecision = fontBytes(24),
+          .lfClipPrecision = fontBytes(25),
+          .lfQuality = fontBytes(26)
+      }
+            lOGFONT.lfClipPrecision = fontBytes(27)
+            Dim array As Byte() = New Byte(63) {}
 
-        For i As Integer = 0 To 64 - 1
-            array(i) = fontBytes(i + 28)
-        Next
+            For i As Integer = 0 To 64 - 1
+                array(i) = fontBytes(i + 28)
+            Next
 
-        lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(Nothing)
-        Return lOGFONT
+            lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(Nothing)
+            Return lOGFONT
+        Else
+            Return Nothing
+        End If
+
     End Function
 
     <Extension()>
     Public Function ToFont(ByVal fontBytes As Byte()) As Font
-        Return Font.FromLogFont(fontBytes.ToLogFont)
+        If fontBytes IsNot Nothing Then
+            Return Font.FromLogFont(fontBytes.ToLogFont)
+        Else
+            Return New Font("Segoe UI", 9, FontStyle.Regular)
+        End If
     End Function
 
     <Extension()>

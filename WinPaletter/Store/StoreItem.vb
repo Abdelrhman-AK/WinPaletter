@@ -20,9 +20,14 @@ Public Class StoreItem : Inherits Panel
         Set(value As CP)
             If value IsNot Nothing Then
                 _CP = value.Clone
-                With _CP.ListColors()
-                    MostColor = .ToArray.GetValue(New Random().Next(.Count))
-                End With
+                DesignedFor_Badges.Clear()
+                If _CP.StoreInfo.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
+                If _CP.StoreInfo.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
+                If _CP.StoreInfo.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
+                If _CP.StoreInfo.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
+                If _CP.StoreInfo.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
+                If _CP.StoreInfo.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
+
                 RaiseEvent CPChanged(Me, New EventArgs())
                 Refresh()
             End If
@@ -32,7 +37,10 @@ Public Class StoreItem : Inherits Panel
     Public MD5 As String
     Public URL As String
     Public Property FileName As String
-    Public MostColor As Color
+
+    Private DesignedFor_Badges As New List(Of Bitmap)
+
+    Public Property DoneByWinPaletter As Boolean = False
 #Region "Events"
     Enum MouseState
         None
@@ -125,19 +133,22 @@ Public Class StoreItem : Inherits Panel
         Dim rect_outer As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 
-        Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, MostColor)'Style.Colors.Back)
-        Dim bkCC As Color = Color.FromArgb(alpha, Style.Colors.Back_Checked)
+        Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
+        Dim bkCC As Color = Color.FromArgb(alpha, CP.StoreInfo.Color1)
 
-        G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
+        Dim linearGradientBrush As New LinearGradientBrush(rect_outer, CP.StoreInfo.Color1, CP.StoreInfo.Color2, 0)
+        Dim cBlend As New ColorBlend(4) With {
+            .Colors = New Color(3) {CP.StoreInfo.Color1, CP.StoreInfo.Color2, bkC, bkC},
+            .Positions = New Single(3) {0F, 0.25F, 0.28F, 1.0F}
+        }
+        linearGradientBrush.InterpolationColors = cblend
+
+        G.FillRoundedRect(linearGradientBrush, rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
 
-
-        Dim w As Single = Width
-        Dim h As Single = Height
+        If BackgroundImage IsNot Nothing Then G.DrawRoundImage(BackgroundImage, rect_inner)
 
         If State <> MouseState.None Then G.FillRoundedRect(Noise, rect_inner)
-
-        TextRenderer.DrawText(G, MostColor.ToString, New Font("Segoe UI", 12, FontStyle.Regular), rect_inner, Color.White, Color.Transparent, TextFormatFlags.WordEllipsis Or TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
 
         Dim lC As Color = Color.FromArgb(255 - alpha, If(State <> MouseState.None, Style.Colors.Border_Checked, Style.Colors.Border))
         Dim lCC As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
@@ -152,11 +163,23 @@ Public Class StoreItem : Inherits Panel
             Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
             G.DrawString(CP.Info.PaletteName, New Font("Segoe UI", 10, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
             G.DrawString(My.Lang.By & " " & CP.Info.Author, New Font("Segoe UI", 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
+
+            For i = 0 To DesignedFor_Badges.Count - 1
+                G.DrawImage(DesignedFor_Badges(i), New Rectangle(Author_Rect.Right - 16 - 18 * i, Author_Rect.Bottom + 3, 16, 16))
+            Next
+
+            Dim BadgeRect As New Rectangle(Author_Rect.Right - 16, Author_Rect.Bottom + 3 + 16 + 3, 16, 16)
+
+            If DoneByWinPaletter Then
+                G.DrawImage(My.Resources.Store_DoneByWinPaletter, BadgeRect)
+            Else
+                G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect)
+            End If
+
         End If
+
+
     End Sub
-
-
-
 
 End Class
 

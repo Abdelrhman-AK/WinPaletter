@@ -22,6 +22,7 @@ Partial Class Store
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TablessControl1 = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.container = New System.Windows.Forms.FlowLayoutPanel()
@@ -50,6 +51,8 @@ Partial Class Store
         Me.RetroButton3 = New WinPaletter.RetroButton()
         Me.RetroButton2 = New WinPaletter.RetroButton()
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -70,10 +73,10 @@ Partial Class Store
         Me.TablessControl1.Controls.Add(Me.TabPage3)
         Me.TablessControl1.Controls.Add(Me.TabPage2)
         Me.TablessControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TablessControl1.Location = New System.Drawing.Point(0, 0)
+        Me.TablessControl1.Location = New System.Drawing.Point(0, 105)
         Me.TablessControl1.Name = "TablessControl1"
         Me.TablessControl1.SelectedIndex = 0
-        Me.TablessControl1.Size = New System.Drawing.Size(1298, 575)
+        Me.TablessControl1.Size = New System.Drawing.Size(1298, 470)
         Me.TablessControl1.TabIndex = 4
         '
         'TabPage1
@@ -83,7 +86,7 @@ Partial Class Store
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage1.Size = New System.Drawing.Size(1290, 547)
+        Me.TabPage1.Size = New System.Drawing.Size(1290, 442)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         '
@@ -93,7 +96,7 @@ Partial Class Store
         Me.container.Dock = System.Windows.Forms.DockStyle.Fill
         Me.container.Location = New System.Drawing.Point(10, 10)
         Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(1270, 527)
+        Me.container.Size = New System.Drawing.Size(1270, 422)
         Me.container.TabIndex = 3
         '
         'TabPage3
@@ -573,6 +576,18 @@ Partial Class Store
         Me.FilesFetcher.WorkerReportsProgress = True
         Me.FilesFetcher.WorkerSupportsCancellation = True
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
+        '
+        'Panel1
+        '
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1298, 105)
+        Me.Panel1.TabIndex = 5
+        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -580,6 +595,7 @@ Partial Class Store
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1298, 575)
         Me.Controls.Add(Me.TablessControl1)
+        Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Margin = New System.Windows.Forms.Padding(5, 2, 5, 2)
@@ -630,4 +646,6 @@ Partial Class Store
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents XenonButton1 As XenonButton
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents Panel1 As Panel
 End Class

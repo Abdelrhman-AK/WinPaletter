@@ -28,9 +28,9 @@ Namespace NativeMethods
             MICA_EFFECT = 1029
             USE_IMMERSIVE_DARK_MODE = 20
             WINDOW_CORNER_PREFERENCE = 33
-            TEXT_COLOR = 34
+            TEXT_COLOR = 36
             CAPTION_COLOR = 35
-            BORDER_COLOR = 36
+            BORDER_COLOR = 34
         End Enum
         Public Enum FormCornersType
             [Default]
