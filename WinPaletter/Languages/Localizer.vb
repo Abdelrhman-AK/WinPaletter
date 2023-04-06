@@ -153,6 +153,7 @@ Public Class Localizer : Implements IDisposable
     Property SaveMsg As String = "Do you want to save settings?"
     Property SettingsSaved As String = "Settings are saved"
     Property MBSizeUnit As String = "MB"
+    Property KBSizeUnit As String = "KB"
     Property Stable As String = "Stable"
     Property Beta As String = "Beta"
     Property Channel As String = "Channel"

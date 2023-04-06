@@ -854,7 +854,7 @@ Namespace NativeMethods
 
     End Class
 
-    Public Class Uxtheme
+    Public Class UxTheme
         <DllImport("UxTheme.DLL", BestFitMapping:=False, CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="#65")>
         Public Shared Function SetSystemVisualStyle(ByVal pszFilename As String, ByVal pszColor As String, ByVal pszSize As String, ByVal dwReserved As Integer) As Integer
         End Function
@@ -868,6 +868,47 @@ Namespace NativeMethods
         <DllImport("uxtheme.dll", ExactSpelling:=True, CharSet:=CharSet.Unicode)>
         Public Shared Function SetWindowTheme(ByVal hwnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As String) As Integer
         End Function
+
+        ''' <summary>
+        ''' Set The Window's Theme Attributes
+        ''' </summary>
+        ''' <returns>If The Call Was Successful or Not</returns>
+        <DllImport("UxTheme.dll")>
+        Public Shared Function SetWindowThemeAttribute(ByVal hWnd As IntPtr, ByVal wtype As WindowThemeAttributeType, ByRef attributes As WTA_OPTIONS, ByVal size As UInteger) As Integer
+        End Function
+
+        ''' <summary>
+        ''' Do Not Draw The Caption (Text)
+        ''' </summary>
+        Public Shared WTNCA_NODRAWCAPTION As UInteger = &H1
+        ''' <summary>
+        ''' Do Not Draw the Icon
+        ''' </summary>
+        Public Shared WTNCA_NODRAWICON As UInteger = &H2
+        ''' <summary>
+        ''' Do Not Show the System Menu
+        ''' </summary>
+        Public Shared WTNCA_NOSYSMENU As UInteger = &H4
+        ''' <summary>
+        ''' Do Not Mirror the Question mark Symbol
+        ''' </summary>
+        Public Shared WTNCA_NOMIRRORHELP As UInteger = &H8
+
+        ''' <summary>
+        ''' The Options of What Attributes to Add/Remove
+        ''' </summary>
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure WTA_OPTIONS
+            Public Flags As UInteger
+            Public Mask As UInteger
+        End Structure
+
+        ''' <summary>
+        ''' What Type of Attributes? (Only One is Currently Defined)
+        ''' </summary>
+        Public Enum WindowThemeAttributeType
+            WTA_NONCLIENT = 1
+        End Enum
     End Class
 
     Public Class Shell32
@@ -1579,6 +1620,17 @@ Namespace NativeMethods
             'SetWindowCompositionAttribute(hWnd, data)
             'End If
 
+        End Sub
+#End Region
+
+#Region "UxTheme"
+        Public Shared Sub RemoveFormTitlebarTextAndIcon(Handle As IntPtr)
+            Dim ops As New UxTheme.WTA_OPTIONS With {
+                .Flags = UxTheme.WTNCA_NODRAWCAPTION Or UxTheme.WTNCA_NODRAWICON,
+                .Mask = UxTheme.WTNCA_NODRAWCAPTION Or UxTheme.WTNCA_NODRAWICON
+            }
+
+            UxTheme.SetWindowThemeAttribute(Handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ops, Marshal.SizeOf(ops))
         End Sub
 #End Region
 

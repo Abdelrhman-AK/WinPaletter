@@ -3,7 +3,7 @@ Imports WinPaletter.XenonCore
 Imports System.Security.Cryptography
 Imports WinPaletter.MainFrm
 Imports WinPaletter.CP
-
+Imports WinPaletter.NativeMethods
 Public Class Store
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
@@ -793,6 +793,7 @@ Public Class Store
         SetToClassicButton(RetroButton2, CP)
         SetToClassicButton(RetroButton3, CP)
         SetToClassicButton(RetroButton4, CP)
+        SetToClassicButton(RetroButton1, CP)
         SetToClassicRaisedPanel(ClassicTaskbar, CP)
     End Sub
 
@@ -852,7 +853,10 @@ Public Class Store
 #End Region
 
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
+        DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
         ApplyDarkMode(Me)
+        Refresh()
+        ShowIcon = False
 
         Panel1.BackColor = Style.Colors.Back
 
@@ -881,6 +885,7 @@ Public Class Store
         Visible = False
         FilesFetcher.CancelAsync()
         RemoveAllStoreItems()
+        TablessControl1.SelectedIndex = 0
     End Sub
 
     Sub RemoveAllStoreItems()
@@ -899,6 +904,7 @@ Public Class Store
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ShowIcon = True
         RemoveAllStoreItems()
         FilesFetcher.RunWorkerAsync()
     End Sub
@@ -989,7 +995,55 @@ Public Class Store
                 TablessControl1.SelectedIndex = 1
                 With DirectCast(sender, StoreItem)
                     Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, .CP.StoreInfo.Color2, 10, 15)
+
+                    Adjust_Preview(.CP)
+                    AdjustClassicPreview(.CP)
+                    preview.BackgroundImage = tabs_preview.ToBitmap
+
+                    Label1.Text = .CP.Info.PaletteName
+                    Label6.Text = .CP.Info.PaletteName
+                    Label7.Text = .CP.Info.PaletteVersion
+                    Label9.Text = .CP.Info.Author
+                    XenonLinkLabel1.Text = .CP.Info.AuthorSocialMediaLink
+                    Label12.Text = .MD5
+                    Label10.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
+                    XenonTextBox1.Text = .CP.Info.PaletteDescription
+
+                    Dim os_list As New List(Of String)
+                    os_list.Clear()
+
+                    If .CP.StoreInfo.DesignedFor_Win11 Then os_list.Add(My.Lang.OS_Win11)
+                    If .CP.StoreInfo.DesignedFor_Win10 Then os_list.Add(My.Lang.OS_Win10)
+                    If .CP.StoreInfo.DesignedFor_Win8 Then os_list.Add(My.Lang.OS_Win8)
+                    If .CP.StoreInfo.DesignedFor_Win7 Then os_list.Add(My.Lang.OS_Win7)
+                    If .CP.StoreInfo.DesignedFor_WinVista Then os_list.Add(My.Lang.OS_WinVista)
+                    If .CP.StoreInfo.DesignedFor_WinXP Then os_list.Add(My.Lang.OS_WinXP)
+
+                    Dim os_format As String = ""
+
+                    If os_list.Count = 1 Then
+                        os_format = os_list(0)
+
+                    ElseIf os_list.Count = 2 Then
+                        os_format = os_list(0) & " && " & os_list(1)
+
+                    ElseIf os_list.Count > 2 Then
+
+                        For i = 0 To os_list.Count - 3
+                            os_format &= os_list(i) & ", "
+                        Next
+
+                        os_format &= os_list(os_list.Count - 2) & " && " & os_list(os_list.Count - 1)
+                    End If
+
+                    Label22.Text = os_format
+
+                    'XenonLinkLabel2 = .Link
+
                 End With
+
+
+
                 My.Animator.ShowSync(TablessControl1)
         End Select
     End Sub
@@ -1049,7 +1103,7 @@ Public Class Store
         My.Animator.HideSync(TablessControl1)
 
         TablessControl1.SelectedIndex = 0
-
+        Label1.Text = Text
         My.Animator.ShowSync(TablessControl1)
 
         Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
@@ -1057,5 +1111,33 @@ Public Class Store
 
     Private Sub Panel1_BackColorChanged(sender As Object, e As EventArgs) Handles Panel1.BackColorChanged
         DrawCustomTitlebar(Panel1.BackColor, Panel1.BackColor)
+    End Sub
+
+    Private Sub TablessControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TablessControl1.SelectedIndexChanged
+        XenonButton1.Visible = TablessControl1.SelectedIndex <> 0
+    End Sub
+
+    Private Sub RetroButton1_Click(sender As Object, e As EventArgs) Handles RetroButton1.Click
+        tabs_preview.SelectedIndex = 1
+        preview.BackgroundImage = tabs_preview.ToBitmap
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        tabs_preview.SelectedIndex = 0
+        preview.BackgroundImage = tabs_preview.ToBitmap
+    End Sub
+
+    Private Sub XenonLinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel1.LinkClicked
+        Try
+            If (Uri.IsWellFormedUriString(XenonLinkLabel1.Text, UriKind.Absolute)) Then Process.Start(XenonLinkLabel1.Text)
+        Catch
+        End Try
+    End Sub
+
+    Private Sub XenonLinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
+        Try
+            If (Uri.IsWellFormedUriString(XenonLinkLabel2.Text, UriKind.Absolute)) Then Process.Start(XenonLinkLabel2.Text)
+        Catch
+        End Try
     End Sub
 End Class

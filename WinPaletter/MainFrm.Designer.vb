@@ -5629,14 +5629,14 @@ Partial Class MainFrm
         Me.XenonButton31.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton31.ForeColor = System.Drawing.Color.White
         Me.XenonButton31.Image = CType(resources.GetObject("XenonButton31.Image"), System.Drawing.Image)
-        Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(8, Byte), Integer), CType(CType(80, Byte), Integer), CType(CType(133, Byte), Integer))
+        Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(107, Byte), Integer))
         Me.XenonButton31.LineSize = 1
         Me.XenonButton31.Location = New System.Drawing.Point(420, 3)
         Me.XenonButton31.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton31.Name = "XenonButton31"
         Me.XenonButton31.Size = New System.Drawing.Size(40, 54)
         Me.XenonButton31.TabIndex = 23
-        Me.XenonButton31.Tag = "Store - Under Construction"
+        Me.XenonButton31.Tag = "WinPaletter Store (Beta)"
         Me.XenonButton31.UseVisualStyleBackColor = False
         '
         'XenonButton20
