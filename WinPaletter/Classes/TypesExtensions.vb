@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Drawing2D
+﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.IO.Compression
@@ -911,14 +912,31 @@ Public Module ControlExtensions
     '''Return graphical state of a control to a bitmap
     '''</summary>
     <Extension()>
-    Public Function ToBitmap([Control] As Control) As Bitmap
-        Dim bm As New Bitmap([Control].Width, [Control].Height)
+    Public Function ToBitmap([Control] As Control, Optional ByVal FixMethod As Boolean = False) As Bitmap
+        If Not FixMethod Then
+            Dim bm As New Bitmap([Control].Width, [Control].Height)
 
-        SyncLock [Control]
-            [Control].DrawToBitmap(bm, New Rectangle(0, 0, [Control].Width, [Control].Height))
-            Return bm.Clone
-        End SyncLock
+            SyncLock [Control]
+                [Control].DrawToBitmap(bm, New Rectangle(0, 0, [Control].Width, [Control].Height))
+                Return bm.Clone
+            End SyncLock
+        Else
+            Return DrawToBitmap([Control])
+        End If
 
+    End Function
+
+    Private Function DrawToBitmap(ByVal Control As Control) As Bitmap
+        Dim childControls = Control.Controls.Cast(Of Control)().ToArray()
+        Array.Reverse(childControls)
+
+        Dim bmp As New Bitmap([Control].Width, [Control].Height)
+
+        For Each childControl In childControls
+            childControl.DrawToBitmap(bmp, childControl.Bounds)
+        Next
+
+        Return bmp
     End Function
 End Module
 

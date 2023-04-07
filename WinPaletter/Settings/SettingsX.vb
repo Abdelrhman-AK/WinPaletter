@@ -772,8 +772,9 @@ Public Class SettingsX
             appearance_accent.BackColor = SubMenu.ShowMenu(appearance_accent)
             Exit Sub
         End If
-
-        ColorPickerDlg.Pick(New List(Of Control) From {appearance_accent})
+        Dim clist As New List(Of Control) From {appearance_accent}
+        ColorPickerDlg.Pick(clist)
+        clist.Clear()
     End Sub
 
     Private Sub appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
@@ -782,7 +783,9 @@ Public Class SettingsX
             Exit Sub
         End If
 
+        Dim clist As New List(Of Control) From {appearance_backcolor}
         ColorPickerDlg.Pick(New List(Of Control) From {appearance_backcolor})
+        clist.Clear()
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click

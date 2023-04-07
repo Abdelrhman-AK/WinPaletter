@@ -6946,7 +6946,6 @@ Public Class XenonTerminal
             Return Nothing
         End Try
     End Function
-
     Public Function RRNoLine(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
@@ -6986,63 +6985,6 @@ Public Class XenonTerminal
         Catch
         End Try
     End Sub
-
-    Public Sub FillRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
-        Try
-            If [Radius] = -1 Then [Radius] = 6
-
-            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
-
-            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = Rectangle.Round(Radius)
-                    Graphics.FillPath(Brush, path)
-                End Using
-            Else
-                Graphics.FillRectangle(Brush, [Rectangle])
-            End If
-        Catch
-        End Try
-    End Sub
-    Public Sub FillImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
-        Try
-            If [Radius] = -1 Then [Radius] = 6
-
-            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
-
-            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
-                Using path As GraphicsPath = Rectangle.Round(Radius)
-                    Dim reg As New Region(path)
-                    [Graphics].Clip = reg
-                    [Graphics].DrawImage([Image], [Rectangle])
-                    [Graphics].ResetClip()
-                End Using
-            Else
-                Graphics.DrawImage([Image], [Rectangle])
-            End If
-        Catch
-        End Try
-    End Sub
-    Public Sub DrawRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
-        Try
-            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 6
-            [Radius_willbe_x2] *= 2
-
-            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
-                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
-                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
-                [Graphics].DrawLine([Pen], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
-                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
-                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
-                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
-            Else
-                [Graphics].DrawRectangle([Pen], [Rectangle])
-            End If
-        Catch
-        End Try
-    End Sub
-
     Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
@@ -7329,7 +7271,7 @@ Public Class XenonTerminal
             Try : AddHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try
 
             ProcessBack()
-            UpdateOpacityBackImageChanged()
+            'UpdateOpacityBackImageChanged()
         Else
             Tm.Enabled = False
             Tm.Stop()
@@ -7351,7 +7293,7 @@ Public Class XenonTerminal
     End Sub
 
     Sub GetBack()
-        adaptedBack = My.Wallpaper '.Clone(RectangleToScreen(Bounds), My.Wallpaper.PixelFormat)
+        adaptedBack = My.Wallpaper
         adaptedBackBlurred = New Bitmap(adaptedBack).Blur(13)
     End Sub
 

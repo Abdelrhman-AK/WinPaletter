@@ -56,11 +56,11 @@ Public Class DragPreviewer
 
         Adjust_Preview()
         ApplyLivePreviewFromCP(CP)
+
         ApplyRetroPreview(CP)
         SetClassicMetrics(CP)
         AdjustClassicPreview()
 
-        XenonAlertBox11.Text = MainFrm.WXP_Alert2.Text
         XenonAlertBox11.Text = MainFrm.WXP_Alert2.Text
         XenonAlertBox11.Size = XenonAlertBox11.Parent.Size - New Size(40, 40)
         XenonAlertBox11.Location = New Point(20, 20)

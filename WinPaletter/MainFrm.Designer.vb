@@ -5423,7 +5423,7 @@ Partial Class MainFrm
         Me.XenonButton25.Image = Nothing
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(291, 485)
+        Me.XenonButton25.Location = New System.Drawing.Point(290, 482)
         Me.XenonButton25.Name = "XenonButton25"
         Me.XenonButton25.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton25.TabIndex = 22
@@ -5440,7 +5440,7 @@ Partial Class MainFrm
         Me.XenonButton22.Image = Nothing
         Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(372, 485)
+        Me.XenonButton22.Location = New System.Drawing.Point(372, 482)
         Me.XenonButton22.Name = "XenonButton22"
         Me.XenonButton22.Size = New System.Drawing.Size(85, 34)
         Me.XenonButton22.TabIndex = 21
@@ -5457,7 +5457,7 @@ Partial Class MainFrm
         Me.log_lbl.Location = New System.Drawing.Point(7, 454)
         Me.log_lbl.Name = "log_lbl"
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.log_lbl.Size = New System.Drawing.Size(510, 28)
+        Me.log_lbl.Size = New System.Drawing.Size(510, 25)
         Me.log_lbl.TabIndex = 20
         Me.log_lbl.Text = "Error\s happened. Press on 'Show errors' for details"
         Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -5472,7 +5472,7 @@ Partial Class MainFrm
         Me.XenonButton14.Image = Nothing
         Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(208, 485)
+        Me.XenonButton14.Location = New System.Drawing.Point(206, 482)
         Me.XenonButton14.Name = "XenonButton14"
         Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
         Me.XenonButton14.TabIndex = 7
@@ -5489,7 +5489,7 @@ Partial Class MainFrm
         Me.XenonButton8.Image = Nothing
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(459, 485)
+        Me.XenonButton8.Location = New System.Drawing.Point(459, 482)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(59, 34)
         Me.XenonButton8.TabIndex = 6

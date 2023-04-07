@@ -260,6 +260,18 @@ Public Class ColorPickerDlg
                     End If
                 End With
 
+            ElseIf TypeOf ctrl Is StoreItem Then
+
+                With DirectCast(ctrl, StoreItem)
+                    If _Conditions.BackColor1 Then
+                        .CP.StoreInfo.Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    ElseIf _Conditions.BackColor2 Then
+                        .CP.StoreInfo.Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
+
+                    End If
+                    .Invalidate()
+                End With
+
             ElseIf TypeOf ctrl Is Label Then
                 If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then
                     ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)

@@ -4,6 +4,9 @@ Imports System.Security.Cryptography
 Imports WinPaletter.MainFrm
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
+Imports Devcorp.Controls.VisualStyles
+Imports System.Text
+
 Public Class Store
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
@@ -11,13 +14,16 @@ Public Class Store
     Dim h As Integer = 297 * 0.6
 
     Private elapsedSeconds As Integer = 0
+    Private apply_elapsedSecs As Integer = 0
+
     Private SwitchAfterSecs As Integer = 1
 
     Private hoveredItem As StoreItem
+    Public selectedItem As StoreItem
     Private ModernOrClassic As Integer = 0
     Private SwitchedByMouseWheel As Boolean = False
-#Region "Preview Subs"
 
+#Region "Preview Subs"
     Sub ReValidateLivePreview(ByVal Parent As Control)
         Parent.Refresh()
 
@@ -793,8 +799,22 @@ Public Class Store
         SetToClassicButton(RetroButton2, CP)
         SetToClassicButton(RetroButton3, CP)
         SetToClassicButton(RetroButton4, CP)
-        SetToClassicButton(RetroButton1, CP)
         SetToClassicRaisedPanel(ClassicTaskbar, CP)
+    End Sub
+
+    Private Sub Menu_Window_SizeChanged(sender As Object, e As EventArgs) Handles Menu_Window.SizeChanged, Menu_Window.LocationChanged
+        RetroShadow1.Size = Menu_Window.Size
+        RetroShadow1.Location = Menu_Window.Location + New Point(6, 5)
+
+        Dim b As New Bitmap(RetroShadow1.Width, RetroShadow1.Height)
+        Dim g As Graphics = Graphics.FromImage(b)
+        g.DrawGlow(New Rectangle(5, 5, b.Width - 10 - 1, b.Height - 10 - 1), Color.FromArgb(128, 0, 0, 0))
+        g.Save()
+        RetroShadow1.Image = b
+        g.Dispose()
+
+        RetroShadow1.BringToFront()
+        Menu_Window.BringToFront()
     End Sub
 
     Sub SetClassicMetrics([Window] As RetroWindow, [CP] As CP)
@@ -845,20 +865,335 @@ Public Class Store
         [Button].ForeColor = [CP].Win32.ButtonText
         [Button].FocusRectWidth = [CP].WindowsEffects.FocusRectWidth
         [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
+        [Button].Font = [CP].MetricsFonts.CaptionFont
         [Button].Refresh()
     End Sub
 
+    Sub SetClassicMetrics(CP As CP)
+        Try
+            If MainFrm.PreviewConfig = WinVer.WXP AndAlso MainFrm.WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
+                End If
 
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
+                End If
+            End If
+        Catch
+        End Try
+
+        RetroPanel2.Width = CP.MetricsFonts.ScrollWidth
+        menucontainer0.Height = CP.MetricsFonts.MenuHeight
+
+        menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont))
+
+        RetroLabel1.Font = CP.MetricsFonts.MenuFont
+        RetroLabel2.Font = CP.MetricsFonts.MenuFont
+        RetroLabel3.Font = CP.MetricsFonts.MenuFont
+
+        RetroLabel9.Font = CP.MetricsFonts.MenuFont
+        RetroLabel5.Font = CP.MetricsFonts.MenuFont
+        RetroLabel6.Font = CP.MetricsFonts.MenuFont
+
+        menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3
+        highlight.Height = menucontainer1.Height + 1
+        menucontainer3.Height = menucontainer1.Height + 1
+        Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
+
+        RetroLabel4.Font = CP.MetricsFonts.MessageFont
+
+        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+
+        Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+        TitleTextH = "ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height
+        TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(CP.MetricsFonts.CaptionFont.Name, 9, Font.Style)).Height
+        TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
+        Dim iP As Integer = 3 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth
+        Dim iT As Integer = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum
+        Dim _Padding As New Windows.Forms.Padding(iP, iT, iP, iP)
+
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            If Not RW.UseItAsMenu Then
+                RW.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+                RW.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+                RW.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+                RW.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+                RW.Font = CP.MetricsFonts.CaptionFont
+
+                RW.Padding = _Padding
+            End If
+        Next
+
+        RetroWindow3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow3.GetTitleTextHeight
+        RetroWindow2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
+
+
+        Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu_Window.Left = Math.Min(RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3, RetroWindow2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
+
+        RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
+        RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
+
+        RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
+        RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
+
+        RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
+    End Sub
+
+    Sub ApplyRetroPreview([CP] As CP)
+        Try
+            If MainFrm.PreviewConfig = WinVer.WXP AndAlso MainFrm.WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                    Dim vs As New VisualStyleFile(My.VS)
+                    CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
+                End If
+            End If
+        Catch
+        End Try
+
+        RetroWindow1.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow2.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow3.ColorGradient = [CP].Win32.EnableGradient
+        RetroWindow4.ColorGradient = [CP].Win32.EnableGradient
+
+        Dim c As Color
+        c = [CP].Win32.ActiveTitle
+        RetroWindow2.Color1 = c
+        RetroWindow3.Color1 = c
+        RetroWindow4.Color1 = c
+
+        c = [CP].Win32.GradientActiveTitle
+        RetroWindow2.Color2 = c
+        RetroWindow3.Color2 = c
+        RetroWindow4.Color2 = c
+
+        c = [CP].Win32.TitleText
+        RetroWindow2.ForeColor = c
+        RetroWindow3.ForeColor = c
+        RetroWindow4.ForeColor = c
+
+        c = [CP].Win32.InactiveTitle
+        RetroWindow1.Color1 = c
+
+        c = [CP].Win32.GradientInactiveTitle
+        RetroWindow1.Color2 = c
+
+        c = [CP].Win32.InactiveTitleText
+        RetroWindow1.ForeColor = c
+
+        c = [CP].Win32.ActiveBorder
+        RetroWindow2.ColorBorder = c
+        RetroWindow3.ColorBorder = c
+        RetroWindow4.ColorBorder = c
+
+        c = [CP].Win32.InactiveBorder
+        RetroWindow1.ColorBorder = c
+
+        c = [CP].Win32.WindowFrame
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.WindowFrame = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.WindowFrame = c
+        Next
+
+        c = [CP].Win32.ButtonFace
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            If RW IsNot Menu Then RW.BackColor = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.BackColor = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.BackColor = c
+        Next
+        RetroPanel2.BackColor = c
+        Menu_Window.ButtonFace = c
+
+        c = [CP].Win32.ButtonDkShadow
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonDkShadow = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.ButtonDkShadow = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.ButtonDkShadow = c
+        Next
+        RetroTextBox1.ButtonDkShadow = c
+        Menu_Window.ButtonDkShadow = c
+
+        c = [CP].Win32.ButtonHilight
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonHilight = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.ButtonHilight = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.ButtonHilight = c
+        Next
+        For Each RB As RetroPanelRaised In ClassicColorsPreview.Controls.OfType(Of RetroPanelRaised)
+            RB.ButtonHilight = c
+        Next
+        RetroTextBox1.ButtonHilight = c
+        RetroPanel1.ButtonHilight = c
+        RetroPanel2.ButtonHilight = c
+        Menu_Window.ButtonHilight = c
+
+        c = [CP].Win32.ButtonLight
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonLight = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.ButtonLight = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.ButtonLight = c
+        Next
+        RetroTextBox1.ButtonLight = c
+        Menu_Window.ButtonLight = c
+
+        c = [CP].Win32.ButtonShadow
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonShadow = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.ButtonShadow = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.ButtonShadow = c
+        Next
+        For Each RB As RetroPanelRaised In ClassicColorsPreview.Controls.OfType(Of RetroPanelRaised)
+            RB.ButtonShadow = c
+        Next
+        RetroTextBox1.ButtonShadow = c
+        RetroPanel1.ButtonShadow = c
+        RetroTextBox1.Invalidate()
+        Menu_Window.ButtonShadow = c
+
+        c = [CP].Win32.ButtonText
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.ButtonText = c
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.ForeColor = c
+            Next
+        Next
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.ForeColor = c
+        Next
+
+        c = [CP].Win32.AppWorkspace
+        programcontainer.BackColor = c
+
+        c = [CP].Win32.Background
+        ClassicColorsPreview.BackColor = c
+
+        c = [CP].Win32.Menu
+        Menu_Window.BackColor = c
+        RetroPanel1.BackColor = c
+        Menu_Window.Invalidate()
+
+        c = [CP].Win32.MenuBar
+        menucontainer0.BackColor = c
+
+        c = [CP].Win32.Hilight
+        highlight.BackColor = c
+
+        c = [CP].Win32.MenuHilight
+        menuhilight.BackColor = c
+
+        c = [CP].Win32.MenuText
+        RetroLabel6.ForeColor = c
+        RetroLabel1.ForeColor = c
+
+        c = [CP].Win32.HilightText
+        RetroLabel5.ForeColor = c
+
+        c = [CP].Win32.GrayText
+        RetroLabel2.ForeColor = c
+        RetroLabel9.ForeColor = c
+
+        c = [CP].Win32.Window
+        RetroTextBox1.BackColor = c
+
+        c = [CP].Win32.WindowText
+        RetroTextBox1.ForeColor = c
+        RetroLabel4.ForeColor = c
+
+        c = [CP].Win32.InfoWindow
+        RetroLabel13.BackColor = c
+
+        c = [CP].Win32.InfoText
+        RetroLabel13.ForeColor = c
+
+        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+            RW.Invalidate()
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.Invalidate()
+            Next
+        Next
+
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.Invalidate()
+        Next
+
+        Refresh17BitPreference([CP])
+
+        RetroShadow1.Refresh()
+    End Sub
+
+    Sub Refresh17BitPreference([CP] As CP)
+
+        If [CP].Win32.EnableTheming Then
+            'Theming Enabled (Menus Has colors and borders)
+            Menu_Window.Flat = True
+            RetroPanel1.Flat = True
+            menuhilight.BackColor = [CP].Win32.MenuHilight  'Filling of selected item
+            highlight.BackColor = [CP].Win32.Hilight 'Outer Border of selected item
+
+            RetroPanel1.BackColor = [CP].Win32.MenuHilight
+            RetroPanel1.ButtonShadow = [CP].Win32.Hilight
+
+            menucontainer0.BackColor = [CP].Win32.MenuBar
+            RetroLabel3.ForeColor = [CP].Win32.HilightText
+        Else
+            'Theming Disabled (Menus are retro 3d)
+            Menu_Window.Flat = False
+            RetroPanel1.Flat = False
+            menuhilight.BackColor = [CP].Win32.Hilight 'Both will have same color
+            highlight.BackColor = [CP].Win32.Hilight 'Both will have same color
+            RetroPanel1.BackColor = [CP].Win32.Menu
+            RetroPanel1.ButtonShadow = [CP].Win32.ButtonShadow
+            menucontainer0.BackColor = [CP].Win32.Menu
+            RetroLabel3.ForeColor = [CP].Win32.MenuText
+
+        End If
+
+        Menu_Window.Invalidate()
+        RetroPanel1.Invalidate()
+        menuhilight.Invalidate()
+        highlight.Invalidate()
+
+    End Sub
 
 #End Region
 
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Panel1.BackColor = Style.Colors.Back
+
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
         ApplyDarkMode(Me)
         Refresh()
         ShowIcon = False
-
-        Panel1.BackColor = Style.Colors.Back
 
         If Not IsFontInstalled("Segoe MDL2 Assets") Then
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
@@ -872,10 +1207,28 @@ Public Class Store
         XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
         XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
 
+        MainFrm.MakeItDoubleBuffered(Me)
+        MainFrm.MakeItDoubleBuffered(Panel1)
+        MainFrm.MakeItDoubleBuffered(TablessControl1)
+        MainFrm.MakeItDoubleBuffered(TreeView1)
+        MainFrm.MakeItDoubleBuffered(TreeView2)
+        TreeView1.ImageList = My.Notifications_IL
+        XenonButton4.Image = MainFrm.apply_btn.Image
+        XenonButton19.Image = MainFrm.XenonButton19.Image
+
+        WXP_Alert2.Text = MainFrm.WXP_Alert2.Text
+        WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
+        WXP_Alert2.Location = New Point(20, 20)
+
         pnl_preview.BackgroundImage = My.Wallpaper
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         FinishedLoadingInitialCPs = False
+
+        Label12.Font = My.Application.ConsoleFontMedium
+        Label10.Font = My.Application.ConsoleFontMedium
+        Label7.Font = My.Application.ConsoleFontMedium
+        XenonTextBox1.Font = My.Application.ConsoleFontLarge
 
         'Prevent exception error of cross-thread
         container.CheckForIllegalCrossThreadCalls = False
@@ -993,20 +1346,23 @@ Public Class Store
             Case Else
                 My.Animator.HideSync(TablessControl1)
                 TablessControl1.SelectedIndex = 1
+                selectedItem = DirectCast(sender, StoreItem)
+
                 With DirectCast(sender, StoreItem)
-                    Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, .CP.StoreInfo.Color2, 10, 15)
 
                     Adjust_Preview(.CP)
                     AdjustClassicPreview(.CP)
-                    preview.BackgroundImage = tabs_preview.ToBitmap
+                    ApplyRetroPreview(.CP)
+                    SetClassicMetrics(.CP)
 
-                    Label1.Text = .CP.Info.PaletteName
+                    Label1.Text = .CP.Info.PaletteName & " - " & My.Lang.By & " " & .CP.Info.Author
                     Label6.Text = .CP.Info.PaletteName
                     Label7.Text = .CP.Info.PaletteVersion
                     Label9.Text = .CP.Info.Author
-                    XenonLinkLabel1.Text = .CP.Info.AuthorSocialMediaLink
                     Label12.Text = .MD5
                     Label10.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
+                    XenonLinkLabel1.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, "There is no included data")
+                    XenonLinkLabel2.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL, "There is no included data")
                     XenonTextBox1.Text = .CP.Info.PaletteDescription
 
                     Dim os_list As New List(Of String)
@@ -1038,14 +1394,116 @@ Public Class Store
 
                     Label22.Text = os_format
 
-                    'XenonLinkLabel2 = .Link
-
+                    GetResources()
                 End With
 
-
-
+                Panel1.BackColor = DirectCast(sender, StoreItem).CP.StoreInfo.Color2
                 My.Animator.ShowSync(TablessControl1)
         End Select
+    End Sub
+
+    Sub GetResources()
+        TreeView2.Nodes.Clear()
+        Dim filesList As New List(Of String) : filesList.Clear()
+        Dim fontsList As New List(Of String) : fontsList.Clear()
+
+        Dim x As String
+
+        x = selectedItem.CP.WindowsXP.ThemeFile
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WXP Then filesList.Add(x)
+
+        x = selectedItem.CP.LogonUI7.ImagePath
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And (My.W7 Or My.W8) Then filesList.Add(x)
+
+        If My.W11 Or My.W10 Then
+            x = selectedItem.CP.Terminal.DefaultProf.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.Terminal.DefaultProf.Icon
+            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.TerminalPreview.DefaultProf.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.TerminalPreview.DefaultProf.Icon
+            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+            For Each i In selectedItem.CP.Terminal.Profiles
+                x = i.BackgroundImage
+                If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+                x = i.Icon
+                If Not String.IsNullOrWhiteSpace(x) And Not x.Length <= 1 And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+            Next
+
+            For Each i In selectedItem.CP.TerminalPreview.Profiles
+                x = i.BackgroundImage
+                If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+
+                x = i.Icon
+                If Not String.IsNullOrWhiteSpace(x) And Not x.Length <= 1 And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
+            Next
+        End If
+
+
+        x = selectedItem.CP.WallpaperTone_W11.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W11 Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W10.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W10 Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W8.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W8 Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W7.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W7 Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_WVista.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WVista Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_WXP.Image
+        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WXP Then filesList.Add(x)
+
+
+
+        x = selectedItem.CP.MetricsFonts.CaptionFont.Name
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.StatusFont.Name
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.MessageFont.Name
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.IconFont.Name
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.MenuFont.Name
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg2
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_SegoeUI
+        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
+
+
+        With TreeView2.Nodes.Add("Files")
+            For Each y As String In filesList
+                .Nodes.Add(y)
+            Next
+        End With
+
+        With TreeView2.Nodes.Add("Fonts")
+            For Each y As String In fontsList
+                .Nodes.Add(y)
+            Next
+        End With
+
+        TreeView2.ExpandAll()
     End Sub
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
@@ -1110,6 +1568,7 @@ Public Class Store
     End Sub
 
     Private Sub Panel1_BackColorChanged(sender As Object, e As EventArgs) Handles Panel1.BackColorChanged
+        Label1.ForeColor = If(Panel1.BackColor.IsDark, Color.White, Color.Black)
         DrawCustomTitlebar(Panel1.BackColor, Panel1.BackColor)
     End Sub
 
@@ -1117,27 +1576,191 @@ Public Class Store
         XenonButton1.Visible = TablessControl1.SelectedIndex <> 0
     End Sub
 
-    Private Sub RetroButton1_Click(sender As Object, e As EventArgs) Handles RetroButton1.Click
-        tabs_preview.SelectedIndex = 1
-        preview.BackgroundImage = tabs_preview.ToBitmap
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        tabs_preview.SelectedIndex = 2
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        tabs_preview.SelectedIndex = 0
-        preview.BackgroundImage = tabs_preview.ToBitmap
+        If tabs_preview.SelectedIndex = 0 Then tabs_preview.SelectedIndex = 1 Else tabs_preview.SelectedIndex = 0
     End Sub
 
     Private Sub XenonLinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel1.LinkClicked
         Try
-            If (Uri.IsWellFormedUriString(XenonLinkLabel1.Text, UriKind.Absolute)) Then Process.Start(XenonLinkLabel1.Text)
+            If (Uri.IsWellFormedUriString(XenonLinkLabel1.Text, UriKind.Absolute)) And XenonLinkLabel1.Text.Contains(" ") Then Process.Start(XenonLinkLabel1.Text)
         Catch
         End Try
     End Sub
 
     Private Sub XenonLinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
         Try
-            If (Uri.IsWellFormedUriString(XenonLinkLabel2.Text, UriKind.Absolute)) Then Process.Start(XenonLinkLabel2.Text)
+            If (Uri.IsWellFormedUriString(XenonLinkLabel2.Text, UriKind.Absolute)) And XenonLinkLabel2.Text.Contains(" ") Then Process.Start(XenonLinkLabel2.Text)
         Catch
         End Try
+    End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Store_CPToggles.CP = selectedItem.CP
+        Store_CPToggles.ShowDialog()
+        Apply_Theme()
+    End Sub
+
+    Sub Apply_Theme()
+        Cursor = Cursors.WaitCursor
+
+        log_lbl.Visible = False
+        log_lbl.Text = ""
+        XenonButton8.Visible = False
+        XenonButton14.Visible = False
+        XenonButton22.Visible = False
+        XenonButton25.Visible = False
+
+        If My.[Settings].Log_ShowApplying Then
+            TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
+            TablessControl1.Refresh()
+        End If
+
+        selectedItem.CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
+
+        MainFrm.CP_Original = New CP(CP_Type.Registry)
+
+        Cursor = Cursors.Default
+
+        If My.[Settings].AutoRestartExplorer Then
+            RestartExplorer(If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
+        Else
+            If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
+        End If
+
+        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+
+        If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
+
+        log_lbl.Visible = True
+        XenonButton8.Visible = True
+        XenonButton22.Visible = True
+        XenonButton25.Visible = True
+
+        If Not My.Saving_Exceptions.Count = 0 Then
+            log_lbl.Text = My.Lang.CP_ErrorHappened
+            XenonButton14.Visible = True
+        Else
+            If My.[Settings].Log_Countdown_Enabled Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
+                apply_elapsedSecs = 1
+                Timer2.Enabled = True
+                Timer2.Start()
+            End If
+        End If
+
+    End Sub
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        Store_ConsolesPreview.CP = selectedItem.CP
+        Store_ConsolesPreview.ShowDialog()
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - apply_elapsedSecs)
+
+        If apply_elapsedSecs + 1 <= My.[Settings].Log_Countdown Then
+            apply_elapsedSecs += 1
+        Else
+            log_lbl.Text = ""
+            Timer2.Enabled = False
+            Timer2.Stop()
+            TablessControl1.SelectedIndex = TablessControl1.SelectedIndex - 1
+        End If
+
+    End Sub
+
+    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        log_lbl.Text = ""
+        Timer2.Enabled = False
+        Timer2.Stop()
+        TablessControl1.SelectedIndex = TablessControl1.SelectedIndex - 1
+    End Sub
+
+    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+        log_lbl.Text = ""
+        Timer2.Enabled = False
+        Timer2.Stop()
+
+        If MainFrm.SaveFileDialog3.ShowDialog = DialogResult.OK Then
+            Dim sb As New StringBuilder
+            sb.Clear()
+
+            For Each N As TreeNode In TreeView1.Nodes
+                sb.AppendLine(String.Format("[{0}]{2} {1}{3}", N.ImageKey, N.Text, vbTab, vbCrLf))
+            Next
+
+            IO.File.WriteAllText(MainFrm.SaveFileDialog3.FileName, sb.ToString)
+
+        End If
+    End Sub
+
+    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+        log_lbl.Text = ""
+        Timer2.Enabled = False
+        Timer2.Stop()
+    End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        log_lbl.Text = ""
+        Timer2.Enabled = False
+        Timer2.Stop()
+        Saving_ex_list.ex_List = My.Saving_Exceptions
+        Saving_ex_list.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        XenonGroupBox4.Visible = Not XenonGroupBox4.Visible
+    End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        WindowState = FormWindowState.Minimized
+
+        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
+        Dim r1 As String = r(0)
+        Dim r2 As String = r(1)
+
+        Select Case r1
+            Case 0              '' Save
+                If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                    MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                    MainFrm.CP_Original = MainFrm.CP.Clone
+                Else
+                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                        MainFrm.CP_Original = MainFrm.CP.Clone
+                    Else
+                        Exit Sub
+                    End If
+                End If
+            Case 1              '' Save As
+                If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                    MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                    MainFrm.CP_Original = MainFrm.CP.Clone
+                Else
+                    Exit Sub
+                End If
+        End Select
+
+        MainFrm.CP = selectedItem.CP
+        MainFrm.CP_Original = MainFrm.CP.Clone
+
+        MainFrm.Adjust_Preview(False)
+        MainFrm.ApplyCPValues(MainFrm.CP)
+        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+        MainFrm.AdjustClassicPreview()
+
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        Store_CursorsPreview.CP = selectedItem.CP
+        Store_CursorsPreview.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+        RestartExplorer()
     End Sub
 End Class

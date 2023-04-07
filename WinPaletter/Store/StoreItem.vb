@@ -10,8 +10,8 @@ Public Class StoreItem : Inherits Panel
         DoubleBuffered = True
     End Sub
 
+#Region "Properties"
     Public Event CPChanged(sender As Object, e As EventArgs)
-
     Private _CP As CP
     Public Property CP As CP
         Get
@@ -20,27 +20,29 @@ Public Class StoreItem : Inherits Panel
         Set(value As CP)
             If value IsNot Nothing Then
                 _CP = value.Clone
-                DesignedFor_Badges.Clear()
-                If _CP.StoreInfo.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
-                If _CP.StoreInfo.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
-                If _CP.StoreInfo.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
-                If _CP.StoreInfo.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
-                If _CP.StoreInfo.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
-                If _CP.StoreInfo.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
-
+                UpdateBadges()
                 RaiseEvent CPChanged(Me, New EventArgs())
-                Refresh()
             End If
         End Set
     End Property
 
-    Public MD5 As String
-    Public URL As String
+    Public Property MD5 As String
+    Public Property URL As String
     Public Property FileName As String
-
-    Private DesignedFor_Badges As New List(Of Bitmap)
-
     Public Property DoneByWinPaletter As Boolean = False
+
+    Public Sub UpdateBadges()
+        DesignedFor_Badges.Clear()
+        If _CP.StoreInfo.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
+        If _CP.StoreInfo.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
+        If _CP.StoreInfo.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
+        If _CP.StoreInfo.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
+        If _CP.StoreInfo.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
+        If _CP.StoreInfo.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
+        Refresh()
+    End Sub
+#End Region
+
 #Region "Events"
     Enum MouseState
         None
@@ -122,6 +124,7 @@ Public Class StoreItem : Inherits Panel
 #End Region
 
     Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
+    Private DesignedFor_Badges As New List(Of Bitmap)
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -136,15 +139,10 @@ Public Class StoreItem : Inherits Panel
         Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
         Dim bkCC As Color = Color.FromArgb(alpha, CP.StoreInfo.Color1)
 
-        Dim linearGradientBrush As New LinearGradientBrush(rect_outer, CP.StoreInfo.Color1, CP.StoreInfo.Color2, 0)
-        Dim cBlend As New ColorBlend(4) With {
-            .Colors = New Color(3) {CP.StoreInfo.Color1, CP.StoreInfo.Color2, bkC, bkC},
-            .Positions = New Single(3) {0F, 0.25F, 0.28F, 1.0F}
-        }
-        linearGradientBrush.InterpolationColors = cblend
-
-        G.FillRoundedRect(linearGradientBrush, rect_inner)
+        G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
+        G.FillRoundedRect(New SolidBrush(CP.StoreInfo.Color1), New Rectangle(rect_inner.X, rect_inner.Y, 10, rect_inner.Height))
+        G.FillRoundedRect(New SolidBrush(CP.StoreInfo.Color2), New Rectangle(rect_inner.X + 10, rect_inner.Y, 10, rect_inner.Height))
 
         If BackgroundImage IsNot Nothing Then G.DrawRoundImage(BackgroundImage, rect_inner)
 

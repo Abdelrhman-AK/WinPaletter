@@ -3559,7 +3559,7 @@ Public Class MainFrm
         Else
             If My.[Settings].Log_Countdown_Enabled Then
                 log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
-                ellapsedSecs = 1
+                elapsedSecs = 1
                 Timer1.Enabled = True
                 Timer1.Start()
             End If
@@ -3567,13 +3567,13 @@ Public Class MainFrm
 
     End Sub
 
-    Private ellapsedSecs As Integer = 0
+    Private elapsedSecs As Integer = 0
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - ellapsedSecs)
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - elapsedSecs)
 
-        If ellapsedSecs + 1 <= My.[Settings].Log_Countdown Then
-            ellapsedSecs += 1
+        If elapsedSecs + 1 <= My.[Settings].Log_Countdown Then
+            elapsedSecs += 1
         Else
             log_lbl.Text = ""
             Timer1.Enabled = False
@@ -3833,6 +3833,7 @@ Public Class MainFrm
             CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             CP_Original = CP.Clone
 
+            Adjust_Preview(False)
             ApplyCPValues(CP)
             ApplyLivePreviewFromCP(CP)
             AdjustClassicPreview()
@@ -3894,14 +3895,14 @@ Public Class MainFrm
         CP = New CP(CP.CP_Type.Registry)
         CP_Original = CP.Clone
         SaveFileDialog1.FileName = Nothing
+        Adjust_Preview(False)
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
         AdjustClassicPreview()
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
-        EditInfo.Load_Info(CP)
-        ApplyCPValues(CP)
+        EditInfo.ShowDialog()
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
@@ -3955,12 +3956,14 @@ Public Class MainFrm
 
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
         CP = CP_Original.Clone
+        Adjust_Preview(False)
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
         CP = CP_FirstTime.Clone
+        Adjust_Preview(False)
         ApplyCPValues(CP)
         ApplyLivePreviewFromCP(CP)
     End Sub
@@ -4037,6 +4040,7 @@ Public Class MainFrm
         SaveFileDialog1.FileName = Nothing
 
         ApplyCPValues(CP)
+        Adjust_Preview(False)
         ApplyLivePreviewFromCP(CP)
     End Sub
 
@@ -4200,7 +4204,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
-        Store.ShowDialog()
+        If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
+        Store.Show()
     End Sub
 
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged

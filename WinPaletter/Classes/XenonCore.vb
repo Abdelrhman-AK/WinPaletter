@@ -132,6 +132,7 @@ Public Class XenonCore
     End Function
 
 #End Region
+
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
         If My.Settings.Appearance_Custom Then
@@ -288,6 +289,13 @@ Public Class XenonCore
 
         If TypeOf ctrl Is ListView Then
             With TryCast(ctrl, ListView)
+                .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+        End If
+
+        If TypeOf ctrl Is CheckedListBox Then
+            With TryCast(ctrl, CheckedListBox)
                 .BackColor = ctrl.Parent.BackColor
                 .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With

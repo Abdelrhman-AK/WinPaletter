@@ -179,22 +179,46 @@
         fPEnHonWgTcSWvqGxBLJkpY+b+L+gdf44iuhhBJKKKGEaKhU/wC0ssGDXlwnNAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="XenonButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAASxJREFUSEtj
+        GAUwcCog3vmUf6IVlEtdcH3p6qCT/gl/gPj7Sf9Ed6gwdcDdu3czgfjfjV37T50MSPwPtOTb6YA4M6g0
+        ZeD27duxQPwHiP+D8LXN248CLfh7wi/BFaqEfPBuL0Pm05Mh527duvULiP9D8a9Lc5aGQpWQD0CGv93H
+        8A+I/z874Xv6xo0b34H4BxB7QJWQD97tZ4gBGvwHZDgMPzkVd+T69euRUCXkA2SXI+FfQBwMVUI+GDUc
+        Kxg1HCugreHnQ7Le7mP8i2b4H1DmgiqhDHx6/+rQu7OeyIZTx+UgsGXLFsGnT5/+/PDu1f+3Zz2AhjOB
+        igPqGA4CK1euLOzq6vr/+PHjnx/fPT3y7rx/FlSKOmDDhg3ha9asKVy1apUQVGgUAAEDAwDZOkGirCrP
+        pQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAbtJREFUSEvd
+        z8kvA2EcxvH+A40DRVxstRW1xJmzAydXsdy44WA9iYOrVMQSDqoY+743RTQhEgeJREm5UGu5kkgf7zvz
+        qyadvh3FyZN8LpN5v/OO7n9OXztVrq+VuiNSLZXRce1FVY6+M4jQGx0Pv/iRS4Oh1Q5DhyMyLXYkDHhi
+        KCNedK+7NcZyhZ+ItrhbKCNekvVmImXCA5Hk8SA2RRKTaL0dp4x4hfbXDwZ+BTvcCwq2X5DPbSnyNr2K
+        DS/M3LoXuWvPH5QRTysox/zB9WceleWsKigjXqTBnJUnZHPLCsqIFxyMa7dDXyMJGa3XMC09ImtRQRnx
+        wt3QxC1xgWDWwiMyufkHGWXECw7GtoX+A/6cBzPmAtJn77U/oHXDQEwJcmkzZPobH9AM+mMUNE7fwTil
+        SJXuwn8ArrrGwQMbAsZg2ZdQvHghx+QgxYrnz9GzO4n+/TH071m/wFXfQDn1cFaFUJxHXTCy2/EbcimT
+        HvasM+S7HOXUw2kFRIYcfciT3DAzw47ekO/4UU4930kp/gLl1PMdl+AvUE4932HRJYNfclFOPeyZk+E0
+        NcGZ3fwz7CxrUO5fTKf7BI7ecicSa9lBAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="XenonAlertBox1.Text" xml:space="preserve">
+    <value>Theme designer should provide links (URLs) to files\fonts used and do not exist natievly in Windows inside description text.
+You can ignore these files as applying the theme will continue without them.
+There may be some files not listed according to the current Windows version.</value>
+  </data>
   <data name="PictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        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
+        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
 </value>
   </data>
   <data name="PictureBox14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -374,6 +398,29 @@
         lXORHpvrfzMx+QntC/jaKjG09QAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="PictureBox36.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAA19JREFUSEvt
+        lstPE1EUh1GX6l9g8IW20FqojxBNjFETgfjeuEIj7HzFncG4MXGhLk1MdGUENDxKmSJFapGHLNDEBAOJ
+        BFtKS+lMp/aFIYqBmBzPuTPTmUpD77jVk3yZzuZ8c+7vTNuS/0V1wQUb9g99u4o83D+U1RnU2VuIgT/w
+        Z69SL7Vt8XIOL5zbN7QAjEGdvcRbIqszkAWnEX8mRxVS6UudVdsWLxQ2mJIN5MsYbxScvnSD2nbtCsUy
+        dU/GxdbrIxG4MhiGw71RFGWYMF+GqLKcUJUppKHKlwYHj3hWXLQExQxMR5PwOSzDRDAGj8dmsEHSlKzS
+        AJcYANYHpPSN5k+iu+ndHNwaDsOJvgg4sSGJDo4twrHJnwVYgqMTOofeL0JlP4oRhy/Jd9RUzoGFBqcf
+        ZapQy602uALn41CUU5Ff4OhPgeM1YUqcRrEqNBxlHaf49ByKmdSkuMorN1Z6ZSAoXy03M+I9fSkkySee
+        TCQ2BqWM8CGUiAiTUegYD8Pl/iBmlfwLcRL2eFHcyyEOSZlS3Opl41bfGwmCw5tgmfFmfBozJqmd4BFT
+        TSWTm2q80ZvVQhiqhVmwC9FcXoc/fofawIqB5VXUIEfGf6Dwq4qJjOkV0LdSR8stB06Um4xNp8kUbK/M
+        inEh+GX5QpIZsffKfOIvqdTmen/k9hEPfl0KIbC553KysvY4bGsV89jxUmTC7Xjd2qJAn209CUa5h0Os
+        LteScbnuj8xggzibbndXHHZ1SDnK2iXY7ZLZZHSle2JXZxwqUFrh4RTT6xSIZXtGA/GplvE5eP5xFup7
+        p8H+SmZTVQgJsLjlfPBhCHoohovuZSat8Mh8Yq1sgtRo80hAkFTLa/sLEbY8my9KafM8lAsoJcyIaRNX
+        L4qSGcGOUT1KHVVkpJthYuIeuRFBCaHLdrRJuDyxglhJosvwPs7gEtPP4oyUvdY+IfnuDs/CncEQHO8O
+        YLZKZrQ0ZW0i7CwAiRUUodWtwCUu9Efg0WgAyt2xtY5ylUyDLZ1L5Dtq3OqTD95Hn17qm4F6bwAOdAax
+        OT65CZmlS8rBLaaiTVxzsj+ElgJCi4ukJsXW7sRZTVgot7VkuhDpFHEvpDNqW44CWIfNL1oFqcnaVYRO
+        BRQYiGlcpF5q13+6Skp+A6hk22HDjL84AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="Timer2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>688, 11</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAYGAAAAEAIAColAAAxgAAAGBgAAABAAgAqCwAAG6VAABAQAAAAQAgAChCAAAWwgAAQEAAAAEA
