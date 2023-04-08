@@ -120,11 +120,11 @@
   <metadata name="FilesFetcher.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="Preview_Timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="XenonButton11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_filter_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAK1JREFUOE9j
         GBzgf2+u4f/+7N9A/J9I/BuoRx+qHQLe5bh5vs1x/w3E/wng32+z3D2g2lABUDIRTTEGfpPrkQBVjh0A
@@ -133,7 +133,7 @@
         TkSuQmCC
 </value>
   </data>
-  <data name="XenonButton10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAUFJREFUOE+t
         0bFLAlEcwPErk5YIGhp0C2osKKo/o6nZOaeWllw0QoKCBkPLMwk5kXJp6Q+IlpaotkIz0CJLEpQQM/O+
@@ -144,7 +144,7 @@
         u2M3uzwcLAzIyl/StA9voocBBCo2cAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="back_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABAhJREFUWEft
         121PW2UYB3A+APGFW+fmUEFhA5FnlK2MWtxSxxiKJswX+gV8p9EFNsR1FJGxWkbXsrFujOkoE5OpkZYC
@@ -199,10 +199,10 @@
         fPEnHonWgTcSWvqGxBLJkpY+b+L+gdf44iuhhBJKKKGEaKhU/wC0ssGDXlwnNAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="Timer2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>688, 11</value>
+  <metadata name="Log_Timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>261, 17</value>
   </metadata>
-  <data name="XenonButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Edit_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAASxJREFUSEtj
         GAUwcCog3vmUf6IVlEtdcH3p6qCT/gl/gPj7Sf9Ed6gwdcDdu3czgfjfjV37T50MSPwPtOTb6YA4M6g0
@@ -213,7 +213,7 @@
         pQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="SwitchNonExistingRes_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAbtJREFUSEvd
         z8kvA2EcxvH+A40DRVxstRW1xJmzAydXsdy44WA9iYOrVMQSDqoY+743RTQhEgeJREm5UGu5kkgf7zvz
@@ -226,7 +226,7 @@
         NcGZ3fwz7CxrUO5fTKf7BI7ecicSa9lBAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonAlertBox1.Text" xml:space="preserve">
+  <data name="NonExistingRes_Tip.Text" xml:space="preserve">
     <value>Theme designer should provide links (URLs) to files\fonts used and do not exist natievly in Windows inside description text.
 You can ignore these files as applying the theme will continue without them.
 There may be some files not listed according to the current Windows version.</value>
@@ -263,6 +263,34 @@ There may be some files not listed according to the current Windows version.</va
         fmQOxst0J0Uy4EfT4GOz4MdmwI/fAh+fBp9IwSBxdYqYhJ4wXEvSk6Dn6ZFRdLu8R+8iny9yzCNGWt1i
         2CThFEMmuh2JoEzL+8enq3woY+8XTXa3aOp1+6s4D/G2fuXxHL1N36QTpz/Dqyhf/z+dbLfuEngDFeX1
         fy/68Yu/mR3hVLt1X3n9rf6LGhr+AoJJcGzut+EeAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="cur_anim_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAZpJREFUOE9j
+        oD5oaGDiSVqTDWJKzX6UqDD/PgeIHfT8v6nfs/8mIDZewJ2yTJw3cXW31KTbhpKzH/2RmvWwnOH/f8aA
+        Z//PgDCIDVWKCQTTVvEDNS8AsYG2rwQa8B+I33vd/5MA1PwfhP2f/w8BK8YGgJqt+BPXGknNfGAE1PgP
+        ZIDUrPv/ve/9egczAIhvOvz/zwLVggC8qSvUeJJW14LYknMebYPa/l9nwyOYRgR+/j8BrAkZ8CWuieSM
+        WyUtMfuxA0yz1Ky7/71u/8Q04Nn/B563/7NDtQI1J6325E1e4wtiAw3YAzNAf/NjbJrB2P/Z/3SwZhDg
+        S17lAcTeIDZZBoAA0BVxIC9Izn5oDNQMCcCZ9/67Xf+GTfP10P//maFaIQAciImrqkFsoOa1MFdor8MM
+        RP+n/8PBmtABOBqT1phIzX2qDtT8G2zIzPv/ve7+fI5kwDmciQmckJLWzAexgQlpAdQVL3we/gmBGQBM
+        0uCwwglASRmYHiZK9VzSAGr+ITX7YR5IHOjvI0ADDoAV4QWUZibSAAMDAJyzWi81BNN+AAAAAElFTkSu
+        QmCC
+</value>
+  </data>
+  <data name="PictureBox12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAj1JREFUSEvl
+        0ktPE2EUBuBKdGvUeEW04gXBougMpSCUttMWfpKuFI1/QMUoinvFnQsSCOBleqMtlBZaSN3pqpEWlAhz
+        a1/P105hIiZ2LCt9k5NJ2vme783JWP7vAEMNyAwOIzPwGelBp/7z3gTv3Ps/PRcy6zNe0AVsNpH2e/W/
+        6wvDCXy1Ifog3nZgdcJNF/jZ/Kj7knLzEc/y2rSnjK5NuxG8x1cv0C8ZEPTXzaWyc9/L9RkBkQd2I7oz
+        aS9KS56cfqT2MDw7IiQZvhv10QgEu1Fa7EdxsfeFfqy2VHbuf70heg07N6BL/QT3oZi6iWKy+wlg2acf
+        /XN279yF4BBHqItQJ0qpXoJ7CHaguGAfNo1j2T9W2Xnn9goMbQntoumEluDM4+XmU9TU2Da53ZZQHtr8
+        DXp2mMfpSxj7/t4J8VYXvo5TU72tlii3Jfg6tLmrNLbHpvHsM9dKfpI17UZ+wo7A3Q4Deg3qXDvU+BVo
+        sVbzeCnV86Yw6UD4PmFsBQlawTxdQG3VuA1qrI3mMpTZiybxOH8g+7RvpUCNf9dWjbVCibYwmOaCOZxF
+        W+BHv03xtHM7cm8JNraNXmIolEgzpLB1lPAG/VjtoRXkGLo6bkPgTvsOOttMsBVy+AykUNPf4SxKvI1T
+        oy15JcpWcJ7Qc4SepWmCHGqEFDz5yPRafo0StnJyxJpnbeXQacjBUwSfgCQee1g3Xo0SbuSobUEKHCf4
+        KM2RvcOr2Qocdm59PPRl88NB81/LPxaL5SdxOzHwxMsEowAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="PictureBox41.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -441,6 +469,9 @@ There may be some files not listed according to the current Windows version.</va
         BRQYiGlcpF5q13+6Skp+A6hk22HDjL84AAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="Cursor_Timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>369, 17</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAYGAAAAEAIAColAAAxgAAAGBgAAABAAgAqCwAAG6VAABAQAAAAQAgAChCAAAWwgAAQEAAAAEA

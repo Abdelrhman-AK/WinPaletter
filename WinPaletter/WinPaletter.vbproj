@@ -435,22 +435,10 @@
     <Compile Include="Store\StoreItem.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Store\Store_ConsolesPreview.Designer.vb">
-      <DependentUpon>Store_ConsolesPreview.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Store\Store_ConsolesPreview.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Store\Store_CPToggles.Designer.vb">
       <DependentUpon>Store_CPToggles.vb</DependentUpon>
     </Compile>
     <Compile Include="Store\Store_CPToggles.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Store\Store_CursorsPreview.Designer.vb">
-      <DependentUpon>Store_CursorsPreview.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Store\Store_CursorsPreview.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Store\Store_SearchFilter.Designer.vb">
@@ -807,14 +795,8 @@
     <EmbeddedResource Include="Store\Store.resx">
       <DependentUpon>Store.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Store\Store_ConsolesPreview.resx">
-      <DependentUpon>Store_ConsolesPreview.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_CPToggles.resx">
       <DependentUpon>Store_CPToggles.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Store\Store_CursorsPreview.resx">
-      <DependentUpon>Store_CursorsPreview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_SearchFilter.resx">
       <DependentUpon>Store_SearchFilter.vb</DependentUpon>

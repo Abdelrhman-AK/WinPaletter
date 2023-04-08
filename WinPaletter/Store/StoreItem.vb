@@ -196,10 +196,10 @@ Public Class StoreItem : Inherits Panel
         Dim Circle1 As New Rectangle(rect_inner.X + 10 + factor_max - factor1, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
         Dim Circle2 As New Rectangle(rect_inner.X + 10 + CircleR + CircleR * 0.4 - factor2, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
 
-        G.FillEllipse(New SolidBrush(CP.StoreInfo.Color2), Circle2)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.StoreInfo.Color2)), Circle2)
         G.DrawEllipse(New Pen(CP.StoreInfo.Color2.CB(0.3)), Circle2)
 
-        G.FillEllipse(New SolidBrush(CP.StoreInfo.Color1), Circle1)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.StoreInfo.Color1)), Circle1)
         G.DrawEllipse(New Pen(CP.StoreInfo.Color1.CB(0.3)), Circle1)
 
         If BackgroundImage IsNot Nothing Then

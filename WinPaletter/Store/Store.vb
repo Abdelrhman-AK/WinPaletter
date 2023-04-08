@@ -6,23 +6,30 @@ Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports Devcorp.Controls.VisualStyles
 Imports System.Text
-Imports Newtonsoft.Json.Linq
 
 Public Class Store
+
+#Region "Variables"
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
     Dim w As Integer = 528 * 0.6
     Dim h As Integer = 297 * 0.6
 
     Private elapsedSeconds As Integer = 0
-    Private apply_elapsedSecs As Integer = 0
-
     Private SwitchAfterSecs As Integer = 1
+    Private apply_elapsedSecs As Integer = 0
 
     Private hoveredItem As StoreItem
     Public selectedItem As StoreItem
-    Private ModernOrClassic As Integer = 0
+    Private PreviewIndex As Integer = 0
     Private SwitchedByMouseWheel As Boolean = False
+
+    Private _Shown As Boolean = False
+    Private ReadOnly AnimateList As New List(Of CursorControl)
+    Dim Angle As Single = 180
+    ReadOnly Increment As Single = 5
+    Dim Cycles As Integer = 0
+#End Region
 
 #Region "Preview Subs"
     Sub ReValidateLivePreview(ByVal Parent As Control)
@@ -42,7 +49,7 @@ Public Class Store
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
         Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, ModernOrClassic)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, PreviewIndex)
 
         Panel3.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
@@ -1186,15 +1193,149 @@ Public Class Store
 
     End Sub
 
+    Sub ApplyCMDPreview(XenonCMD As XenonCMD, [Console] As CP.Structures.Console, PS As Boolean)
+        XenonCMD.CMD_ColorTable00 = [Console].ColorTable00
+        XenonCMD.CMD_ColorTable01 = [Console].ColorTable01
+        XenonCMD.CMD_ColorTable02 = [Console].ColorTable02
+        XenonCMD.CMD_ColorTable03 = [Console].ColorTable03
+        XenonCMD.CMD_ColorTable04 = [Console].ColorTable04
+        XenonCMD.CMD_ColorTable05 = [Console].ColorTable05
+        XenonCMD.CMD_ColorTable06 = [Console].ColorTable06
+        XenonCMD.CMD_ColorTable07 = [Console].ColorTable07
+        XenonCMD.CMD_ColorTable08 = [Console].ColorTable08
+        XenonCMD.CMD_ColorTable09 = [Console].ColorTable09
+        XenonCMD.CMD_ColorTable10 = [Console].ColorTable10
+        XenonCMD.CMD_ColorTable11 = [Console].ColorTable11
+        XenonCMD.CMD_ColorTable12 = [Console].ColorTable12
+        XenonCMD.CMD_ColorTable13 = [Console].ColorTable13
+        XenonCMD.CMD_ColorTable14 = [Console].ColorTable14
+        XenonCMD.CMD_ColorTable15 = [Console].ColorTable15
+        XenonCMD.CMD_PopupForeground = [Console].PopupForeground
+        XenonCMD.CMD_PopupBackground = [Console].PopupBackground
+        XenonCMD.CMD_ScreenColorsForeground = [Console].ScreenColorsForeground
+        XenonCMD.CMD_ScreenColorsBackground = [Console].ScreenColorsBackground
+
+        If Not [Console].FontRaster Then
+            With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight})
+                XenonCMD.Font = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style)
+            End With
+        End If
+
+        XenonCMD.PowerShell = PS
+        XenonCMD.Raster = [Console].FontRaster
+        Select Case [Console].FontSize
+            Case 393220
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._4x6
+
+            Case 524294
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._6x8
+
+
+            Case 524296
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x8
+
+            Case 524304
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._16x8
+
+            Case 786437
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._5x12
+
+            Case 786439
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._7x12
+
+            Case 0
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+            Case 786448
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._16x12
+
+            Case 1048588
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._12x16
+
+            Case 1179658
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._10x18
+
+            Case Else
+                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x12
+
+        End Select
+
+        XenonCMD.Refresh()
+    End Sub
+
+    Sub LoadCursorsFromCP([CP] As CP)
+        CursorCP_to_Cursor(Arrow, [CP].Cursor_Arrow)
+        CursorCP_to_Cursor(Help, [CP].Cursor_Help)
+        CursorCP_to_Cursor(AppLoading, [CP].Cursor_AppLoading)
+        CursorCP_to_Cursor(Busy, [CP].Cursor_Busy)
+        CursorCP_to_Cursor(Move_Cur, [CP].Cursor_Move)
+        CursorCP_to_Cursor(NS, [CP].Cursor_NS)
+        CursorCP_to_Cursor(EW, [CP].Cursor_EW)
+        CursorCP_to_Cursor(NESW, [CP].Cursor_NESW)
+        CursorCP_to_Cursor(NWSE, [CP].Cursor_NWSE)
+        CursorCP_to_Cursor(Up, [CP].Cursor_Up)
+        CursorCP_to_Cursor(Pen, [CP].Cursor_Pen)
+        CursorCP_to_Cursor(None, [CP].Cursor_None)
+        CursorCP_to_Cursor(Link, [CP].Cursor_Link)
+        CursorCP_to_Cursor(Pin, [CP].Cursor_Pin)
+        CursorCP_to_Cursor(Person, [CP].Cursor_Person)
+        CursorCP_to_Cursor(IBeam, [CP].Cursor_IBeam)
+        CursorCP_to_Cursor(Cross, [CP].Cursor_Cross)
+
+        For Each i As CursorControl In Cursors_Container.Controls
+            If TypeOf i Is CursorControl Then
+                i.Invalidate()
+            End If
+        Next
+    End Sub
+
+    Sub CursorCP_to_Cursor([CursorControl] As CursorControl, [Cursor] As CP.Structures.Cursor)
+        [CursorControl].Prop_ArrowStyle = [Cursor].ArrowStyle
+        [CursorControl].Prop_CircleStyle = [Cursor].CircleStyle
+        [CursorControl].Prop_PrimaryColor1 = [Cursor].PrimaryColor1
+        [CursorControl].Prop_PrimaryColor2 = [Cursor].PrimaryColor2
+        [CursorControl].Prop_PrimaryColorGradient = [Cursor].PrimaryColorGradient
+        [CursorControl].Prop_PrimaryColorGradientMode = [Cursor].PrimaryColorGradientMode
+        [CursorControl].Prop_PrimaryNoise = [Cursor].PrimaryColorNoise
+        [CursorControl].Prop_PrimaryNoiseOpacity = [Cursor].PrimaryColorNoiseOpacity
+        [CursorControl].Prop_SecondaryColor1 = [Cursor].SecondaryColor1
+        [CursorControl].Prop_SecondaryColor2 = [Cursor].SecondaryColor2
+        [CursorControl].Prop_SecondaryColorGradient = [Cursor].SecondaryColorGradient
+        [CursorControl].Prop_SecondaryColorGradientMode = [Cursor].SecondaryColorGradientMode
+        [CursorControl].Prop_SecondaryNoise = [Cursor].SecondaryColorNoise
+        [CursorControl].Prop_SecondaryNoiseOpacity = [Cursor].SecondaryColorNoiseOpacity
+        [CursorControl].Prop_LoadingCircleBack1 = [Cursor].LoadingCircleBack1
+        [CursorControl].Prop_LoadingCircleBack2 = [Cursor].LoadingCircleBack2
+        [CursorControl].Prop_LoadingCircleBackGradient = [Cursor].LoadingCircleBackGradient
+        [CursorControl].Prop_LoadingCircleBackGradientMode = [Cursor].LoadingCircleBackGradientMode
+        [CursorControl].Prop_LoadingCircleBackNoise = [Cursor].LoadingCircleBackNoise
+        [CursorControl].Prop_LoadingCircleBackNoiseOpacity = [Cursor].LoadingCircleBackNoiseOpacity
+        [CursorControl].Prop_LoadingCircleHot1 = [Cursor].LoadingCircleHot1
+        [CursorControl].Prop_LoadingCircleHot2 = [Cursor].LoadingCircleHot2
+        [CursorControl].Prop_LoadingCircleHotGradient = [Cursor].LoadingCircleHotGradient
+        [CursorControl].Prop_LoadingCircleHotGradientMode = [Cursor].LoadingCircleHotGradientMode
+        [CursorControl].Prop_LoadingCircleHotNoise = [Cursor].LoadingCircleHotNoise
+        [CursorControl].Prop_LoadingCircleHotNoiseOpacity = [Cursor].LoadingCircleHotNoiseOpacity
+        [CursorControl].Prop_Shadow_Enabled = [Cursor].Shadow_Enabled
+        [CursorControl].Prop_Shadow_Color = [Cursor].Shadow_Color
+        [CursorControl].Prop_Shadow_Blur = [Cursor].Shadow_Blur
+        [CursorControl].Prop_Shadow_Opacity = [Cursor].Shadow_Opacity
+        [CursorControl].Prop_Shadow_OffsetX = [Cursor].Shadow_OffsetX
+        [CursorControl].Prop_Shadow_OffsetY = [Cursor].Shadow_OffsetY
+    End Sub
 #End Region
 
+#Region "Store form events"
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Panel1.BackColor = Style.Colors.Back
+        Titlebar_panel.BackColor = Style.Colors.Back
 
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
-        ApplyDarkMode(Me)
-        Refresh()
         ShowIcon = False
+        FinishedLoadingInitialCPs = False
+        _Shown = False
+        container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
+
+        ApplyDarkMode(Me)
 
         If Not IsFontInstalled("Segoe MDL2 Assets") Then
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
@@ -1209,13 +1350,34 @@ Public Class Store
         XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
 
         MainFrm.MakeItDoubleBuffered(Me)
-        MainFrm.MakeItDoubleBuffered(Panel1)
-        MainFrm.MakeItDoubleBuffered(TablessControl1)
-        MainFrm.MakeItDoubleBuffered(TreeView1)
-        MainFrm.MakeItDoubleBuffered(TreeView2)
-        TreeView1.ImageList = My.Notifications_IL
-        XenonButton4.Image = MainFrm.apply_btn.Image
-        XenonButton19.Image = MainFrm.XenonButton19.Image
+        MainFrm.MakeItDoubleBuffered(Titlebar_panel)
+        MainFrm.MakeItDoubleBuffered(Titlebar_lbl)
+        MainFrm.MakeItDoubleBuffered(Tabs)
+        MainFrm.MakeItDoubleBuffered(log)
+        MainFrm.MakeItDoubleBuffered(NonExistingRes)
+
+        MainFrm.MakeItDoubleBuffered(Cursors_Container)
+        MainFrm.MakeItDoubleBuffered(Arrow)
+        MainFrm.MakeItDoubleBuffered(Help)
+        MainFrm.MakeItDoubleBuffered(AppLoading)
+        MainFrm.MakeItDoubleBuffered(Busy)
+        MainFrm.MakeItDoubleBuffered(Move_Cur)
+        MainFrm.MakeItDoubleBuffered(NS)
+        MainFrm.MakeItDoubleBuffered(EW)
+        MainFrm.MakeItDoubleBuffered(NESW)
+        MainFrm.MakeItDoubleBuffered(NWSE)
+        MainFrm.MakeItDoubleBuffered(Up)
+        MainFrm.MakeItDoubleBuffered(Pen)
+        MainFrm.MakeItDoubleBuffered(None)
+        MainFrm.MakeItDoubleBuffered(Link)
+        MainFrm.MakeItDoubleBuffered(Pin)
+        MainFrm.MakeItDoubleBuffered(Person)
+        MainFrm.MakeItDoubleBuffered(IBeam)
+        MainFrm.MakeItDoubleBuffered(Cross)
+
+        log.ImageList = My.Notifications_IL
+        Apply_btn.Image = MainFrm.apply_btn.Image
+        RestartExplorer.Image = MainFrm.XenonButton19.Image
 
         WXP_Alert2.Text = MainFrm.WXP_Alert2.Text
         WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
@@ -1224,45 +1386,29 @@ Public Class Store
         pnl_preview.BackgroundImage = My.Wallpaper
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
-        FinishedLoadingInitialCPs = False
+        MD5_lbl.Font = My.Application.ConsoleFontMedium
+        themeSize_lbl.Font = My.Application.ConsoleFontMedium
+        theme_ver_lbl.Font = My.Application.ConsoleFontMedium
+        desc_txt.Font = My.Application.ConsoleFontLarge
 
-        Label12.Font = My.Application.ConsoleFontMedium
-        Label10.Font = My.Application.ConsoleFontMedium
-        Label7.Font = My.Application.ConsoleFontMedium
-        XenonTextBox1.Font = My.Application.ConsoleFontLarge
+    End Sub
 
-        'Prevent exception error of cross-thread
-        container.CheckForIllegalCrossThreadCalls = False
+    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ShowIcon = True
+        _Shown = True
+        RemoveAllStoreItems(container)
+        FilesFetcher.RunWorkerAsync()
     End Sub
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Visible = False
         FilesFetcher.CancelAsync()
         RemoveAllStoreItems(container)
-        TablessControl1.SelectedIndex = 0
+        Tabs.SelectedIndex = 0
     End Sub
+#End Region
 
-    Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
-        For x = 0 To Container.Controls.Count - 1
-
-            If TypeOf Container.Controls(0) Is StoreItem Then
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
-            End If
-
-            Container.Controls(0).Dispose()
-        Next
-        Container.Controls.Clear()
-    End Sub
-
-    Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        ShowIcon = True
-        RemoveAllStoreItems(container)
-        FilesFetcher.RunWorkerAsync()
-    End Sub
-
+#Region "Backgroundworkers to load Store CPs"
     Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
 
         For Each file As String In Directory.GetFiles(My.Themes_Storage)
@@ -1316,28 +1462,9 @@ Public Class Store
 
     End Sub
 
-    Private Function CalculateMD5(ByVal path As String) As String
+#End Region
 
-        Using md5 As MD5 = MD5.Create()
-            Dim txt = IO.File.ReadAllText(path)
-            Dim hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(txt))
-            Dim result = BitConverter.ToString(hash).Replace("-", "")
-            Return result
-        End Using
-
-    End Function
-
-    Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
-        If FinishedLoadingInitialCPs Then
-            With DirectCast(sender, StoreItem)
-                Adjust_Preview(.CP)
-                AdjustClassicPreview(.CP)
-                .BackgroundImage = tabs_preview.ToBitmap
-                .Refresh()
-            End With
-        End If
-    End Sub
-
+#Region "Store item events"
     Public Sub StoreItem_Clicked(sender As Object, e As MouseEventArgs)
 
         Select Case e.Button
@@ -1346,26 +1473,35 @@ Public Class Store
                 SwitchStoreItemPreview(DirectCast(sender, StoreItem))
 
             Case Else
-                My.Animator.HideSync(TablessControl1)
-                TablessControl1.SelectedIndex = 1
+                My.Animator.HideSync(Tabs)
+
                 selectedItem = DirectCast(sender, StoreItem)
 
-                With DirectCast(sender, StoreItem)
+                With selectedItem
 
                     Adjust_Preview(.CP)
                     AdjustClassicPreview(.CP)
                     ApplyRetroPreview(.CP)
                     SetClassicMetrics(.CP)
+                    ApplyCMDPreview(XenonCMD1, .CP.CommandPrompt, False)
+                    ApplyCMDPreview(XenonCMD2, .CP.PowerShellx86, True)
+                    ApplyCMDPreview(XenonCMD3, .CP.PowerShellx64, True)
+                    LoadCursorsFromCP(.CP)
 
-                    Label1.Text = .CP.Info.PaletteName & " - " & My.Lang.By & " " & .CP.Info.Author
-                    Label6.Text = .CP.Info.PaletteName
-                    Label7.Text = .CP.Info.PaletteVersion
-                    Label9.Text = .CP.Info.Author
-                    Label12.Text = .MD5
-                    Label10.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
-                    XenonLinkLabel1.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, "There is no included data")
-                    XenonLinkLabel2.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL, "There is no included data")
-                    XenonTextBox1.Text = .CP.Info.PaletteDescription
+                    For Each i As CursorControl In Cursors_Container.Controls
+                        If TypeOf i Is CursorControl Then
+                            If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
+                        End If
+                    Next
+                    Titlebar_lbl.Text = .CP.Info.PaletteName & " - " & My.Lang.By & " " & .CP.Info.Author
+                    theme_name_lbl.Text = .CP.Info.PaletteName
+                    theme_ver_lbl.Text = .CP.Info.PaletteVersion
+                    author_lbl.Text = .CP.Info.Author
+                    MD5_lbl.Text = .MD5
+                    themeSize_lbl.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
+                    Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, "There is no included data")
+                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL, "There is no included data")
+                    desc_txt.Text = .CP.Info.PaletteDescription
 
                     Dim os_list As New List(Of String)
                     os_list.Clear()
@@ -1394,143 +1530,121 @@ Public Class Store
                         os_format &= os_list(os_list.Count - 2) & " && " & os_list(os_list.Count - 1)
                     End If
 
-                    Label22.Text = os_format
+                    SupportedOS_lbl.Text = os_format
 
-                    GetResources()
+                    GetNonExistingResources()
                 End With
 
-                Panel1.BackColor = DirectCast(sender, StoreItem).CP.StoreInfo.Color2
-                My.Animator.ShowSync(TablessControl1)
+
+                Tabs.SelectedIndex = 1
+
+                My.Animator.ShowSync(Tabs)
+
+                Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, selectedItem.CP.StoreInfo.Color2, 10, 15)
         End Select
-    End Sub
-
-    Sub GetResources()
-        TreeView2.Nodes.Clear()
-        Dim filesList As New List(Of String) : filesList.Clear()
-        Dim fontsList As New List(Of String) : fontsList.Clear()
-
-        Dim x As String
-
-        x = selectedItem.CP.WindowsXP.ThemeFile
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WXP Then filesList.Add(x)
-
-        x = selectedItem.CP.LogonUI7.ImagePath
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And (My.W7 Or My.W8) Then filesList.Add(x)
-
-        If My.W11 Or My.W10 Then
-            x = selectedItem.CP.Terminal.DefaultProf.BackgroundImage
-            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.Terminal.DefaultProf.Icon
-            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.TerminalPreview.DefaultProf.BackgroundImage
-            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.TerminalPreview.DefaultProf.Icon
-            If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-            For Each i In selectedItem.CP.Terminal.Profiles
-                x = i.BackgroundImage
-                If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-                x = i.Icon
-                If Not String.IsNullOrWhiteSpace(x) And Not x.Length <= 1 And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-            Next
-
-            For Each i In selectedItem.CP.TerminalPreview.Profiles
-                x = i.BackgroundImage
-                If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-
-                x = i.Icon
-                If Not String.IsNullOrWhiteSpace(x) And Not x.Length <= 1 And Not File.Exists(x) And Not filesList.Contains(x) Then filesList.Add(x)
-            Next
-        End If
-
-
-        x = selectedItem.CP.WallpaperTone_W11.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W11 Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W10.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W10 Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W8.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W8 Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W7.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.W7 Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_WVista.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WVista Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_WXP.Image
-        If Not String.IsNullOrWhiteSpace(x) And Not File.Exists(x) And Not filesList.Contains(x) And My.WXP Then filesList.Add(x)
-
-
-
-        x = selectedItem.CP.MetricsFonts.CaptionFont.Name
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.StatusFont.Name
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.MessageFont.Name
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.IconFont.Name
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.MenuFont.Name
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg2
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_SegoeUI
-        If Not CP.IsFontInstalled(x) And Not fontsList.Contains(x) Then fontsList.Add(x)
-
-
-        With TreeView2.Nodes.Add("Files")
-            For Each y As String In filesList
-                .Nodes.Add(y)
-            Next
-        End With
-
-        With TreeView2.Nodes.Add("Fonts")
-            For Each y As String In fontsList
-                .Nodes.Add(y)
-            Next
-        End With
-
-        TreeView2.ExpandAll()
     End Sub
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
         SwitchedByMouseWheel = False
         hoveredItem = DirectCast(sender, StoreItem)
-        Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, hoveredItem.CP.StoreInfo.Color1, 10, 15)
-        Timer1.Enabled = True
-        Timer1.Start()
+        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.StoreInfo.Color1, 10, 15)
+        Preview_Timer.Enabled = True
+        Preview_Timer.Start()
     End Sub
 
     Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
         elapsedSeconds = 0
-        Timer1.Enabled = False
-        Timer1.Stop()
+        Preview_Timer.Enabled = False
+        Preview_Timer.Stop()
         SwitchedByMouseWheel = False
         If hoveredItem.BackgroundImage IsNot Nothing Then SwitchStoreItemPreview(hoveredItem)
-        If TablessControl1.SelectedIndex = 0 Or TablessControl1.SelectedIndex = 2 Then Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
+        If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
     Public Sub StoreItem_MouseWheel(sender As Object, e As MouseEventArgs)
-        If ModernOrClassic = 0 Then ModernOrClassic = 1 Else ModernOrClassic = 0
+        If PreviewIndex = 0 Then PreviewIndex = 1 Else PreviewIndex = 0
         SwitchedByMouseWheel = True
         SwitchStoreItemPreview(hoveredItem)
     End Sub
 
+    Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
+        If FinishedLoadingInitialCPs Then
+            With DirectCast(sender, StoreItem)
+                Adjust_Preview(.CP)
+                AdjustClassicPreview(.CP)
+                .BackgroundImage = tabs_preview.ToBitmap
+                .Refresh()
+            End With
+        End If
+    End Sub
+#End Region
+
+#Region "Subs\Functions"
+
+#Region "   Store"
+    Sub Apply_Theme()
+        Cursor = Cursors.WaitCursor
+
+        log_lbl.Visible = False
+        log_lbl.Text = ""
+        ok_btn.Visible = False
+        ShowErrors_btn.Visible = False
+        ExportDetails_btn.Visible = False
+        StopTimer_btn.Visible = False
+
+        If My.[Settings].Log_ShowApplying Then
+            Tabs.SelectedIndex = Tabs.TabCount - 1
+            Tabs.Refresh()
+        End If
+
+        selectedItem.CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, log, Nothing))
+
+        MainFrm.CP_Original = New CP(CP_Type.Registry)
+
+        Cursor = Cursors.Default
+
+        If My.[Settings].AutoRestartExplorer Then
+            XenonCore.RestartExplorer(If(My.[Settings].Log_ShowApplying, log, Nothing))
+        Else
+            If My.[Settings].Log_ShowApplying Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
+        End If
+
+        If My.[Settings].Log_ShowApplying Then CP.AddNode(log, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+
+        If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(log, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
+
+        log_lbl.Visible = True
+        ok_btn.Visible = True
+        ExportDetails_btn.Visible = True
+        StopTimer_btn.Visible = True
+
+        If Not My.Saving_Exceptions.Count = 0 Then
+            log_lbl.Text = My.Lang.CP_ErrorHappened
+            ShowErrors_btn.Visible = True
+        Else
+            If My.[Settings].Log_Countdown_Enabled Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
+                apply_elapsedSecs = 1
+                Log_Timer.Enabled = True
+                Log_Timer.Start()
+            End If
+        End If
+
+    End Sub
+    Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
+        For x = 0 To Container.Controls.Count - 1
+
+            If TypeOf Container.Controls(0) Is StoreItem Then
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
+            End If
+
+            Container.Controls(0).Dispose()
+        Next
+        Container.Controls.Clear()
+    End Sub
     Sub SwitchStoreItemPreview(St_itm As StoreItem)
         If St_itm.BackgroundImage Is Nothing Or SwitchedByMouseWheel Then
             Adjust_Preview(St_itm.CP)
@@ -1545,7 +1659,129 @@ Public Class Store
         St_itm.Refresh()
     End Sub
 
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+#End Region
+
+#Region "   Helpers"
+    Private Function CalculateMD5(ByVal path As String) As String
+
+        Using md5 As MD5 = MD5.Create()
+            Dim txt = IO.File.ReadAllText(path)
+            Dim hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(txt))
+            Dim result = BitConverter.ToString(hash).Replace("-", "")
+            Return result
+        End Using
+
+    End Function
+
+    Sub GetNonExistingResources()
+        NonExistingRes.Nodes.Clear()
+        Dim filesList As New List(Of String) : filesList.Clear()
+        Dim fontsList As New List(Of String) : fontsList.Clear()
+
+        Dim x As String
+
+        x = selectedItem.CP.WindowsXP.ThemeFile
+        If My.WXP AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.LogonUI7.ImagePath
+        If (My.W7 Or My.W8) AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        If My.W11 Or My.W10 Then
+            x = selectedItem.CP.Terminal.DefaultProf.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.Terminal.DefaultProf.Icon
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.TerminalPreview.DefaultProf.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+            x = selectedItem.CP.TerminalPreview.DefaultProf.Icon
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+            For Each i In selectedItem.CP.Terminal.Profiles
+                x = i.BackgroundImage
+                If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+                x = i.Icon
+                If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+            Next
+
+            For Each i In selectedItem.CP.TerminalPreview.Profiles
+                x = i.BackgroundImage
+                If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+                x = i.Icon
+                If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+            Next
+        End If
+
+
+        x = selectedItem.CP.WallpaperTone_W11.Image
+        If My.W11 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W10.Image
+        If My.W10 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W8.Image
+        If My.W8 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_W7.Image
+        If My.W7 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_WVista.Image
+        If My.WVista AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+        x = selectedItem.CP.WallpaperTone_WXP.Image
+        If My.WXP AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
+
+
+
+        x = selectedItem.CP.MetricsFonts.CaptionFont.Name
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.StatusFont.Name
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.MessageFont.Name
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.IconFont.Name
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.MenuFont.Name
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg2
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+        x = selectedItem.CP.MetricsFonts.FontSubstitute_SegoeUI
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
+
+
+        With NonExistingRes.Nodes.Add("Files")
+            For Each y As String In filesList
+                .Nodes.Add(y)
+            Next
+        End With
+
+        With NonExistingRes.Nodes.Add("Fonts")
+            For Each y As String In fontsList
+                .Nodes.Add(y)
+            Next
+        End With
+
+        NonExistingRes.ExpandAll()
+    End Sub
+#End Region
+
+#End Region
+
+#Region "Timers"
+    Private Sub Preview_Timer_Tick(sender As Object, e As EventArgs) Handles Preview_Timer.Tick
 
         If elapsedSeconds < SwitchAfterSecs - 1 Then
             elapsedSeconds += 1
@@ -1553,177 +1789,115 @@ Public Class Store
             elapsedSeconds = 0
             SwitchedByMouseWheel = False
             If hoveredItem.BackgroundImage Is Nothing Then SwitchStoreItemPreview(hoveredItem)
-            Timer1.Enabled = False
-            Timer1.Stop()
+            Preview_Timer.Enabled = False
+            Preview_Timer.Stop()
         End If
     End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-
-        My.Animator.HideSync(TablessControl1)
-
-        RemoveAllStoreItems(search_results)
-
-        TablessControl1.SelectedIndex = 0
-        Label1.Text = Text
-        My.Animator.ShowSync(TablessControl1)
-
-        Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
-    End Sub
-
-    Private Sub Panel1_BackColorChanged(sender As Object, e As EventArgs) Handles Panel1.BackColorChanged
-        Label1.ForeColor = If(Panel1.BackColor.IsDark, Color.White, Color.Black)
-        For Each ctrl As Control In Panel1.Controls
-            ctrl.Refresh()
-        Next
-        DrawCustomTitlebar(Panel1.BackColor, Panel1.BackColor)
-    End Sub
-
-    Private Sub TablessControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TablessControl1.SelectedIndexChanged
-        XenonButton1.Visible = TablessControl1.SelectedIndex <> 0
-    End Sub
-
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        tabs_preview.SelectedIndex = 2
-    End Sub
-
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If tabs_preview.SelectedIndex = 0 Then tabs_preview.SelectedIndex = 1 Else tabs_preview.SelectedIndex = 0
-    End Sub
-
-    Private Sub XenonLinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel1.LinkClicked
-        Try
-            If (Uri.IsWellFormedUriString(XenonLinkLabel1.Text, UriKind.Absolute)) And XenonLinkLabel1.Text.Contains(" ") Then Process.Start(XenonLinkLabel1.Text)
-        Catch
-        End Try
-    End Sub
-
-    Private Sub XenonLinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
-        Try
-            If (Uri.IsWellFormedUriString(XenonLinkLabel2.Text, UriKind.Absolute)) And XenonLinkLabel2.Text.Contains(" ") Then Process.Start(XenonLinkLabel2.Text)
-        Catch
-        End Try
-    End Sub
-
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Store_CPToggles.CP = selectedItem.CP
-        Store_CPToggles.ShowDialog()
-        Apply_Theme()
-    End Sub
-
-    Sub Apply_Theme()
-        Cursor = Cursors.WaitCursor
-
-        log_lbl.Visible = False
-        log_lbl.Text = ""
-        XenonButton8.Visible = False
-        XenonButton14.Visible = False
-        XenonButton22.Visible = False
-        XenonButton25.Visible = False
-
-        If My.[Settings].Log_ShowApplying Then
-            TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
-            TablessControl1.Refresh()
-        End If
-
-        selectedItem.CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
-
-        MainFrm.CP_Original = New CP(CP_Type.Registry)
-
-        Cursor = Cursors.Default
-
-        If My.[Settings].AutoRestartExplorer Then
-            RestartExplorer(If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
-        Else
-            If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
-        End If
-
-        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
-
-        If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
-
-        log_lbl.Visible = True
-        XenonButton8.Visible = True
-        XenonButton22.Visible = True
-        XenonButton25.Visible = True
-
-        If Not My.Saving_Exceptions.Count = 0 Then
-            log_lbl.Text = My.Lang.CP_ErrorHappened
-            XenonButton14.Visible = True
-        Else
-            If My.[Settings].Log_Countdown_Enabled Then
-                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
-                apply_elapsedSecs = 1
-                Timer2.Enabled = True
-                Timer2.Start()
-            End If
-        End If
-
-    End Sub
-
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        Store_ConsolesPreview.CP = selectedItem.CP
-        Store_ConsolesPreview.ShowDialog()
-    End Sub
-
-    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+    Private Sub Log_Timer_Tick(sender As Object, e As EventArgs) Handles Log_Timer.Tick
         log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - apply_elapsedSecs)
 
         If apply_elapsedSecs + 1 <= My.[Settings].Log_Countdown Then
             apply_elapsedSecs += 1
         Else
             log_lbl.Text = ""
-            Timer2.Enabled = False
-            Timer2.Stop()
-            TablessControl1.SelectedIndex = 1
+            Log_Timer.Enabled = False
+            Log_Timer.Stop()
+            Tabs.SelectedIndex = 1
         End If
 
     End Sub
+    Private Sub Cursor_Timer_Tick(sender As Object, e As EventArgs) Handles Cursor_Timer.Tick
+        If Not _Shown Then Exit Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        log_lbl.Text = ""
-        Timer2.Enabled = False
-        Timer2.Stop()
-        TablessControl1.SelectedIndex = 1
-    End Sub
+        Try
+            For Each i As CursorControl In AnimateList
+                i.Angle = Angle
+                i.Refresh()
 
-    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
-        log_lbl.Text = ""
-        Timer2.Enabled = False
-        Timer2.Stop()
+                If Angle + Increment >= 360 Then Angle = 0
+                Angle += Increment
 
-        If MainFrm.SaveFileDialog3.ShowDialog = DialogResult.OK Then
-            Dim sb As New StringBuilder
-            sb.Clear()
+                If Angle = 180 And Cycles >= 2 Then
+                    i.Angle = 180
+                    Cursor_Timer.Enabled = False
+                    Cursor_Timer.Stop()
+                ElseIf Angle = 180 Then
+                    Cycles += 1
+                End If
 
-            For Each N As TreeNode In TreeView1.Nodes
-                sb.AppendLine(String.Format("[{0}]{2} {1}{3}", N.ImageKey, N.Text, vbTab, vbCrLf))
             Next
+        Catch
+        End Try
+    End Sub
+#End Region
 
-            IO.File.WriteAllText(MainFrm.SaveFileDialog3.FileName, sb.ToString)
+#Region "Buttons Events"
+    Private Sub back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
 
-        End If
+        My.Animator.HideSync(Tabs)
+
+        RemoveAllStoreItems(search_results)
+
+        Tabs.SelectedIndex = 0
+        Titlebar_lbl.Text = Text
+        My.Animator.ShowSync(Tabs)
+
+        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
-        log_lbl.Text = ""
-        Timer2.Enabled = False
-        Timer2.Stop()
+#Region "   Preview switchers"
+    Private Sub Switch_M_C_btn_Click(sender As Object, e As EventArgs) Handles Switch_M_C_btn.Click
+        If tabs_preview.SelectedIndex = 0 Then tabs_preview.SelectedIndex = 1 Else tabs_preview.SelectedIndex = 0
+    End Sub
+    Private Sub ShowClassic_btn_Click(sender As Object, e As EventArgs) Handles ShowClassic_btn.Click
+        tabs_preview.SelectedIndex = 2
+    End Sub
+    Private Sub ShowCMD_btn_Click(sender As Object, e As EventArgs) Handles ShowCMD_btn.Click
+        tabs_preview.SelectedIndex = 3
+    End Sub
+    Private Sub ShowPS86_btn_Click(sender As Object, e As EventArgs) Handles ShowPS86_btn.Click
+        tabs_preview.SelectedIndex = 4
+    End Sub
+    Private Sub ShowPS64_btn_Click(sender As Object, e As EventArgs) Handles ShowPS64_btn.Click
+        tabs_preview.SelectedIndex = 5
+    End Sub
+    Private Sub ShowCursors_btn_Click(sender As Object, e As EventArgs) Handles ShowCursors_btn.Click
+        tabs_preview.SelectedIndex = 6
+    End Sub
+#End Region
+
+#Region "   Links"
+    Private Sub Author_link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Author_link.LinkClicked
+        Try
+            If (Uri.IsWellFormedUriString(Author_link.Text, UriKind.Absolute)) And Author_link.Text.Contains(" ") Then Process.Start(Author_link.Text)
+        Catch
+        End Try
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
-        log_lbl.Text = ""
-        Timer2.Enabled = False
-        Timer2.Stop()
-        Saving_ex_list.ex_List = My.Saving_Exceptions
-        Saving_ex_list.ShowDialog()
+    Private Sub Download_Link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Download_Link.LinkClicked
+        Try
+            If (Uri.IsWellFormedUriString(Download_Link.Text, UriKind.Absolute)) And Download_Link.Text.Contains(" ") Then Process.Start(Download_Link.Text)
+        Catch
+        End Try
     End Sub
+#End Region
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        XenonGroupBox4.Visible = Not XenonGroupBox4.Visible
+#Region "   Applying row"
+    Private Sub Apply_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click
+        Store_CPToggles.CP = selectedItem.CP
+        Store_CPToggles.ShowDialog()
+        Apply_Theme()
+
+        MainFrm.CP = selectedItem.CP
+        MainFrm.CP_Original = MainFrm.CP.Clone
+
+        MainFrm.Adjust_Preview(False)
+        MainFrm.ApplyCPValues(MainFrm.CP)
+        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+        MainFrm.AdjustClassicPreview()
+
     End Sub
-
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Edit_btn_Click(sender As Object, e As EventArgs) Handles Edit_btn.Click
         WindowState = FormWindowState.Minimized
 
         Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
@@ -1761,17 +1935,57 @@ Public Class Store
         MainFrm.AdjustClassicPreview()
 
     End Sub
+    Private Sub RestartExplorer_Click(sender As Object, e As EventArgs) Handles RestartExplorer.Click
+        XenonCore.RestartExplorer()
+    End Sub
+    Private Sub SwitchNonExistingRes_btn_Click(sender As Object, e As EventArgs) Handles SwitchNonExistingRes_btn.Click
+        XenonGroupBox4.Visible = Not XenonGroupBox4.Visible
+    End Sub
+#End Region
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        Store_CursorsPreview.CP = selectedItem.CP
-        Store_CursorsPreview.ShowDialog()
+#Region "   Log row"
+    Private Sub ok_btn_Click(sender As Object, e As EventArgs) Handles ok_btn.Click
+        log_lbl.Text = ""
+        Log_Timer.Enabled = False
+        Log_Timer.Stop()
+        Tabs.SelectedIndex = 1
     End Sub
 
-    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
-        RestartExplorer()
+    Private Sub ExportDetails_btn_Click(sender As Object, e As EventArgs) Handles ExportDetails_btn.Click
+        log_lbl.Text = ""
+        Log_Timer.Enabled = False
+        Log_Timer.Stop()
+
+        If MainFrm.SaveFileDialog3.ShowDialog = DialogResult.OK Then
+            Dim sb As New StringBuilder
+            sb.Clear()
+
+            For Each N As TreeNode In log.Nodes
+                sb.AppendLine(String.Format("[{0}]{2} {1}{3}", N.ImageKey, N.Text, vbTab, vbCrLf))
+            Next
+
+            IO.File.WriteAllText(MainFrm.SaveFileDialog3.FileName, sb.ToString)
+
+        End If
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub StopTimer_btn_Click(sender As Object, e As EventArgs) Handles StopTimer_btn.Click
+        log_lbl.Text = ""
+        Log_Timer.Enabled = False
+        Log_Timer.Stop()
+    End Sub
+
+    Private Sub ShowErrors_btn_Click(sender As Object, e As EventArgs) Handles ShowErrors_btn.Click
+        log_lbl.Text = ""
+        Log_Timer.Enabled = False
+        Log_Timer.Stop()
+        Saving_ex_list.ex_List = My.Saving_Exceptions
+        Saving_ex_list.ShowDialog()
+    End Sub
+#End Region
+
+#Region "   Search"
+    Private Sub search_btn_Click(sender As Object, e As EventArgs) Handles search_btn.Click
         Dim search_text As String = search_box.Text.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper
 
         Dim lst As New Dictionary(Of String, CP) : lst.Clear()
@@ -1809,13 +2023,59 @@ Public Class Store
             End If
         Next
 
-        Label1.Text = "Search results"
+        Titlebar_lbl.Text = "Search results"
 
-        TablessControl1.SelectedIndex = 2
+        Tabs.SelectedIndex = 2
 
     End Sub
-
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub search_filter_btn_Click(sender As Object, e As EventArgs) Handles search_filter_btn.Click
         Store_SearchFilter.ShowDialog()
     End Sub
+#End Region
+
+#Region "   Cursors"
+    Private Sub cur_anim_btn_Click(sender As Object, e As EventArgs) Handles cur_anim_btn.Click
+        Angle = 180
+        Cycles = 0
+        Cursor_Timer.Enabled = True
+        Cursor_Timer.Start()
+    End Sub
+
+    Private Sub cur_tip_btn_Click(sender As Object, e As EventArgs) Handles cur_tip_btn.Click
+        MsgBox(My.Lang.ScalingTip, MsgBoxStyle.Information)
+    End Sub
+#End Region
+
+#End Region
+
+#Region "Major Tab"
+    Private Sub Tabs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Tabs.SelectedIndexChanged
+        back_btn.Visible = Tabs.SelectedIndex <> 0
+    End Sub
+
+#End Region
+
+#Region "Others"
+    Private Sub Titlebar_panel_BackColorChanged(sender As Object, e As EventArgs) Handles Titlebar_panel.BackColorChanged
+        Titlebar_lbl.ForeColor = If(Titlebar_panel.BackColor.IsDark, Color.White, Color.Black)
+        For Each ctrl As Control In Titlebar_panel.Controls
+            ctrl.Refresh()
+        Next
+        DrawCustomTitlebar(Titlebar_panel.BackColor, Titlebar_panel.BackColor)
+    End Sub
+
+    Private Sub CursorsSize_Bar_Scroll(sender As Object) Handles CursorsSize_Bar.Scroll
+        If Not _Shown Then Exit Sub
+
+        For Each i As CursorControl In Cursors_Container.Controls
+            i.Prop_Scale = sender.value / 100
+            i.Width = 32 * i.Prop_Scale + 32
+            i.Height = i.Width
+            i.Refresh()
+        Next
+
+        Label17.Text = String.Format("{0} ({1}x)", My.Lang.Scaling, sender.value / 100)
+    End Sub
+#End Region
+
 End Class

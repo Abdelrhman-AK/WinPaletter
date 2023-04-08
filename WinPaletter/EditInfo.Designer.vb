@@ -43,8 +43,10 @@ Partial Class EditInfo
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
@@ -76,8 +78,6 @@ Partial Class EditInfo
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -219,7 +219,7 @@ Partial Class EditInfo
         Me.XenonTextBox3.Multiline = True
         Me.XenonTextBox3.Name = "XenonTextBox3"
         Me.XenonTextBox3.ReadOnly = False
-        Me.XenonTextBox3.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox3.Scrollbars = System.Windows.Forms.ScrollBars.Vertical
         Me.XenonTextBox3.SelectedText = ""
         Me.XenonTextBox3.SelectionLength = 0
         Me.XenonTextBox3.SelectionStart = 0
@@ -407,6 +407,23 @@ Partial Class EditInfo
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main info"
         '
+        'XenonAlertBox2
+        '
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox2.CenterText = False
+        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox2.Image = Nothing
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(170, 222)
+        Me.XenonAlertBox2.Name = "XenonAlertBox2"
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(507, 22)
+        Me.XenonAlertBox2.TabIndex = 138
+        Me.XenonAlertBox2.TabStop = False
+        Me.XenonAlertBox2.Text = "You can include tags in descriptions to make search in store easier"
+        '
         'XenonAlertBox1
         '
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
@@ -466,6 +483,19 @@ Partial Class EditInfo
         Me.TabPage2.Size = New System.Drawing.Size(683, 385)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Store item info"
+        '
+        'Label13
+        '
+        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label13.BackColor = System.Drawing.Color.Transparent
+        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label13.Location = New System.Drawing.Point(352, 6)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(324, 54)
+        Me.Label13.TabIndex = 46
+        Me.Label13.Text = "Descriptive colors should give the user an idea about the most used or main color" &
+    "s in the theme"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'XenonTrackbar1
         '
@@ -839,36 +869,6 @@ Partial Class EditInfo
         Me.PictureBox7.TabIndex = 14
         Me.PictureBox7.TabStop = False
         '
-        'XenonAlertBox2
-        '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CenterText = False
-        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(170, 222)
-        Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(507, 22)
-        Me.XenonAlertBox2.TabIndex = 138
-        Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "You can include tags in descriptions to make search in store easier"
-        '
-        'Label13
-        '
-        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.Transparent
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label13.Location = New System.Drawing.Point(352, 6)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(324, 54)
-        Me.Label13.TabIndex = 46
-        Me.Label13.Text = "Descriptive colors should give the user an idea about the most used or main color" &
-    "s in the theme"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'EditInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -889,7 +889,6 @@ Partial Class EditInfo
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Edit info"
-        Me.TopMost = True
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()

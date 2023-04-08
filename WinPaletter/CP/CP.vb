@@ -2906,8 +2906,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     }
 
     Public StoreInfo As New Structures.StoreInfo With {
-            .Color1 = Color.FromArgb(0, 81, 210),
-            .Color2 = Color.FromArgb(199, 49, 61),
+            .Color1 = Color.FromArgb(0, 102, 204),
+            .Color2 = Color.FromArgb(122, 9, 9),
             .DesignedFor_Win11 = True,
             .DesignedFor_Win10 = True,
             .DesignedFor_Win8 = True,

@@ -5,6 +5,12 @@ Public Class EditInfo
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         Load_Info(MainFrm.CP)
+        MainFrm.Visible = False
+        XenonTextBox3.Font = My.Application.ConsoleFontMedium
+
+    End Sub
+    Private Sub EditInfo_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -154,4 +160,6 @@ Public Class EditInfo
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         StoreItem1.UpdatePattern(XenonTrackbar1.Value)
     End Sub
+
+
 End Class
