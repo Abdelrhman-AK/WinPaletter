@@ -6,6 +6,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports Devcorp.Controls.VisualStyles
 Imports System.Text
+Imports Newtonsoft.Json.Linq
 
 Public Class Store
     Private FinishedLoadingInitialCPs As Boolean
@@ -1237,28 +1238,28 @@ Public Class Store
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Visible = False
         FilesFetcher.CancelAsync()
-        RemoveAllStoreItems()
+        RemoveAllStoreItems(container)
         TablessControl1.SelectedIndex = 0
     End Sub
 
-    Sub RemoveAllStoreItems()
-        For x = 0 To container.Controls.Count - 1
+    Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
+        For x = 0 To Container.Controls.Count - 1
 
-            If TypeOf container.Controls(0) Is StoreItem Then
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
-                RemoveHandler DirectCast(container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
+            If TypeOf Container.Controls(0) Is StoreItem Then
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
+                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
             End If
 
-            container.Controls(0).Dispose()
+            Container.Controls(0).Dispose()
         Next
-        container.Controls.Clear()
+        Container.Controls.Clear()
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         ShowIcon = True
-        RemoveAllStoreItems()
+        RemoveAllStoreItems(container)
         FilesFetcher.RunWorkerAsync()
     End Sub
 
@@ -1286,8 +1287,9 @@ Public Class Store
                 .CP = StoreItem.Value,
                 .MD5 = CalculateMD5(StoreItem.Key),
                 .DoneByWinPaletter = True,
-                .Size = New Size(w, h),
-                .BackgroundImageLayout = ImageLayout.Stretch}
+                .Size = New Size(w, h)}
+
+            If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
 
             AddHandler ctrl.Click, AddressOf StoreItem_Clicked
             AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
@@ -1520,7 +1522,7 @@ Public Class Store
         Timer1.Stop()
         SwitchedByMouseWheel = False
         If hoveredItem.BackgroundImage IsNot Nothing Then SwitchStoreItemPreview(hoveredItem)
-        If TablessControl1.SelectedIndex = 0 Then Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
+        If TablessControl1.SelectedIndex = 0 Or TablessControl1.SelectedIndex = 2 Then Visual.FadeColor(Panel1, "BackColor", Panel1.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
     Public Sub StoreItem_MouseWheel(sender As Object, e As MouseEventArgs)
@@ -1560,6 +1562,8 @@ Public Class Store
 
         My.Animator.HideSync(TablessControl1)
 
+        RemoveAllStoreItems(search_results)
+
         TablessControl1.SelectedIndex = 0
         Label1.Text = Text
         My.Animator.ShowSync(TablessControl1)
@@ -1569,6 +1573,9 @@ Public Class Store
 
     Private Sub Panel1_BackColorChanged(sender As Object, e As EventArgs) Handles Panel1.BackColorChanged
         Label1.ForeColor = If(Panel1.BackColor.IsDark, Color.White, Color.Black)
+        For Each ctrl As Control In Panel1.Controls
+            ctrl.Refresh()
+        Next
         DrawCustomTitlebar(Panel1.BackColor, Panel1.BackColor)
     End Sub
 
@@ -1668,7 +1675,7 @@ Public Class Store
             log_lbl.Text = ""
             Timer2.Enabled = False
             Timer2.Stop()
-            TablessControl1.SelectedIndex = TablessControl1.SelectedIndex - 1
+            TablessControl1.SelectedIndex = 1
         End If
 
     End Sub
@@ -1677,7 +1684,7 @@ Public Class Store
         log_lbl.Text = ""
         Timer2.Enabled = False
         Timer2.Stop()
-        TablessControl1.SelectedIndex = TablessControl1.SelectedIndex - 1
+        TablessControl1.SelectedIndex = 1
     End Sub
 
     Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
@@ -1762,5 +1769,53 @@ Public Class Store
 
     Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
         RestartExplorer()
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        Dim search_text As String = search_box.Text.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper
+
+        Dim lst As New Dictionary(Of String, CP) : lst.Clear()
+
+        For Each st_itm In container.Controls.OfType(Of StoreItem)
+            lst.Add(st_itm.FileName, st_itm.CP)
+        Next
+
+        RemoveAllStoreItems(search_results)
+
+        For Each st_item In lst
+            If (My.Settings.Store_Search_ThemeNames AndAlso st_item.Value.Info.PaletteName.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
+                Or (My.Settings.Store_Search_AuthorsNames AndAlso st_item.Value.Info.Author.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
+                Or (My.Settings.Store_Search_Descriptions AndAlso st_item.Value.Info.PaletteDescription.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) Then
+
+                Dim ctrl As New StoreItem With {
+               .FileName = st_item.Key,
+               .CP = st_item.Value,
+               .MD5 = CalculateMD5(st_item.Key),
+               .DoneByWinPaletter = True,
+               .Size = New Size(w, h)}
+
+                If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
+
+                AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+                AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+                AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
+                AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
+                AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
+
+                BeginInvoke(CType(Sub()
+                                      search_results.Controls.Add(ctrl)
+                                  End Sub, MethodInvoker))
+
+            End If
+        Next
+
+        Label1.Text = "Search results"
+
+        TablessControl1.SelectedIndex = 2
+
+    End Sub
+
+    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+        Store_SearchFilter.ShowDialog()
     End Sub
 End Class

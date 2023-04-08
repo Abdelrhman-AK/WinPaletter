@@ -124,6 +124,26 @@
     <value>132, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="XenonButton11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAK1JREFUOE9j
+        GBzgf2+u4f/+7N9A/J9I/BuoRx+qHQLe5bh5vs1x/w3E/wng32+z3D2g2lABUDIRTTEGfpPrkQBVjh0A
+        XdKGTSMIv8t2b4Uqww3+MzAwvslxX4qu+U22xxKQHFQZfvCixI37U1nw5q81YcdA+Et50KZnab5cUGni
+        ADCkVyGF+iqoMPFg2BmQNQEqTDyAGvDof1+WL1SINAC0NeR/X6EQlEsrwMAAACK31UJMxqKuAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="XenonButton10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAUFJREFUOE+t
+        0bFLAlEcwPErk5YIGhp0C2osKKo/o6nZOaeWllw0QoKCBkPLMwk5kXJp6Q+IlpaotkIz0CJLEpQQM/O+
+        PeE3dGml1Bduee993o+70/69OIzHGvj3GuxH39nWX5nzQa9sf18Y7AaEYyamwkTroNcgVIWtChcbJUbk
+        aPsUDinMVxyowOYLrJdJ+YoMynFrCk+1m/wJ4y+Ct8CqEGvyzr9hPHmuhFhTON4BZumeqhBr6msHO8As
+        ZskLsRapMd8BZiFDQoi1JNgUPv8Rp82665YJIa01/7PCmXbYfWPWZw+vmTkpG2qaTUhrayWGvE+seB5I
+        KdxQ+NmdwXBdvk1OH5eNseTjqSOSS2g++oR0EfQ49NyOugCnfnc0Gkj3y04XqcnOSO6geYl6PLLaZeEz
+        u2M3uzwcLAzIyl/StA9voocBBCo2cAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABAhJREFUWEft
@@ -179,6 +199,9 @@
         fPEnHonWgTcSWvqGxBLJkpY+b+L+gdf44iuhhBJKKKGEaKhU/wC0ssGDXlwnNAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="Timer2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>688, 11</value>
+  </metadata>
   <data name="XenonButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAASxJREFUSEtj
@@ -418,9 +441,6 @@ There may be some files not listed according to the current Windows version.</va
         BRQYiGlcpF5q13+6Skp+A6hk22HDjL84AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="Timer2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>688, 11</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAYGAAAAEAIAColAAAxgAAAGBgAAABAAgAqCwAAG6VAABAQAAAAQAgAChCAAAWwgAAQEAAAAEA

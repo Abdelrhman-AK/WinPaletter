@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports WinPaletter.XenonCore
 
 <DefaultEvent("Click")>
 Public Class StoreItem : Inherits Panel
@@ -21,6 +22,7 @@ Public Class StoreItem : Inherits Panel
             If value IsNot Nothing Then
                 _CP = value.Clone
                 UpdateBadges()
+                UpdatePattern(_CP.StoreInfo.Pattern)
                 RaiseEvent CPChanged(Me, New EventArgs())
             End If
         End Set
@@ -39,6 +41,42 @@ Public Class StoreItem : Inherits Panel
         If _CP.StoreInfo.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
         If _CP.StoreInfo.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
         If _CP.StoreInfo.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
+        Refresh()
+    End Sub
+
+    Public Sub UpdatePattern(val As Integer)
+        Dim bmp As Bitmap
+
+        Select Case val
+            Case 0
+                bmp = New Bitmap(Width, Height)
+            Case 1
+                bmp = My.Resources.Store_Pattern1
+            Case 2
+                bmp = My.Resources.Store_Pattern2
+            Case 3
+                bmp = My.Resources.Store_Pattern3
+            Case 4
+                bmp = My.Resources.Store_Pattern4
+            Case 5
+                bmp = My.Resources.Store_Pattern5
+            Case 6
+                bmp = My.Resources.Store_Pattern6
+            Case 7
+                bmp = My.Resources.Store_Pattern7
+            Case 8
+                bmp = My.Resources.Store_Pattern8
+            Case 9
+                bmp = My.Resources.Store_Pattern9
+            Case 10
+                bmp = My.Resources.Store_Pattern10
+            Case Else
+                bmp = New Bitmap(Width, Height)
+        End Select
+
+        If Not GetDarkMode() Then bmp = bmp.Invert
+        pattern = New TextureBrush(bmp)
+
         Refresh()
     End Sub
 #End Region
@@ -123,8 +161,9 @@ Public Class StoreItem : Inherits Panel
     End Sub
 #End Region
 
-    Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
+    Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.65))
     Private DesignedFor_Badges As New List(Of Bitmap)
+    Private pattern As New TextureBrush(New Bitmap(Width, Height))
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -137,14 +176,42 @@ Public Class StoreItem : Inherits Panel
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
-        Dim bkCC As Color = Color.FromArgb(alpha, CP.StoreInfo.Color1)
+        Dim bkCC As Color
+
+        If GetDarkMode() Then
+            bkCC = Color.FromArgb(alpha, CP.StoreInfo.Color1.Dark)
+        Else
+            bkCC = Color.FromArgb(alpha, CP.StoreInfo.Color1.Light)
+        End If
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
-        G.FillRoundedRect(New SolidBrush(CP.StoreInfo.Color1), New Rectangle(rect_inner.X, rect_inner.Y, 10, rect_inner.Height))
-        G.FillRoundedRect(New SolidBrush(CP.StoreInfo.Color2), New Rectangle(rect_inner.X + 10, rect_inner.Y, 10, rect_inner.Height))
+        If pattern IsNot Nothing Then G.FillRoundedRect(pattern, rect_inner)
 
-        If BackgroundImage IsNot Nothing Then G.DrawRoundImage(BackgroundImage, rect_inner)
+        Dim factor_max As Single = 20
+        Dim factor1 As Single = factor_max * (alpha / 255)
+        Dim factor2 As Single = factor_max * ((255 - alpha) / 255)
+        Dim CircleR As Integer = rect_inner.Height * 0.4
+
+        Dim Circle1 As New Rectangle(rect_inner.X + 10 + factor_max - factor1, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
+        Dim Circle2 As New Rectangle(rect_inner.X + 10 + CircleR + CircleR * 0.4 - factor2, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
+
+        G.FillEllipse(New SolidBrush(CP.StoreInfo.Color2), Circle2)
+        G.DrawEllipse(New Pen(CP.StoreInfo.Color2.CB(0.3)), Circle2)
+
+        G.FillEllipse(New SolidBrush(CP.StoreInfo.Color1), Circle1)
+        G.DrawEllipse(New Pen(CP.StoreInfo.Color1.CB(0.3)), Circle1)
+
+        If BackgroundImage IsNot Nothing Then
+            Select Case State
+                Case MouseState.Over
+                    G.DrawRoundImage(BackgroundImage, rect_outer)
+
+                Case Else
+                    G.DrawRoundImage(BackgroundImage, rect_inner)
+
+            End Select
+        End If
 
         If State <> MouseState.None Then G.FillRoundedRect(Noise, rect_inner)
 
@@ -155,24 +222,27 @@ Public Class StoreItem : Inherits Panel
         G.DrawRoundedRect_LikeW11(New Pen(lCC), rect_outer)
 
         Dim ThemeName_Rect As New Rectangle(rect_inner.X, rect_inner.Y, rect_inner.Width - 10, 25)
-        Dim Author_Rect As New Rectangle(ThemeName_Rect.X, ThemeName_Rect.Bottom - 5, ThemeName_Rect.Width, 15)
+        Dim Author_Rect As New Rectangle(ThemeName_Rect.X, ThemeName_Rect.Bottom, ThemeName_Rect.Width - 20, 15)
 
         If CP IsNot Nothing Then
             Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
-            G.DrawString(CP.Info.PaletteName, New Font("Segoe UI", 10, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
-            G.DrawString(My.Lang.By & " " & CP.Info.Author, New Font("Segoe UI", 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
+            G.DrawString(CP.Info.PaletteName, New Font("Segoe UI", 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
 
-            For i = 0 To DesignedFor_Badges.Count - 1
-                G.DrawImage(DesignedFor_Badges(i), New Rectangle(Author_Rect.Right - 16 - 18 * i, Author_Rect.Bottom + 3, 16, 16))
-            Next
-
-            Dim BadgeRect As New Rectangle(Author_Rect.Right - 16, Author_Rect.Bottom + 3 + 16 + 3, 16, 16)
+            Dim BadgeRect As New Rectangle(Author_Rect.Right + 2, Author_Rect.Y, 16, 16)
 
             If DoneByWinPaletter Then
                 G.DrawImage(My.Resources.Store_DoneByWinPaletter, BadgeRect)
             Else
                 G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect)
             End If
+
+            Dim author As String
+            author = If(DoneByWinPaletter, My.Application.Info.ProductName, CP.Info.Author)
+            G.DrawString(My.Lang.By & " " & author, New Font("Segoe UI", 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
+
+            For i = 0 To DesignedFor_Badges.Count - 1
+                G.DrawImage(DesignedFor_Badges(i), New Rectangle(BadgeRect.Right - 16 - 18 * i, Author_Rect.Bottom + 7, 16, 16))
+            Next
 
         End If
 

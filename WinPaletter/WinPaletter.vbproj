@@ -453,6 +453,12 @@
     <Compile Include="Store\Store_CursorsPreview.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Store\Store_SearchFilter.Designer.vb">
+      <DependentUpon>Store_SearchFilter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_SearchFilter.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Terminals\CMD.Designer.vb">
       <DependentUpon>CMD.vb</DependentUpon>
     </Compile>
@@ -662,6 +668,16 @@
     <None Include="Resources\Store_DesignedFor10.png" />
     <None Include="Resources\Store_DesignedFor11.png" />
     <None Include="Resources\Store_DesignedForVista.png" />
+    <None Include="Resources\Store_Pattern4.png" />
+    <None Include="Resources\Store_Pattern5.png" />
+    <None Include="Resources\Store_Pattern6.png" />
+    <None Include="Resources\Store_Pattern7.png" />
+    <None Include="Resources\Store_Pattern8.png" />
+    <None Include="Resources\Store_Pattern9.png" />
+    <None Include="Resources\Store_Pattern10.png" />
+    <None Include="Resources\Store_Pattern1.png" />
+    <None Include="Resources\Store_Pattern2.png" />
+    <None Include="Resources\Store_Pattern3.png" />
     <Content Include="Resources\System.Buffers.dll" />
     <Content Include="Resources\System.Memory.dll" />
     <Content Include="Resources\System.Numerics.Vectors.dll" />
@@ -799,6 +815,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_CursorsPreview.resx">
       <DependentUpon>Store_CursorsPreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_SearchFilter.resx">
+      <DependentUpon>Store_SearchFilter.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\CMD.resx">
       <DependentUpon>CMD.vb</DependentUpon>

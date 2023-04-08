@@ -155,6 +155,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public DesignedFor_Win7 As Boolean
             Public DesignedFor_WinVista As Boolean
             Public DesignedFor_WinXP As Boolean
+            Public Pattern As Integer
 
             Shared Operator =(First As StoreInfo, Second As StoreInfo) As Boolean
                 Return First.Equals(Second)
@@ -180,6 +181,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*DesignedFor_Win7= " & DesignedFor_Win7)
                 tx.Add("*DesignedFor_WinVista= " & DesignedFor_WinVista)
                 tx.Add("*DesignedFor_WinXP= " & DesignedFor_WinXP)
+                tx.Add("*Pattern= " & Pattern)
                 tx.Add("</StoreInfo>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -2911,7 +2913,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .DesignedFor_Win8 = True,
             .DesignedFor_Win7 = True,
             .DesignedFor_WinVista = True,
-            .DesignedFor_WinXP = True
+            .DesignedFor_WinXP = True,
+            .Pattern = 1
     }
 
     Public Windows11 As New Structures.Windows10x With {
@@ -4475,6 +4478,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*DesignedFor_Win7= ", My._ignore) Then StoreInfo.DesignedFor_Win7 = lin.Remove(0, "*DesignedFor_Win7= ".Count)
                     If lin.StartsWith("*DesignedFor_WinVista= ", My._ignore) Then StoreInfo.DesignedFor_WinVista = lin.Remove(0, "*DesignedFor_WinVista= ".Count)
                     If lin.StartsWith("*DesignedFor_WinXP= ", My._ignore) Then StoreInfo.DesignedFor_WinXP = lin.Remove(0, "*DesignedFor_WinXP= ".Count)
+                    If lin.StartsWith("*Pattern= ", My._ignore) Then StoreInfo.Pattern = lin.Remove(0, "*Pattern= ".Count)
+
 #End Region
 
 #Region "Windows 11"

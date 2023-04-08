@@ -48,6 +48,7 @@ Public Class EditInfo
 
         color1.BackColor = [CP].StoreInfo.Color1
         color2.BackColor = [CP].StoreInfo.Color2
+        XenonTrackbar1.Value = [CP].StoreInfo.Pattern
 
         XenonCheckBox1.Checked = [CP].StoreInfo.DesignedFor_Win11
         XenonCheckBox2.Checked = [CP].StoreInfo.DesignedFor_Win10
@@ -66,6 +67,7 @@ Public Class EditInfo
 
         [CP].StoreInfo.Color1 = color1.BackColor
         [CP].StoreInfo.Color2 = color2.BackColor
+        [CP].StoreInfo.Pattern = XenonTrackbar1.Value
 
         [CP].StoreInfo.DesignedFor_Win11 = XenonCheckBox1.Checked
         [CP].StoreInfo.DesignedFor_Win10 = XenonCheckBox2.Checked
@@ -149,4 +151,7 @@ Public Class EditInfo
         Return XenonCheckBox1.Checked Or XenonCheckBox2.Checked Or XenonCheckBox3.Checked Or XenonCheckBox4.Checked Or XenonCheckBox5.Checked Or XenonCheckBox6.Checked
     End Function
 
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+        StoreItem1.UpdatePattern(XenonTrackbar1.Value)
+    End Sub
 End Class

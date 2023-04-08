@@ -27,9 +27,13 @@ Partial Class Store
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XenonButton11 = New WinPaletter.XenonButton()
+        Me.XenonButton10 = New WinPaletter.XenonButton()
+        Me.search_box = New WinPaletter.XenonTextBox()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.TablessControl1 = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.container = New System.Windows.Forms.FlowLayoutPanel()
@@ -131,6 +135,8 @@ Partial Class Store
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.search_results = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.XenonButton25 = New WinPaletter.XenonButton()
         Me.XenonButton22 = New WinPaletter.XenonButton()
@@ -141,7 +147,6 @@ Partial Class Store
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TablessControl1.SuspendLayout()
@@ -186,6 +191,7 @@ Partial Class Store
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -201,6 +207,9 @@ Partial Class Store
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.XenonButton11)
+        Me.Panel1.Controls.Add(Me.XenonButton10)
+        Me.Panel1.Controls.Add(Me.search_box)
         Me.Panel1.Controls.Add(Me.XenonButton1)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.PictureBox1)
@@ -209,6 +218,56 @@ Partial Class Store
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1298, 70)
         Me.Panel1.TabIndex = 5
+        '
+        'XenonButton11
+        '
+        Me.XenonButton11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton11.ForeColor = System.Drawing.Color.White
+        Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
+        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.XenonButton11.LineSize = 1
+        Me.XenonButton11.Location = New System.Drawing.Point(1216, 20)
+        Me.XenonButton11.Name = "XenonButton11"
+        Me.XenonButton11.Size = New System.Drawing.Size(32, 24)
+        Me.XenonButton11.TabIndex = 41
+        Me.XenonButton11.UseVisualStyleBackColor = False
+        '
+        'XenonButton10
+        '
+        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton10.ForeColor = System.Drawing.Color.White
+        Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
+        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
+        Me.XenonButton10.LineSize = 1
+        Me.XenonButton10.Location = New System.Drawing.Point(1254, 20)
+        Me.XenonButton10.Name = "XenonButton10"
+        Me.XenonButton10.Size = New System.Drawing.Size(32, 24)
+        Me.XenonButton10.TabIndex = 40
+        Me.XenonButton10.UseVisualStyleBackColor = False
+        '
+        'search_box
+        '
+        Me.search_box.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.search_box.ForeColor = System.Drawing.Color.White
+        Me.search_box.Location = New System.Drawing.Point(943, 20)
+        Me.search_box.MaxLength = 32767
+        Me.search_box.Multiline = False
+        Me.search_box.Name = "search_box"
+        Me.search_box.ReadOnly = False
+        Me.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.search_box.SelectedText = ""
+        Me.search_box.SelectionLength = 0
+        Me.search_box.SelectionStart = 0
+        Me.search_box.Size = New System.Drawing.Size(267, 24)
+        Me.search_box.TabIndex = 39
+        Me.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.search_box.UseSystemPasswordChar = False
+        Me.search_box.WordWrap = True
         '
         'XenonButton1
         '
@@ -231,7 +290,7 @@ Partial Class Store
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(75, 14)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(1211, 37)
+        Me.Label1.Size = New System.Drawing.Size(900, 37)
         Me.Label1.TabIndex = 38
         Me.Label1.Text = "WinPaletter Store (Beta)"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -246,10 +305,15 @@ Partial Class Store
         Me.PictureBox1.TabIndex = 37
         Me.PictureBox1.TabStop = False
         '
+        'Timer2
+        '
+        Me.Timer2.Interval = 1000
+        '
         'TablessControl1
         '
         Me.TablessControl1.Controls.Add(Me.TabPage1)
         Me.TablessControl1.Controls.Add(Me.TabPage3)
+        Me.TablessControl1.Controls.Add(Me.TabPage5)
         Me.TablessControl1.Controls.Add(Me.TabPage2)
         Me.TablessControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TablessControl1.Location = New System.Drawing.Point(0, 70)
@@ -295,7 +359,7 @@ Partial Class Store
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(10)
         Me.TabPage3.Size = New System.Drawing.Size(1290, 620)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "TabPage3"
+        Me.TabPage3.Text = "i"
         '
         'XenonButton19
         '
@@ -1900,6 +1964,26 @@ Partial Class Store
         Me.PictureBox2.TabIndex = 0
         Me.PictureBox2.TabStop = False
         '
+        'TabPage5
+        '
+        Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.search_results)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(10)
+        Me.TabPage5.Size = New System.Drawing.Size(1290, 620)
+        Me.TabPage5.TabIndex = 3
+        Me.TabPage5.Text = "s"
+        '
+        'search_results
+        '
+        Me.search_results.AutoScroll = True
+        Me.search_results.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.search_results.Location = New System.Drawing.Point(10, 10)
+        Me.search_results.Name = "search_results"
+        Me.search_results.Size = New System.Drawing.Size(1270, 600)
+        Me.search_results.TabIndex = 4
+        '
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -2052,10 +2136,6 @@ Partial Class Store
         Me.PictureBox36.TabIndex = 23
         Me.PictureBox36.TabStop = False
         '
-        'Timer2
-        '
-        Me.Timer2.Interval = 1000
-        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2118,6 +2198,7 @@ Partial Class Store
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -2241,4 +2322,9 @@ Partial Class Store
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents XenonButton9 As XenonButton
     Friend WithEvents XenonButton19 As XenonButton
+    Friend WithEvents search_box As XenonTextBox
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents search_results As FlowLayoutPanel
+    Friend WithEvents XenonButton10 As XenonButton
+    Friend WithEvents XenonButton11 As XenonButton
 End Class

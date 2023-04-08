@@ -64,6 +64,11 @@ Public Class XeSettings
     Public Property PS86_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
     Public Property PS64_HKU_DEFAULT_Prefs As OverwriteOptions = OverwriteOptions.DontChange
     Public Property Desktop_HKU_DEFAULT As OverwriteOptions = OverwriteOptions.Overwrite
+
+    Public Property Store_Search_ThemeNames As Boolean = True
+    Public Property Store_Search_AuthorsNames As Boolean = True
+    Public Property Store_Search_Descriptions As Boolean = True
+
 #End Region
 
     Public Enum OverwriteOptions
@@ -170,6 +175,10 @@ Public Class XeSettings
         If Key.GetValue("PS64_HKU_DEFAULT_Prefs", Nothing) Is Nothing Then Key.SetValue("PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange, RegistryValueKind.DWord)
         If Key.GetValue("Desktop_HKU_DEFAULT", Nothing) Is Nothing Then Key.SetValue("Desktop_HKU_DEFAULT", OverwriteOptions.DontChange, RegistryValueKind.DWord)
 
+        If Key.GetValue("Store_Search_ThemeNames", Nothing) Is Nothing Then Key.SetValue("Store_Search_ThemeNames", True, RegistryValueKind.DWord)
+        If Key.GetValue("Store_Search_AuthorsNames", Nothing) Is Nothing Then Key.SetValue("Store_Search_AuthorsNames", True, RegistryValueKind.DWord)
+        If Key.GetValue("Store_Search_Descriptions", Nothing) Is Nothing Then Key.SetValue("Store_Search_Descriptions", True, RegistryValueKind.DWord)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -261,6 +270,10 @@ Public Class XeSettings
                 PS64_HKU_DEFAULT_Prefs = Key.GetValue("PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange)
                 Desktop_HKU_DEFAULT = Key.GetValue("Desktop_HKU_DEFAULT", OverwriteOptions.DontChange)
 
+                Store_Search_ThemeNames = Key.GetValue("Store_Search_ThemeNames", True)
+                Store_Search_AuthorsNames = Key.GetValue("Store_Search_AuthorsNames", True)
+                Store_Search_Descriptions = Key.GetValue("Store_Search_Descriptions", True)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -322,6 +335,10 @@ Public Class XeSettings
                     If x.StartsWith("PS86_HKU_DEFAULT_Prefs= ", My._ignore) Then PS86_HKU_DEFAULT_Prefs = x.Remove(0, "PS86_HKU_DEFAULT_Prefs= ".Count)
                     If x.StartsWith("PS64_HKU_DEFAULT_Prefs= ", My._ignore) Then PS64_HKU_DEFAULT_Prefs = x.Remove(0, "PS64_HKU_DEFAULT_Prefs= ".Count)
                     If x.StartsWith("Desktop_HKU_DEFAULT= ", My._ignore) Then Desktop_HKU_DEFAULT = x.Remove(0, "Desktop_HKU_DEFAULT= ".Count)
+
+                    If x.StartsWith("Store_Search_ThemeNames= ", My._ignore) Then Store_Search_ThemeNames = x.Remove(0, "Store_Search_ThemeNames= ".Count)
+                    If x.StartsWith("Store_Search_AuthorsNames= ", My._ignore) Then Store_Search_AuthorsNames = x.Remove(0, "Store_Search_AuthorsNames= ".Count)
+                    If x.StartsWith("Store_Search_Descriptions= ", My._ignore) Then Store_Search_Descriptions = x.Remove(0, "Store_Search_Descriptions= ".Count)
 
                 Next
         End Select
@@ -411,6 +428,10 @@ Public Class XeSettings
                 Key.SetValue("PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord)
                 Key.SetValue("Desktop_HKU_DEFAULT", Desktop_HKU_DEFAULT, RegistryValueKind.DWord)
 
+                Key.SetValue("Store_Search_ThemeNames", Store_Search_ThemeNames, RegistryValueKind.DWord)
+                Key.SetValue("Store_Search_AuthorsNames", Store_Search_AuthorsNames, RegistryValueKind.DWord)
+                Key.SetValue("Store_Search_Descriptions", Store_Search_Descriptions, RegistryValueKind.DWord)
+
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -487,6 +508,10 @@ Public Class XeSettings
                 l.Add(String.Format("PS86_HKU_DEFAULT_Prefs= {0}", PS86_HKU_DEFAULT_Prefs))
                 l.Add(String.Format("PS64_HKU_DEFAULT_Prefs= {0}", PS64_HKU_DEFAULT_Prefs))
                 l.Add(String.Format("Desktop_HKU_DEFAULT= {0}", Desktop_HKU_DEFAULT))
+
+                l.Add(String.Format("Store_Search_ThemeNames= {0}", Store_Search_ThemeNames))
+                l.Add(String.Format("Store_Search_AuthorsNames= {0}", Store_Search_AuthorsNames))
+                l.Add(String.Format("Store_Search_Descriptions= {0}", Store_Search_Descriptions))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select
