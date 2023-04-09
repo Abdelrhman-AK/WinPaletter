@@ -30,9 +30,9 @@ Partial Class Store
         Me.search_filter_btn = New WinPaletter.XenonButton()
         Me.search_btn = New WinPaletter.XenonButton()
         Me.search_box = New WinPaletter.XenonTextBox()
-        Me.back_btn = New WinPaletter.XenonButton()
         Me.Titlebar_lbl = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.back_btn = New WinPaletter.XenonButton()
+        Me.Titlebar_img = New System.Windows.Forms.PictureBox()
         Me.Log_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Tabs = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -179,8 +179,9 @@ Partial Class Store
         Me.log_header = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.Cursor_Timer = New System.Windows.Forms.Timer(Me.components)
+        Me.search_panel = New System.Windows.Forms.Panel()
         Me.Titlebar_panel.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Tabs.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -232,6 +233,7 @@ Partial Class Store
         Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.search_panel.SuspendLayout()
         Me.SuspendLayout()
         '
         'FilesFetcher
@@ -245,12 +247,10 @@ Partial Class Store
         '
         'Titlebar_panel
         '
-        Me.Titlebar_panel.Controls.Add(Me.search_filter_btn)
-        Me.Titlebar_panel.Controls.Add(Me.search_btn)
-        Me.Titlebar_panel.Controls.Add(Me.search_box)
-        Me.Titlebar_panel.Controls.Add(Me.back_btn)
+        Me.Titlebar_panel.Controls.Add(Me.search_panel)
         Me.Titlebar_panel.Controls.Add(Me.Titlebar_lbl)
-        Me.Titlebar_panel.Controls.Add(Me.PictureBox1)
+        Me.Titlebar_panel.Controls.Add(Me.back_btn)
+        Me.Titlebar_panel.Controls.Add(Me.Titlebar_img)
         Me.Titlebar_panel.Dock = System.Windows.Forms.DockStyle.Top
         Me.Titlebar_panel.Location = New System.Drawing.Point(0, 0)
         Me.Titlebar_panel.Name = "Titlebar_panel"
@@ -266,7 +266,7 @@ Partial Class Store
         Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
         Me.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.search_filter_btn.LineSize = 1
-        Me.search_filter_btn.Location = New System.Drawing.Point(1216, 20)
+        Me.search_filter_btn.Location = New System.Drawing.Point(270, 3)
         Me.search_filter_btn.Name = "search_filter_btn"
         Me.search_filter_btn.Size = New System.Drawing.Size(32, 24)
         Me.search_filter_btn.TabIndex = 41
@@ -281,7 +281,7 @@ Partial Class Store
         Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
         Me.search_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
         Me.search_btn.LineSize = 1
-        Me.search_btn.Location = New System.Drawing.Point(1254, 20)
+        Me.search_btn.Location = New System.Drawing.Point(308, 3)
         Me.search_btn.Name = "search_btn"
         Me.search_btn.Size = New System.Drawing.Size(32, 24)
         Me.search_btn.TabIndex = 40
@@ -289,10 +289,11 @@ Partial Class Store
         '
         'search_box
         '
-        Me.search_box.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_box.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.search_box.ForeColor = System.Drawing.Color.White
-        Me.search_box.Location = New System.Drawing.Point(943, 20)
+        Me.search_box.Location = New System.Drawing.Point(3, 3)
         Me.search_box.MaxLength = 32767
         Me.search_box.Multiline = False
         Me.search_box.Name = "search_box"
@@ -301,11 +302,24 @@ Partial Class Store
         Me.search_box.SelectedText = ""
         Me.search_box.SelectionLength = 0
         Me.search_box.SelectionStart = 0
-        Me.search_box.Size = New System.Drawing.Size(267, 24)
+        Me.search_box.Size = New System.Drawing.Size(261, 24)
         Me.search_box.TabIndex = 39
         Me.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.search_box.UseSystemPasswordChar = False
         Me.search_box.WordWrap = True
+        '
+        'Titlebar_lbl
+        '
+        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
+        Me.Titlebar_lbl.Name = "Titlebar_lbl"
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(862, 37)
+        Me.Titlebar_lbl.TabIndex = 38
+        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
+        Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'back_btn
         '
@@ -322,28 +336,15 @@ Partial Class Store
         Me.back_btn.UseVisualStyleBackColor = False
         Me.back_btn.Visible = False
         '
-        'Titlebar_lbl
+        'Titlebar_img
         '
-        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
-        Me.Titlebar_lbl.Name = "Titlebar_lbl"
-        Me.Titlebar_lbl.Size = New System.Drawing.Size(862, 37)
-        Me.Titlebar_lbl.TabIndex = 38
-        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
-        Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(5, 0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(64, 64)
-        Me.PictureBox1.TabIndex = 37
-        Me.PictureBox1.TabStop = False
+        Me.Titlebar_img.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_img.Image = CType(resources.GetObject("Titlebar_img.Image"), System.Drawing.Image)
+        Me.Titlebar_img.Location = New System.Drawing.Point(5, 0)
+        Me.Titlebar_img.Name = "Titlebar_img"
+        Me.Titlebar_img.Size = New System.Drawing.Size(64, 64)
+        Me.Titlebar_img.TabIndex = 37
+        Me.Titlebar_img.TabStop = False
         '
         'Log_Timer
         '
@@ -1787,7 +1788,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 256)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 248)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1803,7 +1804,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 256)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 248)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -1812,8 +1813,7 @@ Partial Class Store
         '
         'Cursors_Container
         '
-        Me.Cursors_Container.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Cursors_Container.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cursors_Container.AutoScroll = True
         Me.Cursors_Container.Controls.Add(Me.Arrow)
@@ -1836,7 +1836,7 @@ Partial Class Store
         Me.Cursors_Container.Location = New System.Drawing.Point(3, 4)
         Me.Cursors_Container.Name = "Cursors_Container"
         Me.Cursors_Container.Padding = New System.Windows.Forms.Padding(4, 4, 0, 4)
-        Me.Cursors_Container.Size = New System.Drawing.Size(514, 249)
+        Me.Cursors_Container.Size = New System.Drawing.Size(514, 234)
         Me.Cursors_Container.TabIndex = 67
         '
         'Arrow
@@ -2540,7 +2540,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 254)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 246)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2550,7 +2550,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 254)
+        Me.Label17.Location = New System.Drawing.Point(33, 246)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2562,7 +2562,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 257)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 249)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -3141,6 +3141,18 @@ Partial Class Store
         '
         Me.Cursor_Timer.Interval = 30
         '
+        'search_panel
+        '
+        Me.search_panel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_panel.BackColor = System.Drawing.Color.Transparent
+        Me.search_panel.Controls.Add(Me.search_btn)
+        Me.search_panel.Controls.Add(Me.search_box)
+        Me.search_panel.Controls.Add(Me.search_filter_btn)
+        Me.search_panel.Location = New System.Drawing.Point(943, 17)
+        Me.search_panel.Name = "search_panel"
+        Me.search_panel.Size = New System.Drawing.Size(343, 30)
+        Me.search_panel.TabIndex = 42
+        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3157,7 +3169,7 @@ Partial Class Store
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter Store (Beta)"
         Me.Titlebar_panel.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Tabs.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
@@ -3211,6 +3223,7 @@ Partial Class Store
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.search_panel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -3245,7 +3258,7 @@ Partial Class Store
     Friend WithEvents Preview_Timer As Timer
     Friend WithEvents Titlebar_panel As Panel
     Friend WithEvents Titlebar_lbl As Label
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Titlebar_img As PictureBox
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents Download_Link As XenonLinkLabel
     Friend WithEvents themeSize_lbl As Label
@@ -3369,4 +3382,5 @@ Partial Class Store
     Friend WithEvents Label17 As Label
     Friend WithEvents CursorsSize_Bar As XenonTrackbar
     Friend WithEvents Cursor_Timer As Timer
+    Friend WithEvents search_panel As Panel
 End Class
