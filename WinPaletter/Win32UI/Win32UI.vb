@@ -1146,8 +1146,8 @@ Public Class Win32UI
             s.Add("; " & String.Format(My.Lang.OldMSTheme_ProgrammedBy, My.Application.Info.CompanyName))
             s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedFromAppVer, MainFrm.CP.Info.AppVersion))
             s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedBy, MainFrm.CP.Info.Author))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeName, MainFrm.CP.Info.PaletteName))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeVersion, MainFrm.CP.Info.PaletteVersion))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeName, MainFrm.CP.Info.ThemeName))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeVersion, MainFrm.CP.Info.ThemeVersion))
             s.Add("")
 
             s.Add(String.Format("[Control Panel\Colors]"))

@@ -38,17 +38,17 @@ Public Class EditInfo
 
 
         Save_Info(MainFrm.CP)
-        MainFrm.themename_lbl.Text = XenonTextBox1.Text
-        MainFrm.author_lbl.Text = XenonTextBox4.Text
+        MainFrm.themename_lbl.Text = String.Format("{0} ({1})", MainFrm.CP.Info.ThemeName, MainFrm.CP.Info.ThemeVersion)
+        MainFrm.author_lbl.Text = String.Format("{0} {1}", My.Lang.By, MainFrm.CP.Info.Author)
 
         Me.Close()
     End Sub
 
     Public Sub Load_Info(ByVal [CP] As CP)
         StoreItem1.CP = [CP]
-        XenonTextBox1.Text = [CP].Info.PaletteName
-        XenonTextBox2.Text = [CP].Info.PaletteVersion
-        XenonTextBox3.Text = [CP].Info.PaletteDescription
+        XenonTextBox1.Text = [CP].Info.ThemeName
+        XenonTextBox2.Text = [CP].Info.ThemeVersion
+        XenonTextBox3.Text = [CP].Info.Description
         XenonTextBox4.Text = [CP].Info.Author
         XenonTextBox5.Text = [CP].Info.AuthorSocialMediaLink
 
@@ -65,9 +65,9 @@ Public Class EditInfo
     End Sub
 
     Sub Save_Info(ByVal [CP] As CP)
-        [CP].Info.PaletteName = XenonTextBox1.Text
-        [CP].Info.PaletteVersion = XenonTextBox2.Text
-        [CP].Info.PaletteDescription = XenonTextBox3.Text
+        [CP].Info.ThemeName = XenonTextBox1.Text
+        [CP].Info.ThemeVersion = XenonTextBox2.Text
+        [CP].Info.Description = XenonTextBox3.Text
         [CP].Info.Author = XenonTextBox4.Text
         [CP].Info.AuthorSocialMediaLink = XenonTextBox5.Text
 

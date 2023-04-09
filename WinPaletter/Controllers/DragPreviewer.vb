@@ -750,8 +750,9 @@ Public Class DragPreviewer
         start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
         XenonAlertBox11.Visible = MainFrm.PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
         MainFrm.ApplyMetrics([CP], XenonWindow1)

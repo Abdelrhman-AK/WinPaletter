@@ -226,7 +226,7 @@ Public Class StoreItem : Inherits Panel
 
         If CP IsNot Nothing Then
             Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
-            G.DrawString(CP.Info.PaletteName, New Font("Segoe UI", 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
+            G.DrawString(CP.Info.ThemeName, New Font("Segoe UI", 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
 
             Dim BadgeRect As New Rectangle(Author_Rect.Right + 2, Author_Rect.Y, 16, 16)
 

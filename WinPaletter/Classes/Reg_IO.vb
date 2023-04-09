@@ -172,9 +172,10 @@ Public Class Reg_IO
         process.Start()
         process.WaitForExit()
     End Sub
-    Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False) As Object
+    Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False, Optional IfNothingReturnDefaultValue As Boolean = False) As Object
         Try
-            Return Registry.GetValue(KeyName, ValueName, DefaultValue)
+            Dim val As Object = Registry.GetValue(KeyName, ValueName, DefaultValue)
+            Return If(IfNothingReturnDefaultValue AndAlso val Is Nothing, DefaultValue, val)
         Catch ex As Exception
             My.Loading_Exceptions.Add(New Tuple(Of String, Exception)(KeyName & " : " & ValueName, ex))
             If RaiseExceptions Then BugReport.ThrowError(ex)

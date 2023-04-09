@@ -2832,6 +2832,8 @@ End Class
 
         AddHandler TB.TextChanged, AddressOf OnBaseTextChanged
         AddHandler TB.KeyDown, AddressOf OnBaseKeyDown
+        AddHandler TB.KeyPress, AddressOf OnKeyPress
+
     End Sub
 
 #Region "Variables"
@@ -2990,6 +2992,12 @@ End Class
             TB.Copy()
             e.SuppressKeyPress = True
         End If
+    End Sub
+
+    Public Event KeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+
+    Public Sub OnKeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+        RaiseEvent KeyPress(s, e)
     End Sub
 
     Protected Overrides Sub OnResize(ByVal e As EventArgs)

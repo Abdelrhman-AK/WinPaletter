@@ -934,10 +934,11 @@ Public Class MainFrm
         ActionCenter.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         XenonButton23.Visible = (PreviewConfig = WinVer.W7)
         Dim condition0 As Boolean = PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        Dim condition1 As Boolean = PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
         WXP_Alert2.Visible = PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
 
         ApplyMetrics([CP], XenonWindow1)
         ApplyMetrics([CP], XenonWindow2)
@@ -1335,8 +1336,8 @@ Public Class MainFrm
         End If
     End Sub
     Sub ApplyCPValues([CP] As CP)
-        themename_lbl.Text = String.Format("{0} ({1})", Me.[CP].Info.PaletteName, Me.[CP].Info.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, Me.[CP].Info.Author)
+        themename_lbl.Text = String.Format("{0} ({1})", [CP].Info.ThemeName, [CP].Info.ThemeVersion)
+        author_lbl.Text = String.Format("{0} {1}", My.Lang.By, [CP].Info.Author)
 
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light

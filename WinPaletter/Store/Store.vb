@@ -6,6 +6,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports Devcorp.Controls.VisualStyles
 Imports System.Text
+Imports System.Runtime.InteropServices
 
 Public Class Store
 
@@ -47,9 +48,10 @@ Public Class Store
 
     Sub Adjust_Preview(CP As CP)
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, PreviewIndex)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, PreviewIndex)
 
         Panel3.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
@@ -1390,7 +1392,6 @@ Public Class Store
         themeSize_lbl.Font = My.Application.ConsoleFontMedium
         theme_ver_lbl.Font = My.Application.ConsoleFontMedium
         desc_txt.Font = My.Application.ConsoleFontLarge
-
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1493,15 +1494,15 @@ Public Class Store
                             If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
                         End If
                     Next
-                    Titlebar_lbl.Text = .CP.Info.PaletteName & " - " & My.Lang.By & " " & .CP.Info.Author
-                    theme_name_lbl.Text = .CP.Info.PaletteName
-                    theme_ver_lbl.Text = .CP.Info.PaletteVersion
+                    Titlebar_lbl.Text = .CP.Info.ThemeName & " - " & My.Lang.By & " " & .CP.Info.Author
+                    theme_name_lbl.Text = .CP.Info.ThemeName
+                    theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
                     MD5_lbl.Text = .MD5
                     themeSize_lbl.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, "There is no included data")
                     Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL, "There is no included data")
-                    desc_txt.Text = .CP.Info.PaletteDescription
+                    desc_txt.Text = .CP.Info.Description
 
                     Dim os_list As New List(Of String)
                     os_list.Clear()
@@ -1986,7 +1987,15 @@ Public Class Store
 
 #Region "   Search"
     Private Sub search_btn_Click(sender As Object, e As EventArgs) Handles search_btn.Click
+        PerformSearch()
+    End Sub
+    Private Sub search_filter_btn_Click(sender As Object, e As EventArgs) Handles search_filter_btn.Click
+        Store_SearchFilter.ShowDialog()
+    End Sub
+    Sub PerformSearch()
         Dim search_text As String = search_box.Text.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper
+
+        If String.IsNullOrWhiteSpace(search_text) Then Exit Sub
 
         Dim lst As New Dictionary(Of String, CP) : lst.Clear()
 
@@ -1997,9 +2006,9 @@ Public Class Store
         RemoveAllStoreItems(search_results)
 
         For Each st_item In lst
-            If (My.Settings.Store_Search_ThemeNames AndAlso st_item.Value.Info.PaletteName.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
+            If (My.Settings.Store_Search_ThemeNames AndAlso st_item.Value.Info.ThemeName.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
                 Or (My.Settings.Store_Search_AuthorsNames AndAlso st_item.Value.Info.Author.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
-                Or (My.Settings.Store_Search_Descriptions AndAlso st_item.Value.Info.PaletteDescription.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) Then
+                Or (My.Settings.Store_Search_Descriptions AndAlso st_item.Value.Info.Description.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) Then
 
                 Dim ctrl As New StoreItem With {
                .FileName = st_item.Key,
@@ -2026,10 +2035,6 @@ Public Class Store
         Titlebar_lbl.Text = "Search results"
 
         Tabs.SelectedIndex = 2
-
-    End Sub
-    Private Sub search_filter_btn_Click(sender As Object, e As EventArgs) Handles search_filter_btn.Click
-        Store_SearchFilter.ShowDialog()
     End Sub
 #End Region
 
@@ -2057,7 +2062,10 @@ Public Class Store
 
 #Region "Others"
     Private Sub Titlebar_panel_BackColorChanged(sender As Object, e As EventArgs) Handles Titlebar_panel.BackColorChanged
+
         Titlebar_lbl.ForeColor = If(Titlebar_panel.BackColor.IsDark, Color.White, Color.Black)
+        back_btn.Image = If(Titlebar_panel.BackColor.IsDark, My.Resources.Store_BackBtn, My.Resources.Store_BackBtn.Invert)
+
         For Each ctrl As Control In Titlebar_panel.Controls
             ctrl.Refresh()
         Next
@@ -2076,6 +2084,11 @@ Public Class Store
 
         Label17.Text = String.Format("{0} ({1}x)", My.Lang.Scaling, sender.value / 100)
     End Sub
+
+    Private Sub search_box_KeyPress(sender As Object, e As KeyPressEventArgs) Handles search_box.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then PerformSearch()
+    End Sub
+
 #End Region
 
 End Class

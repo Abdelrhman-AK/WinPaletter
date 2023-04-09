@@ -312,8 +312,8 @@ Partial Class Store
         Me.back_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.back_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.back_btn.ForeColor = System.Drawing.Color.White
-        Me.back_btn.Image = CType(resources.GetObject("back_btn.Image"), System.Drawing.Image)
-        Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.back_btn.Image = Nothing
+        Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
         Me.back_btn.LineSize = 1
         Me.back_btn.Location = New System.Drawing.Point(5, 0)
         Me.back_btn.Name = "back_btn"
@@ -324,11 +324,13 @@ Partial Class Store
         '
         'Titlebar_lbl
         '
+        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
         Me.Titlebar_lbl.Name = "Titlebar_lbl"
-        Me.Titlebar_lbl.Size = New System.Drawing.Size(900, 37)
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(862, 37)
         Me.Titlebar_lbl.TabIndex = 38
         Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
         Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -529,7 +531,7 @@ Partial Class Store
         Me.Apply_btn.ForeColor = System.Drawing.Color.White
         Me.Apply_btn.Image = Nothing
         Me.Apply_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(95, Byte), Integer), CType(CType(96, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.Apply_btn.LineSize = 1
         Me.Apply_btn.Location = New System.Drawing.Point(1182, 577)
         Me.Apply_btn.Name = "Apply_btn"
@@ -1785,7 +1787,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 248)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 256)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1801,7 +1803,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 248)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 256)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -1834,7 +1836,7 @@ Partial Class Store
         Me.Cursors_Container.Location = New System.Drawing.Point(3, 4)
         Me.Cursors_Container.Name = "Cursors_Container"
         Me.Cursors_Container.Padding = New System.Windows.Forms.Padding(4, 4, 0, 4)
-        Me.Cursors_Container.Size = New System.Drawing.Size(514, 241)
+        Me.Cursors_Container.Size = New System.Drawing.Size(514, 249)
         Me.Cursors_Container.TabIndex = 67
         '
         'Arrow
@@ -2538,7 +2540,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 246)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 254)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2548,7 +2550,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 246)
+        Me.Label17.Location = New System.Drawing.Point(33, 254)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2560,7 +2562,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 249)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 257)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -3154,7 +3156,6 @@ Partial Class Store
         Me.Name = "Store"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter Store (Beta)"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Titlebar_panel.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Tabs.ResumeLayout(False)

@@ -666,6 +666,7 @@
     <None Include="Resources\Store_Pattern1.png" />
     <None Include="Resources\Store_Pattern2.png" />
     <None Include="Resources\Store_Pattern3.png" />
+    <None Include="Resources\Store_BackBtn.png" />
     <Content Include="Resources\System.Buffers.dll" />
     <Content Include="Resources\System.Memory.dll" />
     <Content Include="Resources\System.Numerics.Vectors.dll" />

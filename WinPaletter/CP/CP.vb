@@ -101,9 +101,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Public Class Structures
         Structure Info : Implements ICloneable
             Public AppVersion As String
-            Public PaletteName As String
-            Public PaletteDescription As String
-            Public PaletteVersion As String
+            Public ThemeName As String
+            Public Description As String
+            Public ThemeVersion As String
             Public Author As String
             Public AuthorSocialMediaLink As String
 
@@ -120,25 +120,36 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Function
 
             Public Sub Load()
-                Author = Environment.UserName
-                AppVersion = My.Application.Info.Version.ToString
-                PaletteVersion = "1.0"
-                PaletteName = My.Lang.CurrentMode
+                ThemeName = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", My.Lang.CurrentMode, False, True)
+                ThemeVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0", False, True)
+                Author = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Environment.UserName, False, True)
+                AuthorSocialMediaLink = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "", False, True)
+                AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, False, True)
+                Description = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "", False, True)
+            End Sub
+
+            Sub Apply()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", AppVersion, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
             End Sub
 
             Public Overrides Function ToString() As String
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add("<General>")
-                tx.Add("*Palette Name= " & PaletteName)
+                tx.Add("*Palette Name= " & ThemeName)
 
-                If String.IsNullOrWhiteSpace(PaletteDescription) Then
+                If String.IsNullOrWhiteSpace(Description) Then
                     tx.Add("*Palette Description= ")
                 Else
-                    tx.Add("*Palette Description= " & PaletteDescription.Replace(vbCrLf, "<br>"))
+                    tx.Add("*Palette Description= " & Description.Replace(vbCrLf, "<br>"))
                 End If
 
-                tx.Add("*Palette File Version= " & PaletteVersion)
+                tx.Add("*Palette File Version= " & ThemeVersion)
                 tx.Add("*Author= " & Author)
                 tx.Add("*AuthorSocialMediaLink= " & AuthorSocialMediaLink)
                 tx.Add("</General>" & vbCrLf)
@@ -149,13 +160,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Structure StoreInfo : Implements ICloneable
             Public Color1 As Color
             Public Color2 As Color
+            Public Pattern As Integer
             Public DesignedFor_Win11 As Boolean
             Public DesignedFor_Win10 As Boolean
             Public DesignedFor_Win8 As Boolean
             Public DesignedFor_Win7 As Boolean
             Public DesignedFor_WinVista As Boolean
             Public DesignedFor_WinXP As Boolean
-            Public Pattern As Integer
 
             Shared Operator =(First As StoreInfo, Second As StoreInfo) As Boolean
                 Return First.Equals(Second)
@@ -169,19 +180,47 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Return MemberwiseClone()
             End Function
 
+            Public Sub Load()
+                Dim y As Object = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color.FromArgb(0, 102, 204).ToArgb, False, True)
+                Color1 = Color.FromArgb(y)
+
+                y = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color.FromArgb(122, 9, 9).ToArgb, False, True)
+                Color2 = Color.FromArgb(y)
+
+                Pattern = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1, False, True)
+                DesignedFor_Win11 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", True, False, True)
+                DesignedFor_Win10 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", True, False, True)
+                DesignedFor_Win8 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", True, False, True)
+                DesignedFor_Win7 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", True, False, True)
+                DesignedFor_WinVista = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", True, False, True)
+                DesignedFor_WinXP = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", True, False, True)
+            End Sub
+
+            Sub Apply()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color2.ToArgb, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", Pattern, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", DesignedFor_Win8.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP.ToInteger, RegistryValueKind.DWord)
+            End Sub
+
             Public Overrides Function ToString() As String
                 Dim tx As New List(Of String)
                 tx.Clear()
                 tx.Add("<StoreInfo>")
                 tx.Add("*Color1= " & Color1.ToArgb)
                 tx.Add("*Color2= " & Color2.ToArgb)
+                tx.Add("*Pattern= " & Pattern)
                 tx.Add("*DesignedFor_Win11= " & DesignedFor_Win11)
                 tx.Add("*DesignedFor_Win10= " & DesignedFor_Win10)
                 tx.Add("*DesignedFor_Win8= " & DesignedFor_Win8)
                 tx.Add("*DesignedFor_Win7= " & DesignedFor_Win7)
                 tx.Add("*DesignedFor_WinVista= " & DesignedFor_WinVista)
                 tx.Add("*DesignedFor_WinXP= " & DesignedFor_WinXP)
-                tx.Add("*Pattern= " & Pattern)
                 tx.Add("</StoreInfo>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -399,7 +438,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim y As Object
 
                     Dim stringThemeName As New System.Text.StringBuilder(260)
-                    Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                    UxTheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
 
                     If stringThemeName.ToString.Split("\").Last.ToLower = "aerolite.msstyles" Or String.IsNullOrWhiteSpace(stringThemeName.ToString) Then
                         Theme = AeroTheme.AeroLite
@@ -452,11 +491,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Try
                     Select Case Theme
                         Case AeroTheme.Aero
-                            Uxtheme.EnableTheming(1)
-                            Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            UxTheme.EnableTheming(1)
+                            UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
                         Case AeroTheme.AeroLite
-                            Uxtheme.EnableTheming(1)
-                            Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                            UxTheme.EnableTheming(1)
+                            UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
                             My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", "", RegistryValueKind.String)
@@ -552,7 +591,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         Try
                             Dim stringThemeName As New System.Text.StringBuilder(260)
-                            Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                            UxTheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
                             Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
                         Catch
                             Classic = False
@@ -588,31 +627,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Sub Apply()
                 Select Case Theme
                     Case AeroTheme.Aero
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                     Case AeroTheme.AeroOpaque
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
 
                     Case AeroTheme.Basic
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                     Case AeroTheme.Classic
-                        Uxtheme.EnableTheming(0)
+                        UxTheme.EnableTheming(0)
 
                 End Select
 
@@ -682,7 +721,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Try
                         Dim stringThemeName As New System.Text.StringBuilder(260)
-                        Uxtheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
+                        UxTheme.GetCurrentThemeName(stringThemeName, 260, Nothing, 0, Nothing, 0)
                         Classic = String.IsNullOrWhiteSpace(stringThemeName.ToString) Or Not IO.File.Exists(stringThemeName.ToString)
                     Catch
                         Classic = False
@@ -706,31 +745,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Sub Apply()
                 Select Case Theme
                     Case AeroTheme.Aero
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                     Case AeroTheme.AeroOpaque
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
 
                     Case AeroTheme.Basic
-                        Uxtheme.EnableTheming(1)
-                        Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        UxTheme.EnableTheming(1)
+                        UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                         EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                     Case AeroTheme.Classic
-                        Uxtheme.EnableTheming(0)
+                        UxTheme.EnableTheming(0)
 
                 End Select
 
@@ -767,7 +806,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim colorName As New Text.StringBuilder(260)
                     Dim sizeName As New Text.StringBuilder(260)
 
-                    Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+                    UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
 
                     If vsFile.ToString.ToLower = My.PATH_Windows.ToLower & "\resources\Themes\Luna\Luna.msstyles".ToLower Then
                         If colorName.ToString.ToLower = "normalcolor" Then
@@ -811,25 +850,25 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Try
                     Select Case Theme
                         Case WinXPTheme.LunaBlue
-                            Uxtheme.EnableTheming(1)
-                            Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
+                            UxTheme.EnableTheming(1)
+                            UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
 
                         Case WinXPTheme.LunaOliveGreen
-                            Uxtheme.EnableTheming(1)
-                            Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
+                            UxTheme.EnableTheming(1)
+                            UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
 
                         Case WinXPTheme.LunaSilver
-                            Uxtheme.EnableTheming(1)
-                            Uxtheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
+                            UxTheme.EnableTheming(1)
+                            UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
 
                         Case WinXPTheme.Classic
-                            Uxtheme.EnableTheming(0)
+                            UxTheme.EnableTheming(0)
 
                         Case WinXPTheme.Custom
 
                             If IO.File.Exists(ThemeFile) AndAlso (IO.Path.GetExtension(ThemeFile) = ".theme" Or IO.Path.GetExtension(ThemeFile) = ".msstyles") Then
-                                Uxtheme.EnableTheming(1)
-                                Uxtheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0)
+                                UxTheme.EnableTheming(1)
+                                UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0)
                             End If
 
                     End Select
@@ -838,7 +877,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim colorName As New Text.StringBuilder(260)
                     Dim sizeName As New Text.StringBuilder(260)
 
-                    Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+                    UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
 
                     EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", vsFile.ToString, RegistryValueKind.String)
                     EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", colorName.ToString, RegistryValueKind.String)
@@ -1134,7 +1173,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Dim vsFile As New Text.StringBuilder(260)
                 Dim colorName As New Text.StringBuilder(260)
                 Dim sizeName As New Text.StringBuilder(260)
-                Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+                UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
                 Dim isClassic As Boolean = String.IsNullOrEmpty(vsFile.ToString)
 
                 Dim fl As New List(Of Form) : fl.Clear()
@@ -2898,9 +2937,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Properties"
     Public Info As New Structures.Info With {
             .AppVersion = My.Application.Info.Version.ToString,
-            .PaletteName = "Current Mode",
-            .PaletteDescription = "",
-            .PaletteVersion = "1.0.0.0",
+            .ThemeName = My.Lang.CurrentMode,
+            .Description = "",
+            .ThemeVersion = "1.0.0.0",
             .Author = Environment.UserName,
             .AuthorSocialMediaLink = ""
     }
@@ -4303,6 +4342,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Registry"
                 Info.Load()
+                StoreInfo.Load()
                 Windows11.Load(New CP_Defaults().Default_Windows11.Windows11, New CP_Defaults().Default_Windows11Accents_Bytes)
                 Windows10.Load(New CP_Defaults().Default_Windows10.Windows10, New CP_Defaults().Default_Windows10Accents_Bytes)
                 Windows8.Load(_Def.Windows8)
@@ -4461,24 +4501,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 For Each lin As String In txt
 #Region "Personal Info"
                     If lin.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
-                    If lin.StartsWith("*Palette Name= ", My._ignore) Then Info.PaletteName = lin.Remove(0, "*Palette Name= ".Count)
-                    If lin.StartsWith("*Palette Description= ", My._ignore) Then Info.PaletteDescription = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*Palette Name= ", My._ignore) Then Info.ThemeName = lin.Remove(0, "*Palette Name= ".Count)
+                    If lin.StartsWith("*Palette Description= ", My._ignore) Then Info.Description = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count)
                     If lin.StartsWith("*Author= ", My._ignore) Then Info.Author = lin.Remove(0, "*Author= ".Count)
                     If lin.StartsWith("*AuthorSocialMediaLink= ", My._ignore) Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.PaletteVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
 #Region "Store Info"
                     If lin.StartsWith("*Color1= ", My._ignore) Then StoreInfo.Color1 = Color.FromArgb(lin.Remove(0, "*Color1= ".Count))
                     If lin.StartsWith("*Color2= ", My._ignore) Then StoreInfo.Color2 = Color.FromArgb(lin.Remove(0, "*Color2= ".Count))
+                    If lin.StartsWith("*Pattern= ", My._ignore) Then StoreInfo.Pattern = lin.Remove(0, "*Pattern= ".Count)
                     If lin.StartsWith("*DesignedFor_Win11= ", My._ignore) Then StoreInfo.DesignedFor_Win11 = lin.Remove(0, "*DesignedFor_Win11= ".Count)
                     If lin.StartsWith("*DesignedFor_Win10= ", My._ignore) Then StoreInfo.DesignedFor_Win10 = lin.Remove(0, "*DesignedFor_Win10= ".Count)
                     If lin.StartsWith("*DesignedFor_Win8= ", My._ignore) Then StoreInfo.DesignedFor_Win8 = lin.Remove(0, "*DesignedFor_Win8= ".Count)
                     If lin.StartsWith("*DesignedFor_Win7= ", My._ignore) Then StoreInfo.DesignedFor_Win7 = lin.Remove(0, "*DesignedFor_Win7= ".Count)
                     If lin.StartsWith("*DesignedFor_WinVista= ", My._ignore) Then StoreInfo.DesignedFor_WinVista = lin.Remove(0, "*DesignedFor_WinVista= ".Count)
                     If lin.StartsWith("*DesignedFor_WinXP= ", My._ignore) Then StoreInfo.DesignedFor_WinXP = lin.Remove(0, "*DesignedFor_WinXP= ".Count)
-                    If lin.StartsWith("*Pattern= ", My._ignore) Then StoreInfo.Pattern = lin.Remove(0, "*Pattern= ".Count)
 
 #End Region
 
@@ -5006,6 +5046,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 sw_all.Reset()
                 sw_all.Start()
 
+
                 If ReportProgress Then
                     My.Saving_Exceptions.Clear()
                     [TreeView].Nodes.Clear()
@@ -5037,6 +5078,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                 End If
+
+                Execute(CType(Sub()
+                                  Info.Apply()
+                                  StoreInfo.Apply()
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_SavingInfo, My.Lang.CP_SavingInfo_Error, My.Lang.CP_Time, sw_all)
+
 
                 If My.W11 Then
                     Execute(CType(Sub()

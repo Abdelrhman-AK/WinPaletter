@@ -109,11 +109,11 @@ Partial Class Store_SearchFilter
         Me.XenonCheckBox2.Checked = True
         Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox2.Location = New System.Drawing.Point(45, 69)
+        Me.XenonCheckBox2.Location = New System.Drawing.Point(45, 99)
         Me.XenonCheckBox2.Name = "XenonCheckBox2"
         Me.XenonCheckBox2.Size = New System.Drawing.Size(314, 24)
         Me.XenonCheckBox2.TabIndex = 211
-        Me.XenonCheckBox2.Text = "Themes authors names"
+        Me.XenonCheckBox2.Text = "Authors names"
         '
         'XenonCheckBox3
         '
@@ -123,7 +123,7 @@ Partial Class Store_SearchFilter
         Me.XenonCheckBox3.Checked = True
         Me.XenonCheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox3.Location = New System.Drawing.Point(45, 99)
+        Me.XenonCheckBox3.Location = New System.Drawing.Point(45, 69)
         Me.XenonCheckBox3.Name = "XenonCheckBox3"
         Me.XenonCheckBox3.Size = New System.Drawing.Size(314, 24)
         Me.XenonCheckBox3.TabIndex = 212

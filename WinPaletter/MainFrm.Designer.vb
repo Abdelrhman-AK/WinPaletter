@@ -1238,7 +1238,7 @@ Partial Class MainFrm
         Me.author_lbl.Name = "author_lbl"
         Me.author_lbl.Size = New System.Drawing.Size(344, 15)
         Me.author_lbl.TabIndex = 6
-        Me.author_lbl.Text = "By: Abdelrhman_ak"
+        Me.author_lbl.Text = "By: "
         Me.author_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'TablessControl1
