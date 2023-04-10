@@ -68,6 +68,9 @@ Public Class XeSettings
     Public Property Store_Search_ThemeNames As Boolean = True
     Public Property Store_Search_AuthorsNames As Boolean = True
     Public Property Store_Search_Descriptions As Boolean = True
+    Public Property Store_Online_or_Offline As Boolean = True
+    Public Property Store_Online_Repositories As String()
+    Public Property Store_Offline_Directories As String()
 
 #End Region
 
@@ -179,6 +182,10 @@ Public Class XeSettings
         If Key.GetValue("Store_Search_AuthorsNames", Nothing) Is Nothing Then Key.SetValue("Store_Search_AuthorsNames", True, RegistryValueKind.DWord)
         If Key.GetValue("Store_Search_Descriptions", Nothing) Is Nothing Then Key.SetValue("Store_Search_Descriptions", True, RegistryValueKind.DWord)
 
+        If Key.GetValue("Store_Online_or_Offline", Nothing) Is Nothing Then Key.SetValue("Store_Online_or_Offline", True, RegistryValueKind.DWord)
+        If Key.GetValue("Store_Online_Repositories", Nothing) Is Nothing Then Key.SetValue("Store_Online_Repositories", {""}, RegistryValueKind.MultiString)
+        If Key.GetValue("Store_Offline_Directories", Nothing) Is Nothing Then Key.SetValue("Store_Offline_Directories", {""}, RegistryValueKind.MultiString)
+
     End Sub
 
     Sub New(ByVal LoadFrom As Mode, Optional ByVal File As String = Nothing)
@@ -274,6 +281,10 @@ Public Class XeSettings
                 Store_Search_AuthorsNames = Key.GetValue("Store_Search_AuthorsNames", True)
                 Store_Search_Descriptions = Key.GetValue("Store_Search_Descriptions", True)
 
+                Store_Online_or_Offline = Key.GetValue("Store_Online_or_Offline", True)
+                Store_Online_Repositories = Key.GetValue("Store_Online_Repositories", {""})
+                Store_Offline_Directories = Key.GetValue("Store_Offline_Directories", {""})
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -339,6 +350,10 @@ Public Class XeSettings
                     If x.StartsWith("Store_Search_ThemeNames= ", My._ignore) Then Store_Search_ThemeNames = x.Remove(0, "Store_Search_ThemeNames= ".Count)
                     If x.StartsWith("Store_Search_AuthorsNames= ", My._ignore) Then Store_Search_AuthorsNames = x.Remove(0, "Store_Search_AuthorsNames= ".Count)
                     If x.StartsWith("Store_Search_Descriptions= ", My._ignore) Then Store_Search_Descriptions = x.Remove(0, "Store_Search_Descriptions= ".Count)
+
+                    If x.StartsWith("Store_Online_or_Offline= ", My._ignore) Then Store_Online_or_Offline = x.Remove(0, "Store_Online_or_Offline= ".Count)
+                    If x.StartsWith("Store_Online_Repositories= ", My._ignore) Then Store_Online_Repositories = x.Remove(0, "Store_Online_Repositories= ".Count).Split("|")
+                    If x.StartsWith("Store_Offline_Directories= ", My._ignore) Then Store_Offline_Directories = x.Remove(0, "Store_Offline_Directories= ".Count).Split("|")
 
                 Next
         End Select
@@ -431,7 +446,9 @@ Public Class XeSettings
                 Key.SetValue("Store_Search_ThemeNames", Store_Search_ThemeNames, RegistryValueKind.DWord)
                 Key.SetValue("Store_Search_AuthorsNames", Store_Search_AuthorsNames, RegistryValueKind.DWord)
                 Key.SetValue("Store_Search_Descriptions", Store_Search_Descriptions, RegistryValueKind.DWord)
-
+                Key.SetValue("Store_Online_or_Offline", Store_Online_or_Offline, RegistryValueKind.DWord)
+                Key.SetValue("Store_Online_Repositories", Store_Online_Repositories, RegistryValueKind.MultiString)
+                Key.SetValue("Store_Offline_Directories", Store_Offline_Directories, RegistryValueKind.MultiString)
 
             Case Mode.File
                 Dim l As New List(Of String)
@@ -512,6 +529,9 @@ Public Class XeSettings
                 l.Add(String.Format("Store_Search_ThemeNames= {0}", Store_Search_ThemeNames))
                 l.Add(String.Format("Store_Search_AuthorsNames= {0}", Store_Search_AuthorsNames))
                 l.Add(String.Format("Store_Search_Descriptions= {0}", Store_Search_Descriptions))
+                l.Add(String.Format("Store_Online_or_Offline= {0}", Store_Online_or_Offline))
+                l.Add(String.Format("Store_Online_Repositories= {0}", Store_Online_Repositories.ToArray.ToList.CString("|")))
+                l.Add(String.Format("Store_Offline_Directories= {0}", Store_Offline_Directories.ToArray.ToList.CString("|")))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

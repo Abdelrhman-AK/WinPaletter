@@ -1411,51 +1411,97 @@ Public Class Store
 #Region "Backgroundworkers to load Store CPs"
     Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
 
-        For Each file As String In Directory.GetFiles(My.Themes_Storage)
-            If Path.GetExtension(file) = ".wpth" Then
-                Try
-                    Using CPx As New CP(CP.CP_Type.File, file)
-                        CPList.Add(file, CPx)
-                    End Using
-                Catch ex As Exception
+        If My.Settings.Store_Online_or_Offline Then
 
-                End Try
-            End If
-        Next
-
-        BeginInvoke(CType(Sub()
-                              container.Visible = False
-                          End Sub, MethodInvoker))
-
-        For Each StoreItem In CPList
-            Dim ctrl As New StoreItem With {
-                .FileName = StoreItem.Key,
-                .CP = StoreItem.Value,
-                .MD5 = CalculateMD5(StoreItem.Key),
-                .DoneByWinPaletter = True,
-                .Size = New Size(w, h)}
-
-            If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
-
-            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
-            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
-            AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
-            AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
+        Else
 
             BeginInvoke(CType(Sub()
-                                  container.Controls.Add(ctrl)
+                                  ProgressBar1.Visible = True
+                                  container.Visible = False
                               End Sub, MethodInvoker))
-        Next
 
-        BeginInvoke(CType(Sub()
-                              container.Visible = True
-                          End Sub, MethodInvoker))
+            Dim i As Integer = 0
+            Dim allProgress As Integer = 0
 
-        CPList.Clear()
+            For Each folder In My.Settings.Store_Offline_Directories
+
+                If Directory.Exists(folder) Then
+                    allProgress += Directory.GetFiles(folder).Count
+                End If
+            Next
+
+            allProgress *= 2
+
+            For Each folder In My.Settings.Store_Offline_Directories
+
+                If Directory.Exists(folder) Then
+
+                    For Each file As String In Directory.GetFiles(folder)
+
+                        If Path.GetExtension(file) = ".wpth" Then
+                            Try
+                                Using CPx As New CP(CP.CP_Type.File, file)
+                                    CPList.Add(file, CPx)
+                                End Using
+                            Catch ex As Exception
+
+                            End Try
+                        End If
+
+                        i += 1
+
+                        If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
+                    Next
+                End If
+            Next
+
+
+                    For Each StoreItem In CPList
+
+                        Dim ctrl As New StoreItem With {
+                            .FileName = StoreItem.Key,
+                            .CP = StoreItem.Value,
+                            .MD5 = CalculateMD5(StoreItem.Key),
+                            .DoneByWinPaletter = False,
+                            .Size = New Size(w, h)}
+
+                        If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
+
+                        AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+                        AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+                        AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
+                        AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
+                        AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
+
+                        BeginInvoke(CType(Sub()
+                                              container.Controls.Add(ctrl)
+                                          End Sub, MethodInvoker))
+
+                        i += 1
+
+                        If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
+                    Next
+
+                    BeginInvoke(CType(Sub()
+                                          ProgressBar1.Visible = False
+                                          container.Visible = True
+                                      End Sub, MethodInvoker))
+
+                End If
+
+
+
+                CPList.Clear()
 
         FinishedLoadingInitialCPs = True
 
+    End Sub
+
+    Private Sub FilesFetcher_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles FilesFetcher.ProgressChanged
+        Try
+            ProgressBar1.Value = Math.Max(Math.Min(e.ProgressPercentage, ProgressBar1.Maximum), ProgressBar1.Minimum)
+        Catch
+        End Try
     End Sub
 
     Private Sub FilesFetcher_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles FilesFetcher.RunWorkerCompleted
@@ -2111,6 +2157,8 @@ Public Class Store
             Location = newPoint
         End If
     End Sub
+
+
 #End Region
 
 End Class

@@ -117,6 +117,13 @@ Public Class SettingsX
             If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton23.Checked Then Changed = True
             If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton21.Checked Then Changed = True
 
+            If .Store_Online_or_Offline And Not XenonRadioImage1.Checked Then Changed = True
+            If Not .Store_Online_or_Offline And Not XenonRadioImage2.Checked Then Changed = True
+
+            If .Store_Search_ThemeNames <> XenonCheckBox28.Checked Then Changed = True
+            If .Store_Search_Descriptions <> XenonCheckBox26.Checked Then Changed = True
+            If .Store_Search_AuthorsNames <> XenonCheckBox27.Checked Then Changed = True
+
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then
@@ -234,6 +241,22 @@ Public Class SettingsX
             XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
             XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
+
+            XenonRadioImage1.Checked = .Store_Online_or_Offline
+            XenonRadioImage2.Checked = Not .Store_Online_or_Offline
+            ListBox1.Items.Clear()
+            For Each x In .Store_Online_Repositories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox1.Items.Add(x)
+            Next
+            ListBox2.Items.Clear()
+            For Each x In .Store_Offline_Directories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox2.Items.Add(x)
+            Next
+
+            XenonCheckBox28.Checked = .Store_Search_ThemeNames
+            XenonCheckBox26.Checked = .Store_Search_Descriptions
+            XenonCheckBox27.Checked = .Store_Search_AuthorsNames
+
         End With
 
         With My.Lang
@@ -348,6 +371,14 @@ Public Class SettingsX
             If XenonRadioButton22.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
             If XenonRadioButton23.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
             If XenonRadioButton21.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
+
+            .Store_Online_or_Offline = XenonRadioImage1.Checked
+            .Store_Online_Repositories = ListBox1.Items.OfType(Of String)().Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
+            .Store_Offline_Directories = ListBox2.Items.OfType(Of String)().Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
+
+            .Store_Search_ThemeNames = XenonCheckBox28.Checked
+            .Store_Search_Descriptions = XenonCheckBox26.Checked
+            .Store_Search_AuthorsNames = XenonCheckBox27.Checked
 
             .Save(XeSettings.Mode.Registry)
         End With
@@ -500,6 +531,13 @@ Public Class SettingsX
                 If XenonRadioButton23.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
                 If XenonRadioButton21.Checked Then .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
 
+                .Store_Online_or_Offline = XenonRadioImage1.Checked
+                .Store_Online_Repositories = ListBox1.Items.OfType(Of String)().Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
+                .Store_Offline_Directories = ListBox2.Items.OfType(Of String)().Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
+                .Store_Search_ThemeNames = XenonCheckBox28.Checked
+                .Store_Search_Descriptions = XenonCheckBox26.Checked
+                .Store_Search_AuthorsNames = XenonCheckBox27.Checked
+
                 .Save(XeSettings.Mode.File, SaveFileDialog1.FileName)
             End With
 
@@ -597,6 +635,21 @@ Public Class SettingsX
                 XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
                 XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
                 XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
+
+                XenonRadioImage1.Checked = .Store_Online_or_Offline
+                XenonRadioImage2.Checked = Not .Store_Online_or_Offline
+                ListBox1.Items.Clear()
+                For Each x In .Store_Online_Repositories
+                    If Not String.IsNullOrWhiteSpace(x) Then ListBox1.Items.Add(x)
+                Next
+                ListBox2.Items.Clear()
+                For Each x In .Store_Offline_Directories
+                    If Not String.IsNullOrWhiteSpace(x) Then ListBox2.Items.Add(x)
+                Next
+
+                XenonCheckBox28.Checked = .Store_Search_ThemeNames
+                XenonCheckBox26.Checked = .Store_Search_Descriptions
+                XenonCheckBox27.Checked = .Store_Search_AuthorsNames
             End With
         End If
     End Sub
@@ -702,6 +755,21 @@ Public Class SettingsX
             XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
             XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
             XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
+
+            XenonRadioImage1.Checked = .Store_Online_or_Offline
+            XenonRadioImage2.Checked = Not .Store_Online_or_Offline
+            ListBox1.Items.Clear()
+            For Each x In .Store_Online_Repositories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox1.Items.Add(x)
+            Next
+            ListBox2.Items.Clear()
+            For Each x In .Store_Offline_Directories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox2.Items.Add(x)
+            Next
+
+            XenonCheckBox28.Checked = .Store_Search_ThemeNames
+            XenonCheckBox26.Checked = .Store_Search_Descriptions
+            XenonCheckBox27.Checked = .Store_Search_AuthorsNames
         End With
 
         OpenFileDialog1.FileName = files(0)
@@ -852,4 +920,35 @@ Public Class SettingsX
 
         End Select
     End Sub
+
+    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+        Dim inputText As String = ""
+        If ListBox1.SelectedItem IsNot Nothing Then inputText = ListBox1.SelectedItem
+        Dim response As String = InputBox(My.Lang.InputThemeRepos, inputText, My.Lang.InputThemeRepos_Notice)
+        If Not ListBox1.Items.Contains(response) Then ListBox1.Items.Add(response)
+    End Sub
+
+    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        If ListBox1.SelectedItem IsNot Nothing Then
+            Dim i As Integer = ListBox1.SelectedIndex
+            ListBox1.Items.RemoveAt(i)
+            If i <ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex= i Else ListBox1.SelectedIndex= ListBox1.Items.Count - 1
+        End If
+    End Sub
+
+    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+        If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
+            If Not ListBox2.Items.Contains(FolderBrowserDialog1.SelectedPath) Then ListBox2.Items.Add(FolderBrowserDialog1.SelectedPath)
+        End If
+    End Sub
+
+    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+        If ListBox2.SelectedItem IsNot Nothing Then
+            Dim i As Integer = ListBox2.SelectedIndex
+            ListBox2.Items.RemoveAt(i)
+            If i < ListBox2.Items.Count - 1 Then ListBox2.SelectedIndex = i Else ListBox2.SelectedIndex = ListBox2.Items.Count - 1
+        End If
+    End Sub
+
+
 End Class
