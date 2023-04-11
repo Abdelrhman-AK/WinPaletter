@@ -181,6 +181,8 @@ Partial Class Store
         Me.search_box = New WinPaletter.XenonTextBox()
         Me.search_filter_btn = New WinPaletter.XenonButton()
         Me.back_btn = New WinPaletter.XenonButton()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Status_lbl = New System.Windows.Forms.Label()
         Me.Titlebar_panel.SuspendLayout()
         Me.search_panel.SuspendLayout()
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -235,6 +237,7 @@ Partial Class Store
         Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'FilesFetcher
@@ -321,7 +324,7 @@ Partial Class Store
         Me.Tabs.Location = New System.Drawing.Point(0, 70)
         Me.Tabs.Name = "Tabs"
         Me.Tabs.SelectedIndex = 0
-        Me.Tabs.Size = New System.Drawing.Size(1298, 648)
+        Me.Tabs.Size = New System.Drawing.Size(1298, 624)
         Me.Tabs.TabIndex = 4
         '
         'TabPage1
@@ -331,7 +334,7 @@ Partial Class Store
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage1.Size = New System.Drawing.Size(1290, 620)
+        Me.TabPage1.Size = New System.Drawing.Size(1290, 596)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "0"
         '
@@ -341,7 +344,7 @@ Partial Class Store
         Me.container.Dock = System.Windows.Forms.DockStyle.Fill
         Me.container.Location = New System.Drawing.Point(10, 10)
         Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(1270, 600)
+        Me.container.Size = New System.Drawing.Size(1270, 576)
         Me.container.TabIndex = 3
         '
         'TabPage3
@@ -1749,7 +1752,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 254)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 256)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1765,7 +1768,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 254)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 256)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -2501,7 +2504,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 252)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 254)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2511,7 +2514,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 252)
+        Me.Label17.Location = New System.Drawing.Point(33, 254)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2523,7 +2526,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 255)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 257)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -3164,6 +3167,28 @@ Partial Class Store
         Me.back_btn.UseVisualStyleBackColor = False
         Me.back_btn.Visible = False
         '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.Transparent
+        Me.Panel1.Controls.Add(Me.Status_lbl)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel1.Location = New System.Drawing.Point(0, 694)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
+        Me.Panel1.Size = New System.Drawing.Size(1298, 24)
+        Me.Panel1.TabIndex = 6
+        '
+        'Status_lbl
+        '
+        Me.Status_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Status_lbl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Status_lbl.Location = New System.Drawing.Point(3, 0)
+        Me.Status_lbl.Name = "Status_lbl"
+        Me.Status_lbl.Size = New System.Drawing.Size(1292, 24)
+        Me.Status_lbl.TabIndex = 39
+        Me.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3172,6 +3197,7 @@ Partial Class Store
         Me.ClientSize = New System.Drawing.Size(1298, 718)
         Me.Controls.Add(Me.Tabs)
         Me.Controls.Add(Me.Titlebar_panel)
+        Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -3235,6 +3261,7 @@ Partial Class Store
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -3395,4 +3422,6 @@ Partial Class Store
     Friend WithEvents Cursor_Timer As Timer
     Friend WithEvents search_panel As Panel
     Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Status_lbl As Label
 End Class

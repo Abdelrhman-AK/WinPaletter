@@ -375,6 +375,7 @@ Public Class Localizer : Implements IDisposable
     Property OldMSTheme_ThemeName As String = "Theme name: {0}"
     Property OldMSTheme_ThemeVersion As String = "Theme version: {0}"
 
+    Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
 #End Region
 
     Public Sub ExportJSON(File As String)

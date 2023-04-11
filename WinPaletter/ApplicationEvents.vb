@@ -25,6 +25,7 @@ Namespace My
         Public ReadOnly PATH_PS86_app As String = PATH_Windows & "\System32\WindowsPowerShell\v1.0"
         Public ReadOnly PATH_PS64_reg As String = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
         Public ReadOnly PATH_PS64_app As String = PATH_Windows & "\SysWOW64\WindowsPowerShell\v1.0"
+        Public ReadOnly PATH_StoreCache As String = Application.appData & "\Store"
 
         Public ReadOnly _ignore As StringComparison = StringComparison.OrdinalIgnoreCase
         Public VS As String = Application.appData & "\VisualStyles\Luna\luna.theme"

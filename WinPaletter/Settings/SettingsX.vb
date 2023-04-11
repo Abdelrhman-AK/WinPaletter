@@ -931,15 +931,31 @@ Public Class SettingsX
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
         If ListBox1.SelectedItem IsNot Nothing Then
             Dim i As Integer = ListBox1.SelectedIndex
-            ListBox1.Items.RemoveAt(i)
-            If i <ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex= i Else ListBox1.SelectedIndex= ListBox1.Items.Count - 1
+
+            If Not ListBox1.SelectedItem.ToString.ToUpper = My.Resources.Link_StoreReposDB.ToUpper Then
+                ListBox1.Items.RemoveAt(i)
+                If i < ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = i Else ListBox1.SelectedIndex = ListBox1.Items.Count - 1
+            Else
+                MsgBox(My.Lang.Store_RemoveTip, MsgBoxStyle.Critical)
+            End If
+
         End If
     End Sub
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
-        If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
-            If Not ListBox2.Items.Contains(FolderBrowserDialog1.SelectedPath) Then ListBox2.Items.Add(FolderBrowserDialog1.SelectedPath)
+
+        If Not My.WXP Then
+            Dim dlg As New Ookii.Dialogs.WinForms.VistaFolderBrowserDialog
+            If dlg.ShowDialog = DialogResult.OK Then
+                If Not ListBox2.Items.Contains(dlg.SelectedPath) Then ListBox2.Items.Add(dlg.SelectedPath)
+            End If
+            dlg.Dispose()
+        Else
+            If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
+                If Not ListBox2.Items.Contains(FolderBrowserDialog1.SelectedPath) Then ListBox2.Items.Add(FolderBrowserDialog1.SelectedPath)
+            End If
         End If
+
     End Sub
 
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click

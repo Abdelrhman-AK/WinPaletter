@@ -69,7 +69,7 @@ Public Class XeSettings
     Public Property Store_Search_AuthorsNames As Boolean = True
     Public Property Store_Search_Descriptions As Boolean = True
     Public Property Store_Online_or_Offline As Boolean = True
-    Public Property Store_Online_Repositories As String()
+    Public Property Store_Online_Repositories As String() = {My.Resources.Link_StoreReposDB}
     Public Property Store_Offline_Directories As String()
 
 #End Region
@@ -183,7 +183,7 @@ Public Class XeSettings
         If Key.GetValue("Store_Search_Descriptions", Nothing) Is Nothing Then Key.SetValue("Store_Search_Descriptions", True, RegistryValueKind.DWord)
 
         If Key.GetValue("Store_Online_or_Offline", Nothing) Is Nothing Then Key.SetValue("Store_Online_or_Offline", True, RegistryValueKind.DWord)
-        If Key.GetValue("Store_Online_Repositories", Nothing) Is Nothing Then Key.SetValue("Store_Online_Repositories", {""}, RegistryValueKind.MultiString)
+        If Key.GetValue("Store_Online_Repositories", Nothing) Is Nothing Then Key.SetValue("Store_Online_Repositories", {My.Resources.Link_StoreReposDB}, RegistryValueKind.MultiString)
         If Key.GetValue("Store_Offline_Directories", Nothing) Is Nothing Then Key.SetValue("Store_Offline_Directories", {""}, RegistryValueKind.MultiString)
 
     End Sub
@@ -282,7 +282,7 @@ Public Class XeSettings
                 Store_Search_Descriptions = Key.GetValue("Store_Search_Descriptions", True)
 
                 Store_Online_or_Offline = Key.GetValue("Store_Online_or_Offline", True)
-                Store_Online_Repositories = Key.GetValue("Store_Online_Repositories", {""})
+                Store_Online_Repositories = Key.GetValue("Store_Online_Repositories", {My.Resources.Link_StoreReposDB})
                 Store_Offline_Directories = Key.GetValue("Store_Offline_Directories", {""})
 
             Case Mode.File
@@ -357,9 +357,21 @@ Public Class XeSettings
 
                 Next
         End Select
+
+        If Not Store_Online_Repositories.Contains(My.Resources.Link_StoreReposDB) Then
+            Array.Resize(Store_Online_Repositories, Store_Online_Repositories.Length + 1)
+            Store_Online_Repositories(Store_Online_Repositories.Length - 1) = My.Resources.Link_StoreReposDB
+        End If
+
     End Sub
 
     Sub Save(ByVal SaveTo As Mode, Optional ByVal File As String = Nothing)
+
+        If Not Store_Online_Repositories.Contains(My.Resources.Link_StoreReposDB) Then
+            Array.Resize(Store_Online_Repositories, Store_Online_Repositories.Length + 1)
+            Store_Online_Repositories(Store_Online_Repositories.Length - 1) = My.Resources.Link_StoreReposDB
+        End If
+
         Select Case SaveTo
             Case Mode.Registry
                 Dim Key As RegistryKey
