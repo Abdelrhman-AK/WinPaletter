@@ -1420,8 +1420,7 @@ Public Class Store
             Dim response As New List(Of String) : response.Clear()
 
             For Each DB As String In My.Settings.Store_Online_Repositories
-
-                Dim x As String() = My.Resources.Link_StoreReposDB.Replace("https://", "").Replace("http://", "").Split("/")
+                Dim x As String() = DB.Replace("https://", "").Replace("http://", "").Split("/")
                 Dim reposName As String = x(1) & "_" & x(2)
                 reposName = String.Join("_", reposName.Split(Path.GetInvalidFileNameChars()))
 
@@ -1476,7 +1475,7 @@ Public Class Store
                                .FileName = Dir & "\" & FileName,
                                .CP = CP,
                                .MD5 = MD5,
-                               .DoneByWinPaletter = False,
+                               .DoneByWinPaletter = (DB.ToUpper = My.Resources.Link_StoreMainDB.ToUpper),
                                .Size = New Size(w, h),
                                .URL = URL}
 

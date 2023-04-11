@@ -932,7 +932,7 @@ Public Class SettingsX
         If ListBox1.SelectedItem IsNot Nothing Then
             Dim i As Integer = ListBox1.SelectedIndex
 
-            If Not ListBox1.SelectedItem.ToString.ToUpper = My.Resources.Link_StoreReposDB.ToUpper Then
+            If Not ListBox1.SelectedItem.ToString.ToUpper = My.Resources.Link_StoreReposDB.ToUpper And Not ListBox1.SelectedItem.ToString.ToUpper = My.Resources.Link_StoreMainDB.ToUpper Then
                 ListBox1.Items.RemoveAt(i)
                 If i < ListBox1.Items.Count - 1 Then ListBox1.SelectedIndex = i Else ListBox1.SelectedIndex = ListBox1.Items.Count - 1
             Else
