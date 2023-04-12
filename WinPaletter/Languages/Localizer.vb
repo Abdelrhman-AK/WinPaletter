@@ -376,6 +376,9 @@ Public Class Localizer : Implements IDisposable
     Property OldMSTheme_ThemeVersion As String = "Theme version: {0}"
 
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
+    Property Store_NoNetwork As String = "No internet connection"
+    Property Store_TryOffline As String = "Press ""Yes"" if you want to continue in offline Store mode. You can select its folders from Settings > Store."
+
 #End Region
 
     Public Sub ExportJSON(File As String)

@@ -7,7 +7,7 @@ Imports WinPaletter.NativeMethods
 Imports Devcorp.Controls.VisualStyles
 Imports System.Text
 Imports System.Net
-Imports System.Security.Policy
+Imports System.Text.RegularExpressions
 
 Public Class Store
 
@@ -1413,198 +1413,280 @@ Public Class Store
 #End Region
 
 #Region "Backgroundworkers to load Store CPs"
-    Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
 
-        If My.Settings.Store_Online_or_Offline Then
+    Private Function Ping(ByVal url As String) As Boolean
+        Try
+            Dim request As HttpWebRequest = CType(HttpWebRequest.Create(url), HttpWebRequest)
+            request.Timeout = 3000
+            request.AllowAutoRedirect = False
+            request.Method = "HEAD"
 
-            Dim response As New List(Of String) : response.Clear()
+            Using response = request.GetResponse()
+                Return True
+            End Using
 
-            For Each DB As String In My.Settings.Store_Online_Repositories
+        Catch
+            Return False
+        End Try
+    End Function
+
+
+    Sub OnlineMode()
+        Dim response As New List(Of String) : response.Clear()
+        Dim repos_list As New List(Of String) : repos_list.Clear()
+        Dim items As New List(Of String) : items.Clear()
+
+        'Check by Ping if repos DB URL is accessible or not
+        For Each DB As String In My.Settings.Store_Online_Repositories
+
+            If Not DB.StartsWith("https://", My._ignore) Then DB &= "https://"
+
+            Status_lbl.SetText("Testing access to """ & DB & """")
+
+            If Ping(DB) Then
+                repos_list.Add(DB)
+            Else
+                Status_lbl.SetText("Couldn't get response from """ & DB & """. Skipping this themes database")
+            End If
+
+        Next
+
+        'Loop through all valid repos DBs
+        For Each DB As String In repos_list
+
+            'Try to generate a folder name dependent on the URL
+            Dim reposName As String
+            If DB.ToUpper.Contains("GITHUB.COM") Then
                 Dim x As String() = DB.Replace("https://", "").Replace("http://", "").Split("/")
-                Dim reposName As String = x(1) & "_" & x(2)
+                reposName = x(1) & "_" & x(2)
                 reposName = String.Join("_", reposName.Split(Path.GetInvalidFileNameChars()))
+            Else
+                reposName = String.Join("_", DB.Replace("https://", "").Replace("http://", "").Split(Path.GetInvalidFileNameChars()))
+            End If
 
-                Status_lbl.SetText("Accessing themes database from repository: " & DB)
+            'Get text of the DB from URL
+            Status_lbl.SetText("Accessing themes database from """ & DB & """")
+            response.Clear()
+            response = WebCL.DownloadString(DB).CList
+            items.Clear()
 
-                response = WebCL.DownloadString(DB).CList
-
-                BeginInvoke(CType(Sub()
-                                      ProgressBar1.Visible = True
-                                  End Sub, MethodInvoker))
-
-                Dim i As Integer = 0
-                Dim allProgress As Integer = response.Count * 2
-
-                For Each item In response
-
-                    If item.Contains("|") Then
-                        Dim URL As String = item.Split("|")(1)
-                        Dim MD5 As String = item.Split("|")(0).ToUpper
-
-                        Dim temp As String = URL.Replace("?raw=true", "")
-                        Dim FileName As String = temp.Split("/").Last
-                        temp = temp.Replace("/" & FileName, "")
-                        Dim FolderName As String = temp.Split("/").Last
-                        Dim Dir As String = My.PATH_StoreCache
-                        If Not String.IsNullOrWhiteSpace(FolderName) Then Dir &= "\" & reposName & "\" & FolderName
-                        If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
-
-                        Status_lbl.SetText("")
-
-                        If File.Exists(Dir & "\" & FileName) Then
-                            If CalculateMD5(Dir & "\" & FileName) <> MD5 Then
-                                File.Delete(Dir & "\" & FileName)
-                                Status_lbl.SetText("Downloading theme """ & FileName & """ from " & URL)
-                                WebCL.DownloadFile(URL, Dir & "\" & FileName)
-                            End If
-                        Else
-                            Status_lbl.SetText("Downloading theme """ & FileName & """ from " & URL)
-                            WebCL.DownloadFile(URL, Dir & "\" & FileName)
+            'Add valid lines (Correct format) in a themes list
+            For Each item In response
+                Dim valid As Boolean = True
+                If item.Contains("|") Then
+                    For Each x In item.Split("|")
+                        If String.IsNullOrWhiteSpace(x) Then
+                            valid = False
+                            Exit For
                         End If
+                    Next
+                Else
+                    valid = False
+                End If
 
-                        i += 1
+                If valid Then items.Add(item)
 
-                        If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
-
-                        Try
-                            Status_lbl.SetText("Loading theme """ & FileName & """")
-
-                            Using CP As New CP(CP_Type.File, Dir & "\" & FileName)
-
-                                Dim ctrl As New StoreItem With {
-                               .FileName = Dir & "\" & FileName,
-                               .CP = CP,
-                               .MD5 = MD5,
-                               .DoneByWinPaletter = (DB.ToUpper = My.Resources.Link_StoreMainDB.ToUpper),
-                               .Size = New Size(w, h),
-                               .URL = URL}
-
-                                If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
-
-
-                                AddHandler ctrl.Click, AddressOf StoreItem_Clicked
-                                AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
-                                AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
-                                AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-                                AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
-
-                                BeginInvoke(CType(Sub()
-                                                      container.Controls.Add(ctrl)
-                                                  End Sub, MethodInvoker))
-
-                            End Using
-
-                        Catch ex As Exception
-
-                        End Try
-
-                        Status_lbl.SetText("")
-
-                        i += 1
-
-                        If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
-
-                    End If
-
-                Next
-
-                BeginInvoke(CType(Sub()
-                                      ProgressBar1.Visible = False
-                                  End Sub, MethodInvoker))
-
-                CPList.Clear()
-
-                FinishedLoadingInitialCPs = True
             Next
-
-        Else
 
             BeginInvoke(CType(Sub()
                                   ProgressBar1.Visible = True
-                                  container.Visible = False
                               End Sub, MethodInvoker))
 
             Dim i As Integer = 0
-            Dim allProgress As Integer = 0
+            Dim allProgress As Integer = items.Count * 2
 
+            'Loop through valid lines from the themes list
+            For Each item In items
+                Dim URL As String = item.Split("|")(1)
+                Dim MD5 As String = item.Split("|")(0).ToUpper
 
-            For Each folder In My.Settings.Store_Offline_Directories
+                'Create a folder inside AppData folder
+                Dim temp As String = URL.Replace("?raw=true", "")
+                Dim FileName As String = temp.Split("/").Last
+                temp = temp.Replace("/" & FileName, "")
+                Dim FolderName As String = temp.Split("/").Last
+                Dim Dir As String = My.PATH_StoreCache
+                If Not String.IsNullOrWhiteSpace(FolderName) Then Dir &= "\" & reposName & "\" & FolderName
+                If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
 
-                If Directory.Exists(folder) Then
-                    Status_lbl.SetText("Accessing themes from folder """ & folder & """")
-                    allProgress += Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories).Count
+                Status_lbl.SetText("")
+
+                'Download the theme (*.wpth)
+                If File.Exists(Dir & "\" & FileName) Then
+
+                    'If it exists, check MD5, if it is changed, redownload the theme
+                    If CalculateMD5(Dir & "\" & FileName) <> MD5 Then
+                        File.Delete(Dir & "\" & FileName)
+                        Status_lbl.SetText("Updating theme """ & FileName & """ from """ & URL & """")
+                        Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
+                    End If
+                Else
+                    Status_lbl.SetText("Downloading theme """ & FileName & """ from """ & URL & """")
+                    Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
                 End If
 
-            Next
+                i += 1
+                If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
 
-            allProgress *= 2
+                'Convert themes CPs into StoreItems
+                If File.Exists(Dir & "\" & FileName) Then
+                    Try
+                        Status_lbl.SetText("Loading theme """ & FileName & """")
 
-            For Each folder In My.Settings.Store_Offline_Directories
+                        Using CP As New CP(CP_Type.File, Dir & "\" & FileName)
 
-                If Directory.Exists(folder) Then
+                            Dim ctrl As New StoreItem With {
+                                           .FileName = Dir & "\" & FileName,
+                                           .CP = CP,
+                                           .MD5 = MD5,
+                                           .DoneByWinPaletter = (DB.ToUpper = My.Resources.Link_StoreMainDB.ToUpper),
+                                           .Size = New Size(w, h),
+                                           .URL = URL}
 
-                    For Each file As String In Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories)
+                            If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
 
-                        Try
-                            If Not CPList.ContainsKey(file) Then
 
-                                Status_lbl.SetText("Enumerating themes: """ & file & """")
+                            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+                            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+                            AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
+                            AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
+                            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
-                                Using CPx As New CP(CP.CP_Type.File, file)
-                                    CPList.Add(file, CPx)
-                                End Using
-                            End If
-                        Catch ex As Exception
-                        End Try
+                            BeginInvoke(CType(Sub()
+                                                  container.Controls.Add(ctrl)
+                                              End Sub, MethodInvoker))
 
-                        i += 1
+                        End Using
 
-                        If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
-                    Next
+                    Catch ex As Exception
+
+                    End Try
                 End If
-            Next
 
-
-            For Each StoreItem In CPList
-                Status_lbl.SetText("Loading theme """ & StoreItem.Value.Info.ThemeName & """")
-
-                Dim ctrl As New StoreItem With {
-                            .FileName = StoreItem.Key,
-                            .CP = StoreItem.Value,
-                            .MD5 = CalculateMD5(StoreItem.Key),
-                            .DoneByWinPaletter = False,
-                            .Size = New Size(w, h),
-                            .URL = New FileInfo(StoreItem.Key).FullName}
-
-                If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
-
-                AddHandler ctrl.Click, AddressOf StoreItem_Clicked
-                AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
-                AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
-                AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-                AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
-
-                BeginInvoke(CType(Sub()
-                                      container.Controls.Add(ctrl)
-                                  End Sub, MethodInvoker))
+                Status_lbl.SetText("")
 
                 i += 1
 
                 If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
+
             Next
 
+            'Finalizing
             BeginInvoke(CType(Sub()
-                                  ProgressBar1.Visible = False
-                                  container.Visible = True
+                                      ProgressBar1.Visible = False
+                                  End Sub, MethodInvoker))
+
+                CPList.Clear()
+            Next
+
+            FinishedLoadingInitialCPs = True
+    End Sub
+
+    Sub OfflineMode()
+        BeginInvoke(CType(Sub()
+                              ProgressBar1.Visible = True
+                              container.Visible = False
+                          End Sub, MethodInvoker))
+
+        Dim i As Integer = 0
+        Dim allProgress As Integer = 0
+
+
+        For Each folder In My.Settings.Store_Offline_Directories
+
+            If Directory.Exists(folder) Then
+                Status_lbl.SetText("Accessing themes from folder """ & folder & """")
+                allProgress += Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories).Count
+            End If
+
+        Next
+
+        allProgress *= 2
+
+        For Each folder In My.Settings.Store_Offline_Directories
+
+            If Directory.Exists(folder) Then
+
+                For Each file As String In Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories)
+
+                    Try
+                        If Not CPList.ContainsKey(file) Then
+
+                            Status_lbl.SetText("Enumerating themes: """ & file & """")
+
+                            Using CPx As New CP(CP.CP_Type.File, file)
+                                CPList.Add(file, CPx)
+                            End Using
+                        End If
+                    Catch ex As Exception
+                    End Try
+
+                    i += 1
+
+                    If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
+                Next
+            End If
+        Next
+
+
+        For Each StoreItem In CPList
+            Status_lbl.SetText("Loading theme """ & StoreItem.Value.Info.ThemeName & """")
+
+            Dim ctrl As New StoreItem With {
+                        .FileName = StoreItem.Key,
+                        .CP = StoreItem.Value,
+                        .MD5 = CalculateMD5(StoreItem.Key),
+                        .DoneByWinPaletter = False,
+                        .Size = New Size(w, h),
+                        .URL = New FileInfo(StoreItem.Key).FullName}
+
+            If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
+
+            AddHandler ctrl.Click, AddressOf StoreItem_Clicked
+            AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
+            AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
+            AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
+            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
+
+            BeginInvoke(CType(Sub()
+                                  container.Controls.Add(ctrl)
                               End Sub, MethodInvoker))
 
-            Status_lbl.SetText("")
+            i += 1
 
-            CPList.Clear()
-        End If
+            If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
+        Next
 
+        BeginInvoke(CType(Sub()
+                              ProgressBar1.Visible = False
+                              container.Visible = True
+                          End Sub, MethodInvoker))
+
+        Status_lbl.SetText("")
+
+        CPList.Clear()
 
         FinishedLoadingInitialCPs = True
+    End Sub
+
+    Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
+
+        If My.Settings.Store_Online_or_Offline Then
+            If Not IsNetworkAvailable() Then
+                Status_lbl.SetText(My.Lang.Store_NoNetwork)
+
+                If MsgBox(My.Lang.Store_NoNetwork, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Store_TryOffline) = MsgBoxResult.Yes Then
+                    OfflineMode()
+                    Exit Sub
+                End If
+
+            Else
+                OnlineMode()
+            End If
+
+        Else
+            OfflineMode()
+        End If
 
     End Sub
 
