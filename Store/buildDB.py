@@ -31,7 +31,7 @@ def main():
                     for byte_block in iter(lambda: f.read(4096),b""):
                         md5_hash.update(byte_block)
                 
-                paths = paths + md5_hash.hexdigest() + '|' + 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/' + targetfile + '?raw=true' + '\n'
+                paths = paths + md5_hash.hexdigest() + '|' + 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetfile + '?raw=true' + '\n'
                 path_count = path_count + 1
 
     set_action_output('path_count', path_count)
