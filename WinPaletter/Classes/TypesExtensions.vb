@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
+﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.IO.Compression
@@ -416,6 +415,76 @@ Public Module IntegerExtensions
         End If
 
     End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Long) As String
+        Dim B As Long = 0, KB As Long = 1024, MB As Long = KB * 1024, GB As Long = MB * 1024, TB As Long = GB * 1024
+        Dim size As Double = length
+        Dim suffix As String = My.Lang.ByteSizeUnit
+
+        If length >= TB Then
+            size = Math.Round(CDbl(length) / TB, 2)
+            suffix = My.Lang.TBSizeUnit
+
+        ElseIf length >= GB Then
+            size = Math.Round(CDbl(length) / GB, 2)
+            suffix = My.Lang.GBSizeUnit
+
+        ElseIf length >= MB Then
+            size = Math.Round(CDbl(length) / MB, 2)
+            suffix = My.Lang.MBSizeUnit
+
+        ElseIf length >= KB Then
+            size = Math.Round(CDbl(length) / KB, 2)
+            suffix = My.Lang.KBSizeUnit
+
+        End If
+
+        Return $"{size} {suffix}"
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Short) As String
+        Return SizeString(CLng(length))
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Single) As String
+        Return SizeString(CLng(length))
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Double) As String
+        Return SizeString(CLng(length))
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Decimal) As String
+        Return SizeString(CLng(length))
+    End Function
+
+    '''<summary>
+    '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
+    '''</summary>
+    <Extension()>
+    Public Function SizeString(ByVal length As Integer) As String
+        Return SizeString(CLng(length))
+    End Function
 End Module
 
 Public Module StringExtensions
@@ -734,20 +803,19 @@ Public Module BitmapExtensions
             Exit Function
         End If
 
-        Dim bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
-
-        Using grDest = Graphics.FromImage(bmDest)
-            With grDest
-                .CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
-                .InterpolationMode = Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
-                .PixelOffsetMode = Drawing.Drawing2D.PixelOffsetMode.HighQuality
-                .SmoothingMode = Drawing.Drawing2D.SmoothingMode.AntiAlias
-                .CompositingMode = Drawing.Drawing2D.CompositingMode.SourceOver
-                .DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight)
-            End With
+        Using bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
+            Using grDest = Graphics.FromImage(bmDest)
+                With grDest
+                    .CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
+                    .InterpolationMode = Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+                    .PixelOffsetMode = Drawing.Drawing2D.PixelOffsetMode.HighQuality
+                    .SmoothingMode = Drawing.Drawing2D.SmoothingMode.AntiAlias
+                    .CompositingMode = Drawing.Drawing2D.CompositingMode.SourceOver
+                    .DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight)
+                End With
+            End Using
+            Return bmDest.Clone
         End Using
-
-        Return bmDest
     End Function
 
     '''<summary>

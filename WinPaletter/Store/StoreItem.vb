@@ -49,7 +49,10 @@ Public Class StoreItem : Inherits Panel
 
         Select Case val
             Case 0
-                bmp = New Bitmap(Width, Height)
+                Using x As New Bitmap(Width, Height)
+                    bmp = x.Clone
+                End Using
+
             Case 1
                 bmp = My.Resources.Store_Pattern1
             Case 2
@@ -71,7 +74,10 @@ Public Class StoreItem : Inherits Panel
             Case 10
                 bmp = My.Resources.Store_Pattern10
             Case Else
-                bmp = New Bitmap(Width, Height)
+                Using x As New Bitmap(Width, Height)
+                    bmp = x.Clone
+                End Using
+
         End Select
 
         If Not GetDarkMode() Then bmp = bmp.Invert
@@ -172,6 +178,7 @@ Public Class StoreItem : Inherits Panel
         G.TextRenderingHint = TextRenderingHint.SystemDefault
         DoubleBuffered = True
         G.Clear(GetParentColor)
+
         Dim rect_outer As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 

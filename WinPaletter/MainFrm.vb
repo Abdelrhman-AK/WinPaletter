@@ -6,6 +6,7 @@ Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
+Imports WinPaletter.NativeMethods
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -1656,7 +1657,10 @@ Public Class MainFrm
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                W8_start.Image = My.Application.GetWallpaper.Resize(48, 48)
+                Using wall As New Bitmap(My.Application.GetWallpaper)
+                    W8_start.Image = wall.Resize(48, 48)
+                End Using
+
             Case Else
                 W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
         End Select
@@ -1749,7 +1753,9 @@ Public Class MainFrm
     Public Sub Update_Wallpaper_Preview()
         Cursor = Cursors.AppStarting
 
-        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
+        Using wall As New Bitmap(My.Application.GetWallpaper())
+            My.Wallpaper = wall.Resize(528, 297)
+        End Using
 
         Select Case PreviewConfig
             Case WinVer.W11

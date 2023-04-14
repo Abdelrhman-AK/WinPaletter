@@ -178,7 +178,10 @@ Public Class LogonUI7
             End If
 
         ElseIf XenonRadioButton2.Checked Then
-            bmpX = My.Application.GetWallpaper
+            Using wall As New Bitmap(My.Application.GetWallpaper)
+                bmpX = wall
+            End Using
+
         ElseIf XenonRadioButton3.Checked Then
             bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)
         ElseIf XenonRadioButton4.Checked And IO.File.Exists(XenonTextBox1.Text) Then

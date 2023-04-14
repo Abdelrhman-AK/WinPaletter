@@ -7,7 +7,6 @@ Imports WinPaletter.NativeMethods
 Imports Devcorp.Controls.VisualStyles
 Imports System.Text
 Imports System.Net
-Imports System.Text.RegularExpressions
 
 Public Class Store
 
@@ -1405,32 +1404,23 @@ Public Class Store
     End Sub
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Visible = False
+        Status_pnl.Visible = True
+        Status_lbl.SetText(My.Lang.Store_CleaningFromMemory)
+        Status_lbl.Refresh()
+
         FilesFetcher.CancelAsync()
+        container.Visible = False
         RemoveAllStoreItems(container)
+        container.Visible = True
         Tabs.SelectedIndex = 0
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+        Status_lbl.SetText("")
     End Sub
+
 #End Region
 
 #Region "Backgroundworkers to load Store CPs"
-
-    Private Function Ping(ByVal url As String) As Boolean
-        Try
-            Dim request As HttpWebRequest = CType(HttpWebRequest.Create(url), HttpWebRequest)
-            request.Timeout = 3000
-            request.AllowAutoRedirect = False
-            request.Method = "HEAD"
-
-            Using response = request.GetResponse()
-                Return True
-            End Using
-
-        Catch
-            Return False
-        End Try
-    End Function
-
-
     Sub OnlineMode()
         Dim response As New List(Of String) : response.Clear()
         Dim repos_list As New List(Of String) : repos_list.Clear()
@@ -1441,12 +1431,12 @@ Public Class Store
 
             If Not DB.StartsWith("https://", My._ignore) Then DB &= "https://"
 
-            Status_lbl.SetText("Testing access to """ & DB & """")
+            Status_lbl.SetText(String.Format(My.Lang.Store_Ping, DB))
 
             If Ping(DB) Then
                 repos_list.Add(DB)
             Else
-                Status_lbl.SetText("Couldn't get response from """ & DB & """. Skipping this themes database")
+                Status_lbl.SetText(String.Format(My.Lang.Store_PingFailed, DB))
             End If
 
         Next
@@ -1465,7 +1455,7 @@ Public Class Store
             End If
 
             'Get text of the DB from URL
-            Status_lbl.SetText("Accessing themes database from """ & DB & """")
+            Status_lbl.SetText(String.Format(My.Lang.Store_Accessing, DB))
             response.Clear()
             response = WebCL.DownloadString(DB).CList
             items.Clear()
@@ -1517,11 +1507,11 @@ Public Class Store
                     'If it exists, check MD5, if it is changed, redownload the theme
                     If CalculateMD5(Dir & "\" & FileName) <> MD5 Then
                         File.Delete(Dir & "\" & FileName)
-                        Status_lbl.SetText("Updating theme """ & FileName & """ from """ & URL & """")
+                        Status_lbl.SetText(String.Format(My.Lang.Store_UpdateTheme, FileName, URL))
                         Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
                     End If
                 Else
-                    Status_lbl.SetText("Downloading theme """ & FileName & """ from """ & URL & """")
+                    Status_lbl.SetText(String.Format(My.Lang.Store_DownloadTheme, FileName, URL))
                     Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
                 End If
 
@@ -1531,7 +1521,7 @@ Public Class Store
                 'Convert themes CPs into StoreItems
                 If File.Exists(Dir & "\" & FileName) Then
                     Try
-                        Status_lbl.SetText("Loading theme """ & FileName & """")
+                        Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 
                         Using CP As New CP(CP_Type.File, Dir & "\" & FileName)
 
@@ -1573,13 +1563,13 @@ Public Class Store
 
             'Finalizing
             BeginInvoke(CType(Sub()
-                                      ProgressBar1.Visible = False
-                                  End Sub, MethodInvoker))
+                                  ProgressBar1.Visible = False
+                              End Sub, MethodInvoker))
 
-                CPList.Clear()
-            Next
+            CPList.Clear()
+        Next
 
-            FinishedLoadingInitialCPs = True
+        FinishedLoadingInitialCPs = True
     End Sub
 
     Sub OfflineMode()
@@ -1596,7 +1586,7 @@ Public Class Store
 
             If Directory.Exists(folder) Then
                 Status_lbl.SetText("Accessing themes from folder """ & folder & """")
-                allProgress += Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories).Count
+                allProgress += Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store_Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly)).Count
             End If
 
         Next
@@ -1607,7 +1597,7 @@ Public Class Store
 
             If Directory.Exists(folder) Then
 
-                For Each file As String In Directory.GetFiles(folder, "*.wpth", SearchOption.AllDirectories)
+                For Each file As String In Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store_Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly))
 
                     Try
                         If Not CPList.ContainsKey(file) Then
@@ -1688,6 +1678,10 @@ Public Class Store
             OfflineMode()
         End If
 
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+
+        My.Animator.HideSync(Status_pnl)
     End Sub
 
     Private Sub FilesFetcher_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles FilesFetcher.ProgressChanged
@@ -1736,9 +1730,9 @@ Public Class Store
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
                     MD5_lbl.Text = .MD5
-                    themeSize_lbl.Text = Math.Round(My.Computer.FileSystem.GetFileInfo(.FileName).Length / 1024, 2) & " " & My.Lang.KBSizeUnit
-                    Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, "There is no included data")
-                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL, "There is no included data")
+                    themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
+                    Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
+                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
                     Dim os_list As New List(Of String)
@@ -2152,14 +2146,14 @@ Public Class Store
 #Region "   Links"
     Private Sub Author_link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Author_link.LinkClicked
         Try
-            If (Uri.IsWellFormedUriString(Author_link.Text, UriKind.Absolute)) And Author_link.Text.Contains(" ") Then Process.Start(Author_link.Text)
+            If (Uri.IsWellFormedUriString(Author_link.Text, UriKind.Absolute)) And Not Author_link.Text.Contains(" ") Then Process.Start(Author_link.Text)
         Catch
         End Try
     End Sub
 
     Private Sub Download_Link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Download_Link.LinkClicked
         Try
-            If (Uri.IsWellFormedUriString(Download_Link.Text, UriKind.Absolute)) And Download_Link.Text.Contains(" ") Then Process.Start(Download_Link.Text)
+            If (Uri.IsWellFormedUriString(Download_Link.Text, UriKind.Absolute)) And Not Download_Link.Text.Contains(" ") Then Process.Start(Download_Link.Text)
         Catch
         End Try
     End Sub
@@ -2353,8 +2347,6 @@ Public Class Store
             Location = newPoint
         End If
     End Sub
-
-
 #End Region
 
 End Class

@@ -172,7 +172,7 @@ Public Class Reg_IO
         process.Start()
         process.WaitForExit()
     End Sub
-    Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False, Optional IfNothingReturnDefaultValue As Boolean = False) As Object
+    Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False, Optional IfNothingReturnDefaultValue As Boolean = True) As Object
         Try
             Dim val As Object = Registry.GetValue(KeyName, ValueName, DefaultValue)
             Return If(IfNothingReturnDefaultValue AndAlso val Is Nothing, DefaultValue, val)

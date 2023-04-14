@@ -154,8 +154,12 @@ Public Class Localizer : Implements IDisposable
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save settings?"
     Property SettingsSaved As String = "Settings are saved"
+    Property TBSizeUnit As String = "TB"
+    Property GBSizeUnit As String = "GB"
     Property MBSizeUnit As String = "MB"
     Property KBSizeUnit As String = "KB"
+    Property ByteSizeUnit As String = "B"
+
     Property Stable As String = "Stable"
     Property Beta As String = "Beta"
     Property Channel As String = "Channel"
@@ -377,7 +381,15 @@ Public Class Localizer : Implements IDisposable
 
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
     Property Store_NoNetwork As String = "No internet connection"
-    Property Store_TryOffline As String = "Press ""Yes"" if you want to continue in offline Store mode. You can select its folders from Settings > Store."
+    Property Store_TryOffline As String = "Press 'Yes' if you want to continue in offline Store mode. You can select its folders from Settings > Store."
+    Property Store_Ping As String = "Testing access to ""{0}"""
+    Property Store_PingFailed As String = "Couldn't get response from ""{0}"". Skipping this themes database"
+    Property Store_Accessing As String = "Accessing themes database from ""{0}"""
+    Property Store_UpdateTheme As String = "Updating theme ""{0}"" from ""{1}"""
+    Property Store_DownloadTheme As String = "Downloading theme ""{0}"" from ""{1}"""
+    Property Store_LoadingTheme As String = "Loading theme ""{0}"""
+    Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
+    Property Store_NoIncludedData As String = "There is no included data"
 
 #End Region
 

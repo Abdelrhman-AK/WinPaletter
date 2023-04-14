@@ -423,33 +423,42 @@ Namespace My
 
 #Region "   Wallpaper and User Preferences System"
         Public Function GetWallpaper() As Bitmap
+
+            Dim WallpaperPath As String
+
             'Gets Wallpaper Path
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-            Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
-            If R1 IsNot Nothing Then R1.Close()
+            Using R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
+                WallpaperPath = R1.GetValue("Wallpaper").ToString()
+            End Using
 
             'Gets Wallpaper Type (Valid only for Windows 10\11)
             Dim WallpaperType As Integer = 0
+
             If Not W7 And Not W8 And Not WVista And Not WXP Then
                 Try
-                    Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
-                    If R2.GetValue("BackgroundType", Nothing) Is Nothing Then R2.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-                    WallpaperType = R2.GetValue("BackgroundType")
-                    If R2 IsNot Nothing Then R2.Close()
+                    Using R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
+                        WallpaperType = R2.GetValue("BackgroundType", 0)
+                    End Using
                 Catch
                 End Try
             End If
 
-            Dim img As Bitmap
+            Dim img As New Bitmap(100, 100)
             If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
-                Dim x As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
-                img = New Bitmap(Image.FromStream(x))
-                x.Close()
+                Using ms As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
+                    Using bmp As New Bitmap(Image.FromStream(ms))
+                        img = bmp.Clone
+                    End Using
+                    ms.Dispose
+                End Using
             Else
                 With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
                     img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
                 End With
             End If
+
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
 
             Return img
         End Function
@@ -537,7 +546,9 @@ Namespace My
             Invoke(UpdateDarkModeInvoker)
         End Sub
         Sub Wallpaper_Changed()
-            Wallpaper = GetWallpaper().Resize(528, 297)
+            Using wall As New Bitmap(GetWallpaper())
+                Wallpaper = wall.Resize(528, 297)
+            End Using
             Invoke(UpdateWallpaperInvoker)
         End Sub
 #End Region
@@ -685,7 +696,9 @@ Namespace My
                 End If
             Next
 
-            Wallpaper = GetWallpaper().Resize(528, 297)
+            Using wall As New Bitmap(GetWallpaper())
+                Wallpaper = wall.Resize(528, 297)
+            End Using
 
             If Not My.WXP Then
                 Try

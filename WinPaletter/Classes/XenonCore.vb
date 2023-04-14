@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.Net.NetworkInformation
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports Ookii.Dialogs.WinForms
@@ -8,6 +7,7 @@ Imports WinPaletter.NativeMethods
 Imports System.Drawing.Imaging
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports System.Net
 
 Public Class XenonCore
 
@@ -116,7 +116,21 @@ Public Class XenonCore
     Public Shared Function IsNetworkAvailable() As Boolean
         Return Wininet.CheckNet
     End Function
+    Public Shared Function Ping(ByVal url As String) As Boolean
+        Try
+            Dim request As HttpWebRequest = CType(HttpWebRequest.Create(url), HttpWebRequest)
+            request.Timeout = 3000
+            request.AllowAutoRedirect = False
+            request.Method = "HEAD"
 
+            Using response = request.GetResponse()
+                Return True
+            End Using
+
+        Catch
+            Return False
+        End Try
+    End Function
     Public Shared Function GetWindowsScreenScalingFactor(ByVal Optional percentage As Boolean = True) As Double
         Dim GraphicsObject As Graphics = Graphics.FromHwnd(IntPtr.Zero)
         Dim DeviceContextHandle As IntPtr = GraphicsObject.GetHdc()

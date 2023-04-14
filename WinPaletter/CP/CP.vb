@@ -5517,7 +5517,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmpList.Add([LogonElement].Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case LogonUI_Modes.Wallpaper
-                    bmpList.Add(My.Application.GetWallpaper)
+                    Using wall As New Bitmap(My.Application.GetWallpaper)
+                        bmpList.Add(wall)
+                    End Using
 
             End Select
 
@@ -5594,7 +5596,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmp = LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size)
 
                 Case LogonUI_Modes.Wallpaper
-                    bmp = My.Application.GetWallpaper
+                    Using wall As New Bitmap(My.Application.GetWallpaper)
+                        bmp = wall
+                    End Using
+
             End Select
 
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
