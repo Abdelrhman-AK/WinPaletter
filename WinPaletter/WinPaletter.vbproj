@@ -562,6 +562,16 @@
     <None Include="Resources\checker_disabled.png" />
     <None Include="Resources\checker_enabled.png" />
     <None Include="Resources\checker_disabled.png" />
+    <None Include="Resources\CF_Pie_Red-green_red weak_protanopia.png" />
+    <None Include="Resources\CF_Img_Blue-yellow_tritanopia.png" />
+    <None Include="Resources\CF_Img_Grayscale.png" />
+    <None Include="Resources\CF_Img_Normal.png" />
+    <None Include="Resources\CF_Img_Red-green_green_weak_deuteranopia.png" />
+    <None Include="Resources\CF_Img_Red-green_red_weak_protanopia.png" />
+    <None Include="Resources\CF_Pie_Blue-yellow _tritanopia.png" />
+    <None Include="Resources\CF_Pie_Grayscale.png" />
+    <None Include="Resources\CF_Pie_Normal.png" />
+    <None Include="Resources\CF_Pie_Red-green_green weak_deuteranopia.png" />
     <Content Include="Resources\CMD_10x18.png" />
     <Content Include="Resources\CMD_10x18_P.png" />
     <Content Include="Resources\CMD_12x16.png" />

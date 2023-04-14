@@ -51,7 +51,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Ribbon
         Bar
     End Enum
-
     Enum ApplyAccentonTaskbar_Level
         None
         Taskbar_Start_AC
@@ -90,14 +89,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Fade
         Scroll
     End Enum
-
     Enum AltTabStyles
         [Default]
         ClassicNT
         Placeholder
         EP_Win10
     End Enum
+    Enum ColorFilters
+        Grayscale
+        Inverted
+        GrayscaleInverted
+        RedGreen_deuteranopia
+        RedGreen_protanopia
+        BlueYellow
+    End Enum
 #End Region
+
     Public Class Structures
         Structure Info : Implements ICloneable
             Public AppVersion As String
@@ -1554,6 +1561,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Win11ExplorerBar As ExplorerBar
             Public DisableNavBar As Boolean
 
+            Public AutoHideScrollBars As Boolean
+            Public ColorFilter_Enabled As Boolean
+            Public ColorFilter As ColorFilters
+
             Sub Load(_DefEffects As WinEffects)
                 Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", True)
 
@@ -1643,6 +1654,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     DisableNavBar = _DefEffects.DisableNavBar
                 End Try
 
+                AutoHideScrollBars = GetReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", _DefEffects.AutoHideScrollBars)
+
+                ColorFilter_Enabled = GetReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", _DefEffects.ColorFilter_Enabled)
+                ColorFilter = GetReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", _DefEffects.ColorFilter)
             End Sub
 
             Sub Apply()
@@ -1679,12 +1694,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
 
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled)
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", CInt(ColorFilter))
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", If(ColorFilter_Enabled, "colorfiltering", ""), RegistryValueKind.String)
+
                     If My.Settings.UPM_HKU_DEFAULT Then
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton.ToInteger)
-
                     End If
 
                     If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
@@ -1762,6 +1782,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         End If
                     Catch
                     End Try
+
+
                 End If
             End Sub
 
@@ -1813,6 +1835,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_Win11BootDots= " & Win11BootDots)
                 tx.Add("*WinEffects_Win11ExplorerBar= " & Win11ExplorerBar)
                 tx.Add("*WinEffects_DisableNavBar= " & DisableNavBar)
+                tx.Add("*WinEffects_AutoHideScrollBars= " & AutoHideScrollBars)
+                tx.Add("*WinEffects_ColorFilter_Enabled= " & ColorFilter_Enabled)
+                tx.Add("*WinEffects_ColorFilter= " & CInt(ColorFilter))
+
                 tx.Add("</WindowsEffects>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -1834,7 +1860,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public SmCaptionHeight As Integer
             Public SmCaptionWidth As Integer
             Public DesktopIconSize As Integer
+
             Public ShellIconSize As Integer
+            Public ShellSmallIconSize As Integer
+            Public ShellIconBPP As Integer
+
             Public CaptionFont As Font
             Public IconFont As Font
             Public MenuFont As Font
@@ -1890,12 +1920,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 SmCaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
                 SmCaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
 
-                'Try is a must here, "ShellIconSize" is sometimes empty and VB won't be able to convert it to integer
-                Try
-                    ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
-                Catch
-                    ShellIconSize = _DefMetricsFonts.ShellIconSize
-                End Try
+                ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+                ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
+                ShellIconBPP = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", _DefMetricsFonts.ShellIconBPP)
 
                 DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
                 CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
@@ -1985,6 +2012,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", ShellIconBPP, RegistryValueKind.String)
+
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
                     If My.Settings.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
@@ -2007,6 +2037,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", ShellIconBPP, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
                     End If
 
@@ -2061,6 +2093,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metrics_SmCaptionWidth= " & SmCaptionWidth)
                 tx.Add("*Metrics_DesktopIconSize= " & DesktopIconSize)
                 tx.Add("*Metrics_ShellIconSize= " & ShellIconSize)
+                tx.Add("*Metrics_ShellSmallIconSize= " & ShellSmallIconSize)
+                tx.Add("*Metrics_ShellIconBPP= " & ShellIconBPP)
                 tx.Add("*FontSubstitute_MSShellDlg= " & FontSubstitute_MSShellDlg)
                 tx.Add("*FontSubstitute_MSShellDlg2= " & FontSubstitute_MSShellDlg2)
                 tx.Add("*FontSubstitute_SegoeUI= " & FontSubstitute_SegoeUI)
@@ -3151,7 +3185,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .AWT_BringActivatedWindowToTop = False,
         .Win11BootDots = Not My.W11,
         .Win11ExplorerBar = ExplorerBar.Default,
-        .DisableNavBar = False}
+        .DisableNavBar = False,
+        .AutoHideScrollBars = True}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
@@ -3169,6 +3204,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .SmCaptionWidth = 22,
                 .DesktopIconSize = 48,
                 .ShellIconSize = 32,
+                .ShellSmallIconSize = 16,
+                .ShellIconBPP = 32,
                 .CaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .IconFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .MenuFont = New Font("Segoe UI", 9, FontStyle.Regular),
@@ -4861,6 +4898,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*WinEffects_Win11BootDots= ", My._ignore) Then WindowsEffects.Win11BootDots = lin.Remove(0, "*WinEffects_Win11BootDots= ".Count)
                     If lin.StartsWith("*WinEffects_Win11ExplorerBar= ", My._ignore) Then WindowsEffects.Win11ExplorerBar = lin.Remove(0, "*WinEffects_Win11ExplorerBar= ".Count)
                     If lin.StartsWith("*WinEffects_DisableNavBar= ", My._ignore) Then WindowsEffects.DisableNavBar = lin.Remove(0, "*WinEffects_DisableNavBar= ".Count)
+                    If lin.StartsWith("*WinEffects_AutoHideScrollBars= ", My._ignore) Then WindowsEffects.AutoHideScrollBars = lin.Remove(0, "*WinEffects_AutoHideScrollBars= ".Count)
+                    If lin.StartsWith("*WinEffects_ColorFilter_Enabled= ", My._ignore) Then WindowsEffects.ColorFilter_Enabled = lin.Remove(0, "*WinEffects_ColorFilter_Enabled= ".Count)
+                    If lin.StartsWith("*WinEffects_ColorFilter= ", My._ignore) Then WindowsEffects.ColorFilter = lin.Remove(0, "*WinEffects_ColorFilter= ".Count)
 #End Region
 
 #Region "Metrics & Fonts"
@@ -4879,8 +4919,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Metrics_SmCaptionWidth= ", My._ignore) Then MetricsFonts.SmCaptionWidth = lin.Remove(0, "*Metrics_SmCaptionWidth= ".Count)
                     If lin.StartsWith("*Metrics_DesktopIconSize= ", My._ignore) Then MetricsFonts.DesktopIconSize = lin.Remove(0, "*Metrics_DesktopIconSize= ".Count)
                     If lin.StartsWith("*Metrics_ShellIconSize= ", My._ignore) Then MetricsFonts.ShellIconSize = lin.Remove(0, "*Metrics_ShellIconSize= ".Count)
+                    If lin.StartsWith("*Metrics_ShellSmallIconSize= ", My._ignore) Then MetricsFonts.ShellSmallIconSize = lin.Remove(0, "*Metrics_ShellSmallIconSize= ".Count)
+                    If lin.StartsWith("*Metrics_ShellIconBPP= ", My._ignore) Then MetricsFonts.ShellIconBPP = lin.Remove(0, "*Metrics_ShellIconBPP= ".Count)
                     If lin.StartsWith("*Fonts_", My._ignore) Then fonts.Add(lin.Remove(0, "*Fonts_".Count))
-
                     If lin.StartsWith("*FontSubstitute_MSShellDlg= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
                     If lin.StartsWith("*FontSubstitute_MSShellDlg2= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
                     If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._ignore) Then MetricsFonts.FontSubstitute_SegoeUI = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)

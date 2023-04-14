@@ -7,154 +7,6 @@ Public Class SettingsX
     Public _File As String = Nothing
     Dim Changed As Boolean = False
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        Me.Close()
-    End Sub
-
-    Private Sub SettingsX_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        XenonComboBox2.Items.Clear()
-        XenonComboBox2.Items.Add(My.Lang.Stable)
-        XenonComboBox2.Items.Add(My.Lang.Beta)
-        ApplyDarkMode(Me)
-        LoadSettings()
-
-        Dim w As Integer = 19
-        EP_Start_11.Image = My.Resources.Native11.Resize(w, w)
-        EP_Start_10.Image = My.Resources.Native10.Resize(w, w)
-        EP_Taskbar_11.Image = EP_Start_11.Image
-        EP_Taskbar_10.Image = EP_Start_10.Image
-
-        If GetDarkMode() Then
-            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Resize(w, w)
-            EP_ORB_10.Image = My.Resources.StartBtn_10Dark.Resize(w, w)
-        Else
-            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Invert.Resize(w, w)
-            EP_ORB_10.Image = My.Resources.StartBtn_10Light.Resize(w, w)
-        End If
-
-        If My.WXP Then
-            XenonAlertBox17.Visible = True
-            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
-
-        ElseIf My.WVista Then
-            XenonAlertBox17.Visible = True
-            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
-        End If
-
-        Label38.Font = My.Application.ConsoleFontMedium
-    End Sub
-
-    Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        Dim NewSets As New XeSettings(XeSettings.Mode.Empty)
-
-        Changed = False
-
-        With My.[Settings]
-            If .AutoAddExt <> XenonCheckBox1.Checked Then Changed = True
-            If .DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
-            If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
-            If .AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
-            If .AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
-            If .ResetCursorsToAero <> XenonCheckBox16.Checked Then Changed = True
-            If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
-            If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
-            If .SaveForLegacyWP <> XenonCheckBox4.Checked Then Changed = True
-            If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
-            If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
-
-            If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
-            If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
-            If .Appearance_Custom <> appearance_enabled.Checked Then Changed = True
-            If .Appearance_Custom_Dark <> appearance_dark.Checked Then Changed = True
-            If .Appearance_Rounded <> appearance_rounded.Checked Then Changed = True
-            If .Appearance_Accent <> appearance_accent.BackColor Then Changed = True
-            If .Appearance_Back <> appearance_backcolor.BackColor Then Changed = True
-
-            If .Language <> XenonCheckBox8.Checked Then Changed = True
-            If .Language_File <> XenonTextBox3.Text Then Changed = True
-            If .Nerd_Stats <> XenonCheckBox10.Checked Then Changed = True
-            If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then Changed = True
-            If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
-            If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
-            If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
-            If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
-            If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
-            If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
-            If .CMD_OverrideUserPreferences <> XenonCheckBox15.Checked Then Changed = True
-
-            If .Log_ShowApplying <> XenonCheckBox19.Checked Then Changed = True
-            If .Log_Countdown_Enabled <> XenonCheckBox18.Checked Then Changed = True
-            If .Log_Countdown <> XenonNumericUpDown1.Value Then Changed = True
-
-            If .EP_Enabled <> XenonCheckBox20.Checked Then Changed = True
-            If .EP_Enabled_Force <> XenonCheckBox21.Checked Then Changed = True
-            If .EP_UseStart10 <> EP_Start_10.Checked Then Changed = True
-            If .EP_StartStyle <> EP_Start_10_Type.SelectedIndex Then Changed = True
-            If .EP_UseTaskbar10 <> EP_Taskbar_10.Checked Then Changed = True
-            If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then Changed = True
-
-            If .DelayMetrics <> XenonCheckBox22.Checked Then Changed = True
-
-            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton5.Checked Then Changed = True
-            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton6.Checked Then Changed = True
-
-            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton8.Checked Then Changed = True
-            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton10.Checked Then Changed = True
-            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton9.Checked Then Changed = True
-            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase And Not XenonRadioButton7.Checked Then Changed = True
-            If .UPM_HKU_DEFAULT <> XenonCheckBox25.Checked Then Changed = True
-            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton12.Checked Then Changed = True
-            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton11.Checked Then Changed = True
-            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton14.Checked Then Changed = True
-            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton13.Checked Then Changed = True
-            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton16.Checked Then Changed = True
-            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton15.Checked Then Changed = True
-            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton18.Checked Then Changed = True
-            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton17.Checked Then Changed = True
-            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton20.Checked Then Changed = True
-            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton19.Checked Then Changed = True
-            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton22.Checked Then Changed = True
-            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton23.Checked Then Changed = True
-            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton21.Checked Then Changed = True
-
-            If .Store_Online_or_Offline And Not XenonRadioImage1.Checked Then Changed = True
-            If Not .Store_Online_or_Offline And Not XenonRadioImage2.Checked Then Changed = True
-
-            If .Store_Search_ThemeNames <> XenonCheckBox28.Checked Then Changed = True
-            If .Store_Search_Descriptions <> XenonCheckBox26.Checked Then Changed = True
-            If .Store_Search_AuthorsNames <> XenonCheckBox27.Checked Then Changed = True
-            If .Store_Offline_SubFolders <> XenonCheckBox29.Checked Then Changed = True
-        End With
-
-        If e.CloseReason = CloseReason.UserClosing And Changed Then
-            Select Case MsgBox(My.Lang.SaveMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
-                Case DialogResult.Cancel
-                    e.Cancel = True
-                Case DialogResult.Yes
-                    SaveSettings()
-                    _External = False
-                    _File = Nothing
-                    e.Cancel = False
-                    MyBase.OnFormClosing(e)
-                Case DialogResult.No
-                    _External = False
-                    _File = Nothing
-                    e.Cancel = False
-                    MyBase.OnFormClosing(e)
-            End Select
-        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
-            e.Cancel = False
-            MyBase.OnFormClosing(e)
-        End If
-    End Sub
-
-    Function CalcStoreCache() As Integer
-        If IO.Directory.Exists(My.PATH_StoreCache) Then
-            Return Directory.EnumerateFiles(My.PATH_StoreCache, "*", SearchOption.AllDirectories).Sum(Function(fileInfo) New FileInfo(fileInfo).Length)
-        Else
-            Return 0
-        End If
-    End Function
 
     Sub LoadSettings()
         Dim sets As XeSettings
@@ -174,7 +26,114 @@ Public Class SettingsX
         If _External Then OpenFileDialog1.FileName = _File
         XenonTextBox3.Text = My.[Settings].Language_File
     End Sub
+    Sub Read(Sets As XeSettings)
+        With Sets
+            XenonCheckBox1.Checked = .AutoAddExt
 
+            XenonCheckBox3.Checked = .DragAndDropPreview
+            XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
+            XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+
+            XenonCheckBox2.Checked = .AutoRestartExplorer
+            XenonCheckBox7.Checked = .AutoApplyCursors
+            XenonCheckBox16.Checked = .ResetCursorsToAero
+
+            XenonCheckBox5.Checked = .AutoUpdatesChecking
+            XenonCheckBox9.Checked = .Win7LivePreview
+
+            XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+            XenonCheckBox17.Checked = .ShowSaveConfirmation
+            XenonCheckBox4.Checked = .SaveForLegacyWP
+
+            XenonRadioButton3.Checked = .Appearance_Dark
+            XenonRadioButton4.Checked = Not .Appearance_Dark
+            XenonCheckBox6.Checked = .Appearance_Auto
+
+            appearance_enabled.Checked = .Appearance_Custom
+            If appearance_list.Items.Contains(.Appearance_SchemeName) Then appearance_list.SelectedItem = .Appearance_SchemeName
+            appearance_dark.Checked = .Appearance_Custom_Dark
+            appearance_accent.BackColor = .Appearance_Accent
+            appearance_backcolor.BackColor = .Appearance_Back
+            appearance_rounded.Checked = .Appearance_Rounded
+
+            XenonCheckBox8.Checked = .Language
+            XenonTextBox3.Text = .Language_File
+
+            XenonCheckBox10.Checked = .Nerd_Stats
+            XenonCheckBox11.Checked = .Nerd_Stats_HexHash
+            XenonCheckBox12.Checked = .Terminal_Bypass
+            XenonCheckBox13.Checked = .Terminal_OtherFonts
+            XenonCheckBox14.Checked = .Terminal_Path_Deflection
+            XenonTextBox1.Text = .Terminal_Stable_Path
+            XenonTextBox2.Text = .Terminal_Preview_Path
+            XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
+
+            Select Case .Nerd_Stats_Kind
+                Case XeSettings.Nerd_Stats_Type.HEX
+                    XenonComboBox3.SelectedIndex = 0
+                Case XeSettings.Nerd_Stats_Type.RGB
+                    XenonComboBox3.SelectedIndex = 1
+                Case XeSettings.Nerd_Stats_Type.HSL
+                    XenonComboBox3.SelectedIndex = 2
+                Case XeSettings.Nerd_Stats_Type.Dec
+                    XenonComboBox3.SelectedIndex = 3
+            End Select
+
+            XenonCheckBox19.Checked = .Log_ShowApplying
+            XenonCheckBox18.Checked = .Log_Countdown_Enabled
+            XenonNumericUpDown1.Value = .Log_Countdown
+
+            XenonCheckBox20.Checked = .EP_Enabled
+            XenonCheckBox21.Checked = .EP_Enabled_Force
+            EP_Start_10.Checked = .EP_UseStart10
+            EP_Start_11.Checked = Not .EP_UseStart10
+            EP_Start_10_Type.SelectedIndex = .EP_StartStyle
+            EP_Taskbar_10.Checked = .EP_UseTaskbar10
+            EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
+            EP_ORB_10.Checked = .EP_TaskbarButton10
+            EP_ORB_11.Checked = Not .EP_TaskbarButton10
+
+            XenonCheckBox22.Checked = .DelayMetrics
+
+            XenonRadioButton5.Checked = .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton6.Checked = Not (.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton8.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
+            XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
+            XenonCheckBox25.Checked = .UPM_HKU_DEFAULT
+            XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton13.Checked = Not (.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton16.Checked = .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton15.Checked = Not (.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton18.Checked = .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
+            XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
+            XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
+            XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
+
+            Label38.Text = CalcStoreCache().SizeString
+            XenonRadioImage1.Checked = .Store_Online_or_Offline
+            XenonRadioImage2.Checked = Not .Store_Online_or_Offline
+            ListBox1.Items.Clear()
+            For Each x In .Store_Online_Repositories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox1.Items.Add(x)
+            Next
+            ListBox2.Items.Clear()
+            For Each x In .Store_Offline_Directories
+                If Not String.IsNullOrWhiteSpace(x) Then ListBox2.Items.Add(x)
+            Next
+
+            XenonCheckBox28.Checked = .Store_Search_ThemeNames
+            XenonCheckBox26.Checked = .Store_Search_Descriptions
+            XenonCheckBox27.Checked = .Store_Search_AuthorsNames
+            XenonCheckBox29.Checked = .Store_Offline_SubFolders
+        End With
+    End Sub
     Sub SaveSettings()
         Cursor = Cursors.WaitCursor
 
@@ -285,16 +244,6 @@ Public Class SettingsX
 
         MsgBox(My.Lang.SettingsSaved, MsgBoxStyle.Information)
     End Sub
-
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
-        SaveSettings()
-        Me.Close()
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        SaveSettings()
-    End Sub
-
     Sub Write(Sets As XeSettings, Mode As XeSettings.Mode, Optional File As String = "")
         With Sets
             .AutoAddExt = XenonCheckBox1.Checked
@@ -370,114 +319,163 @@ Public Class SettingsX
             .Save(Mode, File)
         End With
     End Sub
+    Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
+        Dim NewSets As New XeSettings(XeSettings.Mode.Empty)
 
-    Sub Read(Sets As XeSettings)
-        With Sets
-            XenonCheckBox1.Checked = .AutoAddExt
+        Changed = False
 
-            XenonCheckBox3.Checked = .DragAndDropPreview
-            XenonRadioButton1.Checked = .OpeningPreviewInApp_or_AppliesIt
-            XenonRadioButton2.Checked = Not .OpeningPreviewInApp_or_AppliesIt
+        With My.[Settings]
+            If .AutoAddExt <> XenonCheckBox1.Checked Then Changed = True
+            If .DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
+            If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
+            If .AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
+            If .AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
+            If .ResetCursorsToAero <> XenonCheckBox16.Checked Then Changed = True
+            If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
+            If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
+            If .SaveForLegacyWP <> XenonCheckBox4.Checked Then Changed = True
+            If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
+            If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
 
-            XenonCheckBox2.Checked = .AutoRestartExplorer
-            XenonCheckBox7.Checked = .AutoApplyCursors
-            XenonCheckBox16.Checked = .ResetCursorsToAero
+            If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
+            If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
+            If .Appearance_Custom <> appearance_enabled.Checked Then Changed = True
+            If .Appearance_Custom_Dark <> appearance_dark.Checked Then Changed = True
+            If .Appearance_Rounded <> appearance_rounded.Checked Then Changed = True
+            If .Appearance_Accent <> appearance_accent.BackColor Then Changed = True
+            If .Appearance_Back <> appearance_backcolor.BackColor Then Changed = True
 
-            XenonCheckBox5.Checked = .AutoUpdatesChecking
-            XenonCheckBox9.Checked = .Win7LivePreview
+            If .Language <> XenonCheckBox8.Checked Then Changed = True
+            If .Language_File <> XenonTextBox3.Text Then Changed = True
+            If .Nerd_Stats <> XenonCheckBox10.Checked Then Changed = True
+            If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then Changed = True
+            If .Nerd_Stats_HexHash <> XenonCheckBox11.Checked Then Changed = True
+            If .Terminal_Bypass <> XenonCheckBox12.Checked Then Changed = True
+            If .Terminal_OtherFonts <> XenonCheckBox13.Checked Then Changed = True
+            If .Terminal_Path_Deflection <> XenonCheckBox14.Checked Then Changed = True
+            If .Terminal_Stable_Path <> XenonTextBox1.Text Then Changed = True
+            If .Terminal_Preview_Path <> XenonTextBox2.Text Then Changed = True
+            If .CMD_OverrideUserPreferences <> XenonCheckBox15.Checked Then Changed = True
 
-            XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
-            XenonCheckBox17.Checked = .ShowSaveConfirmation
-            XenonCheckBox4.Checked = .SaveForLegacyWP
+            If .Log_ShowApplying <> XenonCheckBox19.Checked Then Changed = True
+            If .Log_Countdown_Enabled <> XenonCheckBox18.Checked Then Changed = True
+            If .Log_Countdown <> XenonNumericUpDown1.Value Then Changed = True
 
-            XenonRadioButton3.Checked = .Appearance_Dark
-            XenonRadioButton4.Checked = Not .Appearance_Dark
-            XenonCheckBox6.Checked = .Appearance_Auto
+            If .EP_Enabled <> XenonCheckBox20.Checked Then Changed = True
+            If .EP_Enabled_Force <> XenonCheckBox21.Checked Then Changed = True
+            If .EP_UseStart10 <> EP_Start_10.Checked Then Changed = True
+            If .EP_StartStyle <> EP_Start_10_Type.SelectedIndex Then Changed = True
+            If .EP_UseTaskbar10 <> EP_Taskbar_10.Checked Then Changed = True
+            If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then Changed = True
 
-            appearance_enabled.Checked = .Appearance_Custom
-            If appearance_list.Items.Contains(.Appearance_SchemeName) Then appearance_list.SelectedItem = .Appearance_SchemeName
-            appearance_dark.Checked = .Appearance_Custom_Dark
-            appearance_accent.BackColor = .Appearance_Accent
-            appearance_backcolor.BackColor = .Appearance_Back
-            appearance_rounded.Checked = .Appearance_Rounded
+            If .DelayMetrics <> XenonCheckBox22.Checked Then Changed = True
 
-            XenonCheckBox8.Checked = .Language
-            XenonTextBox3.Text = .Language_File
+            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton5.Checked Then Changed = True
+            If .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton6.Checked Then Changed = True
 
-            XenonCheckBox10.Checked = .Nerd_Stats
-            XenonCheckBox11.Checked = .Nerd_Stats_HexHash
-            XenonCheckBox12.Checked = .Terminal_Bypass
-            XenonCheckBox13.Checked = .Terminal_OtherFonts
-            XenonCheckBox14.Checked = .Terminal_Path_Deflection
-            XenonTextBox1.Text = .Terminal_Stable_Path
-            XenonTextBox2.Text = .Terminal_Preview_Path
-            XenonCheckBox15.Checked = .CMD_OverrideUserPreferences
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton8.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton10.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton9.Checked Then Changed = True
+            If .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase And Not XenonRadioButton7.Checked Then Changed = True
+            If .UPM_HKU_DEFAULT <> XenonCheckBox25.Checked Then Changed = True
+            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton12.Checked Then Changed = True
+            If .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton11.Checked Then Changed = True
+            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton14.Checked Then Changed = True
+            If .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton13.Checked Then Changed = True
+            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton16.Checked Then Changed = True
+            If .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton15.Checked Then Changed = True
+            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton18.Checked Then Changed = True
+            If .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton17.Checked Then Changed = True
+            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton20.Checked Then Changed = True
+            If .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton19.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite And Not XenonRadioButton22.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults And Not XenonRadioButton23.Checked Then Changed = True
+            If .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange And Not XenonRadioButton21.Checked Then Changed = True
 
-            Select Case .Nerd_Stats_Kind
-                Case XeSettings.Nerd_Stats_Type.HEX
-                    XenonComboBox3.SelectedIndex = 0
-                Case XeSettings.Nerd_Stats_Type.RGB
-                    XenonComboBox3.SelectedIndex = 1
-                Case XeSettings.Nerd_Stats_Type.HSL
-                    XenonComboBox3.SelectedIndex = 2
-                Case XeSettings.Nerd_Stats_Type.Dec
-                    XenonComboBox3.SelectedIndex = 3
-            End Select
+            If .Store_Online_or_Offline And Not XenonRadioImage1.Checked Then Changed = True
+            If Not .Store_Online_or_Offline And Not XenonRadioImage2.Checked Then Changed = True
 
-            XenonCheckBox19.Checked = .Log_ShowApplying
-            XenonCheckBox18.Checked = .Log_Countdown_Enabled
-            XenonNumericUpDown1.Value = .Log_Countdown
-
-            XenonCheckBox20.Checked = .EP_Enabled
-            XenonCheckBox21.Checked = .EP_Enabled_Force
-            EP_Start_10.Checked = .EP_UseStart10
-            EP_Start_11.Checked = Not .EP_UseStart10
-            EP_Start_10_Type.SelectedIndex = .EP_StartStyle
-            EP_Taskbar_10.Checked = .EP_UseTaskbar10
-            EP_Taskbar_11.Checked = Not .EP_UseTaskbar10
-            EP_ORB_10.Checked = .EP_TaskbarButton10
-            EP_ORB_11.Checked = Not .EP_TaskbarButton10
-
-            XenonCheckBox22.Checked = .DelayMetrics
-
-            XenonRadioButton5.Checked = .ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton6.Checked = Not (.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton8.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton10.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.DontChange
-            XenonRadioButton9.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults
-            XenonRadioButton7.Checked = .ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase
-            XenonCheckBox25.Checked = .UPM_HKU_DEFAULT
-            XenonRadioButton12.Checked = .Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton11.Checked = Not (.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton14.Checked = .Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton13.Checked = Not (.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton16.Checked = .CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton15.Checked = Not (.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton18.Checked = .PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton17.Checked = Not (.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton20.Checked = .PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton19.Checked = Not (.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite)
-            XenonRadioButton22.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite
-            XenonRadioButton23.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults
-            XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
-
-            Label38.Text = CalcStoreCache().SizeString
-            XenonRadioImage1.Checked = .Store_Online_or_Offline
-            XenonRadioImage2.Checked = Not .Store_Online_or_Offline
-            ListBox1.Items.Clear()
-            For Each x In .Store_Online_Repositories
-                If Not String.IsNullOrWhiteSpace(x) Then ListBox1.Items.Add(x)
-            Next
-            ListBox2.Items.Clear()
-            For Each x In .Store_Offline_Directories
-                If Not String.IsNullOrWhiteSpace(x) Then ListBox2.Items.Add(x)
-            Next
-
-            XenonCheckBox28.Checked = .Store_Search_ThemeNames
-            XenonCheckBox26.Checked = .Store_Search_Descriptions
-            XenonCheckBox27.Checked = .Store_Search_AuthorsNames
-            XenonCheckBox29.Checked = .Store_Offline_SubFolders
+            If .Store_Search_ThemeNames <> XenonCheckBox28.Checked Then Changed = True
+            If .Store_Search_Descriptions <> XenonCheckBox26.Checked Then Changed = True
+            If .Store_Search_AuthorsNames <> XenonCheckBox27.Checked Then Changed = True
+            If .Store_Offline_SubFolders <> XenonCheckBox29.Checked Then Changed = True
         End With
+
+        If e.CloseReason = CloseReason.UserClosing And Changed Then
+            Select Case MsgBox(My.Lang.SaveMsg, MsgBoxStyle.Question + MsgBoxStyle.YesNoCancel)
+                Case DialogResult.Cancel
+                    e.Cancel = True
+                Case DialogResult.Yes
+                    SaveSettings()
+                    _External = False
+                    _File = Nothing
+                    e.Cancel = False
+                    MyBase.OnFormClosing(e)
+                Case DialogResult.No
+                    _External = False
+                    _File = Nothing
+                    e.Cancel = False
+                    MyBase.OnFormClosing(e)
+            End Select
+        ElseIf e.CloseReason = CloseReason.UserClosing And Not Changed Then
+            e.Cancel = False
+            MyBase.OnFormClosing(e)
+        End If
+    End Sub
+
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub SettingsX_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        XenonComboBox2.Items.Clear()
+        XenonComboBox2.Items.Add(My.Lang.Stable)
+        XenonComboBox2.Items.Add(My.Lang.Beta)
+        ApplyDarkMode(Me)
+        LoadSettings()
+
+        Dim w As Integer = 19
+        EP_Start_11.Image = My.Resources.Native11.Resize(w, w)
+        EP_Start_10.Image = My.Resources.Native10.Resize(w, w)
+        EP_Taskbar_11.Image = EP_Start_11.Image
+        EP_Taskbar_10.Image = EP_Start_10.Image
+
+        If GetDarkMode() Then
+            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Resize(w, w)
+            EP_ORB_10.Image = My.Resources.StartBtn_10Dark.Resize(w, w)
+        Else
+            EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Invert.Resize(w, w)
+            EP_ORB_10.Image = My.Resources.StartBtn_10Light.Resize(w, w)
+        End If
+
+        If My.WXP Then
+            XenonAlertBox17.Visible = True
+            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
+
+        ElseIf My.WVista Then
+            XenonAlertBox17.Visible = True
+            XenonAlertBox17.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
+        End If
+
+        Label38.Font = My.Application.ConsoleFontMedium
+    End Sub
+
+    Function CalcStoreCache() As Integer
+        If IO.Directory.Exists(My.PATH_StoreCache) Then
+            Return Directory.EnumerateFiles(My.PATH_StoreCache, "*", SearchOption.AllDirectories).Sum(Function(fileInfo) New FileInfo(fileInfo).Length)
+        Else
+            Return 0
+        End If
+    End Function
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        SaveSettings()
+        Me.Close()
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        SaveSettings()
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

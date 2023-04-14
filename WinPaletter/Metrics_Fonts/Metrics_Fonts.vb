@@ -256,6 +256,21 @@ Public Class Metrics_Fonts
         XenonTrackbar13.Value = CP.MetricsFonts.SmCaptionWidth
         XenonTrackbar7.Value = CP.MetricsFonts.DesktopIconSize
         XenonTrackbar5.Value = CP.MetricsFonts.ShellIconSize
+        XenonTrackbar15.Value = CP.MetricsFonts.ShellSmallIconSize
+        Select Case CP.MetricsFonts.ShellIconBPP
+            Case 4
+                XenonComboBox1.SelectedIndex = 0
+            Case 8
+                XenonComboBox1.SelectedIndex = 1
+            Case 16
+                XenonComboBox1.SelectedIndex = 2
+            Case 24
+                XenonComboBox1.SelectedIndex = 3
+            Case 32
+                XenonComboBox1.SelectedIndex = 4
+            Case Else
+                XenonComboBox1.SelectedIndex = 4
+        End Select
 
         RetroWindow1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
         RetroWindow3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
@@ -339,6 +354,21 @@ Public Class Metrics_Fonts
         CP.MetricsFonts.SmCaptionWidth = XenonTrackbar13.Value
         CP.MetricsFonts.DesktopIconSize = XenonTrackbar7.Value
         CP.MetricsFonts.ShellIconSize = XenonTrackbar5.Value
+        CP.MetricsFonts.ShellSmallIconSize = XenonTrackbar15.Value
+        Select Case XenonComboBox1.SelectedIndex
+            Case 0
+                CP.MetricsFonts.ShellIconBPP = 4
+            Case 1
+                CP.MetricsFonts.ShellIconBPP = 8
+            Case 2
+                CP.MetricsFonts.ShellIconBPP = 16
+            Case 3
+                CP.MetricsFonts.ShellIconBPP = 24
+            Case 4
+                CP.MetricsFonts.ShellIconBPP = 32
+            Case Else
+                CP.MetricsFonts.ShellIconBPP = 32
+        End Select
 
         CP.MetricsFonts.FontSubstitute_MSShellDlg = XenonTextBox1.Text
         CP.MetricsFonts.FontSubstitute_MSShellDlg2 = XenonTextBox2.Text
@@ -803,4 +833,12 @@ Public Class Metrics_Fonts
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
+    Private Sub XenonTrackbar15_Scroll(sender As Object) Handles XenonTrackbar15.Scroll
+        i_s_s_s.Text = sender.Value
+    End Sub
+
+    Private Sub i_s_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s_s.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar15.Maximum), XenonTrackbar15.Minimum) : XenonTrackbar15.Value = Val(sender.Text)
+    End Sub
 End Class

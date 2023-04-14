@@ -243,6 +243,106 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property CF_Img_Blue_yellow_tritanopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Img_Blue_yellow_tritanopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Img_Grayscale() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Img_Grayscale", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Img_Normal() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Img_Normal", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Img_Red_green_green_weak_deuteranopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Img_Red_green_green_weak_deuteranopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Img_Red_green_red_weak_protanopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Img_Red_green_red_weak_protanopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Pie_Blue_yellow__tritanopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Pie_Blue_yellow__tritanopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Pie_Grayscale() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Pie_Grayscale", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Pie_Normal() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Pie_Normal", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Pie_Red_green_green_weak_deuteranopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Pie_Red_green_green_weak_deuteranopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property CF_Pie_Red_green_red_weak_protanopia() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CF_Pie_Red_green_red_weak_protanopia", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property checker_disabled() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("checker_disabled", resourceCulture)

@@ -308,6 +308,11 @@ Public Class XenonCore
             End With
         End If
 
+        If TypeOf ctrl Is ListBox Then
+            ctrl.BackColor = ctrl.Parent.BackColor
+            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
+        End If
+
         If TypeOf ctrl Is CheckedListBox Then
             With TryCast(ctrl, CheckedListBox)
                 .BackColor = ctrl.Parent.BackColor
@@ -363,7 +368,6 @@ Public Class XenonCore
 
         ctrl.Refresh()
     End Sub
-
     Public Shared Sub SetTheme(ByVal handle As IntPtr, ByVal theme As CtrlTheme)
         'If Not My.W7 Then
         If handle = IntPtr.Zero Then Throw New ArgumentNullException(NameOf(handle))
@@ -382,7 +386,6 @@ Public Class XenonCore
         End Select
         'End If
     End Sub
-
     Public Enum CtrlTheme
         None
         Explorer
