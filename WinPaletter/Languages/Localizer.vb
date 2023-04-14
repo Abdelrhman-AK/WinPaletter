@@ -317,7 +317,7 @@ Public Class Localizer : Implements IDisposable
     Property WhatsNewInVersion As String = "What's new in {0}!"
     Property ThisWillRestartExplorer As String = "This will restart the explorer, don't worry this won't close other applications"
     Property LogoffNotice As String = "This will logoff your Windows account. Please save your open files before logging-off"
-    Property TitlebarColorNotice As String = "Windows volume slider, UAC and Windows 10 LogonUI follow Active Titlebar color"
+    Property TitlebarColorNotice As String = "Windows volume slider, UAC and Windows 10 logonUI follow active titlebar color"
     Property NoDefResExplorer As String = "Restarting Explorer is disabled. If theme is not applied correctly, restart it"
     Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wpsf) from registry?"
     Property RemoveExtMsgNote As String = "Note: You can reassociate them by activating its checkbox and restarting WinPaletter"

@@ -17,6 +17,7 @@ Public Class MainFrm
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
+    Private LoggingOff As Boolean = False
 
 #Region "Preview Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
@@ -1240,8 +1241,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = 44
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton3.Image = My.Resources.SampleApp_Active
+                RetroButton4.Image = My.Resources.SampleApp_Inactive
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
@@ -1267,8 +1268,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1289,8 +1290,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1919,6 +1920,8 @@ Public Class MainFrm
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         Visible = False
+        LoggingOff = False
+
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
 
@@ -2057,7 +2060,7 @@ Public Class MainFrm
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         If CP <> CP_Original Then
 
-            If My.[Settings].ShowSaveConfirmation Then
+            If My.[Settings].ShowSaveConfirmation AndAlso Not LoggingOff Then
 
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
@@ -4231,6 +4234,7 @@ Public Class MainFrm
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
+            LoggingOff = True
             Shell("logoff", AppWinStyle.Hide)
         End If
 

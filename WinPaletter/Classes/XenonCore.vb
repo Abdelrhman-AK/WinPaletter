@@ -259,80 +259,55 @@ Public Class XenonCore
         If TypeOf ctrl Is RetroTextBox Then b = True
         If TypeOf ctrl Is RetroWindow Then b = True
 
-        If Not b Then
-            Select Case DarkMode
-                Case True
-                    If ctrl.ForeColor = Color.Black Then ctrl.ForeColor = Color.White
-                Case False
-                    If ctrl.ForeColor = Color.White Then ctrl.ForeColor = Color.Black
-            End Select
-        End If
+        If Not b Then ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
 
         If TypeOf ctrl Is XenonGroupBox Then
             DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.05))
-        End If
 
-        If TypeOf ctrl Is XenonRadioImage Then
+        ElseIf TypeOf ctrl Is XenonRadioImage Then
             DirectCast(ctrl, XenonRadioImage).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
-        End If
 
-        If TypeOf ctrl Is XenonButton Then
+        ElseIf TypeOf ctrl Is XenonButton Then
             DirectCast(ctrl, XenonButton).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.03))
-            DirectCast(ctrl, XenonButton).ForeColor = If(DarkMode, Color.White, Color.Black)
-        End If
 
-        If TypeOf ctrl Is RichTextBox Then
+        ElseIf TypeOf ctrl Is RichTextBox Then
             ctrl.BackColor = ctrl.Parent.BackColor
-            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
-        End If
 
-        If TypeOf ctrl Is LinkLabel Then
+        ElseIf TypeOf ctrl Is LinkLabel Then
             DirectCast(ctrl, LinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
-        End If
 
-        If TypeOf ctrl Is XenonLinkLabel Then
+        ElseIf TypeOf ctrl Is XenonLinkLabel Then
             DirectCast(ctrl, XenonLinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
-        End If
 
-        If TypeOf ctrl Is TreeView Or TypeOf ctrl Is XenonTreeView Then
+        ElseIf TypeOf ctrl Is TreeView Or TypeOf ctrl Is XenonTreeView Then
             With TryCast(ctrl, TreeView)
                 .BackColor = ctrl.Parent.BackColor
-                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
-        End If
 
-        If TypeOf ctrl Is ListView Then
+        ElseIf TypeOf ctrl Is ListView Then
             With TryCast(ctrl, ListView)
                 .BackColor = ctrl.Parent.BackColor
-                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
-        End If
 
-        If TypeOf ctrl Is ListBox Then
+        ElseIf TypeOf ctrl Is ListBox Then
             ctrl.BackColor = ctrl.Parent.BackColor
-            ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
-        End If
 
-        If TypeOf ctrl Is CheckedListBox Then
+        ElseIf TypeOf ctrl Is CheckedListBox Then
             With TryCast(ctrl, CheckedListBox)
                 .BackColor = ctrl.Parent.BackColor
-                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
-        End If
 
-        If TypeOf ctrl Is NumericUpDown Then
+        ElseIf TypeOf ctrl Is NumericUpDown Then
             With TryCast(ctrl, NumericUpDown)
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
-                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
-        End If
 
-        If TypeOf ctrl Is ComboBox Then
+        ElseIf TypeOf ctrl Is ComboBox Then
             With TryCast(ctrl, ComboBox)
                 .FlatStyle = FlatStyle.Flat
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
-                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
+
         End If
 
         'This will make all control have a consistent dark\light mode.
@@ -340,28 +315,7 @@ Public Class XenonCore
 
         If ctrl.HasChildren Then
             For Each c As Control In ctrl.Controls
-
-                If TypeOf ctrl Is TablessControl Then
-                    With TryCast(ctrl, TablessControl)
-                        For x = 0 To .TabPages.Count - 1
-                            .TabPages.Item(x).BackColor = ctrl.Parent.BackColor
-                            .TabPages.Item(x).Refresh()
-                            .Refresh()
-                        Next
-                    End With
-                End If
-
-                If TypeOf ctrl Is XenonTabControl Then
-                    With TryCast(ctrl, XenonTabControl)
-                        For x = 0 To .TabPages.Count - 1
-                            .TabPages.Item(x).Refresh()
-                            .Invalidate()
-                        Next
-                    End With
-                End If
-
-                c.Invalidate()
-                c.Refresh()
+                If TypeOf c Is TabPage Then c.BackColor = ctrl.Parent.BackColor
                 EnumControls(c, DarkMode)
             Next
         End If

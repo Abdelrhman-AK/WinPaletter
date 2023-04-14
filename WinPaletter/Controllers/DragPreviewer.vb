@@ -1026,8 +1026,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = 44
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton3.Image = My.Resources.SampleApp_Active
+                RetroButton4.Image = My.Resources.SampleApp_Inactive
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
@@ -1052,8 +1052,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1074,8 +1074,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft

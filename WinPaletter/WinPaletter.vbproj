@@ -650,6 +650,10 @@
     <None Include="Resources\Start11_EP_Rounded_Light.png" />
     <None Include="Resources\Start11_Light.png" />
     <None Include="Resources\Start11_Dark.png" />
+    <None Include="Resources\SampleApp_Small_Inactive.png" />
+    <None Include="Resources\SampleApp_Active.png" />
+    <None Include="Resources\SampleApp_Inctive.png" />
+    <None Include="Resources\SampleApp_Small_Active.png" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />

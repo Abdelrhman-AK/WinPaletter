@@ -1860,10 +1860,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public SmCaptionHeight As Integer
             Public SmCaptionWidth As Integer
             Public DesktopIconSize As Integer
-
             Public ShellIconSize As Integer
             Public ShellSmallIconSize As Integer
-            Public ShellIconBPP As Integer
 
             Public CaptionFont As Font
             Public IconFont As Font
@@ -1922,7 +1920,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
                 ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
-                ShellIconBPP = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", _DefMetricsFonts.ShellIconBPP)
 
                 DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
                 CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
@@ -2013,8 +2010,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", ShellIconBPP, RegistryValueKind.String)
-
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
                     If My.Settings.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
@@ -2038,7 +2033,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon BPP", ShellIconBPP, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
                     End If
 
@@ -2094,7 +2088,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Metrics_DesktopIconSize= " & DesktopIconSize)
                 tx.Add("*Metrics_ShellIconSize= " & ShellIconSize)
                 tx.Add("*Metrics_ShellSmallIconSize= " & ShellSmallIconSize)
-                tx.Add("*Metrics_ShellIconBPP= " & ShellIconBPP)
                 tx.Add("*FontSubstitute_MSShellDlg= " & FontSubstitute_MSShellDlg)
                 tx.Add("*FontSubstitute_MSShellDlg2= " & FontSubstitute_MSShellDlg2)
                 tx.Add("*FontSubstitute_SegoeUI= " & FontSubstitute_SegoeUI)
@@ -3205,7 +3198,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .DesktopIconSize = 48,
                 .ShellIconSize = 32,
                 .ShellSmallIconSize = 16,
-                .ShellIconBPP = 32,
                 .CaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .IconFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .MenuFont = New Font("Segoe UI", 9, FontStyle.Regular),
@@ -4920,7 +4912,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If lin.StartsWith("*Metrics_DesktopIconSize= ", My._ignore) Then MetricsFonts.DesktopIconSize = lin.Remove(0, "*Metrics_DesktopIconSize= ".Count)
                     If lin.StartsWith("*Metrics_ShellIconSize= ", My._ignore) Then MetricsFonts.ShellIconSize = lin.Remove(0, "*Metrics_ShellIconSize= ".Count)
                     If lin.StartsWith("*Metrics_ShellSmallIconSize= ", My._ignore) Then MetricsFonts.ShellSmallIconSize = lin.Remove(0, "*Metrics_ShellSmallIconSize= ".Count)
-                    If lin.StartsWith("*Metrics_ShellIconBPP= ", My._ignore) Then MetricsFonts.ShellIconBPP = lin.Remove(0, "*Metrics_ShellIconBPP= ".Count)
                     If lin.StartsWith("*Fonts_", My._ignore) Then fonts.Add(lin.Remove(0, "*Fonts_".Count))
                     If lin.StartsWith("*FontSubstitute_MSShellDlg= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
                     If lin.StartsWith("*FontSubstitute_MSShellDlg2= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)

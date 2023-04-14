@@ -103,16 +103,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property ActiveApp_Taskbar() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ActiveApp_Taskbar", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Public ReadOnly Property add_win10() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("add_win10", resourceCulture)
@@ -207,26 +197,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("AnimCur", resourceCulture)
                 Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Public ReadOnly Property AppPreview() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("AppPreview", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Public ReadOnly Property AppPreviewInActive() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("AppPreviewInActive", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -677,16 +647,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("ImageProcessor", resourceCulture)
                 Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Public ReadOnly Property InactiveApp_Taskbar() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("InactiveApp_Taskbar", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -1319,6 +1279,46 @@ Namespace My.Resources
         Public ReadOnly Property RetroThemesDB() As String
             Get
                 Return ResourceManager.GetString("RetroThemesDB", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property SampleApp_Active() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SampleApp_Active", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property SampleApp_Inactive() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SampleApp_Inactive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property SampleApp_Small_Active() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SampleApp_Small_Active", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property SampleApp_Small_Inactive() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SampleApp_Small_Inactive", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         

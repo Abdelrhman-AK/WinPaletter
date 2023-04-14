@@ -125,6 +125,14 @@ Partial Class WinEffecter
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox16 = New WinPaletter.XenonCheckBox()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
+        Me.XenonRadioImage7 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage6 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage5 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage4 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage3 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage1 = New WinPaletter.XenonRadioImage()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Panel24 = New System.Windows.Forms.Panel()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -158,13 +166,6 @@ Partial Class WinEffecter
         Me.R1 = New System.Windows.Forms.Panel()
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
-        Me.XenonRadioImage7 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage6 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage5 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage4 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage3 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage1 = New WinPaletter.XenonRadioImage()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -1248,7 +1249,7 @@ Partial Class WinEffecter
         Me.XenonCheckBox24.Name = "XenonCheckBox24"
         Me.XenonCheckBox24.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox24.TabIndex = 227
-        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows Apps (Windows 10 and Later)"
+        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and Later)"
         '
         'PictureBox21
         '
@@ -1578,6 +1579,7 @@ Partial Class WinEffecter
         'TabPage12
         '
         Me.TabPage12.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage12.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage12.Controls.Add(Me.XenonRadioImage7)
         Me.TabPage12.Controls.Add(Me.XenonRadioImage6)
         Me.TabPage12.Controls.Add(Me.XenonRadioImage5)
@@ -1595,6 +1597,116 @@ Partial Class WinEffecter
         Me.TabPage12.TabIndex = 11
         Me.TabPage12.Text = "Color filters (accessibility)"
         '
+        'XenonAlertBox4
+        '
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox4.CenterText = False
+        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox4.Image = Nothing
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(6, 335)
+        Me.XenonAlertBox4.Name = "XenonAlertBox4"
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(579, 43)
+        Me.XenonAlertBox4.TabIndex = 239
+        Me.XenonAlertBox4.TabStop = False
+        Me.XenonAlertBox4.Text = "This is for Windows 10 & 11 and requires logoff. The colors of preview may be inc" &
+    "orrect if you applied a color filter (The correct ones are previewed when normal" &
+    " filter is applied). "
+        '
+        'XenonRadioImage7
+        '
+        Me.XenonRadioImage7.Checked = False
+        Me.XenonRadioImage7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage7.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage7.Image = Nothing
+        Me.XenonRadioImage7.Location = New System.Drawing.Point(309, 7)
+        Me.XenonRadioImage7.Name = "XenonRadioImage7"
+        Me.XenonRadioImage7.ShowText = True
+        Me.XenonRadioImage7.Size = New System.Drawing.Size(123, 25)
+        Me.XenonRadioImage7.TabIndex = 6
+        Me.XenonRadioImage7.Text = "Inverted"
+        '
+        'XenonRadioImage6
+        '
+        Me.XenonRadioImage6.Checked = False
+        Me.XenonRadioImage6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage6.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage6.Image = Nothing
+        Me.XenonRadioImage6.Location = New System.Drawing.Point(309, 38)
+        Me.XenonRadioImage6.Name = "XenonRadioImage6"
+        Me.XenonRadioImage6.ShowText = True
+        Me.XenonRadioImage6.Size = New System.Drawing.Size(123, 25)
+        Me.XenonRadioImage6.TabIndex = 5
+        Me.XenonRadioImage6.Text = "Grayscale inverted"
+        '
+        'XenonRadioImage5
+        '
+        Me.XenonRadioImage5.Checked = False
+        Me.XenonRadioImage5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage5.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage5.Image = Nothing
+        Me.XenonRadioImage5.Location = New System.Drawing.Point(180, 38)
+        Me.XenonRadioImage5.Name = "XenonRadioImage5"
+        Me.XenonRadioImage5.ShowText = True
+        Me.XenonRadioImage5.Size = New System.Drawing.Size(123, 25)
+        Me.XenonRadioImage5.TabIndex = 4
+        Me.XenonRadioImage5.Text = "Grayscale"
+        '
+        'XenonRadioImage4
+        '
+        Me.XenonRadioImage4.Checked = False
+        Me.XenonRadioImage4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage4.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage4.Image = Nothing
+        Me.XenonRadioImage4.Location = New System.Drawing.Point(180, 131)
+        Me.XenonRadioImage4.Name = "XenonRadioImage4"
+        Me.XenonRadioImage4.ShowText = True
+        Me.XenonRadioImage4.Size = New System.Drawing.Size(252, 25)
+        Me.XenonRadioImage4.TabIndex = 3
+        Me.XenonRadioImage4.Text = "Blue-yellow (tritanopia)"
+        '
+        'XenonRadioImage3
+        '
+        Me.XenonRadioImage3.Checked = False
+        Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage3.Image = Nothing
+        Me.XenonRadioImage3.Location = New System.Drawing.Point(180, 100)
+        Me.XenonRadioImage3.Name = "XenonRadioImage3"
+        Me.XenonRadioImage3.ShowText = True
+        Me.XenonRadioImage3.Size = New System.Drawing.Size(252, 25)
+        Me.XenonRadioImage3.TabIndex = 2
+        Me.XenonRadioImage3.Text = "Red-green (red weak, protanopia)"
+        '
+        'XenonRadioImage2
+        '
+        Me.XenonRadioImage2.Checked = False
+        Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage2.Image = Nothing
+        Me.XenonRadioImage2.Location = New System.Drawing.Point(180, 69)
+        Me.XenonRadioImage2.Name = "XenonRadioImage2"
+        Me.XenonRadioImage2.ShowText = True
+        Me.XenonRadioImage2.Size = New System.Drawing.Size(252, 25)
+        Me.XenonRadioImage2.TabIndex = 1
+        Me.XenonRadioImage2.Text = "Red-green (green weak, deuteranopia)"
+        '
+        'XenonRadioImage1
+        '
+        Me.XenonRadioImage1.Checked = False
+        Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
+        Me.XenonRadioImage1.Image = Nothing
+        Me.XenonRadioImage1.Location = New System.Drawing.Point(180, 7)
+        Me.XenonRadioImage1.Name = "XenonRadioImage1"
+        Me.XenonRadioImage1.ShowText = True
+        Me.XenonRadioImage1.Size = New System.Drawing.Size(123, 25)
+        Me.XenonRadioImage1.TabIndex = 0
+        Me.XenonRadioImage1.Text = "Normal"
+        '
         'Panel3
         '
         Me.Panel3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1605,7 +1717,7 @@ Partial Class WinEffecter
         Me.Panel3.Controls.Add(Me.Panel12)
         Me.Panel3.Controls.Add(Me.Panel8)
         Me.Panel3.Controls.Add(Me.Panel4)
-        Me.Panel3.Location = New System.Drawing.Point(438, 210)
+        Me.Panel3.Location = New System.Drawing.Point(438, 162)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(147, 168)
         Me.Panel3.TabIndex = 86
@@ -1932,7 +2044,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox33.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox33.Image = Global.WinPaletter.My.Resources.Resources.CF_Img_Normal
-        Me.PictureBox33.Location = New System.Drawing.Point(180, 210)
+        Me.PictureBox33.Location = New System.Drawing.Point(180, 162)
         Me.PictureBox33.Name = "PictureBox33"
         Me.PictureBox33.Size = New System.Drawing.Size(252, 168)
         Me.PictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1943,103 +2055,12 @@ Partial Class WinEffecter
         '
         Me.PictureBox32.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox32.Image = Global.WinPaletter.My.Resources.Resources.CF_Pie_Normal
-        Me.PictureBox32.Location = New System.Drawing.Point(6, 210)
+        Me.PictureBox32.Location = New System.Drawing.Point(6, 162)
         Me.PictureBox32.Name = "PictureBox32"
         Me.PictureBox32.Size = New System.Drawing.Size(168, 168)
         Me.PictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox32.TabIndex = 84
         Me.PictureBox32.TabStop = False
-        '
-        'XenonRadioImage7
-        '
-        Me.XenonRadioImage7.Checked = False
-        Me.XenonRadioImage7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage7.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage7.Image = Nothing
-        Me.XenonRadioImage7.Location = New System.Drawing.Point(309, 31)
-        Me.XenonRadioImage7.Name = "XenonRadioImage7"
-        Me.XenonRadioImage7.ShowText = True
-        Me.XenonRadioImage7.Size = New System.Drawing.Size(123, 25)
-        Me.XenonRadioImage7.TabIndex = 6
-        Me.XenonRadioImage7.Text = "Inverted"
-        '
-        'XenonRadioImage6
-        '
-        Me.XenonRadioImage6.Checked = False
-        Me.XenonRadioImage6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage6.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage6.Image = Nothing
-        Me.XenonRadioImage6.Location = New System.Drawing.Point(309, 62)
-        Me.XenonRadioImage6.Name = "XenonRadioImage6"
-        Me.XenonRadioImage6.ShowText = True
-        Me.XenonRadioImage6.Size = New System.Drawing.Size(123, 25)
-        Me.XenonRadioImage6.TabIndex = 5
-        Me.XenonRadioImage6.Text = "Grayscale inverted"
-        '
-        'XenonRadioImage5
-        '
-        Me.XenonRadioImage5.Checked = False
-        Me.XenonRadioImage5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage5.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage5.Image = Nothing
-        Me.XenonRadioImage5.Location = New System.Drawing.Point(180, 62)
-        Me.XenonRadioImage5.Name = "XenonRadioImage5"
-        Me.XenonRadioImage5.ShowText = True
-        Me.XenonRadioImage5.Size = New System.Drawing.Size(123, 25)
-        Me.XenonRadioImage5.TabIndex = 4
-        Me.XenonRadioImage5.Text = "Grayscale"
-        '
-        'XenonRadioImage4
-        '
-        Me.XenonRadioImage4.Checked = False
-        Me.XenonRadioImage4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage4.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage4.Image = Nothing
-        Me.XenonRadioImage4.Location = New System.Drawing.Point(180, 155)
-        Me.XenonRadioImage4.Name = "XenonRadioImage4"
-        Me.XenonRadioImage4.ShowText = True
-        Me.XenonRadioImage4.Size = New System.Drawing.Size(252, 25)
-        Me.XenonRadioImage4.TabIndex = 3
-        Me.XenonRadioImage4.Text = "Blue-yellow (tritanopia)"
-        '
-        'XenonRadioImage3
-        '
-        Me.XenonRadioImage3.Checked = False
-        Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage3.Image = Nothing
-        Me.XenonRadioImage3.Location = New System.Drawing.Point(180, 124)
-        Me.XenonRadioImage3.Name = "XenonRadioImage3"
-        Me.XenonRadioImage3.ShowText = True
-        Me.XenonRadioImage3.Size = New System.Drawing.Size(252, 25)
-        Me.XenonRadioImage3.TabIndex = 2
-        Me.XenonRadioImage3.Text = "Red-green (red weak, protanopia)"
-        '
-        'XenonRadioImage2
-        '
-        Me.XenonRadioImage2.Checked = False
-        Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage2.Image = Nothing
-        Me.XenonRadioImage2.Location = New System.Drawing.Point(180, 93)
-        Me.XenonRadioImage2.Name = "XenonRadioImage2"
-        Me.XenonRadioImage2.ShowText = True
-        Me.XenonRadioImage2.Size = New System.Drawing.Size(252, 25)
-        Me.XenonRadioImage2.TabIndex = 1
-        Me.XenonRadioImage2.Text = "Red-green (green weak, deuteranopia)"
-        '
-        'XenonRadioImage1
-        '
-        Me.XenonRadioImage1.Checked = False
-        Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage1.Image = Nothing
-        Me.XenonRadioImage1.Location = New System.Drawing.Point(180, 31)
-        Me.XenonRadioImage1.Name = "XenonRadioImage1"
-        Me.XenonRadioImage1.ShowText = True
-        Me.XenonRadioImage1.Size = New System.Drawing.Size(123, 25)
-        Me.XenonRadioImage1.TabIndex = 0
-        Me.XenonRadioImage1.Text = "Normal"
         '
         'XenonButton10
         '
@@ -2428,4 +2449,5 @@ Partial Class WinEffecter
     Friend WithEvents R3 As Panel
     Friend WithEvents R2 As Panel
     Friend WithEvents R1 As Panel
+    Friend WithEvents XenonAlertBox4 As XenonAlertBox
 End Class

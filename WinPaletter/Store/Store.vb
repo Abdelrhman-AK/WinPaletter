@@ -60,8 +60,8 @@ Public Class Store
         start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
 
-        RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-        RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+        RetroButton3.Image = My.Resources.SampleApp_Active
+        RetroButton4.Image = My.Resources.SampleApp_Inactive
 
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
@@ -707,8 +707,8 @@ Public Class Store
                 End Select
 
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -768,8 +768,8 @@ Public Class Store
                 End Select
 
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
