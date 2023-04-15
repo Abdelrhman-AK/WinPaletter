@@ -1,7 +1,4 @@
-﻿Imports System.Drawing.Drawing2D
-Imports System.Windows.Interop
-Imports WinPaletter.NativeMethods
-Imports WinPaletter.NativeMethods.User32
+﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
@@ -97,11 +94,16 @@ Public Class Metrics_Fonts
 
         Dim Win7 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Aero Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Opaque Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Basic
         Dim Win8 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W8 Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W8Lite
+        Dim WinXP As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.WXP
 
-        If Not Win7 And Not Win8 Then
+        If Not Win7 And Not Win8 And Not WinXP Then
             msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
+            MenuStrip1.BackColor = If(XenonWindow6.DarkMode, Color.FromArgb(35, 35, 35), Color.FromArgb(255, 255, 255))
+            MenuStrip1.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
         Else
             msgLbl.ForeColor = Color.Black
+            MenuStrip1.BackColor = Color.FromArgb(255, 255, 255)
+            MenuStrip1.ForeColor = Color.Black
         End If
 
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
@@ -256,6 +258,7 @@ Public Class Metrics_Fonts
         XenonTrackbar13.Value = CP.MetricsFonts.SmCaptionWidth
         XenonTrackbar7.Value = CP.MetricsFonts.DesktopIconSize
         XenonTrackbar5.Value = CP.MetricsFonts.ShellIconSize
+        XenonTrackbar15.Value = CP.MetricsFonts.ShellSmallIconSize
 
         RetroWindow1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
         RetroWindow3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
@@ -339,6 +342,7 @@ Public Class Metrics_Fonts
         CP.MetricsFonts.SmCaptionWidth = XenonTrackbar13.Value
         CP.MetricsFonts.DesktopIconSize = XenonTrackbar7.Value
         CP.MetricsFonts.ShellIconSize = XenonTrackbar5.Value
+        CP.MetricsFonts.ShellSmallIconSize = XenonTrackbar15.Value
 
         CP.MetricsFonts.FontSubstitute_MSShellDlg = XenonTextBox1.Text
         CP.MetricsFonts.FontSubstitute_MSShellDlg2 = XenonTextBox2.Text
@@ -803,4 +807,12 @@ Public Class Metrics_Fonts
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
+    Private Sub XenonTrackbar15_Scroll(sender As Object) Handles XenonTrackbar15.Scroll
+        i_s_s_s.Text = sender.Value
+    End Sub
+
+    Private Sub i_s_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s_s.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar15.Maximum), XenonTrackbar15.Minimum) : XenonTrackbar15.Value = Val(sender.Text)
+    End Sub
 End Class

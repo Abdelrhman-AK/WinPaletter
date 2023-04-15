@@ -1,0 +1,30 @@
+name: EnumThemes
+run-name: Enumerate themes into a database file 'store.wpdb'
+  
+on:
+  push:
+    branches: [ main ]
+    paths: Store/Themes/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3 # checkout the repository content
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install the python version needed
+
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install GitPython
+          
+      - name: execute py script # run main.py
+        id: getfiles
+        # arguments: Directory Extension OutputFile
+        run: python Store/buildDB.py Store/Themes .wpth Store/store.wpdb 

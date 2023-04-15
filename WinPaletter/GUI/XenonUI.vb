@@ -2832,6 +2832,8 @@ End Class
 
         AddHandler TB.TextChanged, AddressOf OnBaseTextChanged
         AddHandler TB.KeyDown, AddressOf OnBaseKeyDown
+        AddHandler TB.KeyPress, AddressOf OnKeyPress
+
     End Sub
 
 #Region "Variables"
@@ -2990,6 +2992,12 @@ End Class
             TB.Copy()
             e.SuppressKeyPress = True
         End If
+    End Sub
+
+    Public Event KeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+
+    Public Sub OnKeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+        RaiseEvent KeyPress(s, e)
     End Sub
 
     Protected Overrides Sub OnResize(ByVal e As EventArgs)
@@ -4211,10 +4219,10 @@ Public Class XenonWinElement : Inherits ContainerControl
 
                 G.FillRoundedRect(New SolidBrush(BackC), AppBtnRect, 3, True)
                 G.DrawRoundedRect_LikeW11(New Pen(BorderC), AppBtnRect, 3)
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppImgRect)
                 G.FillRoundedRect(New SolidBrush(_AppUnderline), AppBtnRectUnderline, 2, True)
 
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2ImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2ImgRect)
                 G.FillRoundedRect(New SolidBrush(Color.FromArgb(255, BackC)), App2BtnRectUnderline, 2, True)
 
                 G.DrawLine(New Pen(Color.FromArgb(100, 100, 100, 100)), New Point(0, 0), New Point(Width - 1, 0))
@@ -4275,7 +4283,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                     End If
 
                     G.FillRoundedRect(New SolidBrush(back), r, Radius * 2, True)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
+                    G.DrawImage(My.Resources.SampleApp_Active, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
 
                     G.FillRectangle(New SolidBrush(Color.FromArgb(150, back2)), New Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4))
 
@@ -4343,10 +4351,10 @@ Public Class XenonWinElement : Inherits ContainerControl
                 End If
 
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right, -1, 40, Height + 2)
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2 - 1, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2 - 1, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
                 Dim AppBtnRectUnderline As New Rectangle(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2)
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right, -1, 40, Height + 2)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
                 Dim App2BtnRectUnderline As New Rectangle(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2)
                 Dim StartColor As Color = _StartColor
                 G.FillRectangle(New SolidBrush(StartColor), StartBtnRect)
@@ -4360,10 +4368,10 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim AppColor As Color = _AppBackground
                 G.FillRectangle(New SolidBrush(AppColor), AppBtnRect)
                 G.FillRectangle(New SolidBrush(_AppUnderline.Light), AppBtnRectUnderline)
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.FillRectangle(New SolidBrush(_AppUnderline.Light), App2BtnRectUnderline)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.AltTab10
@@ -4403,7 +4411,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                         G.DrawRectangle(New Pen(Color.White, 2), surround)
                     End If
 
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
+                    G.DrawImage(My.Resources.SampleApp_Active, New Rectangle(r.X + 5, r.Y + 5, 20, 20))
 
                     G.FillRectangle(Brushes.White, New Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4))
 
@@ -4428,10 +4436,10 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
                 Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
 
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
                 Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
 
                 G.DrawImage(StartORB, StartBtnRect)
 
@@ -4439,13 +4447,13 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawRectangle(New Pen(Color.FromArgb(200, c.CB(-0.5))), AppBtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(215, Color.White)), AppBtnRectInner)
 
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.White)), App2BtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100, c.CB(-0.5))), App2BtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100, Color.White)), App2BtnRectInner)
 
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.Taskbar8Lite
@@ -4464,10 +4472,10 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 8, 0, 45, Height - 1)
                 Dim AppBtnRectInner As New Rectangle(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2)
 
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 2, 0, 45, Height - 1)
                 Dim App2BtnRectInner As New Rectangle(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
 
                 G.DrawImage(StartORB, StartBtnRect)
 
@@ -4476,13 +4484,13 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawRectangle(New Pen(Color.FromArgb(100, bc.CB(-0.5))), AppBtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5))), AppBtnRect)
 
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.FillRectangle(New SolidBrush(Color.FromArgb(255, bc.Light(0.1))), App2BtnRect)
                 G.FillRectangle(New SolidBrush(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1))), App2BtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100, bc.Dark(0.1))), App2BtnRect)
                 G.DrawRectangle(New Pen(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1))), App2BtnRect)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.AltTab8Aero
@@ -4516,9 +4524,9 @@ Public Class XenonWinElement : Inherits ContainerControl
                     End If
 
                     G.FillRectangle(Brushes.White, r)
-                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_w As Integer = My.Resources.SampleApp_Active.Width
                     Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                    G.DrawImage(My.Resources.SampleApp_Active, icon_rect)
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
@@ -4558,9 +4566,9 @@ Public Class XenonWinElement : Inherits ContainerControl
                     End If
 
                     G.FillRectangle(Brushes.White, r)
-                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_w As Integer = My.Resources.SampleApp_Active.Width
                     Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                    G.DrawImage(My.Resources.SampleApp_Active, icon_rect)
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
@@ -4638,20 +4646,20 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
 
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
 
                 G.DrawImage(StartORB, StartBtnRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.Taskbar7Opaque
@@ -4672,20 +4680,20 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
 
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
 
                 G.DrawImage(StartORB, StartBtnRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.Taskbar7Basic
@@ -4699,20 +4707,20 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Dim StartBtnRect As New Rectangle(3, -3, 39, 39)
 
                 Dim AppBtnRect As New Rectangle(StartBtnRect.Right + 5, 0, 45, 35)
-                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                Dim AppBtnImgRect As New Rectangle(AppBtnRect.X + (AppBtnRect.Width - My.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
 
                 Dim App2BtnRect As New Rectangle(AppBtnRect.Right + 1, 0, 45, 35)
-                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.InactiveApp_Taskbar.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.InactiveApp_Taskbar.Height) / 2, My.Resources.InactiveApp_Taskbar.Width, My.Resources.InactiveApp_Taskbar.Height)
+                Dim App2BtnImgRect As New Rectangle(App2BtnRect.X + (App2BtnRect.Width - My.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - My.Resources.SampleApp_Inactive.Height) / 2, My.Resources.SampleApp_Inactive.Width, My.Resources.SampleApp_Inactive.Height)
 
                 G.DrawImage(StartORB, StartBtnRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(150, 0, 0, 0)), New Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_ActiveApp7, AppBtnRect)
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, AppBtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Active, AppBtnImgRect)
 
                 G.DrawRoundedRect(New Pen(Color.FromArgb(110, 0, 0, 0)), New Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2)
                 G.DrawImage(My.Resources.Taskbar_InactiveApp7, App2BtnRect)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, App2BtnImgRect)
+                G.DrawImage(My.Resources.SampleApp_Inactive, App2BtnImgRect)
 #End Region
 
             Case Styles.AltTab7Aero
@@ -4770,11 +4778,11 @@ Public Class XenonWinElement : Inherits ContainerControl
                     G.FillRoundedRect(Brushes.White, r, 2, True)
                     G.DrawRoundedRect(Pens.Black, r, 2, True)
 
-                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_w As Integer = My.Resources.SampleApp_Active.Width
 
                     Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
 
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                    G.DrawImage(My.Resources.SampleApp_Active, icon_rect)
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
@@ -4834,11 +4842,11 @@ Public Class XenonWinElement : Inherits ContainerControl
                     G.FillRoundedRect(Brushes.White, r, 2, True)
                     G.DrawRoundedRect(Pens.Black, r, 2, True)
 
-                    Dim icon_w As Integer = My.Resources.ActiveApp_Taskbar.Width
+                    Dim icon_w As Integer = My.Resources.SampleApp_Active.Width
 
                     Dim icon_rect As New Rectangle(r.X + r.Width - 0.7 * icon_w, r.Y + r.Height - 0.6 * icon_w, icon_w, icon_w)
 
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, icon_rect)
+                    G.DrawImage(My.Resources.SampleApp_Active, icon_rect)
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
@@ -4898,9 +4906,9 @@ Public Class XenonWinElement : Inherits ContainerControl
                     Dim r As Rectangle = Rects(x)
                     If x = 0 Then G.DrawImage(My.Resources.Win7AltTabBasicButton, r)
 
-                    Dim imgrect As New Rectangle(r.X + (r.Width - My.Resources.ActiveApp_Taskbar.Width) / 2, r.Y + (r.Height - My.Resources.ActiveApp_Taskbar.Height) / 2, My.Resources.ActiveApp_Taskbar.Width, My.Resources.ActiveApp_Taskbar.Height)
+                    Dim imgrect As New Rectangle(r.X + (r.Width - My.Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - My.Resources.SampleApp_Active.Height) / 2, My.Resources.SampleApp_Active.Width, My.Resources.SampleApp_Active.Height)
 
-                    G.DrawImage(My.Resources.ActiveApp_Taskbar, imgrect)
+                    G.DrawImage(My.Resources.SampleApp_Active, imgrect)
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30)
@@ -4949,8 +4957,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
                 G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
 
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+                G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
+                G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
                 G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
                 G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
@@ -4974,8 +4982,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
                 G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
 
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+                G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
+                G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
                 G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
                 G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
@@ -4997,8 +5005,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                 G.DrawImage(My.Resources.Vista_ActiveApp, apprect1)
                 G.DrawImage(My.Resources.Vista_InactiveApp, apprect2)
 
-                G.DrawImage(My.Resources.ActiveApp_Taskbar, appIcon1)
-                G.DrawImage(My.Resources.InactiveApp_Taskbar, appIcon2)
+                G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
+                G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
                 G.DrawString("App Preview", Font, Brushes.White, appLabel1, StringAligner(ContentAlignment.MiddleLeft))
                 G.DrawString("Inactive app", Font, Brushes.White, appLabel2, StringAligner(ContentAlignment.MiddleLeft))
@@ -5962,7 +5970,7 @@ Public Class XenonWindow : Inherits Panel
             End If
         End If
 
-        If Not ToolWindow Then G.DrawImage(If(Active, My.Resources.AppPreview, My.Resources.AppPreviewInActive), IconRect)
+        If Not ToolWindow Then G.DrawImage(If(Active, My.Resources.SampleApp_Small_Active, My.Resources.SampleApp_Small_Inactive), IconRect)
 
         If Preview = Preview_Enum.W11 Or Preview = Preview_Enum.W10 Then
             G.DrawString(Text, Font, New SolidBrush(ForeColorX), LabelRect, StringAligner(ContentAlignment.MiddleLeft))

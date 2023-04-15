@@ -25,31 +25,39 @@ Partial Class Store
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store))
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.TablessControl1 = New WinPaletter.TablessControl()
+        Me.Preview_Timer = New System.Windows.Forms.Timer(Me.components)
+        Me.Titlebar_panel = New System.Windows.Forms.Panel()
+        Me.search_panel = New System.Windows.Forms.Panel()
+        Me.search_btn = New WinPaletter.XenonButton()
+        Me.search_box = New WinPaletter.XenonTextBox()
+        Me.search_filter_btn = New WinPaletter.XenonButton()
+        Me.Titlebar_lbl = New System.Windows.Forms.Label()
+        Me.back_btn = New WinPaletter.XenonButton()
+        Me.Titlebar_img = New System.Windows.Forms.PictureBox()
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.Log_Timer = New System.Windows.Forms.Timer(Me.components)
+        Me.Cursor_Timer = New System.Windows.Forms.Timer(Me.components)
+        Me.Tabs = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.container = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonButton19 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
+        Me.RestartExplorer = New WinPaletter.XenonButton()
+        Me.Edit_btn = New WinPaletter.XenonButton()
+        Me.SwitchNonExistingRes_btn = New WinPaletter.XenonButton()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.TreeView2 = New System.Windows.Forms.TreeView()
+        Me.NonExistingRes_Tip = New WinPaletter.XenonAlertBox()
+        Me.NonExistingRes = New System.Windows.Forms.TreeView()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.Apply_btn = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.Label22 = New System.Windows.Forms.Label()
+        Me.SupportedOS_lbl = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.previewContainer = New WinPaletter.XenonGroupBox()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
+        Me.ShowPS64_btn = New WinPaletter.XenonButton()
+        Me.ShowPS86_btn = New WinPaletter.XenonButton()
+        Me.ShowCursors_btn = New WinPaletter.XenonButton()
         Me.tabs_preview = New WinPaletter.TablessControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.pnl_preview = New System.Windows.Forms.Panel()
@@ -100,29 +108,59 @@ Partial Class Store
         Me.RetroButton12 = New WinPaletter.RetroButton()
         Me.RetroButton11 = New WinPaletter.RetroButton()
         Me.RetroButton10 = New WinPaletter.RetroButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
-        Me.Label24 = New System.Windows.Forms.Label()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.XenonCMD1 = New WinPaletter.XenonCMD()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.XenonCMD2 = New WinPaletter.XenonCMD()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.XenonCMD3 = New WinPaletter.XenonCMD()
+        Me.TabPage11 = New System.Windows.Forms.TabPage()
+        Me.cur_anim_btn = New WinPaletter.XenonButton()
+        Me.cur_tip_btn = New WinPaletter.XenonButton()
+        Me.Cursors_Container = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Arrow = New WinPaletter.CursorControl()
+        Me.Help = New WinPaletter.CursorControl()
+        Me.AppLoading = New WinPaletter.CursorControl()
+        Me.Busy = New WinPaletter.CursorControl()
+        Me.Move_Cur = New WinPaletter.CursorControl()
+        Me.Up = New WinPaletter.CursorControl()
+        Me.NS = New WinPaletter.CursorControl()
+        Me.EW = New WinPaletter.CursorControl()
+        Me.NESW = New WinPaletter.CursorControl()
+        Me.NWSE = New WinPaletter.CursorControl()
+        Me.Pen = New WinPaletter.CursorControl()
+        Me.None = New WinPaletter.CursorControl()
+        Me.Link = New WinPaletter.CursorControl()
+        Me.Pin = New WinPaletter.CursorControl()
+        Me.Person = New WinPaletter.CursorControl()
+        Me.IBeam = New WinPaletter.CursorControl()
+        Me.Cross = New WinPaletter.CursorControl()
+        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.CursorsSize_Bar = New WinPaletter.XenonTrackbar()
+        Me.desc_txt = New WinPaletter.XenonTextBox()
+        Me.ShowClassic_btn = New WinPaletter.XenonButton()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.ShowCMD_btn = New WinPaletter.XenonButton()
+        Me.Label24 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.Switch_M_C_btn = New WinPaletter.XenonButton()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.XenonLinkLabel2 = New WinPaletter.XenonLinkLabel()
+        Me.Download_Link = New WinPaletter.XenonLinkLabel()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonLinkLabel1 = New WinPaletter.XenonLinkLabel()
+        Me.Author_link = New WinPaletter.XenonLinkLabel()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.themeSize_lbl = New System.Windows.Forms.Label()
+        Me.author_lbl = New System.Windows.Forms.Label()
+        Me.theme_ver_lbl = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
+        Me.MD5_lbl = New System.Windows.Forms.Label()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.theme_name_lbl = New System.Windows.Forms.Label()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -131,20 +169,24 @@ Partial Class Store
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.search_results = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.XenonButton25 = New WinPaletter.XenonButton()
-        Me.XenonButton22 = New WinPaletter.XenonButton()
+        Me.StopTimer_btn = New WinPaletter.XenonButton()
+        Me.ExportDetails_btn = New WinPaletter.XenonButton()
         Me.log_lbl = New System.Windows.Forms.Label()
-        Me.XenonButton14 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.ShowErrors_btn = New WinPaletter.XenonButton()
+        Me.ok_btn = New WinPaletter.XenonButton()
+        Me.log = New System.Windows.Forms.TreeView()
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.Label60 = New System.Windows.Forms.Label()
+        Me.log_header = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TablessControl1.SuspendLayout()
+        Me.Status_pnl = New System.Windows.Forms.Panel()
+        Me.Status_lbl = New System.Windows.Forms.Label()
+        Me.Titlebar_panel.SuspendLayout()
+        Me.search_panel.SuspendLayout()
+        CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Tabs.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.XenonGroupBox4.SuspendLayout()
@@ -175,6 +217,12 @@ Partial Class Store
         Me.RetroWindow4.SuspendLayout()
         Me.programcontainer.SuspendLayout()
         Me.RetroPanel2.SuspendLayout()
+        Me.TabPage8.SuspendLayout()
+        Me.TabPage9.SuspendLayout()
+        Me.TabPage10.SuspendLayout()
+        Me.TabPage11.SuspendLayout()
+        Me.Cursors_Container.SuspendLayout()
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -186,8 +234,10 @@ Partial Class Store
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Status_pnl.SuspendLayout()
         Me.SuspendLayout()
         '
         'FilesFetcher
@@ -195,68 +245,152 @@ Partial Class Store
         Me.FilesFetcher.WorkerReportsProgress = True
         Me.FilesFetcher.WorkerSupportsCancellation = True
         '
-        'Timer1
+        'Preview_Timer
         '
-        Me.Timer1.Interval = 1000
+        Me.Preview_Timer.Interval = 1000
         '
-        'Panel1
+        'Titlebar_panel
         '
-        Me.Panel1.Controls.Add(Me.XenonButton1)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1298, 70)
-        Me.Panel1.TabIndex = 5
+        Me.Titlebar_panel.Controls.Add(Me.search_panel)
+        Me.Titlebar_panel.Controls.Add(Me.Titlebar_lbl)
+        Me.Titlebar_panel.Controls.Add(Me.back_btn)
+        Me.Titlebar_panel.Controls.Add(Me.Titlebar_img)
+        Me.Titlebar_panel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Titlebar_panel.Location = New System.Drawing.Point(0, 0)
+        Me.Titlebar_panel.Name = "Titlebar_panel"
+        Me.Titlebar_panel.Size = New System.Drawing.Size(1254, 70)
+        Me.Titlebar_panel.TabIndex = 5
         '
-        'XenonButton1
+        'search_panel
         '
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(5, 0)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(64, 64)
-        Me.XenonButton1.TabIndex = 36
-        Me.XenonButton1.UseVisualStyleBackColor = False
-        Me.XenonButton1.Visible = False
+        Me.search_panel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_panel.BackColor = System.Drawing.Color.Transparent
+        Me.search_panel.Controls.Add(Me.search_btn)
+        Me.search_panel.Controls.Add(Me.search_box)
+        Me.search_panel.Controls.Add(Me.search_filter_btn)
+        Me.search_panel.Location = New System.Drawing.Point(899, 17)
+        Me.search_panel.Name = "search_panel"
+        Me.search_panel.Size = New System.Drawing.Size(343, 30)
+        Me.search_panel.TabIndex = 42
         '
-        'Label1
+        'search_btn
         '
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(75, 14)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(1211, 37)
-        Me.Label1.TabIndex = 38
-        Me.Label1.Text = "WinPaletter Store (Beta)"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.search_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.search_btn.ForeColor = System.Drawing.Color.White
+        Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
+        Me.search_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
+        Me.search_btn.LineSize = 1
+        Me.search_btn.Location = New System.Drawing.Point(308, 3)
+        Me.search_btn.Name = "search_btn"
+        Me.search_btn.Size = New System.Drawing.Size(32, 24)
+        Me.search_btn.TabIndex = 40
+        Me.search_btn.UseVisualStyleBackColor = False
         '
-        'PictureBox1
+        'search_box
         '
-        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(5, 0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(64, 64)
-        Me.PictureBox1.TabIndex = 37
-        Me.PictureBox1.TabStop = False
+        Me.search_box.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.search_box.ForeColor = System.Drawing.Color.White
+        Me.search_box.Location = New System.Drawing.Point(3, 3)
+        Me.search_box.MaxLength = 32767
+        Me.search_box.Multiline = False
+        Me.search_box.Name = "search_box"
+        Me.search_box.ReadOnly = False
+        Me.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.search_box.SelectedText = ""
+        Me.search_box.SelectionLength = 0
+        Me.search_box.SelectionStart = 0
+        Me.search_box.Size = New System.Drawing.Size(261, 24)
+        Me.search_box.TabIndex = 39
+        Me.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.search_box.UseSystemPasswordChar = False
+        Me.search_box.WordWrap = True
         '
-        'TablessControl1
+        'search_filter_btn
         '
-        Me.TablessControl1.Controls.Add(Me.TabPage1)
-        Me.TablessControl1.Controls.Add(Me.TabPage3)
-        Me.TablessControl1.Controls.Add(Me.TabPage2)
-        Me.TablessControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TablessControl1.Location = New System.Drawing.Point(0, 70)
-        Me.TablessControl1.Name = "TablessControl1"
-        Me.TablessControl1.SelectedIndex = 0
-        Me.TablessControl1.Size = New System.Drawing.Size(1298, 648)
-        Me.TablessControl1.TabIndex = 4
+        Me.search_filter_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_filter_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_filter_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.search_filter_btn.ForeColor = System.Drawing.Color.White
+        Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
+        Me.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.search_filter_btn.LineSize = 1
+        Me.search_filter_btn.Location = New System.Drawing.Point(270, 3)
+        Me.search_filter_btn.Name = "search_filter_btn"
+        Me.search_filter_btn.Size = New System.Drawing.Size(32, 24)
+        Me.search_filter_btn.TabIndex = 41
+        Me.search_filter_btn.UseVisualStyleBackColor = False
+        '
+        'Titlebar_lbl
+        '
+        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
+        Me.Titlebar_lbl.Name = "Titlebar_lbl"
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 37)
+        Me.Titlebar_lbl.TabIndex = 38
+        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
+        Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'back_btn
+        '
+        Me.back_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.back_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.back_btn.ForeColor = System.Drawing.Color.White
+        Me.back_btn.Image = Nothing
+        Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.back_btn.LineSize = 1
+        Me.back_btn.Location = New System.Drawing.Point(5, 0)
+        Me.back_btn.Name = "back_btn"
+        Me.back_btn.Size = New System.Drawing.Size(64, 64)
+        Me.back_btn.TabIndex = 36
+        Me.back_btn.UseVisualStyleBackColor = False
+        Me.back_btn.Visible = False
+        '
+        'Titlebar_img
+        '
+        Me.Titlebar_img.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_img.Image = CType(resources.GetObject("Titlebar_img.Image"), System.Drawing.Image)
+        Me.Titlebar_img.Location = New System.Drawing.Point(5, 0)
+        Me.Titlebar_img.Name = "Titlebar_img"
+        Me.Titlebar_img.Size = New System.Drawing.Size(64, 64)
+        Me.Titlebar_img.TabIndex = 37
+        Me.Titlebar_img.TabStop = False
+        '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.ProgressBar1.Location = New System.Drawing.Point(1088, 3)
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(163, 18)
+        Me.ProgressBar1.TabIndex = 43
+        Me.ProgressBar1.Visible = False
+        '
+        'Log_Timer
+        '
+        Me.Log_Timer.Interval = 1000
+        '
+        'Cursor_Timer
+        '
+        Me.Cursor_Timer.Interval = 30
+        '
+        'Tabs
+        '
+        Me.Tabs.Controls.Add(Me.TabPage1)
+        Me.Tabs.Controls.Add(Me.TabPage3)
+        Me.Tabs.Controls.Add(Me.TabPage5)
+        Me.Tabs.Controls.Add(Me.TabPage2)
+        Me.Tabs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Tabs.Location = New System.Drawing.Point(0, 70)
+        Me.Tabs.Name = "Tabs"
+        Me.Tabs.SelectedIndex = 0
+        Me.Tabs.Size = New System.Drawing.Size(1254, 627)
+        Me.Tabs.TabIndex = 4
         '
         'TabPage1
         '
@@ -265,9 +399,9 @@ Partial Class Store
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage1.Size = New System.Drawing.Size(1290, 620)
+        Me.TabPage1.Size = New System.Drawing.Size(1246, 599)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.Text = "0"
         '
         'container
         '
@@ -275,17 +409,17 @@ Partial Class Store
         Me.container.Dock = System.Windows.Forms.DockStyle.Fill
         Me.container.Location = New System.Drawing.Point(10, 10)
         Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(1270, 600)
+        Me.container.Size = New System.Drawing.Size(1226, 579)
         Me.container.TabIndex = 3
         '
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage3.Controls.Add(Me.XenonButton19)
-        Me.TabPage3.Controls.Add(Me.XenonButton7)
-        Me.TabPage3.Controls.Add(Me.XenonButton6)
+        Me.TabPage3.Controls.Add(Me.RestartExplorer)
+        Me.TabPage3.Controls.Add(Me.Edit_btn)
+        Me.TabPage3.Controls.Add(Me.SwitchNonExistingRes_btn)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox4)
-        Me.TabPage3.Controls.Add(Me.XenonButton4)
+        Me.TabPage3.Controls.Add(Me.Apply_btn)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox3)
         Me.TabPage3.Controls.Add(Me.previewContainer)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox2)
@@ -293,108 +427,108 @@ Partial Class Store
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage3.Size = New System.Drawing.Size(1290, 620)
+        Me.TabPage3.Size = New System.Drawing.Size(1246, 599)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "TabPage3"
+        Me.TabPage3.Text = "1"
         '
-        'XenonButton19
+        'RestartExplorer
         '
-        Me.XenonButton19.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton19.ForeColor = System.Drawing.Color.White
-        Me.XenonButton19.Image = Nothing
-        Me.XenonButton19.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton19.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(127, Byte), Integer), CType(CType(79, Byte), Integer))
-        Me.XenonButton19.LineSize = 1
-        Me.XenonButton19.Location = New System.Drawing.Point(930, 577)
-        Me.XenonButton19.Name = "XenonButton19"
-        Me.XenonButton19.Size = New System.Drawing.Size(140, 34)
-        Me.XenonButton19.TabIndex = 138
-        Me.XenonButton19.Text = "Restart Explorer"
-        Me.XenonButton19.UseVisualStyleBackColor = False
+        Me.RestartExplorer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.RestartExplorer.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.RestartExplorer.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RestartExplorer.ForeColor = System.Drawing.Color.White
+        Me.RestartExplorer.Image = Nothing
+        Me.RestartExplorer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.RestartExplorer.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(127, Byte), Integer), CType(CType(79, Byte), Integer))
+        Me.RestartExplorer.LineSize = 1
+        Me.RestartExplorer.Location = New System.Drawing.Point(886, 552)
+        Me.RestartExplorer.Name = "RestartExplorer"
+        Me.RestartExplorer.Size = New System.Drawing.Size(140, 34)
+        Me.RestartExplorer.TabIndex = 138
+        Me.RestartExplorer.Text = "Restart Explorer"
+        Me.RestartExplorer.UseVisualStyleBackColor = False
         '
-        'XenonButton7
+        'Edit_btn
         '
-        Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton7.ForeColor = System.Drawing.Color.White
-        Me.XenonButton7.Image = CType(resources.GetObject("XenonButton7.Image"), System.Drawing.Image)
-        Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(1076, 577)
-        Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(100, 34)
-        Me.XenonButton7.TabIndex = 137
-        Me.XenonButton7.Text = "Edit"
-        Me.XenonButton7.UseVisualStyleBackColor = False
+        Me.Edit_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Edit_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Edit_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Edit_btn.ForeColor = System.Drawing.Color.White
+        Me.Edit_btn.Image = CType(resources.GetObject("Edit_btn.Image"), System.Drawing.Image)
+        Me.Edit_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Edit_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(12, Byte), Integer))
+        Me.Edit_btn.LineSize = 1
+        Me.Edit_btn.Location = New System.Drawing.Point(1032, 552)
+        Me.Edit_btn.Name = "Edit_btn"
+        Me.Edit_btn.Size = New System.Drawing.Size(100, 34)
+        Me.Edit_btn.TabIndex = 137
+        Me.Edit_btn.Text = "Edit"
+        Me.Edit_btn.UseVisualStyleBackColor = False
         '
-        'XenonButton6
+        'SwitchNonExistingRes_btn
         '
-        Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
-        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(98, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(13, 573)
-        Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(300, 34)
-        Me.XenonButton6.TabIndex = 136
-        Me.XenonButton6.Text = "Show\Hide used resources that do not exist"
-        Me.XenonButton6.UseVisualStyleBackColor = False
+        Me.SwitchNonExistingRes_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.SwitchNonExistingRes_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.SwitchNonExistingRes_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.SwitchNonExistingRes_btn.ForeColor = System.Drawing.Color.White
+        Me.SwitchNonExistingRes_btn.Image = CType(resources.GetObject("SwitchNonExistingRes_btn.Image"), System.Drawing.Image)
+        Me.SwitchNonExistingRes_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SwitchNonExistingRes_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(98, Byte), Integer), CType(CType(96, Byte), Integer))
+        Me.SwitchNonExistingRes_btn.LineSize = 1
+        Me.SwitchNonExistingRes_btn.Location = New System.Drawing.Point(13, 552)
+        Me.SwitchNonExistingRes_btn.Name = "SwitchNonExistingRes_btn"
+        Me.SwitchNonExistingRes_btn.Size = New System.Drawing.Size(300, 34)
+        Me.SwitchNonExistingRes_btn.TabIndex = 136
+        Me.SwitchNonExistingRes_btn.Text = "Show\Hide used resources that do not exist"
+        Me.SwitchNonExistingRes_btn.UseVisualStyleBackColor = False
         '
         'XenonGroupBox4
         '
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox4.Controls.Add(Me.XenonAlertBox1)
-        Me.XenonGroupBox4.Controls.Add(Me.TreeView2)
+        Me.XenonGroupBox4.Controls.Add(Me.NonExistingRes_Tip)
+        Me.XenonGroupBox4.Controls.Add(Me.NonExistingRes)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox6)
         Me.XenonGroupBox4.Controls.Add(Me.Label13)
         Me.XenonGroupBox4.Location = New System.Drawing.Point(13, 296)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(725, 223)
+        Me.XenonGroupBox4.Size = New System.Drawing.Size(681, 208)
         Me.XenonGroupBox4.TabIndex = 135
         Me.XenonGroupBox4.Visible = False
         '
-        'XenonAlertBox1
+        'NonExistingRes_Tip
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.NonExistingRes_Tip.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.NonExistingRes_Tip.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(3, 166)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(719, 53)
-        Me.XenonAlertBox1.TabIndex = 136
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = resources.GetString("XenonAlertBox1.Text")
+        Me.NonExistingRes_Tip.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.NonExistingRes_Tip.CenterText = False
+        Me.NonExistingRes_Tip.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.NonExistingRes_Tip.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.NonExistingRes_Tip.Image = Nothing
+        Me.NonExistingRes_Tip.Location = New System.Drawing.Point(3, 152)
+        Me.NonExistingRes_Tip.Name = "NonExistingRes_Tip"
+        Me.NonExistingRes_Tip.Size = New System.Drawing.Size(675, 53)
+        Me.NonExistingRes_Tip.TabIndex = 136
+        Me.NonExistingRes_Tip.TabStop = False
+        Me.NonExistingRes_Tip.Text = resources.GetString("NonExistingRes_Tip.Text")
         '
-        'TreeView2
+        'NonExistingRes
         '
-        Me.TreeView2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.NonExistingRes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TreeView2.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.TreeView2.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TreeView2.ForeColor = System.Drawing.Color.White
-        Me.TreeView2.FullRowSelect = True
-        Me.TreeView2.ItemHeight = 24
-        Me.TreeView2.Location = New System.Drawing.Point(3, 30)
-        Me.TreeView2.Name = "TreeView2"
-        Me.TreeView2.ShowLines = False
-        Me.TreeView2.Size = New System.Drawing.Size(719, 130)
-        Me.TreeView2.TabIndex = 27
+        Me.NonExistingRes.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.NonExistingRes.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NonExistingRes.ForeColor = System.Drawing.Color.White
+        Me.NonExistingRes.FullRowSelect = True
+        Me.NonExistingRes.ItemHeight = 24
+        Me.NonExistingRes.Location = New System.Drawing.Point(3, 30)
+        Me.NonExistingRes.Name = "NonExistingRes"
+        Me.NonExistingRes.ShowLines = False
+        Me.NonExistingRes.Size = New System.Drawing.Size(675, 115)
+        Me.NonExistingRes.TabIndex = 27
         '
         'PictureBox6
         '
@@ -414,53 +548,53 @@ Partial Class Store
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(33, 3)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(689, 24)
+        Me.Label13.Size = New System.Drawing.Size(645, 24)
         Me.Label13.TabIndex = 7
         Me.Label13.Text = "Used resources that do not exist:"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonButton4
+        'Apply_btn
         '
-        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = Nothing
-        Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(1182, 577)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(100, 34)
-        Me.XenonButton4.TabIndex = 134
-        Me.XenonButton4.Text = "Apply"
-        Me.XenonButton4.UseVisualStyleBackColor = False
+        Me.Apply_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Apply_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Apply_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Apply_btn.ForeColor = System.Drawing.Color.White
+        Me.Apply_btn.Image = Nothing
+        Me.Apply_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(95, Byte), Integer), CType(CType(96, Byte), Integer), CType(CType(96, Byte), Integer))
+        Me.Apply_btn.LineSize = 1
+        Me.Apply_btn.Location = New System.Drawing.Point(1138, 552)
+        Me.Apply_btn.Name = "Apply_btn"
+        Me.Apply_btn.Size = New System.Drawing.Size(100, 34)
+        Me.Apply_btn.TabIndex = 134
+        Me.Apply_btn.Text = "Apply"
+        Me.Apply_btn.UseVisualStyleBackColor = False
         '
         'XenonGroupBox3
         '
         Me.XenonGroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox3.Controls.Add(Me.Label22)
+        Me.XenonGroupBox3.Controls.Add(Me.SupportedOS_lbl)
         Me.XenonGroupBox3.Controls.Add(Me.Label26)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 169)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
-        Me.XenonGroupBox3.Size = New System.Drawing.Size(725, 55)
+        Me.XenonGroupBox3.Size = New System.Drawing.Size(681, 55)
         Me.XenonGroupBox3.TabIndex = 132
         '
-        'Label22
+        'SupportedOS_lbl
         '
-        Me.Label22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.SupportedOS_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label22.BackColor = System.Drawing.Color.Transparent
-        Me.Label22.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(33, 27)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(689, 24)
-        Me.Label22.TabIndex = 8
-        Me.Label22.Text = "0"
-        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SupportedOS_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.SupportedOS_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SupportedOS_lbl.Location = New System.Drawing.Point(33, 27)
+        Me.SupportedOS_lbl.Name = "SupportedOS_lbl"
+        Me.SupportedOS_lbl.Size = New System.Drawing.Size(645, 24)
+        Me.SupportedOS_lbl.TabIndex = 8
+        Me.SupportedOS_lbl.Text = "0"
+        Me.SupportedOS_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label26
         '
@@ -489,55 +623,72 @@ Partial Class Store
         Me.previewContainer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.previewContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.previewContainer.Controls.Add(Me.XenonButton9)
-        Me.previewContainer.Controls.Add(Me.XenonButton5)
+        Me.previewContainer.Controls.Add(Me.ShowPS64_btn)
+        Me.previewContainer.Controls.Add(Me.ShowPS86_btn)
+        Me.previewContainer.Controls.Add(Me.ShowCursors_btn)
         Me.previewContainer.Controls.Add(Me.tabs_preview)
-        Me.previewContainer.Controls.Add(Me.XenonTextBox1)
-        Me.previewContainer.Controls.Add(Me.Label24)
+        Me.previewContainer.Controls.Add(Me.desc_txt)
+        Me.previewContainer.Controls.Add(Me.ShowClassic_btn)
         Me.previewContainer.Controls.Add(Me.PictureBox41)
-        Me.previewContainer.Controls.Add(Me.PictureBox13)
+        Me.previewContainer.Controls.Add(Me.ShowCMD_btn)
+        Me.previewContainer.Controls.Add(Me.Label24)
         Me.previewContainer.Controls.Add(Me.Label19)
-        Me.previewContainer.Controls.Add(Me.XenonButton3)
-        Me.previewContainer.Controls.Add(Me.Label11)
-        Me.previewContainer.Controls.Add(Me.XenonButton2)
-        Me.previewContainer.Location = New System.Drawing.Point(745, 13)
+        Me.previewContainer.Controls.Add(Me.Switch_M_C_btn)
+        Me.previewContainer.Controls.Add(Me.PictureBox13)
+        Me.previewContainer.Location = New System.Drawing.Point(701, 13)
         Me.previewContainer.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.previewContainer.Name = "previewContainer"
         Me.previewContainer.Padding = New System.Windows.Forms.Padding(1)
-        Me.previewContainer.Size = New System.Drawing.Size(536, 542)
+        Me.previewContainer.Size = New System.Drawing.Size(536, 533)
         Me.previewContainer.TabIndex = 131
         '
-        'XenonButton9
+        'ShowPS64_btn
         '
-        Me.XenonButton9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton9.ForeColor = System.Drawing.Color.White
-        Me.XenonButton9.Image = Nothing
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(80, 512)
-        Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(81, 26)
-        Me.XenonButton9.TabIndex = 136
-        Me.XenonButton9.Text = "Cursors"
-        Me.XenonButton9.UseVisualStyleBackColor = False
+        Me.ShowPS64_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowPS64_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowPS64_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowPS64_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowPS64_btn.Image = Nothing
+        Me.ShowPS64_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowPS64_btn.LineSize = 1
+        Me.ShowPS64_btn.Location = New System.Drawing.Point(393, 377)
+        Me.ShowPS64_btn.Name = "ShowPS64_btn"
+        Me.ShowPS64_btn.Size = New System.Drawing.Size(139, 26)
+        Me.ShowPS64_btn.TabIndex = 138
+        Me.ShowPS64_btn.Text = "PowerShell x64"
+        Me.ShowPS64_btn.UseVisualStyleBackColor = False
         '
-        'XenonButton5
+        'ShowPS86_btn
         '
-        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Nothing
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(393, 512)
-        Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(139, 26)
-        Me.XenonButton5.TabIndex = 135
-        Me.XenonButton5.Text = "Classic Colors elements"
-        Me.XenonButton5.UseVisualStyleBackColor = False
+        Me.ShowPS86_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowPS86_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowPS86_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowPS86_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowPS86_btn.Image = Nothing
+        Me.ShowPS86_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowPS86_btn.LineSize = 1
+        Me.ShowPS86_btn.Location = New System.Drawing.Point(248, 377)
+        Me.ShowPS86_btn.Name = "ShowPS86_btn"
+        Me.ShowPS86_btn.Size = New System.Drawing.Size(139, 26)
+        Me.ShowPS86_btn.TabIndex = 137
+        Me.ShowPS86_btn.Text = "PowerShell x86"
+        Me.ShowPS86_btn.UseVisualStyleBackColor = False
+        '
+        'ShowCursors_btn
+        '
+        Me.ShowCursors_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowCursors_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowCursors_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowCursors_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowCursors_btn.Image = Nothing
+        Me.ShowCursors_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowCursors_btn.LineSize = 1
+        Me.ShowCursors_btn.Location = New System.Drawing.Point(393, 345)
+        Me.ShowCursors_btn.Name = "ShowCursors_btn"
+        Me.ShowCursors_btn.Size = New System.Drawing.Size(139, 26)
+        Me.ShowCursors_btn.TabIndex = 136
+        Me.ShowCursors_btn.Text = "Cursors"
+        Me.ShowCursors_btn.UseVisualStyleBackColor = False
         '
         'tabs_preview
         '
@@ -545,6 +696,10 @@ Partial Class Store
         Me.tabs_preview.Controls.Add(Me.TabPage6)
         Me.tabs_preview.Controls.Add(Me.TabPage7)
         Me.tabs_preview.Controls.Add(Me.TabPage4)
+        Me.tabs_preview.Controls.Add(Me.TabPage8)
+        Me.tabs_preview.Controls.Add(Me.TabPage9)
+        Me.tabs_preview.Controls.Add(Me.TabPage10)
+        Me.tabs_preview.Controls.Add(Me.TabPage11)
         Me.tabs_preview.Location = New System.Drawing.Point(4, 42)
         Me.tabs_preview.Name = "tabs_preview"
         Me.tabs_preview.SelectedIndex = 0
@@ -1510,40 +1665,978 @@ Partial Class Store
         Me.RetroButton10.UseVisualStyleBackColor = False
         Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
         '
-        'XenonTextBox1
+        'TabPage8
         '
-        Me.XenonTextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage8.Controls.Add(Me.XenonCMD1)
+        Me.TabPage8.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage8.Name = "TabPage8"
+        Me.TabPage8.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage8.TabIndex = 3
+        Me.TabPage8.Text = "3"
+        '
+        'XenonCMD1
+        '
+        Me.XenonCMD1.CMD_ColorTable00 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable01 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable02 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable03 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable04 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable05 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable06 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable07 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable08 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable09 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable10 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable11 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable12 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable13 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable14 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_ColorTable15 = System.Drawing.Color.Empty
+        Me.XenonCMD1.CMD_PopupBackground = 5
+        Me.XenonCMD1.CMD_PopupForeground = 15
+        Me.XenonCMD1.CMD_ScreenColorsBackground = 0
+        Me.XenonCMD1.CMD_ScreenColorsForeground = 7
+        Me.XenonCMD1.CustomTerminal = False
+        Me.XenonCMD1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.XenonCMD1.Location = New System.Drawing.Point(0, 0)
+        Me.XenonCMD1.Name = "XenonCMD1"
+        Me.XenonCMD1.PowerShell = False
+        Me.XenonCMD1.Raster = True
+        Me.XenonCMD1.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD1.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD1.TabIndex = 1
+        '
+        'TabPage9
+        '
+        Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.XenonCMD2)
+        Me.TabPage9.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage9.TabIndex = 4
+        Me.TabPage9.Text = "4"
+        '
+        'XenonCMD2
+        '
+        Me.XenonCMD2.CMD_ColorTable00 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable01 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable02 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable03 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable04 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable05 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable06 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable07 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable08 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable09 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable10 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable11 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable12 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable13 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable14 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_ColorTable15 = System.Drawing.Color.Empty
+        Me.XenonCMD2.CMD_PopupBackground = 5
+        Me.XenonCMD2.CMD_PopupForeground = 15
+        Me.XenonCMD2.CMD_ScreenColorsBackground = 0
+        Me.XenonCMD2.CMD_ScreenColorsForeground = 7
+        Me.XenonCMD2.CustomTerminal = False
+        Me.XenonCMD2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.XenonCMD2.Location = New System.Drawing.Point(0, 0)
+        Me.XenonCMD2.Name = "XenonCMD2"
+        Me.XenonCMD2.PowerShell = False
+        Me.XenonCMD2.Raster = True
+        Me.XenonCMD2.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD2.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD2.TabIndex = 2
+        '
+        'TabPage10
+        '
+        Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage10.Controls.Add(Me.XenonCMD3)
+        Me.TabPage10.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage10.Name = "TabPage10"
+        Me.TabPage10.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage10.TabIndex = 5
+        Me.TabPage10.Text = "5"
+        '
+        'XenonCMD3
+        '
+        Me.XenonCMD3.CMD_ColorTable00 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable01 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable02 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable03 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable04 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable05 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable06 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable07 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable08 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable09 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable10 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable11 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable12 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable13 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable14 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_ColorTable15 = System.Drawing.Color.Empty
+        Me.XenonCMD3.CMD_PopupBackground = 5
+        Me.XenonCMD3.CMD_PopupForeground = 15
+        Me.XenonCMD3.CMD_ScreenColorsBackground = 0
+        Me.XenonCMD3.CMD_ScreenColorsForeground = 7
+        Me.XenonCMD3.CustomTerminal = False
+        Me.XenonCMD3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.XenonCMD3.Location = New System.Drawing.Point(0, 0)
+        Me.XenonCMD3.Name = "XenonCMD3"
+        Me.XenonCMD3.PowerShell = False
+        Me.XenonCMD3.Raster = True
+        Me.XenonCMD3.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD3.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD3.TabIndex = 2
+        '
+        'TabPage11
+        '
+        Me.TabPage11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage11.Controls.Add(Me.cur_anim_btn)
+        Me.TabPage11.Controls.Add(Me.cur_tip_btn)
+        Me.TabPage11.Controls.Add(Me.Cursors_Container)
+        Me.TabPage11.Controls.Add(Me.PictureBox12)
+        Me.TabPage11.Controls.Add(Me.Label17)
+        Me.TabPage11.Controls.Add(Me.CursorsSize_Bar)
+        Me.TabPage11.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage11.Margin = New System.Windows.Forms.Padding(0)
+        Me.TabPage11.Name = "TabPage11"
+        Me.TabPage11.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage11.TabIndex = 6
+        Me.TabPage11.Text = "6"
+        '
+        'cur_anim_btn
+        '
+        Me.cur_anim_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cur_anim_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.cur_anim_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.cur_anim_btn.ForeColor = System.Drawing.Color.White
+        Me.cur_anim_btn.Image = CType(resources.GetObject("cur_anim_btn.Image"), System.Drawing.Image)
+        Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.cur_anim_btn.LineSize = 1
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 246)
+        Me.cur_anim_btn.Name = "cur_anim_btn"
+        Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
+        Me.cur_anim_btn.TabIndex = 72
+        Me.cur_anim_btn.Text = "Animate (3 Cycles)"
+        Me.cur_anim_btn.UseVisualStyleBackColor = False
+        '
+        'cur_tip_btn
+        '
+        Me.cur_tip_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cur_tip_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.cur_tip_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.cur_tip_btn.ForeColor = System.Drawing.Color.White
+        Me.cur_tip_btn.Image = Nothing
+        Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.cur_tip_btn.LineSize = 1
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 246)
+        Me.cur_tip_btn.Name = "cur_tip_btn"
+        Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
+        Me.cur_tip_btn.TabIndex = 71
+        Me.cur_tip_btn.Text = "?"
+        Me.cur_tip_btn.UseVisualStyleBackColor = False
+        '
+        'Cursors_Container
+        '
+        Me.Cursors_Container.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Cursors_Container.AutoScroll = True
+        Me.Cursors_Container.Controls.Add(Me.Arrow)
+        Me.Cursors_Container.Controls.Add(Me.Help)
+        Me.Cursors_Container.Controls.Add(Me.AppLoading)
+        Me.Cursors_Container.Controls.Add(Me.Busy)
+        Me.Cursors_Container.Controls.Add(Me.Move_Cur)
+        Me.Cursors_Container.Controls.Add(Me.Up)
+        Me.Cursors_Container.Controls.Add(Me.NS)
+        Me.Cursors_Container.Controls.Add(Me.EW)
+        Me.Cursors_Container.Controls.Add(Me.NESW)
+        Me.Cursors_Container.Controls.Add(Me.NWSE)
+        Me.Cursors_Container.Controls.Add(Me.Pen)
+        Me.Cursors_Container.Controls.Add(Me.None)
+        Me.Cursors_Container.Controls.Add(Me.Link)
+        Me.Cursors_Container.Controls.Add(Me.Pin)
+        Me.Cursors_Container.Controls.Add(Me.Person)
+        Me.Cursors_Container.Controls.Add(Me.IBeam)
+        Me.Cursors_Container.Controls.Add(Me.Cross)
+        Me.Cursors_Container.Location = New System.Drawing.Point(3, 4)
+        Me.Cursors_Container.Name = "Cursors_Container"
+        Me.Cursors_Container.Padding = New System.Windows.Forms.Padding(4, 4, 0, 4)
+        Me.Cursors_Container.Size = New System.Drawing.Size(514, 234)
+        Me.Cursors_Container.TabIndex = 67
+        '
+        'Arrow
+        '
+        Me.Arrow.Location = New System.Drawing.Point(7, 7)
+        Me.Arrow.Name = "Arrow"
+        Me.Arrow.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Arrow.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Arrow.Prop_Cursor = WinPaletter.Paths.CursorType.Arrow
+        Me.Arrow.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleBackGradient = False
+        Me.Arrow.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_LoadingCircleBackNoise = False
+        Me.Arrow.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Arrow.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Arrow.Prop_LoadingCircleHotGradient = False
+        Me.Arrow.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_LoadingCircleHotNoise = False
+        Me.Arrow.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Arrow.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Arrow.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Arrow.Prop_PrimaryColorGradient = False
+        Me.Arrow.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_PrimaryNoise = False
+        Me.Arrow.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Arrow.Prop_Scale = 1.0!
+        Me.Arrow.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Arrow.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Arrow.Prop_SecondaryColorGradient = False
+        Me.Arrow.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Arrow.Prop_SecondaryNoise = False
+        Me.Arrow.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Arrow.Prop_Shadow_Blur = 5
+        Me.Arrow.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Arrow.Prop_Shadow_Enabled = False
+        Me.Arrow.Prop_Shadow_OffsetX = 2
+        Me.Arrow.Prop_Shadow_OffsetY = 2
+        Me.Arrow.Prop_Shadow_Opacity = 0.3!
+        Me.Arrow.Size = New System.Drawing.Size(64, 64)
+        Me.Arrow.TabIndex = 5
+        '
+        'Help
+        '
+        Me.Help.Location = New System.Drawing.Point(77, 7)
+        Me.Help.Name = "Help"
+        Me.Help.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Help.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Help.Prop_Cursor = WinPaletter.Paths.CursorType.Help
+        Me.Help.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Help.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Help.Prop_LoadingCircleBackGradient = False
+        Me.Help.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_LoadingCircleBackNoise = False
+        Me.Help.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Help.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Help.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Help.Prop_LoadingCircleHotGradient = False
+        Me.Help.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_LoadingCircleHotNoise = False
+        Me.Help.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Help.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Help.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Help.Prop_PrimaryColorGradient = False
+        Me.Help.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_PrimaryNoise = False
+        Me.Help.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Help.Prop_Scale = 1.0!
+        Me.Help.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Help.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Help.Prop_SecondaryColorGradient = False
+        Me.Help.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Help.Prop_SecondaryNoise = False
+        Me.Help.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Help.Prop_Shadow_Blur = 5
+        Me.Help.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Help.Prop_Shadow_Enabled = False
+        Me.Help.Prop_Shadow_OffsetX = 2
+        Me.Help.Prop_Shadow_OffsetY = 2
+        Me.Help.Prop_Shadow_Opacity = 0.3!
+        Me.Help.Size = New System.Drawing.Size(64, 64)
+        Me.Help.TabIndex = 6
+        '
+        'AppLoading
+        '
+        Me.AppLoading.Location = New System.Drawing.Point(147, 7)
+        Me.AppLoading.Name = "AppLoading"
+        Me.AppLoading.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.AppLoading.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.AppLoading.Prop_Cursor = WinPaletter.Paths.CursorType.AppLoading
+        Me.AppLoading.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleBackGradient = False
+        Me.AppLoading.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_LoadingCircleBackNoise = False
+        Me.AppLoading.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.AppLoading.Prop_LoadingCircleHotGradient = False
+        Me.AppLoading.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_LoadingCircleHotNoise = False
+        Me.AppLoading.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.AppLoading.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.AppLoading.Prop_PrimaryColorGradient = False
+        Me.AppLoading.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_PrimaryNoise = False
+        Me.AppLoading.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_Scale = 1.0!
+        Me.AppLoading.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.AppLoading.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.AppLoading.Prop_SecondaryColorGradient = False
+        Me.AppLoading.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.AppLoading.Prop_SecondaryNoise = False
+        Me.AppLoading.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.AppLoading.Prop_Shadow_Blur = 5
+        Me.AppLoading.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.AppLoading.Prop_Shadow_Enabled = False
+        Me.AppLoading.Prop_Shadow_OffsetX = 2
+        Me.AppLoading.Prop_Shadow_OffsetY = 2
+        Me.AppLoading.Prop_Shadow_Opacity = 0.3!
+        Me.AppLoading.Size = New System.Drawing.Size(64, 64)
+        Me.AppLoading.TabIndex = 6
+        '
+        'Busy
+        '
+        Me.Busy.Location = New System.Drawing.Point(217, 7)
+        Me.Busy.Name = "Busy"
+        Me.Busy.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Busy.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Busy.Prop_Cursor = WinPaletter.Paths.CursorType.Busy
+        Me.Busy.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleBackGradient = False
+        Me.Busy.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_LoadingCircleBackNoise = False
+        Me.Busy.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Busy.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Busy.Prop_LoadingCircleHotGradient = False
+        Me.Busy.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_LoadingCircleHotNoise = False
+        Me.Busy.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Busy.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Busy.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Busy.Prop_PrimaryColorGradient = False
+        Me.Busy.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_PrimaryNoise = False
+        Me.Busy.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Busy.Prop_Scale = 1.0!
+        Me.Busy.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Busy.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Busy.Prop_SecondaryColorGradient = False
+        Me.Busy.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Circle
+        Me.Busy.Prop_SecondaryNoise = False
+        Me.Busy.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Busy.Prop_Shadow_Blur = 5
+        Me.Busy.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Busy.Prop_Shadow_Enabled = False
+        Me.Busy.Prop_Shadow_OffsetX = 2
+        Me.Busy.Prop_Shadow_OffsetY = 2
+        Me.Busy.Prop_Shadow_Opacity = 0.3!
+        Me.Busy.Size = New System.Drawing.Size(64, 64)
+        Me.Busy.TabIndex = 7
+        '
+        'Move_Cur
+        '
+        Me.Move_Cur.Location = New System.Drawing.Point(287, 7)
+        Me.Move_Cur.Name = "Move_Cur"
+        Me.Move_Cur.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Move_Cur.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Move_Cur.Prop_Cursor = WinPaletter.Paths.CursorType.Move
+        Me.Move_Cur.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleBackGradient = False
+        Me.Move_Cur.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_LoadingCircleBackNoise = False
+        Me.Move_Cur.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Move_Cur.Prop_LoadingCircleHotGradient = False
+        Me.Move_Cur.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_LoadingCircleHotNoise = False
+        Me.Move_Cur.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Move_Cur.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Move_Cur.Prop_PrimaryColorGradient = False
+        Me.Move_Cur.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_PrimaryNoise = False
+        Me.Move_Cur.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_Scale = 1.0!
+        Me.Move_Cur.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move_Cur.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Move_Cur.Prop_SecondaryColorGradient = False
+        Me.Move_Cur.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Move_Cur.Prop_SecondaryNoise = False
+        Me.Move_Cur.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Move_Cur.Prop_Shadow_Blur = 5
+        Me.Move_Cur.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Move_Cur.Prop_Shadow_Enabled = False
+        Me.Move_Cur.Prop_Shadow_OffsetX = 2
+        Me.Move_Cur.Prop_Shadow_OffsetY = 2
+        Me.Move_Cur.Prop_Shadow_Opacity = 0.3!
+        Me.Move_Cur.Size = New System.Drawing.Size(64, 64)
+        Me.Move_Cur.TabIndex = 8
+        '
+        'Up
+        '
+        Me.Up.Location = New System.Drawing.Point(357, 7)
+        Me.Up.Name = "Up"
+        Me.Up.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Up.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Up.Prop_Cursor = WinPaletter.Paths.CursorType.Up
+        Me.Up.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Up.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Up.Prop_LoadingCircleBackGradient = False
+        Me.Up.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_LoadingCircleBackNoise = False
+        Me.Up.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Up.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Up.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Up.Prop_LoadingCircleHotGradient = False
+        Me.Up.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_LoadingCircleHotNoise = False
+        Me.Up.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Up.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Up.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Up.Prop_PrimaryColorGradient = False
+        Me.Up.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_PrimaryNoise = False
+        Me.Up.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Up.Prop_Scale = 1.0!
+        Me.Up.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Up.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Up.Prop_SecondaryColorGradient = False
+        Me.Up.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Up.Prop_SecondaryNoise = False
+        Me.Up.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Up.Prop_Shadow_Blur = 5
+        Me.Up.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Up.Prop_Shadow_Enabled = False
+        Me.Up.Prop_Shadow_OffsetX = 2
+        Me.Up.Prop_Shadow_OffsetY = 2
+        Me.Up.Prop_Shadow_Opacity = 0.3!
+        Me.Up.Size = New System.Drawing.Size(64, 64)
+        Me.Up.TabIndex = 9
+        '
+        'NS
+        '
+        Me.NS.Location = New System.Drawing.Point(427, 7)
+        Me.NS.Name = "NS"
+        Me.NS.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.NS.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.NS.Prop_Cursor = WinPaletter.Paths.CursorType.NS
+        Me.NS.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NS.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NS.Prop_LoadingCircleBackGradient = False
+        Me.NS.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_LoadingCircleBackNoise = False
+        Me.NS.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NS.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NS.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NS.Prop_LoadingCircleHotGradient = False
+        Me.NS.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_LoadingCircleHotNoise = False
+        Me.NS.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NS.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NS.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NS.Prop_PrimaryColorGradient = False
+        Me.NS.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_PrimaryNoise = False
+        Me.NS.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NS.Prop_Scale = 1.0!
+        Me.NS.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NS.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NS.Prop_SecondaryColorGradient = False
+        Me.NS.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NS.Prop_SecondaryNoise = False
+        Me.NS.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NS.Prop_Shadow_Blur = 5
+        Me.NS.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.NS.Prop_Shadow_Enabled = False
+        Me.NS.Prop_Shadow_OffsetX = 2
+        Me.NS.Prop_Shadow_OffsetY = 2
+        Me.NS.Prop_Shadow_Opacity = 0.3!
+        Me.NS.Size = New System.Drawing.Size(64, 64)
+        Me.NS.TabIndex = 10
+        '
+        'EW
+        '
+        Me.EW.Location = New System.Drawing.Point(7, 77)
+        Me.EW.Name = "EW"
+        Me.EW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.EW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.EW.Prop_Cursor = WinPaletter.Paths.CursorType.EW
+        Me.EW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.EW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.EW.Prop_LoadingCircleBackGradient = False
+        Me.EW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_LoadingCircleBackNoise = False
+        Me.EW.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.EW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.EW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.EW.Prop_LoadingCircleHotGradient = False
+        Me.EW.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_LoadingCircleHotNoise = False
+        Me.EW.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.EW.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.EW.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.EW.Prop_PrimaryColorGradient = False
+        Me.EW.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_PrimaryNoise = False
+        Me.EW.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.EW.Prop_Scale = 1.0!
+        Me.EW.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.EW.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.EW.Prop_SecondaryColorGradient = False
+        Me.EW.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.EW.Prop_SecondaryNoise = False
+        Me.EW.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.EW.Prop_Shadow_Blur = 5
+        Me.EW.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.EW.Prop_Shadow_Enabled = False
+        Me.EW.Prop_Shadow_OffsetX = 2
+        Me.EW.Prop_Shadow_OffsetY = 2
+        Me.EW.Prop_Shadow_Opacity = 0.3!
+        Me.EW.Size = New System.Drawing.Size(64, 64)
+        Me.EW.TabIndex = 11
+        '
+        'NESW
+        '
+        Me.NESW.Location = New System.Drawing.Point(77, 77)
+        Me.NESW.Name = "NESW"
+        Me.NESW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.NESW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.NESW.Prop_Cursor = WinPaletter.Paths.CursorType.NESW
+        Me.NESW.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleBackGradient = False
+        Me.NESW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_LoadingCircleBackNoise = False
+        Me.NESW.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NESW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NESW.Prop_LoadingCircleHotGradient = False
+        Me.NESW.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_LoadingCircleHotNoise = False
+        Me.NESW.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NESW.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NESW.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NESW.Prop_PrimaryColorGradient = False
+        Me.NESW.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_PrimaryNoise = False
+        Me.NESW.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NESW.Prop_Scale = 1.0!
+        Me.NESW.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NESW.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NESW.Prop_SecondaryColorGradient = False
+        Me.NESW.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NESW.Prop_SecondaryNoise = False
+        Me.NESW.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NESW.Prop_Shadow_Blur = 5
+        Me.NESW.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.NESW.Prop_Shadow_Enabled = False
+        Me.NESW.Prop_Shadow_OffsetX = 2
+        Me.NESW.Prop_Shadow_OffsetY = 2
+        Me.NESW.Prop_Shadow_Opacity = 0.3!
+        Me.NESW.Size = New System.Drawing.Size(64, 64)
+        Me.NESW.TabIndex = 12
+        '
+        'NWSE
+        '
+        Me.NWSE.Location = New System.Drawing.Point(147, 77)
+        Me.NWSE.Name = "NWSE"
+        Me.NWSE.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.NWSE.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.NWSE.Prop_Cursor = WinPaletter.Paths.CursorType.NWSE
+        Me.NWSE.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleBackGradient = False
+        Me.NWSE.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_LoadingCircleBackNoise = False
+        Me.NWSE.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.NWSE.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.NWSE.Prop_LoadingCircleHotGradient = False
+        Me.NWSE.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_LoadingCircleHotNoise = False
+        Me.NWSE.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.NWSE.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.NWSE.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.NWSE.Prop_PrimaryColorGradient = False
+        Me.NWSE.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_PrimaryNoise = False
+        Me.NWSE.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.NWSE.Prop_Scale = 1.0!
+        Me.NWSE.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NWSE.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.NWSE.Prop_SecondaryColorGradient = False
+        Me.NWSE.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.NWSE.Prop_SecondaryNoise = False
+        Me.NWSE.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.NWSE.Prop_Shadow_Blur = 5
+        Me.NWSE.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.NWSE.Prop_Shadow_Enabled = False
+        Me.NWSE.Prop_Shadow_OffsetX = 2
+        Me.NWSE.Prop_Shadow_OffsetY = 2
+        Me.NWSE.Prop_Shadow_Opacity = 0.3!
+        Me.NWSE.Size = New System.Drawing.Size(64, 64)
+        Me.NWSE.TabIndex = 13
+        '
+        'Pen
+        '
+        Me.Pen.Location = New System.Drawing.Point(217, 77)
+        Me.Pen.Name = "Pen"
+        Me.Pen.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Pen.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Pen.Prop_Cursor = WinPaletter.Paths.CursorType.Pen
+        Me.Pen.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleBackGradient = False
+        Me.Pen.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_LoadingCircleBackNoise = False
+        Me.Pen.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Pen.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pen.Prop_LoadingCircleHotGradient = False
+        Me.Pen.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_LoadingCircleHotNoise = False
+        Me.Pen.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Pen.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Pen.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Pen.Prop_PrimaryColorGradient = False
+        Me.Pen.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_PrimaryNoise = False
+        Me.Pen.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Pen.Prop_Scale = 1.0!
+        Me.Pen.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pen.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pen.Prop_SecondaryColorGradient = False
+        Me.Pen.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pen.Prop_SecondaryNoise = False
+        Me.Pen.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Pen.Prop_Shadow_Blur = 5
+        Me.Pen.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Pen.Prop_Shadow_Enabled = False
+        Me.Pen.Prop_Shadow_OffsetX = 2
+        Me.Pen.Prop_Shadow_OffsetY = 2
+        Me.Pen.Prop_Shadow_Opacity = 0.3!
+        Me.Pen.Size = New System.Drawing.Size(64, 64)
+        Me.Pen.TabIndex = 14
+        '
+        'None
+        '
+        Me.None.Location = New System.Drawing.Point(287, 77)
+        Me.None.Name = "None"
+        Me.None.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.None.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.None.Prop_Cursor = WinPaletter.Paths.CursorType.None
+        Me.None.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.None.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.None.Prop_LoadingCircleBackGradient = False
+        Me.None.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_LoadingCircleBackNoise = False
+        Me.None.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.None.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.None.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.None.Prop_LoadingCircleHotGradient = False
+        Me.None.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_LoadingCircleHotNoise = False
+        Me.None.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.None.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.None.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.None.Prop_PrimaryColorGradient = False
+        Me.None.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_PrimaryNoise = False
+        Me.None.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.None.Prop_Scale = 1.0!
+        Me.None.Prop_SecondaryColor1 = System.Drawing.Color.Red
+        Me.None.Prop_SecondaryColor2 = System.Drawing.Color.Red
+        Me.None.Prop_SecondaryColorGradient = False
+        Me.None.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.None.Prop_SecondaryNoise = False
+        Me.None.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.None.Prop_Shadow_Blur = 5
+        Me.None.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.None.Prop_Shadow_Enabled = False
+        Me.None.Prop_Shadow_OffsetX = 2
+        Me.None.Prop_Shadow_OffsetY = 2
+        Me.None.Prop_Shadow_Opacity = 0.3!
+        Me.None.Size = New System.Drawing.Size(64, 64)
+        Me.None.TabIndex = 15
+        '
+        'Link
+        '
+        Me.Link.Location = New System.Drawing.Point(357, 77)
+        Me.Link.Name = "Link"
+        Me.Link.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Link.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Link.Prop_Cursor = WinPaletter.Paths.CursorType.Link
+        Me.Link.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Link.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Link.Prop_LoadingCircleBackGradient = False
+        Me.Link.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_LoadingCircleBackNoise = False
+        Me.Link.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Link.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Link.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Link.Prop_LoadingCircleHotGradient = False
+        Me.Link.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_LoadingCircleHotNoise = False
+        Me.Link.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Link.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Link.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Link.Prop_PrimaryColorGradient = False
+        Me.Link.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_PrimaryNoise = False
+        Me.Link.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Link.Prop_Scale = 1.0!
+        Me.Link.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Link.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Link.Prop_SecondaryColorGradient = False
+        Me.Link.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Link.Prop_SecondaryNoise = False
+        Me.Link.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Link.Prop_Shadow_Blur = 5
+        Me.Link.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Link.Prop_Shadow_Enabled = False
+        Me.Link.Prop_Shadow_OffsetX = 2
+        Me.Link.Prop_Shadow_OffsetY = 2
+        Me.Link.Prop_Shadow_Opacity = 0.3!
+        Me.Link.Size = New System.Drawing.Size(64, 64)
+        Me.Link.TabIndex = 16
+        '
+        'Pin
+        '
+        Me.Pin.Location = New System.Drawing.Point(427, 77)
+        Me.Pin.Name = "Pin"
+        Me.Pin.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Pin.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Pin.Prop_Cursor = WinPaletter.Paths.CursorType.Pin
+        Me.Pin.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleBackGradient = False
+        Me.Pin.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_LoadingCircleBackNoise = False
+        Me.Pin.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Pin.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Pin.Prop_LoadingCircleHotGradient = False
+        Me.Pin.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_LoadingCircleHotNoise = False
+        Me.Pin.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Pin.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Pin.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Pin.Prop_PrimaryColorGradient = False
+        Me.Pin.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_PrimaryNoise = False
+        Me.Pin.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Pin.Prop_Scale = 1.0!
+        Me.Pin.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pin.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Pin.Prop_SecondaryColorGradient = False
+        Me.Pin.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Pin.Prop_SecondaryNoise = False
+        Me.Pin.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Pin.Prop_Shadow_Blur = 5
+        Me.Pin.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Pin.Prop_Shadow_Enabled = False
+        Me.Pin.Prop_Shadow_OffsetX = 2
+        Me.Pin.Prop_Shadow_OffsetY = 2
+        Me.Pin.Prop_Shadow_Opacity = 0.3!
+        Me.Pin.Size = New System.Drawing.Size(64, 64)
+        Me.Pin.TabIndex = 17
+        '
+        'Person
+        '
+        Me.Person.Location = New System.Drawing.Point(7, 147)
+        Me.Person.Name = "Person"
+        Me.Person.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Person.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Person.Prop_Cursor = WinPaletter.Paths.CursorType.Person
+        Me.Person.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Person.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Person.Prop_LoadingCircleBackGradient = False
+        Me.Person.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_LoadingCircleBackNoise = False
+        Me.Person.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Person.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Person.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Person.Prop_LoadingCircleHotGradient = False
+        Me.Person.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_LoadingCircleHotNoise = False
+        Me.Person.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Person.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Person.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Person.Prop_PrimaryColorGradient = False
+        Me.Person.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_PrimaryNoise = False
+        Me.Person.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Person.Prop_Scale = 1.0!
+        Me.Person.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Person.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Person.Prop_SecondaryColorGradient = False
+        Me.Person.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Person.Prop_SecondaryNoise = False
+        Me.Person.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Person.Prop_Shadow_Blur = 5
+        Me.Person.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Person.Prop_Shadow_Enabled = False
+        Me.Person.Prop_Shadow_OffsetX = 2
+        Me.Person.Prop_Shadow_OffsetY = 2
+        Me.Person.Prop_Shadow_Opacity = 0.3!
+        Me.Person.Size = New System.Drawing.Size(64, 64)
+        Me.Person.TabIndex = 18
+        '
+        'IBeam
+        '
+        Me.IBeam.Location = New System.Drawing.Point(77, 147)
+        Me.IBeam.Name = "IBeam"
+        Me.IBeam.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.IBeam.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.IBeam.Prop_Cursor = WinPaletter.Paths.CursorType.IBeam
+        Me.IBeam.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleBackGradient = False
+        Me.IBeam.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_LoadingCircleBackNoise = False
+        Me.IBeam.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.IBeam.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.IBeam.Prop_LoadingCircleHotGradient = False
+        Me.IBeam.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_LoadingCircleHotNoise = False
+        Me.IBeam.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.IBeam.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.IBeam.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.IBeam.Prop_PrimaryColorGradient = False
+        Me.IBeam.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_PrimaryNoise = False
+        Me.IBeam.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.IBeam.Prop_Scale = 1.0!
+        Me.IBeam.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.IBeam.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.IBeam.Prop_SecondaryColorGradient = False
+        Me.IBeam.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.IBeam.Prop_SecondaryNoise = False
+        Me.IBeam.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.IBeam.Prop_Shadow_Blur = 5
+        Me.IBeam.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.IBeam.Prop_Shadow_Enabled = False
+        Me.IBeam.Prop_Shadow_OffsetX = 2
+        Me.IBeam.Prop_Shadow_OffsetY = 2
+        Me.IBeam.Prop_Shadow_Opacity = 0.3!
+        Me.IBeam.Size = New System.Drawing.Size(64, 64)
+        Me.IBeam.TabIndex = 19
+        '
+        'Cross
+        '
+        Me.Cross.Location = New System.Drawing.Point(147, 147)
+        Me.Cross.Name = "Cross"
+        Me.Cross.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero
+        Me.Cross.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero
+        Me.Cross.Prop_Cursor = WinPaletter.Paths.CursorType.Cross
+        Me.Cross.Prop_LoadingCircleBack1 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleBack2 = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleBackGradient = False
+        Me.Cross.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_LoadingCircleBackNoise = False
+        Me.Cross.Prop_LoadingCircleBackNoiseOpacity = 0.25!
+        Me.Cross.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Cross.Prop_LoadingCircleHotGradient = False
+        Me.Cross.Prop_LoadingCircleHotGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_LoadingCircleHotNoise = False
+        Me.Cross.Prop_LoadingCircleHotNoiseOpacity = 0.25!
+        Me.Cross.Prop_PrimaryColor1 = System.Drawing.Color.White
+        Me.Cross.Prop_PrimaryColor2 = System.Drawing.Color.White
+        Me.Cross.Prop_PrimaryColorGradient = False
+        Me.Cross.Prop_PrimaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_PrimaryNoise = False
+        Me.Cross.Prop_PrimaryNoiseOpacity = 0.25!
+        Me.Cross.Prop_Scale = 1.0!
+        Me.Cross.Prop_SecondaryColor1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Cross.Prop_SecondaryColor2 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Cross.Prop_SecondaryColorGradient = False
+        Me.Cross.Prop_SecondaryColorGradientMode = WinPaletter.Paths.GradientMode.Horizontal
+        Me.Cross.Prop_SecondaryNoise = False
+        Me.Cross.Prop_SecondaryNoiseOpacity = 0.25!
+        Me.Cross.Prop_Shadow_Blur = 5
+        Me.Cross.Prop_Shadow_Color = System.Drawing.Color.Black
+        Me.Cross.Prop_Shadow_Enabled = False
+        Me.Cross.Prop_Shadow_OffsetX = 2
+        Me.Cross.Prop_Shadow_OffsetY = 2
+        Me.Cross.Prop_Shadow_Opacity = 0.3!
+        Me.Cross.Size = New System.Drawing.Size(64, 64)
+        Me.Cross.TabIndex = 20
+        '
+        'PictureBox12
+        '
+        Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 244)
+        Me.PictureBox12.Name = "PictureBox12"
+        Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox12.TabIndex = 70
+        Me.PictureBox12.TabStop = False
+        '
+        'Label17
+        '
+        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(33, 244)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(85, 24)
+        Me.Label17.TabIndex = 69
+        Me.Label17.Text = "Scaling (1x)"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'CursorsSize_Bar
+        '
+        Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CursorsSize_Bar.LargeChange = 50
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 247)
+        Me.CursorsSize_Bar.Maximum = 320
+        Me.CursorsSize_Bar.Minimum = 100
+        Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
+        Me.CursorsSize_Bar.Size = New System.Drawing.Size(223, 19)
+        Me.CursorsSize_Bar.SmallChange = 20
+        Me.CursorsSize_Bar.TabIndex = 68
+        Me.CursorsSize_Bar.Value = 100
+        '
+        'desc_txt
+        '
+        Me.desc_txt.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Location = New System.Drawing.Point(7, 369)
-        Me.XenonTextBox1.MaxLength = 32767
-        Me.XenonTextBox1.Multiline = True
-        Me.XenonTextBox1.Name = "XenonTextBox1"
-        Me.XenonTextBox1.ReadOnly = True
-        Me.XenonTextBox1.Scrollbars = System.Windows.Forms.ScrollBars.Vertical
-        Me.XenonTextBox1.SelectedText = ""
-        Me.XenonTextBox1.SelectionLength = 0
-        Me.XenonTextBox1.SelectionStart = 0
-        Me.XenonTextBox1.Size = New System.Drawing.Size(525, 111)
-        Me.XenonTextBox1.TabIndex = 7
-        Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.XenonTextBox1.UseSystemPasswordChar = False
-        Me.XenonTextBox1.WordWrap = True
+        Me.desc_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.desc_txt.ForeColor = System.Drawing.Color.White
+        Me.desc_txt.Location = New System.Drawing.Point(4, 443)
+        Me.desc_txt.MaxLength = 32767
+        Me.desc_txt.Multiline = True
+        Me.desc_txt.Name = "desc_txt"
+        Me.desc_txt.ReadOnly = True
+        Me.desc_txt.Scrollbars = System.Windows.Forms.ScrollBars.Vertical
+        Me.desc_txt.SelectedText = ""
+        Me.desc_txt.SelectionLength = 0
+        Me.desc_txt.SelectionStart = 0
+        Me.desc_txt.Size = New System.Drawing.Size(528, 86)
+        Me.desc_txt.TabIndex = 7
+        Me.desc_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.desc_txt.UseSystemPasswordChar = False
+        Me.desc_txt.WordWrap = True
         '
-        'Label24
+        'ShowClassic_btn
         '
-        Me.Label24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label24.BackColor = System.Drawing.Color.Transparent
-        Me.Label24.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(34, 342)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(97, 24)
-        Me.Label24.TabIndex = 4
-        Me.Label24.Text = "Description:"
-        Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ShowClassic_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowClassic_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowClassic_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowClassic_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowClassic_btn.Image = Nothing
+        Me.ShowClassic_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowClassic_btn.LineSize = 1
+        Me.ShowClassic_btn.Location = New System.Drawing.Point(248, 345)
+        Me.ShowClassic_btn.Name = "ShowClassic_btn"
+        Me.ShowClassic_btn.Size = New System.Drawing.Size(139, 26)
+        Me.ShowClassic_btn.TabIndex = 135
+        Me.ShowClassic_btn.Text = "Classic Colors elements"
+        Me.ShowClassic_btn.UseVisualStyleBackColor = False
         '
         'PictureBox41
         '
@@ -1555,15 +2648,34 @@ Partial Class Store
         Me.PictureBox41.TabIndex = 4
         Me.PictureBox41.TabStop = False
         '
-        'PictureBox13
+        'ShowCMD_btn
         '
-        Me.PictureBox13.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
-        Me.PictureBox13.Location = New System.Drawing.Point(4, 342)
-        Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox13.TabIndex = 0
-        Me.PictureBox13.TabStop = False
+        Me.ShowCMD_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowCMD_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowCMD_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowCMD_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowCMD_btn.Image = Nothing
+        Me.ShowCMD_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowCMD_btn.LineSize = 1
+        Me.ShowCMD_btn.Location = New System.Drawing.Point(103, 377)
+        Me.ShowCMD_btn.Name = "ShowCMD_btn"
+        Me.ShowCMD_btn.Size = New System.Drawing.Size(139, 26)
+        Me.ShowCMD_btn.TabIndex = 3
+        Me.ShowCMD_btn.Text = "Command Prompt"
+        Me.ShowCMD_btn.UseVisualStyleBackColor = False
+        '
+        'Label24
+        '
+        Me.Label24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.BackColor = System.Drawing.Color.Transparent
+        Me.Label24.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(34, 416)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(97, 24)
+        Me.Label24.TabIndex = 4
+        Me.Label24.Text = "Description:"
+        Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label19
         '
@@ -1577,49 +2689,31 @@ Partial Class Store
         Me.Label19.Text = "Preview"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonButton3
+        'Switch_M_C_btn
         '
-        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(254, 512)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(133, 26)
-        Me.XenonButton3.TabIndex = 6
-        Me.XenonButton3.Text = "Switch modern\classic"
-        Me.XenonButton3.UseVisualStyleBackColor = False
+        Me.Switch_M_C_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Switch_M_C_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Switch_M_C_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Switch_M_C_btn.ForeColor = System.Drawing.Color.White
+        Me.Switch_M_C_btn.Image = Nothing
+        Me.Switch_M_C_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Switch_M_C_btn.LineSize = 1
+        Me.Switch_M_C_btn.Location = New System.Drawing.Point(103, 345)
+        Me.Switch_M_C_btn.Name = "Switch_M_C_btn"
+        Me.Switch_M_C_btn.Size = New System.Drawing.Size(139, 26)
+        Me.Switch_M_C_btn.TabIndex = 6
+        Me.Switch_M_C_btn.Text = "Switch modern\classic"
+        Me.Switch_M_C_btn.UseVisualStyleBackColor = False
         '
-        'Label11
+        'PictureBox13
         '
-        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(5, 483)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(116, 26)
-        Me.Label11.TabIndex = 5
-        Me.Label11.Text = "Other previews:"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonButton2
-        '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(167, 512)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(81, 26)
-        Me.XenonButton2.TabIndex = 3
-        Me.XenonButton2.Text = "Consoles"
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.PictureBox13.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
+        Me.PictureBox13.Location = New System.Drawing.Point(4, 416)
+        Me.PictureBox13.Name = "PictureBox13"
+        Me.PictureBox13.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox13.TabIndex = 0
+        Me.PictureBox13.TabStop = False
         '
         'XenonGroupBox2
         '
@@ -1627,14 +2721,14 @@ Partial Class Store
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonLinkLabel2)
+        Me.XenonGroupBox2.Controls.Add(Me.Download_Link)
         Me.XenonGroupBox2.Controls.Add(Me.Label5)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonLinkLabel1)
+        Me.XenonGroupBox2.Controls.Add(Me.Author_link)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox2.Controls.Add(Me.Label15)
         Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 230)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
-        Me.XenonGroupBox2.Size = New System.Drawing.Size(725, 60)
+        Me.XenonGroupBox2.Size = New System.Drawing.Size(681, 60)
         Me.XenonGroupBox2.TabIndex = 13
         '
         'PictureBox5
@@ -1647,18 +2741,18 @@ Partial Class Store
         Me.PictureBox5.TabIndex = 3
         Me.PictureBox5.TabStop = False
         '
-        'XenonLinkLabel2
+        'Download_Link
         '
-        Me.XenonLinkLabel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Download_Link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonLinkLabel2.LinkColor = System.Drawing.Color.White
-        Me.XenonLinkLabel2.Location = New System.Drawing.Point(136, 33)
-        Me.XenonLinkLabel2.Name = "XenonLinkLabel2"
-        Me.XenonLinkLabel2.Size = New System.Drawing.Size(586, 24)
-        Me.XenonLinkLabel2.TabIndex = 12
-        Me.XenonLinkLabel2.TabStop = True
-        Me.XenonLinkLabel2.Text = "0"
-        Me.XenonLinkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Download_Link.LinkColor = System.Drawing.Color.White
+        Me.Download_Link.Location = New System.Drawing.Point(136, 33)
+        Me.Download_Link.Name = "Download_Link"
+        Me.Download_Link.Size = New System.Drawing.Size(542, 24)
+        Me.Download_Link.TabIndex = 12
+        Me.Download_Link.TabStop = True
+        Me.Download_Link.Text = "0"
+        Me.Download_Link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label5
         '
@@ -1671,18 +2765,18 @@ Partial Class Store
         Me.Label5.Text = "Author's link:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonLinkLabel1
+        'Author_link
         '
-        Me.XenonLinkLabel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Author_link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonLinkLabel1.LinkColor = System.Drawing.Color.White
-        Me.XenonLinkLabel1.Location = New System.Drawing.Point(136, 3)
-        Me.XenonLinkLabel1.Name = "XenonLinkLabel1"
-        Me.XenonLinkLabel1.Size = New System.Drawing.Size(586, 24)
-        Me.XenonLinkLabel1.TabIndex = 11
-        Me.XenonLinkLabel1.TabStop = True
-        Me.XenonLinkLabel1.Text = "0"
-        Me.XenonLinkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Author_link.LinkColor = System.Drawing.Color.White
+        Me.Author_link.Location = New System.Drawing.Point(136, 3)
+        Me.Author_link.Name = "Author_link"
+        Me.Author_link.Size = New System.Drawing.Size(542, 24)
+        Me.Author_link.TabIndex = 11
+        Me.Author_link.TabStop = True
+        Me.Author_link.Text = "0"
+        Me.Author_link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
         '
@@ -1710,13 +2804,13 @@ Partial Class Store
         Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox1.Controls.Add(Me.Label10)
-        Me.XenonGroupBox1.Controls.Add(Me.Label9)
-        Me.XenonGroupBox1.Controls.Add(Me.Label7)
+        Me.XenonGroupBox1.Controls.Add(Me.themeSize_lbl)
+        Me.XenonGroupBox1.Controls.Add(Me.author_lbl)
+        Me.XenonGroupBox1.Controls.Add(Me.theme_ver_lbl)
         Me.XenonGroupBox1.Controls.Add(Me.Label14)
-        Me.XenonGroupBox1.Controls.Add(Me.Label12)
+        Me.XenonGroupBox1.Controls.Add(Me.MD5_lbl)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox8)
-        Me.XenonGroupBox1.Controls.Add(Me.Label6)
+        Me.XenonGroupBox1.Controls.Add(Me.theme_name_lbl)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox9)
         Me.XenonGroupBox1.Controls.Add(Me.Label4)
         Me.XenonGroupBox1.Controls.Add(Me.Label3)
@@ -1727,47 +2821,47 @@ Partial Class Store
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
         Me.XenonGroupBox1.Location = New System.Drawing.Point(13, 13)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(725, 150)
+        Me.XenonGroupBox1.Size = New System.Drawing.Size(681, 150)
         Me.XenonGroupBox1.TabIndex = 0
         '
-        'Label10
+        'themeSize_lbl
         '
-        Me.Label10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.themeSize_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(136, 123)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(586, 24)
-        Me.Label10.TabIndex = 13
-        Me.Label10.Text = "0"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.themeSize_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.themeSize_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.themeSize_lbl.Location = New System.Drawing.Point(136, 123)
+        Me.themeSize_lbl.Name = "themeSize_lbl"
+        Me.themeSize_lbl.Size = New System.Drawing.Size(542, 24)
+        Me.themeSize_lbl.TabIndex = 13
+        Me.themeSize_lbl.Text = "0"
+        Me.themeSize_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label9
+        'author_lbl
         '
-        Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.author_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(136, 63)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(586, 24)
-        Me.Label9.TabIndex = 10
-        Me.Label9.Text = "0"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.author_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.author_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.author_lbl.Location = New System.Drawing.Point(136, 63)
+        Me.author_lbl.Name = "author_lbl"
+        Me.author_lbl.Size = New System.Drawing.Size(542, 24)
+        Me.author_lbl.TabIndex = 10
+        Me.author_lbl.Text = "0"
+        Me.author_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label7
+        'theme_ver_lbl
         '
-        Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.theme_ver_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(136, 33)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(586, 24)
-        Me.Label7.TabIndex = 9
-        Me.Label7.Text = "0"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.theme_ver_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.theme_ver_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.theme_ver_lbl.Location = New System.Drawing.Point(136, 33)
+        Me.theme_ver_lbl.Name = "theme_ver_lbl"
+        Me.theme_ver_lbl.Size = New System.Drawing.Size(542, 24)
+        Me.theme_ver_lbl.TabIndex = 9
+        Me.theme_ver_lbl.Text = "0"
+        Me.theme_ver_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label14
         '
@@ -1780,18 +2874,18 @@ Partial Class Store
         Me.Label14.Text = "Theme size:"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label12
+        'MD5_lbl
         '
-        Me.Label12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.MD5_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label12.BackColor = System.Drawing.Color.Transparent
-        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(136, 93)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(586, 24)
-        Me.Label12.TabIndex = 8
-        Me.Label12.Text = "0"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.MD5_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.MD5_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MD5_lbl.Location = New System.Drawing.Point(136, 93)
+        Me.MD5_lbl.Name = "MD5_lbl"
+        Me.MD5_lbl.Size = New System.Drawing.Size(542, 24)
+        Me.MD5_lbl.TabIndex = 8
+        Me.MD5_lbl.Text = "0"
+        Me.MD5_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox8
         '
@@ -1803,18 +2897,18 @@ Partial Class Store
         Me.PictureBox8.TabIndex = 1
         Me.PictureBox8.TabStop = False
         '
-        'Label6
+        'theme_name_lbl
         '
-        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.theme_name_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(136, 3)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(586, 24)
-        Me.Label6.TabIndex = 8
-        Me.Label6.Text = "0"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.theme_name_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.theme_name_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.theme_name_lbl.Location = New System.Drawing.Point(136, 3)
+        Me.theme_name_lbl.Name = "theme_name_lbl"
+        Me.theme_name_lbl.Size = New System.Drawing.Size(542, 24)
+        Me.theme_name_lbl.TabIndex = 8
+        Me.theme_name_lbl.Text = "0"
+        Me.theme_name_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox9
         '
@@ -1900,58 +2994,78 @@ Partial Class Store
         Me.PictureBox2.TabIndex = 0
         Me.PictureBox2.TabStop = False
         '
+        'TabPage5
+        '
+        Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.search_results)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(10)
+        Me.TabPage5.Size = New System.Drawing.Size(1246, 599)
+        Me.TabPage5.TabIndex = 3
+        Me.TabPage5.Text = "2"
+        '
+        'search_results
+        '
+        Me.search_results.AutoScroll = True
+        Me.search_results.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.search_results.Location = New System.Drawing.Point(10, 10)
+        Me.search_results.Name = "search_results"
+        Me.search_results.Size = New System.Drawing.Size(1226, 579)
+        Me.search_results.TabIndex = 4
+        '
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage2.Controls.Add(Me.XenonButton25)
-        Me.TabPage2.Controls.Add(Me.XenonButton22)
+        Me.TabPage2.Controls.Add(Me.StopTimer_btn)
+        Me.TabPage2.Controls.Add(Me.ExportDetails_btn)
         Me.TabPage2.Controls.Add(Me.log_lbl)
-        Me.TabPage2.Controls.Add(Me.XenonButton14)
-        Me.TabPage2.Controls.Add(Me.XenonButton8)
-        Me.TabPage2.Controls.Add(Me.TreeView1)
+        Me.TabPage2.Controls.Add(Me.ShowErrors_btn)
+        Me.TabPage2.Controls.Add(Me.ok_btn)
+        Me.TabPage2.Controls.Add(Me.log)
         Me.TabPage2.Controls.Add(Me.XenonSeparator1)
-        Me.TabPage2.Controls.Add(Me.Label60)
+        Me.TabPage2.Controls.Add(Me.log_header)
         Me.TabPage2.Controls.Add(Me.PictureBox36)
         Me.TabPage2.Location = New System.Drawing.Point(4, 24)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage2.Size = New System.Drawing.Size(1290, 620)
+        Me.TabPage2.Size = New System.Drawing.Size(1246, 599)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.Text = "3"
         '
-        'XenonButton25
+        'StopTimer_btn
         '
-        Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton25.ForeColor = System.Drawing.Color.White
-        Me.XenonButton25.Image = Nothing
-        Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(1049, 573)
-        Me.XenonButton25.Name = "XenonButton25"
-        Me.XenonButton25.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton25.TabIndex = 31
-        Me.XenonButton25.Text = "Stop timer"
-        Me.XenonButton25.UseVisualStyleBackColor = False
-        Me.XenonButton25.Visible = False
+        Me.StopTimer_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.StopTimer_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.StopTimer_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.StopTimer_btn.ForeColor = System.Drawing.Color.White
+        Me.StopTimer_btn.Image = Nothing
+        Me.StopTimer_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.StopTimer_btn.LineSize = 1
+        Me.StopTimer_btn.Location = New System.Drawing.Point(1005, 555)
+        Me.StopTimer_btn.Name = "StopTimer_btn"
+        Me.StopTimer_btn.Size = New System.Drawing.Size(80, 34)
+        Me.StopTimer_btn.TabIndex = 31
+        Me.StopTimer_btn.Text = "Stop timer"
+        Me.StopTimer_btn.UseVisualStyleBackColor = False
+        Me.StopTimer_btn.Visible = False
         '
-        'XenonButton22
+        'ExportDetails_btn
         '
-        Me.XenonButton22.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton22.ForeColor = System.Drawing.Color.White
-        Me.XenonButton22.Image = Nothing
-        Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(1131, 573)
-        Me.XenonButton22.Name = "XenonButton22"
-        Me.XenonButton22.Size = New System.Drawing.Size(85, 34)
-        Me.XenonButton22.TabIndex = 30
-        Me.XenonButton22.Text = "Export details"
-        Me.XenonButton22.UseVisualStyleBackColor = False
-        Me.XenonButton22.Visible = False
+        Me.ExportDetails_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ExportDetails_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExportDetails_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ExportDetails_btn.ForeColor = System.Drawing.Color.White
+        Me.ExportDetails_btn.Image = Nothing
+        Me.ExportDetails_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ExportDetails_btn.LineSize = 1
+        Me.ExportDetails_btn.Location = New System.Drawing.Point(1087, 555)
+        Me.ExportDetails_btn.Name = "ExportDetails_btn"
+        Me.ExportDetails_btn.Size = New System.Drawing.Size(85, 34)
+        Me.ExportDetails_btn.TabIndex = 30
+        Me.ExportDetails_btn.Text = "Export details"
+        Me.ExportDetails_btn.UseVisualStyleBackColor = False
+        Me.ExportDetails_btn.Visible = False
         '
         'log_lbl
         '
@@ -1959,63 +3073,63 @@ Partial Class Store
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.log_lbl.BackColor = System.Drawing.Color.Transparent
         Me.log_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.log_lbl.Location = New System.Drawing.Point(13, 573)
+        Me.log_lbl.Location = New System.Drawing.Point(13, 555)
         Me.log_lbl.Name = "log_lbl"
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.log_lbl.Size = New System.Drawing.Size(946, 34)
+        Me.log_lbl.Size = New System.Drawing.Size(902, 34)
         Me.log_lbl.TabIndex = 29
         Me.log_lbl.Text = "Error\s happened. Press on 'Show errors' for details"
         Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.log_lbl.Visible = False
         '
-        'XenonButton14
+        'ShowErrors_btn
         '
-        Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton14.ForeColor = System.Drawing.Color.White
-        Me.XenonButton14.Image = Nothing
-        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(965, 573)
-        Me.XenonButton14.Name = "XenonButton14"
-        Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
-        Me.XenonButton14.TabIndex = 28
-        Me.XenonButton14.Text = "Show errors"
-        Me.XenonButton14.UseVisualStyleBackColor = False
-        Me.XenonButton14.Visible = False
+        Me.ShowErrors_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ShowErrors_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ShowErrors_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ShowErrors_btn.ForeColor = System.Drawing.Color.White
+        Me.ShowErrors_btn.Image = Nothing
+        Me.ShowErrors_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ShowErrors_btn.LineSize = 1
+        Me.ShowErrors_btn.Location = New System.Drawing.Point(921, 555)
+        Me.ShowErrors_btn.Name = "ShowErrors_btn"
+        Me.ShowErrors_btn.Size = New System.Drawing.Size(82, 34)
+        Me.ShowErrors_btn.TabIndex = 28
+        Me.ShowErrors_btn.Text = "Show errors"
+        Me.ShowErrors_btn.UseVisualStyleBackColor = False
+        Me.ShowErrors_btn.Visible = False
         '
-        'XenonButton8
+        'ok_btn
         '
-        Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = Nothing
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(1218, 573)
-        Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(59, 34)
-        Me.XenonButton8.TabIndex = 27
-        Me.XenonButton8.Text = "OK"
-        Me.XenonButton8.UseVisualStyleBackColor = False
+        Me.ok_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ok_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ok_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ok_btn.ForeColor = System.Drawing.Color.White
+        Me.ok_btn.Image = Nothing
+        Me.ok_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.ok_btn.LineSize = 1
+        Me.ok_btn.Location = New System.Drawing.Point(1174, 555)
+        Me.ok_btn.Name = "ok_btn"
+        Me.ok_btn.Size = New System.Drawing.Size(59, 34)
+        Me.ok_btn.TabIndex = 27
+        Me.ok_btn.Text = "OK"
+        Me.ok_btn.UseVisualStyleBackColor = False
         '
-        'TreeView1
+        'log
         '
-        Me.TreeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.log.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TreeView1.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TreeView1.ForeColor = System.Drawing.Color.White
-        Me.TreeView1.FullRowSelect = True
-        Me.TreeView1.ItemHeight = 28
-        Me.TreeView1.Location = New System.Drawing.Point(13, 61)
-        Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.ShowLines = False
-        Me.TreeView1.Size = New System.Drawing.Size(1264, 501)
-        Me.TreeView1.TabIndex = 26
+        Me.log.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.log.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.log.ForeColor = System.Drawing.Color.White
+        Me.log.FullRowSelect = True
+        Me.log.ItemHeight = 28
+        Me.log.Location = New System.Drawing.Point(13, 61)
+        Me.log.Name = "log"
+        Me.log.ShowLines = False
+        Me.log.Size = New System.Drawing.Size(1220, 488)
+        Me.log.TabIndex = 26
         '
         'XenonSeparator1
         '
@@ -2024,22 +3138,22 @@ Partial Class Store
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(13, 54)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(1264, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(1220, 1)
         Me.XenonSeparator1.TabIndex = 25
         Me.XenonSeparator1.TabStop = False
         '
-        'Label60
+        'log_header
         '
-        Me.Label60.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.log_header.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label60.BackColor = System.Drawing.Color.Transparent
-        Me.Label60.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.Label60.Location = New System.Drawing.Point(54, 13)
-        Me.Label60.Name = "Label60"
-        Me.Label60.Size = New System.Drawing.Size(1223, 35)
-        Me.Label60.TabIndex = 24
-        Me.Label60.Text = "Log"
-        Me.Label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.log_header.BackColor = System.Drawing.Color.Transparent
+        Me.log_header.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.log_header.Location = New System.Drawing.Point(54, 13)
+        Me.log_header.Name = "log_header"
+        Me.log_header.Size = New System.Drawing.Size(1179, 35)
+        Me.log_header.TabIndex = 24
+        Me.log_header.Text = "Log"
+        Me.log_header.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox36
         '
@@ -2052,29 +3166,51 @@ Partial Class Store
         Me.PictureBox36.TabIndex = 23
         Me.PictureBox36.TabStop = False
         '
-        'Timer2
+        'Status_pnl
         '
-        Me.Timer2.Interval = 1000
+        Me.Status_pnl.BackColor = System.Drawing.Color.Transparent
+        Me.Status_pnl.Controls.Add(Me.Status_lbl)
+        Me.Status_pnl.Controls.Add(Me.ProgressBar1)
+        Me.Status_pnl.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Status_pnl.Location = New System.Drawing.Point(0, 697)
+        Me.Status_pnl.Name = "Status_pnl"
+        Me.Status_pnl.Padding = New System.Windows.Forms.Padding(3)
+        Me.Status_pnl.Size = New System.Drawing.Size(1254, 24)
+        Me.Status_pnl.TabIndex = 6
+        '
+        'Status_lbl
+        '
+        Me.Status_lbl.AutoEllipsis = True
+        Me.Status_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Status_lbl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Status_lbl.Location = New System.Drawing.Point(3, 3)
+        Me.Status_lbl.Name = "Status_lbl"
+        Me.Status_lbl.Size = New System.Drawing.Size(1085, 18)
+        Me.Status_lbl.TabIndex = 39
+        Me.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1298, 718)
-        Me.Controls.Add(Me.TablessControl1)
-        Me.Controls.Add(Me.Panel1)
+        Me.ClientSize = New System.Drawing.Size(1254, 721)
+        Me.Controls.Add(Me.Tabs)
+        Me.Controls.Add(Me.Titlebar_panel)
+        Me.Controls.Add(Me.Status_pnl)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(5, 2, 5, 2)
+        Me.MinimumSize = New System.Drawing.Size(1270, 760)
         Me.Name = "Store"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter Store (Beta)"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        Me.Panel1.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TablessControl1.ResumeLayout(False)
+        Me.Titlebar_panel.ResumeLayout(False)
+        Me.search_panel.ResumeLayout(False)
+        CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Tabs.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.XenonGroupBox4.ResumeLayout(False)
@@ -2107,6 +3243,12 @@ Partial Class Store
         Me.RetroWindow4.ResumeLayout(False)
         Me.programcontainer.ResumeLayout(False)
         Me.RetroPanel2.ResumeLayout(False)
+        Me.TabPage8.ResumeLayout(False)
+        Me.TabPage9.ResumeLayout(False)
+        Me.TabPage10.ResumeLayout(False)
+        Me.TabPage11.ResumeLayout(False)
+        Me.Cursors_Container.ResumeLayout(False)
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox2.ResumeLayout(False)
@@ -2118,12 +3260,14 @@ Partial Class Store
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Status_pnl.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents TablessControl1 As TablessControl
+    Friend WithEvents Tabs As TablessControl
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents tabs_preview As TablessControl
     Friend WithEvents TabPage6 As TabPage
@@ -2149,24 +3293,24 @@ Partial Class Store
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents container As FlowLayoutPanel
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents back_btn As XenonButton
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
-    Friend WithEvents Timer1 As Timer
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label1 As Label
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Preview_Timer As Timer
+    Friend WithEvents Titlebar_panel As Panel
+    Friend WithEvents Titlebar_lbl As Label
+    Friend WithEvents Titlebar_img As PictureBox
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonLinkLabel2 As XenonLinkLabel
-    Friend WithEvents Label10 As Label
-    Friend WithEvents XenonLinkLabel1 As XenonLinkLabel
+    Friend WithEvents Download_Link As XenonLinkLabel
+    Friend WithEvents themeSize_lbl As Label
+    Friend WithEvents Author_link As XenonLinkLabel
     Friend WithEvents Label15 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents author_lbl As Label
     Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents Label7 As Label
+    Friend WithEvents theme_ver_lbl As Label
     Friend WithEvents Label14 As Label
-    Friend WithEvents Label12 As Label
+    Friend WithEvents MD5_lbl As Label
     Friend WithEvents PictureBox8 As PictureBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents theme_name_lbl As Label
     Friend WithEvents PictureBox9 As PictureBox
     Friend WithEvents Label5 As Label
     Friend WithEvents Label4 As Label
@@ -2177,21 +3321,20 @@ Partial Class Store
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents Label11 As Label
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents ShowCMD_btn As XenonButton
+    Friend WithEvents Switch_M_C_btn As XenonButton
     Friend WithEvents Label24 As Label
     Friend WithEvents PictureBox13 As PictureBox
     Friend WithEvents XenonGroupBox2 As XenonGroupBox
     Friend WithEvents previewContainer As XenonGroupBox
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents desc_txt As XenonTextBox
     Friend WithEvents PictureBox41 As PictureBox
     Friend WithEvents Label19 As Label
     Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents Label22 As Label
+    Friend WithEvents SupportedOS_lbl As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox14 As PictureBox
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents Apply_btn As XenonButton
     Friend WithEvents ClassicColorsPreview As Panel
     Friend WithEvents RetroShadow1 As TransparentPictureBox
     Friend WithEvents Menu_Window As RetroWindow
@@ -2221,24 +3364,66 @@ Partial Class Store
     Friend WithEvents RetroButton11 As RetroButton
     Friend WithEvents RetroButton10 As RetroButton
     Friend WithEvents TabPage4 As TabPage
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonButton25 As XenonButton
-    Friend WithEvents XenonButton22 As XenonButton
+    Friend WithEvents ShowClassic_btn As XenonButton
+    Friend WithEvents StopTimer_btn As XenonButton
+    Friend WithEvents ExportDetails_btn As XenonButton
     Friend WithEvents log_lbl As Label
-    Friend WithEvents XenonButton14 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents ShowErrors_btn As XenonButton
+    Friend WithEvents ok_btn As XenonButton
+    Friend WithEvents log As TreeView
     Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents Label60 As Label
+    Friend WithEvents log_header As Label
     Friend WithEvents PictureBox36 As PictureBox
-    Friend WithEvents Timer2 As Timer
+    Friend WithEvents Log_Timer As Timer
     Friend WithEvents XenonGroupBox4 As XenonGroupBox
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents Label13 As Label
-    Friend WithEvents TreeView2 As TreeView
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton9 As XenonButton
-    Friend WithEvents XenonButton19 As XenonButton
+    Friend WithEvents NonExistingRes As TreeView
+    Friend WithEvents SwitchNonExistingRes_btn As XenonButton
+    Friend WithEvents NonExistingRes_Tip As XenonAlertBox
+    Friend WithEvents Edit_btn As XenonButton
+    Friend WithEvents ShowCursors_btn As XenonButton
+    Friend WithEvents RestartExplorer As XenonButton
+    Friend WithEvents search_box As XenonTextBox
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents search_results As FlowLayoutPanel
+    Friend WithEvents search_btn As XenonButton
+    Friend WithEvents search_filter_btn As XenonButton
+    Friend WithEvents TabPage8 As TabPage
+    Friend WithEvents TabPage9 As TabPage
+    Friend WithEvents TabPage10 As TabPage
+    Friend WithEvents XenonCMD1 As XenonCMD
+    Friend WithEvents XenonCMD2 As XenonCMD
+    Friend WithEvents XenonCMD3 As XenonCMD
+    Friend WithEvents ShowPS64_btn As XenonButton
+    Friend WithEvents ShowPS86_btn As XenonButton
+    Friend WithEvents TabPage11 As TabPage
+    Friend WithEvents cur_anim_btn As XenonButton
+    Friend WithEvents cur_tip_btn As XenonButton
+    Friend WithEvents Cursors_Container As FlowLayoutPanel
+    Friend WithEvents Arrow As CursorControl
+    Friend WithEvents Help As CursorControl
+    Friend WithEvents AppLoading As CursorControl
+    Friend WithEvents Busy As CursorControl
+    Friend WithEvents Move_Cur As CursorControl
+    Friend WithEvents Up As CursorControl
+    Friend WithEvents NS As CursorControl
+    Friend WithEvents EW As CursorControl
+    Friend WithEvents NESW As CursorControl
+    Friend WithEvents NWSE As CursorControl
+    Friend WithEvents Pen As CursorControl
+    Friend WithEvents None As CursorControl
+    Friend WithEvents Link As CursorControl
+    Friend WithEvents Pin As CursorControl
+    Friend WithEvents Person As CursorControl
+    Friend WithEvents IBeam As CursorControl
+    Friend WithEvents Cross As CursorControl
+    Friend WithEvents PictureBox12 As PictureBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents CursorsSize_Bar As XenonTrackbar
+    Friend WithEvents Cursor_Timer As Timer
+    Friend WithEvents search_panel As Panel
+    Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents Status_pnl As Panel
+    Friend WithEvents Status_lbl As Label
 End Class

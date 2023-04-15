@@ -24,9 +24,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows 11 (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows 11 (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString
@@ -108,9 +108,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows 10 (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows 10 (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString
@@ -193,9 +193,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows 8.1 (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows 8.1 (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString
@@ -309,9 +309,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows 7 (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows 7 (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString
@@ -424,9 +424,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows Vista (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows Vista (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString
@@ -581,9 +581,9 @@ Public Class CP_Defaults : Implements IDisposable
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
-            .PaletteName = "Windows XP (Initial)"
-            .PaletteDescription = "Initial; Like first time after Windows Setup"
-            .PaletteVersion = "1.0.0.0"
+            .ThemeName = "Windows XP (Initial)"
+            .Description = "Initial; Like first time after Windows Setup"
+            .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
             .AppVersion = My.Application.Info.Version.ToString

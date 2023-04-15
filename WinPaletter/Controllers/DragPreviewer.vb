@@ -750,8 +750,9 @@ Public Class DragPreviewer
         start.Visible = (Not MainFrm.PreviewConfig = WinVer.W8)
         ActionCenter.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         Dim condition0 As Boolean = MainFrm.PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
         XenonAlertBox11.Visible = MainFrm.PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
         MainFrm.ApplyMetrics([CP], XenonWindow1)
@@ -1025,8 +1026,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = 44
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton3.Image = My.Resources.SampleApp_Active
+                RetroButton4.Image = My.Resources.SampleApp_Inactive
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
@@ -1051,8 +1052,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1073,8 +1074,8 @@ Public Class DragPreviewer
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft

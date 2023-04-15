@@ -6,6 +6,7 @@ Imports System.Text
 Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
+Imports WinPaletter.NativeMethods
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -16,6 +17,7 @@ Public Class MainFrm
     Dim StableInt, BetaInt, UpdateChannel As Integer
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
+    Private LoggingOff As Boolean = False
 
 #Region "Preview Subs"
     Sub ApplyLivePreviewFromCP(ByVal [CP] As CP)
@@ -934,10 +936,11 @@ Public Class MainFrm
         ActionCenter.Visible = (PreviewConfig = WinVer.W11 Or PreviewConfig = WinVer.W10)
         XenonButton23.Visible = (PreviewConfig = WinVer.W7)
         Dim condition0 As Boolean = PreviewConfig = WinVer.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        Dim condition1 As Boolean = PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
         WXP_Alert2.Visible = PreviewConfig = WinVer.WXP AndAlso My.StartedWithClassicTheme
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1, 1, 0)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
 
         ApplyMetrics([CP], XenonWindow1)
         ApplyMetrics([CP], XenonWindow2)
@@ -1238,8 +1241,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = 44
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar
+                RetroButton3.Image = My.Resources.SampleApp_Active
+                RetroButton4.Image = My.Resources.SampleApp_Inactive
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.MiddleCenter
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.MiddleCenter
@@ -1265,8 +1268,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.Native7.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1287,8 +1290,8 @@ Public Class MainFrm
                 start.Left = 0
                 start.Top = taskbar.Top - start.Height
                 ClassicTaskbar.Height = taskbar.Height
-                RetroButton3.Image = My.Resources.ActiveApp_Taskbar.Resize(23, 23)
-                RetroButton4.Image = My.Resources.InactiveApp_Taskbar.Resize(23, 23)
+                RetroButton3.Image = My.Resources.SampleApp_Active.Resize(23, 23)
+                RetroButton4.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
                 RetroButton2.Image = My.Resources.NativeXP.Resize(18, 16)
                 RetroButton3.ImageAlign = Drawing.ContentAlignment.BottomLeft
                 RetroButton4.ImageAlign = Drawing.ContentAlignment.BottomLeft
@@ -1335,8 +1338,8 @@ Public Class MainFrm
         End If
     End Sub
     Sub ApplyCPValues([CP] As CP)
-        themename_lbl.Text = String.Format("{0} ({1})", Me.[CP].Info.PaletteName, Me.[CP].Info.PaletteVersion)
-        author_lbl.Text = String.Format("{0}: {1}", My.Lang.By, Me.[CP].Info.Author)
+        themename_lbl.Text = String.Format("{0} ({1})", [CP].Info.ThemeName, [CP].Info.ThemeVersion)
+        author_lbl.Text = String.Format("{0} {1}", My.Lang.By, [CP].Info.Author)
 
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
@@ -1655,7 +1658,10 @@ Public Class MainFrm
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                W8_start.Image = My.Application.GetWallpaper.Resize(48, 48)
+                Using wall As New Bitmap(My.Application.GetWallpaper)
+                    W8_start.Image = wall.Resize(48, 48)
+                End Using
+
             Case Else
                 W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
         End Select
@@ -1748,7 +1754,9 @@ Public Class MainFrm
     Public Sub Update_Wallpaper_Preview()
         Cursor = Cursors.AppStarting
 
-        My.Wallpaper = My.Application.GetWallpaper().Resize(528, 297)
+        Using wall As New Bitmap(My.Application.GetWallpaper())
+            My.Wallpaper = wall.Resize(528, 297)
+        End Using
 
         Select Case PreviewConfig
             Case WinVer.W11
@@ -1912,6 +1920,8 @@ Public Class MainFrm
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         Visible = False
+        LoggingOff = False
+
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
 
@@ -2050,7 +2060,7 @@ Public Class MainFrm
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         If CP <> CP_Original Then
 
-            If My.[Settings].ShowSaveConfirmation Then
+            If My.[Settings].ShowSaveConfirmation AndAlso Not LoggingOff Then
 
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
@@ -4224,6 +4234,7 @@ Public Class MainFrm
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
+            LoggingOff = True
             Shell("logoff", AppWinStyle.Hide)
         End If
 

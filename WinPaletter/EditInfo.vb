@@ -5,6 +5,12 @@ Public Class EditInfo
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         Load_Info(MainFrm.CP)
+        MainFrm.Visible = False
+        XenonTextBox3.Font = My.Application.ConsoleFontMedium
+
+    End Sub
+    Private Sub EditInfo_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        MainFrm.Visible = True
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
@@ -32,22 +38,23 @@ Public Class EditInfo
 
 
         Save_Info(MainFrm.CP)
-        MainFrm.themename_lbl.Text = XenonTextBox1.Text
-        MainFrm.author_lbl.Text = XenonTextBox4.Text
+        MainFrm.themename_lbl.Text = String.Format("{0} ({1})", MainFrm.CP.Info.ThemeName, MainFrm.CP.Info.ThemeVersion)
+        MainFrm.author_lbl.Text = String.Format("{0} {1}", My.Lang.By, MainFrm.CP.Info.Author)
 
         Me.Close()
     End Sub
 
     Public Sub Load_Info(ByVal [CP] As CP)
         StoreItem1.CP = [CP]
-        XenonTextBox1.Text = [CP].Info.PaletteName
-        XenonTextBox2.Text = [CP].Info.PaletteVersion
-        XenonTextBox3.Text = [CP].Info.PaletteDescription
+        XenonTextBox1.Text = [CP].Info.ThemeName
+        XenonTextBox2.Text = [CP].Info.ThemeVersion
+        XenonTextBox3.Text = [CP].Info.Description
         XenonTextBox4.Text = [CP].Info.Author
         XenonTextBox5.Text = [CP].Info.AuthorSocialMediaLink
 
         color1.BackColor = [CP].StoreInfo.Color1
         color2.BackColor = [CP].StoreInfo.Color2
+        XenonTrackbar1.Value = [CP].StoreInfo.Pattern
 
         XenonCheckBox1.Checked = [CP].StoreInfo.DesignedFor_Win11
         XenonCheckBox2.Checked = [CP].StoreInfo.DesignedFor_Win10
@@ -58,14 +65,15 @@ Public Class EditInfo
     End Sub
 
     Sub Save_Info(ByVal [CP] As CP)
-        [CP].Info.PaletteName = XenonTextBox1.Text
-        [CP].Info.PaletteVersion = XenonTextBox2.Text
-        [CP].Info.PaletteDescription = XenonTextBox3.Text
+        [CP].Info.ThemeName = XenonTextBox1.Text
+        [CP].Info.ThemeVersion = XenonTextBox2.Text
+        [CP].Info.Description = XenonTextBox3.Text
         [CP].Info.Author = XenonTextBox4.Text
         [CP].Info.AuthorSocialMediaLink = XenonTextBox5.Text
 
         [CP].StoreInfo.Color1 = color1.BackColor
         [CP].StoreInfo.Color2 = color2.BackColor
+        [CP].StoreInfo.Pattern = XenonTrackbar1.Value
 
         [CP].StoreInfo.DesignedFor_Win11 = XenonCheckBox1.Checked
         [CP].StoreInfo.DesignedFor_Win10 = XenonCheckBox2.Checked
@@ -148,5 +156,10 @@ Public Class EditInfo
     Function CheckAllOS() As Boolean
         Return XenonCheckBox1.Checked Or XenonCheckBox2.Checked Or XenonCheckBox3.Checked Or XenonCheckBox4.Checked Or XenonCheckBox5.Checked Or XenonCheckBox6.Checked
     End Function
+
+    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+        StoreItem1.UpdatePattern(XenonTrackbar1.Value)
+    End Sub
+
 
 End Class
