@@ -252,6 +252,7 @@
     <Compile Include="BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Classes\DLL_ResourcesManager.vb" />
     <Compile Include="Classes\ExplorerPatcher.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
@@ -259,6 +260,12 @@
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />
+    <Compile Include="ScreenSaver_Editor.Designer.vb">
+      <DependentUpon>ScreenSaver_Editor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenSaver_Editor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Settings\XeSettings.vb" />
     <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -800,6 +807,9 @@
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenSaver_Editor.resx">
+      <DependentUpon>ScreenSaver_Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

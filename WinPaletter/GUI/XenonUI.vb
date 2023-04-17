@@ -25,7 +25,7 @@ Module XenonModule
         Dim g2 As Graphics = Graphics.FromImage(bm)
         Dim pth As New GraphicsPath()
         pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
-        Dim mx As Matrix = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+        Dim mx As New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
         g2.SmoothingMode = SmoothingMode.AntiAlias
         g2.Transform = mx
         Dim p As New Pen(GlowColor, GlowSize)
@@ -2994,10 +2994,10 @@ End Class
         End If
     End Sub
 
-    Public Event KeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+    Public Event KeyboardPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
 
-    Public Sub OnKeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
-        RaiseEvent KeyPress(s, e)
+    Public Overloads Sub OnKeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+        RaiseEvent KeyboardPress(s, e)
     End Sub
 
     Protected Overrides Sub OnResize(ByVal e As EventArgs)

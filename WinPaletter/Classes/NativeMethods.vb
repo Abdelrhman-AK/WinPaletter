@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Text
 Imports WinPaletter.Metrics
 
@@ -832,8 +831,28 @@ Namespace NativeMethods
         Public Shared Function LoadLibraryEx(ByVal lpFileName As String, ByVal hFile As IntPtr, ByVal dwFlags As UInteger) As IntPtr
         End Function
 
+        <DllImport("kernel32.dll", SetLastError:=True)>
+        Public Shared Function FreeLibrary(ByVal hModule As IntPtr) As Boolean
+        End Function
+
+        <DllImport("User32.dll")>
+        Public Shared Function LoadImage(ByVal hInstance As IntPtr, ByVal uID As Integer, ByVal type As UInteger, ByVal width As Integer, ByVal height As Integer, ByVal load As Integer) As IntPtr
+        End Function
+
+        <DllImport("User32.dll")>
+        Public Shared Function LoadBitmap(ByVal hInstance As IntPtr, ByVal uID As Integer) As IntPtr
+        End Function
+
         <DllImport("kernel32.dll")>
-        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpID As Integer, ByVal lpType As String) As IntPtr
+        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpName As String, ByVal lpType As String) As IntPtr
+        End Function
+
+        <DllImport("kernel32.dll")>
+        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal iResID As Integer, ByVal lpType As String) As IntPtr
+        End Function
+
+        <DllImport("kernel32.dll")>
+        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpName As String, ByVal iType As Integer) As IntPtr
         End Function
 
         <DllImport("kernel32.dll", SetLastError:=True)>
@@ -842,6 +861,26 @@ Namespace NativeMethods
 
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function SizeofResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As UInteger
+        End Function
+
+        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="BeginUpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
+        Public Shared Function BeginUpdateResource(ByVal pFileName As String, ByVal bDeleteExistingResources As Boolean) As IntPtr
+        End Function
+
+        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
+        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal pType As UInteger, ByVal pName As String, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
+        End Function
+
+        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
+        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal pType As UInteger, ByVal iResID As Integer, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
+        End Function
+
+        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
+        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal lpType As String, ByVal iResID As Integer, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
+        End Function
+
+        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="EndUpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
+        Public Shared Function EndUpdateResource(ByVal hUpdate As IntPtr, ByVal bDiscard As Boolean) As Boolean
         End Function
 
         <DllImport("kernel32.dll", SetLastError:=True)>
@@ -1480,11 +1519,11 @@ Namespace NativeMethods
         Public Shared Iterator Function GetFixedWidthFonts(ByVal dc As IDeviceContext) As IEnumerable(Of FontFamily)
             Dim hDC As IntPtr = dc.GetHdc()
 
-            For Each oFontFamily As System.Drawing.FontFamily In System.Drawing.FontFamily.Families
+            For Each oFontFamily As FontFamily In FontFamily.Families
 
                 Try
                     If oFontFamily.IsStyleAvailable(FontStyle.Regular) Then
-                        Using oFont As System.Drawing.Font = New System.Drawing.Font(oFontFamily, 10)
+                        Using oFont As New Font(oFontFamily, 10)
                             Dim hFont As IntPtr = IntPtr.Zero
                             Dim hFontDefault As IntPtr = IntPtr.Zero
 
@@ -1555,7 +1594,7 @@ Namespace NativeMethods
             If result = 0 Then
                 If ico IsNot Nothing Then ico.Dispose()
 
-                'if the large and/or small icons where created in the unmanaged memory successfuly then create
+                'if the large and/or small icons where created in the unmanaged memory successfully then create
                 'a clone of them in the managed icons and delete the icons in the unmanaged memory.
 
                 If hSmlIcon <> IntPtr.Zero Then
@@ -1571,30 +1610,6 @@ Namespace NativeMethods
             Dim sii As New Shell32.SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(Shell32.SHSTOCKICONINFO))}
             Shell32.SHGetStockIconInfo(_Icon, _Type, sii)
             Return Icon.FromHandle(sii.hIcon)
-        End Function
-
-#End Region
-
-#Region "Kernel32"
-        Public Shared Function GetDllRes(File As String, ResourceID As Integer, Optional ResourceType As String = "IMAGE", Optional UnfoundW As Integer = 50, Optional UnfoundH As Integer = 50) As Bitmap
-            Try
-                If IO.File.Exists(File) Then
-                    Dim hMod As IntPtr = Kernel32.LoadLibraryEx(File, IntPtr.Zero, &H2)
-                    Dim hRes As IntPtr = Kernel32.FindResource(hMod, ResourceID, ResourceType)
-                    Dim size As UInteger = Kernel32.SizeofResource(hMod, hRes)
-                    Dim pt As IntPtr = Kernel32.LoadResource(hMod, hRes)
-                    Dim bPtr As Byte() = New Byte(size - 1) {}
-                    Marshal.Copy(pt, bPtr, 0, CInt(size))
-                    Dim ms As New MemoryStream(bPtr)
-                    Dim img As New Bitmap(Image.FromStream(ms))
-                    ms.Close()
-                    Return img
-                Else
-                    Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
-                End If
-            Catch
-                Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
-            End Try
         End Function
 
 #End Region

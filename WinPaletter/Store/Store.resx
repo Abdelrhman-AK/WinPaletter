@@ -448,6 +448,9 @@ There may be some files not listed according to the current Windows version.</va
         BRQYiGlcpF5q13+6Skp+A6hk22HDjL84AAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>66</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAYGAAAAEAIAColAAAxgAAAGBgAAABAAgAqCwAAG6VAABAQAAAAQAgAChCAAAWwgAAQEAAAAEA

@@ -218,7 +218,7 @@ Public Class WinEffecter
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
         MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub EffectsEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles EffectsEnabled.CheckedChanged

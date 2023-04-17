@@ -164,7 +164,7 @@ Public Class LogonUI7
 
         If XenonRadioButton1.Checked Then
             If My.W7 Or My.WVista Then
-                bmpX = NativeMethods.DLLFunc.GetDllRes(My.PATH_imageres, 5038)
+                bmpX = Resources_Functions.GetImageFromDLL(My.PATH_imageres, 5038)
             End If
 
             If My.W8 Then

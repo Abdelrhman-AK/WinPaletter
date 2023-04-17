@@ -20,7 +20,6 @@ Namespace My
         Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
-        Public ReadOnly PATH_AccessibilityCursors As String = PATH_UserProfile & "\AppData\Local\Microsoft\Windows\Cursors"
         Public ReadOnly PATH_PS86_reg As String = "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe"
         Public ReadOnly PATH_PS86_app As String = PATH_Windows & "\System32\WindowsPowerShell\v1.0"
         Public ReadOnly PATH_PS64_reg As String = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
@@ -951,6 +950,7 @@ Namespace My
 
 #Region "   Domain (External Resources) and Exceptions Handling"
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As Assembly Handles Domain.AssemblyResolve
+
             Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(Resources.Animator)
             Catch : End Try
 
@@ -992,6 +992,8 @@ Namespace My
 
             Try : If e.Name.ToUpper.Contains("System.ValueTuple".ToUpper) Then Return Assembly.Load(Resources.System_ValueTuple)
             Catch : End Try
+
+            Return Nothing
         End Function
 
         Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)

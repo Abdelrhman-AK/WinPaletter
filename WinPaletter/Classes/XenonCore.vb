@@ -224,9 +224,8 @@ Public Class XenonCore
         Else
             '####################### For Selected [Form]
 
-            If [Form].BackColor <> BackColor Then
-                [Form].BackColor = BackColor
-            End If
+            If [Form].BackColor <> BackColor Then [Form].BackColor = BackColor
+
             DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
             EnumControls([Form], DarkMode)
 
@@ -236,9 +235,11 @@ Public Class XenonCore
             If [Form].Name = ExternalTerminal.Name Then
                 ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.1))
             End If
+
             If [Form].Name = MainFrm.Name Then
                 MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
             End If
+
             [Form].Refresh()
 
         End If
@@ -778,7 +779,7 @@ End Module
 '
 ' For questions you can contact author at
 '    miran.uhan@gmail.com
-' Sugestions and bug reports are also welcome.
+' Suggestions and bug reports are also welcome.
 '
 Public Interface IFilter
 
@@ -856,7 +857,7 @@ End Class
 '    Boston, MA 02110-1301 USA
 '
 ' Sources:
-' - http://en.wikipedia.org/wiki/HSL_color_space
+' - http://en.Wikipedia.org/wiki/HSL_color_space
 ' - http://www.easyrgb.com/math.php?MATH=M19#text19
 '
 ' For questions you can contact author at
@@ -953,7 +954,7 @@ Public Class HSLFilter
     Private Function ExecuteRgb8(ByVal img As System.Drawing.Image) As System.Drawing.Image
         Const c1o60 As Double = 1 / 60
         Const c1o255 As Double = 1 / 255
-        Dim result As Bitmap = New Bitmap(img)
+        Dim result As New Bitmap(img)
         result.SetResolution(img.HorizontalResolution, img.VerticalResolution)
         Dim bmpData As BitmapData = result.LockBits(
                        New Rectangle(0, 0, result.Width, result.Height),

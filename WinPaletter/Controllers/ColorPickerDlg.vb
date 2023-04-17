@@ -586,18 +586,22 @@ Public Class ColorPickerDlg
                 Using wall As New Bitmap(My.Application.GetWallpaper())
                     img = wall.Clone
                 End Using
+
             Case False
                 If IO.File.Exists(TextBox1.Text) Then
                     Try
-                        fs = New IO.FileStream(TextBox1.Text, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
-                        img = Image.FromStream(fs)
-                        fs.Close()
+                        Using fs As New IO.FileStream(TextBox1.Text, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
+                            img = Image.FromStream(fs).Clone
+                            fs.Close()
+                            fs.Dispose()
+                        End Using
                     Catch
                         img = Nothing
                     End Try
                 Else
                     img = Nothing
                 End If
+
         End Select
 
         If img IsNot Nothing Then
@@ -617,26 +621,33 @@ Public Class ColorPickerDlg
 
     ReadOnly ColorsList As New List(Of Color)
     Dim img As Image
-    ReadOnly ColorThiefX As New ColorThiefDotNet.ColorThief
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
-            For Each C As ColorThiefDotNet.QuantizedColor In ColorThiefX.GetPalette(img, XenonTrackbar1.Value, XenonTrackbar2.Value, XenonCheckBox1.Checked)
+            Dim ColorThiefX As New ColorThiefDotNet.ColorThief
+            Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(img, XenonTrackbar1.Value, XenonTrackbar2.Value, XenonCheckBox1.Checked)
+            For Each C As ColorThiefDotNet.QuantizedColor In Colors
                 ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
-
-
+            GC.Collect()
+            GC.SuppressFinalize(Colors)
+            GC.SuppressFinalize(ColorThiefX)
+            img.Dispose()
         End If
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+
+        For Each ctrl As XenonCP In ImgPaletteContainer.Controls.OfType(Of XenonCP)
+            ctrl.Dispose()
+        Next
         ImgPaletteContainer.Controls.Clear()
 
         For Each C As Color In ColorsList
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
-                .BackColor = Color.FromArgb(255, C)
-            }
+                    .Size = New Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                    .BackColor = Color.FromArgb(255, C)
+                }
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
         Next
@@ -657,8 +668,6 @@ Public Class ColorPickerDlg
 
         CHANGECOLORPREVIEW()
     End Sub
-
-    Public Shared fs As IO.FileStream
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
         ColorWheel1.Visible = False

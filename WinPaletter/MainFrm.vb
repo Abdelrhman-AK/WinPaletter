@@ -7,6 +7,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.NativeMethods
+Imports System.Media
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -1853,11 +1854,11 @@ Public Class MainFrm
     End Sub
 
     Sub UpdateHint_Dashboard(Sender As Object, e As EventArgs)
-        Label61.Text = Sender.Tag
+        status_lbl.Text = Sender.Tag
     End Sub
 
     Sub EraseHint_Dashboard()
-        Label61.Text = ""
+        status_lbl.Text = ""
     End Sub
 
 #End Region
@@ -2013,6 +2014,7 @@ Public Class MainFrm
         End If
 
         Visible = True
+
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -2137,9 +2139,6 @@ Public Class MainFrm
 
         CList.Clear()
 
-        'If Not CP.Windows11.ApplyAccentonTitlebars Then
-        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        'End If
     End Sub
 
     Private Sub W11_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_InactiveTitlebar_pick.Click
@@ -2165,10 +2164,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-        'If Not CP.Windows11.ApplyAccentonTitlebars Then
-        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        'End If
     End Sub
 
     Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
@@ -2558,10 +2553,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-        'If Not CP.Windows10.ApplyAccentonTitlebars Then
-        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        'End If
     End Sub
 
     Private Sub W10_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_InactiveTitlebar_pick.Click
@@ -2587,10 +2578,6 @@ Public Class MainFrm
         sender.invalidate
 
         CList.Clear()
-
-        'If Not CP.Windows10.ApplyAccentonTitlebars Then
-        'Notify(My.Lang.CP_TitlebarToggle, My.Resources.notify_info, 4000)
-        'End If
     End Sub
 
     Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
@@ -3643,14 +3630,14 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
+    Private Sub Apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
             status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
-    Private Sub apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
+    Private Sub Apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
         If My.[Settings].AutoRestartExplorer Then
             status_lbl.Text = ""
             status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
@@ -4208,16 +4195,6 @@ Public Class MainFrm
             If PreviewConfig = WinVer.W10 Then ApplyLivePreviewFromCP(CP)
         End If
     End Sub
-
-    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
-        MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
-    End Sub
-
-    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
-        If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
-        Store.Show()
-    End Sub
-
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
         If _Shown And Select_WXP.Checked Then
             PreviewConfig = WinVer.WXP
@@ -4231,11 +4208,16 @@ Public Class MainFrm
         Timer1.Stop()
     End Sub
 
+    Private Sub XenonButton33_Click(sender As Object, e As EventArgs) Handles XenonButton33.Click
+        ScreenSaver_Editor.ShowDialog()
+    End Sub
+
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
             LoggingOff = True
-            Shell("logoff", AppWinStyle.Hide)
+            Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+            Shell(My.PATH_System32 & "\logoff.exe", AppWinStyle.Hide)
         End If
 
     End Sub
@@ -4248,6 +4230,15 @@ Public Class MainFrm
     Private Sub XenonButton28_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton28.MouseLeave
         status_lbl.Text = ""
         status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+    End Sub
+
+
+    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+        MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
+    End Sub
+    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
+        If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
+        Store.Show()
     End Sub
 End Class
 

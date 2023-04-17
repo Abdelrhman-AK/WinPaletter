@@ -958,7 +958,7 @@ Public Module BitmapExtensions
     Public Function Invert(bmp As Bitmap) As Bitmap
         Dim bmpDest As Bitmap = Nothing
 
-        Using bmpSource As Bitmap = New Bitmap(bmp)
+        Using bmpSource As New Bitmap(bmp)
             bmpDest = New Bitmap(bmpSource.Width, bmpSource.Height)
 
             For x As Integer = 0 To bmpSource.Width - 1

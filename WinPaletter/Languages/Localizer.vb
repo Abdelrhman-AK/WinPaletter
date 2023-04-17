@@ -78,7 +78,10 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "VS2Metrics".ToLower Then Return VS2Metrics
         If Name.ToLower = "Uninstall".ToLower Then Return Uninstall
         If Name.ToLower = "AltTabEditor".ToLower Then Return AltTabEditor
-
+        If Name.ToLower = "Store".ToLower Then Return Store
+        If Name.ToLower = "Store_CPToggles".ToLower Then Return Store_CPToggles
+        If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
+        If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
     End Function
 
     Public allForms As New List(Of String) From {
@@ -119,7 +122,11 @@ Public Class Localizer : Implements IDisposable
                         "VS2Win32UI",
                         "VS2Metrics",
                         "Uninstall",
-                        "AltTabEditor"
+                        "AltTabEditor",
+                        "Store",
+                        "Store_CPToggles",
+                        "Store_SearchFilter",
+                        "ScreenSaver_Editor"
                         }
 
 #Region "Language Info"
@@ -159,7 +166,6 @@ Public Class Localizer : Implements IDisposable
     Property MBSizeUnit As String = "MB"
     Property KBSizeUnit As String = "KB"
     Property ByteSizeUnit As String = "B"
-
     Property Stable As String = "Stable"
     Property Beta As String = "Beta"
     Property Channel As String = "Channel"
@@ -179,7 +185,7 @@ Public Class Localizer : Implements IDisposable
     Property VistaLogonNotSupported As String = "Editing Windows Vista LogonUI with registry is not supported. Change the preview to another OS and try again."
     Property MonitorIssue As String = "Error occurred during loading registry monitor (Used in real-time-detection of wallpaper\dark mode change from registry). Resetting your wallpaper may fix the issue."
     Property MonitorIssue2 As String = "Anyway, loading will continue without it."
-    Property LogoffQuestion As String = "Are you sure from Logging-off?"
+    Property LogoffQuestion As String = "Are you sure you want to log off?"
     Property LogoffAlert1 As String = "This will close all open files\applications"
     Property LogoffAlert2 As String = "Logoff equals Sign Out in Windows 8.1/10/11"
     Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in Main Form"
@@ -248,6 +254,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_Metrics As String = "Applying Windows Metrics and Fonts"
     Property CP_Applying_AltTab As String = "Applying Windows Switcher (Alt+Tab) appearance"
     Property CP_Applying_TerminalPreview As String = "Applying Windows Terminal Preview"
+    Property CP_Applying_ScreenSaver As String = "Applying Screen Saver"
     Property CP_Check_Terminals As String = "Checking if Windows Terminal (Stable & Preview) are installed"
     Property CP_Check_TerminalStable As String = "Checking if Windows Terminal Stable is installed"
     Property CP_Check_TerminalPreview As String = "Checking if Windows Terminal Preview is installed"
@@ -291,6 +298,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Error_AltTab As String = "Error occurred during applying Windows Switcher (Alt+Tab) appearance"
     Property CP_Error_TerminalPreview As String = "Error occurred during applying Windows Terminal Preview"
     Property CP_Error_TerminalStable As String = "Error occurred during applying Windows Terminal Stable"
+    Property CP_Error_ScreenSaver As String = "Error occurred during applying Screen Saver"
     Property CP_MetricsHighDPIAlert As String = "Please Logoff and Logon after setting Metrics and Fonts with a high DPI"
     Property CP_Restricted_Cursors As String = "Modifying Windows Cursors is restricted from settings"
     Property CP_Applying_TerminalStable As String = "Applying Windows Terminal Stable"

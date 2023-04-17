@@ -1337,7 +1337,7 @@ Public Class Store
         ShowIcon = False
         FinishedLoadingInitialCPs = False
         _Shown = False
-        container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
+        store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
         ApplyDarkMode(Me)
 
@@ -1399,7 +1399,7 @@ Public Class Store
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         ShowIcon = True
         _Shown = True
-        RemoveAllStoreItems(container)
+        RemoveAllStoreItems(store_container)
         FilesFetcher.RunWorkerAsync()
     End Sub
 
@@ -1409,9 +1409,9 @@ Public Class Store
         Status_lbl.Refresh()
 
         FilesFetcher.CancelAsync()
-        container.Visible = False
-        RemoveAllStoreItems(container)
-        container.Visible = True
+        store_container.Visible = False
+        RemoveAllStoreItems(store_container)
+        store_container.Visible = True
         Tabs.SelectedIndex = 0
         GC.Collect()
         GC.WaitForPendingFinalizers()
@@ -1543,7 +1543,7 @@ Public Class Store
                             AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
                             BeginInvoke(CType(Sub()
-                                                  container.Controls.Add(ctrl)
+                                                  store_container.Controls.Add(ctrl)
                                               End Sub, MethodInvoker))
 
                         End Using
@@ -1575,7 +1575,7 @@ Public Class Store
     Sub OfflineMode()
         BeginInvoke(CType(Sub()
                               ProgressBar1.Visible = True
-                              container.Visible = False
+                              store_container.Visible = False
                           End Sub, MethodInvoker))
 
         Dim i As Integer = 0
@@ -1639,7 +1639,7 @@ Public Class Store
             AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
             BeginInvoke(CType(Sub()
-                                  container.Controls.Add(ctrl)
+                                  store_container.Controls.Add(ctrl)
                               End Sub, MethodInvoker))
 
             i += 1
@@ -1649,7 +1649,7 @@ Public Class Store
 
         BeginInvoke(CType(Sub()
                               ProgressBar1.Visible = False
-                              container.Visible = True
+                              store_container.Visible = True
                           End Sub, MethodInvoker))
 
         Status_lbl.SetText("")
@@ -1890,7 +1890,7 @@ Public Class Store
 
         Dim lst As New Dictionary(Of String, StoreItem) : lst.Clear()
 
-        For Each st_itm In container.Controls.OfType(Of StoreItem)
+        For Each st_itm In store_container.Controls.OfType(Of StoreItem)
             lst.Add(st_itm.FileName, st_itm)
         Next
 
@@ -2330,7 +2330,7 @@ Public Class Store
         Label17.Text = String.Format("{0} ({1}x)", My.Lang.Scaling, sender.value / 100)
     End Sub
 
-    Private Sub search_box_KeyPress(sender As Object, e As KeyPressEventArgs) Handles search_box.KeyPress
+    Private Sub search_box_KeyPress(sender As Object, e As KeyPressEventArgs) Handles search_box.KeyboardPress
         If e.KeyChar = ChrW(Keys.Enter) Then PerformSearch()
     End Sub
 

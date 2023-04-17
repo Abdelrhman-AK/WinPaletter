@@ -7,6 +7,7 @@ Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
+Imports WinPaletter.CP.Structures
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -2959,6 +2960,51 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Function
 
         End Structure
+
+        Structure ScreenSaver : Implements ICloneable
+            Public Enabled As Boolean
+            Public IsSecure As Boolean
+            Public TimeOut As Integer
+            Public File As String
+
+            Public Sub Load(_DefScrSaver As ScreenSaver)
+                Enabled = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", _DefScrSaver.Enabled.ToInteger)).ToBoolean
+                IsSecure = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", _DefScrSaver.IsSecure.ToInteger)).ToBoolean
+                TimeOut = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", _DefScrSaver.TimeOut))
+                File = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", _DefScrSaver.File)
+            End Sub
+
+            Sub Apply()
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled.ToInteger, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure.ToInteger, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String)
+            End Sub
+
+            Shared Operator =(First As ScreenSaver, Second As ScreenSaver) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As ScreenSaver, Second As ScreenSaver) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<ScreenSaver>")
+                tx.Add("*ScreenSaver_Enabled= " & Enabled)
+                tx.Add("*ScreenSaver_IsSecure= " & IsSecure)
+                tx.Add("*ScreenSaver_TimeOut= " & TimeOut)
+                tx.Add("*ScreenSaver_File= " & File)
+                tx.Add("</ScreenSaver>" & vbCrLf)
+                Return tx.CString
+            End Function
+
+        End Structure
     End Class
 
 #Region "Properties"
@@ -3179,7 +3225,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Win11BootDots = Not My.W11,
         .Win11ExplorerBar = ExplorerBar.Default,
         .DisableNavBar = False,
-        .AutoHideScrollBars = True}
+        .AutoHideScrollBars = True,
+        .ColorFilter_Enabled = False,
+        .ColorFilter = ColorFilters.Grayscale}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
                 .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
@@ -3314,6 +3362,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Public Terminal As New WinTerminal("", WinTerminal.Mode.Empty)
 
     Public TerminalPreview As New WinTerminal("", WinTerminal.Mode.Empty)
+
+    Public ScreenSaver As New ScreenSaver With {
+        .Enabled = False,
+        .File = "",
+        .IsSecure = False,
+        .TimeOut = 60}
 
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
@@ -4385,6 +4439,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Win32.Load()
                 MetricsFonts.Load(_Def.MetricsFonts)
                 AltTab.Load(_Def.AltTab)
+                ScreenSaver.Load(_Def.ScreenSaver)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -4979,6 +5034,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
+#Region "Screen Saver"
+                    If lin.StartsWith("*ScreenSaver_Enabled= ", My._ignore) Then ScreenSaver.Enabled = lin.Remove(0, "*ScreenSaver_Enabled= ".Count)
+                    If lin.StartsWith("*ScreenSaver_IsSecure= ", My._ignore) Then ScreenSaver.IsSecure = lin.Remove(0, "*ScreenSaver_IsSecure= ".Count)
+                    If lin.StartsWith("*ScreenSaver_TimeOut= ", My._ignore) Then ScreenSaver.TimeOut = lin.Remove(0, "*ScreenSaver_TimeOut= ".Count)
+                    If lin.StartsWith("*ScreenSaver_File= ", My._ignore) Then ScreenSaver.File = lin.Remove(0, "*ScreenSaver_File= ".Count)
+#End Region
                 Next
 
 #Region "Fonts"
@@ -5342,6 +5403,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 sw.Stop()
 #End Region
 
+                'ScreenSaver
+                Execute(CType(Sub()
+                                  ScreenSaver.Apply()
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_ScreenSaver, My.Lang.CP_Error_ScreenSaver, My.Lang.CP_Time, sw_all)
+
                 'Cursors
                 Execute(CType(Sub()
                                   Apply_Cursors([TreeView])
@@ -5471,6 +5537,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Catch : End Try
         tx.Add("</Terminals>" & vbCrLf)
 
+        tx.Add(ScreenSaver.ToString)
+
         tx.Add("<Cursors>")
         tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
         tx.Add("*Cursor_Shadow= " & Cursor_Shadow)
@@ -5535,7 +5603,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Select Case [LogonElement].Mode
                 Case LogonUI_Modes.Default_
                     For i As Integer = 5031 To 5043 Step +1
-                        bmpList.Add(DLLFunc.GetDllRes(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
+                        bmpList.Add(Resources_Functions.GetImageFromDLL(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                     Next
 
                 Case LogonUI_Modes.CustomImage
@@ -6290,6 +6358,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WallpaperTone_W7 <> DirectCast(obj, CP).WallpaperTone_W7 Then _Equals = False
         If WallpaperTone_WVista <> DirectCast(obj, CP).WallpaperTone_WVista Then _Equals = False
         If WallpaperTone_WXP <> DirectCast(obj, CP).WallpaperTone_WXP Then _Equals = False
+        If ScreenSaver <> DirectCast(obj, CP).ScreenSaver Then _Equals = False
 
         If Cursor_Enabled <> DirectCast(obj, CP).Cursor_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False

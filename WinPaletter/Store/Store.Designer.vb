@@ -39,7 +39,7 @@ Partial Class Store
         Me.Cursor_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Tabs = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.container = New System.Windows.Forms.FlowLayoutPanel()
+        Me.store_container = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.RestartExplorer = New WinPaletter.XenonButton()
         Me.Edit_btn = New WinPaletter.XenonButton()
@@ -329,6 +329,7 @@ Partial Class Store
         Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
         Me.Titlebar_lbl.Name = "Titlebar_lbl"
@@ -395,7 +396,7 @@ Partial Class Store
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage1.Controls.Add(Me.container)
+        Me.TabPage1.Controls.Add(Me.store_container)
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(10)
@@ -405,12 +406,12 @@ Partial Class Store
         '
         'container
         '
-        Me.container.AutoScroll = True
-        Me.container.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.container.Location = New System.Drawing.Point(10, 10)
-        Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(1226, 579)
-        Me.container.TabIndex = 3
+        Me.store_container.AutoScroll = True
+        Me.store_container.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.store_container.Location = New System.Drawing.Point(10, 10)
+        Me.store_container.Name = "container"
+        Me.store_container.Size = New System.Drawing.Size(1226, 579)
+        Me.store_container.TabIndex = 3
         '
         'TabPage3
         '
@@ -3291,7 +3292,7 @@ Partial Class Store
     Friend WithEvents RetroButton3 As RetroButton
     Friend WithEvents RetroButton2 As RetroButton
     Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents container As FlowLayoutPanel
+    Friend WithEvents store_container As FlowLayoutPanel
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents back_btn As XenonButton
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
