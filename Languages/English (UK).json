@@ -1,7 +1,7 @@
 {
   "Information": {
     "name": "Bonding for Today",
-    "translationversion": "1.0",
+    "translationversion": "1.0a",
     "lang": "English (UK)",
     "langcode": "EN-GB",
     "appver": "1.0.7.6",
@@ -48,7 +48,7 @@
     "vistalogonnotsupported": "Editing Windows Vista LogonUI with registry is not supported. Change the preview to another OS and try again.",
     "monitorissue": "Error occurred during loading registry monitor (Used in real-time-detection of wallpaper\\dark mode change from registry). Resetting your wallpaper may fix the issue.",
     "monitorissue2": "Anyway, loading will continue without it.",
-    "logoffquestion": "Are you sure from Logging-off?",
+    "logoffquestion": "Are you sure you want to log off?",
     "logoffalert1": "This will close all open files\\applications",
     "logoffalert2": "Logoff equals Sign Out in Windows 8.1/10/11",
     "wallpapertone_notice": "This is for {0}. To change another OS preferences, switch the preview in Main Form",
@@ -183,7 +183,7 @@
     "untitled": "Untitled",
     "whatsnewinversion": "What's new in {0}!",
     "thiswillrestartexplorer": "This will restart the explorer, don't worry this won't close other applications",
-    "logoffnotice": "This will logoff your Windows account. Please save your open files before logging-off",
+    "logoffnotice": "This will logoff your Windows account. Please save your open files before logging off!",
     "titlebarcolornotice": "Windows volume slider, UAC and Windows 10 LogonUI follow Active Titlebar colour",
     "nodefresexplorer": "Restarting Explorer is disabled. If theme is not applied correctly, restart it",
     "removeextmsg": "Are you sure from removing files association (*.wpth, *.wpsf) from registry?",
