@@ -94,6 +94,7 @@ Public Class ScreenSaver_Editor
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         If IO.File.Exists(XenonTextBox1.Text) AndAlso IO.Path.GetExtension(XenonTextBox1.Text).ToUpper = ".SCR" Then
+            If Proc IsNot Nothing AndAlso Not Proc.HasExited Then Proc.Kill()
             Proc = Process.GetProcessById(Shell("""" & XenonTextBox1.Text & """" & " /p " & pnl_preview.Handle.ToInt32))
         End If
     End Sub
@@ -117,13 +118,16 @@ Public Class ScreenSaver_Editor
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        If Proc IsNot Nothing AndAlso Not Proc.HasExited Then Proc.Kill()
-        Proc = Process.GetProcessById(Shell("""" & XenonTextBox1.Text & """" & " /s"))
+        If IO.File.Exists(XenonTextBox1.Text) AndAlso IO.Path.GetExtension(XenonTextBox1.Text).ToUpper = ".SCR" Then Shell("""" & XenonTextBox1.Text & """" & " /s")
     End Sub
 
     Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
         If Proc IsNot Nothing AndAlso Not Proc.HasExited Then Proc.Kill()
-        Proc = Process.GetProcessById(Shell("""" & XenonTextBox1.Text & """" & " /c", AppWinStyle.NormalFocus))
+        If IO.File.Exists(XenonTextBox1.Text) AndAlso IO.Path.GetExtension(XenonTextBox1.Text).ToUpper = ".SCR" Then
+            Proc = Process.GetProcessById(Shell("""" & XenonTextBox1.Text & """" & " /c", AppWinStyle.NormalFocus))
+            Proc.WaitForExit()
+            Proc = Process.GetProcessById(Shell("""" & XenonTextBox1.Text & """" & " /p " & pnl_preview.Handle.ToInt32))
+        End If
     End Sub
 
     Private Sub ScreenSaver_Editor_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing

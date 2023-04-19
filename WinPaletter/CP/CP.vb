@@ -3005,6 +3005,351 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Function
 
         End Structure
+
+        Structure Sounds : Implements ICloneable
+            Public Enabled As Boolean
+
+            Public Snd_Win_Default As String
+            Public Snd_Win_AppGPFault As String
+            Public Snd_Win_CCSelect As String
+            Public Snd_Win_ChangeTheme As String
+            Public Snd_Win_Close As String
+            Public Snd_Win_CriticalBatteryAlarm As String
+            Public Snd_Win_DeviceConnect As String
+            Public Snd_Win_DeviceDisconnect As String
+            Public Snd_Win_DeviceFail As String
+            Public Snd_Win_FaxBeep As String
+            Public Snd_Win_LowBatteryAlarm As String
+            Public Snd_Win_MailBeep As String
+            Public Snd_Win_Maximize As String
+            Public Snd_Win_MenuCommand As String
+            Public Snd_Win_MenuPopup As String
+            Public Snd_Win_MessageNudge As String
+            Public Snd_Win_Minimize As String
+            Public Snd_Win_Notification_Default As String
+            Public Snd_Win_Notification_IM As String
+            Public Snd_Win_Notification_Looping_Alarm As String
+            Public Snd_Win_Notification_Looping_Alarm10 As String
+            Public Snd_Win_Notification_Looping_Alarm2 As String
+            Public Snd_Win_Notification_Looping_Alarm3 As String
+            Public Snd_Win_Notification_Looping_Alarm4 As String
+            Public Snd_Win_Notification_Looping_Alarm5 As String
+            Public Snd_Win_Notification_Looping_Alarm6 As String
+            Public Snd_Win_Notification_Looping_Alarm7 As String
+            Public Snd_Win_Notification_Looping_Alarm8 As String
+            Public Snd_Win_Notification_Looping_Alarm9 As String
+            Public Snd_Win_Notification_Looping_Call As String
+            Public Snd_Win_Notification_Looping_Call10 As String
+            Public Snd_Win_Notification_Looping_Call2 As String
+            Public Snd_Win_Notification_Looping_Call3 As String
+            Public Snd_Win_Notification_Looping_Call4 As String
+            Public Snd_Win_Notification_Looping_Call5 As String
+            Public Snd_Win_Notification_Looping_Call6 As String
+            Public Snd_Win_Notification_Looping_Call7 As String
+            Public Snd_Win_Notification_Looping_Call8 As String
+            Public Snd_Win_Notification_Looping_Call9 As String
+            Public Snd_Win_Notification_Mail As String
+            Public Snd_Win_Notification_Proximity As String
+            Public Snd_Win_Notification_Reminder As String
+            Public Snd_Win_Notification_SMS As String
+            Public Snd_Win_Open As String
+            Public Snd_Win_PrintComplete As String
+            Public Snd_Win_ProximityConnection As String
+            Public Snd_Win_RestoreDown As String
+            Public Snd_Win_RestoreUp As String
+            Public Snd_Win_ShowBand As String
+            Public Snd_Win_SystemAsterisk As String
+            Public Snd_Win_SystemExclamation As String
+            Public Snd_Win_SystemExit As String
+            Public Snd_Win_SystemStartup As String
+            Public Snd_Imageres_SystemStartup As String
+            Public Snd_Win_SystemHand As String
+            Public Snd_Win_SystemNotification As String
+            Public Snd_Win_SystemQuestion As String
+            Public Snd_Win_WindowsLogoff As String
+            Public Snd_Win_WindowsLogon As String
+            Public Snd_Win_WindowsUAC As String
+            Public Snd_Win_WindowsUnlock As String
+            Public Snd_Explorer_ActivatingDocument As String
+            Public Snd_Explorer_BlockedPopup As String
+            Public Snd_Explorer_EmptyRecycleBin As String
+            Public Snd_Explorer_FeedDiscovered As String
+            Public Snd_Explorer_MoveMenuItem As String
+            Public Snd_Explorer_Navigating As String
+            Public Snd_Explorer_SecurityBand As String
+
+            Public Sub Load(_DefSounds As Sounds)
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled)
+                Snd_Imageres_SystemStartup = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStartup)
+
+                Dim Scope_Win As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current"
+                Snd_Win_Default = GetReg(String.Format(Scope_Win, ".Default"), "", _DefSounds.Snd_Win_Default)
+                Snd_Win_AppGPFault = GetReg(String.Format(Scope_Win, "AppGPFault"), "", _DefSounds.Snd_Win_AppGPFault)
+                Snd_Win_CCSelect = GetReg(String.Format(Scope_Win, "CCSelect"), "", _DefSounds.Snd_Win_CCSelect)
+                Snd_Win_ChangeTheme = GetReg(String.Format(Scope_Win, "ChangeTheme"), "", _DefSounds.Snd_Win_ChangeTheme)
+                Snd_Win_Close = GetReg(String.Format(Scope_Win, "Close"), "", _DefSounds.Snd_Win_Close)
+                Snd_Win_CriticalBatteryAlarm = GetReg(String.Format(Scope_Win, "CriticalBatteryAlarm"), "", _DefSounds.Snd_Win_CriticalBatteryAlarm)
+                Snd_Win_DeviceConnect = GetReg(String.Format(Scope_Win, "DeviceConnect"), "", _DefSounds.Snd_Win_DeviceConnect)
+                Snd_Win_DeviceDisconnect = GetReg(String.Format(Scope_Win, "DeviceDisconnect"), "", _DefSounds.Snd_Win_DeviceDisconnect)
+                Snd_Win_DeviceFail = GetReg(String.Format(Scope_Win, "DeviceFail"), "", _DefSounds.Snd_Win_DeviceFail)
+                Snd_Win_FaxBeep = GetReg(String.Format(Scope_Win, "FaxBeep"), "", _DefSounds.Snd_Win_FaxBeep)
+                Snd_Win_LowBatteryAlarm = GetReg(String.Format(Scope_Win, "LowBatteryAlarm"), "", _DefSounds.Snd_Win_LowBatteryAlarm)
+                Snd_Win_MailBeep = GetReg(String.Format(Scope_Win, "MailBeep"), "", _DefSounds.Snd_Win_MailBeep)
+                Snd_Win_Maximize = GetReg(String.Format(Scope_Win, "Maximize"), "", _DefSounds.Snd_Win_Maximize)
+                Snd_Win_MenuCommand = GetReg(String.Format(Scope_Win, "MenuCommand"), "", _DefSounds.Snd_Win_MenuCommand)
+                Snd_Win_MenuPopup = GetReg(String.Format(Scope_Win, "MenuPopup"), "", _DefSounds.Snd_Win_MenuPopup)
+                Snd_Win_MessageNudge = GetReg(String.Format(Scope_Win, "MessageNudge"), "", _DefSounds.Snd_Win_MessageNudge)
+                Snd_Win_Minimize = GetReg(String.Format(Scope_Win, "Minimize"), "", _DefSounds.Snd_Win_Minimize)
+                Snd_Win_Notification_Default = GetReg(String.Format(Scope_Win, "Notification.Default"), "", _DefSounds.Snd_Win_Notification_Default)
+                Snd_Win_Notification_IM = GetReg(String.Format(Scope_Win, "Notification.IM"), "", _DefSounds.Snd_Win_Notification_IM)
+                Snd_Win_Notification_Looping_Alarm = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm)
+                Snd_Win_Notification_Looping_Alarm2 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm2"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm2)
+                Snd_Win_Notification_Looping_Alarm3 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm3"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm3)
+                Snd_Win_Notification_Looping_Alarm4 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm4"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm4)
+                Snd_Win_Notification_Looping_Alarm5 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm5"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm5)
+                Snd_Win_Notification_Looping_Alarm6 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm6"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm6)
+                Snd_Win_Notification_Looping_Alarm7 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm7"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm7)
+                Snd_Win_Notification_Looping_Alarm8 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm8"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm8)
+                Snd_Win_Notification_Looping_Alarm9 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm9"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm9)
+                Snd_Win_Notification_Looping_Alarm10 = GetReg(String.Format(Scope_Win, "Notification.Looping.Alarm10"), "", _DefSounds.Snd_Win_Notification_Looping_Alarm10)
+                Snd_Win_Notification_Looping_Call = GetReg(String.Format(Scope_Win, "Notification.Looping.Call"), "", _DefSounds.Snd_Win_Notification_Looping_Call)
+                Snd_Win_Notification_Looping_Call2 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call2"), "", _DefSounds.Snd_Win_Notification_Looping_Call2)
+                Snd_Win_Notification_Looping_Call3 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call3"), "", _DefSounds.Snd_Win_Notification_Looping_Call3)
+                Snd_Win_Notification_Looping_Call4 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call4"), "", _DefSounds.Snd_Win_Notification_Looping_Call4)
+                Snd_Win_Notification_Looping_Call5 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call5"), "", _DefSounds.Snd_Win_Notification_Looping_Call5)
+                Snd_Win_Notification_Looping_Call6 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call6"), "", _DefSounds.Snd_Win_Notification_Looping_Call6)
+                Snd_Win_Notification_Looping_Call7 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call7"), "", _DefSounds.Snd_Win_Notification_Looping_Call7)
+                Snd_Win_Notification_Looping_Call8 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call8"), "", _DefSounds.Snd_Win_Notification_Looping_Call8)
+                Snd_Win_Notification_Looping_Call9 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call9"), "", _DefSounds.Snd_Win_Notification_Looping_Call9)
+                Snd_Win_Notification_Looping_Call10 = GetReg(String.Format(Scope_Win, "Notification.Looping.Call10"), "", _DefSounds.Snd_Win_Notification_Looping_Call10)
+                Snd_Win_Notification_Mail = GetReg(String.Format(Scope_Win, "Notification.Mail"), "", _DefSounds.Snd_Win_Notification_Mail)
+                Snd_Win_Notification_Proximity = GetReg(String.Format(Scope_Win, "Notification.Proximity"), "", _DefSounds.Snd_Win_Notification_Proximity)
+                Snd_Win_Notification_Reminder = GetReg(String.Format(Scope_Win, "Notification.Reminder"), "", _DefSounds.Snd_Win_Notification_Reminder)
+                Snd_Win_Notification_SMS = GetReg(String.Format(Scope_Win, "Notification.SMS"), "", _DefSounds.Snd_Win_Notification_SMS)
+                Snd_Win_Open = GetReg(String.Format(Scope_Win, "Open"), "", _DefSounds.Snd_Win_Open)
+                Snd_Win_PrintComplete = GetReg(String.Format(Scope_Win, "PrintComplete"), "", _DefSounds.Snd_Win_PrintComplete)
+                Snd_Win_ProximityConnection = GetReg(String.Format(Scope_Win, "ProximityConnection"), "", _DefSounds.Snd_Win_ProximityConnection)
+                Snd_Win_RestoreDown = GetReg(String.Format(Scope_Win, "RestoreDown"), "", _DefSounds.Snd_Win_RestoreDown)
+                Snd_Win_RestoreUp = GetReg(String.Format(Scope_Win, "RestoreUp"), "", _DefSounds.Snd_Win_RestoreUp)
+                Snd_Win_ShowBand = GetReg(String.Format(Scope_Win, "ShowBand"), "", _DefSounds.Snd_Win_ShowBand)
+                Snd_Win_SystemAsterisk = GetReg(String.Format(Scope_Win, "SystemAsterisk"), "", _DefSounds.Snd_Win_SystemAsterisk)
+                Snd_Win_SystemExclamation = GetReg(String.Format(Scope_Win, "SystemExclamation"), "", _DefSounds.Snd_Win_SystemExclamation)
+                Snd_Win_SystemExit = GetReg(String.Format(Scope_Win, "SystemExit"), "", _DefSounds.Snd_Win_SystemExit)
+                Snd_Win_SystemStartup = GetReg(String.Format(Scope_Win, "SystemStartup"), "", _DefSounds.Snd_Win_SystemStartup)
+                Snd_Win_SystemHand = GetReg(String.Format(Scope_Win, "SystemHand"), "", _DefSounds.Snd_Win_SystemHand)
+                Snd_Win_SystemNotification = GetReg(String.Format(Scope_Win, "SystemNotification"), "", _DefSounds.Snd_Win_SystemNotification)
+                Snd_Win_SystemQuestion = GetReg(String.Format(Scope_Win, "SystemQuestion"), "", _DefSounds.Snd_Win_SystemQuestion)
+                Snd_Win_WindowsLogoff = GetReg(String.Format(Scope_Win, "WindowsLogoff"), "", _DefSounds.Snd_Win_WindowsLogoff)
+                Snd_Win_WindowsLogon = GetReg(String.Format(Scope_Win, "WindowsLogon"), "", _DefSounds.Snd_Win_WindowsLogon)
+                Snd_Win_WindowsUAC = GetReg(String.Format(Scope_Win, "WindowsUAC"), "", _DefSounds.Snd_Win_WindowsUAC)
+                Snd_Win_WindowsUnlock = GetReg(String.Format(Scope_Win, "WindowsUnlock"), "", _DefSounds.Snd_Win_WindowsUnlock)
+
+                Dim Scope_Explorer As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current"
+                Snd_Explorer_ActivatingDocument = GetReg(String.Format(Scope_Explorer, "ActivatingDocument"), "", _DefSounds.Snd_Explorer_ActivatingDocument)
+                Snd_Explorer_BlockedPopup = GetReg(String.Format(Scope_Explorer, "BlockedPopup"), "", _DefSounds.Snd_Explorer_BlockedPopup)
+                Snd_Explorer_EmptyRecycleBin = GetReg(String.Format(Scope_Explorer, "EmptyRecycleBin"), "", _DefSounds.Snd_Explorer_EmptyRecycleBin)
+                Snd_Explorer_FeedDiscovered = GetReg(String.Format(Scope_Explorer, "FeedDiscovered"), "", _DefSounds.Snd_Explorer_FeedDiscovered)
+                Snd_Explorer_MoveMenuItem = GetReg(String.Format(Scope_Explorer, "MoveMenuItem"), "", _DefSounds.Snd_Explorer_MoveMenuItem)
+                Snd_Explorer_Navigating = GetReg(String.Format(Scope_Explorer, "Navigating"), "", _DefSounds.Snd_Explorer_Navigating)
+                Snd_Explorer_SecurityBand = GetReg(String.Format(Scope_Explorer, "SecurityBand"), "", _DefSounds.Snd_Explorer_SecurityBand)
+
+            End Sub
+
+            Sub Apply()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStartup, RegistryValueKind.String)
+
+                If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStartup) Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1)
+
+                ElseIf IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 0)
+
+                ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 0)
+
+                ElseIf Not Snd_Imageres_SystemStartup.Trim.ToUpper = "CURRENT" Then
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1)
+
+                End If
+
+                If Enabled Then
+
+                    If IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
+                        If Not My.WXP Then ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(Snd_Imageres_SystemStartup))
+
+                    ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
+                        If Not My.WXP Then ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav"))
+
+                    End If
+
+                    'Dim Scope_Win As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified"}
+                    'Dim Scope_Explorer As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Modified"}
+
+                    'For Each Scope As String In Scope_Win
+                    '    EditReg(String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "AppGPFault"), "", Snd_Win_AppGPFault, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "CCSelect"), "", Snd_Win_CCSelect, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "ChangeTheme"), "", Snd_Win_ChangeTheme, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Close"), "", Snd_Win_Close, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "CriticalBatteryAlarm"), "", Snd_Win_CriticalBatteryAlarm, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "DeviceConnect"), "", Snd_Win_DeviceConnect, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "DeviceDisconnect"), "", Snd_Win_DeviceDisconnect, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "DeviceFail"), "", Snd_Win_DeviceFail, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "FaxBeep"), "", Snd_Win_FaxBeep, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "LowBatteryAlarm"), "", Snd_Win_LowBatteryAlarm, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "MailBeep"), "", Snd_Win_MailBeep, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Maximize"), "", Snd_Win_Maximize, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "MenuCommand"), "", Snd_Win_MenuCommand, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "MenuPopup"), "", Snd_Win_MenuPopup, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "MessageNudge"), "", Snd_Win_MessageNudge, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Minimize"), "", Snd_Win_Minimize, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Default"), "", Snd_Win_Notification_Default, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.IM"), "", Snd_Win_Notification_IM, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm"), "", Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm2"), "", Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm3"), "", Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm4"), "", Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm5"), "", Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm6"), "", Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm7"), "", Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm8"), "", Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm9"), "", Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm10"), "", Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call"), "", Snd_Win_Notification_Looping_Call, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call2"), "", Snd_Win_Notification_Looping_Call2, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call3"), "", Snd_Win_Notification_Looping_Call3, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call4"), "", Snd_Win_Notification_Looping_Call4, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call5"), "", Snd_Win_Notification_Looping_Call5, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call6"), "", Snd_Win_Notification_Looping_Call6, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call7"), "", Snd_Win_Notification_Looping_Call7, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call8"), "", Snd_Win_Notification_Looping_Call8, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call9"), "", Snd_Win_Notification_Looping_Call9, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Looping.Call10"), "", Snd_Win_Notification_Looping_Call10, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Mail"), "", Snd_Win_Notification_Mail, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Proximity"), "", Snd_Win_Notification_Proximity, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.Reminder"), "", Snd_Win_Notification_Reminder, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Notification.SMS"), "", Snd_Win_Notification_SMS, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Open"), "", Snd_Win_Open, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "PrintComplete"), "", Snd_Win_PrintComplete, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "ProximityConnection"), "", Snd_Win_ProximityConnection, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "RestoreDown"), "", Snd_Win_RestoreDown, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "RestoreUp"), "", Snd_Win_RestoreUp, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "ShowBand"), "", Snd_Win_ShowBand, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemStartup"), "", Snd_Win_SystemStartup, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "WindowsLogoff"), "", Snd_Win_WindowsLogoff, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "WindowsLogon"), "", Snd_Win_WindowsLogon, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "WindowsUAC"), "", Snd_Win_WindowsUAC, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "WindowsUnlock"), "", Snd_Win_WindowsUnlock, RegistryValueKind.String)
+                    'Next
+
+                    'For Each Scope As String In Scope_Explorer
+                    '    EditReg(String.Format(Scope, "ActivatingDocument"), "", Snd_Explorer_ActivatingDocument, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "BlockedPopup"), "", Snd_Explorer_BlockedPopup, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "EmptyRecycleBin"), "", Snd_Explorer_EmptyRecycleBin, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "FeedDiscovered"), "", Snd_Explorer_FeedDiscovered, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
+                    '    EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
+                    'Next
+                End If
+            End Sub
+
+            Shared Operator =(First As Sounds, Second As Sounds) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As Sounds, Second As Sounds) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<Sounds>")
+                tx.Add("*Sounds_Enabled= " & Enabled)
+                tx.Add("*Snd_Imageres_SystemStartup= " & Snd_Imageres_SystemStartup)
+                tx.Add("*Snd_Win_Default= " & Snd_Win_Default)
+                tx.Add("*Snd_Win_AppGPFault= " & Snd_Win_AppGPFault)
+                tx.Add("*Snd_Win_CCSelect= " & Snd_Win_CCSelect)
+                tx.Add("*Snd_Win_ChangeTheme= " & Snd_Win_ChangeTheme)
+                tx.Add("*Snd_Win_Close= " & Snd_Win_Close)
+                tx.Add("*Snd_Win_CriticalBatteryAlarm= " & Snd_Win_CriticalBatteryAlarm)
+                tx.Add("*Snd_Win_DeviceConnect= " & Snd_Win_DeviceConnect)
+                tx.Add("*Snd_Win_DeviceDisconnect= " & Snd_Win_DeviceDisconnect)
+                tx.Add("*Snd_Win_DeviceFail= " & Snd_Win_DeviceFail)
+                tx.Add("*Snd_Win_FaxBeep= " & Snd_Win_FaxBeep)
+                tx.Add("*Snd_Win_LowBatteryAlarm= " & Snd_Win_LowBatteryAlarm)
+                tx.Add("*Snd_Win_MailBeep= " & Snd_Win_MailBeep)
+                tx.Add("*Snd_Win_Maximize= " & Snd_Win_Maximize)
+                tx.Add("*Snd_Win_MenuCommand= " & Snd_Win_MenuCommand)
+                tx.Add("*Snd_Win_MenuPopup= " & Snd_Win_MenuPopup)
+                tx.Add("*Snd_Win_MessageNudge= " & Snd_Win_MessageNudge)
+                tx.Add("*Snd_Win_Minimize= " & Snd_Win_Minimize)
+                tx.Add("*Snd_Win_Notification.Default= " & Snd_Win_Notification_Default)
+                tx.Add("*Snd_Win_Notification.IM= " & Snd_Win_Notification_IM)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm= " & Snd_Win_Notification_Looping_Alarm)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm2= " & Snd_Win_Notification_Looping_Alarm2)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm3= " & Snd_Win_Notification_Looping_Alarm3)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm4= " & Snd_Win_Notification_Looping_Alarm4)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm5= " & Snd_Win_Notification_Looping_Alarm5)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm6= " & Snd_Win_Notification_Looping_Alarm6)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm7= " & Snd_Win_Notification_Looping_Alarm7)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm8= " & Snd_Win_Notification_Looping_Alarm8)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm9= " & Snd_Win_Notification_Looping_Alarm9)
+                tx.Add("*Snd_Win_Notification.Looping.Alarm10= " & Snd_Win_Notification_Looping_Alarm10)
+                tx.Add("*Snd_Win_Notification.Looping.Call= " & Snd_Win_Notification_Looping_Call)
+                tx.Add("*Snd_Win_Notification.Looping.Call2= " & Snd_Win_Notification_Looping_Call2)
+                tx.Add("*Snd_Win_Notification.Looping.Call3= " & Snd_Win_Notification_Looping_Call3)
+                tx.Add("*Snd_Win_Notification.Looping.Call4= " & Snd_Win_Notification_Looping_Call4)
+                tx.Add("*Snd_Win_Notification.Looping.Call5= " & Snd_Win_Notification_Looping_Call5)
+                tx.Add("*Snd_Win_Notification.Looping.Call6= " & Snd_Win_Notification_Looping_Call6)
+                tx.Add("*Snd_Win_Notification.Looping.Call7= " & Snd_Win_Notification_Looping_Call7)
+                tx.Add("*Snd_Win_Notification.Looping.Call8= " & Snd_Win_Notification_Looping_Call8)
+                tx.Add("*Snd_Win_Notification.Looping.Call9= " & Snd_Win_Notification_Looping_Call9)
+                tx.Add("*Snd_Win_Notification.Looping.Call10= " & Snd_Win_Notification_Looping_Call10)
+                tx.Add("*Snd_Win_Notification.Mail= " & Snd_Win_Notification_Mail)
+                tx.Add("*Snd_Win_Notification.Proximity= " & Snd_Win_Notification_Proximity)
+                tx.Add("*Snd_Win_Notification.Reminder= " & Snd_Win_Notification_Reminder)
+                tx.Add("*Snd_Win_Notification.SMS= " & Snd_Win_Notification_SMS)
+                tx.Add("*Snd_Win_Open= " & Snd_Win_Open)
+                tx.Add("*Snd_Win_PrintComplete= " & Snd_Win_PrintComplete)
+                tx.Add("*Snd_Win_ProximityConnection= " & Snd_Win_ProximityConnection)
+                tx.Add("*Snd_Win_RestoreDown= " & Snd_Win_RestoreDown)
+                tx.Add("*Snd_Win_RestoreUp= " & Snd_Win_RestoreUp)
+                tx.Add("*Snd_Win_ShowBand= " & Snd_Win_ShowBand)
+                tx.Add("*Snd_Win_SystemAsterisk= " & Snd_Win_SystemAsterisk)
+                tx.Add("*Snd_Win_SystemExclamation= " & Snd_Win_SystemExclamation)
+                tx.Add("*Snd_Win_SystemExit= " & Snd_Win_SystemExit)
+                tx.Add("*Snd_Win_SystemStartup= " & Snd_Win_SystemStartup)
+                tx.Add("*Snd_Win_SystemHand= " & Snd_Win_SystemHand)
+                tx.Add("*Snd_Win_SystemNotification= " & Snd_Win_SystemNotification)
+                tx.Add("*Snd_Win_SystemQuestion= " & Snd_Win_SystemQuestion)
+                tx.Add("*Snd_Win_WindowsLogoff= " & Snd_Win_WindowsLogoff)
+                tx.Add("*Snd_Win_WindowsLogon= " & Snd_Win_WindowsLogon)
+                tx.Add("*Snd_Win_WindowsUAC= " & Snd_Win_WindowsUAC)
+                tx.Add("*Snd_Win_WindowsUnlock= " & Snd_Win_WindowsUnlock)
+                tx.Add("*Snd_Explorer_ActivatingDocument= " & Snd_Explorer_ActivatingDocument)
+                tx.Add("*Snd_Explorer_BlockedPopup= " & Snd_Explorer_BlockedPopup)
+                tx.Add("*Snd_Explorer_EmptyRecycleBin= " & Snd_Explorer_EmptyRecycleBin)
+                tx.Add("*Snd_Explorer_FeedDiscovered= " & Snd_Explorer_FeedDiscovered)
+                tx.Add("*Snd_Explorer_MoveMenuItem= " & Snd_Explorer_MoveMenuItem)
+                tx.Add("*Snd_Explorer_Navigating= " & Snd_Explorer_Navigating)
+                tx.Add("*Snd_Explorer_SecurityBand= " & Snd_Explorer_SecurityBand)
+                tx.Add("</Sounds>" & vbCrLf)
+                Return tx.CString
+            End Function
+
+        End Structure
     End Class
 
 #Region "Properties"
@@ -3368,6 +3713,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .File = "",
         .IsSecure = False,
         .TimeOut = 60}
+
+    Public Sounds As New Sounds With {.Enabled = False}
 
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
@@ -4440,6 +4787,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 MetricsFonts.Load(_Def.MetricsFonts)
                 AltTab.Load(_Def.AltTab)
                 ScreenSaver.Load(_Def.ScreenSaver)
+                Sounds.Load(_Def.Sounds)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -4543,14 +4891,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Case CP_Type.File
 #Region "File"
-                Dim txt As New List(Of String)
-                txt.Clear()
+                Dim txt As New List(Of String) : txt.Clear()
                 txt = IO.File.ReadAllText(File).CList
 
                 Dim CUR_Arrow_List, CUR_AppLoading_List, CUR_Busy_List, CUR_Help_List, CUR_Move_List, CUR_NS_List, CUR_EW_List, CUR_NESW_List, CUR_NWSE_List,
                     CUR_Up_List, CUR_Pen_List, CUR_None_List, CUR_Link_List, CUR_Pin_List, CUR_Person_List, CUR_IBeam_List, CUR_Cross_List As New List(Of String)
-                CUR_Arrow_List.Clear() : CUR_AppLoading_List.Clear() : CUR_Busy_List.Clear() : CUR_Help_List.Clear() : CUR_Move_List.Clear() : CUR_NS_List.Clear() : CUR_EW_List.Clear() : CUR_NESW_List.Clear() : CUR_NWSE_List.Clear()
-                CUR_Up_List.Clear() : CUR_Pen_List.Clear() : CUR_None_List.Clear() : CUR_Link_List.Clear() : CUR_Pin_List.Clear() : CUR_Person_List.Clear() : CUR_IBeam_List.Clear() : CUR_Cross_List.Clear()
+
+                CUR_Arrow_List.Clear() : CUR_AppLoading_List.Clear() : CUR_Busy_List.Clear() : CUR_Help_List.Clear() : CUR_Move_List.Clear() : CUR_NS_List.Clear()
+                CUR_EW_List.Clear() : CUR_NESW_List.Clear() : CUR_NWSE_List.Clear() : CUR_Up_List.Clear() : CUR_Pen_List.Clear() : CUR_None_List.Clear() : CUR_Link_List.Clear()
+                CUR_Pin_List.Clear() : CUR_Person_List.Clear() : CUR_IBeam_List.Clear() : CUR_Cross_List.Clear()
 
                 Dim cmdList, PS86List, PS64List As New List(Of String)
                 cmdList.Clear()
@@ -4574,210 +4923,216 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 '## Checks if the loaded file is an old WPTH or not
                 Dim OldWPTH As Boolean = False
-                For Each lin As String In txt
-                    If lin.StartsWith("*Created from App Version= ", My._ignore) Then
-                        Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
+                For Each line As String In txt
+                    If line.StartsWith("*Created from App Version= ", My._ignore) Then
+                        Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count)
                         OldWPTH = (Info.AppVersion < "1.0.6.9")
                         Exit For
                     End If
                 Next
 
-                For Each lin As String In txt
+                For Each line As String In txt
 #Region "Personal Info"
-                    If lin.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = lin.Remove(0, "*Created from App Version= ".Count)
-                    If lin.StartsWith("*Palette Name= ", My._ignore) Then Info.ThemeName = lin.Remove(0, "*Palette Name= ".Count)
-                    If lin.StartsWith("*Palette Description= ", My._ignore) Then Info.Description = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count)
-                    If lin.StartsWith("*Author= ", My._ignore) Then Info.Author = lin.Remove(0, "*Author= ".Count)
-                    If lin.StartsWith("*AuthorSocialMediaLink= ", My._ignore) Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If lin.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count)
+                    If line.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count)
+                    If line.StartsWith("*Palette Name= ", My._ignore) Then Info.ThemeName = line.Remove(0, "*Palette Name= ".Count)
+                    If line.StartsWith("*Palette Description= ", My._ignore) Then Info.Description = line.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+                    If line.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = line.Remove(0, "*Palette File Version= ".Count)
+                    If line.StartsWith("*Author= ", My._ignore) Then Info.Author = line.Remove(0, "*Author= ".Count)
+                    If line.StartsWith("*AuthorSocialMediaLink= ", My._ignore) Then Info.AuthorSocialMediaLink = line.Remove(0, "*AuthorSocialMediaLink= ".Count)
+                    If line.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = line.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
 #Region "Store Info"
-                    If lin.StartsWith("*Color1= ", My._ignore) Then StoreInfo.Color1 = Color.FromArgb(lin.Remove(0, "*Color1= ".Count))
-                    If lin.StartsWith("*Color2= ", My._ignore) Then StoreInfo.Color2 = Color.FromArgb(lin.Remove(0, "*Color2= ".Count))
-                    If lin.StartsWith("*Pattern= ", My._ignore) Then StoreInfo.Pattern = lin.Remove(0, "*Pattern= ".Count)
-                    If lin.StartsWith("*DesignedFor_Win11= ", My._ignore) Then StoreInfo.DesignedFor_Win11 = lin.Remove(0, "*DesignedFor_Win11= ".Count)
-                    If lin.StartsWith("*DesignedFor_Win10= ", My._ignore) Then StoreInfo.DesignedFor_Win10 = lin.Remove(0, "*DesignedFor_Win10= ".Count)
-                    If lin.StartsWith("*DesignedFor_Win8= ", My._ignore) Then StoreInfo.DesignedFor_Win8 = lin.Remove(0, "*DesignedFor_Win8= ".Count)
-                    If lin.StartsWith("*DesignedFor_Win7= ", My._ignore) Then StoreInfo.DesignedFor_Win7 = lin.Remove(0, "*DesignedFor_Win7= ".Count)
-                    If lin.StartsWith("*DesignedFor_WinVista= ", My._ignore) Then StoreInfo.DesignedFor_WinVista = lin.Remove(0, "*DesignedFor_WinVista= ".Count)
-                    If lin.StartsWith("*DesignedFor_WinXP= ", My._ignore) Then StoreInfo.DesignedFor_WinXP = lin.Remove(0, "*DesignedFor_WinXP= ".Count)
+                    If line.StartsWith("*Color1= ", My._ignore) Then StoreInfo.Color1 = Color.FromArgb(line.Remove(0, "*Color1= ".Count))
+                    If line.StartsWith("*Color2= ", My._ignore) Then StoreInfo.Color2 = Color.FromArgb(line.Remove(0, "*Color2= ".Count))
+                    If line.StartsWith("*Pattern= ", My._ignore) Then StoreInfo.Pattern = line.Remove(0, "*Pattern= ".Count)
+                    If line.StartsWith("*DesignedFor_Win11= ", My._ignore) Then StoreInfo.DesignedFor_Win11 = line.Remove(0, "*DesignedFor_Win11= ".Count)
+                    If line.StartsWith("*DesignedFor_Win10= ", My._ignore) Then StoreInfo.DesignedFor_Win10 = line.Remove(0, "*DesignedFor_Win10= ".Count)
+                    If line.StartsWith("*DesignedFor_Win8= ", My._ignore) Then StoreInfo.DesignedFor_Win8 = line.Remove(0, "*DesignedFor_Win8= ".Count)
+                    If line.StartsWith("*DesignedFor_Win7= ", My._ignore) Then StoreInfo.DesignedFor_Win7 = line.Remove(0, "*DesignedFor_Win7= ".Count)
+                    If line.StartsWith("*DesignedFor_WinVista= ", My._ignore) Then StoreInfo.DesignedFor_WinVista = line.Remove(0, "*DesignedFor_WinVista= ".Count)
+                    If line.StartsWith("*DesignedFor_WinXP= ", My._ignore) Then StoreInfo.DesignedFor_WinXP = line.Remove(0, "*DesignedFor_WinXP= ".Count)
 
 #End Region
 
 #Region "Windows 11"
-                    If lin.StartsWith("*Win_11_Color_Index0= ", My._ignore) Then Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index0= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index1= ", My._ignore) Then Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index1= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index2= ", My._ignore) Then Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index2= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index3= ", My._ignore) Then Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index3= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index4= ", My._ignore) Then Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index4= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index5= ", My._ignore) Then Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index5= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index6= ", My._ignore) Then Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index6= ".Count))
-                    If lin.StartsWith("*Win_11_Color_Index7= ", My._ignore) Then Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_11_Color_Index7= ".Count))
-                    If lin.StartsWith("*Win_11_WinMode_Light= ", My._ignore) Then Windows11.WinMode_Light = lin.Remove(0, "*Win_11_WinMode_Light= ".Count)
-                    If lin.StartsWith("*Win_11_AppMode_Light= ", My._ignore) Then Windows11.AppMode_Light = lin.Remove(0, "*Win_11_AppMode_Light= ".Count)
-                    If lin.StartsWith("*Win_11_Transparency= ", My._ignore) Then Windows11.Transparency = lin.Remove(0, "*Win_11_Transparency= ".Count)
-                    If lin.StartsWith("*Win_11_IncreaseTBTransparency= ", My._ignore) Then Windows11.IncreaseTBTransparency = lin.Remove(0, "*Win_11_IncreaseTBTransparency= ".Count)
-                    If lin.StartsWith("*Win_11_TB_Blur= ", My._ignore) Then Windows11.TB_Blur = lin.Remove(0, "*Win_11_TB_Blur= ".Count)
-                    If lin.StartsWith("*Win_11_Titlebar_Active= ", My._ignore) Then Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Win_11_Titlebar_Inactive= ", My._ignore) Then Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*Win_11_StartMenu_Accent= ", My._ignore) Then Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Win_11_ApplyAccentonTitlebars= ", My._ignore) Then Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*Win_11_ApplyAccentonTitlebars= ".Count)
+                    If line.StartsWith("*Win_11", My._ignore) Then
+                        If line.StartsWith("*Win_11_Color_Index0= ", My._ignore) Then Windows11.Color_Index0 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index0= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index1= ", My._ignore) Then Windows11.Color_Index1 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index1= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index2= ", My._ignore) Then Windows11.Color_Index2 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index2= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index3= ", My._ignore) Then Windows11.Color_Index3 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index3= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index4= ", My._ignore) Then Windows11.Color_Index4 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index4= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index5= ", My._ignore) Then Windows11.Color_Index5 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index5= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index6= ", My._ignore) Then Windows11.Color_Index6 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index6= ".Count))
+                        If line.StartsWith("*Win_11_Color_Index7= ", My._ignore) Then Windows11.Color_Index7 = Color.FromArgb(line.Remove(0, "*Win_11_Color_Index7= ".Count))
+                        If line.StartsWith("*Win_11_WinMode_Light= ", My._ignore) Then Windows11.WinMode_Light = line.Remove(0, "*Win_11_WinMode_Light= ".Count)
+                        If line.StartsWith("*Win_11_AppMode_Light= ", My._ignore) Then Windows11.AppMode_Light = line.Remove(0, "*Win_11_AppMode_Light= ".Count)
+                        If line.StartsWith("*Win_11_Transparency= ", My._ignore) Then Windows11.Transparency = line.Remove(0, "*Win_11_Transparency= ".Count)
+                        If line.StartsWith("*Win_11_IncreaseTBTransparency= ", My._ignore) Then Windows11.IncreaseTBTransparency = line.Remove(0, "*Win_11_IncreaseTBTransparency= ".Count)
+                        If line.StartsWith("*Win_11_TB_Blur= ", My._ignore) Then Windows11.TB_Blur = line.Remove(0, "*Win_11_TB_Blur= ".Count)
+                        If line.StartsWith("*Win_11_Titlebar_Active= ", My._ignore) Then Windows11.Titlebar_Active = Color.FromArgb(line.Remove(0, "*Win_11_Titlebar_Active= ".Count))
+                        If line.StartsWith("*Win_11_Titlebar_Inactive= ", My._ignore) Then Windows11.Titlebar_Inactive = Color.FromArgb(line.Remove(0, "*Win_11_Titlebar_Inactive= ".Count))
+                        If line.StartsWith("*Win_11_StartMenu_Accent= ", My._ignore) Then Windows11.StartMenu_Accent = Color.FromArgb(line.Remove(0, "*Win_11_StartMenu_Accent= ".Count))
+                        If line.StartsWith("*Win_11_ApplyAccentonTitlebars= ", My._ignore) Then Windows11.ApplyAccentonTitlebars = line.Remove(0, "*Win_11_ApplyAccentonTitlebars= ".Count)
 
-                    If lin.StartsWith("*Win_11_AccentOnStartTBAC= ", My._ignore) Then
-                        Select Case lin.Remove(0, "*Win_11_AccentOnStartTBAC= ".Count).ToLower
-                            Case "false"
-                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                        If line.StartsWith("*Win_11_AccentOnStartTBAC= ", My._ignore) Then
+                            Select Case line.Remove(0, "*Win_11_AccentOnStartTBAC= ".Count).ToLower
+                                Case "false"
+                                    Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
-                            Case "true"
-                                Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case "true"
+                                    Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
-                            Case Else
-                                Select Case lin.Remove(0, "*Win_11_AccentOnStartTBAC= ".Count)
-                                    Case 0
-                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Case Else
+                                    Select Case line.Remove(0, "*Win_11_AccentOnStartTBAC= ".Count)
+                                        Case 0
+                                            Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
-                                    Case 1
-                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                        Case 1
+                                            Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
-                                    Case 2
-                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                        Case 2
+                                            Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
 
-                                    Case Else
-                                        Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-                                End Select
-                        End Select
+                                        Case Else
+                                            Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                    End Select
+                            End Select
+                        End If
                     End If
+
 #End Region
 
 #Region "Windows 10"
-                    If lin.StartsWith("*Win_10_Color_Index0= ", My._ignore) Then Windows10.Color_Index0 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index0= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index1= ", My._ignore) Then Windows10.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index1= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index2= ", My._ignore) Then Windows10.Color_Index2 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index2= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index3= ", My._ignore) Then Windows10.Color_Index3 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index3= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index4= ", My._ignore) Then Windows10.Color_Index4 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index4= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index5= ", My._ignore) Then Windows10.Color_Index5 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index5= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index6= ", My._ignore) Then Windows10.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index6= ".Count))
-                    If lin.StartsWith("*Win_10_Color_Index7= ", My._ignore) Then Windows10.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Win_10_Color_Index7= ".Count))
-                    If lin.StartsWith("*Win_10_WinMode_Light= ", My._ignore) Then Windows10.WinMode_Light = lin.Remove(0, "*Win_10_WinMode_Light= ".Count)
-                    If lin.StartsWith("*Win_10_AppMode_Light= ", My._ignore) Then Windows10.AppMode_Light = lin.Remove(0, "*Win_10_AppMode_Light= ".Count)
-                    If lin.StartsWith("*Win_10_Transparency= ", My._ignore) Then Windows10.Transparency = lin.Remove(0, "*Win_10_Transparency= ".Count)
-                    If lin.StartsWith("*Win_10_IncreaseTBTransparency= ", My._ignore) Then Windows10.IncreaseTBTransparency = lin.Remove(0, "*Win_10_IncreaseTBTransparency= ".Count)
-                    If lin.StartsWith("*Win_10_TB_Blur= ", My._ignore) Then Windows10.TB_Blur = lin.Remove(0, "*Win_10_TB_Blur= ".Count)
-                    If lin.StartsWith("*Win_10_Titlebar_Active= ", My._ignore) Then Windows10.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Active= ".Count))
-                    If lin.StartsWith("*Win_10_Titlebar_Inactive= ", My._ignore) Then Windows10.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
-                    If lin.StartsWith("*Win_10_StartMenu_Accent= ", My._ignore) Then Windows10.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
-                    If lin.StartsWith("*Win_10_ApplyAccentonTitlebars= ", My._ignore) Then Windows10.ApplyAccentonTitlebars = lin.Remove(0, "*Win_10_ApplyAccentonTitlebars= ".Count)
+                    If line.StartsWith("*Win_10", My._ignore) Then
+                        If line.StartsWith("*Win_10_Color_Index0= ", My._ignore) Then Windows10.Color_Index0 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index0= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index1= ", My._ignore) Then Windows10.Color_Index1 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index1= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index2= ", My._ignore) Then Windows10.Color_Index2 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index2= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index3= ", My._ignore) Then Windows10.Color_Index3 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index3= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index4= ", My._ignore) Then Windows10.Color_Index4 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index4= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index5= ", My._ignore) Then Windows10.Color_Index5 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index5= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index6= ", My._ignore) Then Windows10.Color_Index6 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index6= ".Count))
+                        If line.StartsWith("*Win_10_Color_Index7= ", My._ignore) Then Windows10.Color_Index7 = Color.FromArgb(line.Remove(0, "*Win_10_Color_Index7= ".Count))
+                        If line.StartsWith("*Win_10_WinMode_Light= ", My._ignore) Then Windows10.WinMode_Light = line.Remove(0, "*Win_10_WinMode_Light= ".Count)
+                        If line.StartsWith("*Win_10_AppMode_Light= ", My._ignore) Then Windows10.AppMode_Light = line.Remove(0, "*Win_10_AppMode_Light= ".Count)
+                        If line.StartsWith("*Win_10_Transparency= ", My._ignore) Then Windows10.Transparency = line.Remove(0, "*Win_10_Transparency= ".Count)
+                        If line.StartsWith("*Win_10_IncreaseTBTransparency= ", My._ignore) Then Windows10.IncreaseTBTransparency = line.Remove(0, "*Win_10_IncreaseTBTransparency= ".Count)
+                        If line.StartsWith("*Win_10_TB_Blur= ", My._ignore) Then Windows10.TB_Blur = line.Remove(0, "*Win_10_TB_Blur= ".Count)
+                        If line.StartsWith("*Win_10_Titlebar_Active= ", My._ignore) Then Windows10.Titlebar_Active = Color.FromArgb(line.Remove(0, "*Win_10_Titlebar_Active= ".Count))
+                        If line.StartsWith("*Win_10_Titlebar_Inactive= ", My._ignore) Then Windows10.Titlebar_Inactive = Color.FromArgb(line.Remove(0, "*Win_10_Titlebar_Inactive= ".Count))
+                        If line.StartsWith("*Win_10_StartMenu_Accent= ", My._ignore) Then Windows10.StartMenu_Accent = Color.FromArgb(line.Remove(0, "*Win_10_StartMenu_Accent= ".Count))
+                        If line.StartsWith("*Win_10_ApplyAccentonTitlebars= ", My._ignore) Then Windows10.ApplyAccentonTitlebars = line.Remove(0, "*Win_10_ApplyAccentonTitlebars= ".Count)
 
-                    If lin.StartsWith("*Win_10_AccentOnStartTBAC= ", My._ignore) Then
-                        Select Case lin.Remove(0, "*Win_10_AccentOnStartTBAC= ".Count).ToLower
-                            Case "false"
-                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                        If line.StartsWith("*Win_10_AccentOnStartTBAC= ", My._ignore) Then
+                            Select Case line.Remove(0, "*Win_10_AccentOnStartTBAC= ".Count).ToLower
+                                Case "false"
+                                    Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
-                            Case "true"
-                                Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case "true"
+                                    Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
-                            Case Else
-                                Select Case lin.Remove(0, "*Win_10_AccentOnStartTBAC= ".Count)
-                                    Case 0
-                                        Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                Case Else
+                                    Select Case line.Remove(0, "*Win_10_AccentOnStartTBAC= ".Count)
+                                        Case 0
+                                            Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
-                                    Case 1
-                                        Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                        Case 1
+                                            Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
-                                    Case 2
-                                        Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+                                        Case 2
+                                            Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
 
-                                    Case Else
-                                        Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
-                                End Select
-                        End Select
+                                        Case Else
+                                            Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+                                    End Select
+                            End Select
+                        End If
                     End If
+
 #End Region
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
 
                     If OldWPTH Then
                         Try
-                            If lin.StartsWith("*WinMode_Light= ", My._ignore) Then
-                                Windows11.WinMode_Light = lin.Remove(0, "*WinMode_Light= ".Count)
+                            If line.StartsWith("*WinMode_Light= ", My._ignore) Then
+                                Windows11.WinMode_Light = line.Remove(0, "*WinMode_Light= ".Count)
                                 Windows10.WinMode_Light = Windows11.WinMode_Light
                             End If
 
-                            If lin.StartsWith("*AppMode_Light= ", My._ignore) Then
-                                Windows11.AppMode_Light = lin.Remove(0, "*AppMode_Light= ".Count)
+                            If line.StartsWith("*AppMode_Light= ", My._ignore) Then
+                                Windows11.AppMode_Light = line.Remove(0, "*AppMode_Light= ".Count)
                                 Windows10.AppMode_Light = Windows11.AppMode_Light
                             End If
 
 
-                            If lin.StartsWith("*Transparency= ", My._ignore) Then
-                                Windows11.Transparency = lin.Remove(0, "*Transparency= ".Count)
+                            If line.StartsWith("*Transparency= ", My._ignore) Then
+                                Windows11.Transparency = line.Remove(0, "*Transparency= ".Count)
                                 Windows10.Transparency = Windows11.Transparency
                             End If
 
-                            If lin.StartsWith("*AccentColorOnTitlebarAndBorders= ", My._ignore) Then
-                                Windows11.ApplyAccentonTitlebars = lin.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
+                            If line.StartsWith("*AccentColorOnTitlebarAndBorders= ", My._ignore) Then
+                                Windows11.ApplyAccentonTitlebars = line.Remove(0, "*AccentColorOnTitlebarAndBorders= ".Count)
                                 Windows10.ApplyAccentonTitlebars = Windows11.ApplyAccentonTitlebars
                             End If
 
-                            If lin.StartsWith("*Titlebar_Active= ", My._ignore) Then
-                                Windows11.Titlebar_Active = Color.FromArgb(lin.Remove(0, "*Titlebar_Active= ".Count))
+                            If line.StartsWith("*Titlebar_Active= ", My._ignore) Then
+                                Windows11.Titlebar_Active = Color.FromArgb(line.Remove(0, "*Titlebar_Active= ".Count))
                                 Windows10.Titlebar_Active = Windows11.Titlebar_Active
                             End If
 
-                            If lin.StartsWith("*Titlebar_Inactive= ", My._ignore) Then
-                                Windows11.Titlebar_Inactive = Color.FromArgb(lin.Remove(0, "*Titlebar_Inactive= ".Count))
+                            If line.StartsWith("*Titlebar_Inactive= ", My._ignore) Then
+                                Windows11.Titlebar_Inactive = Color.FromArgb(line.Remove(0, "*Titlebar_Inactive= ".Count))
                                 Windows10.Titlebar_Inactive = Windows11.Titlebar_Inactive
                             End If
 
-                            If lin.StartsWith("*ActionCenter_AppsLinks= ", My._ignore) Then
-                                Windows11.Color_Index0 = Color.FromArgb(lin.Remove(0, "*ActionCenter_AppsLinks= ".Count))
+                            If line.StartsWith("*ActionCenter_AppsLinks= ", My._ignore) Then
+                                Windows11.Color_Index0 = Color.FromArgb(line.Remove(0, "*ActionCenter_AppsLinks= ".Count))
                                 Windows10.Color_Index0 = Windows11.Color_Index0
                             End If
 
-                            If lin.StartsWith("*Taskbar_Icon_Underline= ", My._ignore) Then
-                                Windows11.Color_Index1 = Color.FromArgb(lin.Remove(0, "*Taskbar_Icon_Underline= ".Count))
+                            If line.StartsWith("*Taskbar_Icon_Underline= ", My._ignore) Then
+                                Windows11.Color_Index1 = Color.FromArgb(line.Remove(0, "*Taskbar_Icon_Underline= ".Count))
                                 Windows10.Color_Index1 = Windows11.Color_Index1
                             End If
 
-                            If lin.StartsWith("*StartButton_Hover= ", My._ignore) Then
-                                Windows11.Color_Index2 = Color.FromArgb(lin.Remove(0, "*StartButton_Hover= ".Count))
+                            If line.StartsWith("*StartButton_Hover= ", My._ignore) Then
+                                Windows11.Color_Index2 = Color.FromArgb(line.Remove(0, "*StartButton_Hover= ".Count))
                                 Windows10.Color_Index2 = Windows11.Color_Index2
                             End If
 
-                            If lin.StartsWith("*SettingsIconsAndLinks= ", My._ignore) Then
-                                Windows11.Color_Index3 = Color.FromArgb(lin.Remove(0, "*SettingsIconsAndLinks= ".Count))
+                            If line.StartsWith("*SettingsIconsAndLinks= ", My._ignore) Then
+                                Windows11.Color_Index3 = Color.FromArgb(line.Remove(0, "*SettingsIconsAndLinks= ".Count))
                                 Windows10.Color_Index3 = Windows11.Color_Index3
                             End If
 
-                            If lin.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ", My._ignore) Then
-                                Windows11.Color_Index4 = Color.FromArgb(lin.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
+                            If line.StartsWith("*StartMenuBackground_ActiveTaskbarButton= ", My._ignore) Then
+                                Windows11.Color_Index4 = Color.FromArgb(line.Remove(0, "*StartMenuBackground_ActiveTaskbarButton= ".Count))
                                 Windows10.Color_Index4 = Windows11.Color_Index4
                             End If
 
-                            If lin.StartsWith("*StartListFolders_TaskbarFront= ", My._ignore) Then
-                                Windows11.Color_Index5 = Color.FromArgb(lin.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
+                            If line.StartsWith("*StartListFolders_TaskbarFront= ", My._ignore) Then
+                                Windows11.Color_Index5 = Color.FromArgb(line.Remove(0, "*StartListFolders_TaskbarFront= ".Count))
                                 Windows10.Color_Index5 = Windows11.Color_Index5
                             End If
 
-                            If lin.StartsWith("*Taskbar_Background= ", My._ignore) Then
-                                Windows11.Color_Index6 = Color.FromArgb(lin.Remove(0, "*Taskbar_Background= ".Count))
+                            If line.StartsWith("*Taskbar_Background= ", My._ignore) Then
+                                Windows11.Color_Index6 = Color.FromArgb(line.Remove(0, "*Taskbar_Background= ".Count))
                                 Windows10.Color_Index6 = Windows11.Color_Index6
                             End If
 
-                            If lin.StartsWith("*StartMenu_Accent= ", My._ignore) Then
-                                Windows11.StartMenu_Accent = Color.FromArgb(lin.Remove(0, "*StartMenu_Accent= ".Count))
+                            If line.StartsWith("*StartMenu_Accent= ", My._ignore) Then
+                                Windows11.StartMenu_Accent = Color.FromArgb(line.Remove(0, "*StartMenu_Accent= ".Count))
                                 Windows10.StartMenu_Accent = Windows11.StartMenu_Accent
                             End If
 
-                            If lin.StartsWith("*Undefined= ", My._ignore) Then
-                                Windows11.Color_Index7 = Color.FromArgb(lin.Remove(0, "*Undefined= ".Count))
+                            If line.StartsWith("*Undefined= ", My._ignore) Then
+                                Windows11.Color_Index7 = Color.FromArgb(line.Remove(0, "*Undefined= ".Count))
                                 Windows10.Color_Index7 = Windows11.Color_Index7
                             End If
 
-                            If lin.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ", My._ignore) Then
-                                Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
+                            If line.StartsWith("*AccentColorOnStartTaskbarAndActionCenter= ", My._ignore) Then
+                                Select Case line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count).ToLower
                                     Case "false"
                                         Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
@@ -4785,7 +5140,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                         Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
 
                                     Case Else
-                                        Select Case lin.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
+                                        Select Case line.Remove(0, "*AccentColorOnStartTaskbarAndActionCenter= ".Count)
                                             Case 0
                                                 Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
 
@@ -4810,236 +5165,353 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
 #Region "Metro"
-                    If lin.StartsWith("*Metro_ColorizationColor= ", My._ignore) Then Windows8.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Metro_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Metro_ColorizationColorBalance= ", My._ignore) Then Windows8.ColorizationColorBalance = lin.Remove(0, "*Metro_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Metro_PersonalColors_Background= ", My._ignore) Then Windows8.PersonalColors_Background = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Background= ".Count))
-                    If lin.StartsWith("*Metro_PersonalColors_Accent= ", My._ignore) Then Windows8.PersonalColors_Accent = Color.FromArgb(lin.Remove(0, "*Metro_PersonalColors_Accent= ".Count))
-                    If lin.StartsWith("*Metro_StartColor= ", My._ignore) Then Windows8.StartColor = Color.FromArgb(lin.Remove(0, "*Metro_StartColor= ".Count))
-                    If lin.StartsWith("*Metro_AccentColor= ", My._ignore) Then Windows8.AccentColor = Color.FromArgb(lin.Remove(0, "*Metro_AccentColor= ".Count))
-                    If lin.StartsWith("*Metro_Start= ", My._ignore) Then Windows8.Start = lin.Remove(0, "*Metro_Start= ".Count)
-                    If lin.StartsWith("*Metro_Theme= ", My._ignore) Then Windows8.Theme = lin.Remove(0, "*Metro_Theme= ".Count)
-                    If lin.StartsWith("*Metro_LogonUI= ", My._ignore) Then Windows8.LogonUI = lin.Remove(0, "*Metro_LogonUI= ".Count)
-                    If lin.StartsWith("*Metro_NoLockScreen= ", My._ignore) Then Windows8.NoLockScreen = lin.Remove(0, "*Metro_NoLockScreen= ".Count)
-                    If lin.StartsWith("*Metro_LockScreenType= ", My._ignore) Then Windows8.LockScreenType = lin.Remove(0, "*Metro_LockScreenType= ".Count)
-                    If lin.StartsWith("*Metro_LockScreenSystemID= ", My._ignore) Then Windows8.LockScreenSystemID = lin.Remove(0, "*Metro_LockScreenSystemID= ".Count)
+                    If line.StartsWith("*Metro", My._ignore) Then
+                        If line.StartsWith("*Metro_ColorizationColor= ", My._ignore) Then Windows8.ColorizationColor = Color.FromArgb(line.Remove(0, "*Metro_ColorizationColor= ".Count))
+                        If line.StartsWith("*Metro_ColorizationColorBalance= ", My._ignore) Then Windows8.ColorizationColorBalance = line.Remove(0, "*Metro_ColorizationColorBalance= ".Count)
+                        If line.StartsWith("*Metro_PersonalColors_Background= ", My._ignore) Then Windows8.PersonalColors_Background = Color.FromArgb(line.Remove(0, "*Metro_PersonalColors_Background= ".Count))
+                        If line.StartsWith("*Metro_PersonalColors_Accent= ", My._ignore) Then Windows8.PersonalColors_Accent = Color.FromArgb(line.Remove(0, "*Metro_PersonalColors_Accent= ".Count))
+                        If line.StartsWith("*Metro_StartColor= ", My._ignore) Then Windows8.StartColor = Color.FromArgb(line.Remove(0, "*Metro_StartColor= ".Count))
+                        If line.StartsWith("*Metro_AccentColor= ", My._ignore) Then Windows8.AccentColor = Color.FromArgb(line.Remove(0, "*Metro_AccentColor= ".Count))
+                        If line.StartsWith("*Metro_Start= ", My._ignore) Then Windows8.Start = line.Remove(0, "*Metro_Start= ".Count)
+                        If line.StartsWith("*Metro_Theme= ", My._ignore) Then Windows8.Theme = line.Remove(0, "*Metro_Theme= ".Count)
+                        If line.StartsWith("*Metro_LogonUI= ", My._ignore) Then Windows8.LogonUI = line.Remove(0, "*Metro_LogonUI= ".Count)
+                        If line.StartsWith("*Metro_NoLockScreen= ", My._ignore) Then Windows8.NoLockScreen = line.Remove(0, "*Metro_NoLockScreen= ".Count)
+                        If line.StartsWith("*Metro_LockScreenType= ", My._ignore) Then Windows8.LockScreenType = line.Remove(0, "*Metro_LockScreenType= ".Count)
+                        If line.StartsWith("*Metro_LockScreenSystemID= ", My._ignore) Then Windows8.LockScreenSystemID = line.Remove(0, "*Metro_LockScreenSystemID= ".Count)
+                    End If
+
 #End Region
 
 #Region "Aero"
-                    If lin.StartsWith("*Aero_ColorizationColor= ", My._ignore) Then Windows7.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationAfterglow= ", My._ignore) Then Windows7.ColorizationAfterglow = Color.FromArgb(lin.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
-                    If lin.StartsWith("*Aero_ColorizationColorBalance= ", My._ignore) Then Windows7.ColorizationColorBalance = lin.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationAfterglowBalance= ", My._ignore) Then Windows7.ColorizationAfterglowBalance = lin.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationBlurBalance= ", My._ignore) Then Windows7.ColorizationBlurBalance = lin.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
-                    If lin.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ", My._ignore) Then Windows7.ColorizationGlassReflectionIntensity = lin.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
-                    If lin.StartsWith("*Aero_EnableAeroPeek= ", My._ignore) Then Windows7.EnableAeroPeek = lin.Remove(0, "*Aero_EnableAeroPeek= ".Count)
-                    If lin.StartsWith("*Aero_AlwaysHibernateThumbnails= ", My._ignore) Then Windows7.AlwaysHibernateThumbnails = lin.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
-                    If lin.StartsWith("*Aero_Theme= ", My._ignore) Then Windows7.Theme = lin.Remove(0, "*Aero_Theme= ".Count)
+                    If line.StartsWith("*Aero", My._ignore) Then
+                        If line.StartsWith("*Aero_ColorizationColor= ", My._ignore) Then Windows7.ColorizationColor = Color.FromArgb(line.Remove(0, "*Aero_ColorizationColor= ".Count))
+                        If line.StartsWith("*Aero_ColorizationAfterglow= ", My._ignore) Then Windows7.ColorizationAfterglow = Color.FromArgb(line.Remove(0, "*Aero_ColorizationAfterglow= ".Count))
+                        If line.StartsWith("*Aero_ColorizationColorBalance= ", My._ignore) Then Windows7.ColorizationColorBalance = line.Remove(0, "*Aero_ColorizationColorBalance= ".Count)
+                        If line.StartsWith("*Aero_ColorizationAfterglowBalance= ", My._ignore) Then Windows7.ColorizationAfterglowBalance = line.Remove(0, "*Aero_ColorizationAfterglowBalance= ".Count)
+                        If line.StartsWith("*Aero_ColorizationBlurBalance= ", My._ignore) Then Windows7.ColorizationBlurBalance = line.Remove(0, "*Aero_ColorizationBlurBalance= ".Count)
+                        If line.StartsWith("*Aero_ColorizationGlassReflectionIntensity= ", My._ignore) Then Windows7.ColorizationGlassReflectionIntensity = line.Remove(0, "*Aero_ColorizationGlassReflectionIntensity= ".Count)
+                        If line.StartsWith("*Aero_EnableAeroPeek= ", My._ignore) Then Windows7.EnableAeroPeek = line.Remove(0, "*Aero_EnableAeroPeek= ".Count)
+                        If line.StartsWith("*Aero_AlwaysHibernateThumbnails= ", My._ignore) Then Windows7.AlwaysHibernateThumbnails = line.Remove(0, "*Aero_AlwaysHibernateThumbnails= ".Count)
+                        If line.StartsWith("*Aero_Theme= ", My._ignore) Then Windows7.Theme = line.Remove(0, "*Aero_Theme= ".Count)
+                    End If
+
 #End Region
 
 #Region "Vista"
-                    If lin.StartsWith("*Vista_ColorizationColor= ", My._ignore) Then WindowsVista.ColorizationColor = Color.FromArgb(lin.Remove(0, "*Vista_ColorizationColor= ".Count))
-                    If lin.StartsWith("*Vista_Alpha= ", My._ignore) Then WindowsVista.Alpha = lin.Remove(0, "*Vista_Alpha= ".Count)
-                    If lin.StartsWith("*Vista_Theme= ", My._ignore) Then WindowsVista.Theme = lin.Remove(0, "*Vista_Theme= ".Count)
+                    If line.StartsWith("*Vista", My._ignore) Then
+                        If line.StartsWith("*Vista_ColorizationColor= ", My._ignore) Then WindowsVista.ColorizationColor = Color.FromArgb(line.Remove(0, "*Vista_ColorizationColor= ".Count))
+                        If line.StartsWith("*Vista_Alpha= ", My._ignore) Then WindowsVista.Alpha = line.Remove(0, "*Vista_Alpha= ".Count)
+                        If line.StartsWith("*Vista_Theme= ", My._ignore) Then WindowsVista.Theme = line.Remove(0, "*Vista_Theme= ".Count)
+                    End If
+
 #End Region
 
 #Region "Windows XP"
-                    If lin.StartsWith("*WinXP_Theme= ", My._ignore) Then WindowsXP.Theme = lin.Remove(0, "*WinXP_Theme= ".Count)
-                    If lin.StartsWith("*WinXP_ThemeFile= ", My._ignore) Then WindowsXP.ThemeFile = lin.Remove(0, "*WinXP_ThemeFile= ".Count)
-                    If lin.StartsWith("*WinXP_ColorScheme= ", My._ignore) Then WindowsXP.ColorScheme = lin.Remove(0, "*WinXP_ColorScheme= ".Count)
+                    If line.StartsWith("*WinXP", My._ignore) Then
+                        If line.StartsWith("*WinXP_Theme= ", My._ignore) Then WindowsXP.Theme = line.Remove(0, "*WinXP_Theme= ".Count)
+                        If line.StartsWith("*WinXP_ThemeFile= ", My._ignore) Then WindowsXP.ThemeFile = line.Remove(0, "*WinXP_ThemeFile= ".Count)
+                        If line.StartsWith("*WinXP_ColorScheme= ", My._ignore) Then WindowsXP.ColorScheme = line.Remove(0, "*WinXP_ColorScheme= ".Count)
+                    End If
+
 #End Region
 
 #Region "LogonUI"
-                    If lin.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ", My._ignore) Then LogonUI10x.DisableAcrylicBackgroundOnLogon = lin.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
-                    If lin.StartsWith("*LogonUI_DisableLogonBackgroundImage= ", My._ignore) Then LogonUI10x.DisableLogonBackgroundImage = lin.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
-                    If lin.StartsWith("*LogonUI_NoLockScreen= ", My._ignore) Then LogonUI10x.NoLockScreen = lin.Remove(0, "*LogonUI_NoLockScreen= ".Count)
+                    If line.StartsWith("*LogonUI_", My._ignore) Then
+                        If line.StartsWith("*LogonUI_DisableAcrylicBackgroundOnLogon= ", My._ignore) Then LogonUI10x.DisableAcrylicBackgroundOnLogon = line.Remove(0, "*LogonUI_DisableAcrylicBackgroundOnLogon= ".Count)
+                        If line.StartsWith("*LogonUI_DisableLogonBackgroundImage= ", My._ignore) Then LogonUI10x.DisableLogonBackgroundImage = line.Remove(0, "*LogonUI_DisableLogonBackgroundImage= ".Count)
+                        If line.StartsWith("*LogonUI_NoLockScreen= ", My._ignore) Then LogonUI10x.NoLockScreen = line.Remove(0, "*LogonUI_NoLockScreen= ".Count)
+                    End If
+
 #End Region
 
 #Region "LogonUI_7_8"
-                    If lin.StartsWith("*LogonUI7_Color= ", My._ignore) Then LogonUI7.Color = Color.FromArgb(lin.Remove(0, "*LogonUI7_Color= ".Count))
-                    If lin.StartsWith("*LogonUI7_Enabled= ", My._ignore) Then LogonUI7.Enabled = lin.Remove(0, "*LogonUI7_Enabled= ".Count)
-                    If lin.StartsWith("*LogonUI7_Mode= ", My._ignore) Then LogonUI7.Mode = lin.Remove(0, "*LogonUI7_Mode= ".Count)
-                    If lin.StartsWith("*LogonUI7_ImagePath= ", My._ignore) Then LogonUI7.ImagePath = lin.Remove(0, "*LogonUI7_ImagePath= ".Count)
-                    If lin.StartsWith("*LogonUI7_Blur= ", My._ignore) Then LogonUI7.Blur = lin.Remove(0, "*LogonUI7_Blur= ".Count)
-                    If lin.StartsWith("*LogonUI7_Blur_Intensity= ", My._ignore) Then LogonUI7.Blur_Intensity = lin.Remove(0, "*LogonUI7_Blur_Intensity= ".Count)
-                    If lin.StartsWith("*LogonUI7_Grayscale= ", My._ignore) Then LogonUI7.Grayscale = lin.Remove(0, "*LogonUI7_Grayscale= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise= ", My._ignore) Then LogonUI7.Noise = lin.Remove(0, "*LogonUI7_Noise= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise_Mode= ", My._ignore) Then LogonUI7.Noise_Mode = lin.Remove(0, "*LogonUI7_Noise_Mode= ".Count)
-                    If lin.StartsWith("*LogonUI7_Noise_Intensity= ", My._ignore) Then LogonUI7.Noise_Intensity = lin.Remove(0, "*LogonUI7_Noise_Intensity= ".Count)
+                    If line.StartsWith("*LogonUI7_", My._ignore) Then
+                        If line.StartsWith("*LogonUI7_Color= ", My._ignore) Then LogonUI7.Color = Color.FromArgb(line.Remove(0, "*LogonUI7_Color= ".Count))
+                        If line.StartsWith("*LogonUI7_Enabled= ", My._ignore) Then LogonUI7.Enabled = line.Remove(0, "*LogonUI7_Enabled= ".Count)
+                        If line.StartsWith("*LogonUI7_Mode= ", My._ignore) Then LogonUI7.Mode = line.Remove(0, "*LogonUI7_Mode= ".Count)
+                        If line.StartsWith("*LogonUI7_ImagePath= ", My._ignore) Then LogonUI7.ImagePath = line.Remove(0, "*LogonUI7_ImagePath= ".Count)
+                        If line.StartsWith("*LogonUI7_Blur= ", My._ignore) Then LogonUI7.Blur = line.Remove(0, "*LogonUI7_Blur= ".Count)
+                        If line.StartsWith("*LogonUI7_Blur_Intensity= ", My._ignore) Then LogonUI7.Blur_Intensity = line.Remove(0, "*LogonUI7_Blur_Intensity= ".Count)
+                        If line.StartsWith("*LogonUI7_Grayscale= ", My._ignore) Then LogonUI7.Grayscale = line.Remove(0, "*LogonUI7_Grayscale= ".Count)
+                        If line.StartsWith("*LogonUI7_Noise= ", My._ignore) Then LogonUI7.Noise = line.Remove(0, "*LogonUI7_Noise= ".Count)
+                        If line.StartsWith("*LogonUI7_Noise_Mode= ", My._ignore) Then LogonUI7.Noise_Mode = line.Remove(0, "*LogonUI7_Noise_Mode= ".Count)
+                        If line.StartsWith("*LogonUI7_Noise_Intensity= ", My._ignore) Then LogonUI7.Noise_Intensity = line.Remove(0, "*LogonUI7_Noise_Intensity= ".Count)
+                    End If
+
 #End Region
 
 #Region "LogonUI XP"
-                    If lin.StartsWith("*LogonUIXP_Enabled= ", My._ignore) Then LogonUIXP.Enabled = lin.Remove(0, "*LogonUIXP_Enabled= ".Count)
-                    If lin.StartsWith("*LogonUIXP_Mode= ", My._ignore) Then LogonUIXP.Mode = If(lin.Remove(0, "*LogonUIXP_Mode= ".Count) = 1, LogonUIXP_Modes.Default, LogonUIXP_Modes.Win2000)
-                    If lin.StartsWith("*LogonUIXP_BackColor= ", My._ignore) Then LogonUIXP.BackColor = Color.FromArgb(lin.Remove(0, "*LogonUIXP_BackColor= ".Count))
-                    If lin.StartsWith("*LogonUIXP_ShowMoreOptions= ", My._ignore) Then LogonUIXP.ShowMoreOptions = lin.Remove(0, "*LogonUIXP_ShowMoreOptions= ".Count)
+                    If line.StartsWith("*LogonUIXP_", My._ignore) Then
+                        If line.StartsWith("*LogonUIXP_Enabled= ", My._ignore) Then LogonUIXP.Enabled = line.Remove(0, "*LogonUIXP_Enabled= ".Count)
+                        If line.StartsWith("*LogonUIXP_Mode= ", My._ignore) Then LogonUIXP.Mode = If(line.Remove(0, "*LogonUIXP_Mode= ".Count) = 1, LogonUIXP_Modes.Default, LogonUIXP_Modes.Win2000)
+                        If line.StartsWith("*LogonUIXP_BackColor= ", My._ignore) Then LogonUIXP.BackColor = Color.FromArgb(line.Remove(0, "*LogonUIXP_BackColor= ".Count))
+                        If line.StartsWith("*LogonUIXP_ShowMoreOptions= ", My._ignore) Then LogonUIXP.ShowMoreOptions = line.Remove(0, "*LogonUIXP_ShowMoreOptions= ".Count)
+                    End If
+
 #End Region
 
 #Region "Win32UI"
-                    If lin.StartsWith("*Win32UI_EnableTheming= ", My._ignore) Then Win32.EnableTheming = lin.Remove(0, "*Win32UI_EnableTheming= ".Count)
-                    If lin.StartsWith("*Win32UI_EnableGradient= ", My._ignore) Then Win32.EnableGradient = lin.Remove(0, "*Win32UI_EnableGradient= ".Count)
-                    If lin.StartsWith("*Win32UI_ActiveBorder= ", My._ignore) Then Win32.ActiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveBorder= ".Count))
-                    If lin.StartsWith("*Win32UI_ActiveTitle= ", My._ignore) Then Win32.ActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_ActiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_AppWorkspace= ", My._ignore) Then Win32.AppWorkspace = Color.FromArgb(lin.Remove(0, "*Win32UI_AppWorkspace= ".Count))
-                    If lin.StartsWith("*Win32UI_Background= ", My._ignore) Then Win32.Background = Color.FromArgb(lin.Remove(0, "*Win32UI_Background= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonAlternateFace= ", My._ignore) Then Win32.ButtonAlternateFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonDkShadow= ", My._ignore) Then Win32.ButtonDkShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonFace= ", My._ignore) Then Win32.ButtonFace = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonFace= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonHilight= ", My._ignore) Then Win32.ButtonHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonHilight= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonLight= ", My._ignore) Then Win32.ButtonLight = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonLight= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonShadow= ", My._ignore) Then Win32.ButtonShadow = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonShadow= ".Count))
-                    If lin.StartsWith("*Win32UI_ButtonText= ", My._ignore) Then Win32.ButtonText = Color.FromArgb(lin.Remove(0, "*Win32UI_ButtonText= ".Count))
-                    If lin.StartsWith("*Win32UI_GradientActiveTitle= ", My._ignore) Then Win32.GradientActiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_GradientInactiveTitle= ", My._ignore) Then Win32.GradientInactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_GrayText= ", My._ignore) Then Win32.GrayText = Color.FromArgb(lin.Remove(0, "*Win32UI_GrayText= ".Count))
-                    If lin.StartsWith("*Win32UI_HilightText= ", My._ignore) Then Win32.HilightText = Color.FromArgb(lin.Remove(0, "*Win32UI_HilightText= ".Count))
-                    If lin.StartsWith("*Win32UI_HotTrackingColor= ", My._ignore) Then Win32.HotTrackingColor = Color.FromArgb(lin.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveBorder= ", My._ignore) Then Win32.InactiveBorder = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveBorder= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveTitle= ", My._ignore) Then Win32.InactiveTitle = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitle= ".Count))
-                    If lin.StartsWith("*Win32UI_InactiveTitleText= ", My._ignore) Then Win32.InactiveTitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
-                    If lin.StartsWith("*Win32UI_InfoText= ", My._ignore) Then Win32.InfoText = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoText= ".Count))
-                    If lin.StartsWith("*Win32UI_InfoWindow= ", My._ignore) Then Win32.InfoWindow = Color.FromArgb(lin.Remove(0, "*Win32UI_InfoWindow= ".Count))
-                    If lin.StartsWith("*Win32UI_Menu= ", My._ignore) Then Win32.Menu = Color.FromArgb(lin.Remove(0, "*Win32UI_Menu= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuBar= ", My._ignore) Then Win32.MenuBar = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuBar= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuText= ", My._ignore) Then Win32.MenuText = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuText= ".Count))
-                    If lin.StartsWith("*Win32UI_Scrollbar= ", My._ignore) Then Win32.Scrollbar = Color.FromArgb(lin.Remove(0, "*Win32UI_Scrollbar= ".Count))
-                    If lin.StartsWith("*Win32UI_TitleText= ", My._ignore) Then Win32.TitleText = Color.FromArgb(lin.Remove(0, "*Win32UI_TitleText= ".Count))
-                    If lin.StartsWith("*Win32UI_Window= ", My._ignore) Then Win32.Window = Color.FromArgb(lin.Remove(0, "*Win32UI_Window= ".Count))
-                    If lin.StartsWith("*Win32UI_WindowFrame= ", My._ignore) Then Win32.WindowFrame = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowFrame= ".Count))
-                    If lin.StartsWith("*Win32UI_WindowText= ", My._ignore) Then Win32.WindowText = Color.FromArgb(lin.Remove(0, "*Win32UI_WindowText= ".Count))
-                    If lin.StartsWith("*Win32UI_Hilight= ", My._ignore) Then Win32.Hilight = Color.FromArgb(lin.Remove(0, "*Win32UI_Hilight= ".Count))
-                    If lin.StartsWith("*Win32UI_MenuHilight= ", My._ignore) Then Win32.MenuHilight = Color.FromArgb(lin.Remove(0, "*Win32UI_MenuHilight= ".Count))
-                    If lin.StartsWith("*Win32UI_Desktop= ", My._ignore) Then Win32.Desktop = Color.FromArgb(lin.Remove(0, "*Win32UI_Desktop= ".Count))
+                    If line.StartsWith("*Win32UI", My._ignore) Then
+                        If line.StartsWith("*Win32UI_EnableTheming= ", My._ignore) Then Win32.EnableTheming = line.Remove(0, "*Win32UI_EnableTheming= ".Count)
+                        If line.StartsWith("*Win32UI_EnableGradient= ", My._ignore) Then Win32.EnableGradient = line.Remove(0, "*Win32UI_EnableGradient= ".Count)
+                        If line.StartsWith("*Win32UI_ActiveBorder= ", My._ignore) Then Win32.ActiveBorder = Color.FromArgb(line.Remove(0, "*Win32UI_ActiveBorder= ".Count))
+                        If line.StartsWith("*Win32UI_ActiveTitle= ", My._ignore) Then Win32.ActiveTitle = Color.FromArgb(line.Remove(0, "*Win32UI_ActiveTitle= ".Count))
+                        If line.StartsWith("*Win32UI_AppWorkspace= ", My._ignore) Then Win32.AppWorkspace = Color.FromArgb(line.Remove(0, "*Win32UI_AppWorkspace= ".Count))
+                        If line.StartsWith("*Win32UI_Background= ", My._ignore) Then Win32.Background = Color.FromArgb(line.Remove(0, "*Win32UI_Background= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonAlternateFace= ", My._ignore) Then Win32.ButtonAlternateFace = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonAlternateFace= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonDkShadow= ", My._ignore) Then Win32.ButtonDkShadow = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonDkShadow= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonFace= ", My._ignore) Then Win32.ButtonFace = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonFace= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonHilight= ", My._ignore) Then Win32.ButtonHilight = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonHilight= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonLight= ", My._ignore) Then Win32.ButtonLight = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonLight= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonShadow= ", My._ignore) Then Win32.ButtonShadow = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonShadow= ".Count))
+                        If line.StartsWith("*Win32UI_ButtonText= ", My._ignore) Then Win32.ButtonText = Color.FromArgb(line.Remove(0, "*Win32UI_ButtonText= ".Count))
+                        If line.StartsWith("*Win32UI_GradientActiveTitle= ", My._ignore) Then Win32.GradientActiveTitle = Color.FromArgb(line.Remove(0, "*Win32UI_GradientActiveTitle= ".Count))
+                        If line.StartsWith("*Win32UI_GradientInactiveTitle= ", My._ignore) Then Win32.GradientInactiveTitle = Color.FromArgb(line.Remove(0, "*Win32UI_GradientInactiveTitle= ".Count))
+                        If line.StartsWith("*Win32UI_GrayText= ", My._ignore) Then Win32.GrayText = Color.FromArgb(line.Remove(0, "*Win32UI_GrayText= ".Count))
+                        If line.StartsWith("*Win32UI_HilightText= ", My._ignore) Then Win32.HilightText = Color.FromArgb(line.Remove(0, "*Win32UI_HilightText= ".Count))
+                        If line.StartsWith("*Win32UI_HotTrackingColor= ", My._ignore) Then Win32.HotTrackingColor = Color.FromArgb(line.Remove(0, "*Win32UI_HotTrackingColor= ".Count))
+                        If line.StartsWith("*Win32UI_InactiveBorder= ", My._ignore) Then Win32.InactiveBorder = Color.FromArgb(line.Remove(0, "*Win32UI_InactiveBorder= ".Count))
+                        If line.StartsWith("*Win32UI_InactiveTitle= ", My._ignore) Then Win32.InactiveTitle = Color.FromArgb(line.Remove(0, "*Win32UI_InactiveTitle= ".Count))
+                        If line.StartsWith("*Win32UI_InactiveTitleText= ", My._ignore) Then Win32.InactiveTitleText = Color.FromArgb(line.Remove(0, "*Win32UI_InactiveTitleText= ".Count))
+                        If line.StartsWith("*Win32UI_InfoText= ", My._ignore) Then Win32.InfoText = Color.FromArgb(line.Remove(0, "*Win32UI_InfoText= ".Count))
+                        If line.StartsWith("*Win32UI_InfoWindow= ", My._ignore) Then Win32.InfoWindow = Color.FromArgb(line.Remove(0, "*Win32UI_InfoWindow= ".Count))
+                        If line.StartsWith("*Win32UI_Menu= ", My._ignore) Then Win32.Menu = Color.FromArgb(line.Remove(0, "*Win32UI_Menu= ".Count))
+                        If line.StartsWith("*Win32UI_MenuBar= ", My._ignore) Then Win32.MenuBar = Color.FromArgb(line.Remove(0, "*Win32UI_MenuBar= ".Count))
+                        If line.StartsWith("*Win32UI_MenuText= ", My._ignore) Then Win32.MenuText = Color.FromArgb(line.Remove(0, "*Win32UI_MenuText= ".Count))
+                        If line.StartsWith("*Win32UI_Scrollbar= ", My._ignore) Then Win32.Scrollbar = Color.FromArgb(line.Remove(0, "*Win32UI_Scrollbar= ".Count))
+                        If line.StartsWith("*Win32UI_TitleText= ", My._ignore) Then Win32.TitleText = Color.FromArgb(line.Remove(0, "*Win32UI_TitleText= ".Count))
+                        If line.StartsWith("*Win32UI_Window= ", My._ignore) Then Win32.Window = Color.FromArgb(line.Remove(0, "*Win32UI_Window= ".Count))
+                        If line.StartsWith("*Win32UI_WindowFrame= ", My._ignore) Then Win32.WindowFrame = Color.FromArgb(line.Remove(0, "*Win32UI_WindowFrame= ".Count))
+                        If line.StartsWith("*Win32UI_WindowText= ", My._ignore) Then Win32.WindowText = Color.FromArgb(line.Remove(0, "*Win32UI_WindowText= ".Count))
+                        If line.StartsWith("*Win32UI_Hilight= ", My._ignore) Then Win32.Hilight = Color.FromArgb(line.Remove(0, "*Win32UI_Hilight= ".Count))
+                        If line.StartsWith("*Win32UI_MenuHilight= ", My._ignore) Then Win32.MenuHilight = Color.FromArgb(line.Remove(0, "*Win32UI_MenuHilight= ".Count))
+                        If line.StartsWith("*Win32UI_Desktop= ", My._ignore) Then Win32.Desktop = Color.FromArgb(line.Remove(0, "*Win32UI_Desktop= ".Count))
+                    End If
+
 #End Region
 
 #Region "Windows Effects"
-                    If lin.StartsWith("*WinEffects_Enabled= ", My._ignore) Then WindowsEffects.Enabled = lin.Remove(0, "*WinEffects_Enabled= ".Count)
-                    If lin.StartsWith("*WinEffects_WindowAnimation= ", My._ignore) Then WindowsEffects.WindowAnimation = lin.Remove(0, "*WinEffects_WindowAnimation= ".Count)
-                    If lin.StartsWith("*WinEffects_WindowShadow= ", My._ignore) Then WindowsEffects.WindowShadow = lin.Remove(0, "*WinEffects_WindowShadow= ".Count)
-                    If lin.StartsWith("*WinEffects_WindowUIEffects= ", My._ignore) Then WindowsEffects.WindowUIEffects = lin.Remove(0, "*WinEffects_WindowUIEffects= ".Count)
-                    If lin.StartsWith("*WinEffects_MenuAnimation= ", My._ignore) Then WindowsEffects.MenuAnimation = lin.Remove(0, "*WinEffects_MenuAnimation= ".Count)
-                    If lin.StartsWith("*WinEffects_MenuFade= ", My._ignore) Then WindowsEffects.MenuFade = lin.Remove(0, "*WinEffects_MenuFade= ".Count)
-                    If lin.StartsWith("*WinEffects_MenuShowDelay= ", My._ignore) Then WindowsEffects.MenuShowDelay = lin.Remove(0, "*WinEffects_MenuShowDelay= ".Count)
-                    If lin.StartsWith("*WinEffects_MenuSelectionFade= ", My._ignore) Then WindowsEffects.MenuSelectionFade = lin.Remove(0, "*WinEffects_MenuSelectionFade= ".Count)
-                    If lin.StartsWith("*WinEffects_ComboBoxAnimation= ", My._ignore) Then WindowsEffects.ComboboxAnimation = lin.Remove(0, "*WinEffects_ComboBoxAnimation= ".Count)
-                    If lin.StartsWith("*WinEffects_ListboxSmoothScrolling= ", My._ignore) Then WindowsEffects.ListBoxSmoothScrolling = lin.Remove(0, "*WinEffects_ListboxSmoothScrolling= ".Count)
-                    If lin.StartsWith("*WinEffects_TooltipAnimation= ", My._ignore) Then WindowsEffects.TooltipAnimation = lin.Remove(0, "*WinEffects_TooltipAnimation= ".Count)
-                    If lin.StartsWith("*WinEffects_TooltipFade= ", My._ignore) Then WindowsEffects.TooltipFade = lin.Remove(0, "*WinEffects_TooltipFade= ".Count)
-                    If lin.StartsWith("*WinEffects_IconsShadow= ", My._ignore) Then WindowsEffects.IconsShadow = lin.Remove(0, "*WinEffects_IconsShadow= ".Count)
-                    If lin.StartsWith("*WinEffects_IconsDesktopTranslSel= ", My._ignore) Then WindowsEffects.IconsDesktopTranslSel = lin.Remove(0, "*WinEffects_IconsDesktopTranslSel= ".Count)
-                    If lin.StartsWith("*WinEffects_ShowWinContentDrag= ", My._ignore) Then WindowsEffects.ShowWinContentDrag = lin.Remove(0, "*WinEffects_ShowWinContentDrag= ".Count)
-                    If lin.StartsWith("*WinEffects_KeyboardUnderline= ", My._ignore) Then WindowsEffects.KeyboardUnderline = lin.Remove(0, "*WinEffects_KeyboardUnderline= ".Count)
-                    If lin.StartsWith("*WinEffects_FocusRectWidth= ", My._ignore) Then WindowsEffects.FocusRectWidth = lin.Remove(0, "*WinEffects_FocusRectWidth= ".Count)
-                    If lin.StartsWith("*WinEffects_FocusRectHeight= ", My._ignore) Then WindowsEffects.FocusRectHeight = lin.Remove(0, "*WinEffects_FocusRectHeight= ".Count)
-                    If lin.StartsWith("*WinEffects_Caret= ", My._ignore) Then WindowsEffects.Caret = lin.Remove(0, "*WinEffects_Caret= ".Count)
-                    If lin.StartsWith("*WinEffects_NotificationDuration= ", My._ignore) Then WindowsEffects.NotificationDuration = lin.Remove(0, "*WinEffects_NotificationDuration= ".Count)
-                    If lin.StartsWith("*WinEffects_ShakeToMinimize= ", My._ignore) Then WindowsEffects.ShakeToMinimize = lin.Remove(0, "*WinEffects_ShakeToMinimize= ".Count)
-                    If lin.StartsWith("*WinEffects_AWT_Enabled= ", My._ignore) Then WindowsEffects.AWT_Enabled = lin.Remove(0, "*WinEffects_AWT_Enabled= ".Count)
-                    If lin.StartsWith("*WinEffects_AWT_BringActivatedWindowToTop= ", My._ignore) Then WindowsEffects.AWT_BringActivatedWindowToTop = lin.Remove(0, "*WinEffects_AWT_BringActivatedWindowToTop= ".Count)
-                    If lin.StartsWith("*WinEffects_AWT_Delay= ", My._ignore) Then WindowsEffects.AWT_Delay = lin.Remove(0, "*WinEffects_AWT_Delay= ".Count)
-                    If lin.StartsWith("*WinEffects_SnapCursorToDefButton= ", My._ignore) Then WindowsEffects.SnapCursorToDefButton = lin.Remove(0, "*WinEffects_SnapCursorToDefButton= ".Count)
-                    If lin.StartsWith("*WinEffects_Win11ClassicContextMenu= ", My._ignore) Then WindowsEffects.Win11ClassicContextMenu = lin.Remove(0, "*WinEffects_Win11ClassicContextMenu= ".Count)
-                    If lin.StartsWith("*WinEffects_SysListView32= ", My._ignore) Then WindowsEffects.SysListView32 = lin.Remove(0, "*WinEffects_SysListView32= ".Count)
-                    If lin.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", My._ignore) Then WindowsEffects.ShowSecondsInSystemClock = lin.Remove(0, "*WinEffects_ShowSecondsInSystemClock= ".Count)
-                    If lin.StartsWith("*WinEffects_BalloonNotifications= ", My._ignore) Then WindowsEffects.BalloonNotifications = lin.Remove(0, "*WinEffects_BalloonNotifications= ".Count)
-                    If lin.StartsWith("*WinEffects_PaintDesktopVersion= ", My._ignore) Then WindowsEffects.PaintDesktopVersion = lin.Remove(0, "*WinEffects_PaintDesktopVersion= ".Count)
-                    If lin.StartsWith("*WinEffects_Win11BootDots= ", My._ignore) Then WindowsEffects.Win11BootDots = lin.Remove(0, "*WinEffects_Win11BootDots= ".Count)
-                    If lin.StartsWith("*WinEffects_Win11ExplorerBar= ", My._ignore) Then WindowsEffects.Win11ExplorerBar = lin.Remove(0, "*WinEffects_Win11ExplorerBar= ".Count)
-                    If lin.StartsWith("*WinEffects_DisableNavBar= ", My._ignore) Then WindowsEffects.DisableNavBar = lin.Remove(0, "*WinEffects_DisableNavBar= ".Count)
-                    If lin.StartsWith("*WinEffects_AutoHideScrollBars= ", My._ignore) Then WindowsEffects.AutoHideScrollBars = lin.Remove(0, "*WinEffects_AutoHideScrollBars= ".Count)
-                    If lin.StartsWith("*WinEffects_ColorFilter_Enabled= ", My._ignore) Then WindowsEffects.ColorFilter_Enabled = lin.Remove(0, "*WinEffects_ColorFilter_Enabled= ".Count)
-                    If lin.StartsWith("*WinEffects_ColorFilter= ", My._ignore) Then WindowsEffects.ColorFilter = lin.Remove(0, "*WinEffects_ColorFilter= ".Count)
+                    If line.StartsWith("*WinEffects", My._ignore) Then
+                        If line.StartsWith("*WinEffects_Enabled= ", My._ignore) Then WindowsEffects.Enabled = line.Remove(0, "*WinEffects_Enabled= ".Count)
+                        If line.StartsWith("*WinEffects_WindowAnimation= ", My._ignore) Then WindowsEffects.WindowAnimation = line.Remove(0, "*WinEffects_WindowAnimation= ".Count)
+                        If line.StartsWith("*WinEffects_WindowShadow= ", My._ignore) Then WindowsEffects.WindowShadow = line.Remove(0, "*WinEffects_WindowShadow= ".Count)
+                        If line.StartsWith("*WinEffects_WindowUIEffects= ", My._ignore) Then WindowsEffects.WindowUIEffects = line.Remove(0, "*WinEffects_WindowUIEffects= ".Count)
+                        If line.StartsWith("*WinEffects_MenuAnimation= ", My._ignore) Then WindowsEffects.MenuAnimation = line.Remove(0, "*WinEffects_MenuAnimation= ".Count)
+                        If line.StartsWith("*WinEffects_MenuFade= ", My._ignore) Then WindowsEffects.MenuFade = line.Remove(0, "*WinEffects_MenuFade= ".Count)
+                        If line.StartsWith("*WinEffects_MenuShowDelay= ", My._ignore) Then WindowsEffects.MenuShowDelay = line.Remove(0, "*WinEffects_MenuShowDelay= ".Count)
+                        If line.StartsWith("*WinEffects_MenuSelectionFade= ", My._ignore) Then WindowsEffects.MenuSelectionFade = line.Remove(0, "*WinEffects_MenuSelectionFade= ".Count)
+                        If line.StartsWith("*WinEffects_ComboBoxAnimation= ", My._ignore) Then WindowsEffects.ComboboxAnimation = line.Remove(0, "*WinEffects_ComboBoxAnimation= ".Count)
+                        If line.StartsWith("*WinEffects_ListboxSmoothScrolling= ", My._ignore) Then WindowsEffects.ListBoxSmoothScrolling = line.Remove(0, "*WinEffects_ListboxSmoothScrolling= ".Count)
+                        If line.StartsWith("*WinEffects_TooltipAnimation= ", My._ignore) Then WindowsEffects.TooltipAnimation = line.Remove(0, "*WinEffects_TooltipAnimation= ".Count)
+                        If line.StartsWith("*WinEffects_TooltipFade= ", My._ignore) Then WindowsEffects.TooltipFade = line.Remove(0, "*WinEffects_TooltipFade= ".Count)
+                        If line.StartsWith("*WinEffects_IconsShadow= ", My._ignore) Then WindowsEffects.IconsShadow = line.Remove(0, "*WinEffects_IconsShadow= ".Count)
+                        If line.StartsWith("*WinEffects_IconsDesktopTranslSel= ", My._ignore) Then WindowsEffects.IconsDesktopTranslSel = line.Remove(0, "*WinEffects_IconsDesktopTranslSel= ".Count)
+                        If line.StartsWith("*WinEffects_ShowWinContentDrag= ", My._ignore) Then WindowsEffects.ShowWinContentDrag = line.Remove(0, "*WinEffects_ShowWinContentDrag= ".Count)
+                        If line.StartsWith("*WinEffects_KeyboardUnderline= ", My._ignore) Then WindowsEffects.KeyboardUnderline = line.Remove(0, "*WinEffects_KeyboardUnderline= ".Count)
+                        If line.StartsWith("*WinEffects_FocusRectWidth= ", My._ignore) Then WindowsEffects.FocusRectWidth = line.Remove(0, "*WinEffects_FocusRectWidth= ".Count)
+                        If line.StartsWith("*WinEffects_FocusRectHeight= ", My._ignore) Then WindowsEffects.FocusRectHeight = line.Remove(0, "*WinEffects_FocusRectHeight= ".Count)
+                        If line.StartsWith("*WinEffects_Caret= ", My._ignore) Then WindowsEffects.Caret = line.Remove(0, "*WinEffects_Caret= ".Count)
+                        If line.StartsWith("*WinEffects_NotificationDuration= ", My._ignore) Then WindowsEffects.NotificationDuration = line.Remove(0, "*WinEffects_NotificationDuration= ".Count)
+                        If line.StartsWith("*WinEffects_ShakeToMinimize= ", My._ignore) Then WindowsEffects.ShakeToMinimize = line.Remove(0, "*WinEffects_ShakeToMinimize= ".Count)
+                        If line.StartsWith("*WinEffects_AWT_Enabled= ", My._ignore) Then WindowsEffects.AWT_Enabled = line.Remove(0, "*WinEffects_AWT_Enabled= ".Count)
+                        If line.StartsWith("*WinEffects_AWT_BringActivatedWindowToTop= ", My._ignore) Then WindowsEffects.AWT_BringActivatedWindowToTop = line.Remove(0, "*WinEffects_AWT_BringActivatedWindowToTop= ".Count)
+                        If line.StartsWith("*WinEffects_AWT_Delay= ", My._ignore) Then WindowsEffects.AWT_Delay = line.Remove(0, "*WinEffects_AWT_Delay= ".Count)
+                        If line.StartsWith("*WinEffects_SnapCursorToDefButton= ", My._ignore) Then WindowsEffects.SnapCursorToDefButton = line.Remove(0, "*WinEffects_SnapCursorToDefButton= ".Count)
+                        If line.StartsWith("*WinEffects_Win11ClassicContextMenu= ", My._ignore) Then WindowsEffects.Win11ClassicContextMenu = line.Remove(0, "*WinEffects_Win11ClassicContextMenu= ".Count)
+                        If line.StartsWith("*WinEffects_SysListView32= ", My._ignore) Then WindowsEffects.SysListView32 = line.Remove(0, "*WinEffects_SysListView32= ".Count)
+                        If line.StartsWith("*WinEffects_ShowSecondsInSystemClock= ", My._ignore) Then WindowsEffects.ShowSecondsInSystemClock = line.Remove(0, "*WinEffects_ShowSecondsInSystemClock= ".Count)
+                        If line.StartsWith("*WinEffects_BalloonNotifications= ", My._ignore) Then WindowsEffects.BalloonNotifications = line.Remove(0, "*WinEffects_BalloonNotifications= ".Count)
+                        If line.StartsWith("*WinEffects_PaintDesktopVersion= ", My._ignore) Then WindowsEffects.PaintDesktopVersion = line.Remove(0, "*WinEffects_PaintDesktopVersion= ".Count)
+                        If line.StartsWith("*WinEffects_Win11BootDots= ", My._ignore) Then WindowsEffects.Win11BootDots = line.Remove(0, "*WinEffects_Win11BootDots= ".Count)
+                        If line.StartsWith("*WinEffects_Win11ExplorerBar= ", My._ignore) Then WindowsEffects.Win11ExplorerBar = line.Remove(0, "*WinEffects_Win11ExplorerBar= ".Count)
+                        If line.StartsWith("*WinEffects_DisableNavBar= ", My._ignore) Then WindowsEffects.DisableNavBar = line.Remove(0, "*WinEffects_DisableNavBar= ".Count)
+                        If line.StartsWith("*WinEffects_AutoHideScrollBars= ", My._ignore) Then WindowsEffects.AutoHideScrollBars = line.Remove(0, "*WinEffects_AutoHideScrollBars= ".Count)
+                        If line.StartsWith("*WinEffects_ColorFilter_Enabled= ", My._ignore) Then WindowsEffects.ColorFilter_Enabled = line.Remove(0, "*WinEffects_ColorFilter_Enabled= ".Count)
+                        If line.StartsWith("*WinEffects_ColorFilter= ", My._ignore) Then WindowsEffects.ColorFilter = line.Remove(0, "*WinEffects_ColorFilter= ".Count)
+                    End If
+
 #End Region
 
 #Region "Metrics & Fonts"
-                    If lin.StartsWith("*MetricsFonts_Enabled= ", My._ignore) Then MetricsFonts.Enabled = lin.Remove(0, "*MetricsFonts_Enabled= ".Count)
-                    If lin.StartsWith("*Metrics_BorderWidth= ", My._ignore) Then MetricsFonts.BorderWidth = lin.Remove(0, "*Metrics_BorderWidth= ".Count)
-                    If lin.StartsWith("*Metrics_CaptionHeight= ", My._ignore) Then MetricsFonts.CaptionHeight = lin.Remove(0, "*Metrics_CaptionHeight= ".Count)
-                    If lin.StartsWith("*Metrics_CaptionWidth= ", My._ignore) Then MetricsFonts.CaptionWidth = lin.Remove(0, "*Metrics_CaptionWidth= ".Count)
-                    If lin.StartsWith("*Metrics_IconSpacing= ", My._ignore) Then MetricsFonts.IconSpacing = lin.Remove(0, "*Metrics_IconSpacing= ".Count)
-                    If lin.StartsWith("*Metrics_IconVerticalSpacing= ", My._ignore) Then MetricsFonts.IconVerticalSpacing = lin.Remove(0, "*Metrics_IconVerticalSpacing= ".Count)
-                    If lin.StartsWith("*Metrics_MenuHeight= ", My._ignore) Then MetricsFonts.MenuHeight = lin.Remove(0, "*Metrics_MenuHeight= ".Count)
-                    If lin.StartsWith("*Metrics_MenuWidth= ", My._ignore) Then MetricsFonts.MenuWidth = lin.Remove(0, "*Metrics_MenuWidth= ".Count)
-                    If lin.StartsWith("*Metrics_PaddedBorderWidth= ", My._ignore) Then MetricsFonts.PaddedBorderWidth = lin.Remove(0, "*Metrics_PaddedBorderWidth= ".Count)
-                    If lin.StartsWith("*Metrics_ScrollHeight= ", My._ignore) Then MetricsFonts.ScrollHeight = lin.Remove(0, "*Metrics_ScrollHeight= ".Count)
-                    If lin.StartsWith("*Metrics_ScrollWidth= ", My._ignore) Then MetricsFonts.ScrollWidth = lin.Remove(0, "*Metrics_ScrollWidth= ".Count)
-                    If lin.StartsWith("*Metrics_SmCaptionHeight= ", My._ignore) Then MetricsFonts.SmCaptionHeight = lin.Remove(0, "*Metrics_SmCaptionHeight= ".Count)
-                    If lin.StartsWith("*Metrics_SmCaptionWidth= ", My._ignore) Then MetricsFonts.SmCaptionWidth = lin.Remove(0, "*Metrics_SmCaptionWidth= ".Count)
-                    If lin.StartsWith("*Metrics_DesktopIconSize= ", My._ignore) Then MetricsFonts.DesktopIconSize = lin.Remove(0, "*Metrics_DesktopIconSize= ".Count)
-                    If lin.StartsWith("*Metrics_ShellIconSize= ", My._ignore) Then MetricsFonts.ShellIconSize = lin.Remove(0, "*Metrics_ShellIconSize= ".Count)
-                    If lin.StartsWith("*Metrics_ShellSmallIconSize= ", My._ignore) Then MetricsFonts.ShellSmallIconSize = lin.Remove(0, "*Metrics_ShellSmallIconSize= ".Count)
-                    If lin.StartsWith("*Fonts_", My._ignore) Then fonts.Add(lin.Remove(0, "*Fonts_".Count))
-                    If lin.StartsWith("*FontSubstitute_MSShellDlg= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg = lin.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
-                    If lin.StartsWith("*FontSubstitute_MSShellDlg2= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = lin.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
-                    If lin.StartsWith("*FontSubstitute_SegoeUI= ", My._ignore) Then MetricsFonts.FontSubstitute_SegoeUI = lin.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
+                    If line.StartsWith("*Metrics", My._ignore) OrElse line.StartsWith("*Fonts_", My._ignore) OrElse line.StartsWith("*FontSubstitute_", My._ignore) Then
+                        If line.StartsWith("*MetricsFonts_Enabled= ", My._ignore) Then MetricsFonts.Enabled = line.Remove(0, "*MetricsFonts_Enabled= ".Count)
+                        If line.StartsWith("*Metrics_BorderWidth= ", My._ignore) Then MetricsFonts.BorderWidth = line.Remove(0, "*Metrics_BorderWidth= ".Count)
+                        If line.StartsWith("*Metrics_CaptionHeight= ", My._ignore) Then MetricsFonts.CaptionHeight = line.Remove(0, "*Metrics_CaptionHeight= ".Count)
+                        If line.StartsWith("*Metrics_CaptionWidth= ", My._ignore) Then MetricsFonts.CaptionWidth = line.Remove(0, "*Metrics_CaptionWidth= ".Count)
+                        If line.StartsWith("*Metrics_IconSpacing= ", My._ignore) Then MetricsFonts.IconSpacing = line.Remove(0, "*Metrics_IconSpacing= ".Count)
+                        If line.StartsWith("*Metrics_IconVerticalSpacing= ", My._ignore) Then MetricsFonts.IconVerticalSpacing = line.Remove(0, "*Metrics_IconVerticalSpacing= ".Count)
+                        If line.StartsWith("*Metrics_MenuHeight= ", My._ignore) Then MetricsFonts.MenuHeight = line.Remove(0, "*Metrics_MenuHeight= ".Count)
+                        If line.StartsWith("*Metrics_MenuWidth= ", My._ignore) Then MetricsFonts.MenuWidth = line.Remove(0, "*Metrics_MenuWidth= ".Count)
+                        If line.StartsWith("*Metrics_PaddedBorderWidth= ", My._ignore) Then MetricsFonts.PaddedBorderWidth = line.Remove(0, "*Metrics_PaddedBorderWidth= ".Count)
+                        If line.StartsWith("*Metrics_ScrollHeight= ", My._ignore) Then MetricsFonts.ScrollHeight = line.Remove(0, "*Metrics_ScrollHeight= ".Count)
+                        If line.StartsWith("*Metrics_ScrollWidth= ", My._ignore) Then MetricsFonts.ScrollWidth = line.Remove(0, "*Metrics_ScrollWidth= ".Count)
+                        If line.StartsWith("*Metrics_SmCaptionHeight= ", My._ignore) Then MetricsFonts.SmCaptionHeight = line.Remove(0, "*Metrics_SmCaptionHeight= ".Count)
+                        If line.StartsWith("*Metrics_SmCaptionWidth= ", My._ignore) Then MetricsFonts.SmCaptionWidth = line.Remove(0, "*Metrics_SmCaptionWidth= ".Count)
+                        If line.StartsWith("*Metrics_DesktopIconSize= ", My._ignore) Then MetricsFonts.DesktopIconSize = line.Remove(0, "*Metrics_DesktopIconSize= ".Count)
+                        If line.StartsWith("*Metrics_ShellIconSize= ", My._ignore) Then MetricsFonts.ShellIconSize = line.Remove(0, "*Metrics_ShellIconSize= ".Count)
+                        If line.StartsWith("*Metrics_ShellSmallIconSize= ", My._ignore) Then MetricsFonts.ShellSmallIconSize = line.Remove(0, "*Metrics_ShellSmallIconSize= ".Count)
+                        If line.StartsWith("*Fonts_", My._ignore) Then fonts.Add(line.Remove(0, "*Fonts_".Count))
+                        If line.StartsWith("*FontSubstitute_MSShellDlg= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg = line.Remove(0, "*FontSubstitute_MSShellDlg= ".Count)
+                        If line.StartsWith("*FontSubstitute_MSShellDlg2= ", My._ignore) Then MetricsFonts.FontSubstitute_MSShellDlg2 = line.Remove(0, "*FontSubstitute_MSShellDlg2= ".Count)
+                        If line.StartsWith("*FontSubstitute_SegoeUI= ", My._ignore) Then MetricsFonts.FontSubstitute_SegoeUI = line.Remove(0, "*FontSubstitute_SegoeUI= ".Count)
+                    End If
+
 #End Region
 
 #Region "AltTab"
-                    If lin.StartsWith("*AltTab_Enabled= ", My._ignore) Then AltTab.Enabled = lin.Remove(0, "*AltTab_Enabled= ".Count)
-                    If lin.StartsWith("*AltTab_Style= ", My._ignore) Then AltTab.Style = lin.Remove(0, "*AltTab_Style= ".Count)
-                    If lin.StartsWith("*AltTab_Win10Opacity= ", My._ignore) Then AltTab.Win10Opacity = lin.Remove(0, "*AltTab_Win10Opacity= ".Count)
+                    If line.StartsWith("*AltTab", My._ignore) Then
+                        If line.StartsWith("*AltTab_Enabled= ", My._ignore) Then AltTab.Enabled = line.Remove(0, "*AltTab_Enabled= ".Count)
+                        If line.StartsWith("*AltTab_Style= ", My._ignore) Then AltTab.Style = line.Remove(0, "*AltTab_Style= ".Count)
+                        If line.StartsWith("*AltTab_Win10Opacity= ", My._ignore) Then AltTab.Win10Opacity = line.Remove(0, "*AltTab_Win10Opacity= ".Count)
+                    End If
+
 #End Region
 
 #Region "Terminals"
+                    If line.StartsWith("*Terminal", My._ignore) Then
+                        If line.StartsWith("*Terminal_CMD_Enabled= ", My._ignore) Then CommandPrompt.Enabled = line.Remove(0, "*Terminal_CMD_Enabled= ".Count)
+                        If line.StartsWith("*Terminal_PS_32_Enabled= ", My._ignore) Then PowerShellx86.Enabled = line.Remove(0, "*Terminal_PS_32_Enabled= ".Count)
+                        If line.StartsWith("*Terminal_PS_64_Enabled= ", My._ignore) Then PowerShellx64.Enabled = line.Remove(0, "*Terminal_PS_64_Enabled= ".Count)
+                        If line.StartsWith("*Terminal_Stable_Enabled= ", My._ignore) Then Terminal.Enabled = line.Remove(0, "*Terminal_Stable_Enabled= ".Count)
+                        If line.StartsWith("*Terminal_Preview_Enabled= ", My._ignore) Then TerminalPreview.Enabled = line.Remove(0, "*Terminal_Preview_Enabled= ".Count)
+                    End If
 
-                    If lin.StartsWith("*Terminal_CMD_Enabled= ", My._ignore) Then CommandPrompt.Enabled = lin.Remove(0, "*Terminal_CMD_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_PS_32_Enabled= ", My._ignore) Then PowerShellx86.Enabled = lin.Remove(0, "*Terminal_PS_32_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_PS_64_Enabled= ", My._ignore) Then PowerShellx64.Enabled = lin.Remove(0, "*Terminal_PS_64_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_Stable_Enabled= ", My._ignore) Then Terminal.Enabled = lin.Remove(0, "*Terminal_Stable_Enabled= ".Count)
-                    If lin.StartsWith("*Terminal_Preview_Enabled= ", My._ignore) Then TerminalPreview.Enabled = lin.Remove(0, "*Terminal_Preview_Enabled= ".Count)
-
-                    If lin.StartsWith("*CMD_", My._ignore) Then cmdList.Add(lin.Remove(0, "*CMD_".Count))
-                    If lin.StartsWith("*PS_32_", My._ignore) Then PS86List.Add(lin.Remove(0, "*PS_32_".Count))
-                    If lin.StartsWith("*PS_64_", My._ignore) Then PS64List.Add(lin.Remove(0, "*PS_64_".Count))
+                    If line.StartsWith("*CMD_", My._ignore) Then cmdList.Add(line.Remove(0, "*CMD_".Count))
+                    If line.StartsWith("*PS_32_", My._ignore) Then PS86List.Add(line.Remove(0, "*PS_32_".Count))
+                    If line.StartsWith("*PS_64_", My._ignore) Then PS64List.Add(line.Remove(0, "*PS_64_".Count))
 
                     If Not IgnoreWTerminal Then
                         If My.W10 Or My.W11 Then
-                            If lin.StartsWith("terminal.", My._ignore) Then ls_stable.Add(lin)
-                            If lin.StartsWith("terminalpreview.", My._ignore) Then ls_preview.Add(lin)
+                            If line.StartsWith("terminal.", My._ignore) Then ls_stable.Add(line)
+                            If line.StartsWith("terminalpreview.", My._ignore) Then ls_preview.Add(line)
                         End If
                     End If
 #End Region
 
 #Region "Wallpaper Tone"
-                    If lin.StartsWith("*WallpaperTone_Win11_", My._ignore) Then WT_11.Add(lin.Remove(0, "*WallpaperTone_Win11_".Count))
-                    If lin.StartsWith("*WallpaperTone_Win10_", My._ignore) Then WT_10.Add(lin.Remove(0, "*WallpaperTone_Win10_".Count))
-                    If lin.StartsWith("*WallpaperTone_Win8.1_", My._ignore) Then WT_8.Add(lin.Remove(0, "*WallpaperTone_Win8.1_".Count))
-                    If lin.StartsWith("*WallpaperTone_Win7_", My._ignore) Then WT_7.Add(lin.Remove(0, "*WallpaperTone_Win7_".Count))
-                    If lin.StartsWith("*WallpaperTone_WinVista_", My._ignore) Then WT_Vista.Add(lin.Remove(0, "*WallpaperTone_WinVista_".Count))
-                    If lin.StartsWith("*WallpaperTone_WinXP_", My._ignore) Then WT_XP.Add(lin.Remove(0, "*WallpaperTone_WinXP_".Count))
+                    If line.StartsWith("*WallpaperTone", My._ignore) Then
+                        If line.StartsWith("*WallpaperTone_Win11_", My._ignore) Then WT_11.Add(line.Remove(0, "*WallpaperTone_Win11_".Count))
+                        If line.StartsWith("*WallpaperTone_Win10_", My._ignore) Then WT_10.Add(line.Remove(0, "*WallpaperTone_Win10_".Count))
+                        If line.StartsWith("*WallpaperTone_Win8.1_", My._ignore) Then WT_8.Add(line.Remove(0, "*WallpaperTone_Win8.1_".Count))
+                        If line.StartsWith("*WallpaperTone_Win7_", My._ignore) Then WT_7.Add(line.Remove(0, "*WallpaperTone_Win7_".Count))
+                        If line.StartsWith("*WallpaperTone_WinVista_", My._ignore) Then WT_Vista.Add(line.Remove(0, "*WallpaperTone_WinVista_".Count))
+                        If line.StartsWith("*WallpaperTone_WinXP_", My._ignore) Then WT_XP.Add(line.Remove(0, "*WallpaperTone_WinXP_".Count))
+                    End If
+
 #End Region
 
 #Region "Cursors"
-                    If lin.StartsWith("*Cursor_Enabled= ", My._ignore) Then Cursor_Enabled = lin.Remove(0, "*Cursor_Enabled= ".Count)
-                    If lin.StartsWith("*Cursor_Shadow= ", My._ignore) Then Cursor_Shadow = lin.Remove(0, "*Cursor_Shadow= ".Count)
-                    If lin.StartsWith("*Cursor_Trails= ", My._ignore) Then Cursor_Trails = lin.Remove(0, "*Cursor_Trails= ".Count)
-                    If lin.StartsWith("*Cursor_Sonar= ", My._ignore) Then Cursor_Sonar = lin.Remove(0, "*Cursor_Sonar= ".Count)
+                    If line.StartsWith("*Cursor", My._ignore) Then
+                        If line.StartsWith("*Cursor_Enabled= ", My._ignore) Then Cursor_Enabled = line.Remove(0, "*Cursor_Enabled= ".Count)
+                        If line.StartsWith("*Cursor_Shadow= ", My._ignore) Then Cursor_Shadow = line.Remove(0, "*Cursor_Shadow= ".Count)
+                        If line.StartsWith("*Cursor_Trails= ", My._ignore) Then Cursor_Trails = line.Remove(0, "*Cursor_Trails= ".Count)
+                        If line.StartsWith("*Cursor_Sonar= ", My._ignore) Then Cursor_Sonar = line.Remove(0, "*Cursor_Sonar= ".Count)
 
-                    If lin.StartsWith("*Cursor_Arrow_", My._ignore) Then CUR_Arrow_List.Add(lin.Remove(0, "*Cursor_Arrow_".Count))
-                    If lin.StartsWith("*Cursor_Help_", My._ignore) Then CUR_Help_List.Add(lin.Remove(0, "*Cursor_Help_".Count))
-                    If lin.StartsWith("*Cursor_AppLoading_", My._ignore) Then CUR_AppLoading_List.Add(lin.Remove(0, "*Cursor_AppLoading_".Count))
-                    If lin.StartsWith("*Cursor_Busy_", My._ignore) Then CUR_Busy_List.Add(lin.Remove(0, "*Cursor_Busy_".Count))
-                    If lin.StartsWith("*Cursor_Move_", My._ignore) Then CUR_Move_List.Add(lin.Remove(0, "*Cursor_Move_".Count))
-                    If lin.StartsWith("*Cursor_NS_", My._ignore) Then CUR_NS_List.Add(lin.Remove(0, "*Cursor_NS_".Count))
-                    If lin.StartsWith("*Cursor_EW_", My._ignore) Then CUR_EW_List.Add(lin.Remove(0, "*Cursor_EW_".Count))
-                    If lin.StartsWith("*Cursor_NESW_", My._ignore) Then CUR_NESW_List.Add(lin.Remove(0, "*Cursor_NESW_".Count))
-                    If lin.StartsWith("*Cursor_NWSE_", My._ignore) Then CUR_NWSE_List.Add(lin.Remove(0, "*Cursor_NWSE_".Count))
-                    If lin.StartsWith("*Cursor_Up_", My._ignore) Then CUR_Up_List.Add(lin.Remove(0, "*Cursor_Up_".Count))
-                    If lin.StartsWith("*Cursor_Pen_", My._ignore) Then CUR_Pen_List.Add(lin.Remove(0, "*Cursor_Pen_".Count))
-                    If lin.StartsWith("*Cursor_None_", My._ignore) Then CUR_None_List.Add(lin.Remove(0, "*Cursor_None_".Count))
-                    If lin.StartsWith("*Cursor_Link_", My._ignore) Then CUR_Link_List.Add(lin.Remove(0, "*Cursor_Link_".Count))
-                    If lin.StartsWith("*Cursor_Pin_", My._ignore) Then CUR_Pin_List.Add(lin.Remove(0, "*Cursor_Pin_".Count))
-                    If lin.StartsWith("*Cursor_Person_", My._ignore) Then CUR_Person_List.Add(lin.Remove(0, "*Cursor_Person_".Count))
-                    If lin.StartsWith("*Cursor_IBeam_", My._ignore) Then CUR_IBeam_List.Add(lin.Remove(0, "*Cursor_IBeam_".Count))
-                    If lin.StartsWith("*Cursor_Cross_", My._ignore) Then CUR_Cross_List.Add(lin.Remove(0, "*Cursor_Cross_".Count))
-
+                        If line.StartsWith("*Cursor_Arrow_", My._ignore) Then CUR_Arrow_List.Add(line.Remove(0, "*Cursor_Arrow_".Count))
+                        If line.StartsWith("*Cursor_Help_", My._ignore) Then CUR_Help_List.Add(line.Remove(0, "*Cursor_Help_".Count))
+                        If line.StartsWith("*Cursor_AppLoading_", My._ignore) Then CUR_AppLoading_List.Add(line.Remove(0, "*Cursor_AppLoading_".Count))
+                        If line.StartsWith("*Cursor_Busy_", My._ignore) Then CUR_Busy_List.Add(line.Remove(0, "*Cursor_Busy_".Count))
+                        If line.StartsWith("*Cursor_Move_", My._ignore) Then CUR_Move_List.Add(line.Remove(0, "*Cursor_Move_".Count))
+                        If line.StartsWith("*Cursor_NS_", My._ignore) Then CUR_NS_List.Add(line.Remove(0, "*Cursor_NS_".Count))
+                        If line.StartsWith("*Cursor_EW_", My._ignore) Then CUR_EW_List.Add(line.Remove(0, "*Cursor_EW_".Count))
+                        If line.StartsWith("*Cursor_NESW_", My._ignore) Then CUR_NESW_List.Add(line.Remove(0, "*Cursor_NESW_".Count))
+                        If line.StartsWith("*Cursor_NWSE_", My._ignore) Then CUR_NWSE_List.Add(line.Remove(0, "*Cursor_NWSE_".Count))
+                        If line.StartsWith("*Cursor_Up_", My._ignore) Then CUR_Up_List.Add(line.Remove(0, "*Cursor_Up_".Count))
+                        If line.StartsWith("*Cursor_Pen_", My._ignore) Then CUR_Pen_List.Add(line.Remove(0, "*Cursor_Pen_".Count))
+                        If line.StartsWith("*Cursor_None_", My._ignore) Then CUR_None_List.Add(line.Remove(0, "*Cursor_None_".Count))
+                        If line.StartsWith("*Cursor_Link_", My._ignore) Then CUR_Link_List.Add(line.Remove(0, "*Cursor_Link_".Count))
+                        If line.StartsWith("*Cursor_Pin_", My._ignore) Then CUR_Pin_List.Add(line.Remove(0, "*Cursor_Pin_".Count))
+                        If line.StartsWith("*Cursor_Person_", My._ignore) Then CUR_Person_List.Add(line.Remove(0, "*Cursor_Person_".Count))
+                        If line.StartsWith("*Cursor_IBeam_", My._ignore) Then CUR_IBeam_List.Add(line.Remove(0, "*Cursor_IBeam_".Count))
+                        If line.StartsWith("*Cursor_Cross_", My._ignore) Then CUR_Cross_List.Add(line.Remove(0, "*Cursor_Cross_".Count))
+                    End If
 #End Region
 
 #Region "Screen Saver"
-                    If lin.StartsWith("*ScreenSaver_Enabled= ", My._ignore) Then ScreenSaver.Enabled = lin.Remove(0, "*ScreenSaver_Enabled= ".Count)
-                    If lin.StartsWith("*ScreenSaver_IsSecure= ", My._ignore) Then ScreenSaver.IsSecure = lin.Remove(0, "*ScreenSaver_IsSecure= ".Count)
-                    If lin.StartsWith("*ScreenSaver_TimeOut= ", My._ignore) Then ScreenSaver.TimeOut = lin.Remove(0, "*ScreenSaver_TimeOut= ".Count)
-                    If lin.StartsWith("*ScreenSaver_File= ", My._ignore) Then ScreenSaver.File = lin.Remove(0, "*ScreenSaver_File= ".Count)
+                    If line.StartsWith("*ScreenSaver", My._ignore) Then
+                        If line.StartsWith("*ScreenSaver_Enabled= ", My._ignore) Then ScreenSaver.Enabled = line.Remove(0, "*ScreenSaver_Enabled= ".Count)
+                        If line.StartsWith("*ScreenSaver_IsSecure= ", My._ignore) Then ScreenSaver.IsSecure = line.Remove(0, "*ScreenSaver_IsSecure= ".Count)
+                        If line.StartsWith("*ScreenSaver_TimeOut= ", My._ignore) Then ScreenSaver.TimeOut = line.Remove(0, "*ScreenSaver_TimeOut= ".Count)
+                        If line.StartsWith("*ScreenSaver_File= ", My._ignore) Then ScreenSaver.File = line.Remove(0, "*ScreenSaver_File= ".Count)
+                    End If
+
 #End Region
+
+#Region "Sounds"
+                    If line.StartsWith("*Sounds", My._ignore) OrElse line.StartsWith("*Snd", My._ignore) Then
+                        If line.StartsWith("*Sounds_Enabled= ", My._ignore) Then Sounds.Enabled = line.Remove(0, "*Sounds_Enabled= ".Count)
+                        If line.StartsWith("*Snd_Imageres_SystemStartup= ", My._ignore) Then Sounds.Snd_Imageres_SystemStartup = line.Remove(0, "*Snd_Imageres_SystemStartup= ".Count)
+                        If line.StartsWith("*Snd_Win_Default= ", My._ignore) Then Sounds.Snd_Win_Default = line.Remove(0, "*Snd_Win_Default= ".Count)
+                        If line.StartsWith("*Snd_Win_AppGPFault= ", My._ignore) Then Sounds.Snd_Win_AppGPFault = line.Remove(0, "*Snd_Win_AppGPFault= ".Count)
+                        If line.StartsWith("*Snd_Win_CCSelect= ", My._ignore) Then Sounds.Snd_Win_CCSelect = line.Remove(0, "*Snd_Win_CCSelect= ".Count)
+                        If line.StartsWith("*Snd_Win_ChangeTheme= ", My._ignore) Then Sounds.Snd_Win_ChangeTheme = line.Remove(0, "*Snd_Win_ChangeTheme= ".Count)
+                        If line.StartsWith("*Snd_Win_Close= ", My._ignore) Then Sounds.Snd_Win_Close = line.Remove(0, "*Snd_Win_Close= ".Count)
+                        If line.StartsWith("*Snd_Win_CriticalBatteryAlarm= ", My._ignore) Then Sounds.Snd_Win_CriticalBatteryAlarm = line.Remove(0, "*Snd_Win_CriticalBatteryAlarm= ".Count)
+                        If line.StartsWith("*Snd_Win_DeviceConnect= ", My._ignore) Then Sounds.Snd_Win_DeviceConnect = line.Remove(0, "*Snd_Win_DeviceConnect= ".Count)
+                        If line.StartsWith("*Snd_Win_DeviceDisconnect= ", My._ignore) Then Sounds.Snd_Win_DeviceDisconnect = line.Remove(0, "*Snd_Win_DeviceDisconnect= ".Count)
+                        If line.StartsWith("*Snd_Win_DeviceFail= ", My._ignore) Then Sounds.Snd_Win_DeviceFail = line.Remove(0, "*Snd_Win_DeviceFail= ".Count)
+                        If line.StartsWith("*Snd_Win_FaxBeep= ", My._ignore) Then Sounds.Snd_Win_FaxBeep = line.Remove(0, "*Snd_Win_FaxBeep= ".Count)
+                        If line.StartsWith("*Snd_Win_LowBatteryAlarm= ", My._ignore) Then Sounds.Snd_Win_LowBatteryAlarm = line.Remove(0, "*Snd_Win_LowBatteryAlarm= ".Count)
+                        If line.StartsWith("*Snd_Win_MailBeep= ", My._ignore) Then Sounds.Snd_Win_MailBeep = line.Remove(0, "*Snd_Win_MailBeep= ".Count)
+                        If line.StartsWith("*Snd_Win_Maximize= ", My._ignore) Then Sounds.Snd_Win_Maximize = line.Remove(0, "*Snd_Win_Maximize= ".Count)
+                        If line.StartsWith("*Snd_Win_MenuCommand= ", My._ignore) Then Sounds.Snd_Win_MenuCommand = line.Remove(0, "*Snd_Win_MenuCommand= ".Count)
+                        If line.StartsWith("*Snd_Win_MenuPopup= ", My._ignore) Then Sounds.Snd_Win_MenuPopup = line.Remove(0, "*Snd_Win_MenuPopup= ".Count)
+                        If line.StartsWith("*Snd_Win_MessageNudge= ", My._ignore) Then Sounds.Snd_Win_MessageNudge = line.Remove(0, "*Snd_Win_MessageNudge= ".Count)
+                        If line.StartsWith("*Snd_Win_Minimize= ", My._ignore) Then Sounds.Snd_Win_Minimize = line.Remove(0, "*Snd_Win_Minimize= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Default= ", My._ignore) Then Sounds.Snd_Win_Notification_Default = line.Remove(0, "*Snd_Win_Notification_Default= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_IM= ", My._ignore) Then Sounds.Snd_Win_Notification_IM = line.Remove(0, "*Snd_Win_Notification_IM= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm10= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm10 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm10= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm2= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm2 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm2= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm3= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm3 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm3= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm4= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm4 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm4= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm5= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm5 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm5= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm6= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm6 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm6= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm7= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm7 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm7= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm8= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm8 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm8= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Alarm9= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Alarm9 = line.Remove(0, "*Snd_Win_Notification_Looping_Alarm9= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call = line.Remove(0, "*Snd_Win_Notification_Looping_Call= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call10= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call10 = line.Remove(0, "*Snd_Win_Notification_Looping_Call10= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call2= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call2 = line.Remove(0, "*Snd_Win_Notification_Looping_Call2= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call3= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call3 = line.Remove(0, "*Snd_Win_Notification_Looping_Call3= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call4= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call4 = line.Remove(0, "*Snd_Win_Notification_Looping_Call4= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call5= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call5 = line.Remove(0, "*Snd_Win_Notification_Looping_Call5= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call6= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call6 = line.Remove(0, "*Snd_Win_Notification_Looping_Call6= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call7= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call7 = line.Remove(0, "*Snd_Win_Notification_Looping_Call7= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call8= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call8 = line.Remove(0, "*Snd_Win_Notification_Looping_Call8= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Looping_Call9= ", My._ignore) Then Sounds.Snd_Win_Notification_Looping_Call9 = line.Remove(0, "*Snd_Win_Notification_Looping_Call9= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Mail= ", My._ignore) Then Sounds.Snd_Win_Notification_Mail = line.Remove(0, "*Snd_Win_Notification_Mail= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Proximity= ", My._ignore) Then Sounds.Snd_Win_Notification_Proximity = line.Remove(0, "*Snd_Win_Notification_Proximity= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_Reminder= ", My._ignore) Then Sounds.Snd_Win_Notification_Reminder = line.Remove(0, "*Snd_Win_Notification_Reminder= ".Count)
+                        If line.StartsWith("*Snd_Win_Notification_SMS= ", My._ignore) Then Sounds.Snd_Win_Notification_SMS = line.Remove(0, "*Snd_Win_Notification_SMS= ".Count)
+                        If line.StartsWith("*Snd_Win_Open= ", My._ignore) Then Sounds.Snd_Win_Open = line.Remove(0, "*Snd_Win_Open= ".Count)
+                        If line.StartsWith("*Snd_Win_PrintComplete= ", My._ignore) Then Sounds.Snd_Win_PrintComplete = line.Remove(0, "*Snd_Win_PrintComplete= ".Count)
+                        If line.StartsWith("*Snd_Win_ProximityConnection= ", My._ignore) Then Sounds.Snd_Win_ProximityConnection = line.Remove(0, "*Snd_Win_ProximityConnection= ".Count)
+                        If line.StartsWith("*Snd_Win_RestoreDown= ", My._ignore) Then Sounds.Snd_Win_RestoreDown = line.Remove(0, "*Snd_Win_RestoreDown= ".Count)
+                        If line.StartsWith("*Snd_Win_RestoreUp= ", My._ignore) Then Sounds.Snd_Win_RestoreUp = line.Remove(0, "*Snd_Win_RestoreUp= ".Count)
+                        If line.StartsWith("*Snd_Win_ShowBand= ", My._ignore) Then Sounds.Snd_Win_ShowBand = line.Remove(0, "*Snd_Win_ShowBand= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemAsterisk= ", My._ignore) Then Sounds.Snd_Win_SystemAsterisk = line.Remove(0, "*Snd_Win_SystemAsterisk= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemExclamation= ", My._ignore) Then Sounds.Snd_Win_SystemExclamation = line.Remove(0, "*Snd_Win_SystemExclamation= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemExit= ", My._ignore) Then Sounds.Snd_Win_SystemExit = line.Remove(0, "*Snd_Win_SystemExit= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemStartup= ", My._ignore) Then Sounds.Snd_Win_SystemStartup = line.Remove(0, "*Snd_Win_SystemStartup= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemHand= ", My._ignore) Then Sounds.Snd_Win_SystemHand = line.Remove(0, "*Snd_Win_SystemHand= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemNotification= ", My._ignore) Then Sounds.Snd_Win_SystemNotification = line.Remove(0, "*Snd_Win_SystemNotification= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemQuestion= ", My._ignore) Then Sounds.Snd_Win_SystemQuestion = line.Remove(0, "*Snd_Win_SystemQuestion= ".Count)
+                        If line.StartsWith("*Snd_Win_WindowsLogoff= ", My._ignore) Then Sounds.Snd_Win_WindowsLogoff = line.Remove(0, "*Snd_Win_WindowsLogoff= ".Count)
+                        If line.StartsWith("*Snd_Win_WindowsLogon= ", My._ignore) Then Sounds.Snd_Win_WindowsLogon = line.Remove(0, "*Snd_Win_WindowsLogon= ".Count)
+                        If line.StartsWith("*Snd_Win_WindowsUAC= ", My._ignore) Then Sounds.Snd_Win_WindowsUAC = line.Remove(0, "*Snd_Win_WindowsUAC= ".Count)
+                        If line.StartsWith("*Snd_Win_WindowsUnlock= ", My._ignore) Then Sounds.Snd_Win_WindowsUnlock = line.Remove(0, "*Snd_Win_WindowsUnlock= ".Count)
+                        If line.StartsWith("*Snd_Explorer_ActivatingDocument= ", My._ignore) Then Sounds.Snd_Explorer_ActivatingDocument = line.Remove(0, "*Snd_Explorer_ActivatingDocument= ".Count)
+                        If line.StartsWith("*Snd_Explorer_BlockedPopup= ", My._ignore) Then Sounds.Snd_Explorer_BlockedPopup = line.Remove(0, "*Snd_Explorer_BlockedPopup= ".Count)
+                        If line.StartsWith("*Snd_Explorer_EmptyRecycleBin= ", My._ignore) Then Sounds.Snd_Explorer_EmptyRecycleBin = line.Remove(0, "*Snd_Explorer_EmptyRecycleBin= ".Count)
+                        If line.StartsWith("*Snd_Explorer_FeedDiscovered= ", My._ignore) Then Sounds.Snd_Explorer_FeedDiscovered = line.Remove(0, "*Snd_Explorer_FeedDiscovered= ".Count)
+                        If line.StartsWith("*Snd_Explorer_MoveMenuItem= ", My._ignore) Then Sounds.Snd_Explorer_MoveMenuItem = line.Remove(0, "*Snd_Explorer_MoveMenuItem= ".Count)
+                        If line.StartsWith("*Snd_Explorer_Navigating= ", My._ignore) Then Sounds.Snd_Explorer_Navigating = line.Remove(0, "*Snd_Explorer_Navigating= ".Count)
+                        If line.StartsWith("*Snd_Explorer_SecurityBand= ", My._ignore) Then Sounds.Snd_Explorer_SecurityBand = line.Remove(0, "*Snd_Explorer_SecurityBand= ".Count)
+                    End If
+
+#End Region
+
                 Next
 
 #Region "Fonts"
@@ -5408,6 +5880,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                   ScreenSaver.Apply()
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_ScreenSaver, My.Lang.CP_Error_ScreenSaver, My.Lang.CP_Time, sw_all)
 
+                'Sounds
+                Execute(CType(Sub()
+                                  Sounds.Apply()
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Sounds, My.Lang.CP_Error_Sounds, My.Lang.CP_Time, sw_all, Not Sounds.Enabled, My.Lang.CP_Skip_Sounds)
+
                 'Cursors
                 Execute(CType(Sub()
                                   Apply_Cursors([TreeView])
@@ -5538,6 +6015,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add("</Terminals>" & vbCrLf)
 
         tx.Add(ScreenSaver.ToString)
+        tx.Add(Sounds.ToString)
 
         tx.Add("<Cursors>")
         tx.Add("*Cursor_Enabled= " & Cursor_Enabled)
@@ -6359,6 +6837,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WallpaperTone_WVista <> DirectCast(obj, CP).WallpaperTone_WVista Then _Equals = False
         If WallpaperTone_WXP <> DirectCast(obj, CP).WallpaperTone_WXP Then _Equals = False
         If ScreenSaver <> DirectCast(obj, CP).ScreenSaver Then _Equals = False
+        If Sounds <> DirectCast(obj, CP).Sounds Then _Equals = False
 
         If Cursor_Enabled <> DirectCast(obj, CP).Cursor_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False

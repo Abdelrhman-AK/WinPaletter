@@ -22,6 +22,13 @@ Public Class Uninstall
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
         End If
 
+        Try
+            If Not My.WXP AndAlso IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
+                ReplaceResource(My.PATH_imageres, "WAV", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav"))
+            End If
+        Catch
+        End Try
+
         If XenonCheckBox2.Checked Then
             If IO.Directory.Exists(My.Application.appData) Then
                 IO.Directory.Delete(My.Application.appData, True)

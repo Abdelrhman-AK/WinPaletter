@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Metrics
 
 Namespace NativeMethods
@@ -1572,6 +1573,12 @@ Namespace NativeMethods
         End Function
     End Class
 
+    Public Class Winmm
+        <DllImport("winmm.dll")>
+        Public Shared Function mciSendString(ByVal command As String, ByVal buffer As StringBuilder, ByVal bufferSize As Int32, ByVal hwndCallback As IntPtr) As Int32
+        End Function
+    End Class
+
     ''' <summary>
     ''' Functions not found internally in system DLLs, but uses the functions in DLLs to do something DLLs Functions cannot do alone.
     ''' </summary>
@@ -1646,6 +1653,24 @@ Namespace NativeMethods
             }
 
             UxTheme.SetWindowThemeAttribute(Handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ops, Marshal.SizeOf(ops))
+        End Sub
+
+#End Region
+
+#Region "Winmm"
+        Shared Sub PlayAudio(File As String)
+            If IO.File.Exists(File) Then
+                Winmm.mciSendString("close myWAV", Nothing, 0, 0)
+                Winmm.mciSendString("open """ & File & """ type mpegvideo alias myWAV", Nothing, 0, 0)
+                Winmm.mciSendString("play myWAV", Nothing, 0, 0)
+                Dim Volume As Integer = 1000 ' Sets it to use entire range of volume control
+                Winmm.mciSendString("setaudio myWAV volume to " & Volume.ToString, Nothing, 0, 0)
+            End If
+        End Sub
+
+        Shared Sub StopAudio()
+            Winmm.mciSendString("seek myWAV to start", Nothing, 0, IntPtr.Zero)
+            Winmm.mciSendString("stop myWAV", Nothing, 0, IntPtr.Zero)
         End Sub
 #End Region
 

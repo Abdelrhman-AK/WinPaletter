@@ -2014,7 +2014,6 @@ Public Class MainFrm
         End If
 
         Visible = True
-
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -4210,6 +4209,10 @@ Public Class MainFrm
 
     Private Sub XenonButton33_Click(sender As Object, e As EventArgs) Handles XenonButton33.Click
         ScreenSaver_Editor.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton34_Click(sender As Object, e As EventArgs) Handles XenonButton34.Click
+        Sounds_Editor.ShowDialog()
     End Sub
 
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click

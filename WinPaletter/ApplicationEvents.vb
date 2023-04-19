@@ -9,6 +9,7 @@ Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.IO.Compression
 Imports System.IO
+Imports System.Media
 
 Namespace My
     Module Env
@@ -399,6 +400,14 @@ Namespace My
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
+
+            Try
+                If Not My.WXP AndAlso IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
+                    ReplaceResource(My.PATH_imageres, "WAV", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav"))
+                End If
+            Catch
+            End Try
+
             If IO.Directory.Exists(Application.appData) Then
                 IO.Directory.Delete(Application.appData, True)
                 If Not My.WXP Then
@@ -764,6 +773,15 @@ Namespace My
                 BugReport.ThrowError(ex)
             End Try
 
+            'Backup Windows Startup sound
+            Try
+                If Not My.WXP AndAlso Not IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
+                    Dim SoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                    IO.File.WriteAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav", SoundBytes)
+                End If
+            Catch ex As Exception
+                BugReport.ThrowError(ex)
+            End Try
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew

@@ -233,10 +233,10 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AltTabEditor.Designer.vb">
+    <Compile Include="Extras\AltTabEditor.Designer.vb">
       <DependentUpon>AltTabEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="AltTabEditor.vb">
+    <Compile Include="Extras\AltTabEditor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
@@ -260,10 +260,16 @@
     <Compile Include="Classes\TypesExtensions.vb" />
     <Compile Include="Classes\WinResources.vb" />
     <Compile Include="Classes\XenonCore.vb" />
-    <Compile Include="ScreenSaver_Editor.Designer.vb">
+    <Compile Include="Extras\ScreenSaver_Editor.Designer.vb">
       <DependentUpon>ScreenSaver_Editor.vb</DependentUpon>
     </Compile>
-    <Compile Include="ScreenSaver_Editor.vb">
+    <Compile Include="Extras\ScreenSaver_Editor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\Sounds_Editor.Designer.vb">
+      <DependentUpon>Sounds_Editor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\Sounds_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\XeSettings.vb" />
@@ -515,10 +521,10 @@
     <Compile Include="Updates\Whatsnew.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WallpaperToner.Designer.vb">
+    <Compile Include="Extras\WallpaperToner.Designer.vb">
       <DependentUpon>WallpaperToner.vb</DependentUpon>
     </Compile>
-    <Compile Include="WallpaperToner.vb">
+    <Compile Include="Extras\WallpaperToner.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Win32UI\VS2Win32UI.Designer.vb">
@@ -539,10 +545,10 @@
     <Compile Include="Win8\Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinEffecter.Designer.vb">
+    <Compile Include="Extras\WinEffecter.Designer.vb">
       <DependentUpon>WinEffecter.vb</DependentUpon>
     </Compile>
-    <Compile Include="WinEffecter.vb">
+    <Compile Include="Extras\WinEffecter.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -661,6 +667,8 @@
     <None Include="Resources\SampleApp_Active.png" />
     <None Include="Resources\SampleApp_Inctive.png" />
     <None Include="Resources\SampleApp_Small_Active.png" />
+    <None Include="Resources\Sound_Stop.png" />
+    <None Include="Resources\Sound_Play.png" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
@@ -732,7 +740,7 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AltTabEditor.resx">
+    <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="bk.resx">
@@ -763,6 +771,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditInfo.resx">
       <DependentUpon>EditInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\Sounds_Editor.resx">
+      <DependentUpon>Sounds_Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
@@ -808,7 +819,7 @@
       <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="ScreenSaver_Editor.resx">
+    <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
@@ -856,7 +867,7 @@
     <EmbeddedResource Include="Updates\Whatsnew.resx">
       <DependentUpon>Whatsnew.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WallpaperToner.resx">
+    <EmbeddedResource Include="Extras\WallpaperToner.resx">
       <DependentUpon>WallpaperToner.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
@@ -868,7 +879,7 @@
     <EmbeddedResource Include="Win8\Start8Selector.resx">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinEffecter.resx">
+    <EmbeddedResource Include="Extras\WinEffecter.resx">
       <DependentUpon>WinEffecter.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
