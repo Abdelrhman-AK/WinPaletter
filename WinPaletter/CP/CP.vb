@@ -8,6 +8,7 @@ Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.CP.Structures
+Imports System.ComponentModel
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -3077,6 +3078,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Snd_Explorer_MoveMenuItem As String
             Public Snd_Explorer_Navigating As String
             Public Snd_Explorer_SecurityBand As String
+            Public Snd_SpeechRec_DisNumbersSound As String
+            Public Snd_SpeechRec_HubOffSound As String
+            Public Snd_SpeechRec_HubOnSound As String
+            Public Snd_SpeechRec_HubSleepSound As String
+            Public Snd_SpeechRec_MisrecoSound As String
+            Public Snd_SpeechRec_PanelSound As String
 
             Public Sub Load(_DefSounds As Sounds)
                 Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled)
@@ -3153,111 +3160,174 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Snd_Explorer_Navigating = GetReg(String.Format(Scope_Explorer, "Navigating"), "", _DefSounds.Snd_Explorer_Navigating)
                 Snd_Explorer_SecurityBand = GetReg(String.Format(Scope_Explorer, "SecurityBand"), "", _DefSounds.Snd_Explorer_SecurityBand)
 
+                Dim Scope_SpeechRec As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.current"
+                Snd_SpeechRec_DisNumbersSound = GetReg(String.Format(Scope_SpeechRec, "DisNumbersSound"), "", _DefSounds.Snd_SpeechRec_DisNumbersSound)
+                Snd_SpeechRec_HubOffSound = GetReg(String.Format(Scope_SpeechRec, "HubOffSound"), "", _DefSounds.Snd_SpeechRec_HubOffSound)
+                Snd_SpeechRec_HubOnSound = GetReg(String.Format(Scope_SpeechRec, "HubOnSound"), "", _DefSounds.Snd_SpeechRec_HubOnSound)
+                Snd_SpeechRec_HubSleepSound = GetReg(String.Format(Scope_SpeechRec, "HubSleepSound"), "", _DefSounds.Snd_SpeechRec_HubSleepSound)
+                Snd_SpeechRec_MisrecoSound = GetReg(String.Format(Scope_SpeechRec, "MisrecoSound"), "", _DefSounds.Snd_SpeechRec_MisrecoSound)
+                Snd_SpeechRec_PanelSound = GetReg(String.Format(Scope_SpeechRec, "PanelSound"), "", _DefSounds.Snd_SpeechRec_PanelSound)
+
             End Sub
 
             Sub Apply()
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStartup, RegistryValueKind.String)
 
+                Dim destination_StartupSnd As String
+
+                If My.W10 Then
+                    destination_StartupSnd = "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+                Else
+                    destination_StartupSnd = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"
+                End If
+
                 If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStartup) Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
 
                 ElseIf IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
 
                 ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
 
                 ElseIf Not Snd_Imageres_SystemStartup.Trim.ToUpper = "CURRENT" Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", (Not My.W11).ToInteger)
 
                 End If
 
                 If Enabled Then
 
-                    If IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
-                        If Not My.WXP Then ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(Snd_Imageres_SystemStartup))
+                    If Not My.WXP Then
 
-                    ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
-                        If Not My.WXP Then ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav"))
+                        If IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
+
+                            Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                            Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStartup)
+
+                            If Not CurrentSoundBytes.Equals(TargetSoundBytes) Then
+                                ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), TargetSoundBytes)
+                            End If
+
+                        ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
+
+                            Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                            Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav")
+
+                            If Not CurrentSoundBytes.Equals(OriginalSoundBytes) Then
+                                ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), OriginalSoundBytes)
+                            End If
+
+                        End If
 
                     End If
 
-                    'Dim Scope_Win As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified"}
-                    'Dim Scope_Explorer As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Modified"}
+                    If My.W8 Or My.W10 Or My.W11 Then
+                        If IO.File.Exists(Snd_Win_SystemExit) And IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
+                            TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
+                        Else
+                            TaskMgmt(TaskType.Shutdown, Actions.Delete)
+                        End If
 
-                    'For Each Scope As String In Scope_Win
-                    '    EditReg(String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "AppGPFault"), "", Snd_Win_AppGPFault, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "CCSelect"), "", Snd_Win_CCSelect, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "ChangeTheme"), "", Snd_Win_ChangeTheme, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Close"), "", Snd_Win_Close, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "CriticalBatteryAlarm"), "", Snd_Win_CriticalBatteryAlarm, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "DeviceConnect"), "", Snd_Win_DeviceConnect, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "DeviceDisconnect"), "", Snd_Win_DeviceDisconnect, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "DeviceFail"), "", Snd_Win_DeviceFail, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "FaxBeep"), "", Snd_Win_FaxBeep, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "LowBatteryAlarm"), "", Snd_Win_LowBatteryAlarm, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "MailBeep"), "", Snd_Win_MailBeep, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Maximize"), "", Snd_Win_Maximize, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "MenuCommand"), "", Snd_Win_MenuCommand, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "MenuPopup"), "", Snd_Win_MenuPopup, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "MessageNudge"), "", Snd_Win_MessageNudge, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Minimize"), "", Snd_Win_Minimize, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Default"), "", Snd_Win_Notification_Default, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.IM"), "", Snd_Win_Notification_IM, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm"), "", Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm2"), "", Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm3"), "", Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm4"), "", Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm5"), "", Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm6"), "", Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm7"), "", Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm8"), "", Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm9"), "", Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Alarm10"), "", Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call"), "", Snd_Win_Notification_Looping_Call, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call2"), "", Snd_Win_Notification_Looping_Call2, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call3"), "", Snd_Win_Notification_Looping_Call3, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call4"), "", Snd_Win_Notification_Looping_Call4, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call5"), "", Snd_Win_Notification_Looping_Call5, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call6"), "", Snd_Win_Notification_Looping_Call6, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call7"), "", Snd_Win_Notification_Looping_Call7, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call8"), "", Snd_Win_Notification_Looping_Call8, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call9"), "", Snd_Win_Notification_Looping_Call9, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Looping.Call10"), "", Snd_Win_Notification_Looping_Call10, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Mail"), "", Snd_Win_Notification_Mail, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Proximity"), "", Snd_Win_Notification_Proximity, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.Reminder"), "", Snd_Win_Notification_Reminder, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Notification.SMS"), "", Snd_Win_Notification_SMS, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Open"), "", Snd_Win_Open, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "PrintComplete"), "", Snd_Win_PrintComplete, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "ProximityConnection"), "", Snd_Win_ProximityConnection, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "RestoreDown"), "", Snd_Win_RestoreDown, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "RestoreUp"), "", Snd_Win_RestoreUp, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "ShowBand"), "", Snd_Win_ShowBand, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemStartup"), "", Snd_Win_SystemStartup, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "WindowsLogoff"), "", Snd_Win_WindowsLogoff, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "WindowsLogon"), "", Snd_Win_WindowsLogon, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "WindowsUAC"), "", Snd_Win_WindowsUAC, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "WindowsUnlock"), "", Snd_Win_WindowsUnlock, RegistryValueKind.String)
-                    'Next
+                        If IO.File.Exists(Snd_Win_WindowsLogoff) And IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
+                            TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff)
+                        Else
+                            TaskMgmt(TaskType.Logoff, Actions.Delete)
+                        End If
 
-                    'For Each Scope As String In Scope_Explorer
-                    '    EditReg(String.Format(Scope, "ActivatingDocument"), "", Snd_Explorer_ActivatingDocument, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "BlockedPopup"), "", Snd_Explorer_BlockedPopup, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "EmptyRecycleBin"), "", Snd_Explorer_EmptyRecycleBin, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "FeedDiscovered"), "", Snd_Explorer_FeedDiscovered, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
-                    '    EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
-                    'Next
+                        If IO.File.Exists(Snd_Win_WindowsLogon) And IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
+                            TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon)
+                        Else
+                            TaskMgmt(TaskType.Logon, Actions.Delete)
+                        End If
+                    End If
+
+                    Dim Scope_Win As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified"}
+                    Dim Scope_Explorer As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Modified"}
+                    Dim Scope_SpeechRec As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.Modified"}
+
+                    For Each Scope As String In Scope_Win
+                        EditReg(String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "AppGPFault"), "", Snd_Win_AppGPFault, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "CCSelect"), "", Snd_Win_CCSelect, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "ChangeTheme"), "", Snd_Win_ChangeTheme, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Close"), "", Snd_Win_Close, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "CriticalBatteryAlarm"), "", Snd_Win_CriticalBatteryAlarm, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "DeviceConnect"), "", Snd_Win_DeviceConnect, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "DeviceDisconnect"), "", Snd_Win_DeviceDisconnect, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "DeviceFail"), "", Snd_Win_DeviceFail, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "FaxBeep"), "", Snd_Win_FaxBeep, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "LowBatteryAlarm"), "", Snd_Win_LowBatteryAlarm, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MailBeep"), "", Snd_Win_MailBeep, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Maximize"), "", Snd_Win_Maximize, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MenuCommand"), "", Snd_Win_MenuCommand, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MenuPopup"), "", Snd_Win_MenuPopup, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MessageNudge"), "", Snd_Win_MessageNudge, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Minimize"), "", Snd_Win_Minimize, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Default"), "", Snd_Win_Notification_Default, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.IM"), "", Snd_Win_Notification_IM, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm"), "", Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm2"), "", Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm3"), "", Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm4"), "", Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm5"), "", Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm6"), "", Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm7"), "", Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm8"), "", Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm9"), "", Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Alarm10"), "", Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call"), "", Snd_Win_Notification_Looping_Call, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call2"), "", Snd_Win_Notification_Looping_Call2, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call3"), "", Snd_Win_Notification_Looping_Call3, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call4"), "", Snd_Win_Notification_Looping_Call4, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call5"), "", Snd_Win_Notification_Looping_Call5, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call6"), "", Snd_Win_Notification_Looping_Call6, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call7"), "", Snd_Win_Notification_Looping_Call7, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call8"), "", Snd_Win_Notification_Looping_Call8, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call9"), "", Snd_Win_Notification_Looping_Call9, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Looping.Call10"), "", Snd_Win_Notification_Looping_Call10, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Mail"), "", Snd_Win_Notification_Mail, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Proximity"), "", Snd_Win_Notification_Proximity, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.Reminder"), "", Snd_Win_Notification_Reminder, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Notification.SMS"), "", Snd_Win_Notification_SMS, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Open"), "", Snd_Win_Open, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "PrintComplete"), "", Snd_Win_PrintComplete, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "ProximityConnection"), "", Snd_Win_ProximityConnection, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "RestoreDown"), "", Snd_Win_RestoreDown, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "RestoreUp"), "", Snd_Win_RestoreUp, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "ShowBand"), "", Snd_Win_ShowBand, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemStartup"), "", Snd_Win_SystemStartup, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "WindowsLogoff"), "", Snd_Win_WindowsLogoff, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "WindowsLogon"), "", Snd_Win_WindowsLogon, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "WindowsUAC"), "", Snd_Win_WindowsUAC, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "WindowsUnlock"), "", Snd_Win_WindowsUnlock, RegistryValueKind.String)
+                    Next
+
+                    For Each Scope As String In Scope_Explorer
+                        EditReg(String.Format(Scope, "ActivatingDocument"), "", Snd_Explorer_ActivatingDocument, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "BlockedPopup"), "", Snd_Explorer_BlockedPopup, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "EmptyRecycleBin"), "", Snd_Explorer_EmptyRecycleBin, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "FeedDiscovered"), "", Snd_Explorer_FeedDiscovered, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
+                    Next
+
+                    For Each Scope As String In Scope_SpeechRec
+                        EditReg(String.Format(Scope, "DisNumbersSound"), "", Snd_SpeechRec_DisNumbersSound, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "HubOffSound"), "", Snd_SpeechRec_HubOffSound, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "HubOnSound"), "", Snd_SpeechRec_HubOnSound, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "HubSleepSound"), "", Snd_SpeechRec_HubSleepSound, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "MisrecoSound"), "", Snd_SpeechRec_MisrecoSound, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "PanelSound"), "", Snd_SpeechRec_PanelSound, RegistryValueKind.String)
+                    Next
+
                 End If
             End Sub
 
@@ -3345,6 +3415,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Snd_Explorer_MoveMenuItem= " & Snd_Explorer_MoveMenuItem)
                 tx.Add("*Snd_Explorer_Navigating= " & Snd_Explorer_Navigating)
                 tx.Add("*Snd_Explorer_SecurityBand= " & Snd_Explorer_SecurityBand)
+                tx.Add("*Snd_SpeechRec_DisNumbersSound= " & Snd_SpeechRec_DisNumbersSound)
+                tx.Add("*Snd_SpeechRec_HubOffSound= " & Snd_SpeechRec_HubOffSound)
+                tx.Add("*Snd_SpeechRec_HubOnSound= " & Snd_SpeechRec_HubOnSound)
+                tx.Add("*Snd_SpeechRec_HubSleepSound= " & Snd_SpeechRec_HubSleepSound)
+                tx.Add("*Snd_SpeechRec_MisrecoSound= " & Snd_SpeechRec_MisrecoSound)
+                tx.Add("*Snd_SpeechRec_PanelSound= " & Snd_SpeechRec_PanelSound)
                 tx.Add("</Sounds>" & vbCrLf)
                 Return tx.CString
             End Function
@@ -3714,7 +3790,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .IsSecure = False,
         .TimeOut = 60}
 
-    Public Sounds As New Sounds With {.Enabled = False}
+    Public Sounds As New Sounds With {
+        .Enabled = False,
+        .Snd_Imageres_SystemStartup = If(My.W11, "Default", "")}
 
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
@@ -5508,6 +5586,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If line.StartsWith("*Snd_Explorer_MoveMenuItem= ", My._ignore) Then Sounds.Snd_Explorer_MoveMenuItem = line.Remove(0, "*Snd_Explorer_MoveMenuItem= ".Count)
                         If line.StartsWith("*Snd_Explorer_Navigating= ", My._ignore) Then Sounds.Snd_Explorer_Navigating = line.Remove(0, "*Snd_Explorer_Navigating= ".Count)
                         If line.StartsWith("*Snd_Explorer_SecurityBand= ", My._ignore) Then Sounds.Snd_Explorer_SecurityBand = line.Remove(0, "*Snd_Explorer_SecurityBand= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_DisNumbersSound= ", My._ignore) Then Sounds.Snd_SpeechRec_DisNumbersSound = line.Remove(0, "*Snd_SpeechRec_DisNumbersSound= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_HubOffSound= ", My._ignore) Then Sounds.Snd_SpeechRec_HubOffSound = line.Remove(0, "*Snd_SpeechRec_HubOffSound= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_HubOnSound= ", My._ignore) Then Sounds.Snd_SpeechRec_HubOnSound = line.Remove(0, "*Snd_SpeechRec_HubOnSound= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_HubSleepSound= ", My._ignore) Then Sounds.Snd_SpeechRec_HubSleepSound = line.Remove(0, "*Snd_SpeechRec_HubSleepSound= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_MisrecoSound= ", My._ignore) Then Sounds.Snd_SpeechRec_MisrecoSound = line.Remove(0, "*Snd_SpeechRec_MisrecoSound= ".Count)
+                        If line.StartsWith("*Snd_SpeechRec_PanelSound= ", My._ignore) Then Sounds.Snd_SpeechRec_PanelSound = line.Remove(0, "*Snd_SpeechRec_PanelSound= ".Count)
                     End If
 
 #End Region

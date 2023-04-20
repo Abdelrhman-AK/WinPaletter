@@ -2071,5 +2071,69 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+        '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''  &lt;RegistrationInfo&gt;
+        '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;URI&gt;\WinPaletter\Logoff&lt;/URI&gt;
+        '''  &lt;/RegistrationInfo&gt;
+        '''  &lt;Triggers&gt;
+        '''    &lt;EventTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[EventID=4647]]&amp;lt;/Select&amp;gt;&amp;lt;/Query&amp;gt;&amp;lt;/QueryList&amp;gt;&lt;/Subscription&gt;
+        '''    &lt;/EventTrigge [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property XML_Logoff() As String
+            Get
+                Return ResourceManager.GetString("XML_Logoff", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+        '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''  &lt;RegistrationInfo&gt;
+        '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;URI&gt;\WinPaletter\Play logon sound&lt;/URI&gt;
+        '''  &lt;/RegistrationInfo&gt;
+        '''  &lt;Triggers&gt;
+        '''    &lt;LogonTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''    &lt;/LogonTrigger&gt;
+        '''    &lt;SessionStateChangeTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''      &lt;StateChange&gt;ConsoleConnect&lt;/StateChange&gt;
+        '''    &lt;/SessionStateChangeTrigger&gt;
+        '''  &lt;/Triggers&gt;
+        '''  &lt;Principals&gt; [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property XML_Logon() As String
+            Get
+                Return ResourceManager.GetString("XML_Logon", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+        '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''  &lt;RegistrationInfo&gt;
+        '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;URI&gt;\WinPaletter\Play shutdown sound&lt;/URI&gt;
+        '''  &lt;/RegistrationInfo&gt;
+        '''  &lt;Triggers&gt;
+        '''    &lt;EventTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''      &lt;Subscription&gt;&lt;QueryList&gt;&lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&gt;&lt;Select Path=&quot;System&quot;&gt;*[System[EventID=1074]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;&lt;/Subscription&gt;
+        '''    &lt;/EventTrigger&gt;
+        '''  &lt;/Triggers&gt;
+        '''  &lt;Princ [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property XML_Shutdown() As String
+            Get
+                Return ResourceManager.GetString("XML_Shutdown", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

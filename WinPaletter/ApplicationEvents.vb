@@ -9,7 +9,6 @@ Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.IO.Compression
 Imports System.IO
-Imports System.Media
 
 Namespace My
     Module Env

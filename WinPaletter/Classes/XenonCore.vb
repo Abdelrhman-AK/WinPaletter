@@ -8,6 +8,11 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports System.Net
+Imports Microsoft.Win32.TaskScheduler
+Imports System.Threading
+Imports System.Security.Principal
+Imports System.Security.AccessControl
+Imports System.Xml.Schema
 
 Public Class XenonCore
 
@@ -144,6 +149,84 @@ Public Class XenonCore
         GraphicsObject.Dispose()
         Return ScreenScalingFactor
     End Function
+
+    Enum TaskType
+        Shutdown
+        Logoff
+        Logon
+    End Enum
+
+    Enum Actions
+        Add
+        Delete
+    End Enum
+
+    Public Shared Sub TaskMgmt(TaskType As TaskType, Action As Actions, Optional File As String = "")
+
+        DeleteTask(TaskType)
+
+        If Action = Actions.Add Then
+            Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+                   .FileName = My.PATH_System32 & "\schtasks",
+                   .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
+                   .WindowStyle = ProcessWindowStyle.Hidden,
+                   .CreateNoWindow = True,
+                   .UseShellExecute = True
+                }}
+
+            Dim tmp As String = IO.Path.ChangeExtension(IO.Path.GetTempFileName(), ".xml")
+            'If IO.File.Exists(tmp) Then Kill(tmp)
+
+            Select Case TaskType
+                Case TaskType.Shutdown
+                    Dim XML_Scheme As String = String.Format(My.Resources.XML_Shutdown, File)
+                    IO.File.WriteAllText(tmp, XML_Scheme)
+                    process.StartInfo.Arguments = "/Create /TN WinPaletter\Shutdown /XML """ & tmp & """"
+
+                Case TaskType.Logoff
+                    Dim XML_Scheme As String = String.Format(My.Resources.XML_Logoff, File)
+                    IO.File.WriteAllText(tmp, XML_Scheme)
+                    process.StartInfo.Arguments = "/Create /TN WinPaletter\Logoff /XML """ & tmp & """"
+
+                Case TaskType.Logon
+                    Dim XML_Scheme As String = String.Format(My.Resources.XML_Logon, File)
+                    IO.File.WriteAllText(tmp, XML_Scheme)
+                    process.StartInfo.Arguments = "/Create /TN WinPaletter\Logon /XML """ & tmp & """"
+            End Select
+
+            Clipboard.SetText(process.StartInfo.FileName & " " & process.StartInfo.Arguments)
+            process.Start()
+            process.WaitForExit()
+
+            'If IO.File.Exists(tmp) Then Kill(tmp)
+        End If
+    End Sub
+
+    Private Shared Sub DeleteTask(TaskType As TaskType)
+        Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+               .FileName = My.PATH_System32 & "\schtasks",
+               .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
+               .WindowStyle = ProcessWindowStyle.Hidden,
+               .CreateNoWindow = True,
+               .UseShellExecute = True
+            }}
+
+        Select Case TaskType
+            Case TaskType.Shutdown
+                process.StartInfo.Arguments = "/Delete /TN WinPaletter\Shutdown /F"
+
+            Case TaskType.Logoff
+                process.StartInfo.Arguments = "/Delete /TN WinPaletter\Logoff /F"
+
+            Case TaskType.Logon
+                process.StartInfo.Arguments = "/Delete /TN WinPaletter\Logon /F"
+
+        End Select
+
+        process.Start()
+        process.WaitForExit()
+    End Sub
+
 
 #End Region
 
@@ -329,13 +412,13 @@ Public Class XenonCore
 
         Select Case theme
             Case CtrlTheme.None
-                NativeMethods.Uxtheme.SetWindowTheme(handle, "", "")
+                NativeMethods.UxTheme.SetWindowTheme(handle, "", "")
             Case CtrlTheme.Explorer
-                NativeMethods.Uxtheme.SetWindowTheme(handle, "Explorer", Nothing)
+                NativeMethods.UxTheme.SetWindowTheme(handle, "Explorer", Nothing)
             Case CtrlTheme.DarkExplorer
-                NativeMethods.Uxtheme.SetWindowTheme(handle, "DarkMode_Explorer", Nothing)
+                NativeMethods.UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", Nothing)
             Case CtrlTheme.[Default]
-                NativeMethods.Uxtheme.SetWindowTheme(handle, Nothing, Nothing)
+                NativeMethods.UxTheme.SetWindowTheme(handle, Nothing, Nothing)
             Case Else
                 Throw New ArgumentOutOfRangeException(NameOf(theme), theme, Nothing)
         End Select

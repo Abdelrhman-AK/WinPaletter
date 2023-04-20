@@ -559,6 +559,9 @@
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\XML_Shutdown.xml" />
+    <None Include="Resources\XML_Logon.xml" />
+    <None Include="Resources\XML_Logoff.xml" />
     <None Include="Resources\AC_11_Dark.png" />
     <Content Include="Resources\add_win10.png" />
     <Content Include="Resources\add_win11.png" />
