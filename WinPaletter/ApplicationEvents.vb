@@ -14,6 +14,7 @@ Namespace My
     Module Env
 
         Public ReadOnly PATH_Windows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows")
+        Public ReadOnly PATH_ProgramFiles As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         Public ReadOnly PATH_System32 As String = PATH_Windows & "\System32"
         Public ReadOnly PATH_imageres As String = PATH_System32 & "\imageres.dll"
         Public ReadOnly PATH_Windows_UI_Immersive_dll As String = PATH_System32 & "\Windows.UI.Immersive.dll"

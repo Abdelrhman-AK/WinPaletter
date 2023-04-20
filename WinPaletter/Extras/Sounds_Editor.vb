@@ -172,8 +172,8 @@ Public Class Sounds_Editor
     Sub ApplyFromCP(CP As CP)
         With CP.Sounds
             SoundsEnabled.Checked = .Enabled
-            XenonTextBox1.Text = .Snd_Win_SystemStartup
-            XenonTextBox2.Text = .Snd_Imageres_SystemStartup
+            XenonTextBox1.Text = .Snd_Win_SystemStart
+            XenonTextBox2.Text = .Snd_Imageres_SystemStart
             XenonTextBox3.Text = .Snd_Win_SystemExit
             XenonTextBox4.Text = .Snd_Win_WindowsLogoff
             XenonTextBox5.Text = .Snd_Win_WindowsLogon
@@ -240,6 +240,15 @@ Public Class Sounds_Editor
             XenonTextBox68.Text = .Snd_Win_AppGPFault
             XenonTextBox67.Text = .Snd_Win_CCSelect
             XenonTextBox66.Text = .Snd_Win_SystemHand
+            XenonTextBox75.Text = .Snd_Explorer_SearchProviderDiscovered
+            XenonTextBox76.Text = .Snd_Explorer_FaxNew
+            XenonTextBox77.Text = .Snd_Explorer_FaxSent
+            XenonTextBox79.Text = .Snd_Explorer_FaxLineRings
+            XenonTextBox78.Text = .Snd_Explorer_FaxError
+            XenonTextBox83.Text = .Snd_NetMeeting_PersonJoins
+            XenonTextBox82.Text = .Snd_NetMeeting_PersonLeaves
+            XenonTextBox80.Text = .Snd_NetMeeting_ReceiveCall
+            XenonTextBox81.Text = .Snd_NetMeeting_ReceiveRequestToJoin
             XenonTextBox70.Text = .Snd_SpeechRec_DisNumbersSound
             XenonTextBox74.Text = .Snd_SpeechRec_PanelSound
             XenonTextBox69.Text = .Snd_SpeechRec_MisrecoSound
@@ -253,8 +262,8 @@ Public Class Sounds_Editor
     Sub ApplyToCP(CP As CP)
         With CP.Sounds
             .Enabled = SoundsEnabled.Checked
-            .Snd_Win_SystemStartup = XenonTextBox1.Text
-            .Snd_Imageres_SystemStartup = XenonTextBox2.Text
+            .Snd_Win_SystemStart = XenonTextBox1.Text
+            .Snd_Imageres_SystemStart = XenonTextBox2.Text
             .Snd_Win_SystemExit = XenonTextBox3.Text
             .Snd_Win_WindowsLogoff = XenonTextBox4.Text
             .Snd_Win_WindowsLogon = XenonTextBox5.Text
@@ -263,6 +272,7 @@ Public Class Sounds_Editor
             .Snd_Win_SystemQuestion = XenonTextBox7.Text
             .Snd_Win_SystemExclamation = XenonTextBox8.Text
             .Snd_Win_SystemAsterisk = XenonTextBox9.Text
+            .Snd_Win_SystemHand = XenonTextBox66.Text
             .Snd_Win_SystemNotification = XenonTextBox10.Text
             .Snd_Win_WindowsUAC = XenonTextBox11.Text
             .Snd_Win_Open = XenonTextBox16.Text
@@ -320,7 +330,15 @@ Public Class Sounds_Editor
             .Snd_Explorer_FeedDiscovered = XenonTextBox57.Text
             .Snd_Win_AppGPFault = XenonTextBox68.Text
             .Snd_Win_CCSelect = XenonTextBox67.Text
-            .Snd_Win_SystemHand = XenonTextBox66.Text
+            .Snd_Explorer_SearchProviderDiscovered = XenonTextBox75.Text
+            .Snd_Explorer_FaxNew = XenonTextBox76.Text
+            .Snd_Explorer_FaxSent = XenonTextBox77.Text
+            .Snd_Explorer_FaxLineRings = XenonTextBox79.Text
+            .Snd_Explorer_FaxError = XenonTextBox78.Text
+            .Snd_NetMeeting_PersonJoins = XenonTextBox83.Text
+            .Snd_NetMeeting_PersonLeaves = XenonTextBox82.Text
+            .Snd_NetMeeting_ReceiveCall = XenonTextBox80.Text
+            .Snd_NetMeeting_ReceiveRequestToJoin = XenonTextBox81.Text
             .Snd_SpeechRec_DisNumbersSound = XenonTextBox70.Text
             .Snd_SpeechRec_PanelSound = XenonTextBox74.Text
             .Snd_SpeechRec_MisrecoSound = XenonTextBox69.Text

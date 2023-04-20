@@ -8,7 +8,6 @@ Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.CP.Structures
-Imports System.ComponentModel
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -3062,8 +3061,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Snd_Win_SystemAsterisk As String
             Public Snd_Win_SystemExclamation As String
             Public Snd_Win_SystemExit As String
-            Public Snd_Win_SystemStartup As String
-            Public Snd_Imageres_SystemStartup As String
+            Public Snd_Win_SystemStart As String
+            Public Snd_Imageres_SystemStart As String
             Public Snd_Win_SystemHand As String
             Public Snd_Win_SystemNotification As String
             Public Snd_Win_SystemQuestion As String
@@ -3078,6 +3077,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Snd_Explorer_MoveMenuItem As String
             Public Snd_Explorer_Navigating As String
             Public Snd_Explorer_SecurityBand As String
+            Public Snd_Explorer_SearchProviderDiscovered As String
+            Public Snd_Explorer_FaxError As String
+            Public Snd_Explorer_FaxLineRings As String
+            Public Snd_Explorer_FaxNew As String
+            Public Snd_Explorer_FaxSent As String
+            Public Snd_NetMeeting_PersonJoins As String
+            Public Snd_NetMeeting_PersonLeaves As String
+            Public Snd_NetMeeting_ReceiveCall As String
+            Public Snd_NetMeeting_ReceiveRequestToJoin As String
             Public Snd_SpeechRec_DisNumbersSound As String
             Public Snd_SpeechRec_HubOffSound As String
             Public Snd_SpeechRec_HubOnSound As String
@@ -3087,7 +3095,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Public Sub Load(_DefSounds As Sounds)
                 Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled)
-                Snd_Imageres_SystemStartup = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStartup)
+                Snd_Imageres_SystemStart = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStart)
 
                 Dim Scope_Win As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current"
                 Snd_Win_Default = GetReg(String.Format(Scope_Win, ".Default"), "", _DefSounds.Snd_Win_Default)
@@ -3142,7 +3150,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Snd_Win_SystemAsterisk = GetReg(String.Format(Scope_Win, "SystemAsterisk"), "", _DefSounds.Snd_Win_SystemAsterisk)
                 Snd_Win_SystemExclamation = GetReg(String.Format(Scope_Win, "SystemExclamation"), "", _DefSounds.Snd_Win_SystemExclamation)
                 Snd_Win_SystemExit = GetReg(String.Format(Scope_Win, "SystemExit"), "", _DefSounds.Snd_Win_SystemExit)
-                Snd_Win_SystemStartup = GetReg(String.Format(Scope_Win, "SystemStartup"), "", _DefSounds.Snd_Win_SystemStartup)
+                Snd_Win_SystemStart = GetReg(String.Format(Scope_Win, "SystemStart"), "", _DefSounds.Snd_Win_SystemStart)
                 Snd_Win_SystemHand = GetReg(String.Format(Scope_Win, "SystemHand"), "", _DefSounds.Snd_Win_SystemHand)
                 Snd_Win_SystemNotification = GetReg(String.Format(Scope_Win, "SystemNotification"), "", _DefSounds.Snd_Win_SystemNotification)
                 Snd_Win_SystemQuestion = GetReg(String.Format(Scope_Win, "SystemQuestion"), "", _DefSounds.Snd_Win_SystemQuestion)
@@ -3159,6 +3167,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Snd_Explorer_MoveMenuItem = GetReg(String.Format(Scope_Explorer, "MoveMenuItem"), "", _DefSounds.Snd_Explorer_MoveMenuItem)
                 Snd_Explorer_Navigating = GetReg(String.Format(Scope_Explorer, "Navigating"), "", _DefSounds.Snd_Explorer_Navigating)
                 Snd_Explorer_SecurityBand = GetReg(String.Format(Scope_Explorer, "SecurityBand"), "", _DefSounds.Snd_Explorer_SecurityBand)
+                Snd_Explorer_SearchProviderDiscovered = GetReg(String.Format(Scope_Explorer, "SearchProviderDiscovered"), "", _DefSounds.Snd_Explorer_SearchProviderDiscovered)
+                Snd_Explorer_FaxError = GetReg(String.Format(Scope_Explorer, "FaxError"), "", _DefSounds.Snd_Explorer_FaxError)
+                Snd_Explorer_FaxLineRings = GetReg(String.Format(Scope_Explorer, "FaxLineRings"), "", _DefSounds.Snd_Explorer_FaxLineRings)
+                Snd_Explorer_FaxNew = GetReg(String.Format(Scope_Explorer, "FaxNew"), "", _DefSounds.Snd_Explorer_FaxNew)
+                Snd_Explorer_FaxSent = GetReg(String.Format(Scope_Explorer, "FaxSent"), "", _DefSounds.Snd_Explorer_FaxSent)
+
+                Dim Scope_NetMeeting As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Current"
+                Snd_NetMeeting_PersonJoins = GetReg(String.Format(Scope_NetMeeting, "Person Joins"), "", _DefSounds.Snd_NetMeeting_PersonJoins)
+                Snd_NetMeeting_PersonLeaves = GetReg(String.Format(Scope_NetMeeting, "Person Leaves"), "", _DefSounds.Snd_NetMeeting_PersonLeaves)
+                Snd_NetMeeting_ReceiveCall = GetReg(String.Format(Scope_NetMeeting, "Receive Call"), "", _DefSounds.Snd_NetMeeting_ReceiveCall)
+                Snd_NetMeeting_ReceiveRequestToJoin = GetReg(String.Format(Scope_NetMeeting, "Receive Request to Join"), "", _DefSounds.Snd_NetMeeting_ReceiveRequestToJoin)
 
                 Dim Scope_SpeechRec As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.current"
                 Snd_SpeechRec_DisNumbersSound = GetReg(String.Format(Scope_SpeechRec, "DisNumbersSound"), "", _DefSounds.Snd_SpeechRec_DisNumbersSound)
@@ -3172,7 +3191,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Sub Apply()
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStartup, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String)
 
                 Dim destination_StartupSnd As String
 
@@ -3182,16 +3201,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     destination_StartupSnd = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"
                 End If
 
-                If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStartup) Then
+                If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
 
-                ElseIf IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
+                ElseIf IO.File.Exists(Snd_Imageres_SystemStart) And IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
 
-                ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
+                ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
 
-                ElseIf Not Snd_Imageres_SystemStartup.Trim.ToUpper = "CURRENT" Then
+                ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", (Not My.W11).ToInteger)
 
                 End If
@@ -3200,16 +3219,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If Not My.WXP Then
 
-                        If IO.File.Exists(Snd_Imageres_SystemStartup) And IO.Path.GetExtension(Snd_Imageres_SystemStartup).ToUpper = ".WAV" Then
+                        If IO.File.Exists(Snd_Imageres_SystemStart) And IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
 
                             Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
-                            Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStartup)
+                            Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStart)
 
                             If Not CurrentSoundBytes.Equals(TargetSoundBytes) Then
                                 ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), TargetSoundBytes)
                             End If
 
-                        ElseIf Snd_Imageres_SystemStartup.Trim.ToUpper = "DEFAULT" Then
+                        ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
 
                             Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                             Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav")
@@ -3245,6 +3264,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim Scope_Win As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified"}
                     Dim Scope_Explorer As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\{0}\.Modified"}
                     Dim Scope_SpeechRec As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\sapisvr\{0}\.Modified"}
+                    Dim Scope_NetMeeting As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Modified"}
 
                     For Each Scope As String In Scope_Win
                         EditReg(String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
@@ -3299,7 +3319,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg(String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemStartup"), "", Snd_Win_SystemStartup, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SystemStart"), "", Snd_Win_SystemStart, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
@@ -3317,6 +3337,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "SearchProviderDiscovered"), "", Snd_Explorer_SearchProviderDiscovered)
+                        EditReg(String.Format(Scope, "FaxError"), "", Snd_Explorer_FaxError, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "FaxLineRings"), "", Snd_Explorer_FaxLineRings, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "FaxNew"), "", Snd_Explorer_FaxNew, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "FaxSent"), "", Snd_Explorer_FaxSent, RegistryValueKind.String)
+                    Next
+
+                    For Each Scope As String In Scope_NetMeeting
+                        EditReg(String.Format(Scope, "Person Joins"), "", Snd_NetMeeting_PersonJoins, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Person Leaves"), "", Snd_NetMeeting_PersonLeaves, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Receive Call"), "", Snd_NetMeeting_ReceiveCall, RegistryValueKind.String)
+                        EditReg(String.Format(Scope, "Receive Request to Join"), "", Snd_NetMeeting_ReceiveRequestToJoin, RegistryValueKind.String)
                     Next
 
                     For Each Scope As String In Scope_SpeechRec
@@ -3347,7 +3379,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Clear()
                 tx.Add("<Sounds>")
                 tx.Add("*Sounds_Enabled= " & Enabled)
-                tx.Add("*Snd_Imageres_SystemStartup= " & Snd_Imageres_SystemStartup)
                 tx.Add("*Snd_Win_Default= " & Snd_Win_Default)
                 tx.Add("*Snd_Win_AppGPFault= " & Snd_Win_AppGPFault)
                 tx.Add("*Snd_Win_CCSelect= " & Snd_Win_CCSelect)
@@ -3400,7 +3431,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Snd_Win_SystemAsterisk= " & Snd_Win_SystemAsterisk)
                 tx.Add("*Snd_Win_SystemExclamation= " & Snd_Win_SystemExclamation)
                 tx.Add("*Snd_Win_SystemExit= " & Snd_Win_SystemExit)
-                tx.Add("*Snd_Win_SystemStartup= " & Snd_Win_SystemStartup)
+                tx.Add("*Snd_Win_SystemStart= " & Snd_Win_SystemStart)
+                tx.Add("*Snd_Imageres_SystemStart= " & Snd_Imageres_SystemStart)
                 tx.Add("*Snd_Win_SystemHand= " & Snd_Win_SystemHand)
                 tx.Add("*Snd_Win_SystemNotification= " & Snd_Win_SystemNotification)
                 tx.Add("*Snd_Win_SystemQuestion= " & Snd_Win_SystemQuestion)
@@ -3415,6 +3447,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Snd_Explorer_MoveMenuItem= " & Snd_Explorer_MoveMenuItem)
                 tx.Add("*Snd_Explorer_Navigating= " & Snd_Explorer_Navigating)
                 tx.Add("*Snd_Explorer_SecurityBand= " & Snd_Explorer_SecurityBand)
+                tx.Add("*Snd_Explorer_SearchProviderDiscovered= " & Snd_Explorer_SearchProviderDiscovered)
+                tx.Add("*Snd_Explorer_FaxError= " & Snd_Explorer_FaxError)
+                tx.Add("*Snd_Explorer_FaxLineRings= " & Snd_Explorer_FaxLineRings)
+                tx.Add("*Snd_Explorer_FaxNew= " & Snd_Explorer_FaxNew)
+                tx.Add("*Snd_Explorer_FaxSent= " & Snd_Explorer_FaxSent)
+                tx.Add("*Snd_NetMeeting_PersonJoins= " & Snd_NetMeeting_PersonJoins)
+                tx.Add("*Snd_NetMeeting_PersonLeaves= " & Snd_NetMeeting_PersonLeaves)
+                tx.Add("*Snd_NetMeeting_ReceiveCall= " & Snd_NetMeeting_ReceiveCall)
+                tx.Add("*Snd_NetMeeting_ReceiveRequesttoJoin= " & Snd_NetMeeting_ReceiveRequestToJoin)
                 tx.Add("*Snd_SpeechRec_DisNumbersSound= " & Snd_SpeechRec_DisNumbersSound)
                 tx.Add("*Snd_SpeechRec_HubOffSound= " & Snd_SpeechRec_HubOffSound)
                 tx.Add("*Snd_SpeechRec_HubOnSound= " & Snd_SpeechRec_HubOnSound)
@@ -3792,7 +3833,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Public Sounds As New Sounds With {
         .Enabled = False,
-        .Snd_Imageres_SystemStartup = If(My.W11, "Default", "")}
+        .Snd_Imageres_SystemStart = If(My.W11, "Default", "")}
 
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
@@ -5518,7 +5559,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Sounds"
                     If line.StartsWith("*Sounds", My._ignore) OrElse line.StartsWith("*Snd", My._ignore) Then
                         If line.StartsWith("*Sounds_Enabled= ", My._ignore) Then Sounds.Enabled = line.Remove(0, "*Sounds_Enabled= ".Count)
-                        If line.StartsWith("*Snd_Imageres_SystemStartup= ", My._ignore) Then Sounds.Snd_Imageres_SystemStartup = line.Remove(0, "*Snd_Imageres_SystemStartup= ".Count)
                         If line.StartsWith("*Snd_Win_Default= ", My._ignore) Then Sounds.Snd_Win_Default = line.Remove(0, "*Snd_Win_Default= ".Count)
                         If line.StartsWith("*Snd_Win_AppGPFault= ", My._ignore) Then Sounds.Snd_Win_AppGPFault = line.Remove(0, "*Snd_Win_AppGPFault= ".Count)
                         If line.StartsWith("*Snd_Win_CCSelect= ", My._ignore) Then Sounds.Snd_Win_CCSelect = line.Remove(0, "*Snd_Win_CCSelect= ".Count)
@@ -5571,7 +5611,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If line.StartsWith("*Snd_Win_SystemAsterisk= ", My._ignore) Then Sounds.Snd_Win_SystemAsterisk = line.Remove(0, "*Snd_Win_SystemAsterisk= ".Count)
                         If line.StartsWith("*Snd_Win_SystemExclamation= ", My._ignore) Then Sounds.Snd_Win_SystemExclamation = line.Remove(0, "*Snd_Win_SystemExclamation= ".Count)
                         If line.StartsWith("*Snd_Win_SystemExit= ", My._ignore) Then Sounds.Snd_Win_SystemExit = line.Remove(0, "*Snd_Win_SystemExit= ".Count)
-                        If line.StartsWith("*Snd_Win_SystemStartup= ", My._ignore) Then Sounds.Snd_Win_SystemStartup = line.Remove(0, "*Snd_Win_SystemStartup= ".Count)
+                        If line.StartsWith("*Snd_Win_SystemStarp= ", My._ignore) Then Sounds.Snd_Win_SystemStart = line.Remove(0, "*Snd_Win_SystemStart= ".Count)
+                        If line.StartsWith("*Snd_Imageres_SystemStart= ", My._ignore) Then Sounds.Snd_Imageres_SystemStart = line.Remove(0, "*Snd_Imageres_SystemStart= ".Count)
                         If line.StartsWith("*Snd_Win_SystemHand= ", My._ignore) Then Sounds.Snd_Win_SystemHand = line.Remove(0, "*Snd_Win_SystemHand= ".Count)
                         If line.StartsWith("*Snd_Win_SystemNotification= ", My._ignore) Then Sounds.Snd_Win_SystemNotification = line.Remove(0, "*Snd_Win_SystemNotification= ".Count)
                         If line.StartsWith("*Snd_Win_SystemQuestion= ", My._ignore) Then Sounds.Snd_Win_SystemQuestion = line.Remove(0, "*Snd_Win_SystemQuestion= ".Count)
@@ -5586,6 +5627,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If line.StartsWith("*Snd_Explorer_MoveMenuItem= ", My._ignore) Then Sounds.Snd_Explorer_MoveMenuItem = line.Remove(0, "*Snd_Explorer_MoveMenuItem= ".Count)
                         If line.StartsWith("*Snd_Explorer_Navigating= ", My._ignore) Then Sounds.Snd_Explorer_Navigating = line.Remove(0, "*Snd_Explorer_Navigating= ".Count)
                         If line.StartsWith("*Snd_Explorer_SecurityBand= ", My._ignore) Then Sounds.Snd_Explorer_SecurityBand = line.Remove(0, "*Snd_Explorer_SecurityBand= ".Count)
+                        If line.StartsWith("*Snd_Explorer_SearchProviderDiscovered= ", My._ignore) Then Sounds.Snd_Explorer_SearchProviderDiscovered = line.Remove(0, "*Snd_Explorer_SearchProviderDiscovered= ".Count)
+                        If line.StartsWith("*Snd_Explorer_FaxError= ", My._ignore) Then Sounds.Snd_Explorer_FaxError = line.Remove(0, "*Snd_Explorer_FaxError= ".Count)
+                        If line.StartsWith("*Snd_Explorer_FaxLineRings= ", My._ignore) Then Sounds.Snd_Explorer_FaxLineRings = line.Remove(0, "*Snd_Explorer_FaxLineRings= ".Count)
+                        If line.StartsWith("*Snd_Explorer_FaxNew= ", My._ignore) Then Sounds.Snd_Explorer_FaxNew = line.Remove(0, "*Snd_Explorer_FaxNew= ".Count)
+                        If line.StartsWith("*Snd_Explorer_FaxSent= ", My._ignore) Then Sounds.Snd_Explorer_FaxSent = line.Remove(0, "*Snd_Explorer_FaxSent= ".Count)
+                        If line.StartsWith("*Snd_NetMeeting_PersonJoins= ", My._ignore) Then Sounds.Snd_NetMeeting_PersonJoins = line.Remove(0, "*Snd_NetMeeting_PersonJoins= ".Count)
+                        If line.StartsWith("*Snd_NetMeeting_PersonLeaves= ", My._ignore) Then Sounds.Snd_NetMeeting_PersonLeaves = line.Remove(0, "*Snd_NetMeeting_PersonLeaves= ".Count)
+                        If line.StartsWith("*Snd_NetMeeting_ReceiveCall= ", My._ignore) Then Sounds.Snd_NetMeeting_ReceiveCall = line.Remove(0, "*Snd_NetMeeting_ReceiveCall= ".Count)
+                        If line.StartsWith("*Snd_NetMeeting_ReceiveRequesttoJoin= ", My._ignore) Then Sounds.Snd_NetMeeting_ReceiveRequestToJoin = line.Remove(0, "*Snd_NetMeeting_ReceiveRequesttoJoin= ".Count)
                         If line.StartsWith("*Snd_SpeechRec_DisNumbersSound= ", My._ignore) Then Sounds.Snd_SpeechRec_DisNumbersSound = line.Remove(0, "*Snd_SpeechRec_DisNumbersSound= ".Count)
                         If line.StartsWith("*Snd_SpeechRec_HubOffSound= ", My._ignore) Then Sounds.Snd_SpeechRec_HubOffSound = line.Remove(0, "*Snd_SpeechRec_HubOffSound= ".Count)
                         If line.StartsWith("*Snd_SpeechRec_HubOnSound= ", My._ignore) Then Sounds.Snd_SpeechRec_HubOnSound = line.Remove(0, "*Snd_SpeechRec_HubOnSound= ".Count)
