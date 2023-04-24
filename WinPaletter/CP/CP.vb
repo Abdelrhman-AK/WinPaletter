@@ -8,6 +8,7 @@ Imports WinPaletter.NativeMethods.User32
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.CP.Structures
+Imports System.IO.Compression
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -742,6 +743,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Else
                         Theme = AeroTheme.Basic
                     End If
+
 
                 Else
                     ColorizationColor = _DefWin.ColorizationColor
@@ -5330,7 +5332,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
-#Region "Windows XP"
+#Region "XP"
                     If line.StartsWith("*WinXP", My._ignore) Then
                         If line.StartsWith("*WinXP_Theme= ", My._ignore) Then WindowsXP.Theme = line.Remove(0, "*WinXP_Theme= ".Count)
                         If line.StartsWith("*WinXP_ThemeFile= ", My._ignore) Then WindowsXP.ThemeFile = line.Remove(0, "*WinXP_ThemeFile= ".Count)
@@ -5692,7 +5694,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 WallpaperTone_W7 = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_7)
                 WallpaperTone_WVista = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_Vista)
                 WallpaperTone_WXP = Structures.WallpaperTone.Load_WallpaperTone_From_ListOfString(WT_XP)
-
 #End Region
 
 #Region "Cursors"
@@ -6076,7 +6077,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Try : Kill(FileLocation) : Catch : End Try
                 End If
 
-                IO.File.WriteAllText(FileLocation, ToString)
+                Using CPx As CP = Me.Clone
+                    PackThemeResources(CPx, New IO.FileInfo(FileLocation).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(FileLocation) & ".wptp")
+                    IO.File.WriteAllText(FileLocation, CPx.ToString)
+                End Using
+
         End Select
     End Sub
 
@@ -6184,6 +6189,137 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return tx.CString
     End Function
+
+    Sub PackThemeResources(CP As CP, Package As String)
+        Dim cache As String = "%WinPaletterAppData%\ThemeUnpackedCache\" & String.Concat(CP.Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & "\"
+        Dim filesList As New Dictionary(Of String, String) : filesList.Clear()
+        Dim x As String
+        Dim ZipEntry As String
+
+        x = CP.WindowsXP.ThemeFile
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Resources\Themes\Luna", My._ignore) Then
+            ZipEntry = cache & "winxp_vs" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WindowsXP.ThemeFile = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.LogonUI7.ImagePath
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "logonui" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.LogonUI7.ImagePath = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Terminal.DefaultProf.BackgroundImage
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "winterminal_defprofile_backimg" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Terminal.DefaultProf.BackgroundImage = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Terminal.DefaultProf.Icon
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "winterminal_defprofile_icon" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Terminal.DefaultProf.Icon = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.TerminalPreview.DefaultProf.BackgroundImage
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "winterminal_preview_defprofile_backimg" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.TerminalPreview.DefaultProf.BackgroundImage = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.TerminalPreview.DefaultProf.Icon
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "winterminal_preview_defprofile_icon" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.TerminalPreview.DefaultProf.Icon = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        For Each i In CP.Terminal.Profiles
+            x = i.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+                ZipEntry = cache & "winterminal_profile(" & String.Concat(i.Name.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & ")_backimg" & IO.Path.GetExtension(x)
+                If IO.File.Exists(x) Then i.BackgroundImage = ZipEntry
+                filesList.Add(ZipEntry, x)
+            End If
+
+            x = i.Icon
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+                ZipEntry = cache & "winterminal_profile(" & String.Concat(i.Name.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & ")_icon" & IO.Path.GetExtension(x)
+                If IO.File.Exists(x) Then i.Icon = ZipEntry
+                filesList.Add(ZipEntry, x)
+            End If
+        Next
+
+        For Each i In CP.TerminalPreview.Profiles
+            x = i.BackgroundImage
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+                ZipEntry = cache & "winterminal_preview_profile(" & String.Concat(i.Name.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & ")_backimg" & IO.Path.GetExtension(x)
+                If IO.File.Exists(x) Then i.BackgroundImage = ZipEntry
+                filesList.Add(ZipEntry, x)
+            End If
+
+            x = i.Icon
+            If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+                ZipEntry = cache & "winterminal_preview_profile(" & String.Concat(i.Name.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & ")_icon" & IO.Path.GetExtension(x)
+                If IO.File.Exists(x) Then i.Icon = ZipEntry
+                filesList.Add(ZipEntry, x)
+            End If
+        Next
+
+        x = CP.WallpaperTone_W11.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_w11" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_W11.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.WallpaperTone_W10.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_w10" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_W10.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.WallpaperTone_W8.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_w8" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_W8.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.WallpaperTone_W7.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_w7" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_W7.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.WallpaperTone_WVista.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_wvista" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_WVista.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.WallpaperTone_WXP.Image
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
+            ZipEntry = cache & "wt_wxp" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.WallpaperTone_WXP.Image = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        If IO.File.Exists(Package) Then IO.File.Delete(Package)
+        Using archive As ZipArchive = ZipFile.Open(Package, ZipArchiveMode.Create)
+            For Each _file In filesList
+                If IO.File.Exists(_file.Value) Then archive.CreateEntryFromFile(_file.Value, _file.Key.Split("\").Last)
+            Next
+        End Using
+
+    End Sub
 #End Region
 
 #Region "Applying Subs"
