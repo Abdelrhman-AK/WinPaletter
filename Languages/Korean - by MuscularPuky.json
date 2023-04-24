@@ -1,7 +1,7 @@
 {
   "Information": {
     "name": "근육질푸키",
-    "translationversion": "1",
+    "translationversion": "2",
     "lang": "한국어",
     "langcode": "KO-KR",
     "appver": "1.0.7.6",
@@ -287,7 +287,7 @@
         "Label12.Text": "열기:",
         "XenonButton11.Text": "WinPaletter 테마",
         "XenonButton12.Text": "Windows 기본값",
-        "XenonAlertBox2.Text": "효과를 적용하려면 로그오프 후 로그온해야 할 수도 있습니다",
+        "XenonAlertBox2.Text": "적용하려면 로그오프 후 로그온해야 할 수도 있습니다",
         "XenonAlertBox1.Text": "Windows 7에서의 적용은 장치를 다시 시작해야 할 수 있습니다",
         "XenonButton10.Text": "빠른 적용",
         "XenonButton7.Text": "취소",
@@ -745,7 +745,7 @@
         "Label10.Text": "고전 단추 너비:",
         "Label8.Text": "높이:",
         "XenonAlertBox3.Text": "이 글꼴을 변경하려면 로그오프 및 로그온해야 합니다",
-        "XenonAlertBox2.Text": "이 미리보기는 정확한 결과를 제공하지 않습니다",
+        "XenonAlertBox2.Text": "미리보기는 정확하지 않습니다",
         "Label24.Text": "미리 보기",
         "Label22.Text": "Shell:",
         "Label9.Text": "크기:",
