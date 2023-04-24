@@ -1,6 +1,9 @@
-﻿Imports WinPaletter.NativeMethods
+﻿Imports System.IO
+Imports System.Runtime.InteropServices
+Imports System.Windows.Interop
+Imports WinPaletter.NativeMethods
+Imports WinPaletter.NativeMethods.User32
 Imports WinPaletter.XenonCore
-
 Public Class Metrics_Fonts
 
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load

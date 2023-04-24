@@ -1006,7 +1006,7 @@ Partial Class WinEffecter
         '
         'Panel1
         '
-        Me.Panel1.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(254, Byte), Integer))
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Label7)
@@ -1018,7 +1018,7 @@ Partial Class WinEffecter
         '
         'Panel2
         '
-        Me.Panel2.BackColor = System.Drawing.SystemColors.WindowText
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel2.Location = New System.Drawing.Point(235, 3)
         Me.Panel2.Name = "Panel2"
@@ -1030,7 +1030,7 @@ Partial Class WinEffecter
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.Label7.Location = New System.Drawing.Point(1, 3)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(234, 15)

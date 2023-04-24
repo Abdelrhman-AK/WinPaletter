@@ -80,4 +80,8 @@ Public Class VS2Metrics
             Metrics_Fonts.RetroPanel1.Height = Math.Max(Metrics_Fonts.GetTitleTextHeight(vs.Fonts.StatusFont), 20)
         End If
     End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        Close()
+    End Sub
 End Class

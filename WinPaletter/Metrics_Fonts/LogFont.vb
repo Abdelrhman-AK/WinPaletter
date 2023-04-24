@@ -8,15 +8,15 @@ Public Class LogFont
     Public lfWidth As Integer
     Public lfEscapement As Integer
     Public lfOrientation As Integer
-    Public lfWeight As Integer
+    Public lfWeight As LogFontHelper.FontWeight
     Public lfItalic As Byte
     Public lfUnderline As Byte
     Public lfStrikeOut As Byte
-    Public lfCharSet As Byte
-    Public lfOutPrecision As Byte
-    Public lfClipPrecision As Byte
-    Public lfQuality As Byte
-    Public lfPitchAndFamily As Byte
+    Public lfCharSet As LogFontHelper.FontCharSet
+    Public lfOutPrecision As LogFontHelper.FontOutPrecision
+    Public lfClipPrecision As LogFontHelper.FontClipPrecision
+    Public lfQuality As LogFontHelper.FontQuality
+    Public lfPitchAndFamily As LogFontHelper.FontPitchAndFamily
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public lfFaceName As String
 
@@ -26,41 +26,18 @@ Public Class LogFont
         Me.lfWidth = 0
         Me.lfEscapement = 0
         Me.lfOrientation = 0
-        Me.lfWeight = 0
+        Me.lfWeight = LogFontHelper.FontWeight.FW_DONTCARE
         Me.lfItalic = 0
         Me.lfUnderline = 0
         Me.lfStrikeOut = 0
-        Me.lfCharSet = 0
-        Me.lfOutPrecision = 0
-        Me.lfClipPrecision = 0
-        Me.lfQuality = 0
-        Me.lfPitchAndFamily = 0
+        Me.lfCharSet = LogFontHelper.FontCharSet.ANSI_CHARSET
+        Me.lfOutPrecision = LogFontHelper.FontOutPrecision.OUT_DEFAULT_PRECIS
+        Me.lfClipPrecision = LogFontHelper.FontClipPrecision.CLIP_DEFAULT_PRECIS
+        Me.lfQuality = LogFontHelper.FontQuality.DEFAULT_QUALITY
+        Me.lfPitchAndFamily = LogFontHelper.FontPitchAndFamily.DEFAULT_PITCH
     End Sub
 
 End Class
-
-<StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
-Public Structure LogFontStr
-    Public LfHeight As Integer
-    Public LfWidth As Integer
-    Public LfEscapement As Integer
-    Public LfOrientation As Integer
-    Public LfWeight As Integer
-    Public LfItalic As Byte
-    Public LfUnderline As Byte
-    Public LfStrikeOut As Byte
-    Public LfCharSet As Byte
-    Public LfOutPrecision As Byte
-    Public LfClipPrecision As Byte
-    Public LfQuality As Byte
-    Public LfPitchAndFamily As Byte
-    '<see cref="UnmanagedType.ByValTStr"/> means that the string should be marshalled as an array of TCHAR embedded in the structure.
-    'This implies that the font names can be no larger than <see cref="LF_FACESIZE"/> including the terminating '\0'. That works out to 31 characters.
-    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
-    Public lfFaceName As String '= String.Empty
-
-End Structure
-
 
 Public Class LogFontHelper
     Public Enum FontWeight As Integer
@@ -99,7 +76,7 @@ Public Class LogFontHelper
         BALTIC_CHARSET = 186
     End Enum
 
-    Public Enum FontPrecision As Byte
+    Public Enum FontOutPrecision As Byte
         OUT_DEFAULT_PRECIS = 0
         OUT_STRING_PRECIS = 1
         OUT_CHARACTER_PRECIS = 2

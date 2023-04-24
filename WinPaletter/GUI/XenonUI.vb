@@ -1614,9 +1614,11 @@ Public Class XenonGroupBox : Inherits Panel
         DoubleBuffered = True
         G.SmoothingMode = SmoothingMode.AntiAlias
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        G.Clear(GetParentColor)
-        BackColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.05))
-        LineColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.06, -0.07))
+        Dim ParentColor As Color = GetParentColor
+
+        G.Clear(ParentColor)
+        BackColor = ParentColor.CB(If(ParentColor.IsDark, 0.04, -0.05))
+        LineColor = ParentColor.CB(If(ParentColor.IsDark, 0.06, -0.07))
         G.FillRoundedRect(New SolidBrush(BackColor), Rect)
         G.DrawRoundedRect(New Pen(LineColor), Rect)
     End Sub
@@ -2033,15 +2035,6 @@ Public Class XenonButton : Inherits Button
     ReadOnly Steps As Integer = 15
     ReadOnly Delay As Integer = 1
 
-    Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
-        MyBase.OnPaintBackground(e)
-    End Sub
-
-    Protected Overrides Sub OnBackColorChanged(e As EventArgs)
-        Invalidate()
-        MyBase.OnBackColorChanged(e)
-    End Sub
-
 #Region "OnMouse"
     Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
         MyBase.OnMouseEnter(e)
@@ -2354,15 +2347,15 @@ Public Class XenonButton : Inherits Button
 
     Private Sub XenonButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         Try
-            Try
-                BackColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.04))
-            Catch
-            End Try
+            'Try
+            '    BackColor = GetParentColor.CB(If(GetParentColor.IsDark, 0.04, -0.04))
+            'Catch
+            'End Try
 
             If Not DesignMode Then
                 Try
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
+                    'AddHandler FindForm.Load, AddressOf Loaded
+                    'AddHandler FindForm.Shown, AddressOf Showed
                     AddHandler Parent.Invalidated, AddressOf Rfrsh
                     AddHandler Parent.BackColorChanged, AddressOf Rfrsh
                 Catch

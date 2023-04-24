@@ -7,7 +7,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.NativeMethods
-Imports System.Media
+Imports WinPaletter.NativeMethods.User32
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -2012,7 +2012,6 @@ Public Class MainFrm
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
             setting_icon_preview.Text = "♣"
         End If
-
         Visible = True
     End Sub
 

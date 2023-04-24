@@ -175,7 +175,7 @@ Public Class XenonCore
                 }}
 
             Dim tmp As String = IO.Path.ChangeExtension(IO.Path.GetTempFileName(), ".xml")
-            'If IO.File.Exists(tmp) Then Kill(tmp)
+            If IO.File.Exists(tmp) Then Kill(tmp)
 
             Select Case TaskType
                 Case TaskType.Shutdown
@@ -194,11 +194,10 @@ Public Class XenonCore
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Logon /XML """ & tmp & """"
             End Select
 
-            Clipboard.SetText(process.StartInfo.FileName & " " & process.StartInfo.Arguments)
             process.Start()
             process.WaitForExit()
 
-            'If IO.File.Exists(tmp) Then Kill(tmp)
+            If IO.File.Exists(tmp) Then Kill(tmp)
         End If
     End Sub
 

@@ -142,4 +142,37 @@ Public Class ScreenSaver_Editor
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
     End Sub
+
+    Private Sub XenonButton259_Click(sender As Object, e As EventArgs) Handles XenonButton259.Click
+
+        If OpenThemeDialog.ShowDialog = DialogResult.OK Then
+            Dim _Def As CP
+            If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+                _Def = New CP_Defaults().Default_Windows11
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+                _Def = New CP_Defaults().Default_Windows10
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                _Def = New CP_Defaults().Default_Windows8
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+                _Def = New CP_Defaults().Default_Windows7
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                _Def = New CP_Defaults().Default_WindowsVista
+            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                _Def = New CP_Defaults().Default_WindowsXP
+            Else
+                _Def = New CP_Defaults().Default_Windows11
+            End If
+
+            GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver)
+
+            _Def.Dispose()
+        End If
+    End Sub
+
+    Sub GetFromClassicThemeFile(File As String, _DefaultScrSvr As CP.Structures.ScreenSaver)
+        Using _ini As New INI(File)
+            XenonTextBox1.Text = _ini.IniReadValue("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath
+        End Using
+    End Sub
+
 End Class

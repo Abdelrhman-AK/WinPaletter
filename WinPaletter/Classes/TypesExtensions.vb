@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Runtime.InteropServices.ComTypes
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
@@ -150,7 +151,7 @@ Public Module ColorsExtensions
     '''Get String in the format of R G B from a Color(R,G,B) or A R G B from a Color(A,R,G,B)
     '''</summary>
     <Extension()>
-    Public Function Win32_RegColor([Color] As Color, Optional Alpha As Boolean = False) As String
+    Public Function ToWin32Reg([Color] As Color, Optional Alpha As Boolean = False) As String
         If Not Alpha Then
             Return String.Format("{0} {1} {2}", [Color].R, [Color].G, [Color].B)
         Else
@@ -196,7 +197,7 @@ Public Module ColorsExtensions
                     s = Color.HEX(Alpha, HexHash)
 
                 Case ColorFormat.RGB
-                    s = Color.Win32_RegColor(Alpha)
+                    s = Color.ToWin32Reg(Alpha)
 
                 Case ColorFormat.HSL
                     s = Color.HSL_Text
@@ -508,6 +509,32 @@ Public Module StringExtensions
     End Function
 
     '''<summary>
+    '''Return Color From Reg String String
+    '''</summary>
+    <Extension()>
+    Public Function FromWin32RegToColor([String] As String) As Color
+
+        Try
+            If [String].Contains(" ") Then
+                Dim Splitted As String() = [String].Split(" ")
+
+                If Splitted.Count = 3 Then
+                    Return Color.FromArgb(255, Val(Splitted(0)), Val(Splitted(1)), Val(Splitted(2)))
+                ElseIf Splitted.Count = 4 Then
+                    Return Color.FromArgb(Val(Splitted(0)), Val(Splitted(1)), Val(Splitted(2)), Val(Splitted(3)))
+                Else
+                    Return Color.Empty
+                End If
+            Else
+                Return Color.Empty
+            End If
+        Catch
+            Return Color.Empty
+        End Try
+
+    End Function
+
+    '''<summary>
     '''Convert String to List (String should be multi-lines)
     '''</summary>
     <Extension()>
@@ -537,6 +564,26 @@ Public Module StringExtensions
         Catch
         End Try
 
+    End Function
+
+
+    <Extension()>
+    Public Function PhrasePath(path As String) As String
+        Return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", "%windir%\").Replace("%ThemeDir%", "%ThemeDir%\").Replace("\\", "\") _
+                                                      .Replace("%ThemeDir%", My.PATH_ProgramFiles & "\Plus!\Themes"))
+    End Function
+
+
+    <Extension()>
+    Public Function ToBytes(str As String) As Byte()
+        Dim numChars As String() = str.Split(" ")
+        Dim result = New Byte(numChars.Length - 1) {}
+
+        For i As Integer = 0 To numChars.Length - 1
+            If Not String.IsNullOrWhiteSpace(numChars(i)) Then result(i) = numChars(i) Else result(i) = 0
+        Next
+
+        Return result
     End Function
 End Module
 

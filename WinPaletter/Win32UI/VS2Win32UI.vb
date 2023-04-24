@@ -71,4 +71,8 @@ Public Class VS2Win32UI
         Win32UI.menuhilight_pick.BackColor = vs.Colors.MenuHilight
         Win32UI.desktop_pick.BackColor = vs.Colors.Background
     End Sub
+
+    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        Close()
+    End Sub
 End Class

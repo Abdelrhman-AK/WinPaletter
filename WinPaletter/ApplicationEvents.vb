@@ -70,7 +70,7 @@ Namespace My
         ''' <summary>
         ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
         ''' </summary>
-        Public ReadOnly W10_1909 As Boolean = (W11 Or (W10 AndAlso Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
+        Public ReadOnly W10_1909 As Boolean = (W11 OrElse (W10 AndAlso Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 11 Build 22523 and Higher or not

@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
-Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Metrics
 
 Namespace NativeMethods
@@ -890,6 +889,13 @@ Namespace NativeMethods
 
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function Wow64RevertWow64FsRedirection(ByVal ptr As IntPtr) As Boolean
+        End Function
+
+        <DllImport("kernel32")>
+        Public Shared Function WritePrivateProfileString(ByVal section As String, ByVal key As String, ByVal val As String, ByVal filePath As String) As Long
+        End Function
+        <DllImport("kernel32")>
+        Public Shared Function GetPrivateProfileString(ByVal section As String, ByVal key As String, ByVal def As String, ByVal retVal As StringBuilder, ByVal size As Integer, ByVal filePath As String) As Integer
         End Function
 
     End Class
