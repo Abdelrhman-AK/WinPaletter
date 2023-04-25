@@ -41,8 +41,8 @@ def main():
                 targetpack = root + '/' + str(file).replace('.wpth', '.wptp')
                 md5_hash_file_result = CalcMD5(targetfile)    
                 md5_hash_pack_result = CalcMD5(targetpack)    
-                url_file = 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/master/' + targetfile + '?raw=true'
-                url_pack = 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/master/' + targetpack + '?raw=true'
+                url_file = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetfile + '?raw=true'
+                url_pack = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetpack + '?raw=true'
 
             paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
             path_count = path_count + 1

@@ -1585,6 +1585,12 @@ Namespace NativeMethods
         End Function
     End Class
 
+    Public Class Dnsapi
+        <DllImport("dnsapi.dll", EntryPoint:="DnsFlushResolverCache")>
+        Public Shared Function DnsFlushResolverCache() As UInt32
+        End Function
+    End Class
+
     ''' <summary>
     ''' Functions not found internally in system DLLs, but uses the functions in DLLs to do something DLLs Functions cannot do alone.
     ''' </summary>
