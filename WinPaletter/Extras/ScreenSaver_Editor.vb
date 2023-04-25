@@ -1,5 +1,4 @@
-﻿Imports System.Threading
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.XenonCore
 
 Public Class ScreenSaver_Editor
 

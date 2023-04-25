@@ -4214,6 +4214,10 @@ Public Class MainFrm
         Sounds_Editor.ShowDialog()
     End Sub
 
+    Private Sub XenonButton35_Click(sender As Object, e As EventArgs) Handles XenonButton35.Click
+        Wallpaper_Editor.ShowDialog()
+    End Sub
+
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then

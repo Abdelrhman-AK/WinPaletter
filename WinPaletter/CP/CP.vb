@@ -9,6 +9,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.CP.Structures
 Imports System.IO.Compression
+Imports System.IO
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -104,6 +105,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         RedGreen_deuteranopia
         RedGreen_protanopia
         BlueYellow
+    End Enum
+    Enum WallpaperStyle As Integer
+        Centered = 0
+        Tile = 1
+        Stretched = 2
+        Fit = 6
+        Fill = 10
+    End Enum
+    Enum WallpaperType
+        Picture
+        SolidColor
+        SlideShow
+        WindowsSpotlight
     End Enum
 #End Region
 
@@ -1786,7 +1800,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Catch
                     End Try
 
-
                 End If
             End Sub
 
@@ -1843,6 +1856,187 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*WinEffects_ColorFilter= " & CInt(ColorFilter))
 
                 tx.Add("</WindowsEffects>" & vbCrLf)
+                Return tx.CString
+            End Function
+
+        End Structure
+
+        Structure Wallpaper : Implements ICloneable
+            Public Enabled As Boolean
+            Public SlideShow_Folder_or_ImagesList As Boolean
+
+            Public ImageFile As String
+            Public WallpaperStyle As WallpaperStyle
+            Public WallpaperType As WallpaperType
+
+            Public Wallpaper_Slideshow_ImagesRootPath As String
+            Public Wallpaper_Slideshow_Images As String()
+            Public Wallpaper_Slideshow_Interval As Integer
+            Public Wallpaper_Slideshow_Shuffle As Boolean
+
+            Sub Load(_DefWallpaper As Wallpaper)
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", _DefWallpaper.Enabled)
+                SlideShow_Folder_or_ImagesList = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", _DefWallpaper.SlideShow_Folder_or_ImagesList)
+                Wallpaper_Slideshow_ImagesRootPath = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", _DefWallpaper.Wallpaper_Slideshow_ImagesRootPath)
+                Wallpaper_Slideshow_Images = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", _DefWallpaper.Wallpaper_Slideshow_Images)
+
+                ImageFile = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", _DefWallpaper.ImageFile)
+
+                Dim slideshow_img As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\TranscodedWallpaper"
+                Dim spotlight_img As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets"
+
+                'Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
+                If ImageFile.StartsWith(slideshow_img, My._ignore) OrElse ImageFile.StartsWith(spotlight_img, My._ignore) OrElse Not IO.File.Exists(ImageFile) Then
+                    ImageFile = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", _DefWallpaper.ImageFile)
+                End If
+
+                If GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0") = "1" Then
+                    WallpaperStyle = WallpaperStyle.Tile
+                Else
+                    WallpaperStyle = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", _DefWallpaper.WallpaperStyle)
+                End If
+
+                WallpaperType = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", _DefWallpaper.WallpaperType)
+
+                Wallpaper_Slideshow_Interval = GetReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", _DefWallpaper.Wallpaper_Slideshow_Interval)
+                Wallpaper_Slideshow_Shuffle = GetReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", _DefWallpaper.Wallpaper_Slideshow_Shuffle)
+
+            End Sub
+
+            Sub Apply()
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString)
+
+                If Enabled Then
+                    Dim slideshow_ini As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\slideshow.ini"
+                    Dim slideshow_img As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\TranscodedWallpaper"
+                    Dim spotlight_img As String = GetValidSpotlightImage()
+
+                    IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Normal)
+                    IO.File.WriteAllText(slideshow_ini, "")
+                    IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Hidden)
+
+                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType)
+
+                    If WallpaperType = WallpaperType.SolidColor Then
+                        SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, "", SPIF.UpdateINIFile)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
+
+                    ElseIf WallpaperType = WallpaperType.Picture Then
+                        SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, SPIF.UpdateINIFile)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String)
+
+                        'Necessary to make both WinPaletter and Windows remember last wallpaper that is not from slideshow and not a spotlight image
+                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String)
+
+                    ElseIf WallpaperType = WallpaperType.SlideShow Then
+                        SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, SPIF.UpdateINIFile)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
+
+                    ElseIf WallpaperType = WallpaperType.WindowsSpotlight Then
+                        SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, spotlight_img, SPIF.UpdateINIFile)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", spotlight_img, RegistryValueKind.String)
+
+                    End If
+
+                    If WallpaperStyle = WallpaperStyle.Tile Then
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
+                    Else
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", CInt(WallpaperStyle), RegistryValueKind.String)
+                    End If
+
+                    If Not My.WXP AndAlso Not My.WVista Then
+
+                        Using _ini As New INI(slideshow_ini)
+
+                            If WallpaperType = WallpaperType.SlideShow AndAlso SlideShow_Folder_or_ImagesList AndAlso IO.Directory.Exists(Wallpaper_Slideshow_ImagesRootPath) Then
+                                _ini.IniWriteValue("Slideshow", "ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath)
+                            End If
+
+                            _ini.IniWriteValue("Slideshow", "Interval", Wallpaper_Slideshow_Interval)
+                            _ini.IniWriteValue("Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
+
+                            If WallpaperType = WallpaperType.SlideShow AndAlso Not SlideShow_Folder_or_ImagesList Then
+                                If IO.Directory.Exists(Wallpaper_Slideshow_Images(0)) Then
+                                    _ini.IniWriteValue("Slideshow", "ImagesRootPath", New FileInfo(Wallpaper_Slideshow_Images(0)).Directory.FullName)
+                                End If
+
+                                For i = 0 To Wallpaper_Slideshow_Images.Count - 1
+                                        _ini.IniWriteValue("Slideshow", "Item" & i & "Path", Wallpaper_Slideshow_Images(i))
+                                    Next
+                                End If
+
+                        End Using
+
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", Wallpaper_Slideshow_Interval)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
+                    End If
+                End If
+
+            End Sub
+
+            Function GetValidSpotlightImage() As String
+                Dim dir As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets"
+                Dim validBMPs As New List(Of String)
+                validBMPs.Clear()
+
+                If IO.Directory.Exists(dir) Then
+
+                    For Each file As String In IO.Directory.GetFiles(dir)
+                        Try
+                            Using fs As New FileStream(file, FileMode.Open, FileAccess.Read)
+                                Using bmp As Bitmap = Bitmap.FromStream(fs)
+                                    If bmp.Size = My.Computer.Screen.Bounds.Size Then
+                                        validBMPs.Add(file)
+                                    End If
+                                End Using
+                            End Using
+                        Catch
+                        End Try
+                    Next
+
+                    If validBMPs.Count = 0 Then
+                        Return Nothing
+                    Else
+                        Return validBMPs(New Random().Next(0, validBMPs.Count - 1))
+                    End If
+                Else
+                    Return Nothing
+                End If
+
+            End Function
+
+
+            Shared Operator =(First As Wallpaper, Second As Wallpaper) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+
+            Shared Operator <>(First As Wallpaper, Second As Wallpaper) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<Wallpaper>")
+                tx.Add("*Wallpaper_Enabled= " & Enabled)
+                tx.Add("*Wallpaper_SlideShow_Folder_or_ImagesList= " & SlideShow_Folder_or_ImagesList)
+                tx.Add("*Wallpaper_Path= " & ImageFile)
+                tx.Add("*Wallpaper_WallpaperStyle= " & WallpaperStyle)
+                tx.Add("*Wallpaper_WallpaperType= " & WallpaperType)
+                tx.Add("*Wallpaper_Slideshow_ImagesRootPath= " & Wallpaper_Slideshow_ImagesRootPath)
+                tx.Add("*Wallpaper_Slideshow_Images= " & Wallpaper_Slideshow_Images.ToList.CString("|"))
+                tx.Add("*Wallpaper_Slideshow_Interval= " & Wallpaper_Slideshow_Interval)
+                tx.Add("*Wallpaper_Slideshow_Shuffle= " & Wallpaper_Slideshow_Shuffle)
+                tx.Add("</Wallpaper>" & vbCrLf)
                 Return tx.CString
             End Function
 
@@ -2162,8 +2356,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 End If
 
-                User32.SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
-                Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True).SetValue("Wallpaper", path)
+                SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile)
+                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String)
 
                 MainFrm.Update_Wallpaper_Preview()
             End Sub
@@ -3660,6 +3854,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp",
         .H = 0, .S = 50, .L = 50}
 
+    Public Wallpaper As New Structures.Wallpaper With {
+        .Enabled = False,
+        .ImageFile = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""),
+        .WallpaperType = WallpaperType.Picture,
+        .WallpaperStyle = WallpaperStyle.Fill,
+        .Wallpaper_Slideshow_Images = New String() {},
+        .Wallpaper_Slideshow_ImagesRootPath = "",
+        .Wallpaper_Slideshow_Interval = 60000,
+        .Wallpaper_Slideshow_Shuffle = False,
+        .SlideShow_Folder_or_ImagesList = True}
+
     Public WindowsEffects As New Structures.WinEffects With {
         .Enabled = True,
         .WindowAnimation = True,
@@ -4921,6 +5126,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 WallpaperTone_W7.Load("Win7")
                 WallpaperTone_WVista.Load("WinVista")
                 WallpaperTone_WXP.Load("WinXP")
+                Wallpaper.Load(_Def.Wallpaper)
 
                 CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt)
                 If IO.Directory.Exists(My.PATH_PS86_app) Then
@@ -5061,7 +5267,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Next
 
                 For Each line As String In txt
-
                     If Pack_Exists Then
                         If line.Contains("=") Then
                             Dim arr As String() = line.Split("=")
@@ -5070,8 +5275,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             End If
                         End If
                     End If
-
-
 
 #Region "Personal Info"
                     If line.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count)
@@ -5541,6 +5744,20 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
+#Region "Wallpaper"
+                    If line.StartsWith("*Wallpaper_", My._ignore) Then
+                        If line.StartsWith("*Wallpaper_Enabled= ", My._ignore) Then Wallpaper.Enabled = line.Remove(0, "*Wallpaper_Enabled= ".Count)
+                        If line.StartsWith("*Wallpaper_SlideShow_Folder_or_ImagesList= ", My._ignore) Then Wallpaper.SlideShow_Folder_or_ImagesList = line.Remove(0, "*Wallpaper_SlideShow_Folder_or_ImagesList= ".Count)
+                        If line.StartsWith("*Wallpaper_Path= ", My._ignore) Then Wallpaper.ImageFile = line.Remove(0, "*Wallpaper_Path= ".Count)
+                        If line.StartsWith("*Wallpaper_WallpaperStyle= ", My._ignore) Then Wallpaper.WallpaperStyle = line.Remove(0, "*Wallpaper_WallpaperStyle= ".Count)
+                        If line.StartsWith("*Wallpaper_WallpaperType= ", My._ignore) Then Wallpaper.WallpaperType = line.Remove(0, "*Wallpaper_WallpaperType= ".Count)
+                        If line.StartsWith("*Wallpaper_Slideshow_ImagesRootPath= ", My._ignore) Then Wallpaper.Wallpaper_Slideshow_ImagesRootPath = line.Remove(0, "*Wallpaper_Slideshow_ImagesRootPath= ".Count)
+                        If line.StartsWith("*Wallpaper_Slideshow_Images= ", My._ignore) AndAlso line.Contains("|") Then Wallpaper.Wallpaper_Slideshow_Images = line.Remove(0, "*Wallpaper_Slideshow_Images= ".Count).Split("|")
+                        If line.StartsWith("*Wallpaper_Slideshow_Interval= ", My._ignore) Then Wallpaper.Wallpaper_Slideshow_Interval = line.Remove(0, "*Wallpaper_Slideshow_Interval= ".Count)
+                        If line.StartsWith("*Wallpaper_Slideshow_Shuffle= ", My._ignore) Then Wallpaper.Wallpaper_Slideshow_Shuffle = line.Remove(0, "*Wallpaper_Slideshow_Shuffle= ".Count)
+                    End If
+#End Region
+
 #Region "Cursors"
                     If line.StartsWith("*Cursor", My._ignore) Then
                         If line.StartsWith("*Cursor_Enabled= ", My._ignore) Then Cursor_Enabled = line.Remove(0, "*Cursor_Enabled= ".Count)
@@ -5917,6 +6134,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                   If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
 
+                'Wallpaper
+                Execute(CType(Sub()
+                                  Wallpaper.Apply()
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper)
+
+
 #Region "Consoles"
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled)
@@ -6179,6 +6402,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         tx.Add(WallpaperTone_W7.ToString("Win7"))
         tx.Add(WallpaperTone_WVista.ToString("WinVista"))
         tx.Add(WallpaperTone_WXP.ToString("WinXP"))
+        tx.Add(Wallpaper.ToString)
 
         tx.Add("<Terminals>")
         tx.Add(CommandPrompt.ToString("CMD"))
@@ -7735,6 +7959,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If WallpaperTone_WXP <> DirectCast(obj, CP).WallpaperTone_WXP Then _Equals = False
         If ScreenSaver <> DirectCast(obj, CP).ScreenSaver Then _Equals = False
         If Sounds <> DirectCast(obj, CP).Sounds Then _Equals = False
+        If Wallpaper <> DirectCast(obj, CP).Wallpaper Then _Equals = False
 
         If Cursor_Enabled <> DirectCast(obj, CP).Cursor_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False

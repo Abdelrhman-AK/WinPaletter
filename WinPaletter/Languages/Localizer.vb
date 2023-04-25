@@ -82,6 +82,9 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Store_CPToggles".ToLower Then Return Store_CPToggles
         If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
         If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
+        If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
+        If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
+        Return Nothing
     End Function
 
     Public allForms As New List(Of String) From {
@@ -126,7 +129,9 @@ Public Class Localizer : Implements IDisposable
                         "Store",
                         "Store_CPToggles",
                         "Store_SearchFilter",
-                        "ScreenSaver_Editor"
+                        "ScreenSaver_Editor",
+                        "Sounds_Editor",
+                        "Wallpaper_Editor"
                         }
 
 #Region "Language Info"
@@ -253,6 +258,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Applying_CMD As String = "Applying Command Prompt"
     Property CP_Applying_Metrics As String = "Applying Windows Metrics and Fonts"
     Property CP_Applying_AltTab As String = "Applying Windows Switcher (Alt+Tab) appearance"
+    Property CP_Applying_Wallpaper As String = "Applying Wallpaper"
     Property CP_Applying_TerminalPreview As String = "Applying Windows Terminal Preview"
     Property CP_Applying_ScreenSaver As String = "Applying Screen Saver"
     Property CP_Applying_Sounds As String = "Applying Sounds"
@@ -275,6 +281,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Skip_PS32 As String = "Skipping PowerShell x86 as it is disabled"
     Property CP_Skip_Metrics As String = "Skipping Windows Metrics and Fonts as they are disabled"
     Property CP_Skip_AltTab As String = "Skipping Windows Switcher (Alt+Tab) Appearance as it is disabled"
+    Property CP_Skip_Wallpaper As String = "Skipping Wallpaper as it is disabled"
     Property CP_Skip_Sounds As String = "Skipping Sounds as its toggle is disabled"
     Property CP_CMD_Error As String = "Error occurred during applying Command Prompt"
     Property CP_PS32_Error As String = "Error occurred during applying PowerShell x86"
@@ -298,6 +305,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_Error_SetDesktop As String = "Error occurred during applying Desktop for all users"
     Property CP_Error_Metrics As String = "Error occurred during applying Windows Metrics and Fonts"
     Property CP_Error_AltTab As String = "Error occurred during applying Windows Switcher (Alt+Tab) appearance"
+    Property CP_Error_Wallpaper As String = "Error occurred during applying Wallpaper"
     Property CP_Error_TerminalPreview As String = "Error occurred during applying Windows Terminal Preview"
     Property CP_Error_TerminalStable As String = "Error occurred during applying Windows Terminal Stable"
     Property CP_Error_ScreenSaver As String = "Error occurred during applying Screen Saver"
@@ -330,7 +338,7 @@ Public Class Localizer : Implements IDisposable
     Property LogoffNotice As String = "This will logoff your Windows account. Please save your open files before logging-off"
     Property TitlebarColorNotice As String = "Windows volume slider, UAC and Windows 10 logonUI follow active titlebar color"
     Property NoDefResExplorer As String = "Restarting Explorer is disabled. If theme is not applied correctly, restart it"
-    Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wpsf) from registry?"
+    Property RemoveExtMsg As String = "Are you sure from removing files association (*.wpth, *.wptp, *.wpsf) from registry?"
     Property RemoveExtMsgNote As String = "Note: You can reassociate them by activating its checkbox and restarting WinPaletter"
     Property EmptyName As String = "You can't leave theme name empty. Please type a name to it"
     Property EmptyAuthorName As String = "You can't leave author's name empty. Please type author's name or your name."

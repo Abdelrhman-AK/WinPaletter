@@ -454,12 +454,12 @@ Namespace My
             End If
 
             Dim img As New Bitmap(100, 100)
-            If IO.File.Exists(WallpaperPath) And WallpaperType = 0 Then
+            If IO.File.Exists(WallpaperPath) AndAlso (WallpaperType = 0 Or WallpaperType = 2 Or WallpaperType = 3) Then
                 Using ms As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
                     Using bmp As New Bitmap(Image.FromStream(ms))
                         img = bmp.Clone
                     End Using
-                    ms.Dispose
+                    ms.Dispose()
                 End Using
             Else
                 With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")

@@ -522,10 +522,16 @@
     <Compile Include="Updates\Whatsnew.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extras\WallpaperToner.Designer.vb">
+    <Compile Include="WallpapersEditing\WallpaperToner.Designer.vb">
       <DependentUpon>WallpaperToner.vb</DependentUpon>
     </Compile>
-    <Compile Include="Extras\WallpaperToner.vb">
+    <Compile Include="WallpapersEditing\WallpaperToner.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WallpapersEditing\Wallpaper_Editor.Designer.vb">
+      <DependentUpon>Wallpaper_Editor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WallpapersEditing\Wallpaper_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Win32UI\VS2Win32UI.Designer.vb">
@@ -872,8 +878,11 @@
     <EmbeddedResource Include="Updates\Whatsnew.resx">
       <DependentUpon>Whatsnew.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extras\WallpaperToner.resx">
+    <EmbeddedResource Include="WallpapersEditing\WallpaperToner.resx">
       <DependentUpon>WallpaperToner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WallpapersEditing\Wallpaper_Editor.resx">
+      <DependentUpon>Wallpaper_Editor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
       <DependentUpon>VS2Win32UI.vb</DependentUpon>
