@@ -5016,6 +5016,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 _Def.Dispose()
 
             Case CP_Type.File
+                Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
+                Dim Pack_Exists As Boolean = IO.File.Exists(Pack)
+
 #Region "File"
                 Dim txt As New List(Of String) : txt.Clear()
                 txt = IO.File.ReadAllText(File).CList
@@ -5059,12 +5062,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 For Each line As String In txt
 
-                    If line.Contains("=") Then
-                        Dim arr As String() = line.Split("=")
-                        If arr.Count = 2 AndAlso arr(1).Trim.StartsWith("%WinPaletterAppData%\ThemeUnpackedCache", My._ignore) Then
-                            line = arr(0).Trim & "= " & arr(1).Trim.Replace("%WinPaletterAppData%", My.Application.appData)
+                    If Pack_Exists Then
+                        If line.Contains("=") Then
+                            Dim arr As String() = line.Split("=")
+                            If arr.Count = 2 AndAlso arr(1).Trim.StartsWith("%WinPaletterAppData%\ThemeUnpackedCache", My._ignore) Then
+                                line = arr(0).Trim & "= " & arr(1).Trim.Replace("%WinPaletterAppData%", My.Application.appData)
+                            End If
                         End If
                     End If
+
+
 
 #Region "Personal Info"
                     If line.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count)
@@ -5742,17 +5749,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #End Region
 
                 Try
-                    Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
-                    Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
-                    If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
-                    Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
-                        Using z As New ZipArchive(s, ZipArchiveMode.Read)
-                            z.ExtractToDirectory(cache, True)
-                            z.Dispose()
+                    If Pack_Exists Then
+                        Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
+                        If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
+                        Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
+                            Using z As New ZipArchive(s, ZipArchiveMode.Read)
+                                z.ExtractToDirectory(cache, True)
+                                z.Dispose()
+                            End Using
+                            s.Close()
+                            s.Dispose()
                         End Using
-                        s.Close()
-                        s.Dispose()
-                    End Using
+                    End If
                 Catch ex As Exception
                     BugReport.ThrowError(ex)
                 End Try

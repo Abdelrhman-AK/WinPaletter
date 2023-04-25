@@ -1457,6 +1457,7 @@ Public Class Store
             Status_lbl.SetText(String.Format(My.Lang.Store_Accessing, DB))
             response.Clear()
             response = WebCL.DownloadString(DB).CList
+            Interaction.MsgBox(response.CString)
             items.Clear()
 
             'Add valid lines (Correct format) in a themes list
