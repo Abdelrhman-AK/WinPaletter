@@ -399,6 +399,8 @@ Namespace My
         Sub Uninstall_Quiet()
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack")
+
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
 
             Try
@@ -726,9 +728,12 @@ Namespace My
 
                     IO.File.WriteAllBytes(appData & "\fileextension.ico", Resources.fileextension.ToByteArray)
                     IO.File.WriteAllBytes(appData & "\settingsfile.ico", Resources.settingsfile.ToByteArray)
+                    IO.File.WriteAllBytes(appData & "\themerespack.ico", Resources.ThemesResIcon.ToByteArray)
 
                     CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
                     CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", appData & "\settingsfile.ico", Assembly.GetExecutingAssembly().Location)
+                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", "WinPaletter Theme Resources Pack", appData & "\themerespack.ico", Assembly.GetExecutingAssembly().Location)
+
                 End If
             Catch
             End Try

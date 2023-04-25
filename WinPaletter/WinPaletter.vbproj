@@ -708,6 +708,7 @@
     <None Include="Resources\System.ValueTuple.dll" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <None Include="Resources\ThemesResIcon.ico" />
     <Content Include="Resources\Update.png" />
     <Content Include="Resources\Update_Dot.png" />
     <Content Include="Resources\Vista_ActiveApp.png" />

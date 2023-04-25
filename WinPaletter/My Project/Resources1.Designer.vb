@@ -1763,6 +1763,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Public ReadOnly Property ThemesResIcon() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ThemesResIcon", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property Update() As System.Drawing.Bitmap
@@ -2077,13 +2087,13 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;Description&gt;Play Windows Logoff sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Logoff&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[EventID=4647]]&amp;lt;/Select&amp;gt;&amp;lt;/Query&amp;gt;&amp;lt;/QueryList&amp;gt;&lt;/Subscription&gt;
-        '''    &lt;/EventTrigge [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[Ev [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logoff() As String
             Get
@@ -2096,6 +2106,7 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;Description&gt;Play Windows Logon sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Play logon sound&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
@@ -2104,10 +2115,7 @@ Namespace My.Resources
         '''    &lt;/LogonTrigger&gt;
         '''    &lt;SessionStateChangeTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;StateChange&gt;ConsoleConnect&lt;/StateChange&gt;
-        '''    &lt;/SessionStateChangeTrigger&gt;
-        '''  &lt;/Triggers&gt;
-        '''  &lt;Principals&gt; [rest of string was truncated]&quot;;.
+        '''      &lt;StateChange&gt;C [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logon() As String
             Get
@@ -2120,15 +2128,13 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;Description&gt;Play Windows Shutdown sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Play shutdown sound&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&lt;QueryList&gt;&lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&gt;&lt;Select Path=&quot;System&quot;&gt;*[System[EventID=1074]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;&lt;/Subscription&gt;
-        '''    &lt;/EventTrigger&gt;
-        '''  &lt;/Triggers&gt;
-        '''  &lt;Princ [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&amp;gt;&amp;lt;Select Path=&quot;System&quot;&amp;gt; [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Shutdown() As String
             Get

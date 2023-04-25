@@ -220,6 +220,10 @@ Partial Class SettingsX
         Me.Label55 = New System.Windows.Forms.Label()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TabPage17 = New System.Windows.Forms.TabPage()
+        Me.XenonButton20 = New WinPaletter.XenonButton()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.PictureBox57 = New System.Windows.Forms.PictureBox()
+        Me.Label45 = New System.Windows.Forms.Label()
         Me.XenonAlertBox20 = New WinPaletter.XenonAlertBox()
         Me.XenonButton19 = New WinPaletter.XenonButton()
         Me.Label38 = New System.Windows.Forms.Label()
@@ -379,6 +383,7 @@ Partial Class SettingsX
         CType(Me.PictureBox54, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox64, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage17.SuspendLayout()
+        CType(Me.PictureBox57, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox53, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage18.SuspendLayout()
         CType(Me.PictureBox65, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -511,7 +516,7 @@ Partial Class SettingsX
         Me.XenonAlertBox17.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.XenonAlertBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonAlertBox17.CenterText = True
         Me.XenonAlertBox17.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -531,7 +536,7 @@ Partial Class SettingsX
         Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox2.ForeColor = System.Drawing.Color.Black
+        Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
         Me.XenonComboBox2.FormattingEnabled = True
         Me.XenonComboBox2.ItemHeight = 20
         Me.XenonComboBox2.Items.AddRange(New Object() {"Stable", "Beta"})
@@ -622,7 +627,7 @@ Partial Class SettingsX
         'XenonAlertBox4
         '
         Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Success
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(79, Byte), Integer))
         Me.XenonAlertBox4.CenterText = True
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2927,6 +2932,10 @@ Partial Class SettingsX
         'TabPage17
         '
         Me.TabPage17.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage17.Controls.Add(Me.XenonButton20)
+        Me.TabPage17.Controls.Add(Me.Label43)
+        Me.TabPage17.Controls.Add(Me.PictureBox57)
+        Me.TabPage17.Controls.Add(Me.Label45)
         Me.TabPage17.Controls.Add(Me.XenonAlertBox20)
         Me.TabPage17.Controls.Add(Me.XenonButton19)
         Me.TabPage17.Controls.Add(Me.Label38)
@@ -2938,6 +2947,56 @@ Partial Class SettingsX
         Me.TabPage17.Size = New System.Drawing.Size(815, 382)
         Me.TabPage17.TabIndex = 1
         Me.TabPage17.Text = "Cache"
+        '
+        'XenonButton20
+        '
+        Me.XenonButton20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton20.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton20.ForeColor = System.Drawing.Color.White
+        Me.XenonButton20.Image = Nothing
+        Me.XenonButton20.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton20.LineSize = 1
+        Me.XenonButton20.Location = New System.Drawing.Point(732, 127)
+        Me.XenonButton20.Name = "XenonButton20"
+        Me.XenonButton20.Size = New System.Drawing.Size(80, 25)
+        Me.XenonButton20.TabIndex = 57
+        Me.XenonButton20.Text = "Clean"
+        Me.XenonButton20.UseVisualStyleBackColor = False
+        '
+        'Label43
+        '
+        Me.Label43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label43.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.Location = New System.Drawing.Point(44, 127)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(682, 24)
+        Me.Label43.TabIndex = 56
+        Me.Label43.Text = "0"
+        Me.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox57
+        '
+        Me.PictureBox57.Image = CType(resources.GetObject("PictureBox57.Image"), System.Drawing.Image)
+        Me.PictureBox57.Location = New System.Drawing.Point(13, 102)
+        Me.PictureBox57.Name = "PictureBox57"
+        Me.PictureBox57.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox57.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox57.TabIndex = 54
+        Me.PictureBox57.TabStop = False
+        '
+        'Label45
+        '
+        Me.Label45.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label45.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label45.Location = New System.Drawing.Point(40, 102)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(772, 24)
+        Me.Label45.TabIndex = 55
+        Me.Label45.Text = "Unpacked themes resources:"
+        Me.Label45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonAlertBox20
         '
@@ -4235,6 +4294,7 @@ Partial Class SettingsX
         CType(Me.PictureBox54, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox64, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage17.ResumeLayout(False)
+        CType(Me.PictureBox57, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox53, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage18.ResumeLayout(False)
         CType(Me.PictureBox65, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4551,4 +4611,8 @@ Partial Class SettingsX
     Friend WithEvents TabPage18 As TabPage
     Friend WithEvents PictureBox54 As PictureBox
     Friend WithEvents XenonAlertBox20 As XenonAlertBox
+    Friend WithEvents XenonButton20 As XenonButton
+    Friend WithEvents Label43 As Label
+    Friend WithEvents PictureBox57 As PictureBox
+    Friend WithEvents Label45 As Label
 End Class

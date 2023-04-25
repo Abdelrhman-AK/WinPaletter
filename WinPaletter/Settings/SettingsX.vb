@@ -117,6 +117,8 @@ Public Class SettingsX
             XenonRadioButton21.Checked = .Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.DontChange
 
             Label38.Text = CalcStoreCache().SizeString
+            Label43.Text = CalcThemesResCache().SizeString
+
             XenonRadioImage1.Checked = .Store_Online_or_Offline
             XenonRadioImage2.Checked = Not .Store_Online_or_Offline
             ListBox1.Items.Clear()
@@ -469,6 +471,14 @@ Public Class SettingsX
         End If
     End Function
 
+    Function CalcThemesResCache() As Integer
+        If IO.Directory.Exists(My.Application.appData & "\ThemeUnpackedCache") Then
+            Return Directory.EnumerateFiles(My.Application.appData & "\ThemeUnpackedCache", "*", SearchOption.AllDirectories).Sum(Function(fileInfo) New FileInfo(fileInfo).Length)
+        Else
+            Return 0
+        End If
+    End Function
+
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         SaveSettings()
         Me.Close()
@@ -519,6 +529,7 @@ Public Class SettingsX
             XenonCheckBox1.Checked = False
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            My.Application.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack")
         End If
     End Sub
 
@@ -710,5 +721,13 @@ Public Class SettingsX
         Catch
         End Try
         Label38.Text = CalcStoreCache().SizeString
+    End Sub
+
+    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+        Try
+            Directory.Delete(My.Application.appData & "\ThemeUnpackedCache", True)
+        Catch
+        End Try
+        Label43.Text = CalcThemesResCache().SizeString
     End Sub
 End Class

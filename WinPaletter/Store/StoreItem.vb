@@ -28,8 +28,10 @@ Public Class StoreItem : Inherits Panel
         End Set
     End Property
 
-    Public Property MD5 As String
-    Public Property URL As String
+    Public Property MD5_ThemeFile As String
+    Public Property MD5_PackFile As String
+    Public Property URL_ThemeFile As String
+    Public Property URL_PackFile As String
     Public Property FileName As String
     Public Property DoneByWinPaletter As Boolean = False
 

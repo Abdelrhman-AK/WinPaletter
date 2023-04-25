@@ -16,6 +16,7 @@ Public Class Uninstall
         If XenonCheckBox1.Checked Then
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
+            My.Application.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack")
         End If
 
         If XenonCheckBox3.Checked Then

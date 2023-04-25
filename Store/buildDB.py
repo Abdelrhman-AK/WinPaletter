@@ -9,6 +9,19 @@ def set_action_output(name: str, value: str):
     with open(os.environ["GITHUB_OUTPUT"], "a") as myfile:
         myfile.write(f"{name}={value}\n")
 
+def CalcMD5(file):
+    try:
+        if os.path.exists(file):
+            md5_hash = hashlib.md5()
+            with open(file,"rb") as f:
+                for byte_block in iter(lambda: f.read(4096),b""):
+                    md5_hash.update(byte_block)
+            return str(md5_hash.hexdigest()).upper()
+        else:
+            return '0'
+    except:
+        return '0'
+    
 def main():
     path = sys.argv[1]
     extension = sys.argv[2]
@@ -24,15 +37,15 @@ def main():
     for root, dirs, files in os.walk(path):
         for file in files:
             if file.endswith(f'{extension}'):
-                
                 targetfile = root + '/' + str(file)
-                md5_hash = hashlib.md5()
-                with open(targetfile,"rb") as f:
-                    for byte_block in iter(lambda: f.read(4096),b""):
-                        md5_hash.update(byte_block)
-                
-                paths = paths + md5_hash.hexdigest() + '|' + 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetfile + '?raw=true' + '\n'
-                path_count = path_count + 1
+                targetpack = root + '/' + str(file).replace('.wpth', '.wptp')
+                md5_hash_file_result = CalcMD5(targetfile)    
+                md5_hash_pack_result = CalcMD5(targetpack)    
+                url_file = 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/' + targetfile + '?raw=true'
+                url_pack = 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/' + targetpack + '?raw=true'
+
+            paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
+            path_count = path_count + 1
 
     set_action_output('path_count', path_count)
     set_action_output('paths', paths.replace('\n', ' '))

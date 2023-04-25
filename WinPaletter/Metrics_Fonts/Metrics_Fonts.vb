@@ -85,7 +85,7 @@ Public Class Metrics_Fonts
 
         XenonFakeIcon1.Icon = MainFrm.Icon                  'My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
         XenonFakeIcon2.Icon = My.Resources.fileextension    'My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-        XenonFakeIcon3.Icon = My.Resources.Icon_Uninstall   'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+        XenonFakeIcon3.Icon = My.Resources.ThemesResIcon    'My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
         If My.WXP Then
             PictureBox35.Image = SystemIcons.Information.ToBitmap

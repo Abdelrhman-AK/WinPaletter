@@ -5058,6 +5058,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Next
 
                 For Each line As String In txt
+
+                    If line.Contains("=") Then
+                        Dim arr As String() = line.Split("=")
+                        If arr.Count = 2 AndAlso arr(1).Trim.StartsWith("%WinPaletterAppData%\ThemeUnpackedCache", My._ignore) Then
+                            line = arr(0).Trim & "= " & arr(1).Trim.Replace("%WinPaletterAppData%", My.Application.appData)
+                        End If
+                    End If
+
 #Region "Personal Info"
                     If line.StartsWith("*Created from App Version= ", My._ignore) Then Info.AppVersion = line.Remove(0, "*Created from App Version= ".Count)
                     If line.StartsWith("*Palette Name= ", My._ignore) Then Info.ThemeName = line.Remove(0, "*Palette Name= ".Count)
@@ -5733,6 +5741,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
+                Try
+                    Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
+                    Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
+                    If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
+                    Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
+                        Using z As New ZipArchive(s, ZipArchiveMode.Read)
+                            z.ExtractToDirectory(cache, True)
+                            z.Dispose()
+                        End Using
+                        s.Close()
+                        s.Dispose()
+                    End Using
+                Catch ex As Exception
+                    BugReport.ThrowError(ex)
+                End Try
+
             Case Else
 
         End Select
@@ -6311,6 +6335,596 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             If IO.File.Exists(x) Then CP.WallpaperTone_WXP.Image = ZipEntry
             filesList.Add(ZipEntry, x)
         End If
+
+        x = CP.ScreenSaver.File
+        If Not String.IsNullOrWhiteSpace(x) Then
+            ZipEntry = cache & "scrsvr" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.ScreenSaver.File = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+#Region "Sounds"
+        x = CP.Sounds.Snd_Win_Default
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Default" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Default = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_AppGPFault
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_AppGPFault" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_AppGPFault = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_CCSelect
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_CCSelect" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_CCSelect = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_ChangeTheme
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_ChangeTheme" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_ChangeTheme = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Close
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Close" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Close = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_CriticalBatteryAlarm
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_CriticalBatteryAlarm" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_CriticalBatteryAlarm = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_DeviceConnect
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_DeviceConnect" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_DeviceConnect = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_DeviceDisconnect
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_DeviceDisconnect" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_DeviceDisconnect = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_DeviceFail
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_DeviceFail" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_DeviceFail = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_FaxBeep
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_FaxBeep" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_FaxBeep = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_LowBatteryAlarm
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_LowBatteryAlarm" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_LowBatteryAlarm = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_MailBeep
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_MailBeep" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_MailBeep = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Maximize
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Maximize" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Maximize = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_MenuCommand
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_MenuCommand" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_MenuCommand = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_MenuPopup
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_MenuPopup" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_MenuPopup = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_MessageNudge
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_MessageNudge" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_MessageNudge = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Minimize
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Minimize" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Minimize = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Default
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Default" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Default = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_IM
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_IM" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_IM = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm10
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm10" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm10 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm2
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm2" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm2 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm3
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm3" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm3 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm4
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm4" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm4 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm5
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm5" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm5 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm6
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm6" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm6 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm7
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm7" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm7 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm8
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm8" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm8 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Alarm9
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Alarm9" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Alarm9 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call10
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call10" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call10 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call2
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call2" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call2 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call3
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call3" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call3 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call4
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call4" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call4 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call5
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call5" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call5 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call6
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call6" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call6 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call7
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call7" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call7 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call8
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call8" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call8 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Looping_Call9
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Looping_Call9" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Looping_Call9 = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Mail
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Mail" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Mail = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Proximity
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Proximity" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Proximity = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_Reminder
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_Reminder" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_Reminder = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Notification_SMS
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Notification_SMS" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Notification_SMS = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_Open
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_Open" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_Open = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_PrintComplete
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_PrintComplete" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_PrintComplete = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_ProximityConnection
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_ProximityConnection" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_ProximityConnection = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_RestoreDown
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_RestoreDown" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_RestoreDown = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_RestoreUp
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_RestoreUp" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_RestoreUp = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_ShowBand
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_ShowBand" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_ShowBand = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemAsterisk
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemAsterisk" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemAsterisk = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemExclamation
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemExclamation" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemExclamation = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemExit
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemExit" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemExit = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemStart
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemStart" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemStart = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Imageres_SystemStart
+        If Not String.IsNullOrWhiteSpace(x) Then  'Don't include the condition: Not x.StartsWith(My.PATH_Windows & "\media", My._ignore)
+            ZipEntry = cache & "Snd_Imageres_SystemStart" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Imageres_SystemStart = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemHand
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemHand" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemHand = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemNotification
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemNotification" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemNotification = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_SystemQuestion
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_SystemQuestion" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_SystemQuestion = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_WindowsLogoff
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_WindowsLogoff" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_WindowsLogoff = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_WindowsLogon
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_WindowsLogon" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_WindowsLogon = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_WindowsUAC
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_WindowsUAC" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_WindowsUAC = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Win_WindowsUnlock
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Win_WindowsUnlock" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Win_WindowsUnlock = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_ActivatingDocument
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_ActivatingDocument" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_ActivatingDocument = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_BlockedPopup
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_BlockedPopup" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_BlockedPopup = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_EmptyRecycleBin
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_EmptyRecycleBin" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_EmptyRecycleBin = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_FeedDiscovered
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_FeedDiscovered" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_FeedDiscovered = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_MoveMenuItem
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_MoveMenuItem" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_MoveMenuItem = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_Navigating
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_Navigating" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_Navigating = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_SecurityBand
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_SecurityBand" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_SecurityBand = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_SearchProviderDiscovered
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_SearchProviderDiscovered" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_SearchProviderDiscovered = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_FaxError
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_FaxError" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_FaxError = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_FaxLineRings
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_FaxLineRings" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_FaxLineRings = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_FaxNew
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_FaxNew" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_FaxNew = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_Explorer_FaxSent
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_Explorer_FaxSent" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_Explorer_FaxSent = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_NetMeeting_PersonJoins
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_NetMeeting_PersonJoins" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_NetMeeting_PersonJoins = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_NetMeeting_PersonLeaves
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_NetMeeting_PersonLeaves" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_NetMeeting_PersonLeaves = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_NetMeeting_ReceiveCall
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_NetMeeting_ReceiveCall" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_NetMeeting_ReceiveCall = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_NetMeeting_ReceiveRequestToJoin
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_NetMeeting_ReceiveRequestToJoin" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_NetMeeting_ReceiveRequestToJoin = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_DisNumbersSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_DisNumbersSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_DisNumbersSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_HubOffSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_HubOffSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_HubOffSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_HubOnSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_HubOnSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_HubOnSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_HubSleepSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_HubSleepSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_HubSleepSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_MisrecoSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_MisrecoSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_MisrecoSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+
+        x = CP.Sounds.Snd_SpeechRec_PanelSound
+        If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\media", My._ignore) Then
+            ZipEntry = cache & "Snd_SpeechRec_PanelSound" & IO.Path.GetExtension(x)
+            If IO.File.Exists(x) Then CP.Sounds.Snd_SpeechRec_PanelSound = ZipEntry
+            filesList.Add(ZipEntry, x)
+        End If
+#End Region
 
         If IO.File.Exists(Package) Then IO.File.Delete(Package)
         Using archive As ZipArchive = ZipFile.Open(Package, ZipArchiveMode.Create)

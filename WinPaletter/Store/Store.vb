@@ -1358,7 +1358,6 @@ Public Class Store
         MainFrm.MakeItDoubleBuffered(Titlebar_lbl)
         MainFrm.MakeItDoubleBuffered(Tabs)
         MainFrm.MakeItDoubleBuffered(log)
-        MainFrm.MakeItDoubleBuffered(NonExistingRes)
 
         MainFrm.MakeItDoubleBuffered(Cursors_Container)
         MainFrm.MakeItDoubleBuffered(Arrow)
@@ -1487,11 +1486,13 @@ Public Class Store
 
             'Loop through valid lines from the themes list
             For Each item In items
-                Dim URL As String = item.Split("|")(1)
-                Dim MD5 As String = item.Split("|")(0).ToUpper
+                Dim URL_ThemeFile As String = item.Split("|")(2)
+                Dim MD5_ThemeFile As String = item.Split("|")(0).ToUpper
+                Dim URL_PackFile As String = item.Split("|")(3)
+                Dim MD5_PackFile As String = item.Split("|")(1).ToUpper
 
                 'Create a folder inside AppData folder
-                Dim temp As String = URL.Replace("?raw=true", "")
+                Dim temp As String = URL_ThemeFile.Replace("?raw=true", "")
                 Dim FileName As String = temp.Split("/").Last
                 temp = temp.Replace("/" & FileName, "")
                 Dim FolderName As String = temp.Split("/").Last
@@ -1505,14 +1506,14 @@ Public Class Store
                 If File.Exists(Dir & "\" & FileName) Then
 
                     'If it exists, check MD5, if it is changed, redownload the theme
-                    If CalculateMD5(Dir & "\" & FileName) <> MD5 Then
+                    If CalculateMD5(Dir & "\" & FileName) <> MD5_ThemeFile Then
                         File.Delete(Dir & "\" & FileName)
-                        Status_lbl.SetText(String.Format(My.Lang.Store_UpdateTheme, FileName, URL))
-                        Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
+                        Status_lbl.SetText(String.Format(My.Lang.Store_UpdateTheme, FileName, URL_ThemeFile))
+                        Try : WebCL.DownloadFile(URL_ThemeFile, Dir & "\" & FileName) : Catch : End Try
                     End If
                 Else
-                    Status_lbl.SetText(String.Format(My.Lang.Store_DownloadTheme, FileName, URL))
-                    Try : WebCL.DownloadFile(URL, Dir & "\" & FileName) : Catch : End Try
+                    Status_lbl.SetText(String.Format(My.Lang.Store_DownloadTheme, FileName, URL_ThemeFile))
+                    Try : WebCL.DownloadFile(URL_ThemeFile, Dir & "\" & FileName) : Catch : End Try
                 End If
 
                 i += 1
@@ -1528,13 +1529,14 @@ Public Class Store
                             Dim ctrl As New StoreItem With {
                                            .FileName = Dir & "\" & FileName,
                                            .CP = CP,
-                                           .MD5 = MD5,
+                                           .MD5_ThemeFile = MD5_ThemeFile,
+                                           .MD5_PackFile = MD5_PackFile,
                                            .DoneByWinPaletter = (DB.ToUpper = My.Resources.Link_StoreMainDB.ToUpper),
                                            .Size = New Size(w, h),
-                                           .URL = URL}
+                                           .URL_ThemeFile = URL_ThemeFile,
+                                           .URL_PackFile = URL_PackFile}
 
                             If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
-
 
                             AddHandler ctrl.Click, AddressOf StoreItem_Clicked
                             AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
@@ -1625,10 +1627,10 @@ Public Class Store
             Dim ctrl As New StoreItem With {
                         .FileName = StoreItem.Key,
                         .CP = StoreItem.Value,
-                        .MD5 = CalculateMD5(StoreItem.Key),
+                        .MD5_ThemeFile = CalculateMD5(StoreItem.Key),
                         .DoneByWinPaletter = False,
                         .Size = New Size(w, h),
-                        .URL = New FileInfo(StoreItem.Key).FullName}
+                        .URL_ThemeFile = New FileInfo(StoreItem.Key).FullName}
 
             If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
 
@@ -1729,10 +1731,10 @@ Public Class Store
                     theme_name_lbl.Text = .CP.Info.ThemeName
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
-                    MD5_lbl.Text = .MD5
+                    MD5_lbl.Text = .MD5_ThemeFile
                     themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
-                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL), .URL.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
+                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL_ThemeFile), .URL_ThemeFile.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
                     Dim os_list As New List(Of String)
@@ -1757,8 +1759,6 @@ Public Class Store
                         os_format &= os_list(os_list.Count - 2) & " && " & os_list(os_list.Count - 1)
                     End If
                     SupportedOS_lbl.Text = os_format
-
-                    GetNonExistingResources()
 
                     Tabs.SelectedIndex = 1
 
@@ -1908,10 +1908,10 @@ Public Class Store
                 Dim ctrl As New StoreItem With {
                .FileName = st_item.Key,
                .CP = st_item.Value.CP,
-               .MD5 = CalculateMD5(st_item.Key),
+               .MD5_ThemeFile = CalculateMD5(st_item.Key),
                .DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
                .Size = New Size(w, h),
-               .URL = st_item.Value.URL}
+               .URL_ThemeFile = st_item.Value.URL_ThemeFile}
 
                 If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
 
@@ -1948,109 +1948,6 @@ Public Class Store
 
     End Function
 
-    Sub GetNonExistingResources()
-        NonExistingRes.Nodes.Clear()
-        Dim filesList As New List(Of String) : filesList.Clear()
-        Dim fontsList As New List(Of String) : fontsList.Clear()
-
-        Dim x As String
-
-        x = selectedItem.CP.WindowsXP.ThemeFile
-        If My.WXP AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.LogonUI7.ImagePath
-        If (My.W7 Or My.W8) AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        If My.W11 Or My.W10 Then
-            x = selectedItem.CP.Terminal.DefaultProf.BackgroundImage
-            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.Terminal.DefaultProf.Icon
-            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.TerminalPreview.DefaultProf.BackgroundImage
-            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-            x = selectedItem.CP.TerminalPreview.DefaultProf.Icon
-            If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-            For Each i In selectedItem.CP.Terminal.Profiles
-                x = i.BackgroundImage
-                If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-                x = i.Icon
-                If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-            Next
-
-            For Each i In selectedItem.CP.TerminalPreview.Profiles
-                x = i.BackgroundImage
-                If Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-                x = i.Icon
-                If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.Length <= 1 AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-            Next
-        End If
-
-
-        x = selectedItem.CP.WallpaperTone_W11.Image
-        If My.W11 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W10.Image
-        If My.W10 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W8.Image
-        If My.W8 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_W7.Image
-        If My.W7 AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_WVista.Image
-        If My.WVista AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-        x = selectedItem.CP.WallpaperTone_WXP.Image
-        If My.WXP AndAlso Not String.IsNullOrWhiteSpace(x) AndAlso Not File.Exists(x) AndAlso Not filesList.Contains(x) Then filesList.Add(x)
-
-
-
-        x = selectedItem.CP.MetricsFonts.CaptionFont.Name
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.StatusFont.Name
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.MessageFont.Name
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.IconFont.Name
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.MenuFont.Name
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_MSShellDlg2
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-        x = selectedItem.CP.MetricsFonts.FontSubstitute_SegoeUI
-        If Not String.IsNullOrWhiteSpace(x) AndAlso Not CP.IsFontInstalled(x) AndAlso Not fontsList.Contains(x) Then fontsList.Add(x)
-
-
-        With NonExistingRes.Nodes.Add("Files")
-            For Each y As String In filesList
-                .Nodes.Add(y)
-            Next
-        End With
-
-        With NonExistingRes.Nodes.Add("Fonts")
-            For Each y As String In fontsList
-                .Nodes.Add(y)
-            Next
-        End With
-
-        NonExistingRes.ExpandAll()
-    End Sub
 #End Region
 
 #End Region
@@ -2215,9 +2112,7 @@ Public Class Store
     Private Sub RestartExplorer_Click(sender As Object, e As EventArgs) Handles RestartExplorer.Click
         XenonCore.RestartExplorer()
     End Sub
-    Private Sub SwitchNonExistingRes_btn_Click(sender As Object, e As EventArgs) Handles SwitchNonExistingRes_btn.Click
-        XenonGroupBox4.Visible = Not XenonGroupBox4.Visible
-    End Sub
+
 #End Region
 
 #Region "   Log row"

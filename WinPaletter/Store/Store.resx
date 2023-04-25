@@ -193,37 +193,6 @@
         pQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="SwitchNonExistingRes_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAbtJREFUSEvd
-        z8kvA2EcxvH+A40DRVxstRW1xJmzAydXsdy44WA9iYOrVMQSDqoY+743RTQhEgeJREm5UGu5kkgf7zvz
-        qyadvh3FyZN8LpN5v/OO7n9OXztVrq+VuiNSLZXRce1FVY6+M4jQGx0Pv/iRS4Oh1Q5DhyMyLXYkDHhi
-        KCNedK+7NcZyhZ+ItrhbKCNekvVmImXCA5Hk8SA2RRKTaL0dp4x4hfbXDwZ+BTvcCwq2X5DPbSnyNr2K
-        DS/M3LoXuWvPH5QRTysox/zB9WceleWsKigjXqTBnJUnZHPLCsqIFxyMa7dDXyMJGa3XMC09ImtRQRnx
-        wt3QxC1xgWDWwiMyufkHGWXECw7GtoX+A/6cBzPmAtJn77U/oHXDQEwJcmkzZPobH9AM+mMUNE7fwTil
-        SJXuwn8ArrrGwQMbAsZg2ZdQvHghx+QgxYrnz9GzO4n+/TH071m/wFXfQDn1cFaFUJxHXTCy2/EbcimT
-        HvasM+S7HOXUw2kFRIYcfciT3DAzw47ekO/4UU4930kp/gLl1PMdl+AvUE4932HRJYNfclFOPeyZk+E0
-        NcGZ3fwz7CxrUO5fTKf7BI7ecicSa9lBAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="NonExistingRes_Tip.Text" xml:space="preserve">
-    <value>Theme designer should provide links (URLs) to files\fonts used and do not exist natievly in Windows inside description text.
-You can ignore these files as applying the theme will continue without them.
-There may be some files not listed according to the current Windows version.</value>
-  </data>
-  <data name="PictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAbtJREFUSEvd
-        z8kvA2EcxvH+A40DRVxstRW1xJmzAydXsdy44WA9iYOrVMQSDqoY+743RTQhEgeJREm5UGu5kkgf7zvz
-        qyadvh3FyZN8LpN5v/OO7n9OXztVrq+VuiNSLZXRce1FVY6+M4jQGx0Pv/iRS4Oh1Q5DhyMyLXYkDHhi
-        KCNedK+7NcZyhZ+ItrhbKCNekvVmImXCA5Hk8SA2RRKTaL0dp4x4hfbXDwZ+BTvcCwq2X5DPbSnyNr2K
-        DS/M3LoXuWvPH5QRTysox/zB9WceleWsKigjXqTBnJUnZHPLCsqIFxyMa7dDXyMJGa3XMC09ImtRQRnx
-        wt3QxC1xgWDWwiMyufkHGWXECw7GtoX+A/6cBzPmAtJn77U/oHXDQEwJcmkzZPobH9AM+mMUNE7fwTil
-        SJXuwn8ArrrGwQMbAsZg2ZdQvHghx+QgxYrnz9GzO4n+/TH071m/wFXfQDn1cFaFUJxHXTCy2/EbcimT
-        HvasM+S7HOXUw2kFRIYcfciT3DAzw47ekO/4UU4930kp/gLl1PMdl+AvUE4932HRJYNfclFOPeyZk+E0
-        NcGZ3fwz7CxrUO5fTKf7BI7ecicSa9lBAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="PictureBox14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA6FJREFUSEvt

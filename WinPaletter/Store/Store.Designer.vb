@@ -43,12 +43,6 @@ Partial Class Store
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.RestartExplorer = New WinPaletter.XenonButton()
         Me.Edit_btn = New WinPaletter.XenonButton()
-        Me.SwitchNonExistingRes_btn = New WinPaletter.XenonButton()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.NonExistingRes_Tip = New WinPaletter.XenonAlertBox()
-        Me.NonExistingRes = New System.Windows.Forms.TreeView()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.Apply_btn = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.SupportedOS_lbl = New System.Windows.Forms.Label()
@@ -189,8 +183,6 @@ Partial Class Store
         Me.Tabs.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
-        Me.XenonGroupBox4.SuspendLayout()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.previewContainer.SuspendLayout()
@@ -404,12 +396,12 @@ Partial Class Store
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "0"
         '
-        'container
+        'store_container
         '
         Me.store_container.AutoScroll = True
         Me.store_container.Dock = System.Windows.Forms.DockStyle.Fill
         Me.store_container.Location = New System.Drawing.Point(10, 10)
-        Me.store_container.Name = "container"
+        Me.store_container.Name = "store_container"
         Me.store_container.Size = New System.Drawing.Size(1226, 579)
         Me.store_container.TabIndex = 3
         '
@@ -418,8 +410,6 @@ Partial Class Store
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage3.Controls.Add(Me.RestartExplorer)
         Me.TabPage3.Controls.Add(Me.Edit_btn)
-        Me.TabPage3.Controls.Add(Me.SwitchNonExistingRes_btn)
-        Me.TabPage3.Controls.Add(Me.XenonGroupBox4)
         Me.TabPage3.Controls.Add(Me.Apply_btn)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox3)
         Me.TabPage3.Controls.Add(Me.previewContainer)
@@ -465,94 +455,6 @@ Partial Class Store
         Me.Edit_btn.TabIndex = 137
         Me.Edit_btn.Text = "Edit"
         Me.Edit_btn.UseVisualStyleBackColor = False
-        '
-        'SwitchNonExistingRes_btn
-        '
-        Me.SwitchNonExistingRes_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.SwitchNonExistingRes_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.SwitchNonExistingRes_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.SwitchNonExistingRes_btn.ForeColor = System.Drawing.Color.White
-        Me.SwitchNonExistingRes_btn.Image = CType(resources.GetObject("SwitchNonExistingRes_btn.Image"), System.Drawing.Image)
-        Me.SwitchNonExistingRes_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.SwitchNonExistingRes_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(98, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.SwitchNonExistingRes_btn.LineSize = 1
-        Me.SwitchNonExistingRes_btn.Location = New System.Drawing.Point(13, 552)
-        Me.SwitchNonExistingRes_btn.Name = "SwitchNonExistingRes_btn"
-        Me.SwitchNonExistingRes_btn.Size = New System.Drawing.Size(300, 34)
-        Me.SwitchNonExistingRes_btn.TabIndex = 136
-        Me.SwitchNonExistingRes_btn.Text = "Show\Hide used resources that do not exist"
-        Me.SwitchNonExistingRes_btn.UseVisualStyleBackColor = False
-        '
-        'XenonGroupBox4
-        '
-        Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox4.Controls.Add(Me.NonExistingRes_Tip)
-        Me.XenonGroupBox4.Controls.Add(Me.NonExistingRes)
-        Me.XenonGroupBox4.Controls.Add(Me.PictureBox6)
-        Me.XenonGroupBox4.Controls.Add(Me.Label13)
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(13, 296)
-        Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(681, 208)
-        Me.XenonGroupBox4.TabIndex = 135
-        Me.XenonGroupBox4.Visible = False
-        '
-        'NonExistingRes_Tip
-        '
-        Me.NonExistingRes_Tip.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.NonExistingRes_Tip.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NonExistingRes_Tip.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.NonExistingRes_Tip.CenterText = False
-        Me.NonExistingRes_Tip.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.NonExistingRes_Tip.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.NonExistingRes_Tip.Image = Nothing
-        Me.NonExistingRes_Tip.Location = New System.Drawing.Point(3, 152)
-        Me.NonExistingRes_Tip.Name = "NonExistingRes_Tip"
-        Me.NonExistingRes_Tip.Size = New System.Drawing.Size(675, 53)
-        Me.NonExistingRes_Tip.TabIndex = 136
-        Me.NonExistingRes_Tip.TabStop = False
-        Me.NonExistingRes_Tip.Text = resources.GetString("NonExistingRes_Tip.Text")
-        '
-        'NonExistingRes
-        '
-        Me.NonExistingRes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NonExistingRes.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.NonExistingRes.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.NonExistingRes.ForeColor = System.Drawing.Color.White
-        Me.NonExistingRes.FullRowSelect = True
-        Me.NonExistingRes.ItemHeight = 24
-        Me.NonExistingRes.Location = New System.Drawing.Point(3, 30)
-        Me.NonExistingRes.Name = "NonExistingRes"
-        Me.NonExistingRes.ShowLines = False
-        Me.NonExistingRes.Size = New System.Drawing.Size(675, 115)
-        Me.NonExistingRes.TabIndex = 27
-        '
-        'PictureBox6
-        '
-        Me.PictureBox6.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox6.TabIndex = 3
-        Me.PictureBox6.TabStop = False
-        '
-        'Label13
-        '
-        Me.Label13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.Transparent
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(33, 3)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(645, 24)
-        Me.Label13.TabIndex = 7
-        Me.Label13.Text = "Used resources that do not exist:"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Apply_btn
         '
@@ -1818,7 +1720,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 246)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 248)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1834,7 +1736,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 246)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 248)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -2570,7 +2472,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 244)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 246)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2580,7 +2482,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 244)
+        Me.Label17.Location = New System.Drawing.Point(33, 246)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2592,7 +2494,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 247)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 249)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -3214,8 +3116,6 @@ Partial Class Store
         Me.Tabs.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
-        Me.XenonGroupBox4.ResumeLayout(False)
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.previewContainer.ResumeLayout(False)
@@ -3376,12 +3276,6 @@ Partial Class Store
     Friend WithEvents log_header As Label
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents Log_Timer As Timer
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
-    Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents Label13 As Label
-    Friend WithEvents NonExistingRes As TreeView
-    Friend WithEvents SwitchNonExistingRes_btn As XenonButton
-    Friend WithEvents NonExistingRes_Tip As XenonAlertBox
     Friend WithEvents Edit_btn As XenonButton
     Friend WithEvents ShowCursors_btn As XenonButton
     Friend WithEvents RestartExplorer As XenonButton

@@ -612,11 +612,11 @@ Partial Class EditInfo
         Me.StoreItem1.FileName = Nothing
         Me.StoreItem1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.StoreItem1.Location = New System.Drawing.Point(349, 173)
-        Me.StoreItem1.MD5 = Nothing
+        Me.StoreItem1.MD5_ThemeFile = Nothing
         Me.StoreItem1.Name = "StoreItem1"
         Me.StoreItem1.Size = New System.Drawing.Size(317, 109)
         Me.StoreItem1.TabIndex = 35
-        Me.StoreItem1.URL = Nothing
+        Me.StoreItem1.URL_ThemeFile = Nothing
         '
         'PictureBox14
         '
