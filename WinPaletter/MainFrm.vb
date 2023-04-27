@@ -4238,10 +4238,10 @@ Public Class MainFrm
         status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
 
-
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
+
     Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
         If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
         Store.Show()

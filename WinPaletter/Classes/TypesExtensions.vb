@@ -4,7 +4,6 @@ Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Runtime.InteropServices.ComTypes
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
@@ -1020,6 +1019,17 @@ Public Module BitmapExtensions
 
         Return bmpDest
     End Function
+
+    <Extension()>
+    Public Function Tile(bmp As Bitmap, Size As Size) As Bitmap
+        Dim B As New Bitmap(Size.Width, Size.Height)
+        Dim G As Graphics = Graphics.FromImage(B)
+        Dim tb As New TextureBrush(bmp)
+        G.FillRectangle(tb, New Rectangle(0, 0, Size.Width, Size.Height))
+        G.Save()
+        Return B
+    End Function
+
 End Module
 
 Public Module ControlExtensions
@@ -1232,4 +1242,5 @@ Public Module Others
         End Try
     End Sub
     Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, ByVal text As String)
+
 End Module
