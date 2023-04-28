@@ -1677,6 +1677,11 @@
             .Snd_SpeechRec_PanelSound = ""
         End With
 
+        With [CP].Wallpaper
+            .ImageFile = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+            .WallpaperStyle = CP.WallpaperStyle.Stretched
+        End With
+
         Return [CP]
     End Function
 

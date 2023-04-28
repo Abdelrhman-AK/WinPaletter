@@ -1792,8 +1792,8 @@ Public Class MainFrm
     Function GetTintedWallpaper(WT As CP.Structures.WallpaperTone) As Bitmap
         Dim HSL As New HSLFilter With {
             .Hue = WT.H,
-            .Saturation = (WT.S - 50) * 2,
-            .Lightness = (WT.L - 50) * 2
+            .Saturation = (WT.S - 100),
+            .Lightness = (WT.L - 100)
         }
 
         Dim img As Bitmap
@@ -4117,27 +4117,6 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
-        If PreviewConfig = WinVer.W11 Then
-            WallpaperToner.WT = CP.WallpaperTone_W11
-        ElseIf PreviewConfig = WinVer.W10 Then
-            WallpaperToner.WT = CP.WallpaperTone_W10
-        ElseIf PreviewConfig = WinVer.W8 Then
-            WallpaperToner.WT = CP.WallpaperTone_W8
-        ElseIf PreviewConfig = WinVer.W7 Then
-            WallpaperToner.WT = CP.WallpaperTone_W7
-        ElseIf PreviewConfig = WinVer.WVista Then
-            WallpaperToner.WT = CP.WallpaperTone_WVista
-        ElseIf PreviewConfig = WinVer.WXP Then
-            WallpaperToner.WT = CP.WallpaperTone_WXP
-        Else
-            WallpaperToner.WT = CP.WallpaperTone_W11
-        End If
-
-        WallpaperToner.ShowDialog()
-    End Sub
-
-
     Private Sub Select_W11_CheckedChanged(sender As Object) Handles Select_W11.CheckedChanged
         If _Shown And Select_W11.Checked Then
             PreviewConfig = WinVer.W11
@@ -4215,6 +4194,22 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton35_Click(sender As Object, e As EventArgs) Handles XenonButton35.Click
+        If PreviewConfig = WinVer.W11 Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_W11
+        ElseIf PreviewConfig = WinVer.W10 Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_W10
+        ElseIf PreviewConfig = WinVer.W8 Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_W8
+        ElseIf PreviewConfig = WinVer.W7 Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_W7
+        ElseIf PreviewConfig = WinVer.WVista Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_WVista
+        ElseIf PreviewConfig = WinVer.WXP Then
+            Wallpaper_Editor.WT = CP.WallpaperTone_WXP
+        Else
+            Wallpaper_Editor.WT = CP.WallpaperTone_W11
+        End If
+
         Wallpaper_Editor.ShowDialog()
     End Sub
 

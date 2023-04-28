@@ -769,7 +769,14 @@ Namespace My
                 IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
                 Dim s As New IO.FileStream(appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
                 Dim z As New ZipArchive(s, ZipArchiveMode.Read)
-                z.ExtractToDirectory(appData & "\VisualStyles\Luna", True)
+                For Each entry As ZipArchiveEntry In z.Entries
+                    If entry.FullName.Contains("\") Then
+                        Dim dest As String = Path.Combine(appData & "\VisualStyles\Luna", entry.FullName)
+                        Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
+                        If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
+                    End If
+                    entry.ExtractToFile(Path.Combine(appData & "\VisualStyles\Luna", entry.FullName), True)
+                Next
                 z.Dispose()
                 s.Close()
                 s.Dispose()

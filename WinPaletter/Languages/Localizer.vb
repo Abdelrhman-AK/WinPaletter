@@ -71,7 +71,6 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Lang_Dashboard".ToLower Then Return Lang_Dashboard
         If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
         If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
-        If Name.ToLower = "WallpaperToner".ToLower Then Return WallpaperToner
         If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
         If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
         If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
@@ -119,7 +118,6 @@ Public Class Localizer : Implements IDisposable
                         "Lang_Dashboard",
                         "Lang_JSON_Update",
                         "Lang_JSON_Manage",
-                        "WallpaperToner",
                         "WinEffecter",
                         "LogonUIXP",
                         "VS2Win32UI",
@@ -193,7 +191,7 @@ Public Class Localizer : Implements IDisposable
     Property LogoffQuestion As String = "Are you sure you want to log off?"
     Property LogoffAlert1 As String = "This will close all open files\applications"
     Property LogoffAlert2 As String = "Logoff equals Sign Out in Windows 8.1/10/11"
-    Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in Main Form"
+    Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in main form"
     Property KillingExplorer As String = "Killing Explorer (To be restarted)"
     Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"
     Property ErrorExplorerRestart As String = "Error in restarting explorer. Relaunch it in Task Manager (Open Task Manager > Run new task > Type ""Explorer.exe"" and launch)"

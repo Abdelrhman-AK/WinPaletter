@@ -3,7 +3,10 @@ Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Public Class Wallpaper_Editor
 
+    Public WT As New CP.Structures.WallpaperTone
     Dim img, img_filled, img_tile As Bitmap
+    Dim img_untouched_forTint, img_tinted, img_tinted_filled, img_tinted_tile As Bitmap
+
     Dim index As Integer = 0
     Dim ImgLs1 As New List(Of String)
     Dim ImgLs2 As New List(Of String)
@@ -15,6 +18,24 @@ Public Class Wallpaper_Editor
         ApplyFromCP(MainFrm.CP)
         index = 0
         ApplyPreviewStyle()
+
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win11)
+            Case MainFrm.WinVer.W10
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win10)
+            Case MainFrm.WinVer.W8
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win8)
+            Case MainFrm.WinVer.W7
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win7)
+            Case MainFrm.WinVer.WVista
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinVista)
+            Case MainFrm.WinVer.WXP
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinXP)
+            Case Else
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinUndefined)
+        End Select
+
         MainFrm.Visible = False
     End Sub
 
@@ -24,16 +45,21 @@ Public Class Wallpaper_Editor
             XenonRadioButton1.Checked = .SlideShow_Folder_or_ImagesList
             XenonRadioButton2.Checked = Not .SlideShow_Folder_or_ImagesList
 
-            Select Case .WallpaperType
-                Case CP.WallpaperType.Picture
-                    source_pic.Checked = True
-                Case CP.WallpaperType.SolidColor
-                    source_color.Checked = True
-                Case CP.WallpaperType.SlideShow
-                    source_slideshow.Checked = True
-                Case Else
-                    source_pic.Checked = True
-            End Select
+            If WT.Enabled Then
+                source_wallpapertone.Checked = True
+            Else
+                Select Case .WallpaperType
+
+                    Case CP.WallpaperType.Picture
+                        source_pic.Checked = True
+                    Case CP.WallpaperType.SolidColor
+                        source_color.Checked = True
+                    Case CP.WallpaperType.SlideShow
+                        source_slideshow.Checked = True
+                    Case Else
+                        source_pic.Checked = True
+                End Select
+            End If
 
             XenonTextBox1.Text = .ImageFile
             Select Case .WallpaperStyle
@@ -51,6 +77,10 @@ Public Class Wallpaper_Editor
                     style_fill.Checked = True
             End Select
 
+            XenonTextBox3.Text = WT.Image
+            HBar.Value = WT.H
+            SBar.Value = WT.S
+            LBar.Value = WT.L
 
             XenonTextBox2.Text = .Wallpaper_Slideshow_ImagesRootPath
             ListBox1.Items.Clear()
@@ -64,18 +94,29 @@ Public Class Wallpaper_Editor
     End Sub
 
     Sub ApplyToCP(CP As CP)
+        Cursor = Cursors.AppStarting
+
         With CP.Wallpaper
             .Enabled = WallpaperEnabled.Checked
             .SlideShow_Folder_or_ImagesList = XenonRadioButton1.Checked
 
+
             If source_pic.Checked Then
                 .WallpaperType = CP.WallpaperType.Picture
+                WT.Enabled = False
+
             ElseIf source_color.Checked Then
                 .WallpaperType = CP.WallpaperType.SolidColor
+                WT.Enabled = False
+
             ElseIf source_slideshow.Checked Then
                 .WallpaperType = CP.WallpaperType.SlideShow
-            Else
+                WT.Enabled = False
+
+            ElseIf source_wallpapertone.Checked Then
                 .WallpaperType = CP.WallpaperType.Picture
+                WT.Enabled = True
+
             End If
 
             .ImageFile = XenonTextBox1.Text
@@ -102,7 +143,38 @@ Public Class Wallpaper_Editor
             .Wallpaper_Slideshow_Shuffle = XenonCheckBox3.Checked
 
             CP.Win32.Background = color_pick.BackColor
+
         End With
+
+        Cursor = Cursors.Default
+    End Sub
+
+    Sub ApplyWT()
+        WT = New CP.Structures.WallpaperTone With {
+            .Enabled = source_wallpapertone.Checked,
+            .Image = XenonTextBox3.Text,
+            .H = HBar.Value,
+            .S = SBar.Value,
+            .L = LBar.Value
+            }
+
+        Select Case MainFrm.PreviewConfig
+            Case MainFrm.WinVer.W11
+                MainFrm.CP.WallpaperTone_W11 = WT
+            Case MainFrm.WinVer.W10
+                MainFrm.CP.WallpaperTone_W10 = WT
+            Case MainFrm.WinVer.W8
+                MainFrm.CP.WallpaperTone_W8 = WT
+            Case MainFrm.WinVer.W7
+                MainFrm.CP.WallpaperTone_W7 = WT
+            Case MainFrm.WinVer.WVista
+                MainFrm.CP.WallpaperTone_WVista = WT
+            Case MainFrm.WinVer.WXP
+                MainFrm.CP.WallpaperTone_WXP = WT
+            Case Else
+                MainFrm.CP.WallpaperTone_W11 = WT
+
+        End Select
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
@@ -142,7 +214,10 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+
         ApplyToCP(MainFrm.CP)
+        ApplyWT()
+        MainFrm.Adjust_Preview()
         Close()
     End Sub
 
@@ -151,7 +226,14 @@ Public Class Wallpaper_Editor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         ApplyToCP(MainFrm.CP)
-        CPx.Wallpaper.Apply()
+        ApplyWT()
+
+        CPx.Wallpaper.Apply(source_wallpapertone.Checked)
+
+        If source_wallpapertone.Checked Then
+            WT.Apply()
+        End If
+
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
@@ -282,11 +364,13 @@ Public Class Wallpaper_Editor
         End If
     End Function
 
-    Private Sub source_pic_CheckedChanged(sender As Object) Handles source_pic.CheckedChanged, source_color.CheckedChanged
+    Private Sub source_pic_CheckedChanged(sender As Object) Handles source_pic.CheckedChanged, source_color.CheckedChanged, source_wallpapertone.CheckedChanged
         If sender.Checked Then
             Set_PicSource()
+            ApplyHSLPreview()
             ApplyPreviewStyle()
         End If
+
         Panel1.Visible = False
     End Sub
 
@@ -304,16 +388,31 @@ Public Class Wallpaper_Editor
         If source_color.Checked Then
             temp = Nothing
         Else
-            If style_fill.Checked Then
-                temp = img_filled
 
-            ElseIf style_tile.Checked Then
-                temp = img_tile
+            If Not source_wallpapertone.Checked Then
+                If style_fill.Checked Then
+                    temp = img_filled
 
+                ElseIf style_tile.Checked Then
+                    temp = img_tile
+
+                Else
+                    temp = img
+
+                End If
             Else
-                temp = img
+                If style_fill.Checked Then
+                    temp = img_tinted_filled
 
+                ElseIf style_tile.Checked Then
+                    temp = img_tinted_tile
+
+                Else
+                    temp = img_tinted
+
+                End If
             End If
+
         End If
 
         pnl_preview.Image = temp
@@ -345,6 +444,11 @@ Public Class Wallpaper_Editor
             Set_SlideshowSource()
             ApplyPreviewStyle()
         End If
+    End Sub
+
+    Private Sub XenonTextBox3_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox3.TextChanged
+        Set_PicSource()
+        ApplyHSLPreview()
     End Sub
 
     Private Sub XenonRadioButton1_CheckedChanged(sender As Object) Handles XenonRadioButton1.CheckedChanged, XenonRadioButton2.CheckedChanged
@@ -382,6 +486,10 @@ Public Class Wallpaper_Editor
             img = GetWall(XenonTextBox1.Text)
             img_filled = FillScale(img.Clone, pnl_preview.Size)
             img_tile = DirectCast(img.Clone, Bitmap).Tile(pnl_preview.Size)
+
+        ElseIf source_wallpapertone.Checked Then
+            img_untouched_forTint = GetWall(XenonTextBox3.Text)
+            ApplyHSLPreview()
         End If
 
         Cursor = Cursors.Default
@@ -397,9 +505,7 @@ Public Class Wallpaper_Editor
         End If
 
         Dim CList As New List(Of Control) From {pnl_preview}
-
         Dim C As Color = ColorPickerDlg.Pick(CList)
-
         sender.BackColor = Color.FromArgb(255, C)
 
         CList.Clear()
@@ -461,5 +567,119 @@ Public Class Wallpaper_Editor
 
     Private Sub Wallpaper_Editor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         MainFrm.Visible = True
+    End Sub
+
+    Sub ApplyHSLPreview()
+        If source_wallpapertone.Enabled AndAlso img_untouched_forTint IsNot Nothing Then
+            Dim HSL As New HSLFilter With {
+            .Hue = HBar.Value,
+            .Saturation = (SBar.Value - 100),
+            .Lightness = (LBar.Value - 100)
+        }
+
+            img_tinted = HSL.ExecuteFilter(img_untouched_forTint.Clone)
+            img_tinted_filled = FillScale(img_tinted.Clone, pnl_preview.Size)
+            img_tinted_tile = DirectCast(img_tinted.Clone, Bitmap).Tile(pnl_preview.Size)
+            ApplyPreviewStyle()
+        End If
+    End Sub
+
+    Private Sub XenonColorBar1_Scroll(sender As Object) Handles HBar.Scroll
+        HB.Text = sender.Value.ToString
+
+        Dim HSL_ As New HSL_Structure
+        HSL_ = Color.FromArgb(0, 255, 240).ToHSL()
+        HSL_.H = sender.Value
+        HSL_.S = 1
+        HSL_.L = 0.5
+
+        SBar.AccentColor = HSL_.ToRGB
+        SBar.H = HSL_.H
+
+        LBar.AccentColor = HSL_.ToRGB
+        LBar.H = HSL_.H
+
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub XenonColorBar2_Scroll_1(sender As Object) Handles SBar.Scroll
+        SB.Text = sender.Value.ToString
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub XenonColorBar3_Scroll(sender As Object) Handles LBar.Scroll
+        LB.Text = sender.Value.ToString
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub HB_Click(sender As Object, e As EventArgs) Handles HB.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), HBar.Maximum), HBar.Minimum) : HBar.Value = Val(sender.Text)
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            Dim HSL As New HSLFilter With {
+                .Hue = HBar.Value,
+                .Saturation = (SBar.Value - 100),
+                .Lightness = (LBar.Value - 100)
+            }
+
+            Using _img As Bitmap = GetWall(XenonTextBox3.Text)
+                If _img IsNot Nothing Then HSL.ExecuteFilter(_img).Save(SaveFileDialog2.FileName)
+            End Using
+        End If
+    End Sub
+
+    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+        Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+        Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
+        If R1 IsNot Nothing Then R1.Close()
+
+        If Not IO.File.Exists(WallpaperPath) Then
+            If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+            Else
+                WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+            End If
+        End If
+
+        XenonTextBox3.Text = WallpaperPath
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+        If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            XenonTextBox3.Text = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
+        Else
+            XenonTextBox3.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
+        End If
+
+        If Not IO.File.Exists(XenonTextBox1.Text) Then
+            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            XenonTextBox3.Text = R1.GetValue("Wallpaper").ToString()
+            If R1 IsNot Nothing Then R1.Close()
+        End If
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+        If OpenImgDlg.ShowDialog = DialogResult.OK Then
+            XenonTextBox3.Text = OpenImgDlg.FileName
+            ApplyHSLPreview()
+        End If
+    End Sub
+
+    Private Sub SB_Click(sender As Object, e As EventArgs) Handles SB.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), SBar.Maximum), SBar.Minimum) : SBar.Value = Val(sender.Text)
+        ApplyHSLPreview()
+    End Sub
+
+    Private Sub LB_Click(sender As Object, e As EventArgs) Handles LB.Click
+        Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
+        sender.Text = Math.Max(Math.Min(Val(response), LBar.Maximum), LBar.Minimum) : LBar.Value = Val(sender.Text)
+        ApplyHSLPreview()
     End Sub
 End Class
