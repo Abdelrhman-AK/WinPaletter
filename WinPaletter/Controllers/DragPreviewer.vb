@@ -784,22 +784,17 @@ Public Class DragPreviewer
 
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
 
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
-
             Case WinVer.W10
                 ActionCenter.Style = XenonWinElement.Styles.ActionCenter10
                 taskbar.Style = XenonWinElement.Styles.Taskbar10
                 start.Style = XenonWinElement.Styles.Start10
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W8
                 taskbar.Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W7
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
@@ -854,8 +849,6 @@ Public Class DragPreviewer
 
                 End Select
 
-                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
-
                 XenonWindow1.WinVista = True
                 XenonWindow2.WinVista = True
 
@@ -863,7 +856,6 @@ Public Class DragPreviewer
                 taskbar.Style = XenonWinElement.Styles.TaskbarXP
                 start.Style = XenonWinElement.Styles.StartXP
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.WXP
-                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.WindowsXP.Theme
                     Case WinXPTheme.LunaBlue
@@ -907,6 +899,7 @@ Public Class DragPreviewer
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
+        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(CP, MainFrm.PreviewConfig)
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Select Case MainFrm.PreviewConfig

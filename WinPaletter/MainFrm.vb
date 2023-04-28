@@ -975,22 +975,17 @@ Public Class MainFrm
 
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W11
 
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
-
             Case WinVer.W10
                 ActionCenter.Style = XenonWinElement.Styles.ActionCenter10
                 taskbar.Style = XenonWinElement.Styles.Taskbar10
                 start.Style = XenonWinElement.Styles.Start10
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.W10
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W8
                 taskbar.Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
                 XenonWindow1.Preview = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
 
             Case WinVer.W7
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.Windows7.Theme
                     Case AeroTheme.Aero
@@ -1045,7 +1040,6 @@ Public Class MainFrm
 
                 End Select
 
-                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 XenonWindow1.WinVista = True
                 XenonWindow2.WinVista = True
@@ -1054,7 +1048,6 @@ Public Class MainFrm
                 taskbar.Style = XenonWinElement.Styles.TaskbarXP
                 start.Style = XenonWinElement.Styles.StartXP
                 XenonWindow1.Preview = XenonWindow.Preview_Enum.WXP
-                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
 
                 Select Case CP.WindowsXP.Theme
                     Case WinXPTheme.LunaBlue
@@ -1122,6 +1115,7 @@ Public Class MainFrm
         End Select
 
         XenonWindow2.Preview = XenonWindow1.Preview
+        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(CP, PreviewConfig)
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Select Case PreviewConfig
@@ -1759,26 +1753,90 @@ Public Class MainFrm
             My.Wallpaper = wall.Resize(528, 297)
         End Using
 
-        Select Case PreviewConfig
-            Case WinVer.W11
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11) Else pnl_preview.BackgroundImage = My.Wallpaper
+        If Not CP.Wallpaper.Enabled Then
+            pnl_preview.BackgroundImage = My.Wallpaper
+        Else
 
-            Case WinVer.W10
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10) Else pnl_preview.BackgroundImage = My.Wallpaper
+            Dim condition0 As Boolean = PreviewConfig = WinVer.W11 And CP.WallpaperTone_W11.Enabled
+            Dim condition1 As Boolean = PreviewConfig = WinVer.W10 And CP.WallpaperTone_W10.Enabled
+            Dim condition2 As Boolean = PreviewConfig = WinVer.W8 And CP.WallpaperTone_W8.Enabled
+            Dim condition3 As Boolean = PreviewConfig = WinVer.W7 And CP.WallpaperTone_W7.Enabled
+            Dim condition4 As Boolean = PreviewConfig = WinVer.WVista And CP.WallpaperTone_WVista.Enabled
+            Dim condition5 As Boolean = PreviewConfig = WinVer.WXP And CP.WallpaperTone_WXP.Enabled
+            Dim condition As Boolean = condition0 OrElse condition1 OrElse condition2 OrElse condition3 OrElse condition4 OrElse condition5
 
-            Case WinVer.W8
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8) Else pnl_preview.BackgroundImage = My.Wallpaper
+            If condition Then
+                Select Case PreviewConfig
+                    Case WinVer.W11
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11)
 
-            Case WinVer.W7
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7) Else pnl_preview.BackgroundImage = My.Wallpaper
+                    Case WinVer.W10
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10)
 
-            Case WinVer.WVista
-                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista) Else pnl_preview.BackgroundImage = My.Wallpaper
+                    Case WinVer.W8
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8)
 
-            Case WinVer.WXP
-                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP) Else pnl_preview.BackgroundImage = My.Wallpaper
-        End Select
+                    Case WinVer.W7
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7)
 
+                    Case WinVer.WVista
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista)
+
+                    Case WinVer.WXP
+                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP)
+                End Select
+
+            Else
+
+                If CP.Wallpaper.WallpaperType = WallpaperType.Picture Then
+                    If IO.File.Exists(CP.Wallpaper.ImageFile) Then
+                        Using fs As New IO.FileStream(CP.Wallpaper.ImageFile, FileMode.Open, FileAccess.Read)
+                            Using wall As New Bitmap(fs)
+                                pnl_preview.BackgroundImage = wall.Resize(528, 297)
+                            End Using
+                        End Using
+                    Else
+                        pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
+                    End If
+
+                ElseIf CP.Wallpaper.WallpaperType = WallpaperType.SolidColor Then
+                    pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
+
+                ElseIf CP.Wallpaper.WallpaperType = WallpaperType.SlideShow Then
+                    If CP.Wallpaper.SlideShow_Folder_or_ImagesList Then
+                        Dim ls As String() = Directory.EnumerateFiles(CP.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(Function(s)
+                                                                                                                                                                       Return s.EndsWith(".bmp") _
+                                                                                                                            OrElse s.EndsWith(".jpg") _
+                                                                                                                            OrElse s.EndsWith(".png") _
+                                                                                                                            OrElse s.EndsWith(".gif")
+                                                                                                                                                                   End Function).ToArray
+                        If ls.Count > 0 AndAlso IO.File.Exists(ls(0)) Then
+                            Using fs As New IO.FileStream(ls(0), FileMode.Open, FileAccess.Read)
+                                Using wall As New Bitmap(fs)
+                                    pnl_preview.BackgroundImage = wall.Resize(528, 297)
+                                End Using
+                            End Using
+                        Else
+                            pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
+                        End If
+
+                    Else
+                        If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
+                            Using fs As New IO.FileStream(CP.Wallpaper.Wallpaper_Slideshow_Images(0), FileMode.Open, FileAccess.Read)
+                                Using wall As New Bitmap(fs)
+                                    pnl_preview.BackgroundImage = wall.Resize(528, 297)
+                                End Using
+                            End Using
+                        Else
+                            pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
+                        End If
+                    End If
+                End If
+            End If
+
+
+
+        End If
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         ApplyLivePreviewFromCP(CP)
@@ -1796,9 +1854,6 @@ Public Class MainFrm
             .Lightness = (WT.L - 100)
         }
 
-        Dim img As Bitmap
-
-
         If Not IO.File.Exists([WT].Image) Then
             If My.WXP Then
                 [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
@@ -1807,11 +1862,12 @@ Public Class MainFrm
             End If
         End If
 
-        Dim S As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
-        img = Image.FromStream(S).Resize(pnl_preview.Size)
-        S.Close()
+        Using s As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
+            Using img As New Bitmap(Image.FromStream(s))
+                Return HSL.ExecuteFilter(img).Clone
+            End Using
+        End Using
 
-        Return HSL.ExecuteFilter(img)
     End Function
 #End Region
 

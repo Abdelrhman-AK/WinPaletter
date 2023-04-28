@@ -214,7 +214,6 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-
         ApplyToCP(MainFrm.CP)
         ApplyWT()
         MainFrm.Adjust_Preview()

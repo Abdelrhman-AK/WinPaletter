@@ -66,7 +66,6 @@ Public Class Store
         Select Case MainFrm.PreviewConfig
             Case WinVer.W11
 #Region "Win11"
-                If CP.WallpaperTone_W11.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11)
                 XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
 
@@ -214,7 +213,6 @@ Public Class Store
 
             Case WinVer.W10
 #Region "Win10"
-                If CP.WallpaperTone_W10.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10)
                 XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
                 XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
 
@@ -441,7 +439,6 @@ Public Class Store
 
             Case WinVer.W8
 #Region "Win8.1"
-                If CP.WallpaperTone_W8.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8)
                 Select Case [CP].Windows8.Theme
                     Case CP.AeroTheme.Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
@@ -469,8 +466,6 @@ Public Class Store
 
             Case WinVer.W7
 #Region "Win7"
-                If CP.WallpaperTone_W7.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7)
-
                 XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
                 XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
@@ -596,8 +591,6 @@ Public Class Store
 
             Case WinVer.WVista
 #Region "WinVista"
-                If CP.WallpaperTone_WVista.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista)
-
                 XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
                 XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
@@ -726,8 +719,6 @@ Public Class Store
 
             Case WinVer.WXP
 #Region "WinXP"
-                If CP.WallpaperTone_WXP.Enabled Then pnl_preview.BackgroundImage = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP)
-
                 Select Case CP.WindowsXP.Theme
                     Case WinXPTheme.LunaBlue
                         My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
@@ -788,6 +779,7 @@ Public Class Store
 #End Region
         End Select
 
+        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(CP, MainFrm.PreviewConfig)
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         If MainFrm.PreviewConfig = WinVer.W10 Then taskbar.BlurPower = If(Not CP.Windows10.IncreaseTBTransparency, 12, 6)
@@ -1386,7 +1378,7 @@ Public Class Store
         WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
         WXP_Alert2.Location = New Point(20, 20)
 
-        pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         MD5_lbl.Font = My.Application.ConsoleFontMedium

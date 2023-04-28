@@ -187,6 +187,7 @@ Namespace My
         End Function
 #End Region
 
+
 #Region "   Variables"
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
@@ -194,34 +195,7 @@ Namespace My
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                            Dim Wall As Bitmap
-                                                                            Try
-                                                                                If MainFrm.CP IsNot Nothing Then
-                                                                                    Select Case MainFrm.PreviewConfig
-                                                                                        Case MainFrm.WinVer.W11
-                                                                                            If MainFrm.CP.WallpaperTone_W11.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W11) Else Wall = Wallpaper
-
-                                                                                        Case MainFrm.WinVer.W10
-                                                                                            If MainFrm.CP.WallpaperTone_W10.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W10) Else Wall = Wallpaper
-
-                                                                                        Case MainFrm.WinVer.W8
-                                                                                            If MainFrm.CP.WallpaperTone_W8.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W8) Else Wall = Wallpaper
-
-                                                                                        Case MainFrm.WinVer.W7
-                                                                                            If MainFrm.CP.WallpaperTone_W7.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_W7) Else Wall = Wallpaper
-
-                                                                                        Case MainFrm.WinVer.WVista
-                                                                                            If MainFrm.CP.WallpaperTone_WVista.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_WVista) Else Wall = Wallpaper
-
-                                                                                        Case MainFrm.WinVer.WXP
-                                                                                            If MainFrm.CP.WallpaperTone_WXP.Enabled Then Wall = MainFrm.GetTintedWallpaper(MainFrm.CP.WallpaperTone_WXP) Else Wall = Wallpaper
-                                                                                    End Select
-                                                                                Else
-                                                                                    Wall = Wallpaper
-                                                                                End If
-                                                                            Catch
-                                                                                Wall = Wallpaper
-                                                                            End Try
+                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(MainFrm.CP, MainFrm.PreviewConfig)
                                                                             MainFrm.pnl_preview.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview_classic.BackgroundImage = Wall
                                                                             DragPreviewer.pnl_preview.BackgroundImage = Wall
@@ -432,6 +406,134 @@ Namespace My
 #End Region
 
 #Region "   Wallpaper and User Preferences System"
+        Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As MainFrm.WinVer) As Bitmap
+            Using picbox As New PictureBox With {.Size = MainFrm.pnl_preview.Size, .BackColor = CP.Win32.Background}
+
+                Dim Wall As Bitmap
+
+                If Not CP.Wallpaper.Enabled Then
+                    Wall = Wallpaper
+                    Return Wall
+                Else
+                    Dim condition0 As Boolean = PreviewConfig = MainFrm.WinVer.W11 And CP.WallpaperTone_W11.Enabled
+                    Dim condition1 As Boolean = PreviewConfig = MainFrm.WinVer.W10 And CP.WallpaperTone_W10.Enabled
+                    Dim condition2 As Boolean = PreviewConfig = MainFrm.WinVer.W8 And CP.WallpaperTone_W8.Enabled
+                    Dim condition3 As Boolean = PreviewConfig = MainFrm.WinVer.W7 And CP.WallpaperTone_W7.Enabled
+                    Dim condition4 As Boolean = PreviewConfig = MainFrm.WinVer.WVista And CP.WallpaperTone_WVista.Enabled
+                    Dim condition5 As Boolean = PreviewConfig = MainFrm.WinVer.WXP And CP.WallpaperTone_WXP.Enabled
+                    Dim condition As Boolean = condition0 OrElse condition1 OrElse condition2 OrElse condition3 OrElse condition4 OrElse condition5
+
+                    If condition Then
+                        Select Case PreviewConfig
+                            Case MainFrm.WinVer.W11
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11)
+
+                            Case MainFrm.WinVer.W10
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10)
+
+                            Case MainFrm.WinVer.W8
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8)
+
+                            Case MainFrm.WinVer.W7
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7)
+
+                            Case MainFrm.WinVer.WVista
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista)
+
+                            Case MainFrm.WinVer.WXP
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP)
+
+                            Case Else
+                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11)
+
+                        End Select
+                    Else
+
+                        If CP.Wallpaper.WallpaperType = CP.WallpaperType.Picture Then
+                            If IO.File.Exists(CP.Wallpaper.ImageFile) Then
+                                Using fs As New IO.FileStream(CP.Wallpaper.ImageFile, FileMode.Open, FileAccess.Read)
+                                    Using wallX As New Bitmap(fs)
+                                        Wall = wallX.Clone
+                                    End Using
+                                End Using
+                            Else
+                                Wall = Wallpaper
+                                Return Wall
+                            End If
+
+                        ElseIf CP.Wallpaper.WallpaperType = CP.WallpaperType.SolidColor Then
+                            Wall = Nothing
+
+                        ElseIf CP.Wallpaper.WallpaperType = CP.WallpaperType.SlideShow Then
+
+                            If CP.Wallpaper.SlideShow_Folder_or_ImagesList Then
+                                Dim ls As String() = Directory.EnumerateFiles(CP.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(Function(s)
+                                                                                                                                                                               Return s.EndsWith(".bmp") _
+                                                                                                                                                                                    OrElse s.EndsWith(".jpg") _
+                                                                                                                                                                                    OrElse s.EndsWith(".png") _
+                                                                                                                                                                                    OrElse s.EndsWith(".gif")
+                                                                                                                                                                           End Function).ToArray
+                                If ls.Count > 0 AndAlso IO.File.Exists(ls(0)) Then
+                                    Using fs As New IO.FileStream(ls(0), FileMode.Open, FileAccess.Read)
+                                        Using wallX As New Bitmap(fs)
+                                            Wall = wallX.Clone
+                                        End Using
+                                    End Using
+                                Else
+                                    Wall = Wallpaper
+                                    Return Wall
+                                End If
+
+                            Else
+                                If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
+                                    Using fs As New IO.FileStream(CP.Wallpaper.Wallpaper_Slideshow_Images(0), FileMode.Open, FileAccess.Read)
+                                        Using wallX As New Bitmap(fs)
+                                            Wall = wallX.Clone
+                                        End Using
+                                    End Using
+                                Else
+                                    Wall = Wallpaper
+                                    Return Wall
+                                End If
+                            End If
+                        Else
+                            Wall = Wallpaper
+                            Return Wall
+                        End If
+                    End If
+                End If
+
+                If Wall IsNot Nothing Then
+                    Dim ScaleW As Single = 1920 / picbox.Size.Width
+                    Dim ScaleH As Single = 1080 / picbox.Size.Height
+                    Wall = Wall.Resize(Wall.Width / ScaleW, Wall.Height / ScaleH).Clone
+
+                    If CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fill Then
+                        picbox.SizeMode = PictureBoxSizeMode.CenterImage
+                        Wall = DirectCast(Wall.Clone, Bitmap).FillScale(picbox.Size)
+
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fit Then
+                        picbox.SizeMode = PictureBoxSizeMode.Zoom
+
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Stretched Then
+                        picbox.SizeMode = PictureBoxSizeMode.StretchImage
+
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Centered Then
+                        picbox.SizeMode = PictureBoxSizeMode.CenterImage
+
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Tile Then
+                        picbox.SizeMode = PictureBoxSizeMode.Normal
+                        Wall = DirectCast(Wall.Clone, Bitmap).Tile(picbox.Size)
+
+                    End If
+
+                End If
+
+                picbox.Image = Wall
+
+                Return picbox.ToBitmap
+            End Using
+        End Function
         Public Function GetWallpaper() As Bitmap
 
             Dim WallpaperPath As String
