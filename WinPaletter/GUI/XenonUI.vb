@@ -5077,8 +5077,14 @@ Public Class XenonWinElement : Inherits ContainerControl
                 If Transparency Then
                     Dim b As Bitmap = New Bitmap(adaptedBack).Blur(BlurPower)
                     If DarkMode Then
-                        Dim hsl As New HSLFilter With {.Saturation = 60}
-                        adaptedBackBlurred = hsl.ExecuteFilter(b)
+                        If b IsNot Nothing Then
+                            Using ImgF As New ImageProcessor.ImageFactory
+                                ImgF.Load(b)
+                                ImgF.Saturation(60)
+                                adaptedBackBlurred = ImgF.Image.Clone
+                            End Using
+                        End If
+
                     Else
                         adaptedBackBlurred = b
                     End If
@@ -6038,10 +6044,15 @@ Public Class XenonWindow : Inherits Panel
             If Preview = Preview_Enum.W11 Then
                 Dim b As Bitmap = New Bitmap(AdaptedBack).Blur(15)
                 If DarkMode Then
-                    Dim hsl As New HSLFilter
-                    hsl.Saturation = 35
-                    hsl.Lightness = -50
-                    AdaptedBackBlurred = hsl.ExecuteFilter(b)
+                    If b IsNot Nothing Then
+                        Using ImgF As New ImageProcessor.ImageFactory
+                            ImgF.Load(b)
+                            ImgF.Saturation(15)
+                            ImgF.Brightness(-10)
+                            AdaptedBackBlurred = ImgF.Image.Clone
+                        End Using
+                    End If
+
                 Else
                     AdaptedBackBlurred = b
                 End If

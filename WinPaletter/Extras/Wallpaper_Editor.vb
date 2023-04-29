@@ -346,14 +346,10 @@ Public Class Wallpaper_Editor
     Function GetWall(file As String) As Bitmap
         If IO.File.Exists(file) Then
             Try
-                Using fs As New IO.FileStream(file, IO.FileMode.Open, IO.FileAccess.Read)
-                    Using bmp As New Bitmap(fs)
-
-                        Dim ScaleW As Single = 1920 / pnl_preview.Size.Width
-                        Dim ScaleH As Single = 1080 / pnl_preview.Size.Height
-
-                        Return bmp.Resize(bmp.Width / ScaleW, bmp.Height / ScaleH).Clone
-                    End Using
+                Using bmp As Bitmap = Bitmap_Mgr.Load(file)
+                    Dim ScaleW As Single = 1920 / pnl_preview.Size.Width
+                    Dim ScaleH As Single = 1080 / pnl_preview.Size.Height
+                    Return bmp.Resize(bmp.Width / ScaleW, bmp.Height / ScaleH)
                 End Using
             Catch
                 Return Nothing
@@ -570,15 +566,17 @@ Public Class Wallpaper_Editor
 
     Sub ApplyHSLPreview()
         If source_wallpapertone.Enabled AndAlso img_untouched_forTint IsNot Nothing Then
-            Dim HSL As New HSLFilter With {
-            .Hue = HBar.Value,
-            .Saturation = (SBar.Value - 100),
-            .Lightness = (LBar.Value - 100)
-        }
+            Using ImgF As New ImageProcessor.ImageFactory
+                ImgF.Load(img_untouched_forTint)
+                ImgF.Hue(HBar.Value, True)
+                ImgF.Saturation(SBar.Value - 100)
+                ImgF.Brightness(LBar.Value - 100)
 
-            img_tinted = HSL.ExecuteFilter(img_untouched_forTint.Clone)
-            img_tinted_filled = FillScale(img_tinted.Clone, pnl_preview.Size)
-            img_tinted_tile = DirectCast(img_tinted.Clone, Bitmap).Tile(pnl_preview.Size)
+                img_tinted = ImgF.Image
+                img_tinted_filled = FillScale(img_tinted.Clone, pnl_preview.Size)
+                img_tinted_tile = DirectCast(img_tinted.Clone, Bitmap).Tile(pnl_preview.Size)
+            End Using
+
             ApplyPreviewStyle()
         End If
     End Sub
@@ -618,15 +616,13 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
-        If SaveFileDialog2.ShowDialog = DialogResult.OK Then
-            Dim HSL As New HSLFilter With {
-                .Hue = HBar.Value,
-                .Saturation = (SBar.Value - 100),
-                .Lightness = (LBar.Value - 100)
-            }
-
-            Using _img As Bitmap = GetWall(XenonTextBox3.Text)
-                If _img IsNot Nothing Then HSL.ExecuteFilter(_img).Save(SaveFileDialog2.FileName)
+        If IO.File.Exists(XenonTextBox3.Text) AndAlso SaveFileDialog2.ShowDialog = DialogResult.OK Then
+            Using ImgF As New ImageProcessor.ImageFactory
+                ImgF.Load(XenonTextBox3.Text)
+                ImgF.Hue(HBar.Value, True)
+                ImgF.Saturation(SBar.Value - 100)
+                ImgF.Brightness(LBar.Value - 100)
+                ImgF.Image.Save(SaveFileDialog2.FileName)
             End Using
         End If
     End Sub

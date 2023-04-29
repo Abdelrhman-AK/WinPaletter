@@ -8,6 +8,7 @@ Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
+Imports System.Xml
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -1748,97 +1749,8 @@ Public Class MainFrm
     End Sub
     Public Sub Update_Wallpaper_Preview()
         Cursor = Cursors.AppStarting
-
-        Using wall As New Bitmap(My.Application.GetWallpaper())
-            My.Wallpaper = wall.Resize(528, 297)
-        End Using
-
-        If Not CP.Wallpaper.Enabled Then
-            pnl_preview.BackgroundImage = My.Wallpaper
-        Else
-
-            Dim condition0 As Boolean = PreviewConfig = WinVer.W11 And CP.WallpaperTone_W11.Enabled
-            Dim condition1 As Boolean = PreviewConfig = WinVer.W10 And CP.WallpaperTone_W10.Enabled
-            Dim condition2 As Boolean = PreviewConfig = WinVer.W8 And CP.WallpaperTone_W8.Enabled
-            Dim condition3 As Boolean = PreviewConfig = WinVer.W7 And CP.WallpaperTone_W7.Enabled
-            Dim condition4 As Boolean = PreviewConfig = WinVer.WVista And CP.WallpaperTone_WVista.Enabled
-            Dim condition5 As Boolean = PreviewConfig = WinVer.WXP And CP.WallpaperTone_WXP.Enabled
-            Dim condition As Boolean = condition0 OrElse condition1 OrElse condition2 OrElse condition3 OrElse condition4 OrElse condition5
-
-            If condition Then
-                Select Case PreviewConfig
-                    Case WinVer.W11
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W11)
-
-                    Case WinVer.W10
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W10)
-
-                    Case WinVer.W8
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W8)
-
-                    Case WinVer.W7
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_W7)
-
-                    Case WinVer.WVista
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WVista)
-
-                    Case WinVer.WXP
-                        pnl_preview.BackgroundImage = GetTintedWallpaper(CP.WallpaperTone_WXP)
-                End Select
-
-            Else
-
-                If CP.Wallpaper.WallpaperType = WallpaperType.Picture Then
-                    If IO.File.Exists(CP.Wallpaper.ImageFile) Then
-                        Using fs As New IO.FileStream(CP.Wallpaper.ImageFile, FileMode.Open, FileAccess.Read)
-                            Using wall As New Bitmap(fs)
-                                pnl_preview.BackgroundImage = wall.Resize(528, 297)
-                            End Using
-                        End Using
-                    Else
-                        pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
-                    End If
-
-                ElseIf CP.Wallpaper.WallpaperType = WallpaperType.SolidColor Then
-                    pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
-
-                ElseIf CP.Wallpaper.WallpaperType = WallpaperType.SlideShow Then
-                    If CP.Wallpaper.SlideShow_Folder_or_ImagesList Then
-                        Dim ls As String() = Directory.EnumerateFiles(CP.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(Function(s)
-                                                                                                                                                                       Return s.EndsWith(".bmp") _
-                                                                                                                            OrElse s.EndsWith(".jpg") _
-                                                                                                                            OrElse s.EndsWith(".png") _
-                                                                                                                            OrElse s.EndsWith(".gif")
-                                                                                                                                                                   End Function).ToArray
-                        If ls.Count > 0 AndAlso IO.File.Exists(ls(0)) Then
-                            Using fs As New IO.FileStream(ls(0), FileMode.Open, FileAccess.Read)
-                                Using wall As New Bitmap(fs)
-                                    pnl_preview.BackgroundImage = wall.Resize(528, 297)
-                                End Using
-                            End Using
-                        Else
-                            pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
-                        End If
-
-                    Else
-                        If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
-                            Using fs As New IO.FileStream(CP.Wallpaper.Wallpaper_Slideshow_Images(0), FileMode.Open, FileAccess.Read)
-                                Using wall As New Bitmap(fs)
-                                    pnl_preview.BackgroundImage = wall.Resize(528, 297)
-                                End Using
-                            End Using
-                        Else
-                            pnl_preview.BackgroundImage = CP.Win32.Background.ToBitmap(New Size(528, 297))
-                        End If
-                    End If
-                End If
-            End If
-
-
-
-        End If
+        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(CP, PreviewConfig)
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
-
         ApplyLivePreviewFromCP(CP)
         ApplyCPValues(CP)
         Adjust_Preview(False)
@@ -1848,12 +1760,6 @@ Public Class MainFrm
         Cursor = Cursors.Default
     End Sub
     Function GetTintedWallpaper(WT As CP.Structures.WallpaperTone) As Bitmap
-        Dim HSL As New HSLFilter With {
-            .Hue = WT.H,
-            .Saturation = (WT.S - 100),
-            .Lightness = (WT.L - 100)
-        }
-
         If Not IO.File.Exists([WT].Image) Then
             If My.WXP Then
                 [WT].Image = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
@@ -1862,10 +1768,13 @@ Public Class MainFrm
             End If
         End If
 
-        Using s As New IO.FileStream([WT].Image, IO.FileMode.Open, IO.FileAccess.Read)
-            Using img As New Bitmap(Image.FromStream(s))
-                Return HSL.ExecuteFilter(img).Clone
-            End Using
+        Using ImgF As New ImageProcessor.ImageFactory
+            ImgF.Load([WT].Image)
+            ImgF.Hue(WT.H, True)
+            ImgF.Saturation(WT.S - 100)
+            ImgF.Brightness(WT.L - 100)
+
+            Return ImgF.Image.Clone
         End Using
 
     End Function

@@ -174,18 +174,19 @@ Public Class LogonUI7
                 Else
                     syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", ID)
                 End If
-                bmpX = Image.FromStream(New FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
+
+                bmpX = Bitmap_Mgr.Load(syslock)
             End If
 
         ElseIf XenonRadioButton2.Checked Then
-            Using wall As New Bitmap(My.Application.GetWallpaper)
-                bmpX = wall
-            End Using
+            bmpX = My.Application.GetWallpaper.Clone
 
         ElseIf XenonRadioButton3.Checked Then
             bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)
+
         ElseIf XenonRadioButton4.Checked And IO.File.Exists(XenonTextBox1.Text) Then
-            bmpX = Image.FromStream(New FileStream(XenonTextBox1.Text, IO.FileMode.Open, IO.FileAccess.Read))
+            bmpX = Bitmap_Mgr.Load(XenonTextBox1.Text)
+
         Else
             bmpX = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
         End If

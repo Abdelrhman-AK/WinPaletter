@@ -581,6 +581,7 @@ Public Class ColorPickerDlg
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 
+
         Select Case XenonRadioButton1.Checked
             Case True
                 Using wall As New Bitmap(My.Application.GetWallpaper())
@@ -588,21 +589,11 @@ Public Class ColorPickerDlg
                 End Using
 
             Case False
-                If IO.File.Exists(TextBox1.Text) Then
-                    Try
-                        Using fs As New IO.FileStream(TextBox1.Text, IO.FileMode.OpenOrCreate, IO.FileAccess.Read)
-                            img = Image.FromStream(fs).Clone
-                            fs.Close()
-                            fs.Dispose()
-                        End Using
-                    Catch
-                        img = Nothing
-                    End Try
-                Else
-                    img = Nothing
-                End If
+                img = Bitmap_Mgr.Load(TextBox1.Text)
 
         End Select
+
+        If XenonCheckBox2.Checked Then img = img.Resize(MainFrm.pnl_preview.Size)
 
         If img IsNot Nothing Then
             Label4.Text = My.Lang.Extracting

@@ -209,9 +209,7 @@ Public Module Resources_Functions
         Try
             If IO.File.Exists(File) Then
                 Using ms As New MemoryStream(GetResource(File, ResourceType, ResourceID))
-                    Dim img As New Bitmap(Image.FromStream(ms))
-                    ms.Close()
-                    Return img
+                    Return Bitmap.FromStream(ms, True, False)
                 End Using
             Else
                 Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))

@@ -790,12 +790,12 @@ Public Module Paths
                 Next
             Next
 
-            Dim ImgF As New ImageProcessor.ImageFactory
-            ImgF.Load(shadowedBMP)
-            ImgF.GaussianBlur([CursorOptions].Shadow_Blur)
-            ImgF.Alpha([CursorOptions].Shadow_Opacity * 100)
-            G_Final.DrawImage(ImgF.Image, New Rectangle(0 + [CursorOptions].Shadow_OffsetX, 0 + [CursorOptions].Shadow_OffsetY, b.Width, b.Height))
-            ImgF.Dispose()
+            Using ImgF As New ImageProcessor.ImageFactory
+                ImgF.Load(shadowedBMP)
+                ImgF.GaussianBlur([CursorOptions].Shadow_Blur)
+                ImgF.Alpha([CursorOptions].Shadow_Opacity * 100)
+                G_Final.DrawImage(ImgF.Image, New Rectangle(0 + [CursorOptions].Shadow_OffsetX, 0 + [CursorOptions].Shadow_OffsetY, b.Width, b.Height))
+            End Using
         End If
 
         G_Final.DrawImage(b, New Rectangle(0, 0, b.Width, b.Height))

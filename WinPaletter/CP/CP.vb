@@ -2040,29 +2040,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Sub
 
             Public Sub Apply()
-                Dim HSL As New HSLFilter With {
-                        .Hue = Me.H,
-                        .Saturation = (Me.S - 100),
-                        .Lightness = (Me.L - 100)
-                    }
-
-                Dim img As Bitmap
                 If Not IO.File.Exists(Image) Then Throw New IO.IOException("Couldn't Find image")
-                Dim S As New IO.FileStream(Image, IO.FileMode.Open, IO.FileAccess.Read)
-                img = System.Drawing.Image.FromStream(S)
-                S.Close()
-                S.Dispose()
 
                 Dim path As String
                 If Not My.WXP And Not My.WVista Then
                     path = IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp")
-                    HSL.ExecuteFilter(img).Save(path, Imaging.ImageFormat.Bmp)
-
                 Else
                     path = IO.Path.Combine(My.PATH_Windows, "Web\Wallpaper\TintedWallpaper.bmp")
-                    HSL.ExecuteFilter(img).Save(path, Imaging.ImageFormat.Bmp)
-
                 End If
+
+                Using ImgF As New ImageProcessor.ImageFactory
+                    ImgF.Load(Image)
+                    ImgF.Hue(H, True)
+                    ImgF.Saturation(S - 100)
+                    ImgF.Brightness(L - 100)
+                    ImgF.Image.Save(path, Imaging.ImageFormat.Bmp)
+                End Using
 
                 SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile)
                 EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String)
@@ -7275,7 +7268,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Case LogonUI_Modes.CustomImage
                     If IO.File.Exists([LogonElement].ImagePath) Then
-                        bmpList.Add(New Bitmap(Image.FromStream(New IO.FileStream([LogonElement].ImagePath, IO.FileMode.Open, IO.FileAccess.Read))))
+                        bmpList.Add(Bitmap_Mgr.Load([LogonElement].ImagePath))
+
                     Else
                         bmpList.Add(Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size))
                     End If
@@ -7346,7 +7340,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     If IO.File.Exists(syslock) Then
-                        bmp = Image.FromStream(New IO.FileStream(syslock, IO.FileMode.Open, IO.FileAccess.Read))
+                        Using ms As New IO.MemoryStream(IO.File.ReadAllBytes(syslock))
+                            bmp = Bitmap.FromStream(ms, True, False)
+                        End Using
                     Else
                         bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
                     End If
@@ -7354,7 +7350,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Case LogonUI_Modes.CustomImage
 
                     If IO.File.Exists(LogonUI7.ImagePath) Then
-                        bmp = Image.FromStream(New IO.FileStream(LogonUI7.ImagePath, IO.FileMode.Open, IO.FileAccess.Read))
+                        bmp = Bitmap_Mgr.Load(LogonUI7.ImagePath)
                     Else
                         bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
                     End If

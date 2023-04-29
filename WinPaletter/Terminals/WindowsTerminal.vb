@@ -474,7 +474,7 @@ Public Class WindowsTerminal
             End If
 
             If File.Exists(.Icon) Then
-                XenonTerminal1.TabIcon = Image.FromStream(New FileStream(.Icon, FileMode.Open, FileAccess.Read))
+                XenonTerminal1.TabIcon = Bitmap_Mgr.Load(.Icon)
 
             Else
                 NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
@@ -994,7 +994,8 @@ Public Class WindowsTerminal
             XenonTerminal1.BackImage = My.Wallpaper
         Else
             If IO.File.Exists(TerBackImage.Text) Then
-                XenonTerminal1.BackImage = Image.FromStream(New FileStream(TerBackImage.Text, IO.FileMode.Open, IO.FileAccess.Read)).FillScale(XenonTerminal1.Size).Resize(XenonTerminal1.Width - 2, XenonTerminal1.Height - 32)
+                XenonTerminal1.BackImage = Bitmap_Mgr.Load(TerBackImage.Text).FillScale(XenonTerminal1.Size).Resize(XenonTerminal1.Width - 2, XenonTerminal1.Height - 32)
+
             Else
                 XenonTerminal1.BackImage = Nothing
             End If
@@ -1361,7 +1362,7 @@ Public Class WindowsTerminal
                         End If
 
                         If File.Exists(.Icon) Then
-                            XenonTerminal1.TabIcon = Image.FromStream(New FileStream(.Icon, FileMode.Open, FileAccess.Read))
+                            XenonTerminal1.TabIcon = Bitmap_Mgr.Load(.Icon)
 
                         Else
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)

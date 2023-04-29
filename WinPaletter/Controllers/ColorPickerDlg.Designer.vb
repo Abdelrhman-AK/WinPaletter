@@ -59,6 +59,7 @@ Partial Class ColorPickerDlg
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
         Me.val2 = New WinPaletter.XenonButton()
         Me.val1 = New WinPaletter.XenonButton()
         Me.XenonTrackbar2 = New WinPaletter.XenonTrackbar()
@@ -85,6 +86,7 @@ Partial Class ColorPickerDlg
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -102,6 +104,7 @@ Partial Class ColorPickerDlg
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ColorEditorManager1
@@ -168,7 +171,7 @@ Partial Class ColorPickerDlg
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(381, 261)
+        Me.XenonButton6.Location = New System.Drawing.Point(381, 293)
         Me.XenonButton6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(69, 24)
@@ -204,7 +207,7 @@ Partial Class ColorPickerDlg
         Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
         Me.XenonCheckBox1.Location = New System.Drawing.Point(51, 223)
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(402, 24)
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(399, 24)
         Me.XenonCheckBox1.TabIndex = 9
         Me.XenonCheckBox1.Text = "Ignore white colors"
         '
@@ -260,7 +263,7 @@ Partial Class ColorPickerDlg
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(6, 291)
+        Me.ProgressBar1.Location = New System.Drawing.Point(6, 323)
         Me.ProgressBar1.MarqueeAnimationSpeed = 20
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(447, 6)
@@ -272,7 +275,7 @@ Partial Class ColorPickerDlg
         'PictureBox5
         '
         Me.PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), System.Drawing.Image)
-        Me.PictureBox5.Location = New System.Drawing.Point(6, 261)
+        Me.PictureBox5.Location = New System.Drawing.Point(6, 293)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -282,7 +285,7 @@ Partial Class ColorPickerDlg
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(39, 261)
+        Me.Label3.Location = New System.Drawing.Point(39, 293)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(335, 24)
         Me.Label3.TabIndex = 15
@@ -399,9 +402,9 @@ Partial Class ColorPickerDlg
         'ImgPaletteContainer
         '
         Me.ImgPaletteContainer.AutoScroll = True
-        Me.ImgPaletteContainer.Location = New System.Drawing.Point(18, 303)
+        Me.ImgPaletteContainer.Location = New System.Drawing.Point(18, 335)
         Me.ImgPaletteContainer.Name = "ImgPaletteContainer"
-        Me.ImgPaletteContainer.Size = New System.Drawing.Size(435, 207)
+        Me.ImgPaletteContainer.Size = New System.Drawing.Size(435, 175)
         Me.ImgPaletteContainer.TabIndex = 12
         '
         'Label4
@@ -503,6 +506,8 @@ Partial Class ColorPickerDlg
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage2.Controls.Add(Me.PictureBox12)
+        Me.TabPage2.Controls.Add(Me.XenonCheckBox2)
         Me.TabPage2.Controls.Add(Me.val2)
         Me.TabPage2.Controls.Add(Me.val1)
         Me.TabPage2.Controls.Add(Me.XenonTrackbar2)
@@ -538,6 +543,18 @@ Partial Class ColorPickerDlg
         Me.TabPage2.Size = New System.Drawing.Size(459, 516)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "From Image"
+        '
+        'XenonCheckBox2
+        '
+        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox2.Checked = True
+        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox2.Location = New System.Drawing.Point(51, 253)
+        Me.XenonCheckBox2.Name = "XenonCheckBox2"
+        Me.XenonCheckBox2.Size = New System.Drawing.Size(399, 24)
+        Me.XenonCheckBox2.TabIndex = 132
+        Me.XenonCheckBox2.Text = "Try to accelerate the process"
         '
         'val2
         '
@@ -596,7 +613,7 @@ Partial Class ColorPickerDlg
         'XenonSeparator2
         '
         Me.XenonSeparator2.AlternativeLook = False
-        Me.XenonSeparator2.Location = New System.Drawing.Point(6, 254)
+        Me.XenonSeparator2.Location = New System.Drawing.Point(6, 286)
         Me.XenonSeparator2.Name = "XenonSeparator2"
         Me.XenonSeparator2.Size = New System.Drawing.Size(447, 1)
         Me.XenonSeparator2.TabIndex = 29
@@ -840,6 +857,16 @@ Partial Class ColorPickerDlg
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|Visual Styles File (*.msstyles)|*.msstyles|All Fi" &
     "les (*.*)|*.*"
         '
+        'PictureBox12
+        '
+        Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
+        Me.PictureBox12.Location = New System.Drawing.Point(18, 253)
+        Me.PictureBox12.Name = "PictureBox12"
+        Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox12.TabIndex = 133
+        Me.PictureBox12.TabStop = False
+        '
         'ColorPickerDlg
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -878,6 +905,7 @@ Partial Class ColorPickerDlg
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -944,4 +972,6 @@ Partial Class ColorPickerDlg
     Friend WithEvents XenonTrackbar1 As XenonTrackbar
     Friend WithEvents val1 As XenonButton
     Friend WithEvents val2 As XenonButton
+    Friend WithEvents XenonCheckBox2 As XenonCheckBox
+    Friend WithEvents PictureBox12 As PictureBox
 End Class

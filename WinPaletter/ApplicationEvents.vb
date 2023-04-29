@@ -451,11 +451,8 @@ Namespace My
 
                         If CP.Wallpaper.WallpaperType = CP.WallpaperType.Picture Then
                             If IO.File.Exists(CP.Wallpaper.ImageFile) Then
-                                Using fs As New IO.FileStream(CP.Wallpaper.ImageFile, FileMode.Open, FileAccess.Read)
-                                    Using wallX As New Bitmap(fs)
-                                        Wall = wallX.Clone
-                                    End Using
-                                End Using
+                                Wall = Bitmap_Mgr.Load(CP.Wallpaper.ImageFile)
+
                             Else
                                 Wall = Wallpaper
                                 Return Wall
@@ -474,11 +471,8 @@ Namespace My
                                                                                                                                                                                     OrElse s.EndsWith(".gif")
                                                                                                                                                                            End Function).ToArray
                                 If ls.Count > 0 AndAlso IO.File.Exists(ls(0)) Then
-                                    Using fs As New IO.FileStream(ls(0), FileMode.Open, FileAccess.Read)
-                                        Using wallX As New Bitmap(fs)
-                                            Wall = wallX.Clone
-                                        End Using
-                                    End Using
+                                    Wall = Bitmap_Mgr.Load(ls(0))
+
                                 Else
                                     Wall = Wallpaper
                                     Return Wall
@@ -486,11 +480,7 @@ Namespace My
 
                             Else
                                 If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
-                                    Using fs As New IO.FileStream(CP.Wallpaper.Wallpaper_Slideshow_Images(0), FileMode.Open, FileAccess.Read)
-                                        Using wallX As New Bitmap(fs)
-                                            Wall = wallX.Clone
-                                        End Using
-                                    End Using
+                                    Wall = Bitmap_Mgr.Load(CP.Wallpaper.Wallpaper_Slideshow_Images(0))
                                 Else
                                     Wall = Wallpaper
                                     Return Wall
@@ -506,7 +496,7 @@ Namespace My
                 If Wall IsNot Nothing Then
                     Dim ScaleW As Single = 1920 / picbox.Size.Width
                     Dim ScaleH As Single = 1080 / picbox.Size.Height
-                    Wall = Wall.Resize(Wall.Width / ScaleW, Wall.Height / ScaleH).Clone
+                    Wall = Wall.Resize(Wall.Width / ScaleW, Wall.Height / ScaleH)
 
                     If CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fill Then
                         picbox.SizeMode = PictureBoxSizeMode.CenterImage
@@ -557,12 +547,8 @@ Namespace My
 
             Dim img As New Bitmap(100, 100)
             If IO.File.Exists(WallpaperPath) AndAlso (WallpaperType = 0 Or WallpaperType = 2 Or WallpaperType = 3) Then
-                Using ms As New IO.FileStream(WallpaperPath, IO.FileMode.Open, IO.FileAccess.Read)
-                    Using bmp As New Bitmap(Image.FromStream(ms))
-                        img = bmp.Clone
-                    End Using
-                    ms.Dispose()
-                End Using
+                img = Bitmap_Mgr.Load(WallpaperPath)
+
             Else
                 With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
                     img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))

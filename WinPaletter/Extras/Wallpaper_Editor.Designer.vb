@@ -1050,7 +1050,7 @@ Partial Class Wallpaper_Editor
         Me.LBar.Size = New System.Drawing.Size(390, 19)
         Me.LBar.SmallChange = 1
         Me.LBar.TabIndex = 142
-        Me.LBar.Value = 0
+        Me.LBar.Value = 100
         '
         'SBar
         '
@@ -1069,7 +1069,7 @@ Partial Class Wallpaper_Editor
         Me.SBar.Size = New System.Drawing.Size(390, 19)
         Me.SBar.SmallChange = 1
         Me.SBar.TabIndex = 141
-        Me.SBar.Value = 0
+        Me.SBar.Value = 100
         '
         'HBar
         '
