@@ -1912,9 +1912,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim slideshow_ini As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\slideshow.ini"
                     Dim slideshow_img As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\TranscodedWallpaper"
 
-                    IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Normal)
-                    IO.File.WriteAllText(slideshow_ini, "")
-                    IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Hidden)
+                    If IO.File.Exists(slideshow_ini) Then
+                        IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Normal)
+                        IO.File.WriteAllText(slideshow_ini, "")
+                        IO.File.SetAttributes(slideshow_ini, IO.FileAttributes.Hidden)
+                    End If
+
+                    ' Setting WallpaperStyle must be before setting wallpaper itself
+                    If WallpaperStyle = WallpaperStyle.Tile Then
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
+                    Else
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", CInt(WallpaperStyle), RegistryValueKind.String)
+                    End If
 
                     If Not SkipSettingWallpaper Then
                         If WallpaperType = WallpaperType.SolidColor Then
@@ -1933,13 +1943,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
 
                         End If
-                    End If
-
-                    If WallpaperStyle = WallpaperStyle.Tile Then
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
-                    Else
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", CInt(WallpaperStyle), RegistryValueKind.String)
                     End If
 
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType)
@@ -1973,7 +1976,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
                     End If
                 End If
-
             End Sub
 
             Shared Operator =(First As Wallpaper, Second As Wallpaper) As Boolean
@@ -2003,6 +2005,67 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Add("*Wallpaper_Slideshow_Interval= " & Wallpaper_Slideshow_Interval)
                 tx.Add("*Wallpaper_Slideshow_Shuffle= " & Wallpaper_Slideshow_Shuffle)
                 tx.Add("</Wallpaper>" & vbCrLf)
+                Return tx.CString
+            End Function
+
+        End Structure
+
+        Structure AppTheme : Implements ICloneable
+            Public Enabled As Boolean
+            Public BackColor As Color
+            Public AccentColor As Color
+            Public DarkMode As Boolean
+            Public RoundCorners As Boolean
+
+            Sub Load(_DefAppTheme As AppTheme)
+                Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", _DefAppTheme.Enabled)
+                BackColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Back", _DefAppTheme.BackColor.ToArgb))
+                AccentColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Accent", _DefAppTheme.AccentColor.ToArgb))
+                DarkMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom_Dark", _DefAppTheme.DarkMode)
+                RoundCorners = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Rounded", _DefAppTheme.RoundCorners)
+            End Sub
+
+            Sub Apply(Optional SkipSettingWallpaper As Boolean = False)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", Enabled)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Back", BackColor.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Accent", AccentColor.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom_Dark", DarkMode)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Rounded", RoundCorners)
+
+                With My.Settings
+                    .Appearance_Custom = Enabled
+                    .Appearance_Back = BackColor
+                    .Appearance_Accent = AccentColor
+                    .Appearance_Custom_Dark = DarkMode
+                    .Appearance_Rounded = RoundCorners
+                End With
+
+                ApplyDarkMode()
+            End Sub
+
+            Shared Operator =(First As AppTheme, Second As AppTheme) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+
+            Shared Operator <>(First As AppTheme, Second As AppTheme) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+
+            Public Function Clone() As Object Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim tx As New List(Of String)
+                tx.Clear()
+                tx.Add("<AppTheme>")
+                tx.Add("*AppTheme_Enabled= " & Enabled)
+                tx.Add("*AppTheme_BackColor= " & BackColor.ToArgb)
+                tx.Add("*AppTheme_AccentColor= " & AccentColor.ToArgb)
+                tx.Add("*AppTheme_DarkMode= " & DarkMode)
+                tx.Add("*AppTheme_RoundCorners= " & RoundCorners)
+                tx.Add("</AppTheme>" & vbCrLf)
                 Return tx.CString
             End Function
 
@@ -2081,7 +2144,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Return New Structures.WallpaperTone With {
                             .Enabled = False,
                             .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
-                            .H = 0, .S = 50, .L = 50}
+                            .H = 0, .S = 100, .L = 100}
                 End If
             End Function
 
@@ -4007,6 +4070,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Enabled = False,
         .Snd_Imageres_SystemStart = If(My.W11, "Default", "")}
 
+    Public AppTheme As New Structures.AppTheme With {
+        .Enabled = False,
+        .BackColor = Color.FromArgb(25, 25, 25),
+        .AccentColor = Color.FromArgb(0, 81, 210),
+        .DarkMode = True,
+        .RoundCorners = My.WXP Or My.WVista Or My.W7 Or My.W11}
+
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
 
@@ -5002,7 +5072,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     End Function
     Sub Execute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
-               Optional TimeStr As String = "", Optional overallStopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "")
+               Optional TimeStr As String = "", Optional overallStopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "", Optional ExecuteEvenIfSkip As Boolean = False)
 
         Dim ReportProgress As Boolean = [TreeView] IsNot Nothing
         Dim sw As New Stopwatch
@@ -5010,8 +5080,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         sw.Stop()
         sw.Start()
 
-        If Not Skip Then
-            If Not String.IsNullOrWhiteSpace(StartStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, StartStr), "info")
+        If Not Skip Or ExecuteEvenIfSkip Then
+            If Not ExecuteEvenIfSkip Then
+                If Not String.IsNullOrWhiteSpace(StartStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, StartStr), "info")
+            Else
+                If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, SkipStr), "skip")
+            End If
+
             Try
                 [Sub]()
                 If ReportProgress And Not String.IsNullOrWhiteSpace(TimeStr) Then AddNode([TreeView], String.Format(TimeStr, sw.ElapsedMilliseconds / 1000), "time")
@@ -5028,8 +5103,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Try
         Else
             If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, SkipStr), "skip")
-
         End If
+
         sw.Stop()
     End Sub
 #End Region
@@ -5079,6 +5154,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 AltTab.Load(_Def.AltTab)
                 ScreenSaver.Load(_Def.ScreenSaver)
                 Sounds.Load(_Def.Sounds)
+                AppTheme.Load(_Def.AppTheme)
 
                 WallpaperTone_W11.Load("Win11")
                 WallpaperTone_W10.Load("Win10")
@@ -5878,6 +5954,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #End Region
 
+#Region "AppTheme"
+                    If line.StartsWith("*AppTheme", My._ignore) Then
+                        If line.StartsWith("*AppTheme_Enabled= ", My._ignore) Then AppTheme.Enabled = line.Remove(0, "*AppTheme_Enabled= ".Count)
+                        If line.StartsWith("*AppTheme_BackColor= ", My._ignore) Then AppTheme.BackColor = Color.FromArgb(line.Remove(0, "*AppTheme_BackColor= ".Count))
+                        If line.StartsWith("*AppTheme_AccentColor= ", My._ignore) Then AppTheme.AccentColor = Color.FromArgb(line.Remove(0, "*AppTheme_AccentColor= ".Count))
+                        If line.StartsWith("*AppTheme_DarkMode= ", My._ignore) Then AppTheme.DarkMode = line.Remove(0, "*AppTheme_DarkMode= ".Count)
+                        If line.StartsWith("*AppTheme_RoundCorners= ", My._ignore) Then AppTheme.RoundCorners = line.Remove(0, "*AppTheme_RoundCorners= ".Count)
+                    End If
+#End Region
+
                 Next
 
 #Region "Fonts"
@@ -6010,10 +6096,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 End If
 
-                Execute(CType(Sub()
-                                  Info.Apply()
-                                  StoreInfo.Apply()
-                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_SavingInfo, My.Lang.CP_SavingInfo_Error, My.Lang.CP_Time, sw_all)
+                'Theme info
+                Execute(Sub()
+                            Info.Apply()
+                            StoreInfo.Apply()
+                        End Sub, [TreeView], My.Lang.CP_SavingInfo, My.Lang.CP_SavingInfo_Error, My.Lang.CP_Time, sw_all)
+
+                'WinPaletter application theme
+                Execute(Sub()
+                            AppTheme.Apply()
+                        End Sub, [TreeView], My.Lang.CP_Applying_AppTheme, My.Lang.CP_Error_AppTheme, My.Lang.CP_Time, sw_all, Not AppTheme.Enabled, My.Lang.CP_Skip_AppTheme, True)
 
 
                 If My.W11 Then
@@ -6093,12 +6185,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 'AltTab
                 Execute(CType(Sub()
                                   AltTab.Apply()
-                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_AltTab, My.Lang.CP_Error_AltTab, My.Lang.CP_Time, sw_all, Not AltTab.Enabled, My.Lang.CP_Skip_AltTab)
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_AltTab, My.Lang.CP_Error_AltTab, My.Lang.CP_Time, sw_all, Not AltTab.Enabled, My.Lang.CP_Skip_AltTab, True)
 
                 'Wallpaper
                 Execute(CType(Sub()
                                   Wallpaper.Apply()
-                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper)
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper, True)
 
                 'WallpaperTone
                 Execute(CType(Sub()
@@ -7278,9 +7370,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmpList.Add([LogonElement].Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case LogonUI_Modes.Wallpaper
-                    Using wall As New Bitmap(My.Application.GetWallpaper)
-                        bmpList.Add(wall)
-                    End Using
+                    bmpList.Add(My.Wallpaper_Unscaled)
 
             End Select
 
@@ -7359,9 +7449,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmp = LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size)
 
                 Case LogonUI_Modes.Wallpaper
-                    Using wall As New Bitmap(My.Application.GetWallpaper)
-                        bmp = wall
-                    End Using
+                    bmp = My.Wallpaper_Unscaled
 
             End Select
 
@@ -8024,6 +8112,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         If ScreenSaver <> DirectCast(obj, CP).ScreenSaver Then _Equals = False
         If Sounds <> DirectCast(obj, CP).Sounds Then _Equals = False
         If Wallpaper <> DirectCast(obj, CP).Wallpaper Then _Equals = False
+        If AppTheme <> DirectCast(obj, CP).AppTheme Then _Equals = False
 
         If Cursor_Enabled <> DirectCast(obj, CP).Cursor_Enabled Then _Equals = False
         If Cursor_Arrow <> DirectCast(obj, CP).Cursor_Arrow Then _Equals = False

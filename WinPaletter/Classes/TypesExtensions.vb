@@ -846,7 +846,6 @@ Public Module BitmapExtensions
     Public Function Resize(bmSource As Bitmap, TargetWidth As Integer, TargetHeight As Integer) As Bitmap
         If bmSource Is Nothing Then
             Return Nothing
-            Exit Function
         End If
 
         Using bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
@@ -1022,12 +1021,14 @@ Public Module BitmapExtensions
 
     <Extension()>
     Public Function Tile(bmp As Bitmap, Size As Size) As Bitmap
-        Dim B As New Bitmap(Size.Width, Size.Height)
-        Dim G As Graphics = Graphics.FromImage(B)
-        Dim tb As New TextureBrush(bmp)
-        G.FillRectangle(tb, New Rectangle(0, 0, Size.Width, Size.Height))
-        G.Save()
-        Return B
+        Using B As New Bitmap(Size.Width, Size.Height)
+            Dim G As Graphics = Graphics.FromImage(B)
+            G.SmoothingMode = SmoothingMode.HighSpeed
+            Dim tb As New TextureBrush(bmp)
+            G.FillRectangle(tb, New Rectangle(0, 0, Size.Width, Size.Height))
+            G.Save()
+            Return B.Clone
+        End Using
     End Function
 
 End Module

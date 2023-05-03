@@ -48,13 +48,7 @@ Public Class SettingsX
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
             XenonCheckBox6.Checked = .Appearance_Auto
-
-            appearance_enabled.Checked = .Appearance_Custom
-            If appearance_list.Items.Contains(.Appearance_SchemeName) Then appearance_list.SelectedItem = .Appearance_SchemeName
-            appearance_dark.Checked = .Appearance_Custom_Dark
-            appearance_accent.BackColor = .Appearance_Accent
-            appearance_backcolor.BackColor = .Appearance_Back
-            appearance_rounded.Checked = .Appearance_Rounded
+            XenonCheckBox30.Checked = .Appearance_ManagedByTheme
 
             XenonCheckBox8.Checked = .Language
             XenonTextBox3.Text = .Language_File
@@ -149,11 +143,7 @@ Public Class SettingsX
         With My.[Settings]
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_appearance = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_appearance = True
-            If .Appearance_Custom <> appearance_enabled.Checked Then ch_appearance = True
-            If .Appearance_Custom_Dark <> appearance_dark.Checked Then ch_appearance = True
-            If .Appearance_Rounded <> appearance_rounded.Checked Then ch_appearance = True
-            If .Appearance_Accent <> appearance_accent.BackColor Then ch_appearance = True
-            If .Appearance_Back <> appearance_backcolor.BackColor Then ch_appearance = True
+            If .Appearance_ManagedByTheme <> XenonCheckBox30.Checked Then ch_appearance = True
 
             If .Nerd_Stats <> XenonCheckBox10.Checked Then ch_nerd = True
             If .Nerd_Stats_Kind <> XenonComboBox3.SelectedIndex Then ch_nerd = True
@@ -261,12 +251,7 @@ Public Class SettingsX
 
             .Appearance_Dark = XenonRadioButton3.Checked
             .Appearance_Auto = XenonCheckBox6.Checked
-            .Appearance_Custom = appearance_enabled.Checked
-            .Appearance_SchemeName = appearance_list.SelectedItem
-            .Appearance_Custom_Dark = appearance_dark.Checked
-            .Appearance_Accent = appearance_accent.BackColor
-            .Appearance_Back = appearance_backcolor.BackColor
-            .Appearance_Rounded = appearance_rounded.Checked
+            .Appearance_ManagedByTheme = XenonCheckBox30.Checked
 
             .ShowSaveConfirmation = XenonCheckBox17.Checked
             .SaveForLegacyWP = XenonCheckBox4.Checked
@@ -341,11 +326,7 @@ Public Class SettingsX
 
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
-            If .Appearance_Custom <> appearance_enabled.Checked Then Changed = True
-            If .Appearance_Custom_Dark <> appearance_dark.Checked Then Changed = True
-            If .Appearance_Rounded <> appearance_rounded.Checked Then Changed = True
-            If .Appearance_Accent <> appearance_accent.BackColor Then Changed = True
-            If .Appearance_Back <> appearance_backcolor.BackColor Then Changed = True
+            If .Appearance_ManagedByTheme <> XenonCheckBox30.Checked Then Changed = True
 
             If .Language <> XenonCheckBox8.Checked Then Changed = True
             If .Language_File <> XenonTextBox3.Text Then Changed = True
@@ -582,92 +563,6 @@ Public Class SettingsX
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
         Lang_Dashboard.ShowDialog()
-    End Sub
-
-    Private Sub Appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            appearance_accent.BackColor = SubMenu.ShowMenu(appearance_accent)
-            Exit Sub
-        End If
-        Dim clist As New List(Of Control) From {appearance_accent}
-        ColorPickerDlg.Pick(clist)
-        clist.Clear()
-    End Sub
-
-    Private Sub appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            appearance_backcolor.BackColor = SubMenu.ShowMenu(appearance_backcolor)
-            Exit Sub
-        End If
-
-        Dim clist As New List(Of Control) From {appearance_backcolor}
-        ColorPickerDlg.Pick(New List(Of Control) From {appearance_backcolor})
-        clist.Clear()
-    End Sub
-
-    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
-        Select Case appearance_list.SelectedItem.ToString.ToLower
-            Case "Default Dark".ToLower
-                appearance_dark.Checked = True
-                appearance_rounded.Checked = (My.W11 Or My.W7)
-                appearance_accent.BackColor = DefaultAccent
-                appearance_backcolor.BackColor = DefaultBackColorDark
-
-            Case "Default Light".ToLower
-                appearance_dark.Checked = False
-                appearance_rounded.Checked = (My.W11 Or My.W7)
-                appearance_accent.BackColor = DefaultAccent
-                appearance_backcolor.BackColor = DefaultBackColorLight
-
-            Case "AMOLED".ToLower
-                appearance_dark.Checked = True
-                appearance_rounded.Checked = (My.W11 Or My.W7)
-                appearance_accent.BackColor = DefaultAccent
-                appearance_backcolor.BackColor = Color.Black
-
-            Case "Extreme White".ToLower
-                appearance_dark.Checked = False
-                appearance_rounded.Checked = (My.W11 Or My.W7)
-                appearance_accent.BackColor = DefaultAccent
-                appearance_backcolor.BackColor = Color.White
-
-            Case "GitHub Dark".ToLower
-                appearance_dark.Checked = True
-                appearance_rounded.Checked = True
-                appearance_accent.BackColor = Color.FromArgb(19, 35, 58)
-                appearance_backcolor.BackColor = Color.FromArgb(13, 17, 23)
-
-            Case "GitHub Light".ToLower
-                appearance_dark.Checked = False
-                appearance_rounded.Checked = True
-                appearance_accent.BackColor = Color.FromArgb(31, 111, 235)
-                appearance_backcolor.BackColor = Color.FromArgb(246, 248, 250)
-
-            Case "Reddit Dark".ToLower
-                appearance_dark.Checked = True
-                appearance_rounded.Checked = True
-                appearance_accent.BackColor = Color.FromArgb(255, 70, 0)
-                appearance_backcolor.BackColor = Color.FromArgb(9, 9, 9)
-
-            Case "Reddit Light".ToLower
-                appearance_dark.Checked = False
-                appearance_rounded.Checked = True
-                appearance_accent.BackColor = Color.FromArgb(255, 70, 0)
-                appearance_backcolor.BackColor = Color.FromArgb(242, 242, 242)
-
-            Case "Discord Dark".ToLower
-                appearance_dark.Checked = True
-                appearance_rounded.Checked = False
-                appearance_accent.BackColor = Color.FromArgb(65, 71, 78)
-                appearance_backcolor.BackColor = Color.FromArgb(32, 34, 38)
-
-            Case "Discord Light".ToLower
-                appearance_dark.Checked = False
-                appearance_rounded.Checked = False
-                appearance_accent.BackColor = Color.FromArgb(138, 140, 143)
-                appearance_backcolor.BackColor = Color.FromArgb(255, 255, 255)
-
-        End Select
     End Sub
 
     Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click

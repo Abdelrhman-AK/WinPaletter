@@ -1474,18 +1474,6 @@ Namespace NativeMethods
     End Class
 
     Public Class GDI32
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
-        Public Shared Function GetTextMetrics(ByVal hdc As IntPtr, <Out> ByRef lptm As TEXTMETRICW) As Boolean
-        End Function
-
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
-        Public Shared Function DeleteObject(ByVal hObject As IntPtr) As Boolean
-        End Function
-
-        <DllImport("gdi32.dll", CharSet:=CharSet.Auto)>
-        Public Shared Function SelectObject(ByVal hdc As IntPtr, ByVal hgdiObj As IntPtr) As IntPtr
-        End Function
-
         <DllImport("gdi32.dll")>
         Public Shared Function AddFontMemResourceEx(ByVal pbFont As IntPtr, ByVal cbFont As UInteger, ByVal pdv As IntPtr, <[In]> ByRef pcFonts As UInteger) As IntPtr
         End Function
@@ -1498,74 +1486,6 @@ Namespace NativeMethods
             VERTRES = 10
             DESKTOPVERTRES = 117
         End Enum
-
-        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
-        Public Structure TEXTMETRICW
-            Public tmHeight As Integer
-            Public tmAscent As Integer
-            Public tmDescent As Integer
-            Public tmInternalLeading As Integer
-            Public tmExternalLeading As Integer
-            Public tmAveCharWidth As Integer
-            Public tmMaxCharWidth As Integer
-            Public tmWeight As Integer
-            Public tmOverhang As Integer
-            Public tmDigitizedAspectX As Integer
-            Public tmDigitizedAspectY As Integer
-            Public tmFirstChar As UShort
-            Public tmLastChar As UShort
-            Public tmDefaultChar As UShort
-            Public tmBreakChar As UShort
-            Public tmItalic As Byte
-            Public tmUnderlined As Byte
-            Public tmStruckOut As Byte
-            Public tmPitchAndFamily As Byte
-            Public tmCharSet As Byte
-        End Structure
-
-        Public Shared Iterator Function GetFixedWidthFonts(ByVal dc As IDeviceContext) As IEnumerable(Of FontFamily)
-            Dim hDC As IntPtr = dc.GetHdc()
-
-            For Each oFontFamily As FontFamily In FontFamily.Families
-
-                Try
-                    If oFontFamily.IsStyleAvailable(FontStyle.Regular) Then
-                        Using oFont As New Font(oFontFamily, 10)
-                            Dim hFont As IntPtr = IntPtr.Zero
-                            Dim hFontDefault As IntPtr = IntPtr.Zero
-
-                            Try
-                                Dim oTextMetric As TEXTMETRICW
-                                hFont = oFont.ToHfont()
-                                hFontDefault = SelectObject(hDC, hFont)
-
-                                If GetTextMetrics(hDC, oTextMetric) Then
-
-                                    If (oTextMetric.tmPitchAndFamily And 1) = 0 Then
-                                        Yield oFontFamily
-                                    End If
-                                End If
-
-                            Finally
-
-                                If hFontDefault <> IntPtr.Zero Then
-                                    SelectObject(hDC, hFontDefault)
-                                End If
-
-                                If hFont <> IntPtr.Zero Then
-                                    DeleteObject(hFont)
-                                End If
-
-                            End Try
-                        End Using
-                    End If
-                Catch
-
-                End Try
-            Next
-
-            dc.ReleaseHdc()
-        End Function
     End Class
 
     Public Class Wininet

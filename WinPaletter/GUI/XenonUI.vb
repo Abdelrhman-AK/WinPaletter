@@ -138,7 +138,7 @@ Module XenonModule
     End Function
     Friend Function GetRoundedCorners() As Boolean
         Try
-            If My.Settings.Appearance_Custom Then
+            If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
                 Return My.Settings.Appearance_Rounded
             Else
                 If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
@@ -359,7 +359,15 @@ Module XenonModule
                 End If
 
             Else
+
+                If Dark Then
+                    [Pen].Color = [PenX].Color.CB(0.05)
+                Else
+                    [Pen].Color = [PenX].Color.CB(-0.02)
+                End If
+
                 [Graphics].DrawRectangle([Pen], [Rectangle])
+
             End If
         Catch
         End Try
@@ -3494,7 +3502,6 @@ Public Class XenonComboBox : Inherits ComboBox
         G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
         DoubleBuffered = True
 
-        If GetDarkMode() Then ForeColor = Color.White Else ForeColor = Color.Black
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
         Dim TextRect As New Rectangle(5, 0, Width - 1, Height - 1)

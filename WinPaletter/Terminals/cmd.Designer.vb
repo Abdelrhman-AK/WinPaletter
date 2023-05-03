@@ -79,11 +79,12 @@ Partial Class CMD
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.FontName = New System.Windows.Forms.Label()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.CMD_FontSizeVal = New WinPaletter.XenonButton()
         Me.CMD_RasterToggle = New WinPaletter.XenonToggle()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label58 = New System.Windows.Forms.Label()
-        Me.CMD_FontsBox = New WinPaletter.XenonComboBox()
         Me.CMD_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.CMD_FontWeightBox = New WinPaletter.XenonComboBox()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -142,6 +143,7 @@ Partial Class CMD
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -877,11 +879,12 @@ Partial Class CMD
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.FontName)
+        Me.XenonGroupBox4.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeVal)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_RasterToggle)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox4.Controls.Add(Me.Label58)
-        Me.XenonGroupBox4.Controls.Add(Me.CMD_FontsBox)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.CMD_FontWeightBox)
         Me.XenonGroupBox4.Controls.Add(Me.Label61)
@@ -896,6 +899,34 @@ Partial Class CMD
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 128)
         Me.XenonGroupBox4.TabIndex = 98
+        '
+        'FontName
+        '
+        Me.FontName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FontName.BackColor = System.Drawing.Color.Transparent
+        Me.FontName.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FontName.Location = New System.Drawing.Point(96, 6)
+        Me.FontName.Name = "FontName"
+        Me.FontName.Size = New System.Drawing.Size(172, 24)
+        Me.FontName.TabIndex = 133
+        Me.FontName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonButton5
+        '
+        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = Nothing
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(274, 6)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(21, 24)
+        Me.XenonButton5.TabIndex = 132
+        Me.XenonButton5.Text = "..."
+        Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'CMD_FontSizeVal
         '
@@ -943,23 +974,6 @@ Partial Class CMD
         Me.Label58.TabIndex = 94
         Me.Label58.Text = "Raster font ?"
         Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'CMD_FontsBox
-        '
-        Me.CMD_FontsBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CMD_FontsBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.CMD_FontsBox.CustomFont = True
-        Me.CMD_FontsBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CMD_FontsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CMD_FontsBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CMD_FontsBox.ForeColor = System.Drawing.Color.White
-        Me.CMD_FontsBox.FormattingEnabled = True
-        Me.CMD_FontsBox.ItemHeight = 20
-        Me.CMD_FontsBox.Location = New System.Drawing.Point(96, 5)
-        Me.CMD_FontsBox.Name = "CMD_FontsBox"
-        Me.CMD_FontsBox.Size = New System.Drawing.Size(199, 26)
-        Me.CMD_FontsBox.TabIndex = 100
         '
         'CMD_FontSizeBar
         '
@@ -1713,6 +1727,11 @@ Partial Class CMD
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Tweaks"
         '
+        'FontDialog1
+        '
+        Me.FontDialog1.FixedPitchOnly = True
+        Me.FontDialog1.ShowEffects = False
+        '
         'CMD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1831,7 +1850,6 @@ Partial Class CMD
     Friend WithEvents Label58 As Label
     Friend WithEvents XenonButton4 As XenonButton
     Friend WithEvents CMD_FontWeightBox As XenonComboBox
-    Friend WithEvents CMD_FontsBox As XenonComboBox
     Friend WithEvents CMD_FontSizeBar As XenonTrackbar
     Friend WithEvents XenonGroupBox34 As XenonGroupBox
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
@@ -1889,4 +1907,7 @@ Partial Class CMD
     Friend WithEvents CMD_FontSizeVal As XenonButton
     Friend WithEvents CMD_PreviewCUR_Val As XenonButton
     Friend WithEvents CMD_OpacityVal As XenonButton
+    Friend WithEvents FontName As Label
+    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents FontDialog1 As FontDialog
 End Class

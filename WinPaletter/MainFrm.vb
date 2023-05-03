@@ -7,8 +7,6 @@ Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.NativeMethods
-Imports WinPaletter.NativeMethods.User32
-Imports System.Xml
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -1337,6 +1335,16 @@ Public Class MainFrm
         themename_lbl.Text = String.Format("{0} ({1})", [CP].Info.ThemeName, [CP].Info.ThemeVersion)
         author_lbl.Text = String.Format("{0} {1}", My.Lang.By, [CP].Info.Author)
 
+        With My.Settings
+            .Appearance_Custom = [CP].AppTheme.Enabled
+            .Appearance_Back = [CP].AppTheme.BackColor
+            .Appearance_Accent = [CP].AppTheme.AccentColor
+            .Appearance_Custom_Dark = [CP].AppTheme.DarkMode
+            .Appearance_Rounded = [CP].AppTheme.RoundCorners
+            .Save(XeSettings.Mode.Registry)
+        End With
+        ApplyDarkMode()
+
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
         W11_Transparency_Toggle.Checked = [CP].Windows11.Transparency
@@ -1654,9 +1662,7 @@ Public Class MainFrm
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                Using wall As New Bitmap(My.Application.GetWallpaper)
-                    W8_start.Image = wall.Resize(48, 48)
-                End Using
+                W8_start.Image = My.Wallpaper.Resize(48, 48)
 
             Case Else
                 W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
@@ -4176,6 +4182,10 @@ Public Class MainFrm
         End If
 
         Wallpaper_Editor.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+        ApplicationThemer.ShowDialog()
     End Sub
 
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click

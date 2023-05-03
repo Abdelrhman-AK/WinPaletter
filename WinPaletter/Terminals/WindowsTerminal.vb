@@ -31,8 +31,6 @@ Public Class WindowsTerminal
 
         End Select
 
-        FillFonts(TerFonts, Not My.[Settings].Terminal_OtherFonts)
-
         Load_FromTerminal()
 
     End Sub
@@ -149,26 +147,6 @@ Public Class WindowsTerminal
             Combobox.Items.Add(Terminal.Profiles(x).Name)
         Next
 
-    End Sub
-
-    Sub FillFonts([ListBox] As ComboBox, Optional FixedPitch As Boolean = False)
-        Dim s As String = [ListBox].SelectedItem
-
-        [ListBox].Items.Clear()
-
-        If Not FixedPitch Then
-            For Each x As String In My.FontsList
-                [ListBox].Items.Add(x)
-            Next
-        Else
-            For Each x As String In My.FontsFixedList
-                [ListBox].Items.Add(x)
-            Next
-        End If
-
-        [ListBox].SelectedItem = s
-
-        If [ListBox].SelectedItem = Nothing Then [ListBox].SelectedIndex = 0
     End Sub
 
     Private Sub TerSchemes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerSchemes.SelectedIndexChanged
@@ -451,7 +429,14 @@ Public Class WindowsTerminal
             TerCursorStyle.SelectedIndex = .CursorShape
             TerCursorHeightBar.Value = .CursorHeight
 
-            TerFonts.SelectedItem = .Font.Face
+            TerFontName.Text = .Font.Face
+            Dim fx As New LogFont
+            Dim f_cmd As New Font(.Font.Face, .Font.Size)
+            f_cmd.ToLogFont(fx)
+            fx.lfWeight = .Font.Weight * 100
+            f_cmd = New Font(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style)
+            TerFontName.Font = New Font(f_cmd.Name, 9, f_cmd.Style)
+
             TerFontSizeBar.Value = .Font.Size
             TerFontWeight.SelectedIndex = .Font.Weight
 
@@ -694,13 +679,13 @@ Public Class WindowsTerminal
         CList.Clear()
     End Sub
 
-    Private Sub TerFonts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TerFonts.SelectedIndexChanged
+    Private Sub TerFonts_SelectedIndexChanged(sender As Object, e As EventArgs)
         If Not _Shown Then Exit Sub
 
-        XenonTerminal1.Font = New Font(TerFonts.SelectedItem.ToString, XenonTerminal1.Font.Size, XenonTerminal1.Font.Style)
+        XenonTerminal1.Font = New Font(TerFontName.Font.Name, XenonTerminal1.Font.Size, XenonTerminal1.Font.Style)
 
         With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
-            .Font.Face = TerFonts.SelectedItem.ToString
+            .Font.Face = TerFontName.Font.Name
         End With
     End Sub
 
@@ -935,15 +920,11 @@ Public Class WindowsTerminal
         With If(TerProfiles.SelectedIndex = 0, _Terminal.DefaultProf, _Terminal.Profiles(TerProfiles.SelectedIndex - 1))
             .UseAcrylic = TerAcrylic.Checked
         End With
-
     End Sub
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
-        Dim i As Object = TerFonts.SelectedItem
-        FillFonts(TerFonts, Not XenonCheckBox1.Checked)
         My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
         My.[Settings].Save(XeSettings.Mode.Registry)
-        TerFonts.SelectedItem = i
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
@@ -1339,7 +1320,14 @@ Public Class WindowsTerminal
                         TerCursorStyle.SelectedIndex = .CursorShape
                         TerCursorHeightBar.Value = .CursorHeight
 
-                        TerFonts.SelectedItem = .Font.Face
+                        TerFontName.Text = .Font.Face
+                        Dim fx As New LogFont
+                        Dim f_cmd As New Font(.Font.Face, .Font.Size)
+                        f_cmd.ToLogFont(fx)
+                        fx.lfWeight = .Font.Weight * 100
+                        f_cmd = New Font(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style)
+                        TerFontName.Font = New Font(f_cmd.Name, 9, f_cmd.Style)
+
                         TerFontSizeBar.Value = .Font.Size
                         TerFontWeight.SelectedIndex = .Font.Weight
 
@@ -1551,5 +1539,20 @@ Public Class WindowsTerminal
 
     Private Sub TerEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles TerEnabled.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
+        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.Font = XenonTerminal1.Font
+        If FontDialog1.ShowDialog = DialogResult.OK Then
+            TerFontName.Text = FontDialog1.Font.Name
+            Dim fx As New LogFont
+            FontDialog1.Font.ToLogFont(fx)
+            fx.lfWeight = TerFontWeight.SelectedIndex * 100
+            With Font.FromLogFont(fx) : XenonTerminal1.Font = New Font(FontDialog1.Font.Name, FontDialog1.Font.Size, .Style) : End With
+            TerFontName.Font = New Font(FontDialog1.Font.Name, 9, XenonTerminal1.Font.Style)
+            TerFontSizeBar.Value = FontDialog1.Font.Size
+        End If
+
     End Sub
 End Class

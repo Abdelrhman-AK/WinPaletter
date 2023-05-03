@@ -177,7 +177,7 @@
   <data name="source_wallpapertone.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAABW1JREFUWEftlFlQU1cYx33tA6tba2kZ7EwNKCEIAkIIhD3igmurtY5Va7WyuDzg
+        vgAADr4B6kKxwAAABW1JREFUWEftlFlQU1cYx33tA6tba2kZ7EwNKCEIAkIIhD3igmurtY5Va7WyuDzg
         AojsSEBDJAgJggt7TKiKSDvSkVbbQYijjtYZdHDBaSAb5EIfnJZ/z71eA0qs0EKf+GZ+c85M5p7vd//f
         uZk2VVP1b8tVqQ3jqHpaCZr/DXXPVY5a58UqDBenobfLVd2LycSNZT4LvXdV9VxlFYaLo+6lrB3wX6Cb
         LVDp4EFYeF4H7/N6+Cj18GWh995K3S1WYbgmWsadQAv4KnUIqNdDUKdHMCGk9iWhtQZmFdbqJ0eGSYJA
@@ -202,6 +202,11 @@
         6YO9gsSxyyTbcW8n23OHUsjDk4KjJ3aHJL+WUEhs+19kVbMKw7VzFp+bYud+JMV+Qe5kkTonIHf1l6rc
         0F3tDCFx7Snhsb+6sApTNVXjrGnT/gZRleKBqZ4LHwAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="XenonAlertBox1.Text" xml:space="preserve">
+    <value>- Loading speed depends on image's size\resolution and your device's performance, so there may be a delay or high memory usage with high resolution images.
+- Fill and fit postitions and slideshow source are not available for Windows XP &amp; Vista.
+- Applying slideshow source requires explorer restart.</value>
   </data>
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

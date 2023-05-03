@@ -9,6 +9,7 @@ Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.IO.Compression
 Imports System.IO
+Imports WinPaletter.Reg_IO
 
 Namespace My
     Module Env
@@ -95,7 +96,7 @@ Namespace My
         ''' <summary>
         ''' Current Applied Wallpaper
         ''' </summary>
-        Public Wallpaper As Bitmap
+        Public Wallpaper, Wallpaper_Unscaled As Bitmap
 
         ''' <summary>
         ''' List of exceptions thrown during theme applying
@@ -111,16 +112,6 @@ Namespace My
         ''' Class Represents Resources (PNGs, Icons, ...) from Windows extracted from System DLLs (Loaded at application startup)
         ''' </summary>
         Public WinRes As WinResources
-
-        ''' <summary>
-        ''' List of installed fonts' names (Loaded at application startup)
-        ''' </summary>
-        Public FontsList As New List(Of String)
-
-        ''' <summary>
-        ''' List of installed monospaced fonts' names (Loaded at application startup)
-        ''' </summary>
-        Public FontsFixedList As New List(Of String)
 
         ''' <summary>
         ''' Get if Application is started as administrator or not
@@ -186,7 +177,6 @@ Namespace My
             Return Invoke(method, Nothing)
         End Function
 #End Region
-
 
 #Region "   Variables"
         Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
@@ -409,6 +399,13 @@ Namespace My
         Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As MainFrm.WinVer) As Bitmap
             Using picbox As New PictureBox With {.Size = MainFrm.pnl_preview.Size, .BackColor = CP.Win32.Background}
 
+                If Wallpaper Is Nothing OrElse Wallpaper_Unscaled Is Nothing Then
+                    Using wall_New As New Bitmap(GetWallpaper())
+                        If Wallpaper_Unscaled Is Nothing Then Wallpaper_Unscaled = wall_New
+                        If Wallpaper Is Nothing Then Wallpaper = wall_New.Resize(picbox.Size)
+                    End Using
+                End If
+
                 Dim Wall As Bitmap
 
                 If Not CP.Wallpaper.Enabled Then
@@ -494,8 +491,15 @@ Namespace My
                 End If
 
                 If Wall IsNot Nothing Then
-                    Dim ScaleW As Single = 1920 / picbox.Size.Width
-                    Dim ScaleH As Single = 1080 / picbox.Size.Height
+
+                    Dim ScaleW As Single = 1
+                    Dim ScaleH As Single = 1
+
+                    If Wall.Width > Screen.PrimaryScreen.Bounds.Size.Width Or Wall.Height > Screen.PrimaryScreen.Bounds.Size.Height Then
+                        ScaleW = 1920 / picbox.Size.Width
+                        ScaleH = 1080 / picbox.Size.Height
+                    End If
+
                     Wall = Wall.Resize(Wall.Width / ScaleW, Wall.Height / ScaleH)
 
                     If CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fill Then
@@ -526,89 +530,53 @@ Namespace My
         End Function
         Public Function GetWallpaper() As Bitmap
 
-            Dim WallpaperPath As String
+            Dim WallpaperPath As String = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "")
+            Dim WallpaperType As Integer = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0)
 
-            'Gets Wallpaper Path
-            Using R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-                WallpaperPath = R1.GetValue("Wallpaper").ToString()
-            End Using
-
-            'Gets Wallpaper Type (Valid only for Windows 10\11)
-            Dim WallpaperType As Integer = 0
-
-            If Not W7 And Not W8 And Not WVista And Not WXP Then
-                Try
-                    Using R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", False)
-                        WallpaperType = R2.GetValue("BackgroundType", 0)
-                    End Using
-                Catch
-                End Try
-            End If
-
-            Dim img As New Bitmap(100, 100)
-            If IO.File.Exists(WallpaperPath) AndAlso (WallpaperType = 0 Or WallpaperType = 2 Or WallpaperType = 3) Then
-                img = Bitmap_Mgr.Load(WallpaperPath)
-
+            If IO.File.Exists(WallpaperPath) AndAlso (WallpaperType <> 1) Then
+                Return Bitmap_Mgr.Load(WallpaperPath)
             Else
-                With Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0")
-                    img = Color.FromArgb(255, .ToString.Split(" ")(0), .ToString.Split(" ")(1), .ToString.Split(" ")(2)).ToBitmap(New Size(528, 297))
-                End With
+                Return GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0").ToString.FromWin32RegToColor.ToBitmap(Computer.Screen.Bounds.Size)
             End If
 
-            GC.Collect()
-            GC.WaitForPendingFinalizers()
-
-            Return img
         End Function
         Sub WallpaperType_Changed(sender As Object, e As EventArrivedEventArgs)
-
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", True)
-            If R1.GetValue("BackgroundType", Nothing) Is Nothing Then R1.SetValue("BackgroundType", 0, RegistryValueKind.DWord)
-
-            Dim R2 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+            Dim WallpaperType As Integer = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0)
             Dim S As New Stopwatch
-
-            If R1.GetValue("BackgroundType") = 0 Then
+            If WallpaperType <> 1 Then
                 S.Reset()
                 S.Start()
-
-                Do Until IO.File.Exists(R2.GetValue("Wallpaper").ToString())
+                Do Until IO.File.Exists(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString())
                     If S.ElapsedMilliseconds > 5000 Then Exit Do
                 Loop
-
                 S.Stop()
-
                 Wallpaper_Changed()
             End If
-
-            If R1 IsNot Nothing Then R1.Close()
-            If R2 IsNot Nothing Then R2.Close()
         End Sub
+
         Sub Monitor()
             Dim currentUser = WindowsIdentity.GetCurrent()
             Dim KeyPath As String
             Dim valueName As String
             Dim Base As String
 
-            If Not My.WXP Then
-                KeyPath = "Control Panel\Desktop"
-                valueName = "Wallpaper"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query1 = New WqlEventQuery(Base)
-                WallMon_Watcher1 = New ManagementEventWatcher(query1)
+            KeyPath = "Control Panel\Desktop"
+            valueName = "Wallpaper"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query1 = New WqlEventQuery(Base)
+            WallMon_Watcher1 = New ManagementEventWatcher(query1)
 
-                KeyPath = "Control Panel\Colors"
-                valueName = "Background"
-                Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
-                Dim query2 = New WqlEventQuery(Base)
-                WallMon_Watcher2 = New ManagementEventWatcher(query2)
+            KeyPath = "Control Panel\Colors"
+            valueName = "Background"
+            Base = String.Format("SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{0}\\{1}' AND ValueName='{2}'", currentUser.User.Value, KeyPath.Replace("\", "\\"), valueName)
+            Dim query2 = New WqlEventQuery(Base)
+            WallMon_Watcher2 = New ManagementEventWatcher(query2)
 
-                AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
-                WallMon_Watcher1.Start()
+            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+            WallMon_Watcher1.Start()
 
-                AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
-                WallMon_Watcher2.Start()
-            End If
+            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+            WallMon_Watcher2.Start()
 
             If My.W10 OrElse My.W11 Then
                 KeyPath = "Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
@@ -635,16 +603,18 @@ Namespace My
 
         End Sub
         Public Sub OldWinPreferenceChanged(ByVal sender As Object, ByVal e As UserPreferenceChangedEventArgs)
-            Try
+            If WXP AndAlso e.Category = UserPreferenceCategory.General Then
+                Wallpaper_Changed()
+            Else
                 If e.Category = UserPreferenceCategory.Desktop Or e.Category = UserPreferenceCategory.Color Then Wallpaper_Changed()
-            Catch
-            End Try
+            End If
         End Sub
         Sub DarkMode_Changed()
             Invoke(UpdateDarkModeInvoker)
         End Sub
         Sub Wallpaper_Changed()
             Using wall As New Bitmap(GetWallpaper())
+                Wallpaper_Unscaled = wall
                 Wallpaper = wall.Resize(528, 297)
             End Using
             Invoke(UpdateWallpaperInvoker)
@@ -669,6 +639,8 @@ Namespace My
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
         End Sub
+
+        Private DEBUGMSGMEM As Boolean = False
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
@@ -698,19 +670,11 @@ Namespace My
                 Next
             End If
 
-            FontsList = FontFamily.Families.[Select](Function(f) f.Name).ToList()
-
-            'Old method of loading fixed fonts reused due to 2 issues:
-            '1) A reported GitHub issue
-            '2) Windows Vista issue with Windows.Media.Fonts
-            Dim B As New Bitmap(30, 30)
-            Dim G As Graphics = Graphics.FromImage(B)
-            FontsFixedList.Clear()
-            FontsFixedList = NativeMethods.GDI32.GetFixedWidthFonts(G).[Select](Function(f) f.Name).ToList()
-            B.Dispose()
-            G.Dispose()
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 4)
 
             ApplyDarkMode()
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 5)
 
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then
@@ -734,6 +698,8 @@ Namespace My
                 End If
             Next
 
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 6)
+
             If [Settings].Language Then
                 Try
                     Lang.LoadLanguageFromJSON([Settings].Language_File)
@@ -742,12 +708,16 @@ Namespace My
                 End Try
             End If
 
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 7)
+
             If Not [Settings].LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
             ExternalLink = False
             ExternalLink_File = ""
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 8)
 
             For Each arg As String In ArgsList
 
@@ -794,9 +764,8 @@ Namespace My
                 End If
             Next
 
-            Using wall As New Bitmap(GetWallpaper())
-                Wallpaper = wall.Resize(528, 297)
-            End Using
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 10)
 
             If Not My.WXP Then
                 Try
@@ -809,6 +778,8 @@ Namespace My
             Else
                 AddHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
             End If
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 11)
 
             Try
                 If [Settings].AutoAddExt Then
@@ -826,6 +797,8 @@ Namespace My
             Catch
             End Try
 
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 12)
+
             Notifications_IL.Images.Add("info", Resources.notify_info)
             Notifications_IL.Images.Add("error", Resources.notify_error)
             Notifications_IL.Images.Add("warning", Resources.notify_warning)
@@ -838,40 +811,50 @@ Namespace My
             Lang_IL.Images.Add("value", Resources.LangNode_Value)
             Lang_IL.Images.Add("json", Resources.LangNode_JSON)
 
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 13)
+
             Try : WinRes = New WinResources : Catch : End Try
 
             Saving_Exceptions.Clear()
             Loading_Exceptions.Clear()
 
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 14)
+
             If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 15)
 
             'Detects if WinPaletter started with Classic Theme
             Dim vsFile As New Text.StringBuilder(260)
             Dim colorName As New Text.StringBuilder(260)
             Dim sizeName As New Text.StringBuilder(260)
-            NativeMethods.Uxtheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
+            NativeMethods.UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
             My.StartedWithClassicTheme = String.IsNullOrEmpty(vsFile.ToString)
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 16)
 
             Try
                 If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
                 IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
-                Dim s As New IO.FileStream(appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
-                Dim z As New ZipArchive(s, ZipArchiveMode.Read)
-                For Each entry As ZipArchiveEntry In z.Entries
-                    If entry.FullName.Contains("\") Then
-                        Dim dest As String = Path.Combine(appData & "\VisualStyles\Luna", entry.FullName)
-                        Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
-                        If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
-                    End If
-                    entry.ExtractToFile(Path.Combine(appData & "\VisualStyles\Luna", entry.FullName), True)
-                Next
-                z.Dispose()
-                s.Close()
-                s.Dispose()
+                Using s As New IO.FileStream(appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
+                    Using z As New ZipArchive(s, ZipArchiveMode.Read)
+                        For Each entry As ZipArchiveEntry In z.Entries
+                            If entry.FullName.Contains("\") Then
+                                Dim dest As String = Path.Combine(appData & "\VisualStyles\Luna", entry.FullName)
+                                Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
+                                If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
+                            End If
+                            entry.ExtractToFile(Path.Combine(appData & "\VisualStyles\Luna", entry.FullName), True)
+                        Next
+                    End Using
+                    s.Close()
+                End Using
                 IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
             Catch ex As Exception
                 BugReport.ThrowError(ex)
             End Try
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 17)
 
             'Backup Windows Startup sound
             Try
@@ -882,6 +865,9 @@ Namespace My
             Catch ex As Exception
                 BugReport.ThrowError(ex)
             End Try
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 18)
+
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
@@ -904,6 +890,8 @@ Namespace My
                 ShowWhatsNew = False
             End If
 #End Region
+
+            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 19)
 
         End Sub
 

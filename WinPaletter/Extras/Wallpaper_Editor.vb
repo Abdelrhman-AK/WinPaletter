@@ -78,6 +78,7 @@ Public Class Wallpaper_Editor
             End Select
 
             XenonTextBox3.Text = WT.Image
+
             HBar.Value = WT.H
             SBar.Value = WT.S
             LBar.Value = WT.L
@@ -99,7 +100,6 @@ Public Class Wallpaper_Editor
         With CP.Wallpaper
             .Enabled = WallpaperEnabled.Checked
             .SlideShow_Folder_or_ImagesList = XenonRadioButton1.Checked
-
 
             If source_pic.Checked Then
                 .WallpaperType = CP.WallpaperType.Picture
@@ -347,8 +347,15 @@ Public Class Wallpaper_Editor
         If IO.File.Exists(file) Then
             Try
                 Using bmp As Bitmap = Bitmap_Mgr.Load(file)
-                    Dim ScaleW As Single = 1920 / pnl_preview.Size.Width
-                    Dim ScaleH As Single = 1080 / pnl_preview.Size.Height
+
+                    Dim ScaleW As Single = 1
+                    Dim ScaleH As Single = 1
+
+                    If bmp.Width > Screen.PrimaryScreen.Bounds.Size.Width Or bmp.Height > Screen.PrimaryScreen.Bounds.Size.Height Then
+                        ScaleW = 1920 / pnl_preview.Size.Width
+                        ScaleH = 1080 / pnl_preview.Size.Height
+                    End If
+
                     Return bmp.Resize(bmp.Width / ScaleW, bmp.Height / ScaleH)
                 End Using
             Catch

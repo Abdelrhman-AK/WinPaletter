@@ -179,7 +179,7 @@ Public Class LogonUI7
             End If
 
         ElseIf XenonRadioButton2.Checked Then
-            bmpX = My.Application.GetWallpaper.Clone
+            bmpX = My.Wallpaper_Unscaled
 
         ElseIf XenonRadioButton3.Checked Then
             bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)
@@ -191,7 +191,7 @@ Public Class LogonUI7
             bmpX = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
         End If
 
-        Return ApplyEffects(bmpX.Resize(pnl_preview.Width, pnl_preview.Height))
+        Return ApplyEffects(bmpX.Resize(pnl_preview.Size))
     End Function
 
     Sub ApplyPreview()

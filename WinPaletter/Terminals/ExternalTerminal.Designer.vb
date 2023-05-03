@@ -99,11 +99,12 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_ColorTable11 = New WinPaletter.XenonCP()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.FontName = New System.Windows.Forms.Label()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.ExtTerminal_FontSizeVal = New WinPaletter.XenonButton()
         Me.ExtTerminal_RasterToggle = New WinPaletter.XenonToggle()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label58 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_FontsBox = New WinPaletter.XenonComboBox()
         Me.ExtTerminal_FontSizeBar = New WinPaletter.XenonTrackbar()
         Me.ExtTerminal_FontWeightBox = New WinPaletter.XenonComboBox()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -143,6 +144,7 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_OpacityBar = New WinPaletter.XenonTrackbar()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.XenonGroupBox73.SuspendLayout()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox51.SuspendLayout()
@@ -1179,11 +1181,12 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox4.Controls.Add(Me.FontName)
+        Me.XenonGroupBox4.Controls.Add(Me.XenonButton5)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontSizeVal)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_RasterToggle)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox4.Controls.Add(Me.Label58)
-        Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontsBox)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontSizeBar)
         Me.XenonGroupBox4.Controls.Add(Me.ExtTerminal_FontWeightBox)
         Me.XenonGroupBox4.Controls.Add(Me.Label61)
@@ -1198,6 +1201,34 @@ Partial Class ExternalTerminal
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(301, 128)
         Me.XenonGroupBox4.TabIndex = 98
+        '
+        'FontName
+        '
+        Me.FontName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FontName.BackColor = System.Drawing.Color.Transparent
+        Me.FontName.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FontName.Location = New System.Drawing.Point(96, 6)
+        Me.FontName.Name = "FontName"
+        Me.FontName.Size = New System.Drawing.Size(172, 24)
+        Me.FontName.TabIndex = 136
+        Me.FontName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonButton5
+        '
+        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = Nothing
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(274, 6)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(21, 24)
+        Me.XenonButton5.TabIndex = 135
+        Me.XenonButton5.Text = "..."
+        Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'ExtTerminal_FontSizeVal
         '
@@ -1245,23 +1276,6 @@ Partial Class ExternalTerminal
         Me.Label58.TabIndex = 94
         Me.Label58.Text = "Raster font ?"
         Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'ExtTerminal_FontsBox
-        '
-        Me.ExtTerminal_FontsBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ExtTerminal_FontsBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.ExtTerminal_FontsBox.CustomFont = True
-        Me.ExtTerminal_FontsBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.ExtTerminal_FontsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ExtTerminal_FontsBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ExtTerminal_FontsBox.ForeColor = System.Drawing.Color.White
-        Me.ExtTerminal_FontsBox.FormattingEnabled = True
-        Me.ExtTerminal_FontsBox.ItemHeight = 20
-        Me.ExtTerminal_FontsBox.Location = New System.Drawing.Point(96, 5)
-        Me.ExtTerminal_FontsBox.Name = "ExtTerminal_FontsBox"
-        Me.ExtTerminal_FontsBox.Size = New System.Drawing.Size(199, 26)
-        Me.ExtTerminal_FontsBox.TabIndex = 100
         '
         'ExtTerminal_FontSizeBar
         '
@@ -1755,6 +1769,11 @@ Partial Class ExternalTerminal
         Me.Label57.Text = "Window opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'FontDialog1
+        '
+        Me.FontDialog1.FixedPitchOnly = True
+        Me.FontDialog1.ShowEffects = False
+        '
         'ExternalTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1889,7 +1908,6 @@ Partial Class ExternalTerminal
     Friend WithEvents ExtTerminal_RasterToggle As XenonToggle
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label58 As Label
-    Friend WithEvents ExtTerminal_FontsBox As XenonComboBox
     Friend WithEvents ExtTerminal_FontSizeBar As XenonTrackbar
     Friend WithEvents ExtTerminal_FontWeightBox As XenonComboBox
     Friend WithEvents Label61 As Label
@@ -1930,4 +1948,7 @@ Partial Class ExternalTerminal
     Friend WithEvents ExtTerminal_PreviewCUR_Val As XenonButton
     Friend WithEvents ExtTerminal_OpacityVal As XenonButton
     Friend WithEvents PictureBox8 As PictureBox
+    Friend WithEvents FontName As Label
+    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents FontDialog1 As FontDialog
 End Class

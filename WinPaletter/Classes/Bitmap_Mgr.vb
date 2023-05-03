@@ -6,6 +6,7 @@
                 Dim L As Integer = CInt(fs.Length)
                 Dim B As Byte() = New Byte(L - 1) {}
                 fs.Read(B, 0, L)
+                fs.Close()
                 Using ms As New IO.MemoryStream(B)
                     Return Image.FromStream(ms)
                 End Using
@@ -17,7 +18,6 @@
 
 
     Public Shared Function Load(Stream As IO.Stream, Optional CloseStream As Boolean = True, Optional DisposeStream As Boolean = True) As Bitmap
-
         If Stream IsNot Nothing Then
             Dim L As Integer = CInt(Stream.Length)
             Dim B As Byte() = New Byte(L - 1) {}
@@ -32,8 +32,6 @@
         Else
             Return Nothing
         End If
-
-
     End Function
 
 End Class

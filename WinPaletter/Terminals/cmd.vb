@@ -17,7 +17,6 @@ Public Class CMD
         _Shown = False
         ApplyDarkMode(Me)
         XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
-        FillFonts(CMD_FontsBox, Not My.[Settings].Terminal_OtherFonts)
         RasterList.BringToFront()
 
         ApplyFromCP(MainFrm.CP, _Edition)
@@ -52,30 +51,9 @@ Public Class CMD
     End Sub
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
-            FillFonts(CMD_FontsBox, Not XenonCheckBox1.Checked)
             My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
             My.[Settings].Save(XeSettings.Mode.Registry)
         End If
-    End Sub
-
-    Sub FillFonts([ListBox] As ComboBox, Optional FixedPitch As Boolean = False)
-        Dim s As String = [ListBox].SelectedItem
-
-        [ListBox].Items.Clear()
-
-        If Not FixedPitch Then
-            For Each x As String In My.FontsList
-                [ListBox].Items.Add(x)
-            Next
-        Else
-            For Each x As String In My.FontsFixedList
-                [ListBox].Items.Add(x)
-            Next
-        End If
-
-        [ListBox].SelectedItem = s
-
-        If [ListBox].SelectedItem = Nothing Then [ListBox].SelectedIndex = 0
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
@@ -262,6 +240,9 @@ Public Class CMD
                 XenonCMD1.RasterSize = XenonCMD.Raster_Sizes._8x12
 
         End Select
+
+        FontName.Text = F_cmd.Name
+        FontName.Font = New Font(F_cmd.Name, 9, F_cmd.Style)
 
         XenonCMD1.Refresh()
     End Sub
@@ -532,7 +513,8 @@ Public Class CMD
             With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight}) : F_cmd = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style) : End With
         End If
 
-        CMD_FontsBox.SelectedItem = F_cmd.Name
+        FontName.Text = F_cmd.Name
+        FontName.Font = New Font(F_cmd.Name, 9, F_cmd.Style)
         CMD_FontSizeBar.Value = F_cmd.Size
         CMD_FontSizeVal.Text = F_cmd.Size
 
@@ -766,7 +748,7 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles CMD_RasterToggle.CheckedChanged
-        CMD_FontsBox.Enabled = Not CMD_RasterToggle.Checked
+        XenonButton5.Enabled = Not CMD_RasterToggle.Checked
         CMD_FontWeightBox.Enabled = Not CMD_RasterToggle.Checked
 
         If _Shown Then
@@ -778,17 +760,16 @@ Public Class CMD
     Private Sub CMD_FontWeightBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CMD_FontWeightBox.SelectedIndexChanged
         If Not _Shown Then Exit Sub
         Dim fx As New LogFont
-        F_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, F_cmd.Size, F_cmd.Style)
+        F_cmd = New Font(F_cmd.Name, F_cmd.Size, F_cmd.Style)
         F_cmd.ToLogFont(fx)
         fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100
         With Font.FromLogFont(fx) : F_cmd = New Font(.Name, F_cmd.Size, .Style) : End With
-        CMD_FontsBox.SelectedItem = F_cmd.Name
         ApplyPreview()
     End Sub
 
-    Private Sub CMD_FontsBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CMD_FontsBox.SelectedIndexChanged
+    Private Sub CMD_FontsBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FontName.FontChanged
         If _Shown Then
-            F_cmd = New Font(CMD_FontsBox.SelectedItem.ToString, F_cmd.Size, F_cmd.Style)
+            F_cmd = New Font(FontName.Font.Name, F_cmd.Size, F_cmd.Style)
             ApplyPreview()
         End If
 
@@ -947,5 +928,21 @@ Public Class CMD
 
     Private Sub CMDEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles CMDEnabled.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.Font = F_cmd
+        If FontDialog1.ShowDialog = DialogResult.OK Then
+            F_cmd = FontDialog1.Font
+            FontName.Text = FontName.Font.Name
+            CMD_FontSizeBar.Value = FontDialog1.Font.Size
+            Dim fx As New LogFont
+            F_cmd.ToLogFont(fx)
+            fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100
+            With Font.FromLogFont(fx) : F_cmd = New Font(.Name, F_cmd.Size, .Style) : End With
+            FontName.Font = New Font(FontDialog1.Font.Name, 9, F_cmd.Style)
+        End If
+
     End Sub
 End Class

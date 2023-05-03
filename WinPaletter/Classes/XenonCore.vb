@@ -4,16 +4,8 @@ Imports System.Runtime.InteropServices
 Imports Ookii.Dialogs.WinForms
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
-Imports System.Drawing.Imaging
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports System.Net
-Imports Microsoft.Win32.TaskScheduler
-Imports System.Threading
-Imports System.Security.Principal
-Imports System.Security.AccessControl
-Imports System.Xml.Schema
-
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
@@ -231,8 +223,10 @@ Public Class XenonCore
 
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
-        If My.Settings.Appearance_Custom Then
+
+        If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
             Return My.Settings.Appearance_Custom_Dark
+
         Else
             Dim i As Long
 
@@ -240,7 +234,7 @@ Public Class XenonCore
                 Return True
             Else
                 Try
-                    If My.[Settings].Appearance_Auto Then
+                    If My.Settings.Appearance_Auto Then
                         If My.W11 Or My.W10 Then
                             i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
                             Return Not (i = 1)
@@ -248,18 +242,17 @@ Public Class XenonCore
                             Return False
                         End If
                     Else
-                        Return My.[Settings].Appearance_Dark
+                        Return My.Settings.Appearance_Dark
                     End If
                 Catch
                     Try
-                        Return My.[Settings].Appearance_Dark
+                        Return My.Settings.Appearance_Dark
                     Catch
                         Return My.W11 Or My.W10
                     End Try
                 End Try
             End If
         End If
-
     End Function
 
     Public Shared ReadOnly DefaultAccent As Color = Color.FromArgb(0, 81, 210)
@@ -267,28 +260,33 @@ Public Class XenonCore
     Public Shared ReadOnly DefaultBackColorLight As Color = Color.FromArgb(230, 230, 230)
 
     Public Shared Sub ApplyDarkMode(Optional ByVal [Form] As Form = Nothing)
-        Dim DarkMode As Boolean = GetDarkMode()
-
+        Dim DarkMode As Boolean
         Dim BackColor As Color
         Dim AccentColor As Color
         Dim CustomR As Boolean = False
 
-        If My.Settings.Appearance_Custom Then
+        If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
             BackColor = My.Settings.Appearance_Back
             AccentColor = My.Settings.Appearance_Accent
+            DarkMode = My.Settings.Appearance_Custom_Dark
             CustomR = My.W11
         Else
+            DarkMode = GetDarkMode() 'Must be before BackColor
             BackColor = If(DarkMode, DefaultBackColorDark, DefaultBackColorLight)
             AccentColor = DefaultAccent
             CustomR = False
         End If
+
+        Style = New XenonStyle(AccentColor, BackColor)
 
         If Form Is Nothing Then
 
             '####################### For all open forms
             Try
                 For Each OFORM As Form In Application.OpenForms
-                    OFORM.Visible = False
+                    Dim FormWasVisible As Boolean = OFORM.Visible
+                    If FormWasVisible Then OFORM.Visible = False
+                    OFORM.SuspendLayout()
                     OFORM.BackColor = BackColor
                     DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode)
                     EnumControls(OFORM, DarkMode)
@@ -296,8 +294,9 @@ Public Class XenonCore
                     If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
                     If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
 
+                    If FormWasVisible Then OFORM.Visible = True
+                    OFORM.ResumeLayout()
                     OFORM.Refresh()
-                    OFORM.Visible = True
                 Next
             Catch
 
@@ -305,7 +304,6 @@ Public Class XenonCore
 
         Else
             '####################### For Selected [Form]
-
             If [Form].BackColor <> BackColor Then [Form].BackColor = BackColor
 
             DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
@@ -323,10 +321,8 @@ Public Class XenonCore
             End If
 
             [Form].Refresh()
-
         End If
 
-        Style = New XenonStyle(AccentColor, BackColor)
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
         Dim ctrl_theme As CtrlTheme = If(DarkMode, CtrlTheme.DarkExplorer, CtrlTheme.Default)
@@ -342,7 +338,14 @@ Public Class XenonCore
         If TypeOf ctrl Is RetroTextBox Then b = True
         If TypeOf ctrl Is RetroWindow Then b = True
 
-        If Not b Then ctrl.ForeColor = If(DarkMode, Color.White, Color.Black)
+        If Not b Then
+            Select Case DarkMode
+                Case True
+                    If ctrl.ForeColor = Color.Black Then ctrl.ForeColor = Color.White
+                Case False
+                    If ctrl.ForeColor = Color.White Then ctrl.ForeColor = Color.Black
+            End Select
+        End If
 
         If TypeOf ctrl Is XenonGroupBox Then
             DirectCast(ctrl, XenonGroupBox).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.05))
@@ -431,6 +434,7 @@ Public Class XenonCore
     End Enum
 
 #End Region
+
 
 #Region "Modern Dialogs"
 

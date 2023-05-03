@@ -13,7 +13,6 @@ Public Class ExternalTerminal
         RasterList.BringToFront()
 
         XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
-        FillFonts(ExtTerminal_FontsBox, Not My.[Settings].Terminal_OtherFonts)
         MainFrm.Visible = False
 
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
@@ -300,15 +299,18 @@ Public Class ExternalTerminal
 
                 If Not ExtTerminal_RasterToggle.Checked Then
                     With Font.FromLogFont(New LogFont With {.lfFaceName = y_cmd, .lfWeight = wg}) : f_extterminal = New Font(.FontFamily, CInt(ExtTerminal_FontSizeBar.Value), .Style) : End With
-                    ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
+                    FontName.Text = f_extterminal.Name
+                    FontName.Font = New Font(f_extterminal.Name, 9, f_extterminal.Style)
                 End If
 
             Else
-                ExtTerminal_FontsBox.SelectedItem = "Consolas"
+                FontName.Text = "Consolas"
+                FontName.Font = New Font("Consolas", 9, f_extterminal.Style)
             End If
 
         Catch
-            ExtTerminal_FontsBox.SelectedItem = "Consolas"
+            FontName.Text = "Consolas"
+            FontName.Font = New Font("Consolas", 9, f_extterminal.Style)
         End Try
 
         Try
@@ -392,7 +394,7 @@ Public Class ExternalTerminal
             EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "LineSelection", If(ExtTerminal_LineSelection.Checked, 1, 0))
             EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "TerminalScrolling", If(ExtTerminal_TerminalScrolling.Checked, 1, 0))
 
-            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
+            EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", FontName.Font.Name, RegistryValueKind.String)
 
             If Not ExtTerminal_RasterToggle.Checked Then
                 EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontSize", ExtTerminal_FontSizeBar.Value * 65536)
@@ -445,7 +447,7 @@ Public Class ExternalTerminal
                 EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", "Terminal", RegistryValueKind.String)
             Else
                 EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FontFamily", If(ExtTerminal_RasterToggle.Checked, 1, 54))
-                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", ExtTerminal_FontsBox.SelectedItem, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Console\" & RegKey, "FaceName", FontName.Font.Name, RegistryValueKind.String)
             End If
 
 
@@ -520,7 +522,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ExtTerminal_RasterToggle.CheckedChanged
-        ExtTerminal_FontsBox.Enabled = Not ExtTerminal_RasterToggle.Checked
+        XenonButton5.Enabled = Not ExtTerminal_RasterToggle.Checked
         ExtTerminal_FontWeightBox.Enabled = Not ExtTerminal_RasterToggle.Checked
 
         If _Shown Then
@@ -532,17 +534,17 @@ Public Class ExternalTerminal
     Private Sub ExtTerminal_FontWeightBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ExtTerminal_FontWeightBox.SelectedIndexChanged
         If Not _Shown Then Exit Sub
         Dim fx As New LogFont
-        f_extterminal = New Font(ExtTerminal_FontsBox.SelectedItem.ToString, f_extterminal.Size, f_extterminal.Style)
+        f_extterminal = New Font(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style)
         f_extterminal.ToLogFont(fx)
         fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100
         With Font.FromLogFont(fx) : f_extterminal = New Font(.Name, f_extterminal.Size, .Style) : End With
-        ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
+        FontName.Text = f_extterminal.Name
         ApplyPreview()
     End Sub
 
-    Private Sub ExtTerminal_FontsBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ExtTerminal_FontsBox.SelectedIndexChanged
+    Private Sub ExtTerminal_FontsBox_SelectedIndexChanged(sender As Object, e As EventArgs)
         If _Shown Then
-            f_extterminal = New Font(ExtTerminal_FontsBox.SelectedItem.ToString, f_extterminal.Size, f_extterminal.Style)
+            f_extterminal = New Font(FontName.Font.Name, f_extterminal.Size, f_extterminal.Style)
             ApplyPreview()
         End If
 
@@ -584,31 +586,6 @@ Public Class ExternalTerminal
         ExtTerminal_OpacityVal.Text = Fix((sender.Value / 255) * 100)
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
-        If _Shown Then
-            FillFonts(ExtTerminal_FontsBox, Not XenonCheckBox1.Checked)
-        End If
-    End Sub
-
-    Sub FillFonts([ListBox] As ComboBox, Optional FixedPitch As Boolean = False)
-        Dim s As String = [ListBox].SelectedItem
-
-        [ListBox].Items.Clear()
-
-        If Not FixedPitch Then
-            For Each x As String In My.FontsList
-                [ListBox].Items.Add(x)
-            Next
-        Else
-            For Each x As String In My.FontsFixedList
-                [ListBox].Items.Add(x)
-            Next
-        End If
-
-        [ListBox].SelectedItem = s
-
-        If [ListBox].SelectedItem = Nothing Then [ListBox].SelectedIndex = 0
-    End Sub
     Function FixValue(i As Integer) As Integer
         Dim v As Integer
         v = i
@@ -984,6 +961,9 @@ Public Class ExternalTerminal
             ExtTerminal_AccentForegroundLbl.ForeColor = FC0
             'ExtTerminal_AccentForegroundBar.AccentColor = ExtTerminal_AccentForegroundLbl.BackColor
             ExtTerminal_AccentForegroundBar.Invalidate()
+
+            FontName.Text = f_extterminal.Name
+            FontName.Font = New Font(f_extterminal.Name, 9, f_extterminal.Style)
         End If
     End Sub
 #End Region
@@ -1087,7 +1067,8 @@ Public Class ExternalTerminal
             With Font.FromLogFont(New LogFont With {.lfFaceName = CP.CommandPrompt.FaceName, .lfWeight = CP.CommandPrompt.FontWeight}) : f_extterminal = New Font(.FontFamily, CInt(CP.CommandPrompt.FontSize / 65536), .Style) : End With
         End If
 
-        ExtTerminal_FontsBox.SelectedItem = f_extterminal.Name
+        FontName.Text = f_extterminal.Name
+        FontName.Font = New Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style)
         ExtTerminal_FontSizeBar.Value = f_extterminal.Size
         ExtTerminal_FontSizeVal.Text = f_extterminal.Size
 
@@ -1187,5 +1168,20 @@ Public Class ExternalTerminal
     Private Sub ExtTerminal_OpacityVal_Click(sender As Object, e As EventArgs) Handles ExtTerminal_OpacityVal.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum) : ExtTerminal_OpacityBar.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.Font = f_extterminal
+        If FontDialog1.ShowDialog = DialogResult.OK Then
+            f_extterminal = FontDialog1.Font
+            FontName.Text = FontName.Font.Name
+            ExtTerminal_FontSizeBar.Value = FontDialog1.Font.Size
+            Dim fx As New LogFont
+            f_extterminal.ToLogFont(fx)
+            fx.lfWeight = ExtTerminal_FontWeightBox.SelectedIndex * 100
+            With Font.FromLogFont(fx) : f_extterminal = New Font(.Name, f_extterminal.Size, .Style) : End With
+            FontName.Font = New Font(FontDialog1.Font.Name, 9, f_extterminal.Style)
+        End If
     End Sub
 End Class

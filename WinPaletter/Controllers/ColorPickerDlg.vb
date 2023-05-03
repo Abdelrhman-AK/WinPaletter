@@ -584,9 +584,7 @@ Public Class ColorPickerDlg
 
         Select Case XenonRadioButton1.Checked
             Case True
-                Using wall As New Bitmap(My.Application.GetWallpaper())
-                    img = wall.Clone
-                End Using
+                img = My.Wallpaper_Unscaled
 
             Case False
                 img = Bitmap_Mgr.Load(TextBox1.Text)

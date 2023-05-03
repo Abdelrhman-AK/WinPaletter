@@ -3,7 +3,8 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
-Public Class LogFont
+Public Class LogFont : Implements IDisposable
+
     Public lfHeight As Integer
     Public lfWidth As Integer
     Public lfEscapement As Integer
@@ -19,6 +20,7 @@ Public Class LogFont
     Public lfPitchAndFamily As LogFontHelper.FontPitchAndFamily
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public lfFaceName As String
+    Private disposedValue As Boolean
 
     Public Sub New(Optional lfFaceName As String = Nothing)
         Me.lfFaceName = lfFaceName
@@ -37,6 +39,27 @@ Public Class LogFont
         Me.lfPitchAndFamily = LogFontHelper.FontPitchAndFamily.DEFAULT_PITCH
     End Sub
 
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+            End If
+
+            disposedValue = True
+        End If
+    End Sub
+
+    ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+    Protected Overrides Sub Finalize()
+        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        Dispose(disposing:=False)
+        MyBase.Finalize()
+    End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        Dispose(disposing:=True)
+        GC.SuppressFinalize(Me)
+    End Sub
 End Class
 
 Public Class LogFontHelper

@@ -390,13 +390,12 @@ Partial Class Wallpaper_Editor
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(6, 294)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(6, 258)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(536, 40)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(532, 76)
         Me.XenonAlertBox1.TabIndex = 160
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "- Loading speed depends on image's size\resolution and your device's performance." &
-    "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- So there may be a delay or high memory usage with high resolution images."
+        Me.XenonAlertBox1.Text = resources.GetString("XenonAlertBox1.Text")
         '
         'XenonSeparator1
         '
@@ -405,7 +404,7 @@ Partial Class Wallpaper_Editor
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 112)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(536, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(532, 1)
         Me.XenonSeparator1.TabIndex = 158
         Me.XenonSeparator1.TabStop = False
         '

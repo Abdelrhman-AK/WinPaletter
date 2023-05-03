@@ -28,6 +28,8 @@ Public Class XeSettings
     Public Property Appearance_Accent As Color = Color.FromArgb(0, 81, 210)
     Public Property Appearance_Back As Color = Color.FromArgb(25, 25, 25)
     Public Property Appearance_Rounded As Boolean = True
+    Public Property Appearance_ManagedByTheme As Boolean = True
+
     Public Property WhatsNewRecord As String() = {""}
     Public Property Language As Boolean = False
     Public Property Language_File As String = Nothing
@@ -124,6 +126,7 @@ Public Class XeSettings
                 Appearance_Accent = Color.FromArgb(GetReg(REG, "Appearance_Accent", Color.FromArgb(0, 81, 210).ToArgb))
                 Appearance_Back = Color.FromArgb(GetReg(REG, "Appearance_Back", Color.FromArgb(25, 25, 25).ToArgb))
                 Appearance_Rounded = GetReg(REG, "Appearance_Rounded", True)
+                Appearance_ManagedByTheme = GetReg(REG, "Appearance_ManagedByTheme", True)
 
                 AutoAddExt = GetReg(REG, "AutoAddExt", True)
                 DragAndDropPreview = GetReg(REG, "DragAndDropPreview", True)
@@ -199,6 +202,7 @@ Public Class XeSettings
                     If x.StartsWith("Appearance_Accent= ", My._ignore) Then Appearance_Accent = Color.FromArgb(x.Remove(0, "Appearance_Accent= ".Count))
                     If x.StartsWith("Appearance_Back= ", My._ignore) Then Appearance_Back = Color.FromArgb(x.Remove(0, "Appearance_Back= ".Count))
                     If x.StartsWith("Appearance_Rounded= ", My._ignore) Then Appearance_Rounded = x.Remove(0, "Appearance_Rounded= ".Count)
+                    If x.StartsWith("Appearance_ManagedByTheme= ", My._ignore) Then Appearance_ManagedByTheme = x.Remove(0, "Appearance_ManagedByTheme= ".Count)
 
                     If x.StartsWith("AutoAddExt= ", My._ignore) Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
                     If x.StartsWith("DragAndDropPreview= ", My._ignore) Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
@@ -298,6 +302,7 @@ Public Class XeSettings
                 EditReg(REG, "Appearance_Accent", Appearance_Accent.ToArgb, RegistryValueKind.DWord)
                 EditReg(REG, "Appearance_Back", Appearance_Back.ToArgb, RegistryValueKind.DWord)
                 EditReg(REG, "Appearance_Rounded", Appearance_Rounded, RegistryValueKind.DWord)
+                EditReg(REG, "Appearance_ManagedByTheme", Appearance_ManagedByTheme, RegistryValueKind.DWord)
 
                 EditReg(REG, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
                 EditReg(REG, "DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
@@ -377,6 +382,7 @@ Public Class XeSettings
                 l.Add(String.Format("Appearance_Accent= {0}", Appearance_Accent.ToArgb))
                 l.Add(String.Format("Appearance_Back= {0}", Appearance_Back.ToArgb))
                 l.Add(String.Format("Appearance_Rounded= {0}", Appearance_Rounded))
+                l.Add(String.Format("Appearance_ManagedByTheme= {0}", Appearance_ManagedByTheme))
 
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))
                 l.Add(String.Format("DragAndDropPreview= {0}", DragAndDropPreview))

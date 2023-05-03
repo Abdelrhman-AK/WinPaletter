@@ -121,7 +121,6 @@ Partial Class WindowsTerminal
         Me.TerProfiles = New WinPaletter.XenonComboBox()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.TerFontSizeBar = New WinPaletter.XenonTrackbar()
-        Me.TerFonts = New WinPaletter.XenonComboBox()
         Me.TerFontWeight = New WinPaletter.XenonComboBox()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.XenonButton22 = New WinPaletter.XenonButton()
@@ -152,6 +151,8 @@ Partial Class WindowsTerminal
         Me.Label20 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
+        Me.TerFontName = New System.Windows.Forms.Label()
+        Me.XenonButton23 = New WinPaletter.XenonButton()
         Me.TerFontSizeVal = New WinPaletter.XenonButton()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -173,6 +174,7 @@ Partial Class WindowsTerminal
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.TerThemesContainer.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1553,23 +1555,6 @@ Partial Class WindowsTerminal
         Me.TerFontSizeBar.TabIndex = 101
         Me.TerFontSizeBar.Value = 5
         '
-        'TerFonts
-        '
-        Me.TerFonts.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TerFonts.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.TerFonts.CustomFont = True
-        Me.TerFonts.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.TerFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.TerFonts.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.TerFonts.ForeColor = System.Drawing.Color.White
-        Me.TerFonts.FormattingEnabled = True
-        Me.TerFonts.ItemHeight = 20
-        Me.TerFonts.Location = New System.Drawing.Point(96, 5)
-        Me.TerFonts.Name = "TerFonts"
-        Me.TerFonts.Size = New System.Drawing.Size(250, 26)
-        Me.TerFonts.TabIndex = 100
-        '
         'TerFontWeight
         '
         Me.TerFontWeight.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1970,10 +1955,11 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox5.Controls.Add(Me.TerFontName)
+        Me.XenonGroupBox5.Controls.Add(Me.XenonButton23)
         Me.XenonGroupBox5.Controls.Add(Me.TerFontSizeVal)
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox5.Controls.Add(Me.TerFontWeight)
-        Me.XenonGroupBox5.Controls.Add(Me.TerFonts)
         Me.XenonGroupBox5.Controls.Add(Me.TerFontSizeBar)
         Me.XenonGroupBox5.Controls.Add(Me.Label61)
         Me.XenonGroupBox5.Controls.Add(Me.PictureBox8)
@@ -1984,6 +1970,34 @@ Partial Class WindowsTerminal
         Me.XenonGroupBox5.Name = "XenonGroupBox5"
         Me.XenonGroupBox5.Size = New System.Drawing.Size(351, 97)
         Me.XenonGroupBox5.TabIndex = 98
+        '
+        'TerFontName
+        '
+        Me.TerFontName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TerFontName.BackColor = System.Drawing.Color.Transparent
+        Me.TerFontName.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TerFontName.Location = New System.Drawing.Point(96, 6)
+        Me.TerFontName.Name = "TerFontName"
+        Me.TerFontName.Size = New System.Drawing.Size(210, 24)
+        Me.TerFontName.TabIndex = 138
+        Me.TerFontName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonButton23
+        '
+        Me.XenonButton23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonButton23.ForeColor = System.Drawing.Color.White
+        Me.XenonButton23.Image = Nothing
+        Me.XenonButton23.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton23.LineSize = 1
+        Me.XenonButton23.Location = New System.Drawing.Point(316, 6)
+        Me.XenonButton23.Name = "XenonButton23"
+        Me.XenonButton23.Size = New System.Drawing.Size(30, 24)
+        Me.XenonButton23.TabIndex = 137
+        Me.XenonButton23.Text = "..."
+        Me.XenonButton23.UseVisualStyleBackColor = False
         '
         'TerFontSizeVal
         '
@@ -2243,6 +2257,11 @@ Partial Class WindowsTerminal
         Me.Label57.Text = "Opacity:"
         Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'FontDialog1
+        '
+        Me.FontDialog1.FixedPitchOnly = True
+        Me.FontDialog1.ShowEffects = False
+        '
         'WindowsTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2366,7 +2385,6 @@ Partial Class WindowsTerminal
     Friend WithEvents TerProfiles As XenonComboBox
     Friend WithEvents XenonButton13 As XenonButton
     Friend WithEvents TerFontSizeBar As XenonTrackbar
-    Friend WithEvents TerFonts As XenonComboBox
     Friend WithEvents TerFontWeight As XenonComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
@@ -2466,4 +2484,7 @@ Partial Class WindowsTerminal
     Friend WithEvents TerOpacityVal As XenonButton
     Friend WithEvents TerImageOpacityVal As XenonButton
     Friend WithEvents PictureBox10 As PictureBox
+    Friend WithEvents TerFontName As Label
+    Friend WithEvents XenonButton23 As XenonButton
+    Friend WithEvents FontDialog1 As FontDialog
 End Class
