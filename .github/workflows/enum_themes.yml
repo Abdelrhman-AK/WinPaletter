@@ -3,7 +3,7 @@ run-name: Enumerate themes into a database file 'store.wpdb'
   
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths: Store/Themes/**
   workflow_dispatch:
 
