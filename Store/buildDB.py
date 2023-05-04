@@ -44,8 +44,8 @@ def main():
                 url_file = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetfile + '?raw=true'
                 url_pack = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetpack + '?raw=true'
 
-            paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
-            path_count = path_count + 1
+                paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
+                path_count = path_count + 1
 
     set_action_output('path_count', path_count)
     set_action_output('paths', paths.replace('\n', ' '))
