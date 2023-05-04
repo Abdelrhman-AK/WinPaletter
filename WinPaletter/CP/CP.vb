@@ -6406,7 +6406,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Using CPx As CP = Me.Clone
                     IO.File.WriteAllText(FileLocation, CPx.ToString)
-                    PackThemeResources(CPx, New IO.FileInfo(FileLocation).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(FileLocation) & ".wptp")
+                    If My.Settings.AlwaysExportThemePack Then
+                        PackThemeResources(CPx, New IO.FileInfo(FileLocation).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(FileLocation) & ".wptp")
+                    End If
                 End Using
 
         End Select
@@ -6421,6 +6423,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         tx.Add(Info.ToString)
         tx.Add(StoreInfo.ToString)
+        tx.Add(AppTheme.ToString)
 
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
         If Info.AppVersion < "1.0.6.9" Or My.[Settings].SaveForLegacyWP Then

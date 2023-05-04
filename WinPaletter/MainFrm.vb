@@ -1341,9 +1341,8 @@ Public Class MainFrm
             .Appearance_Accent = [CP].AppTheme.AccentColor
             .Appearance_Custom_Dark = [CP].AppTheme.DarkMode
             .Appearance_Rounded = [CP].AppTheme.RoundCorners
-            .Save(XeSettings.Mode.Registry)
         End With
-        ApplyDarkMode()
+        ApplyDarkMode(Me)
 
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
@@ -2017,15 +2016,24 @@ Public Class MainFrm
 
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         If Me.WindowState = FormWindowState.Normal Then
-            My.[Settings].MainFormWidth = Me.Size.Width
-            My.[Settings].MainFormHeight = Me.Size.Height
+            My.Settings.MainFormWidth = Me.Size.Width
+            My.Settings.MainFormHeight = Me.Size.Height
         End If
 
         If Me.WindowState <> FormWindowState.Minimized Then
-            My.[Settings].MainFormStatus = Me.WindowState
+            My.Settings.MainFormStatus = Me.WindowState
         End If
 
-        My.[Settings].Save(XeSettings.Mode.Registry)
+        Dim old As New XeSettings(XeSettings.Mode.Registry)
+        With My.Settings
+            .Appearance_Custom = old.Appearance_Custom
+            .Appearance_Back = old.Appearance_Back
+            .Appearance_Accent = old.Appearance_Accent
+            .Appearance_Custom_Dark = old.Appearance_Custom_Dark
+            .Appearance_Rounded = old.Appearance_Rounded
+        End With
+
+        My.Settings.Save(XeSettings.Mode.Registry)
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)

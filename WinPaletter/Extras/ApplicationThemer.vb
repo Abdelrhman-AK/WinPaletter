@@ -145,6 +145,15 @@ Public Class ApplicationThemer
     End Sub
 
     Private Sub appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
+
+        With My.Settings
+            .Appearance_Custom = BackupSettings.Appearance_Custom
+            .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
+            .Appearance_Rounded = BackupSettings.Appearance_Rounded
+            .Appearance_Back = BackupSettings.Appearance_Back
+            .Appearance_Accent = BackupSettings.Appearance_Accent
+        End With
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             appearance_accent.BackColor = SubMenu.ShowMenu(appearance_accent)
             AdjustPreview()
@@ -158,6 +167,14 @@ Public Class ApplicationThemer
     End Sub
 
     Private Sub appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
+        With My.Settings
+            .Appearance_Custom = BackupSettings.Appearance_Custom
+            .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
+            .Appearance_Rounded = BackupSettings.Appearance_Rounded
+            .Appearance_Back = BackupSettings.Appearance_Back
+            .Appearance_Accent = BackupSettings.Appearance_Accent
+        End With
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             appearance_backcolor.BackColor = SubMenu.ShowMenu(appearance_backcolor)
             AdjustPreview()

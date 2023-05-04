@@ -44,6 +44,7 @@ Public Class SettingsX
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
             XenonCheckBox17.Checked = .ShowSaveConfirmation
             XenonCheckBox4.Checked = .SaveForLegacyWP
+            XenonCheckBox31.Checked = .AlwaysExportThemePack
 
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -255,6 +256,7 @@ Public Class SettingsX
 
             .ShowSaveConfirmation = XenonCheckBox17.Checked
             .SaveForLegacyWP = XenonCheckBox4.Checked
+            .AlwaysExportThemePack = XenonCheckBox31.Checked
 
             .Language = XenonCheckBox8.Checked
             .Language_File = XenonTextBox3.Text
@@ -323,6 +325,7 @@ Public Class SettingsX
             If .SaveForLegacyWP <> XenonCheckBox4.Checked Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
+            If .AlwaysExportThemePack <> XenonCheckBox31.Checked Then Changed = True
 
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True
@@ -442,6 +445,8 @@ Public Class SettingsX
         End If
 
         Label38.Font = My.Application.ConsoleFontMedium
+        Label43.Font = My.Application.ConsoleFontMedium
+
     End Sub
 
     Function CalcStoreCache() As Integer

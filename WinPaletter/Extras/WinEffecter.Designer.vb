@@ -1574,7 +1574,7 @@ Partial Class WinEffecter
         Me.XenonCheckBox16.Name = "XenonCheckBox16"
         Me.XenonCheckBox16.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox16.TabIndex = 213
-        Me.XenonCheckBox16.Text = "Classic context menu"
+        Me.XenonCheckBox16.Text = "Classic context menu (may require explorer restart)"
         '
         'TabPage12
         '

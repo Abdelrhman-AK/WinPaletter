@@ -16,14 +16,10 @@ Public Class Store
     Dim w As Integer = 528 * 0.6
     Dim h As Integer = 297 * 0.6
 
-    Private elapsedSeconds As Integer = 0
-    Private SwitchAfterSecs As Integer = 1
     Private apply_elapsedSecs As Integer = 0
 
     Private hoveredItem As StoreItem
     Public selectedItem As StoreItem
-    Private PreviewIndex As Integer = 0
-    Private SwitchedByMouseWheel As Boolean = False
 
     Private _Shown As Boolean = False
     Private ReadOnly AnimateList As New List(Of CursorControl)
@@ -31,6 +27,7 @@ Public Class Store
     ReadOnly Increment As Single = 5
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
+    Private DownloadingPack As Boolean = False
 
 #End Region
 
@@ -53,7 +50,7 @@ Public Class Store
         Dim condition1 As Boolean = MainFrm.PreviewConfig = WinVer.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
         Dim condition2 As Boolean = MainFrm.PreviewConfig = WinVer.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
 
-        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, PreviewIndex)
+        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
 
         Panel3.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
         lnk_preview.Visible = (MainFrm.PreviewConfig = WinVer.W11 Or MainFrm.PreviewConfig = WinVer.W10)
@@ -1329,6 +1326,8 @@ Public Class Store
         ShowIcon = False
         FinishedLoadingInitialCPs = False
         _Shown = False
+        DownloadingPack = False
+
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
         ApplyDarkMode(Me)
@@ -1385,6 +1384,7 @@ Public Class Store
         themeSize_lbl.Font = My.Application.ConsoleFontMedium
         theme_ver_lbl.Font = My.Application.ConsoleFontMedium
         desc_txt.Font = My.Application.ConsoleFontLarge
+
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1395,6 +1395,10 @@ Public Class Store
     End Sub
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        'To prevent effect of a store theme on the other forms
+        My.Settings = New XeSettings(XeSettings.Mode.Registry)
+        ApplyDarkMode(Me)
+
         Status_pnl.Visible = True
         Status_lbl.SetText(My.Lang.Store_CleaningFromMemory)
         Status_lbl.Refresh()
@@ -1536,7 +1540,6 @@ Public Class Store
                             AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
                             AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
                             AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-                            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
                             BeginInvoke(CType(Sub()
                                                   store_container.Controls.Add(ctrl)
@@ -1632,7 +1635,6 @@ Public Class Store
             AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
             AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
             AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-            AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
             BeginInvoke(CType(Sub()
                                   store_container.Controls.Add(ctrl)
@@ -1698,14 +1700,33 @@ Public Class Store
 
         Select Case e.Button
             Case MouseButtons.Right
-                SwitchedByMouseWheel = False
-                SwitchStoreItemPreview(DirectCast(sender, StoreItem))
+                With DirectCast(sender, StoreItem)
+                    Adjust_Preview(.CP)
+                    AdjustClassicPreview(.CP)
+                    Store_Hover.Close()
+
+                    tabs_preview.SelectedIndex = 0
+                    Store_Hover.img0 = tabs_preview.ToBitmap
+                    tabs_preview.SelectedIndex = 1
+                    Store_Hover.img1 = tabs_preview.ToBitmap
+                    Store_Hover.ShowDialog()
+
+                End With
 
             Case Else
                 selectedItem = DirectCast(sender, StoreItem)
 
                 With selectedItem
                     My.Animator.HideSync(Tabs)
+
+                    If .CP.AppTheme.Enabled Then
+                        My.Settings.Appearance_Custom = .CP.AppTheme.Enabled
+                        My.Settings.Appearance_Custom_Dark = .CP.AppTheme.DarkMode
+                        My.Settings.Appearance_Rounded = .CP.AppTheme.RoundCorners
+                        My.Settings.Appearance_Back = .CP.AppTheme.BackColor
+                        My.Settings.Appearance_Accent = .CP.AppTheme.AccentColor
+                        ApplyDarkMode(Me)
+                    End If
 
                     Adjust_Preview(.CP)
                     AdjustClassicPreview(.CP)
@@ -1715,6 +1736,7 @@ Public Class Store
                     ApplyCMDPreview(XenonCMD2, .CP.PowerShellx86, True)
                     ApplyCMDPreview(XenonCMD3, .CP.PowerShellx64, True)
                     LoadCursorsFromCP(.CP)
+
                     For Each i As CursorControl In Cursors_Container.Controls
                         If TypeOf i Is CursorControl Then
                             If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
@@ -1722,6 +1744,8 @@ Public Class Store
                     Next
 
                     Titlebar_lbl.Text = .CP.Info.ThemeName & " - " & My.Lang.By & " " & .CP.Info.Author
+                    Titlebar_lbl.Font = New Font(.CP.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
+
                     theme_name_lbl.Text = .CP.Info.ThemeName
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
@@ -1764,26 +1788,13 @@ Public Class Store
     End Sub
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
-        SwitchedByMouseWheel = False
         hoveredItem = DirectCast(sender, StoreItem)
         Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.StoreInfo.Color1, 10, 15)
-        Preview_Timer.Enabled = True
-        Preview_Timer.Start()
     End Sub
 
     Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
-        elapsedSeconds = 0
-        Preview_Timer.Enabled = False
-        Preview_Timer.Stop()
-        SwitchedByMouseWheel = False
-        If hoveredItem.BackgroundImage IsNot Nothing Then SwitchStoreItemPreview(hoveredItem)
-        If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
-    End Sub
 
-    Public Sub StoreItem_MouseWheel(sender As Object, e As MouseEventArgs)
-        If PreviewIndex = 0 Then PreviewIndex = 1 Else PreviewIndex = 0
-        SwitchedByMouseWheel = True
-        SwitchStoreItemPreview(hoveredItem)
+        If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
     Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
@@ -1801,8 +1812,58 @@ Public Class Store
 #Region "Subs\Functions"
 
 #Region "   Store"
+    Private Sub WebCL_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles WebCL.DownloadProgressChanged
+        If DownloadingPack Then ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
+    End Sub
+
+    Private Sub WebCL_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles WebCL.DownloadFileCompleted
+        DownloadingPack = False
+        ProgressBar1.Value = 0
+        Status_pnl.Visible = False
+    End Sub
+
     Sub Apply_Theme()
         Cursor = Cursors.WaitCursor
+
+        Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
+        Dim FileName As String = temp.Split("/").Last
+        temp = temp.Replace("/" & FileName, "")
+        Dim FolderName As String = temp.Split("/").Last
+        Dim Dir As String
+        If File.Exists(selectedItem.FileName) Then
+            Dir = New FileInfo(selectedItem.FileName).Directory.FullName
+        Else
+            Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
+        End If
+        If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
+
+        Status_pnl.Visible = True
+        DownloadingPack = True
+
+        If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse selectedItem.MD5_PackFile = "0" Then
+
+            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadThemeRes, FileName, selectedItem.URL_PackFile))
+
+            Try
+                WebCL.DownloadFile(selectedItem.URL_PackFile, Dir & "\" & FileName)
+            Catch
+                DownloadingPack = False
+                ProgressBar1.Value = 0
+                Status_pnl.Visible = False
+            End Try
+
+        End If
+
+        Exit Sub
+
+
+        '
+        '
+        '
+        '
+        '
+        '
+        '
 
         log_lbl.Visible = False
         log_lbl.Text = ""
@@ -1850,6 +1911,7 @@ Public Class Store
         End If
 
     End Sub
+
     Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
         For x = 0 To Container.Controls.Count - 1
 
@@ -1864,19 +1926,7 @@ Public Class Store
         Next
         Container.Controls.Clear()
     End Sub
-    Sub SwitchStoreItemPreview(St_itm As StoreItem)
-        If St_itm.BackgroundImage Is Nothing Or SwitchedByMouseWheel Then
-            Adjust_Preview(St_itm.CP)
-            AdjustClassicPreview(St_itm.CP)
-            St_itm.BackgroundImage = tabs_preview.ToBitmap
 
-        ElseIf Not SwitchedByMouseWheel Then
-            St_itm.BackgroundImage = Nothing
-
-        End If
-
-        St_itm.Refresh()
-    End Sub
     Sub PerformSearch()
         Dim search_text As String = search_box.Text.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper
 
@@ -1913,7 +1963,6 @@ Public Class Store
                 AddHandler ctrl.CPChanged, AddressOf StoreItem_CPChanged
                 AddHandler ctrl.MouseEnter, AddressOf StoreItem_MouseEnter
                 AddHandler ctrl.MouseLeave, AddressOf StoreItem_MouseLeave
-                AddHandler ctrl.MouseWheel, AddressOf StoreItem_MouseWheel
 
                 BeginInvoke(CType(Sub()
                                       search_results.Controls.Add(ctrl)
@@ -1947,18 +1996,6 @@ Public Class Store
 #End Region
 
 #Region "Timers"
-    Private Sub Preview_Timer_Tick(sender As Object, e As EventArgs) Handles Preview_Timer.Tick
-
-        If elapsedSeconds < SwitchAfterSecs - 1 Then
-            elapsedSeconds += 1
-        Else
-            elapsedSeconds = 0
-            SwitchedByMouseWheel = False
-            If hoveredItem.BackgroundImage Is Nothing Then SwitchStoreItemPreview(hoveredItem)
-            Preview_Timer.Enabled = False
-            Preview_Timer.Stop()
-        End If
-    End Sub
     Private Sub Log_Timer_Tick(sender As Object, e As EventArgs) Handles Log_Timer.Tick
         log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - apply_elapsedSecs)
 
@@ -2002,8 +2039,14 @@ Public Class Store
 
         My.Animator.HideSync(Tabs)
 
+        If selectedItem.CP.AppTheme.Enabled Then
+            My.Settings = New XeSettings(XeSettings.Mode.Registry)
+            ApplyDarkMode(Me)
+        End If
+
         RemoveAllStoreItems(search_results)
 
+        Titlebar_lbl.Font = New Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
         Tabs.SelectedIndex = 0
         My.Animator.HideSync(back_btn)
 
@@ -2236,6 +2279,7 @@ Public Class Store
             Location = newPoint
         End If
     End Sub
+
 #End Region
 
 End Class

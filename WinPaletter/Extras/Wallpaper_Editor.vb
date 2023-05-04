@@ -634,6 +634,18 @@ Public Class Wallpaper_Editor
         End If
     End Sub
 
+    Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
+        HBar.Value = 0
+    End Sub
+
+    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+        SBar.Value = 100
+    End Sub
+
+    Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
+        LBar.Value = 100
+    End Sub
+
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
         Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()

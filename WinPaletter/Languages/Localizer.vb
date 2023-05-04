@@ -409,6 +409,7 @@ Public Class Localizer : Implements IDisposable
     Property Store_Accessing As String = "Accessing themes database from ""{0}"""
     Property Store_UpdateTheme As String = "Updating theme ""{0}"" from ""{1}"""
     Property Store_DownloadTheme As String = "Downloading theme ""{0}"" from ""{1}"""
+    Property Store_DownloadThemeRes As String = "Downloading theme resource pack ""{0}"" from ""{1}"""
     Property Store_LoadingTheme As String = "Loading theme ""{0}"""
     Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
     Property Store_NoIncludedData As String = "There is no included data"

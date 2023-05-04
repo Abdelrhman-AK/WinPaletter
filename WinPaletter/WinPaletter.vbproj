@@ -462,6 +462,12 @@
     <Compile Include="Store\Store_CPToggles.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Store\Store_Hover.Designer.vb">
+      <DependentUpon>Store_Hover.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_Hover.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Store\Store_SearchFilter.Designer.vb">
       <DependentUpon>Store_SearchFilter.vb</DependentUpon>
     </Compile>
@@ -848,6 +854,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_CPToggles.resx">
       <DependentUpon>Store_CPToggles.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_Hover.resx">
+      <DependentUpon>Store_Hover.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_SearchFilter.resx">
       <DependentUpon>Store_SearchFilter.vb</DependentUpon>

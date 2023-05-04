@@ -25,7 +25,6 @@ Partial Class Store
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store))
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
-        Me.Preview_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Titlebar_panel = New System.Windows.Forms.Panel()
         Me.search_panel = New System.Windows.Forms.Panel()
         Me.search_btn = New WinPaletter.XenonButton()
@@ -236,10 +235,6 @@ Partial Class Store
         '
         Me.FilesFetcher.WorkerReportsProgress = True
         Me.FilesFetcher.WorkerSupportsCancellation = True
-        '
-        'Preview_Timer
-        '
-        Me.Preview_Timer.Interval = 1000
         '
         'Titlebar_panel
         '
@@ -501,11 +496,13 @@ Partial Class Store
         '
         'Label26
         '
+        Me.Label26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label26.BackColor = System.Drawing.Color.Transparent
         Me.Label26.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label26.Location = New System.Drawing.Point(33, 3)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(689, 24)
+        Me.Label26.Size = New System.Drawing.Size(645, 24)
         Me.Label26.TabIndex = 4
         Me.Label26.Text = "This theme can be applied to all operation systems, but it was designed specifica" &
     "lly for:"
@@ -1720,7 +1717,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 248)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 252)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1736,7 +1733,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 248)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 252)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -2472,7 +2469,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 246)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 250)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2482,7 +2479,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 246)
+        Me.Label17.Location = New System.Drawing.Point(33, 250)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2494,7 +2491,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 249)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 253)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -2842,7 +2839,7 @@ Partial Class Store
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(97, 24)
         Me.Label3.TabIndex = 5
-        Me.Label3.Text = "Theme version:"
+        Me.Label3.Text = "Version:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label2
@@ -3196,7 +3193,6 @@ Partial Class Store
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents back_btn As XenonButton
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
-    Friend WithEvents Preview_Timer As Timer
     Friend WithEvents Titlebar_panel As Panel
     Friend WithEvents Titlebar_lbl As Label
     Friend WithEvents Titlebar_img As PictureBox
