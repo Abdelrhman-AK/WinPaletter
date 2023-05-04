@@ -22,6 +22,14 @@
 *DesignedFor_WinXP= True
 </StoreInfo>
 
+<AppTheme>
+*AppTheme_Enabled= True
+*AppTheme_BackColor= -4144960
+*AppTheme_AccentColor= -16777088
+*AppTheme_DarkMode= False
+*AppTheme_RoundCorners= False
+</AppTheme>
+
 <Windows11>
 *Win_11_Color_Index0= -6689793
 *Win_11_Color_Index1= -11746561
@@ -200,6 +208,9 @@
 *WinEffects_Win11BootDots= True
 *WinEffects_Win11ExplorerBar= 0
 *WinEffects_DisableNavBar= False
+*WinEffects_AutoHideScrollBars= True
+*WinEffects_ColorFilter_Enabled= False
+*WinEffects_ColorFilter= 0
 </WindowsEffects>
 
 <Metrics&Fonts>
@@ -218,6 +229,7 @@
 *Metrics_SmCaptionWidth= 17
 *Metrics_DesktopIconSize= 48
 *Metrics_ShellIconSize= 32
+*Metrics_ShellSmallIconSize= 16
 *FontSubstitute_MSShellDlg= Microsoft Sans Serif
 *FontSubstitute_MSShellDlg2= Tahoma
 *FontSubstitute_SegoeUI= Microsoft Sans Serif
@@ -294,6 +306,18 @@
 *WallpaperTone_WinXP_S= 29
 *WallpaperTone_WinXP_L= 50
 </WallpaperTone_WinXP>
+
+<Wallpaper>
+*Wallpaper_Enabled= False
+*Wallpaper_SlideShow_Folder_or_ImagesList= True
+*Wallpaper_Path= C:\Windows\Web\Wallpaper\Windows\img0.jpg
+*Wallpaper_WallpaperStyle= 10
+*Wallpaper_WallpaperType= 0
+*Wallpaper_Slideshow_ImagesRootPath= 
+*Wallpaper_Slideshow_Images= 
+*Wallpaper_Slideshow_Interval= 60000
+*Wallpaper_Slideshow_Shuffle= False
+</Wallpaper>
 
 <Terminals>
 <CMD>
@@ -476,6 +500,100 @@ TerminalPreview.Schemes.Campbell.White= -3355444
 TerminalPreview.Schemes.Campbell.Yellow= -4088832
 </WindowsTerminal_Preview>
 </Terminals>
+
+<ScreenSaver>
+*ScreenSaver_Enabled= False
+*ScreenSaver_IsSecure= False
+*ScreenSaver_TimeOut= 60
+*ScreenSaver_File= 
+</ScreenSaver>
+
+<Sounds>
+*Sounds_Enabled= False
+*Snd_Win_Default= 
+*Snd_Win_AppGPFault= 
+*Snd_Win_CCSelect= 
+*Snd_Win_ChangeTheme= 
+*Snd_Win_Close= 
+*Snd_Win_CriticalBatteryAlarm= 
+*Snd_Win_DeviceConnect= 
+*Snd_Win_DeviceDisconnect= 
+*Snd_Win_DeviceFail= 
+*Snd_Win_FaxBeep= 
+*Snd_Win_LowBatteryAlarm= 
+*Snd_Win_MailBeep= 
+*Snd_Win_Maximize= 
+*Snd_Win_MenuCommand= 
+*Snd_Win_MenuPopup= 
+*Snd_Win_MessageNudge= 
+*Snd_Win_Minimize= 
+*Snd_Win_Notification.Default= 
+*Snd_Win_Notification.IM= 
+*Snd_Win_Notification.Looping.Alarm= 
+*Snd_Win_Notification.Looping.Alarm2= 
+*Snd_Win_Notification.Looping.Alarm3= 
+*Snd_Win_Notification.Looping.Alarm4= 
+*Snd_Win_Notification.Looping.Alarm5= 
+*Snd_Win_Notification.Looping.Alarm6= 
+*Snd_Win_Notification.Looping.Alarm7= 
+*Snd_Win_Notification.Looping.Alarm8= 
+*Snd_Win_Notification.Looping.Alarm9= 
+*Snd_Win_Notification.Looping.Alarm10= 
+*Snd_Win_Notification.Looping.Call= 
+*Snd_Win_Notification.Looping.Call2= 
+*Snd_Win_Notification.Looping.Call3= 
+*Snd_Win_Notification.Looping.Call4= 
+*Snd_Win_Notification.Looping.Call5= 
+*Snd_Win_Notification.Looping.Call6= 
+*Snd_Win_Notification.Looping.Call7= 
+*Snd_Win_Notification.Looping.Call8= 
+*Snd_Win_Notification.Looping.Call9= 
+*Snd_Win_Notification.Looping.Call10= 
+*Snd_Win_Notification.Mail= 
+*Snd_Win_Notification.Proximity= 
+*Snd_Win_Notification.Reminder= 
+*Snd_Win_Notification.SMS= 
+*Snd_Win_Open= 
+*Snd_Win_PrintComplete= 
+*Snd_Win_ProximityConnection= 
+*Snd_Win_RestoreDown= 
+*Snd_Win_RestoreUp= 
+*Snd_Win_ShowBand= 
+*Snd_Win_SystemAsterisk= 
+*Snd_Win_SystemExclamation= 
+*Snd_Win_SystemExit= 
+*Snd_Win_SystemStart= 
+*Snd_Imageres_SystemStart= Default
+*Snd_Win_SystemHand= 
+*Snd_Win_SystemNotification= 
+*Snd_Win_SystemQuestion= 
+*Snd_Win_WindowsLogoff= 
+*Snd_Win_WindowsLogon= 
+*Snd_Win_WindowsUAC= 
+*Snd_Win_WindowsUnlock= 
+*Snd_Explorer_ActivatingDocument= 
+*Snd_Explorer_BlockedPopup= 
+*Snd_Explorer_EmptyRecycleBin= 
+*Snd_Explorer_FeedDiscovered= 
+*Snd_Explorer_MoveMenuItem= 
+*Snd_Explorer_Navigating= 
+*Snd_Explorer_SecurityBand= 
+*Snd_Explorer_SearchProviderDiscovered= 
+*Snd_Explorer_FaxError= 
+*Snd_Explorer_FaxLineRings= 
+*Snd_Explorer_FaxNew= 
+*Snd_Explorer_FaxSent= 
+*Snd_NetMeeting_PersonJoins= 
+*Snd_NetMeeting_PersonLeaves= 
+*Snd_NetMeeting_ReceiveCall= 
+*Snd_NetMeeting_ReceiveRequesttoJoin= 
+*Snd_SpeechRec_DisNumbersSound= 
+*Snd_SpeechRec_HubOffSound= 
+*Snd_SpeechRec_HubOnSound= 
+*Snd_SpeechRec_HubSleepSound= 
+*Snd_SpeechRec_MisrecoSound= 
+*Snd_SpeechRec_PanelSound= 
+</Sounds>
 
 <Cursors>
 *Cursor_Enabled= True

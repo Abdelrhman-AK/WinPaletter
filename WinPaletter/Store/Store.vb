@@ -27,7 +27,7 @@ Public Class Store
     ReadOnly Increment As Single = 5
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
-    Private DownloadingPack As Boolean = False
+    Dim WithEvents ThemeDownloader As New WebClient
 
 #End Region
 
@@ -1326,7 +1326,6 @@ Public Class Store
         ShowIcon = False
         FinishedLoadingInitialCPs = False
         _Shown = False
-        DownloadingPack = False
 
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
@@ -1802,7 +1801,6 @@ Public Class Store
             With DirectCast(sender, StoreItem)
                 Adjust_Preview(.CP)
                 AdjustClassicPreview(.CP)
-                .BackgroundImage = tabs_preview.ToBitmap
                 .Refresh()
             End With
         End If
@@ -1812,58 +1810,32 @@ Public Class Store
 #Region "Subs\Functions"
 
 #Region "   Store"
-    Private Sub WebCL_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles WebCL.DownloadProgressChanged
-        If DownloadingPack Then ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
+    Private Sub ThemeDownloader_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles ThemeDownloader.DownloadProgressChanged
+        ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
     End Sub
 
-    Private Sub WebCL_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles WebCL.DownloadFileCompleted
-        DownloadingPack = False
+    Private Sub ThemeDownloader_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles ThemeDownloader.DownloadFileCompleted
         ProgressBar1.Value = 0
+        Status_lbl.SetText("")
+        ProgressBar1.Visible = False
         Status_pnl.Visible = False
+
+        Store_CPToggles.CP = selectedItem.CP
+        Store_CPToggles.ShowDialog()
+        Apply_Theme()
+
+        MainFrm.CP = selectedItem.CP
+        MainFrm.CP_Original = MainFrm.CP.Clone
+
+        MainFrm.Adjust_Preview(False)
+        MainFrm.ApplyCPValues(MainFrm.CP)
+        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+        MainFrm.AdjustClassicPreview()
     End Sub
+
 
     Sub Apply_Theme()
         Cursor = Cursors.WaitCursor
-
-        Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
-        Dim FileName As String = temp.Split("/").Last
-        temp = temp.Replace("/" & FileName, "")
-        Dim FolderName As String = temp.Split("/").Last
-        Dim Dir As String
-        If File.Exists(selectedItem.FileName) Then
-            Dir = New FileInfo(selectedItem.FileName).Directory.FullName
-        Else
-            Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
-        End If
-        If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
-
-        Status_pnl.Visible = True
-        DownloadingPack = True
-
-        If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse selectedItem.MD5_PackFile = "0" Then
-
-            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadThemeRes, FileName, selectedItem.URL_PackFile))
-
-            Try
-                WebCL.DownloadFile(selectedItem.URL_PackFile, Dir & "\" & FileName)
-            Catch
-                DownloadingPack = False
-                ProgressBar1.Value = 0
-                Status_pnl.Visible = False
-            End Try
-
-        End If
-
-        Exit Sub
-
-
-        '
-        '
-        '
-        '
-        '
-        '
-        '
 
         log_lbl.Visible = False
         log_lbl.Text = ""
@@ -1876,6 +1848,15 @@ Public Class Store
             Tabs.SelectedIndex = Tabs.TabCount - 1
             Tabs.Refresh()
         End If
+
+        With My.Settings
+            .Appearance_Custom = selectedItem.CP.AppTheme.Enabled
+            .Appearance_Back = selectedItem.CP.AppTheme.BackColor
+            .Appearance_Accent = selectedItem.CP.AppTheme.AccentColor
+            .Appearance_Custom_Dark = selectedItem.CP.AppTheme.DarkMode
+            .Appearance_Rounded = selectedItem.CP.AppTheme.RoundCorners
+        End With
+        ApplyDarkMode()
 
         selectedItem.CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, log, Nothing))
 
@@ -2095,17 +2076,33 @@ Public Class Store
 
 #Region "   Applying row"
     Private Sub Apply_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click
-        Store_CPToggles.CP = selectedItem.CP
-        Store_CPToggles.ShowDialog()
-        Apply_Theme()
 
-        MainFrm.CP = selectedItem.CP
-        MainFrm.CP_Original = MainFrm.CP.Clone
+        Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
+        Dim FileName As String = temp.Split("/").Last
+        temp = temp.Replace("/" & FileName, "")
+        Dim FolderName As String = temp.Split("/").Last
+        Dim Dir As String
+        If File.Exists(selectedItem.FileName) Then
+            Dir = New FileInfo(selectedItem.FileName).Directory.FullName
+        Else
+            Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
+        End If
+        If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
 
-        MainFrm.Adjust_Preview(False)
-        MainFrm.ApplyCPValues(MainFrm.CP)
-        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        MainFrm.AdjustClassicPreview()
+        Status_pnl.Visible = True
+
+        If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(FileName) OrElse selectedItem.MD5_PackFile = "0" Then
+            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadThemeRes, FileName, selectedItem.URL_PackFile))
+
+            Try
+                ProgressBar1.Visible = True
+                ThemeDownloader.DownloadFileAsync(New Uri(selectedItem.URL_PackFile), Dir & "\" & FileName)
+            Catch
+                ProgressBar1.Value = 0
+                Status_pnl.Visible = False
+            End Try
+
+        End If
 
     End Sub
     Private Sub Edit_btn_Click(sender As Object, e As EventArgs) Handles Edit_btn.Click
@@ -2279,6 +2276,7 @@ Public Class Store
             Location = newPoint
         End If
     End Sub
+
 
 #End Region
 
