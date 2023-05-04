@@ -5113,7 +5113,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Dim _ErrorHappened As Boolean = False
 
-    Sub New(CP_Type As CP_Type, Optional File As String = "", Optional IgnoreWTerminal As Boolean = False)
+    Sub New(CP_Type As CP_Type, Optional File As String = "", Optional IgnoreWTerminal As Boolean = False, Optional IgnoreExtractionThemePack As Boolean = False)
 
         Select Case CP_Type
             Case CP_Type.Registry
@@ -5270,11 +5270,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
-                Dim Pack_Exists As Boolean = IO.File.Exists(Pack)
+                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0
                 Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
 
                 Try
-                    If Pack_Exists Then
+                    If Pack_IsValid And Not IgnoreExtractionThemePack Then
                         If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
 
                         Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
@@ -5296,7 +5296,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     End If
 
-                    If Pack_Exists AndAlso IO.File.Exists(cache & "\WinPaletterTheme_SpecificForPack.wpth") Then
+                    If Pack_IsValid AndAlso IO.File.Exists(cache & "\WinPaletterTheme_SpecificForPack.wpth") AndAlso Not IgnoreExtractionThemePack Then
                         txt = IO.File.ReadAllText(cache & "\WinPaletterTheme_SpecificForPack.wpth").CList
                     Else
                         txt = IO.File.ReadAllText(File).CList
@@ -5345,7 +5345,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Next
 
                 For Each line As String In txt
-                    If Pack_Exists Then
+                    If Pack_IsValid Then
                         If line.Contains("=") Then
                             Dim arr As String() = line.Split("=")
                             If arr.Count = 2 AndAlso arr(1).Trim.StartsWith("%WinPaletterAppData%\ThemeUnpackedCache", My._ignore) Then

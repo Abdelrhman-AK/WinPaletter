@@ -304,7 +304,7 @@ Public Class XenonCore
 
         Else
             '####################### For Selected [Form]
-            If [Form].BackColor <> BackColor Then [Form].BackColor = BackColor
+            [Form].BackColor = BackColor
 
             DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
             EnumControls([Form], DarkMode)
@@ -320,12 +320,14 @@ Public Class XenonCore
                 MainFrm.status_lbl.ForeColor = If(DarkMode, Color.White, Color.Black)
             End If
 
-            [Form].Refresh()
+            [Form].Invalidate()
         End If
 
     End Sub
     Public Shared Sub EnumControls(ByVal ctrl As Control, ByVal DarkMode As Boolean)
+        'This will make all control have a consistent dark\light mode.
         Dim ctrl_theme As CtrlTheme = If(DarkMode, CtrlTheme.DarkExplorer, CtrlTheme.Default)
+        SetTheme(ctrl.Handle, ctrl_theme)
 
         Dim b As Boolean = False
         If TypeOf ctrl Is RetroButton Then b = True
@@ -381,6 +383,7 @@ Public Class XenonCore
         ElseIf TypeOf ctrl Is CheckedListBox Then
             With TryCast(ctrl, CheckedListBox)
                 .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
         ElseIf TypeOf ctrl Is NumericUpDown Then
@@ -396,9 +399,6 @@ Public Class XenonCore
 
         End If
 
-        'This will make all control have a consistent dark\light mode.
-        SetTheme(ctrl.Handle, ctrl_theme)
-
         If ctrl.HasChildren Then
             For Each c As Control In ctrl.Controls
                 If TypeOf c Is TabPage Then c.BackColor = ctrl.Parent.BackColor
@@ -406,7 +406,7 @@ Public Class XenonCore
             Next
         End If
 
-        ctrl.Refresh()
+        If ctrl.FindForm.Visible Then ctrl.Refresh()
     End Sub
     Public Shared Sub SetTheme(ByVal handle As IntPtr, ByVal theme As CtrlTheme)
         'If Not My.W7 Then

@@ -1320,6 +1320,7 @@ Public Class Store
 
 #Region "Store form events"
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
+
         Titlebar_panel.BackColor = Style.Colors.Back
 
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
@@ -1327,21 +1328,14 @@ Public Class Store
         FinishedLoadingInitialCPs = False
         _Shown = False
 
-        store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
-
         ApplyDarkMode(Me)
+
+        store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
         If Not IsFontInstalled("Segoe MDL2 Assets") Then
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
             setting_icon_preview.Text = "♣"
         End If
-
-        start.CopycatFrom(MainFrm.start)
-        taskbar.CopycatFrom(MainFrm.taskbar)
-        ActionCenter.CopycatFrom(MainFrm.ActionCenter)
-
-        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
-        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
 
         MainFrm.MakeItDoubleBuffered(Me)
         MainFrm.MakeItDoubleBuffered(Titlebar_panel)
@@ -1367,6 +1361,14 @@ Public Class Store
         MainFrm.MakeItDoubleBuffered(Person)
         MainFrm.MakeItDoubleBuffered(IBeam)
         MainFrm.MakeItDoubleBuffered(Cross)
+
+        pnl_preview.Visible = False
+        start.CopycatFrom(MainFrm.start)
+        taskbar.CopycatFrom(MainFrm.taskbar)
+        ActionCenter.CopycatFrom(MainFrm.ActionCenter)
+        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
+        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
+        pnl_preview.Visible = True
 
         log.ImageList = My.Notifications_IL
         Apply_btn.Image = MainFrm.apply_btn.Image
@@ -1521,7 +1523,7 @@ Public Class Store
                     Try
                         Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 
-                        Using CP As New CP(CP_Type.File, Dir & "\" & FileName)
+                        Using CP As New CP(CP_Type.File, Dir & "\" & FileName, False, True)
 
                             Dim ctrl As New StoreItem With {
                                            .FileName = Dir & "\" & FileName,
@@ -1602,7 +1604,7 @@ Public Class Store
 
                             Status_lbl.SetText("Enumerating themes: """ & file & """")
 
-                            Using CPx As New CP(CP.CP_Type.File, file)
+                            Using CPx As New CP(CP.CP_Type.File, file, False, True)
                                 CPList.Add(file, CPx)
                             End Using
                         End If
@@ -1811,7 +1813,15 @@ Public Class Store
 
 #Region "   Store"
     Private Sub ThemeDownloader_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles ThemeDownloader.DownloadProgressChanged
-        ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
+
+        If e.TotalBytesToReceive <> 0 Then
+            ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
+            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadingThemePack, e.BytesReceived.SizeString, e.TotalBytesToReceive.SizeString))
+        Else
+            ProgressBar1.Value = 0
+            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadingThemePack, e.BytesReceived.SizeString, "Unknown total size"))
+        End If
+
     End Sub
 
     Private Sub ThemeDownloader_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles ThemeDownloader.DownloadFileCompleted
@@ -1848,9 +1858,10 @@ Public Class Store
         End With
         ApplyDarkMode()
 
-        selectedItem.CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, log, Nothing))
-
-        MainFrm.CP_Original = New CP(CP_Type.Registry)
+        Using CPx As New CP(CP_Type.File, selectedItem.FileName)
+            CPx.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, log, Nothing))
+            MainFrm.CP_Original = CPx.Clone
+        End Using
 
         Cursor = Cursors.Default
 
@@ -2112,14 +2123,14 @@ Public Class Store
 #End Region
 
 #Region "   Links"
-    Private Sub Author_link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Author_link.LinkClicked
+    Private Sub Author_link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         Try
             If (Uri.IsWellFormedUriString(Author_link.Text, UriKind.Absolute)) And Not Author_link.Text.Contains(" ") Then Process.Start(Author_link.Text)
         Catch
         End Try
     End Sub
 
-    Private Sub Download_Link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles Download_Link.LinkClicked
+    Private Sub Download_Link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         Try
             If (Uri.IsWellFormedUriString(Download_Link.Text, UriKind.Absolute)) And Not Download_Link.Text.Contains(" ") Then Process.Start(Download_Link.Text)
         Catch
@@ -2146,10 +2157,10 @@ Public Class Store
         Status_pnl.Visible = True
 
         If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(FileName) OrElse selectedItem.MD5_PackFile = "0" Then
-            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadThemeRes, FileName, selectedItem.URL_PackFile))
 
             Try
                 ProgressBar1.Visible = True
+                ProgressBar1.Value = 0
                 ThemeDownloader.DownloadFileAsync(New Uri(selectedItem.URL_PackFile), Dir & "\" & FileName)
             Catch
                 ProgressBar1.Value = 0

@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Media
-Imports WinPaletter.XenonCore
+﻿Imports WinPaletter.XenonCore
 Public Class Store_CPToggles
     Public CP As CP
 
@@ -19,20 +18,16 @@ Public Class Store_CPToggles
         If CP.Terminal.Enabled Then CheckedListBox1.Items.Add("Windows Terminal Stable", True)
         If CP.TerminalPreview.Enabled Then CheckedListBox1.Items.Add("Windows Terminal Preview", True)
         If CP.MetricsFonts.Enabled Then CheckedListBox1.Items.Add("Metrics & Fonts", True)
-
-        If CP.WallpaperTone_W11.Enabled And My.W11 Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-        If CP.WallpaperTone_W10.Enabled And My.W10 Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-        If CP.WallpaperTone_W8.Enabled And My.W8 Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-        If CP.WallpaperTone_W7.Enabled And My.W7 Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-        If CP.WallpaperTone_WVista.Enabled And My.WVista Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-        If CP.WallpaperTone_WXP.Enabled And My.WXP Then CheckedListBox1.Items.Add("Wallpaper Tone", True)
-
         If CP.WindowsEffects.Enabled Then CheckedListBox1.Items.Add("Windows Effects", True)
         If CP.AltTab.Enabled Then CheckedListBox1.Items.Add("Windows Switcher (Alt+Tab appearance)", True)
+        If CP.Wallpaper.Enabled Then CheckedListBox1.Items.Add("Wallpaper", True)
+        If CP.Sounds.Enabled Then CheckedListBox1.Items.Add("Sounds", True)
+        If CP.ScreenSaver.Enabled Then CheckedListBox1.Items.Add("Screen Saver", True)
 
         If CheckedListBox1.Items.Count = 0 Then Close()
-
         Opacity = 1
+
+        CheckedListBox1.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

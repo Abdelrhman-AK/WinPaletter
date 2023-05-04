@@ -141,9 +141,7 @@ Partial Class Store
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.Download_Link = New WinPaletter.XenonLinkLabel()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Author_link = New WinPaletter.XenonLinkLabel()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
@@ -176,6 +174,8 @@ Partial Class Store
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.Status_pnl = New System.Windows.Forms.Panel()
         Me.Status_lbl = New System.Windows.Forms.Label()
+        Me.Author_link = New System.Windows.Forms.Label()
+        Me.Download_Link = New System.Windows.Forms.Label()
         Me.Titlebar_panel.SuspendLayout()
         Me.search_panel.SuspendLayout()
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -353,9 +353,9 @@ Partial Class Store
         'ProgressBar1
         '
         Me.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.ProgressBar1.Location = New System.Drawing.Point(1088, 3)
+        Me.ProgressBar1.Location = New System.Drawing.Point(1023, 3)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(163, 18)
+        Me.ProgressBar1.Size = New System.Drawing.Size(228, 18)
         Me.ProgressBar1.TabIndex = 43
         Me.ProgressBar1.Visible = False
         '
@@ -476,7 +476,7 @@ Partial Class Store
         Me.XenonGroupBox3.Controls.Add(Me.SupportedOS_lbl)
         Me.XenonGroupBox3.Controls.Add(Me.Label26)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox14)
-        Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 169)
+        Me.XenonGroupBox3.Location = New System.Drawing.Point(13, 235)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(681, 55)
         Me.XenonGroupBox3.TabIndex = 132
@@ -1717,7 +1717,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 252)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 254)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1733,7 +1733,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 252)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 254)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -2469,7 +2469,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 250)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 252)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2479,7 +2479,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 250)
+        Me.Label17.Location = New System.Drawing.Point(33, 252)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2491,7 +2491,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 253)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 255)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -2620,13 +2620,13 @@ Partial Class Store
         Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox2.Controls.Add(Me.Download_Link)
-        Me.XenonGroupBox2.Controls.Add(Me.Label5)
+        Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
         Me.XenonGroupBox2.Controls.Add(Me.Author_link)
+        Me.XenonGroupBox2.Controls.Add(Me.Label5)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox7)
         Me.XenonGroupBox2.Controls.Add(Me.Label15)
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 230)
+        Me.XenonGroupBox2.Location = New System.Drawing.Point(13, 169)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(681, 60)
         Me.XenonGroupBox2.TabIndex = 13
@@ -2641,19 +2641,6 @@ Partial Class Store
         Me.PictureBox5.TabIndex = 3
         Me.PictureBox5.TabStop = False
         '
-        'Download_Link
-        '
-        Me.Download_Link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Download_Link.LinkColor = System.Drawing.Color.White
-        Me.Download_Link.Location = New System.Drawing.Point(136, 33)
-        Me.Download_Link.Name = "Download_Link"
-        Me.Download_Link.Size = New System.Drawing.Size(542, 24)
-        Me.Download_Link.TabIndex = 12
-        Me.Download_Link.TabStop = True
-        Me.Download_Link.Text = "0"
-        Me.Download_Link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Label5
         '
         Me.Label5.BackColor = System.Drawing.Color.Transparent
@@ -2664,19 +2651,6 @@ Partial Class Store
         Me.Label5.TabIndex = 7
         Me.Label5.Text = "Author's link:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Author_link
-        '
-        Me.Author_link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Author_link.LinkColor = System.Drawing.Color.White
-        Me.Author_link.Location = New System.Drawing.Point(136, 3)
-        Me.Author_link.Name = "Author_link"
-        Me.Author_link.Size = New System.Drawing.Size(542, 24)
-        Me.Author_link.TabIndex = 11
-        Me.Author_link.TabStop = True
-        Me.Author_link.Text = "0"
-        Me.Author_link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox7
         '
@@ -3086,9 +3060,35 @@ Partial Class Store
         Me.Status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Status_lbl.Location = New System.Drawing.Point(3, 3)
         Me.Status_lbl.Name = "Status_lbl"
-        Me.Status_lbl.Size = New System.Drawing.Size(1085, 18)
+        Me.Status_lbl.Size = New System.Drawing.Size(1020, 18)
         Me.Status_lbl.TabIndex = 39
         Me.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Author_link
+        '
+        Me.Author_link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Author_link.BackColor = System.Drawing.Color.Transparent
+        Me.Author_link.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Author_link.Location = New System.Drawing.Point(136, 3)
+        Me.Author_link.Name = "Author_link"
+        Me.Author_link.Size = New System.Drawing.Size(542, 24)
+        Me.Author_link.TabIndex = 139
+        Me.Author_link.Text = "0"
+        Me.Author_link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Download_Link
+        '
+        Me.Download_Link.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Download_Link.BackColor = System.Drawing.Color.Transparent
+        Me.Download_Link.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Download_Link.Location = New System.Drawing.Point(136, 33)
+        Me.Download_Link.Name = "Download_Link"
+        Me.Download_Link.Size = New System.Drawing.Size(542, 24)
+        Me.Download_Link.TabIndex = 140
+        Me.Download_Link.Text = "0"
+        Me.Download_Link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Store
         '
@@ -3197,9 +3197,7 @@ Partial Class Store
     Friend WithEvents Titlebar_lbl As Label
     Friend WithEvents Titlebar_img As PictureBox
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents Download_Link As XenonLinkLabel
     Friend WithEvents themeSize_lbl As Label
-    Friend WithEvents Author_link As XenonLinkLabel
     Friend WithEvents Label15 As Label
     Friend WithEvents author_lbl As Label
     Friend WithEvents PictureBox7 As PictureBox
@@ -3317,4 +3315,6 @@ Partial Class Store
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Status_pnl As Panel
     Friend WithEvents Status_lbl As Label
+    Friend WithEvents Download_Link As Label
+    Friend WithEvents Author_link As Label
 End Class
