@@ -5259,6 +5259,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Case CP_Type.File
 #Region "File"
+                If Not IO.File.Exists(File) Then Exit Sub
+
+                For Each line As String In IO.File.ReadLines(File)
+                    If line.StartsWith("*Palette Name= ", My._ignore) Then
+                        Info.ThemeName = line.Remove(0, "*Palette Name= ".Count)
+                        Exit For
+                    End If
+                Next
+
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
                 Dim Pack_Exists As Boolean = IO.File.Exists(Pack)

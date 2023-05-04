@@ -28,7 +28,7 @@ Public Class Store
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
     Dim WithEvents ThemeDownloader As New WebClient
-
+    Private ApplyOrEditToggle As Boolean = True
 #End Region
 
 #Region "Preview Subs"
@@ -1820,17 +1820,7 @@ Public Class Store
         ProgressBar1.Visible = False
         Status_pnl.Visible = False
 
-        Store_CPToggles.CP = selectedItem.CP
-        Store_CPToggles.ShowDialog()
-        Apply_Theme()
-
-        MainFrm.CP = selectedItem.CP
-        MainFrm.CP_Original = MainFrm.CP.Clone
-
-        MainFrm.Adjust_Preview(False)
-        MainFrm.ApplyCPValues(MainFrm.CP)
-        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        MainFrm.AdjustClassicPreview()
+        DoActionsAfterPackDownload()
     End Sub
 
 
@@ -1891,6 +1881,61 @@ Public Class Store
             End If
         End If
 
+    End Sub
+
+    Sub DoActionsAfterPackDownload()
+        If ApplyOrEditToggle Then
+            'Apply button is pressed
+            Store_CPToggles.CP = selectedItem.CP
+            Store_CPToggles.ShowDialog()
+            Apply_Theme()
+
+            MainFrm.CP = selectedItem.CP
+            MainFrm.CP_Original = MainFrm.CP.Clone
+
+            MainFrm.Adjust_Preview(False)
+            MainFrm.ApplyCPValues(MainFrm.CP)
+            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+            MainFrm.AdjustClassicPreview()
+
+        Else
+            'Edit button is pressed
+            WindowState = FormWindowState.Minimized
+
+            Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
+            Dim r1 As String = r(0)
+            Dim r2 As String = r(1)
+
+            Select Case r1
+                Case 0              '' Save
+                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
+                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                        MainFrm.CP_Original = MainFrm.CP.Clone
+                    Else
+                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                            MainFrm.CP_Original = MainFrm.CP.Clone
+                        Else
+                            Exit Sub
+                        End If
+                    End If
+                Case 1              '' Save As
+                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                        MainFrm.CP_Original = MainFrm.CP.Clone
+                    Else
+                        Exit Sub
+                    End If
+            End Select
+
+            MainFrm.CP = selectedItem.CP
+            MainFrm.CP_Original = MainFrm.CP.Clone
+
+            MainFrm.Adjust_Preview(False)
+            MainFrm.ApplyCPValues(MainFrm.CP)
+            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+            MainFrm.AdjustClassicPreview()
+        End If
     End Sub
 
     Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
@@ -2018,6 +2063,14 @@ Public Class Store
 #Region "Buttons Events"
     Private Sub back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
 
+        If ThemeDownloader.IsBusy Then
+            ProgressBar1.Value = 0
+            Status_lbl.SetText("")
+            ProgressBar1.Visible = False
+            Status_pnl.Visible = False
+            ThemeDownloader.CancelAsync()
+        End If
+
         My.Animator.HideSync(Tabs)
 
         If selectedItem.CP.AppTheme.Enabled Then
@@ -2075,7 +2128,8 @@ Public Class Store
 #End Region
 
 #Region "   Applying row"
-    Private Sub Apply_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click
+    Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click
+        ApplyOrEditToggle = sender Is Apply_btn
 
         Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
         Dim FileName As String = temp.Split("/").Last
@@ -2102,47 +2156,13 @@ Public Class Store
                 Status_pnl.Visible = False
             End Try
 
+        Else
+            DoActionsAfterPackDownload()
+
         End If
 
     End Sub
-    Private Sub Edit_btn_Click(sender As Object, e As EventArgs) Handles Edit_btn.Click
-        WindowState = FormWindowState.Minimized
 
-        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-        Dim r1 As String = r(0)
-        Dim r2 As String = r(1)
-
-        Select Case r1
-            Case 0              '' Save
-                If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                    MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                    MainFrm.CP_Original = MainFrm.CP.Clone
-                Else
-                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                        MainFrm.CP_Original = MainFrm.CP.Clone
-                    Else
-                        Exit Sub
-                    End If
-                End If
-            Case 1              '' Save As
-                If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                    MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                    MainFrm.CP_Original = MainFrm.CP.Clone
-                Else
-                    Exit Sub
-                End If
-        End Select
-
-        MainFrm.CP = selectedItem.CP
-        MainFrm.CP_Original = MainFrm.CP.Clone
-
-        MainFrm.Adjust_Preview(False)
-        MainFrm.ApplyCPValues(MainFrm.CP)
-        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
-        MainFrm.AdjustClassicPreview()
-
-    End Sub
     Private Sub RestartExplorer_Click(sender As Object, e As EventArgs) Handles RestartExplorer.Click
         XenonCore.RestartExplorer()
     End Sub

@@ -161,5 +161,11 @@ Public Class EditInfo
         StoreItem1.UpdatePattern(XenonTrackbar1.Value)
     End Sub
 
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+        StoreItem1.CP.Info.ThemeName = sender.Text
+    End Sub
 
+    Private Sub XenonTextBox4_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox4.TextChanged
+        StoreItem1.CP.Info.Author = sender.Text
+    End Sub
 End Class
