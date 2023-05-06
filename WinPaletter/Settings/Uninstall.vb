@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class Uninstall
     Private Sub Uninstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -57,17 +58,17 @@ Public Class Uninstall
             End If
         ElseIf XenonRadioImage3.Checked Then
             Dim _Def As CP
-            If My.W11 = MainFrm.WinVer.W11 Then
+            If My.W11 = WindowStyle.W11 Then
                 _Def = New CP_Defaults().Default_Windows11
-            ElseIf My.W10 = MainFrm.WinVer.W10 Then
+            ElseIf My.W10 = WindowStyle.W10 Then
                 _Def = New CP_Defaults().Default_Windows10
-            ElseIf My.W8 = MainFrm.WinVer.W8 Then
+            ElseIf My.W8 = WindowStyle.W8 Then
                 _Def = New CP_Defaults().Default_Windows8
-            ElseIf My.W7 = MainFrm.WinVer.W7 Then
+            ElseIf My.W7 = WindowStyle.W7 Then
                 _Def = New CP_Defaults().Default_Windows7
-            ElseIf My.W7 = MainFrm.WinVer.WVista Then
+            ElseIf My.W7 = WindowStyle.WVista Then
                 _Def = New CP_Defaults().Default_WindowsVista
-            ElseIf My.W7 = MainFrm.WinVer.WXP Then
+            ElseIf My.W7 = WindowStyle.WXP Then
                 _Def = New CP_Defaults().Default_WindowsXP
             Else
                 _Def = New CP_Defaults().Default_Windows11

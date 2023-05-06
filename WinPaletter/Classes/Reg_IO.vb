@@ -17,6 +17,8 @@ Public Class Reg_IO
 
         If KeyName.StartsWith("Computer\", My._ignore) Then KeyName = KeyName.Remove(0, "Computer\".Count)
 
+        If RegType = RegistryValueKind.String And Value Is Nothing Then Value = ""
+
         Dim scope As reg_scope
 
         If KeyName.StartsWith("HKEY_CURRENT_USER", My._ignore) Then

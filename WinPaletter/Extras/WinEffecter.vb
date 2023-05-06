@@ -1,11 +1,12 @@
 ﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(MainFrm.CP)
-        MainFrm.SetToClassicButton(RetroButton1, MainFrm.CP)
+        SetClassicButtonColors(MainFrm.CP, RetroButton1)
 
     End Sub
 
@@ -179,17 +180,17 @@ Public Class WinEffecter
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
@@ -208,7 +209,7 @@ Public Class WinEffecter
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         ApplyToCP(MainFrm.CP)
-        MainFrm.ApplyLivePreviewFromCP(CPx)
+        MainFrm.ApplyColorsToElements(CPx)
         CPx.WindowsEffects.Apply()
         CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()
@@ -217,7 +218,7 @@ Public Class WinEffecter
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
-        MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+        MainFrm.ApplyColorsToElements(MainFrm.CP)
         Close()
     End Sub
 

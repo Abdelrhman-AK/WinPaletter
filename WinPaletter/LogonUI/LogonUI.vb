@@ -1,4 +1,5 @@
 ﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class LogonUI
     Private Sub LogonUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -39,18 +40,18 @@ Public Class LogonUI
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim CPx As CP
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 CPx = New CP_Defaults().Default_Windows11
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 CPx = New CP_Defaults().Default_Windows10
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 CPx = New CP_Defaults().Default_Windows8
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 CPx = New CP_Defaults().Default_Windows7
-            Case MainFrm.WinVer.WVista
+            Case WindowStyle.WVista
                 CPx = New CP_Defaults().Default_WindowsVista
-            Case MainFrm.WinVer.WXP
+            Case WindowStyle.WXP
                 CPx = New CP_Defaults().Default_WindowsXP
             Case Else
                 CPx = New CP_Defaults().Default_Windows11

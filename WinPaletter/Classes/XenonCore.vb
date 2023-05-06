@@ -435,7 +435,6 @@ Public Class XenonCore
 
 #End Region
 
-
 #Region "Modern Dialogs"
 
 #Region "MsgBox"
@@ -475,111 +474,119 @@ Public Class XenonCore
                                             Optional FooterCustomIcon As Icon = Nothing, Optional RequireElevation As Boolean = False) As MsgBoxResult
 
         Try
-            If My.WXP Then Throw New Exception("Modern Dialogs are not implemented for Windows XP")
+            If Not My.WXP Then
+                TD = New TaskDialog With {
+                   .EnableHyperlinks = True,
+                   .RightToLeft = My.Lang.RightToLeft,
+                   .ButtonStyle = TaskDialogButtonStyle.Standard,
+                   .Content = ConvertToLink(SubMessage),
+                   .FooterIcon = FooterIcon}
 
-            TD = New TaskDialog With {
-                    .EnableHyperlinks = True,
-                    .RightToLeft = My.Lang.RightToLeft,
-                    .ButtonStyle = TaskDialogButtonStyle.Standard,
-                    .Content = ConvertToLink(SubMessage),
-                    .FooterIcon = FooterIcon}
+                If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
+                If Not String.IsNullOrWhiteSpace(Message) Then TD.MainInstruction = Message
+                If Not String.IsNullOrWhiteSpace(ExpandedText) Then TD.CollapsedControlText = ExpandedText
+                If Not String.IsNullOrWhiteSpace(CollapsedText) Then TD.ExpandedControlText = CollapsedText
+                If Not String.IsNullOrWhiteSpace(ExpandedDetails) Then TD.ExpandedInformation = ConvertToLink(ExpandedDetails)
+                If Not String.IsNullOrWhiteSpace(Footer) Then TD.Footer = ConvertToLink(Footer)
+                If FooterCustomIcon Is Nothing Then FooterCustomIcon = Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
 
-            If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
-            If Not String.IsNullOrWhiteSpace(Message) Then TD.MainInstruction = Message
-            If Not String.IsNullOrWhiteSpace(ExpandedText) Then TD.CollapsedControlText = ExpandedText
-            If Not String.IsNullOrWhiteSpace(CollapsedText) Then TD.ExpandedControlText = CollapsedText
-            If Not String.IsNullOrWhiteSpace(ExpandedDetails) Then TD.ExpandedInformation = ConvertToLink(ExpandedDetails)
-            If Not String.IsNullOrWhiteSpace(Footer) Then TD.Footer = ConvertToLink(Footer)
-            If FooterCustomIcon Is Nothing Then FooterCustomIcon = Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
+                TD.CustomFooterIcon = FooterCustomIcon
 
-            TD.CustomFooterIcon = FooterCustomIcon
+                Dim okButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.OK, .ElevationRequired = RequireElevation}
+                Dim yesButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Yes, .ElevationRequired = RequireElevation}
+                Dim noButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.No}
+                Dim cancelButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Cancel}
+                Dim retryButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Retry, .ElevationRequired = RequireElevation}
+                Dim closeButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Close}
+                Dim customButton As New TaskDialogButton(ButtonType.Custom)
+                Dim icon As TaskDialogIcon
 
-            Dim okButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.OK, .ElevationRequired = RequireElevation}
-            Dim yesButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Yes, .ElevationRequired = RequireElevation}
-            Dim noButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.No}
-            Dim cancelButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Cancel}
-            Dim retryButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Retry, .ElevationRequired = RequireElevation}
-            Dim closeButton As New TaskDialogButton(ButtonType.Custom) With {.Text = My.Lang.Close}
-            Dim customButton As New TaskDialogButton(ButtonType.Custom)
-            Dim icon As TaskDialogIcon
+                If Style.HasFlag(MsgBoxStyle.YesNoCancel) Then
+                    TD.Buttons.Add(yesButton)
+                    TD.Buttons.Add(noButton)
+                    TD.Buttons.Add(cancelButton)
+                ElseIf Style.HasFlag(MsgBoxStyle.YesNo) Then
+                    TD.Buttons.Add(yesButton)
+                    TD.Buttons.Add(noButton)
+                ElseIf Style.HasFlag(MsgBoxStyle.RetryCancel) Then
+                    TD.Buttons.Add(retryButton)
+                    TD.Buttons.Add(cancelButton)
+                ElseIf Style.HasFlag(MsgBoxStyle.OkCancel) Then
+                    TD.Buttons.Add(okButton)
+                    TD.Buttons.Add(cancelButton)
+                ElseIf Style.HasFlag(MsgBoxStyle.OkOnly) Then
+                    TD.Buttons.Add(okButton)
+                Else
+                    TD.Buttons.Add(okButton)
+                End If
 
-            If Style.HasFlag(MsgBoxStyle.YesNoCancel) Then
-                TD.Buttons.Add(yesButton)
-                TD.Buttons.Add(noButton)
-                TD.Buttons.Add(cancelButton)
-            ElseIf Style.HasFlag(MsgBoxStyle.YesNo) Then
-                TD.Buttons.Add(yesButton)
-                TD.Buttons.Add(noButton)
-            ElseIf Style.HasFlag(MsgBoxStyle.RetryCancel) Then
-                TD.Buttons.Add(retryButton)
-                TD.Buttons.Add(cancelButton)
-            ElseIf Style.HasFlag(MsgBoxStyle.OkCancel) Then
-                TD.Buttons.Add(okButton)
-                TD.Buttons.Add(cancelButton)
-            ElseIf Style.HasFlag(MsgBoxStyle.OkOnly) Then
-                TD.Buttons.Add(okButton)
+                If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
+
+                If Style.HasFlag(MsgBoxStyle.Question) Then
+                    Try
+                        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
+                    Catch
+                    End Try
+                    icon = TaskDialogIcon.Custom
+
+                    TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
+                End If
+
+                If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
+
+                If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
+
+                TD.MainIcon = icon
+
+                Dim result As MsgBoxResult = MsgBoxResult.Ok
+                Dim resultButton As TaskDialogButton = TD.ShowDialog()
+
+                If resultButton Is yesButton Then
+                    result = MsgBoxResult.Yes
+                ElseIf resultButton Is okButton Then
+                    result = MsgBoxResult.Ok
+                ElseIf resultButton Is noButton Then
+                    result = MsgBoxResult.No
+                ElseIf resultButton Is cancelButton Then
+                    result = MsgBoxResult.Cancel
+                ElseIf retryButton Is retryButton Then
+                    result = MsgBoxResult.Cancel
+                ElseIf retryButton Is closeButton Then
+                    result = MsgBoxResult.Ok
+                ElseIf retryButton Is customButton Then
+                    result = MsgBoxResult.Ok
+                End If
+
+                TD.Dispose()
+                resultButton.Dispose()
+                okButton.Dispose()
+                yesButton.Dispose()
+                noButton.Dispose()
+                cancelButton.Dispose()
+                retryButton.Dispose()
+                closeButton.Dispose()
+                customButton.Dispose()
+
+                Return result
+
             Else
-                TD.Buttons.Add(okButton)
+                Return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Style)
             End If
-
-            If Style.HasFlag(MsgBoxStyle.Information) Then icon = TaskDialogIcon.Information
-
-            If Style.HasFlag(MsgBoxStyle.Question) Then
-                Try
-                    My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
-                Catch
-                End Try
-                icon = TaskDialogIcon.Custom
-
-                TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON)
-            End If
-
-            If Style.HasFlag(MsgBoxStyle.Critical) Then icon = TaskDialogIcon.Error
-
-            If Style.HasFlag(MsgBoxStyle.Exclamation) Then icon = TaskDialogIcon.Warning
-
-            TD.MainIcon = icon
-
-            Dim result As MsgBoxResult = MsgBoxResult.Ok
-            Dim resultButton As TaskDialogButton = TD.ShowDialog()
-
-            If resultButton Is yesButton Then
-                result = MsgBoxResult.Yes
-            ElseIf resultButton Is okButton Then
-                result = MsgBoxResult.Ok
-            ElseIf resultButton Is noButton Then
-                result = MsgBoxResult.No
-            ElseIf resultButton Is cancelButton Then
-                result = MsgBoxResult.Cancel
-            ElseIf retryButton Is retryButton Then
-                result = MsgBoxResult.Cancel
-            ElseIf retryButton Is closeButton Then
-                result = MsgBoxResult.Ok
-            ElseIf retryButton Is customButton Then
-                result = MsgBoxResult.Ok
-            End If
-
-            TD.Dispose()
-            resultButton.Dispose()
-            okButton.Dispose()
-            yesButton.Dispose()
-            noButton.Dispose()
-            cancelButton.Dispose()
-            retryButton.Dispose()
-            closeButton.Dispose()
-            customButton.Dispose()
-
-            Return result
 
         Catch
-            Dim SM As String = If(Not String.IsNullOrWhiteSpace(SubMessage), vbCrLf & vbCrLf & SubMessage, "")
-            Dim ED As String = If(Not String.IsNullOrWhiteSpace(ExpandedDetails), vbCrLf & vbCrLf & ExpandedDetails, "")
-            Dim Fo As String = If(Not String.IsNullOrWhiteSpace(Footer), vbCrLf & vbCrLf & Footer, "")
-            Dim T As String = If(Not String.IsNullOrWhiteSpace(DialogTitle), DialogTitle, My.Application.Info.Title)
-
-            Return Interaction.MsgBox(Message & SM & ED & Fo, Style, T)
+            Return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Style)
         End Try
     End Function
+
+    Private Shared Function Msgbox_Classic(Message As String, SubMessage As String, ExpandedDetails As String, Footer As String, DialogTitle As String, Optional Style As MsgBoxStyle = Nothing)
+        Dim SM As String = If(Not String.IsNullOrWhiteSpace(SubMessage), vbCrLf & vbCrLf & SubMessage, "")
+        Dim ED As String = If(Not String.IsNullOrWhiteSpace(ExpandedDetails), vbCrLf & vbCrLf & ExpandedDetails, "")
+        Dim Fo As String = If(Not String.IsNullOrWhiteSpace(Footer), vbCrLf & vbCrLf & Footer, "")
+        Dim T As String = If(Not String.IsNullOrWhiteSpace(DialogTitle), DialogTitle, My.Application.Info.Title)
+
+        Return Interaction.MsgBox(Message & SM & ED & Fo, Style, T)
+    End Function
+
 
 #Region "MsgBox Functions Branches"
     Public Overloads Shared Function MsgBox(Message As String) As MsgBoxResult
@@ -662,33 +669,39 @@ Public Class XenonCore
 
 #Region "InputBox"
     Public Shared Function InputBox(Instruction As String, Optional Value As String = "", Optional Notice As String = "", Optional Title As String = "") As String
-
         Try
-            If My.WXP Then Throw New Exception("Modern Dialogs are not implemented for Windows XP")
+            If Not My.WXP Then
+                Dim ib As New InputDialog With {
+                        .MainInstruction = Instruction,
+                        .Input = Value,
+                        .Content = Notice,
+                        .WindowTitle = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
+                       }
 
-            Dim ib As New InputDialog With {
-                    .MainInstruction = Instruction,
-                    .Input = Value,
-                    .Content = Notice,
-                    .WindowTitle = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
-                   }
-
-            If ib.ShowDialog() = DialogResult.OK Then
-                Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = Value
-                ib.Dispose()
-                Return response
+                If ib.ShowDialog() = DialogResult.OK Then
+                    Dim response As String = ib.Input : If String.IsNullOrWhiteSpace(response) Then response = Value
+                    ib.Dispose()
+                    Return response
+                Else
+                    ib.Dispose()
+                    Return Value
+                End If
             Else
-                ib.Dispose()
-                Return Value
+                Return InputBox_Classic(Instruction, Value, Notice, Title)
             End If
-
         Catch
-            Dim N As String = If(Not String.IsNullOrWhiteSpace(Notice), vbCrLf & vbCrLf & Notice, "")
-            Dim T As String = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
-
-            Return Interaction.InputBox(Instruction & N, T, Value)
+            Return InputBox_Classic(Instruction, Value, Notice, Title)
         End Try
     End Function
+
+
+    Private Shared Function InputBox_Classic(Instruction As String, Optional Value As String = "", Optional Notice As String = "", Optional Title As String = "") As String
+        Dim N As String = If(Not String.IsNullOrWhiteSpace(Notice), vbCrLf & vbCrLf & Notice, "")
+        Dim T As String = If(Not String.IsNullOrWhiteSpace(Title), Title, My.Application.Info.Title)
+
+        Return Interaction.InputBox(Instruction & N, T, Value)
+    End Function
+
 #End Region
 
 #End Region
@@ -1110,15 +1123,15 @@ End Class
 Public Class RGBColorComparer
     Implements IComparer(Of Color)
     Public Function Compare(a As Color, b As Color) As Integer Implements IComparer(Of Color).Compare
-        ' Compare hue values
+        'Compare hue values
         Dim hueComparison As Integer = a.GetHue().CompareTo(b.GetHue())
         If hueComparison <> 0 Then Return hueComparison
 
-        ' Compare brightness values
+        'Compare brightness values
         Dim brightnessComparison As Integer = a.GetBrightness().CompareTo(b.GetBrightness())
         If brightnessComparison <> 0 Then Return brightnessComparison
 
-        ' Compare saturation values
+        'Compare saturation values
         Dim saturationComparison As Integer = a.GetSaturation().CompareTo(b.GetSaturation())
         Return saturationComparison
     End Function

@@ -23,6 +23,15 @@ Partial Class LogonUI7
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LogonUI7))
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.OpenImgDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
+        Me.XenonToggle1 = New WinPaletter.XenonToggle()
+        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.XenonButton11 = New WinPaletter.XenonButton()
+        Me.XenonButton12 = New WinPaletter.XenonButton()
+        Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
@@ -39,7 +48,6 @@ Partial Class LogonUI7
         Me.XenonCheckBox8 = New WinPaletter.XenonCheckBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.XenonToggle1 = New WinPaletter.XenonToggle()
         Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
@@ -60,14 +68,8 @@ Partial Class LogonUI7
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.XenonRadioButton4 = New WinPaletter.XenonRadioButton()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.checker_img = New System.Windows.Forms.PictureBox()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.OpenImgDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonGroupBox12.SuspendLayout()
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,9 +85,114 @@ Partial Class LogonUI7
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox12.SuspendLayout()
-        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.DefaultExt = "wpt"
+        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
+        '
+        'OpenImgDlg
+        '
+        Me.OpenImgDlg.Filter = "Images (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"
+        '
+        'XenonGroupBox12
+        '
+        Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox12.Controls.Add(Me.XenonToggle1)
+        Me.XenonGroupBox12.Controls.Add(Me.XenonButton9)
+        Me.XenonGroupBox12.Controls.Add(Me.Label12)
+        Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
+        Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
+        Me.XenonGroupBox12.Controls.Add(Me.checker_img)
+        Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
+        Me.XenonGroupBox12.Name = "XenonGroupBox12"
+        Me.XenonGroupBox12.Size = New System.Drawing.Size(860, 39)
+        Me.XenonGroupBox12.TabIndex = 201
+        '
+        'XenonToggle1
+        '
+        Me.XenonToggle1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonToggle1.Checked = False
+        Me.XenonToggle1.DarkLight_Toggler = False
+        Me.XenonToggle1.Location = New System.Drawing.Point(815, 9)
+        Me.XenonToggle1.Name = "XenonToggle1"
+        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
+        Me.XenonToggle1.TabIndex = 82
+        '
+        'XenonButton9
+        '
+        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton9.ForeColor = System.Drawing.Color.White
+        Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
+        Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.XenonButton9.LineSize = 1
+        Me.XenonButton9.Location = New System.Drawing.Point(222, 5)
+        Me.XenonButton9.Name = "XenonButton9"
+        Me.XenonButton9.Size = New System.Drawing.Size(126, 29)
+        Me.XenonButton9.TabIndex = 112
+        Me.XenonButton9.Text = "Current applied"
+        Me.XenonButton9.UseVisualStyleBackColor = False
+        '
+        'Label12
+        '
+        Me.Label12.BackColor = System.Drawing.Color.Transparent
+        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(4, 4)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(75, 31)
+        Me.Label12.TabIndex = 111
+        Me.Label12.Text = "Open from:"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonButton11
+        '
+        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton11.ForeColor = System.Drawing.Color.White
+        Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
+        Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
+        Me.XenonButton11.LineSize = 1
+        Me.XenonButton11.Location = New System.Drawing.Point(85, 5)
+        Me.XenonButton11.Name = "XenonButton11"
+        Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
+        Me.XenonButton11.TabIndex = 110
+        Me.XenonButton11.Text = "WinPaletter theme"
+        Me.XenonButton11.UseVisualStyleBackColor = False
+        '
+        'XenonButton12
+        '
+        Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton12.ForeColor = System.Drawing.Color.White
+        Me.XenonButton12.Image = Nothing
+        Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
+        Me.XenonButton12.LineSize = 1
+        Me.XenonButton12.Location = New System.Drawing.Point(351, 5)
+        Me.XenonButton12.Name = "XenonButton12"
+        Me.XenonButton12.Size = New System.Drawing.Size(135, 29)
+        Me.XenonButton12.TabIndex = 108
+        Me.XenonButton12.Text = "Default Windows"
+        Me.XenonButton12.UseVisualStyleBackColor = False
+        '
+        'checker_img
+        '
+        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
+        Me.checker_img.Location = New System.Drawing.Point(774, 4)
+        Me.checker_img.Name = "checker_img"
+        Me.checker_img.Size = New System.Drawing.Size(35, 31)
+        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.checker_img.TabIndex = 83
+        Me.checker_img.TabStop = False
         '
         'XenonButton2
         '
@@ -185,9 +292,9 @@ Partial Class LogonUI7
         '
         'XenonTrackbar1
         '
-        Me.XenonTrackbar1.LargeChange = 4
+        Me.XenonTrackbar1.LargeChange = 5
         Me.XenonTrackbar1.Location = New System.Drawing.Point(150, 67)
-        Me.XenonTrackbar1.Maximum = 20
+        Me.XenonTrackbar1.Maximum = 35
         Me.XenonTrackbar1.Minimum = 0
         Me.XenonTrackbar1.Name = "XenonTrackbar1"
         Me.XenonTrackbar1.Size = New System.Drawing.Size(128, 19)
@@ -306,18 +413,6 @@ Partial Class LogonUI7
         Me.Label2.TabIndex = 81
         Me.Label2.Text = "Effects"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonToggle1
-        '
-        Me.XenonToggle1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonToggle1.Checked = False
-        Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(815, 9)
-        Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
-        Me.XenonToggle1.TabIndex = 82
         '
         'XenonGroupBox8
         '
@@ -578,101 +673,6 @@ Partial Class LogonUI7
         Me.Label1.Text = "Source"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonGroupBox12
-        '
-        Me.XenonGroupBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox12.Controls.Add(Me.XenonToggle1)
-        Me.XenonGroupBox12.Controls.Add(Me.XenonButton9)
-        Me.XenonGroupBox12.Controls.Add(Me.Label12)
-        Me.XenonGroupBox12.Controls.Add(Me.XenonButton11)
-        Me.XenonGroupBox12.Controls.Add(Me.XenonButton12)
-        Me.XenonGroupBox12.Controls.Add(Me.checker_img)
-        Me.XenonGroupBox12.Location = New System.Drawing.Point(12, 12)
-        Me.XenonGroupBox12.Name = "XenonGroupBox12"
-        Me.XenonGroupBox12.Size = New System.Drawing.Size(860, 39)
-        Me.XenonGroupBox12.TabIndex = 201
-        '
-        'XenonButton9
-        '
-        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton9.ForeColor = System.Drawing.Color.White
-        Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
-        Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(222, 5)
-        Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(126, 29)
-        Me.XenonButton9.TabIndex = 112
-        Me.XenonButton9.Text = "Current applied"
-        Me.XenonButton9.UseVisualStyleBackColor = False
-        '
-        'Label12
-        '
-        Me.Label12.BackColor = System.Drawing.Color.Transparent
-        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(4, 4)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(75, 31)
-        Me.Label12.TabIndex = 111
-        Me.Label12.Text = "Open from:"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonButton11
-        '
-        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton11.ForeColor = System.Drawing.Color.White
-        Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
-        Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(85, 5)
-        Me.XenonButton11.Name = "XenonButton11"
-        Me.XenonButton11.Size = New System.Drawing.Size(135, 29)
-        Me.XenonButton11.TabIndex = 110
-        Me.XenonButton11.Text = "WinPaletter theme"
-        Me.XenonButton11.UseVisualStyleBackColor = False
-        '
-        'XenonButton12
-        '
-        Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton12.ForeColor = System.Drawing.Color.White
-        Me.XenonButton12.Image = Nothing
-        Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(351, 5)
-        Me.XenonButton12.Name = "XenonButton12"
-        Me.XenonButton12.Size = New System.Drawing.Size(135, 29)
-        Me.XenonButton12.TabIndex = 108
-        Me.XenonButton12.Text = "Default Windows"
-        Me.XenonButton12.UseVisualStyleBackColor = False
-        '
-        'checker_img
-        '
-        Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
-        Me.checker_img.Location = New System.Drawing.Point(774, 4)
-        Me.checker_img.Name = "checker_img"
-        Me.checker_img.Size = New System.Drawing.Size(35, 31)
-        Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.checker_img.TabIndex = 83
-        Me.checker_img.TabStop = False
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.DefaultExt = "wpt"
-        Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
-        '
-        'OpenImgDlg
-        '
-        Me.OpenImgDlg.Filter = "Images (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"
-        '
         'LogonUI7
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -694,6 +694,8 @@ Partial Class LogonUI7
         Me.Name = "LogonUI7"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "LogonUI"
+        Me.XenonGroupBox12.ResumeLayout(False)
+        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
@@ -709,8 +711,6 @@ Partial Class LogonUI7
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox12.ResumeLayout(False)
-        CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

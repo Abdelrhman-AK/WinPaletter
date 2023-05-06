@@ -1,4 +1,5 @@
 ﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class ScreenSaver_Editor
 
@@ -7,8 +8,7 @@ Public Class ScreenSaver_Editor
     Private Sub ScreenSaver_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        pnl_preview.CheckForIllegalCrossThreadCalls = False
-        MainFrm.MakeItDoubleBuffered(pnl_preview)
+        pnl_preview.DoubleBuffer
         ApplyFromCP(MainFrm.CP)
     End Sub
 
@@ -48,17 +48,17 @@ Public Class ScreenSaver_Editor
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
@@ -146,17 +146,17 @@ Public Class ScreenSaver_Editor
 
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
             Dim _Def As CP
-            If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+            If My.PreviewStyle = WindowStyle.W11 Then
                 _Def = New CP_Defaults().Default_Windows11
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+            ElseIf My.PreviewStyle = WindowStyle.W10 Then
                 _Def = New CP_Defaults().Default_Windows10
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+            ElseIf My.PreviewStyle = WindowStyle.W8 Then
                 _Def = New CP_Defaults().Default_Windows8
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+            ElseIf My.PreviewStyle = WindowStyle.W7 Then
                 _Def = New CP_Defaults().Default_Windows7
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+            ElseIf My.PreviewStyle = WindowStyle.WVista Then
                 _Def = New CP_Defaults().Default_WindowsVista
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            ElseIf My.PreviewStyle = WindowStyle.WXP Then
                 _Def = New CP_Defaults().Default_WindowsXP
             Else
                 _Def = New CP_Defaults().Default_Windows11

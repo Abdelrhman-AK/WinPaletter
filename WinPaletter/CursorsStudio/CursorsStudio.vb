@@ -1,4 +1,5 @@
 ﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class CursorsStudio
     Private _Shown As Boolean = False
@@ -138,25 +139,7 @@ Public Class CursorsStudio
         ApplyDarkMode(Me)
         MainFrm.Visible = False
         Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
-
-        MainFrm.MakeItDoubleBuffered(FlowLayoutPanel1)
-        MainFrm.MakeItDoubleBuffered(Arrow)
-        MainFrm.MakeItDoubleBuffered(Help)
-        MainFrm.MakeItDoubleBuffered(AppLoading)
-        MainFrm.MakeItDoubleBuffered(Busy)
-        MainFrm.MakeItDoubleBuffered(Move_Cur)
-        MainFrm.MakeItDoubleBuffered(NS)
-        MainFrm.MakeItDoubleBuffered(EW)
-        MainFrm.MakeItDoubleBuffered(NESW)
-        MainFrm.MakeItDoubleBuffered(NWSE)
-        MainFrm.MakeItDoubleBuffered(Up)
-        MainFrm.MakeItDoubleBuffered(Pen)
-        MainFrm.MakeItDoubleBuffered(None)
-        MainFrm.MakeItDoubleBuffered(Link)
-        MainFrm.MakeItDoubleBuffered(Pin)
-        MainFrm.MakeItDoubleBuffered(Person)
-        MainFrm.MakeItDoubleBuffered(IBeam)
-        MainFrm.MakeItDoubleBuffered(Cross)
+        FlowLayoutPanel1.DoubleBuffer
 
         AnimateList.Clear()
         _CopiedControl = Nothing
@@ -691,17 +674,17 @@ Public Class CursorsStudio
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11

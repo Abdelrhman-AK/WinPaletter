@@ -6,6 +6,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
 
 Public Class ColorPickerDlg
     Private _shown As Boolean = False
@@ -544,10 +545,10 @@ Public Class ColorPickerDlg
                     .clrColor = Color1.ToArgb,
                     .clrAfterGlow = Color2.ToArgb}
 
-                If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                If My.PreviewStyle = WindowStyle.W8 Then
                     temp.nIntensity = MainFrm.CP.Windows8.ColorizationColorBalance
 
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+                ElseIf My.PreviewStyle = WindowStyle.W7 Then
                     temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
 
                     temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
@@ -555,7 +556,7 @@ Public Class ColorPickerDlg
                     temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
                     temp.fOpaque = (MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque)
 
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                ElseIf My.PreviewStyle = WindowStyle.WVista Then
                     temp.clrColor = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
                     temp.clrAfterGlowBalance = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
 

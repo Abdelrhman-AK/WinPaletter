@@ -10,6 +10,7 @@ Imports WinPaletter.Reg_IO
 Imports WinPaletter.CP.Structures
 Imports System.IO.Compression
 Imports System.IO
+Imports WinPaletter.PreviewHelpers
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -1441,17 +1442,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 ElseIf My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults Then
                     Dim _DefWin32 As Structures.Win32UI
-                    If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+                    If My.PreviewStyle = WindowStyle.W11 Then
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
-                    ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+                    ElseIf My.PreviewStyle = WindowStyle.W10 Then
                         _DefWin32 = New CP_Defaults().Default_Windows10.Win32
-                    ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                    ElseIf My.PreviewStyle = WindowStyle.W8 Then
                         _DefWin32 = New CP_Defaults().Default_Windows8.Win32
-                    ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+                    ElseIf My.PreviewStyle = WindowStyle.W7 Then
                         _DefWin32 = New CP_Defaults().Default_Windows7.Win32
-                    ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                    ElseIf My.PreviewStyle = WindowStyle.WVista Then
                         _DefWin32 = New CP_Defaults().Default_WindowsVista.Win32
-                    ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                    ElseIf My.PreviewStyle = WindowStyle.WXP Then
                         _DefWin32 = New CP_Defaults().Default_WindowsXP.Win32
                     Else
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
@@ -2286,7 +2287,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If Not My.Settings.DelayMetrics Then
                         Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
                         Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
-                        SystemParametersInfo(SPI.Metrics.GETNONCLIENTMETRICS, NCM.cbSize, NCM, SPIF.None)
                         SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
                         With NCM
@@ -2316,6 +2316,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.UpdateINIFile)
                         SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.UpdateINIFile)
+
                     Else
                         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
                         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
@@ -3557,7 +3558,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SearchProviderDiscovered"), "", Snd_Explorer_SearchProviderDiscovered)
+                        EditReg(String.Format(Scope, "SearchProviderDiscovered"), "", Snd_Explorer_SearchProviderDiscovered, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "FaxError"), "", Snd_Explorer_FaxError, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "FaxLineRings"), "", Snd_Explorer_FaxLineRings, RegistryValueKind.String)
                         EditReg(String.Format(Scope, "FaxNew"), "", Snd_Explorer_FaxNew, RegistryValueKind.String)
@@ -4067,7 +4068,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .TimeOut = 60}
 
     Public Sounds As New Sounds With {
-        .Enabled = False,
+        .Enabled = True,
         .Snd_Imageres_SystemStart = If(My.W11, "Default", "")}
 
     Public AppTheme As New Structures.AppTheme With {
@@ -5118,17 +5119,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Select Case CP_Type
             Case CP_Type.Registry
                 Dim _Def As CP
-                If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+                If My.PreviewStyle = WindowStyle.W11 Then
                     _Def = New CP_Defaults().Default_Windows11
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+                ElseIf My.PreviewStyle = WindowStyle.W10 Then
                     _Def = New CP_Defaults().Default_Windows10
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+                ElseIf My.PreviewStyle = WindowStyle.W8 Then
                     _Def = New CP_Defaults().Default_Windows8
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+                ElseIf My.PreviewStyle = WindowStyle.W7 Then
                     _Def = New CP_Defaults().Default_Windows7
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+                ElseIf My.PreviewStyle = WindowStyle.WVista Then
                     _Def = New CP_Defaults().Default_WindowsVista
-                ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+                ElseIf My.PreviewStyle = WindowStyle.WXP Then
                     _Def = New CP_Defaults().Default_WindowsXP
                 Else
                     _Def = New CP_Defaults().Default_Windows11
@@ -6437,7 +6438,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 #Region "Windows 10x - Legacy WinPaletter - Before Vesion 1.0.6.9"
         If Info.AppVersion < "1.0.6.9" Or My.[Settings].SaveForLegacyWP Then
             Try
-                With If(MainFrm.PreviewConfig = MainFrm.WinVer.W11, Windows11, Windows10)
+                With If(My.PreviewStyle = WindowStyle.W11, Windows11, Windows10)
                     tx.Add("<LegacyWinPaletter_Windows11/10>")
                     tx.Add("*WinMode_Light= " & .WinMode_Light)
                     tx.Add("*AppMode_Light= " & .AppMode_Light)
@@ -7373,7 +7374,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Case LogonUI_Modes.CustomImage
                     If IO.File.Exists([LogonElement].ImagePath) Then
                         bmpList.Add(Bitmap_Mgr.Load([LogonElement].ImagePath))
-
                     Else
                         bmpList.Add(Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size))
                     End If
@@ -7382,7 +7382,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     bmpList.Add([LogonElement].Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case LogonUI_Modes.Wallpaper
-                    bmpList.Add(My.Wallpaper_Unscaled)
+                    bmpList.Add(My.Wallpaper_Unscaled.Clone)
 
             End Select
 
@@ -7390,7 +7390,20 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Lang.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
 
                 If [LogonElement].Grayscale Then bmpList(x) = bmpList(x).Grayscale
-                If [LogonElement].Blur Then bmpList(x) = bmpList(x).Blur([LogonElement].Blur_Intensity)
+
+                If [LogonElement].Blur Then
+                    Dim imgF As New ImageProcessor.ImageFactory
+
+                    Using b As New Bitmap(bmpList(x))
+                        imgF.Load(b)
+                        imgF.GaussianBlur([LogonElement].Blur_Intensity)
+                        bmpList(x) = imgF.Image
+                    End Using
+
+
+
+                End If
+
                 If [LogonElement].Noise Then bmpList(x) = bmpList(x).Noise([LogonElement].Noise_Mode, [LogonElement].Noise_Intensity / 100)
             Next
 

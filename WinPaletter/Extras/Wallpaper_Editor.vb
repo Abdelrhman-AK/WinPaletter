@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+
 Public Class Wallpaper_Editor
 
     Public WT As New CP.Structures.WallpaperTone
@@ -19,18 +21,18 @@ Public Class Wallpaper_Editor
         index = 0
         ApplyPreviewStyle()
 
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win11)
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win10)
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win8)
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win7)
-            Case MainFrm.WinVer.WVista
+            Case WindowStyle.WVista
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinVista)
-            Case MainFrm.WinVer.WXP
+            Case WindowStyle.WXP
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinXP)
             Case Else
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinUndefined)
@@ -158,18 +160,18 @@ Public Class Wallpaper_Editor
             .L = LBar.Value
             }
 
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 MainFrm.CP.WallpaperTone_W11 = WT
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 MainFrm.CP.WallpaperTone_W10 = WT
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 MainFrm.CP.WallpaperTone_W8 = WT
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 MainFrm.CP.WallpaperTone_W7 = WT
-            Case MainFrm.WinVer.WVista
+            Case WindowStyle.WVista
                 MainFrm.CP.WallpaperTone_WVista = WT
-            Case MainFrm.WinVer.WXP
+            Case WindowStyle.WXP
                 MainFrm.CP.WallpaperTone_WXP = WT
             Case Else
                 MainFrm.CP.WallpaperTone_W11 = WT
@@ -193,17 +195,17 @@ Public Class Wallpaper_Editor
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
@@ -216,7 +218,7 @@ Public Class Wallpaper_Editor
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
         ApplyWT()
-        MainFrm.Adjust_Preview()
+        MainFrm.ApplyStylesToElements(MainFrm.CP)
         Close()
     End Sub
 
@@ -252,7 +254,7 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        If My.PreviewStyle = WindowStyle.WXP Then
             XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
         Else
             XenonTextBox1.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
@@ -485,9 +487,15 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.AppStarting
 
         If source_pic.Checked Then
-            img = GetWall(XenonTextBox1.Text)
-            img_filled = FillScale(img.Clone, pnl_preview.Size)
-            img_tile = DirectCast(img.Clone, Bitmap).Tile(pnl_preview.Size)
+            If IO.File.Exists(XenonTextBox1.Text) Then
+                img = GetWall(XenonTextBox1.Text)
+                img_filled = FillScale(img.Clone, pnl_preview.Size)
+                img_tile = DirectCast(img.Clone, Bitmap).Tile(pnl_preview.Size)
+            Else
+                img = Nothing
+                img_filled = Nothing
+                img_tile = Nothing
+            End If
 
         ElseIf source_wallpapertone.Checked Then
             img_untouched_forTint = GetWall(XenonTextBox3.Text)
@@ -652,7 +660,7 @@ Public Class Wallpaper_Editor
         If R1 IsNot Nothing Then R1.Close()
 
         If Not IO.File.Exists(WallpaperPath) Then
-            If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            If My.PreviewStyle = WindowStyle.WXP Then
                 WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
             Else
                 WallpaperPath = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"
@@ -664,7 +672,7 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
-        If MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        If My.PreviewStyle = WindowStyle.WXP Then
             XenonTextBox3.Text = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
         Else
             XenonTextBox3.Text = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"

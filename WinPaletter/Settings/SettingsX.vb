@@ -227,10 +227,10 @@ Public Class SettingsX
 
         If ch_EP Then
             My.EP = New ExplorerPatcher
-            MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+            MainFrm.ApplyColorsToElements(MainFrm.CP)
             MainFrm.ApplyCPValues(MainFrm.CP)
-            MainFrm.Adjust_Preview(False)
-            MainFrm.ReValidateLivePreview(MainFrm.pnl_preview)
+            MainFrm.ApplyStylesToElements(MainFrm.CP, False)
+            PreviewHelpers.ReValidateLivePreview(MainFrm.pnl_preview)
         End If
 
         Cursor = Cursors.Default

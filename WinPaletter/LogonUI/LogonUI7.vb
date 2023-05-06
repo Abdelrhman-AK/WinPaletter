@@ -1,5 +1,7 @@
-﻿Imports System.IO
+﻿Imports ImageProcessor
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+
 Public Class LogonUI7
     Private _Shown As Boolean = False
     ReadOnly b As Bitmap
@@ -13,11 +15,11 @@ Public Class LogonUI7
         ApplyPreview()
         Icon = LogonUI.Icon
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        If My.PreviewStyle = WindowStyle.W8 Then
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             XenonButton3.Visible = False
             PictureBox11.Image = My.Resources.LogonUI7
             PictureBox4.Image = My.Resources.Native7
@@ -32,7 +34,7 @@ Public Class LogonUI7
 
     Sub LoadFromCP(CP As CP)
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        If My.PreviewStyle = WindowStyle.W8 Then
             XenonToggle1.Checked = Not CP.Windows8.NoLockScreen
 
             Select Case CP.Windows8.LockScreenType
@@ -69,7 +71,7 @@ Public Class LogonUI7
                     XenonComboBox1.SelectedIndex = 1
             End Select
 
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
 
             XenonToggle1.Checked = CP.LogonUI7.Enabled
 
@@ -112,7 +114,7 @@ Public Class LogonUI7
 
     Sub LoadToCP(CP As CP)
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        If My.PreviewStyle = WindowStyle.W8 Then
             CP.Windows8.NoLockScreen = Not XenonToggle1.Checked
 
             If XenonRadioButton1.Checked Then CP.Windows8.LockScreenType = CP.LogonUI_Modes.Default_
@@ -135,7 +137,7 @@ Public Class LogonUI7
             If XenonComboBox1.SelectedIndex = 0 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic
             If XenonComboBox1.SelectedIndex = 1 Then CP.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero
 
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             CP.LogonUI7.Enabled = XenonToggle1.Checked
 
             If XenonRadioButton1.Checked Then CP.LogonUI7.Mode = CP.LogonUI_Modes.Default_
@@ -165,21 +167,20 @@ Public Class LogonUI7
         If XenonRadioButton1.Checked Then
             If My.W7 Or My.WVista Then
                 bmpX = Resources_Functions.GetImageFromDLL(My.PATH_imageres, 5038)
-            End If
 
-            If My.W8 Then
-                Dim syslock As String
+            ElseIf My.W8 Then
+                Dim SysLock As String
                 If Not ID = 1 And Not ID = 3 Then
-                    syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", ID)
+                    SysLock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", ID)
                 Else
-                    syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", ID)
+                    SysLock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", ID)
                 End If
 
-                bmpX = Bitmap_Mgr.Load(syslock)
+                bmpX = Bitmap_Mgr.Load(SysLock)
             End If
 
         ElseIf XenonRadioButton2.Checked Then
-            bmpX = My.Wallpaper_Unscaled
+            bmpX = My.Wallpaper_Unscaled.Clone
 
         ElseIf XenonRadioButton3.Checked Then
             bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)
@@ -189,9 +190,15 @@ Public Class LogonUI7
 
         Else
             bmpX = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
+
         End If
 
-        Return ApplyEffects(bmpX.Resize(pnl_preview.Size))
+        If bmpX IsNot Nothing Then
+            Return ApplyEffects(bmpX.Resize(pnl_preview.Size))
+        Else
+            Return Nothing
+        End If
+
     End Function
 
     Sub ApplyPreview()
@@ -207,7 +214,12 @@ Public Class LogonUI7
         Try
             If XenonCheckBox8.Checked Then _bmp = _bmp.Grayscale
 
-            If XenonCheckBox7.Checked Then _bmp = _bmp.Blur(XenonTrackbar1.Value)
+            If XenonCheckBox7.Checked Then
+                Dim imgF As New ImageFactory
+                imgF.Load(_bmp.Clone)
+                imgF.GaussianBlur(XenonTrackbar1.Value)
+                _bmp = imgF.Image
+            End If
 
             If XenonCheckBox6.Checked Then
                 Select Case XenonComboBox1.SelectedIndex
@@ -341,18 +353,18 @@ Public Class LogonUI7
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim CPx As CP
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 CPx = New CP_Defaults().Default_Windows11
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 CPx = New CP_Defaults().Default_Windows10
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 CPx = New CP_Defaults().Default_Windows8
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 CPx = New CP_Defaults().Default_Windows7
-            Case MainFrm.WinVer.WVista
+            Case WindowStyle.WVista
                 CPx = New CP_Defaults().Default_WindowsVista
-            Case MainFrm.WinVer.WXP
+            Case WindowStyle.WXP
                 CPx = New CP_Defaults().Default_WindowsXP
             Case Else
                 CPx = New CP_Defaults().Default_Windows11

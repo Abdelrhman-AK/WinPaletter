@@ -3,24 +3,22 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 
 <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
-Public Class LogFont : Implements IDisposable
-
+Public Class LogFont
     Public lfHeight As Integer
     Public lfWidth As Integer
     Public lfEscapement As Integer
     Public lfOrientation As Integer
-    Public lfWeight As LogFontHelper.FontWeight
+    Public lfWeight As Integer
     Public lfItalic As Byte
     Public lfUnderline As Byte
     Public lfStrikeOut As Byte
-    Public lfCharSet As LogFontHelper.FontCharSet
-    Public lfOutPrecision As LogFontHelper.FontOutPrecision
-    Public lfClipPrecision As LogFontHelper.FontClipPrecision
-    Public lfQuality As LogFontHelper.FontQuality
-    Public lfPitchAndFamily As LogFontHelper.FontPitchAndFamily
+    Public lfCharSet As Byte
+    Public lfOutPrecision As Byte
+    Public lfClipPrecision As Byte
+    Public lfQuality As Byte
+    Public lfPitchAndFamily As Byte
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public lfFaceName As String
-    Private disposedValue As Boolean
 
     Public Sub New(Optional lfFaceName As String = Nothing)
         Me.lfFaceName = lfFaceName
@@ -28,39 +26,41 @@ Public Class LogFont : Implements IDisposable
         Me.lfWidth = 0
         Me.lfEscapement = 0
         Me.lfOrientation = 0
-        Me.lfWeight = LogFontHelper.FontWeight.FW_DONTCARE
+        Me.lfWeight = 0
         Me.lfItalic = 0
         Me.lfUnderline = 0
         Me.lfStrikeOut = 0
-        Me.lfCharSet = LogFontHelper.FontCharSet.ANSI_CHARSET
-        Me.lfOutPrecision = LogFontHelper.FontOutPrecision.OUT_DEFAULT_PRECIS
-        Me.lfClipPrecision = LogFontHelper.FontClipPrecision.CLIP_DEFAULT_PRECIS
-        Me.lfQuality = LogFontHelper.FontQuality.DEFAULT_QUALITY
-        Me.lfPitchAndFamily = LogFontHelper.FontPitchAndFamily.DEFAULT_PITCH
+        Me.lfCharSet = 0
+        Me.lfOutPrecision = 0
+        Me.lfClipPrecision = 0
+        Me.lfQuality = 0
+        Me.lfPitchAndFamily = 0
     End Sub
 
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not disposedValue Then
-            If disposing Then
-            End If
-
-            disposedValue = True
-        End If
-    End Sub
-
-    ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
-    Protected Overrides Sub Finalize()
-        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-        Dispose(disposing:=False)
-        MyBase.Finalize()
-    End Sub
-
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-        Dispose(disposing:=True)
-        GC.SuppressFinalize(Me)
-    End Sub
 End Class
+
+<StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Auto)>
+Public Structure LogFontStr
+    Public LfHeight As Integer
+    Public LfWidth As Integer
+    Public LfEscapement As Integer
+    Public LfOrientation As Integer
+    Public LfWeight As Integer
+    Public LfItalic As Byte
+    Public LfUnderline As Byte
+    Public LfStrikeOut As Byte
+    Public LfCharSet As Byte
+    Public LfOutPrecision As Byte
+    Public LfClipPrecision As Byte
+    Public LfQuality As Byte
+    Public LfPitchAndFamily As Byte
+    '<see cref="UnmanagedType.ByValTStr"/> means that the string should be marshalled as an array of TCHAR embedded in the structure.
+    'This implies that the font names can be no larger than <see cref="LF_FACESIZE"/> including the terminating '\0'. That works out to 31 characters.
+    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
+    Public lfFaceName As String '= String.Empty
+
+End Structure
+
 
 Public Class LogFontHelper
     Public Enum FontWeight As Integer
@@ -99,7 +99,7 @@ Public Class LogFontHelper
         BALTIC_CHARSET = 186
     End Enum
 
-    Public Enum FontOutPrecision As Byte
+    Public Enum FontPrecision As Byte
         OUT_DEFAULT_PRECIS = 0
         OUT_STRING_PRECIS = 1
         OUT_CHARACTER_PRECIS = 2
@@ -152,43 +152,34 @@ Module LogFontHelpers
 
     <Extension()>
     Public Function ToLogFont(ByVal fontBytes As Byte()) As LogFont
-        If fontBytes IsNot Nothing Then
-            Dim lOGFONT As New LogFont With {
-          .lfHeight = BitConverter.ToInt32(fontBytes, 0),
-          .lfWidth = 0,
-          .lfEscapement = 0,
-          .lfOrientation = 0,
-          .lfWeight = BitConverter.ToInt32(fontBytes, 16),
-          .lfItalic = fontBytes(20),
-          .lfUnderline = fontBytes(21),
-          .lfStrikeOut = fontBytes(22),
-          .lfCharSet = fontBytes(23),
-          .lfOutPrecision = fontBytes(24),
-          .lfClipPrecision = fontBytes(25),
-          .lfQuality = fontBytes(26)
-      }
-            lOGFONT.lfClipPrecision = fontBytes(27)
-            Dim array As Byte() = New Byte(63) {}
+        Dim lOGFONT As New LogFont With {
+            .lfHeight = BitConverter.ToInt32(fontBytes, 0),
+            .lfWidth = 0,
+            .lfEscapement = 0,
+            .lfOrientation = 0,
+            .lfWeight = BitConverter.ToInt32(fontBytes, 16),
+            .lfItalic = fontBytes(20),
+            .lfUnderline = fontBytes(21),
+            .lfStrikeOut = fontBytes(22),
+            .lfCharSet = fontBytes(23),
+            .lfOutPrecision = fontBytes(24),
+            .lfClipPrecision = fontBytes(25),
+            .lfQuality = fontBytes(26)
+        }
+        lOGFONT.lfClipPrecision = fontBytes(27)
+        Dim array As Byte() = New Byte(63) {}
 
-            For i As Integer = 0 To 64 - 1
-                array(i) = fontBytes(i + 28)
-            Next
+        For i As Integer = 0 To 64 - 1
+            array(i) = fontBytes(i + 28)
+        Next
 
-            lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(Nothing)
-            Return lOGFONT
-        Else
-            Return Nothing
-        End If
-
+        lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(Nothing)
+        Return lOGFONT
     End Function
 
     <Extension()>
     Public Function ToFont(ByVal fontBytes As Byte()) As Font
-        If fontBytes IsNot Nothing Then
-            Return Font.FromLogFont(fontBytes.ToLogFont)
-        Else
-            Return New Font("Segoe UI", 9, FontStyle.Regular)
-        End If
+        Return Font.FromLogFont(fontBytes.ToLogFont)
     End Function
 
     <Extension()>

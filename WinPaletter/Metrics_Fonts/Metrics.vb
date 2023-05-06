@@ -19,6 +19,7 @@ Public Class Metrics
         Public lfMessageFont As LogFont
         Public iPaddedBorderWidth As Integer
     End Structure
+
     Public Structure ICONMETRICS
         Dim cbSize As UInteger
         Dim iHorzSpacing As Integer

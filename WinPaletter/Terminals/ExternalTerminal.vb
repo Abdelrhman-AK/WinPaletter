@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
 Imports WinPaletter.Reg_IO
+Imports WinPaletter.PreviewHelpers
 
 Public Class ExternalTerminal
     Private _Shown As Boolean = False
@@ -48,17 +49,17 @@ Public Class ExternalTerminal
         Dim y_cmd As Object
 
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11
@@ -1133,17 +1134,17 @@ Public Class ExternalTerminal
         End If
 
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11

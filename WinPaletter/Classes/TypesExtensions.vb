@@ -2,6 +2,7 @@
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.IO.Compression
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Newtonsoft.Json
@@ -1064,6 +1065,28 @@ Public Module ControlExtensions
 
         Return bmp
     End Function
+
+    Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
+        Dim panType As Type = [Control].[GetType]()
+        Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+        pi.SetValue([Control], setting, Nothing)
+    End Sub
+
+    <Extension()>
+    Public Sub DoubleBuffer(ByVal Parent As Control)
+        DoubleBufferedControl(Parent, True)
+
+        For Each ctrl As Control In Parent.Controls
+            If ctrl.HasChildren Then
+                For Each c As Control In ctrl.Controls
+                    DoubleBuffer(c)
+                Next
+            End If
+
+            DoubleBufferedControl(ctrl, True)
+        Next
+    End Sub
+
 End Module
 
 Public Module ComboBoxExtensions

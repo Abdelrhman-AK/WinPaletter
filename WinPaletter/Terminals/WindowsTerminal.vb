@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+
 Public Class WindowsTerminal
     Private _Shown As Boolean = False
     Public _Mode As WinTerminal.Version
@@ -73,13 +75,13 @@ Public Class WindowsTerminal
             TerTabActive.BackColor = Nothing
             TerTabInactive.BackColor = Nothing
 
-            Select Case MainFrm.PreviewConfig
-                Case MainFrm.WinVer.W11
+            Select Case My.PreviewStyle
+                Case WindowStyle.W11
                     TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
                     XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
                     XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
 
-                Case MainFrm.WinVer.W10
+                Case WindowStyle.W10
                     TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
                     XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
                     XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
@@ -736,12 +738,12 @@ Public Class WindowsTerminal
                     XenonTerminal2.Light = True
 
                 ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
-                    Select Case MainFrm.PreviewConfig
-                        Case MainFrm.WinVer.W11
+                    Select Case My.PreviewStyle
+                        Case WindowStyle.W11
                             XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
                             XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
 
-                        Case MainFrm.WinVer.W10
+                        Case WindowStyle.W10
                             XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
                             XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
 
@@ -820,11 +822,11 @@ Public Class WindowsTerminal
             If TerThemes.SelectedIndex = 0 Then TerMode.Checked = True
             If TerThemes.SelectedIndex = 1 Then TerMode.Checked = False
 
-            Select Case MainFrm.PreviewConfig
-                Case MainFrm.WinVer.W11
+            Select Case My.PreviewStyle
+                Case WindowStyle.W11
                     If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
 
-                Case MainFrm.WinVer.W10
+                Case WindowStyle.W10
                     If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
 
                 Case Else

@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports System.IO.Compression
 Imports System.IO
 Imports WinPaletter.Reg_IO
+Imports WinPaletter.PreviewHelpers
 
 Namespace My
     Module Env
@@ -133,6 +134,12 @@ Namespace My
         ''' </summary>
         Public EP As New ExplorerPatcher
 
+        ''' <summary>
+        ''' Variable responsible for the preview type on forms
+        ''' </summary>
+        Public PreviewStyle As WindowStyle = WindowStyle.W11
+
+
     End Module
 
     Partial Friend Class MyApplication
@@ -185,7 +192,7 @@ Namespace My
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(MainFrm.CP, MainFrm.PreviewConfig)
+                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(MainFrm.CP, My.PreviewStyle)
                                                                             MainFrm.pnl_preview.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview_classic.BackgroundImage = Wall
                                                                             DragPreviewer.pnl_preview.BackgroundImage = Wall
@@ -396,12 +403,12 @@ Namespace My
 #End Region
 
 #Region "   Wallpaper and User Preferences System"
-        Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As MainFrm.WinVer) As Bitmap
+        Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As WindowStyle) As Bitmap
             Using picbox As New PictureBox With {.Size = MainFrm.pnl_preview.Size, .BackColor = CP.Win32.Background}
 
                 If Wallpaper Is Nothing OrElse Wallpaper_Unscaled Is Nothing Then
                     Using wall_New As New Bitmap(GetWallpaper())
-                        If Wallpaper_Unscaled Is Nothing Then Wallpaper_Unscaled = wall_New
+                        If Wallpaper_Unscaled Is Nothing Then Wallpaper_Unscaled = wall_New.Clone
                         If Wallpaper Is Nothing Then Wallpaper = wall_New.Resize(picbox.Size)
                     End Using
                 End If
@@ -412,36 +419,36 @@ Namespace My
                     Wall = Wallpaper
                     Return Wall
                 Else
-                    Dim condition0 As Boolean = PreviewConfig = MainFrm.WinVer.W11 And CP.WallpaperTone_W11.Enabled
-                    Dim condition1 As Boolean = PreviewConfig = MainFrm.WinVer.W10 And CP.WallpaperTone_W10.Enabled
-                    Dim condition2 As Boolean = PreviewConfig = MainFrm.WinVer.W8 And CP.WallpaperTone_W8.Enabled
-                    Dim condition3 As Boolean = PreviewConfig = MainFrm.WinVer.W7 And CP.WallpaperTone_W7.Enabled
-                    Dim condition4 As Boolean = PreviewConfig = MainFrm.WinVer.WVista And CP.WallpaperTone_WVista.Enabled
-                    Dim condition5 As Boolean = PreviewConfig = MainFrm.WinVer.WXP And CP.WallpaperTone_WXP.Enabled
+                    Dim condition0 As Boolean = PreviewConfig = WindowStyle.W11 And CP.WallpaperTone_W11.Enabled
+                    Dim condition1 As Boolean = PreviewConfig = WindowStyle.W10 And CP.WallpaperTone_W10.Enabled
+                    Dim condition2 As Boolean = PreviewConfig = WindowStyle.W8 And CP.WallpaperTone_W8.Enabled
+                    Dim condition3 As Boolean = PreviewConfig = WindowStyle.W7 And CP.WallpaperTone_W7.Enabled
+                    Dim condition4 As Boolean = PreviewConfig = WindowStyle.WVista And CP.WallpaperTone_WVista.Enabled
+                    Dim condition5 As Boolean = PreviewConfig = WindowStyle.WXP And CP.WallpaperTone_WXP.Enabled
                     Dim condition As Boolean = condition0 OrElse condition1 OrElse condition2 OrElse condition3 OrElse condition4 OrElse condition5
 
                     If condition Then
                         Select Case PreviewConfig
-                            Case MainFrm.WinVer.W11
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11)
+                            Case WindowStyle.W11
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W11)
 
-                            Case MainFrm.WinVer.W10
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W10)
+                            Case WindowStyle.W10
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W10)
 
-                            Case MainFrm.WinVer.W8
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W8)
+                            Case WindowStyle.W8
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W8)
 
-                            Case MainFrm.WinVer.W7
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W7)
+                            Case WindowStyle.W7
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W7)
 
-                            Case MainFrm.WinVer.WVista
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WVista)
+                            Case WindowStyle.WVista
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_WVista)
 
-                            Case MainFrm.WinVer.WXP
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_WXP)
+                            Case WindowStyle.WXP
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_WXP)
 
                             Case Else
-                                Wall = MainFrm.GetTintedWallpaper(CP.WallpaperTone_W11)
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W11)
 
                         End Select
                     Else
@@ -640,8 +647,6 @@ Namespace My
             Catch : End Try
         End Sub
 
-        Private DEBUGMSGMEM As Boolean = False
-
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
@@ -670,11 +675,7 @@ Namespace My
                 Next
             End If
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 4)
-
             ApplyDarkMode()
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 5)
 
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then
@@ -698,8 +699,6 @@ Namespace My
                 End If
             Next
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 6)
-
             If [Settings].Language Then
                 Try
                     Lang.LoadLanguageFromJSON([Settings].Language_File)
@@ -708,16 +707,12 @@ Namespace My
                 End Try
             End If
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 7)
-
             If Not [Settings].LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
             ExternalLink = False
             ExternalLink_File = ""
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 8)
 
             For Each arg As String In ArgsList
 
@@ -764,9 +759,6 @@ Namespace My
                 End If
             Next
 
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 10)
-
             If Not My.WXP Then
                 Try
                     Monitor()
@@ -778,8 +770,6 @@ Namespace My
             Else
                 AddHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
             End If
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 11)
 
             Try
                 If [Settings].AutoAddExt Then
@@ -797,8 +787,6 @@ Namespace My
             Catch
             End Try
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 12)
-
             Notifications_IL.Images.Add("info", Resources.notify_info)
             Notifications_IL.Images.Add("error", Resources.notify_error)
             Notifications_IL.Images.Add("warning", Resources.notify_warning)
@@ -811,18 +799,12 @@ Namespace My
             Lang_IL.Images.Add("value", Resources.LangNode_Value)
             Lang_IL.Images.Add("json", Resources.LangNode_JSON)
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 13)
-
             Try : WinRes = New WinResources : Catch : End Try
 
             Saving_Exceptions.Clear()
             Loading_Exceptions.Clear()
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 14)
-
             If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 15)
 
             'Detects if WinPaletter started with Classic Theme
             Dim vsFile As New Text.StringBuilder(260)
@@ -830,8 +812,6 @@ Namespace My
             Dim sizeName As New Text.StringBuilder(260)
             NativeMethods.UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
             My.StartedWithClassicTheme = String.IsNullOrEmpty(vsFile.ToString)
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 16)
 
             Try
                 If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
@@ -854,8 +834,6 @@ Namespace My
                 BugReport.ThrowError(ex)
             End Try
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 17)
-
             'Backup Windows Startup sound
             Try
                 If Not My.WXP AndAlso Not IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
@@ -865,8 +843,6 @@ Namespace My
             Catch ex As Exception
                 BugReport.ThrowError(ex)
             End Try
-
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 18)
 
 #Region "WhatsNew"
             If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
@@ -891,7 +867,12 @@ Namespace My
             End If
 #End Region
 
-            If DEBUGMSGMEM Then Interaction.MsgBox(Process.GetCurrentProcess.WorkingSet64.SizeString & "  -  " & 19)
+            If My.W11 Then PreviewStyle = WindowStyle.W11
+            If My.W10 Then PreviewStyle = WindowStyle.W10
+            If My.W8 Then PreviewStyle = WindowStyle.W8
+            If My.W7 Then PreviewStyle = WindowStyle.W7
+            If My.WVista Then PreviewStyle = WindowStyle.WVista
+            If My.WXP Then PreviewStyle = WindowStyle.WXP
 
         End Sub
 
@@ -963,7 +944,7 @@ Namespace My
                                 MainFrm.OpenFileDialog1.FileName = arg
                                 MainFrm.SaveFileDialog1.FileName = arg
                                 MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+                                MainFrm.ApplyColorsToElements(MainFrm.CP)
 
                                 If Not [Settings].OpeningPreviewInApp_or_AppliesIt Then
                                     MainFrm.Apply_Theme()
@@ -1042,7 +1023,7 @@ Namespace My
                                 MainFrm.OpenFileDialog1.FileName = File
                                 MainFrm.SaveFileDialog1.FileName = File
                                 MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyLivePreviewFromCP(MainFrm.CP)
+                                MainFrm.ApplyColorsToElements(MainFrm.CP)
 
                             End If
                         End If

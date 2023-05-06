@@ -1,9 +1,7 @@
-﻿Imports System.IO
-Imports System.Runtime.InteropServices
-Imports System.Windows.Interop
-Imports WinPaletter.NativeMethods
-Imports WinPaletter.NativeMethods.User32
+﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+
 Public Class Metrics_Fonts
 
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -24,18 +22,18 @@ Public Class Metrics_Fonts
         CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
         CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
 
-        SetToClassicWindow(RetroWindow1, MainFrm.CP)
-        SetToClassicWindow(RetroWindow2, MainFrm.CP, False)
-        SetToClassicWindow(RetroWindow3, MainFrm.CP)
-        SetToClassicWindow(RetroWindow5, MainFrm.CP)
-        SetToClassicPanel(RetroPanel1, MainFrm.CP)
-        SetToClassicPanel(RetroPanel2, MainFrm.CP)
-        SetToClassicButton(RetroButton1, MainFrm.CP)
-        SetToClassicButton(RetroButton2, MainFrm.CP)
-        SetToClassicButton(RetroButton3, MainFrm.CP)
-        SetToClassicButton(RetroButton10, MainFrm.CP)
-        SetToClassicButton(RetroButton11, MainFrm.CP)
-        SetToClassicButton(RetroButton12, MainFrm.CP)
+        SetClassicWindowColors(MainFrm.CP, RetroWindow1)
+        SetClassicWindowColors(MainFrm.CP, RetroWindow2, False)
+        SetClassicWindowColors(MainFrm.CP, RetroWindow3)
+        SetClassicWindowColors(MainFrm.CP, RetroWindow5)
+        SetClassicPanelColors(MainFrm.CP, RetroPanel1)
+        SetClassicPanelColors(MainFrm.CP, RetroPanel2)
+        SetClassicButtonColors(MainFrm.CP, RetroButton1)
+        SetClassicButtonColors(MainFrm.CP, RetroButton2)
+        SetClassicButtonColors(MainFrm.CP, RetroButton3)
+        SetClassicButtonColors(MainFrm.CP, RetroButton10)
+        SetClassicButtonColors(MainFrm.CP, RetroButton11)
+        SetClassicButtonColors(MainFrm.CP, RetroButton12)
 
         RetroScrollBar2.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
         RetroScrollBar2.BackColor = MainFrm.CP.Win32.ButtonFace
@@ -49,29 +47,15 @@ Public Class Metrics_Fonts
         ApplyDarkMode(Me)
         ApplyFromCP(MainFrm.CP)
 
-        MainFrm.MakeItDoubleBuffered(pnl_preview1)
-        MainFrm.MakeItDoubleBuffered(pnl_preview2)
-        MainFrm.MakeItDoubleBuffered(pnl_preview3)
-        MainFrm.MakeItDoubleBuffered(pnl_preview4)
-
-        MainFrm.MakeItDoubleBuffered(Classic_Preview1)
-        MainFrm.MakeItDoubleBuffered(Classic_Preview3)
-        MainFrm.MakeItDoubleBuffered(Classic_Preview4)
-        MainFrm.MakeItDoubleBuffered(tabs_preview_1)
-        MainFrm.MakeItDoubleBuffered(tabs_preview_2)
-        MainFrm.MakeItDoubleBuffered(tabs_preview_3)
-
-        MainFrm.MakeItDoubleBuffered(XenonFakeIcon1)
-        MainFrm.MakeItDoubleBuffered(XenonFakeIcon2)
-        MainFrm.MakeItDoubleBuffered(XenonFakeIcon3)
+        DoubleBuffer
 
         XenonFakeIcon1.Title = "Icon 1"
         XenonFakeIcon2.Title = "Icon 2"
         XenonFakeIcon3.Title = "Icon 3"
 
-        Dim condition0 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic
-        Dim condition1 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.AeroTheme.Classic
-        Dim condition2 As Boolean = MainFrm.PreviewConfig = MainFrm.WinVer.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.WinXPTheme.Classic
+        Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic
+        Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.AeroTheme.Classic
+        Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.WinXPTheme.Classic
 
         If condition0 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1
@@ -143,15 +127,6 @@ Public Class Metrics_Fonts
 
     End Sub
 
-    Sub SetToClassicButton([Button] As RetroButton, [CP] As CP)
-        [Button].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Button].ButtonHilight = [CP].Win32.ButtonHilight
-        [Button].ButtonLight = [CP].Win32.ButtonLight
-        [Button].ButtonShadow = [CP].Win32.ButtonShadow
-        [Button].BackColor = [CP].Win32.ButtonFace
-        [Button].ForeColor = [CP].Win32.ButtonText
-    End Sub
-
     Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
         [ToXenonWindow].Active = [FromXenonWindow].Active
         [ToXenonWindow].AccentColor_Active = [FromXenonWindow].AccentColor_Active
@@ -171,38 +146,6 @@ Public Class Metrics_Fonts
         [ToXenonWindow].Padding = [FromXenonWindow].Padding
         [ToXenonWindow].Shadow = [FromXenonWindow].Shadow
         [ToXenonWindow].WinVista = [FromXenonWindow].WinVista
-    End Sub
-
-    Sub SetToClassicWindow([Window] As RetroWindow, [CP] As CP, Optional Active As Boolean = True)
-        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Window].BackColor = [CP].Win32.ButtonFace
-        [Window].ButtonText = [CP].Win32.ButtonText
-        [Window].ButtonHilight = [CP].Win32.ButtonHilight
-        [Window].ButtonLight = [CP].Win32.ButtonLight
-        [Window].ButtonShadow = [CP].Win32.ButtonShadow
-
-        If Active Then
-            [Window].ColorBorder = [CP].Win32.ActiveBorder
-            [Window].ForeColor = [CP].Win32.TitleText
-            [Window].Color1 = [CP].Win32.ActiveTitle
-            [Window].Color2 = [CP].Win32.GradientActiveTitle
-        Else
-            [Window].ColorBorder = [CP].Win32.InactiveBorder
-            [Window].ForeColor = [CP].Win32.InactiveTitleText
-            [Window].Color1 = [CP].Win32.InactiveTitle
-            [Window].Color2 = [CP].Win32.GradientInactiveTitle
-        End If
-
-        [Window].ColorGradient = [CP].Win32.EnableGradient
-    End Sub
-
-    Sub SetToClassicPanel([Panel] As RetroPanel, [CP] As CP)
-        [Panel].BackColor = [CP].Win32.ButtonFace
-        [Panel].ButtonHilight = [CP].Win32.ButtonHilight
-        [Panel].ButtonLight = [CP].Win32.ButtonLight
-        [Panel].ButtonShadow = [CP].Win32.ButtonShadow
-        [Panel].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Panel].ForeColor = [CP].Win32.TitleText
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -282,7 +225,7 @@ Public Class Metrics_Fonts
 
         Dim theme As CtrlTheme, statusBackColor, StatusForeColor As Color
 
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
 
             If CP.Windows11.AppMode_Light Then
                 theme = CtrlTheme.Default
@@ -294,7 +237,7 @@ Public Class Metrics_Fonts
                 statusBackColor = Color.FromArgb(28, 28, 28)
             End If
 
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
 
             If CP.Windows10.AppMode_Light Then
                 theme = CtrlTheme.Default
@@ -429,9 +372,11 @@ Public Class Metrics_Fonts
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         ApplyToCP(MainFrm.CP)
         Me.Close()
-        MainFrm.ApplyMetrics(MainFrm.CP, MainFrm.XenonWindow1)
-        MainFrm.ApplyMetrics(MainFrm.CP, MainFrm.XenonWindow2)
-        MainFrm.AdjustClassicPreview()
+        SetModernWindowMetrics(MainFrm.CP, MainFrm.XenonWindow1)
+        SetModernWindowMetrics(MainFrm.CP, MainFrm.XenonWindow2)
+        SetClassicWindowMetrics(MainFrm.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowMetrics(MainFrm.CP, MainFrm.ClassicWindow2)
+
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -443,10 +388,10 @@ Public Class Metrics_Fonts
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         ApplyToCP(MainFrm.CP)
-        MainFrm.ApplyMetrics(CPx, MainFrm.XenonWindow1)
-        MainFrm.ApplyMetrics(CPx, MainFrm.XenonWindow2)
-        MainFrm.SetClassicMetrics(MainFrm.ClassicWindow1, CPx)
-        MainFrm.SetClassicMetrics(MainFrm.ClassicWindow2, CPx)
+        SetModernWindowMetrics(CPx, MainFrm.XenonWindow1)
+        SetModernWindowMetrics(CPx, MainFrm.XenonWindow2)
+        SetClassicWindowMetrics(CPx, MainFrm.ClassicWindow1)
+        SetClassicWindowMetrics(CPx, MainFrm.ClassicWindow2)
 
         CPx.MetricsFonts.Apply()
         CPx.Dispose()
@@ -630,17 +575,17 @@ Public Class Metrics_Fonts
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11

@@ -1,5 +1,6 @@
-Imports Cyotek.Windows.Forms
 Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+Imports System.Management
 
 Public Class Win32UI
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
@@ -15,9 +16,8 @@ Public Class Win32UI
         ApplyDefaultCPValues()
         LoadCP(MainFrm.CP)
         SetMetics(MainFrm.CP)
-        RevalidateEverything(pnl_preview)
+        DoubleBuffer
     End Sub
-
 
     Sub LoadCP(ByVal [CP] As CP)
         ApplyCPValues([CP])
@@ -153,12 +153,12 @@ Public Class Win32UI
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         ApplyToCP(MainFrm.CP)
-        MainFrm.SetToClassicWindow(MainFrm.ClassicWindow1, MainFrm.CP)
-        MainFrm.SetToClassicWindow(MainFrm.ClassicWindow2, MainFrm.CP, False)
-        MainFrm.SetToClassicButton(MainFrm.RetroButton2, MainFrm.CP)
-        MainFrm.SetToClassicButton(MainFrm.RetroButton3, MainFrm.CP)
-        MainFrm.SetToClassicButton(MainFrm.RetroButton4, MainFrm.CP)
-        MainFrm.SetToClassicRaisedPanel(MainFrm.ClassicTaskbar, MainFrm.CP)
+        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow2, False)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton2)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton3)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton4)
+        SetClassicRaisedPanelColors(MainFrm.CP, MainFrm.ClassicTaskbar)
         Me.Close()
     End Sub
 
@@ -616,17 +616,17 @@ Public Class Win32UI
             XenonToggle1.Checked = False
 
             Dim _Def As CP
-            If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+            If My.PreviewStyle = WindowStyle.W11 Then
                 _Def = New CP_Defaults().Default_Windows11
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+            ElseIf My.PreviewStyle = WindowStyle.W10 Then
                 _Def = New CP_Defaults().Default_Windows10
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+            ElseIf My.PreviewStyle = WindowStyle.W8 Then
                 _Def = New CP_Defaults().Default_Windows8
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+            ElseIf My.PreviewStyle = WindowStyle.W7 Then
                 _Def = New CP_Defaults().Default_Windows7
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+            ElseIf My.PreviewStyle = WindowStyle.WVista Then
                 _Def = New CP_Defaults().Default_WindowsVista
-            ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+            ElseIf My.PreviewStyle = WindowStyle.WXP Then
                 _Def = New CP_Defaults().Default_WindowsXP
             Else
                 _Def = New CP_Defaults().Default_Windows11
@@ -829,12 +829,7 @@ Public Class Win32UI
 
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
             If Not RW.UseItAsMenu Then
-                RW.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
-                RW.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
-                RW.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-                RW.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
-                RW.Font = CP.MetricsFonts.CaptionFont
-
+                SetClassicWindowMetrics(CP, RW)
                 RW.Padding = _Padding
             End If
         Next
@@ -865,197 +860,130 @@ Public Class Win32UI
         RetroWindow3.ColorGradient = XenonToggle2.Checked
         RetroWindow4.ColorGradient = XenonToggle2.Checked
 
-        Dim c As Color
-        c = activetitle_pick.BackColor
-        RetroWindow2.Color1 = c
-        RetroWindow3.Color1 = c
-        RetroWindow4.Color1 = c
+        RetroWindow2.Color1 = activetitle_pick.BackColor
+        RetroWindow3.Color1 = activetitle_pick.BackColor
+        RetroWindow4.Color1 = activetitle_pick.BackColor
 
-        c = GActivetitle_pick.BackColor
-        RetroWindow2.Color2 = c
-        RetroWindow3.Color2 = c
-        RetroWindow4.Color2 = c
+        RetroWindow2.Color2 = GActivetitle_pick.BackColor
+        RetroWindow3.Color2 = GActivetitle_pick.BackColor
+        RetroWindow4.Color2 = GActivetitle_pick.BackColor
 
-        c = TitleText_pick.BackColor
-        RetroWindow2.ForeColor = c
-        RetroWindow3.ForeColor = c
-        RetroWindow4.ForeColor = c
+        RetroWindow2.ForeColor = TitleText_pick.BackColor
+        RetroWindow3.ForeColor = TitleText_pick.BackColor
+        RetroWindow4.ForeColor = TitleText_pick.BackColor
 
-        c = InactiveTitle_pick.BackColor
-        RetroWindow1.Color1 = c
+        RetroWindow1.Color1 = InactiveTitle_pick.BackColor
+        RetroWindow1.Color2 = GInactivetitle_pick.BackColor
+        RetroWindow1.ForeColor = InactivetitleText_pick.BackColor
 
-        c = GInactivetitle_pick.BackColor
-        RetroWindow1.Color2 = c
+        RetroWindow2.ColorBorder = ActiveBorder_pick.BackColor
+        RetroWindow3.ColorBorder = ActiveBorder_pick.BackColor
+        RetroWindow4.ColorBorder = ActiveBorder_pick.BackColor
 
-        c = InactivetitleText_pick.BackColor
-        RetroWindow1.ForeColor = c
+        RetroWindow1.ColorBorder = InactiveBorder_pick.BackColor
 
-        c = ActiveBorder_pick.BackColor
-        RetroWindow2.ColorBorder = c
-        RetroWindow3.ColorBorder = c
-        RetroWindow4.ColorBorder = c
+        Retro3DPreview1.WindowFrame = Frame_pick.BackColor
 
-        c = InactiveBorder_pick.BackColor
-        RetroWindow1.ColorBorder = c
-
-        c = Frame_pick.BackColor
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+            If RW IsNot Menu Then RW.BackColor = btnface_pick.BackColor
+            RW.ButtonDkShadow = btndkshadow_pick.BackColor
+            RW.ButtonHilight = btnhilight_pick.BackColor
+            RW.ButtonLight = btnlight_pick.BackColor
+            RW.ButtonShadow = btnshadow_pick.BackColor
+            RW.ButtonText = btntext_pick.BackColor
+
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.WindowFrame = c
+                RB.BackColor = btnface_pick.BackColor
+                RB.WindowFrame = Frame_pick.BackColor
+                RB.ButtonDkShadow = btndkshadow_pick.BackColor
+                RB.ButtonHilight = btnhilight_pick.BackColor
+                RB.ButtonLight = btnlight_pick.BackColor
+                RB.ButtonShadow = btnshadow_pick.BackColor
+                RB.ForeColor = btntext_pick.BackColor
             Next
         Next
 
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.WindowFrame = c
-        Next
-        Retro3DPreview1.WindowFrame = c
-
-        c = btnface_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            If RW IsNot Menu Then RW.BackColor = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.BackColor = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.BackColor = c
+            RB.BackColor = btnface_pick.BackColor
+            RB.WindowFrame = Frame_pick.BackColor
+            RB.ButtonDkShadow = btndkshadow_pick.BackColor
+            RB.ButtonHilight = btnhilight_pick.BackColor
+            RB.ButtonLight = btnlight_pick.BackColor
+            RB.ButtonShadow = btnshadow_pick.BackColor
+            RB.ForeColor = btntext_pick.BackColor
         Next
 
-        RetroPanel2.BackColor = c
-        Menu_Window.ButtonFace = c
-        Retro3DPreview1.BackColor = c
-
-        c = btndkshadow_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.ButtonDkShadow = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.ButtonDkShadow = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.ButtonDkShadow = c
-        Next
-        RetroTextBox1.ButtonDkShadow = c
-        Menu_Window.ButtonDkShadow = c
-        Retro3DPreview1.ButtonDkShadow = c
-
-        c = btnhilight_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.ButtonHilight = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.ButtonHilight = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.ButtonHilight = c
-        Next
         For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
-            RB.ButtonHilight = c
+            RB.ButtonHilight = btnhilight_pick.BackColor
+            RB.ButtonShadow = btnshadow_pick.BackColor
         Next
-        RetroTextBox1.ButtonHilight = c
-        RetroPanel1.ButtonHilight = c
-        RetroPanel2.ButtonHilight = c
-        Menu_Window.ButtonHilight = c
-        Retro3DPreview1.ButtonHilight = c
 
-        c = btnlight_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.ButtonLight = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.ButtonLight = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.ButtonLight = c
-        Next
-        RetroTextBox1.ButtonLight = c
-        Menu_Window.ButtonLight = c
-        Retro3DPreview1.ButtonLight = c
+        RetroPanel2.BackColor = btnface_pick.BackColor
+        Menu_Window.ButtonFace = btnface_pick.BackColor
+        Retro3DPreview1.BackColor = btnface_pick.BackColor
 
-        c = btnshadow_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.ButtonShadow = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.ButtonShadow = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.ButtonShadow = c
-        Next
-        For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
-            RB.ButtonShadow = c
-        Next
-        RetroTextBox1.ButtonShadow = c
-        RetroPanel1.ButtonShadow = c
-        RetroTextBox1.Invalidate()
-        Menu_Window.ButtonShadow = c
-        Retro3DPreview1.ButtonShadow = c
+        RetroTextBox1.ButtonDkShadow = btndkshadow_pick.BackColor
+        Menu_Window.ButtonDkShadow = btndkshadow_pick.BackColor
+        Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor
 
-        c = btntext_pick.BackColor
-        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.ButtonText = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.ForeColor = c
-            Next
-        Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.ForeColor = c
-        Next
-        Retro3DPreview1.ForeColor = c
+        RetroTextBox1.ButtonHilight = btnhilight_pick.BackColor
+        RetroPanel1.ButtonHilight = btnhilight_pick.BackColor
+        RetroPanel2.ButtonHilight = btnhilight_pick.BackColor
+        Menu_Window.ButtonHilight = btnhilight_pick.BackColor
+        Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor
 
-        c = AppWorkspace_pick.BackColor
-        programcontainer.BackColor = c
+        RetroTextBox1.ButtonLight = btnlight_pick.BackColor
+        Menu_Window.ButtonLight = btnlight_pick.BackColor
+        Retro3DPreview1.ButtonLight = btnlight_pick.BackColor
 
-        c = background_pick.BackColor
-        pnl_preview.BackColor = c
+        RetroTextBox1.ButtonShadow = btnshadow_pick.BackColor
+        RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
+        RetroTextBox1.Refresh()
+        Menu_Window.ButtonShadow = btnshadow_pick.BackColor
+        Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor
 
-        c = menu_pick.BackColor
-        Menu_Window.BackColor = c
-        RetroPanel1.BackColor = c
-        Menu_Window.Invalidate()
+        Retro3DPreview1.ForeColor = btntext_pick.BackColor
 
-        c = menubar_pick.BackColor
-        menucontainer0.BackColor = c
+        programcontainer.BackColor = AppWorkspace_pick.BackColor
 
-        c = hilight_pick.BackColor
-        highlight.BackColor = c
+        pnl_preview.BackColor = background_pick.BackColor
 
-        c = menuhilight_pick.BackColor
-        menuhilight.BackColor = c
+        Menu_Window.BackColor = menu_pick.BackColor
+        RetroPanel1.BackColor = menu_pick.BackColor
+        Menu_Window.Refresh()
 
-        c = menutext_pick.BackColor
-        RetroLabel6.ForeColor = c
-        RetroLabel1.ForeColor = c
+        menucontainer0.BackColor = menubar_pick.BackColor
 
-        c = hilighttext_pick.BackColor
-        RetroLabel5.ForeColor = c
+        highlight.BackColor = hilight_pick.BackColor
 
-        c = GrayText_pick.BackColor
-        RetroLabel2.ForeColor = c
-        RetroLabel9.ForeColor = c
+        menuhilight.BackColor = menuhilight_pick.BackColor
 
-        c = Window_pick.BackColor
-        RetroTextBox1.BackColor = c
+        RetroLabel6.ForeColor = menutext_pick.BackColor
+        RetroLabel1.ForeColor = menutext_pick.BackColor
 
-        c = WindowText_pick.BackColor
-        RetroTextBox1.ForeColor = c
-        RetroLabel4.ForeColor = c
+        RetroLabel5.ForeColor = hilighttext_pick.BackColor
 
-        c = InfoWindow_pick.BackColor
-        RetroLabel13.BackColor = c
+        RetroLabel2.ForeColor = GrayText_pick.BackColor
+        RetroLabel9.ForeColor = GrayText_pick.BackColor
 
-        c = InfoText_pick.BackColor
-        RetroLabel13.ForeColor = c
+        RetroTextBox1.BackColor = Window_pick.BackColor
+
+        RetroTextBox1.ForeColor = WindowText_pick.BackColor
+        RetroLabel4.ForeColor = WindowText_pick.BackColor
+
+        RetroLabel13.BackColor = InfoWindow_pick.BackColor
+
+        RetroLabel13.ForeColor = InfoText_pick.BackColor
 
         For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
-            RW.Invalidate()
+            RW.Refresh()
             For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
-                RB.Invalidate()
+                RB.Refresh()
             Next
         Next
 
         For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
-            RB.Invalidate()
+            RB.Refresh()
         Next
 
         Refresh17BitPreference()
@@ -1083,7 +1011,7 @@ Public Class Win32UI
             menucontainer0.BackColor = menubar_pick.BackColor
             RetroLabel3.ForeColor = hilighttext_pick.BackColor
         Else
-            'Theming Disabled (Menus are retro 3d)
+            'Theming Disabled (Menus are retro 3D)
             Menu_Window.Flat = False
             RetroPanel1.Flat = False
             menuhilight.BackColor = hilight_pick.BackColor      'Both will have same color
@@ -1095,10 +1023,10 @@ Public Class Win32UI
 
         End If
 
-        Menu_Window.Invalidate()
-        RetroPanel1.Invalidate()
-        menuhilight.Invalidate()
-        highlight.Invalidate()
+        Menu_Window.Refresh()
+        RetroPanel1.Refresh()
+        menuhilight.Refresh()
+        highlight.Refresh()
 
     End Sub
 
@@ -1143,7 +1071,14 @@ Public Class Win32UI
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         ApplyToCP(MainFrm.CP)
-        MainFrm.AdjustClassicPreview()
+
+        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow2, False)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton2)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton3)
+        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton4)
+        SetClassicRaisedPanelColors(MainFrm.CP, MainFrm.ClassicTaskbar)
+
         Try
             CPx.Win32.Apply()
             CPx.Win32.Update_UPM_DEFAULT()

@@ -235,6 +235,7 @@
     </Compile>
     <Compile Include="Classes\Bitmap_Mgr.vb" />
     <Compile Include="Classes\INI.vb" />
+    <Compile Include="Classes\PreviewHelpers.vb" />
     <Compile Include="Extras\AltTabEditor.Designer.vb">
       <DependentUpon>AltTabEditor.vb</DependentUpon>
     </Compile>

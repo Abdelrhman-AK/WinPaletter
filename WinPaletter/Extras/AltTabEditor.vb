@@ -1,24 +1,26 @@
 ﻿Imports WinPaletter.XenonCore
+Imports WinPaletter.PreviewHelpers
+
 Public Class AltTabEditor
     Private Sub AltTabEditor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(MainFrm.CP)
 
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 XenonRadioImage1.Image = My.Resources.Native11
 
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 XenonRadioImage1.Image = My.Resources.Native10
 
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 XenonRadioImage1.Image = My.Resources.Native8
 
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 XenonRadioImage1.Image = My.Resources.Native7
 
-            Case MainFrm.WinVer.WVista
+            Case WindowStyle.WVista
                 XenonRadioImage1.Image = My.Resources.NativeVista
 
             Case Else
@@ -31,21 +33,21 @@ Public Class AltTabEditor
         pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview1.BackgroundImage = MainFrm.pnl_preview_classic.BackgroundImage
 
-        MainFrm.SetToClassicRaisedPanel(RetroPanelRaised1, MainFrm.CP)
-        Metrics_Fonts.SetToClassicPanel(RetroPanel1, MainFrm.CP)
+        SetClassicRaisedPanelColors(MainFrm.CP, RetroPanelRaised1)
+        SetClassicPanelColors(MainFrm.CP, RetroPanel1)
 
         Panel1.BackColor = MainFrm.CP.Win32.Hilight
 
-        Select Case MainFrm.PreviewConfig
-            Case MainFrm.WinVer.W11
+        Select Case My.PreviewStyle
+            Case WindowStyle.W11
                 XenonWinElement1.Style = XenonWinElement.Styles.AltTab11
                 XenonWinElement1.DarkMode = Not MainFrm.CP.Windows11.WinMode_Light
 
-            Case MainFrm.WinVer.W10
+            Case WindowStyle.W10
                 XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
                 XenonWinElement1.DarkMode = Not MainFrm.CP.Windows10.WinMode_Light
 
-            Case MainFrm.WinVer.W8
+            Case WindowStyle.W8
                 Select Case MainFrm.CP.Windows8.Theme
                     Case CP.AeroTheme.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
@@ -61,7 +63,7 @@ Public Class AltTabEditor
 
                 End Select
 
-            Case MainFrm.WinVer.W7
+            Case WindowStyle.W7
                 Select Case MainFrm.CP.Windows7.Theme
                     Case CP.AeroTheme.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Aero
@@ -87,7 +89,7 @@ Public Class AltTabEditor
         RetroLabel1.Font = MainFrm.CP.MetricsFonts.CaptionFont
 
         XenonGroupBox4.Enabled = (XenonWinElement1.Style = XenonWinElement.Styles.AltTab10) Or ExplorerPatcher.IsAllowed
-        XenonAlertBox1.Visible = (MainFrm.PreviewConfig = MainFrm.WinVer.W7)
+        XenonAlertBox1.Visible = (My.PreviewStyle = WindowStyle.W7)
 
         If ExplorerPatcher.IsAllowed Then
             If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) = 3 Then
@@ -141,17 +143,17 @@ Public Class AltTabEditor
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
         Dim _Def As CP
-        If MainFrm.PreviewConfig = MainFrm.WinVer.W11 Then
+        If My.PreviewStyle = WindowStyle.W11 Then
             _Def = New CP_Defaults().Default_Windows11
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W10 Then
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
             _Def = New CP_Defaults().Default_Windows10
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W8 Then
             _Def = New CP_Defaults().Default_Windows8
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W7 Then
             _Def = New CP_Defaults().Default_Windows7
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WVista Then
+        ElseIf My.PreviewStyle = WindowStyle.WVista Then
             _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf MainFrm.PreviewConfig = MainFrm.WinVer.WXP Then
+        ElseIf My.PreviewStyle = WindowStyle.WXP Then
             _Def = New CP_Defaults().Default_WindowsXP
         Else
             _Def = New CP_Defaults().Default_Windows11

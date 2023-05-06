@@ -74,6 +74,7 @@ Public Class Store_Hover
     Private Sub Store_Hover_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = Store.Icon
         ApplyDarkMode(Me)
+        DoubleBuffer
 
         Dim p As Point = MousePosition
         If MousePosition.X + Width > Screen.PrimaryScreen.WorkingArea.Right - 10 Then p.X = Screen.PrimaryScreen.WorkingArea.Right - Width - 10

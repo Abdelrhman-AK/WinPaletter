@@ -209,7 +209,7 @@ Public Module Resources_Functions
         Try
             If IO.File.Exists(File) Then
                 Using ms As New MemoryStream(GetResource(File, ResourceType, ResourceID))
-                    Return Bitmap.FromStream(ms, True, False)
+                    Return Bitmap.FromStream(ms)
                 End Using
             Else
                 Return Color.Black.ToBitmap(New Size(UnfoundW, UnfoundH))
