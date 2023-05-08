@@ -10,9 +10,9 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Sounds                                                 | :large_blue_circle: Working on it                                      |
-| Screen Savers                                          | :large_blue_circle: Working on it                                      |
-| WinPaletter Store for themes                           | :yellow_square: Working on it                                          |
+| Sounds                                                 | :large_blue_circle: Coming Soon                                        |
+| Screen Savers                                          | :large_blue_circle: Coming Soon                                        |
+| WinPaletter Store for themes                           | :large_blue_circle: Coming Soon                                        |
 | Sync. preview between ExplorerPatcher & Windows 11     | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Customize Windows Switcher (Alt+Tab) Types             | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Windows Effects & Animations                           | :white_check_mark: Done (Version 1.0.7.1)                              | 
