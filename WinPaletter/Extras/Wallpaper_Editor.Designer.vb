@@ -70,6 +70,9 @@ Partial Class Wallpaper_Editor
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.XenonButton21 = New WinPaletter.XenonButton()
+        Me.XenonButton22 = New WinPaletter.XenonButton()
+        Me.XenonButton23 = New WinPaletter.XenonButton()
         Me.XenonButton20 = New WinPaletter.XenonButton()
         Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
@@ -91,7 +94,6 @@ Partial Class Wallpaper_Editor
         Me.LBar = New WinPaletter.XenonColorBar()
         Me.SBar = New WinPaletter.XenonColorBar()
         Me.HBar = New WinPaletter.XenonColorBar()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
@@ -126,9 +128,7 @@ Partial Class Wallpaper_Editor
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonButton21 = New WinPaletter.XenonButton()
-        Me.XenonButton22 = New WinPaletter.XenonButton()
-        Me.XenonButton23 = New WinPaletter.XenonButton()
+        Me.XenonSeparator4 = New WinPaletter.XenonSeparator()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -143,7 +143,6 @@ Partial Class Wallpaper_Editor
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage4.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -320,7 +319,6 @@ Partial Class Wallpaper_Editor
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
         Me.XenonTabControl1.Controls.Add(Me.TabPage5)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage4)
         Me.XenonTabControl1.Controls.Add(Me.TabPage3)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -664,10 +662,15 @@ Partial Class Wallpaper_Editor
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage2.Controls.Add(Me.XenonSeparator4)
+        Me.TabPage2.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage2.Controls.Add(Me.XenonButton3)
         Me.TabPage2.Controls.Add(Me.XenonButton2)
+        Me.TabPage2.Controls.Add(Me.Label15)
         Me.TabPage2.Controls.Add(Me.XenonButton1)
         Me.TabPage2.Controls.Add(Me.XenonTextBox1)
+        Me.TabPage2.Controls.Add(Me.PictureBox3)
+        Me.TabPage2.Controls.Add(Me.color_pick)
         Me.TabPage2.Controls.Add(Me.PictureBox4)
         Me.TabPage2.Controls.Add(Me.Label4)
         Me.TabPage2.Location = New System.Drawing.Point(144, 4)
@@ -801,6 +804,51 @@ Partial Class Wallpaper_Editor
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Wallpaper Tone"
         '
+        'XenonButton21
+        '
+        Me.XenonButton21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton21.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton21.ForeColor = System.Drawing.Color.White
+        Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
+        Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.XenonButton21.LineSize = 1
+        Me.XenonButton21.Location = New System.Drawing.Point(502, 133)
+        Me.XenonButton21.Name = "XenonButton21"
+        Me.XenonButton21.Size = New System.Drawing.Size(34, 24)
+        Me.XenonButton21.TabIndex = 211
+        Me.XenonButton21.UseVisualStyleBackColor = False
+        '
+        'XenonButton22
+        '
+        Me.XenonButton22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton22.ForeColor = System.Drawing.Color.White
+        Me.XenonButton22.Image = CType(resources.GetObject("XenonButton22.Image"), System.Drawing.Image)
+        Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.XenonButton22.LineSize = 1
+        Me.XenonButton22.Location = New System.Drawing.Point(502, 103)
+        Me.XenonButton22.Name = "XenonButton22"
+        Me.XenonButton22.Size = New System.Drawing.Size(34, 24)
+        Me.XenonButton22.TabIndex = 210
+        Me.XenonButton22.UseVisualStyleBackColor = False
+        '
+        'XenonButton23
+        '
+        Me.XenonButton23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton23.ForeColor = System.Drawing.Color.White
+        Me.XenonButton23.Image = CType(resources.GetObject("XenonButton23.Image"), System.Drawing.Image)
+        Me.XenonButton23.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.XenonButton23.LineSize = 1
+        Me.XenonButton23.Location = New System.Drawing.Point(502, 73)
+        Me.XenonButton23.Name = "XenonButton23"
+        Me.XenonButton23.Size = New System.Drawing.Size(34, 24)
+        Me.XenonButton23.TabIndex = 209
+        Me.XenonButton23.UseVisualStyleBackColor = False
+        '
         'XenonButton20
         '
         Me.XenonButton20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -828,7 +876,7 @@ Partial Class Wallpaper_Editor
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox3.Image = Nothing
-        Me.XenonAlertBox3.Location = New System.Drawing.Point(6, 166)
+        Me.XenonAlertBox3.Location = New System.Drawing.Point(6, 163)
         Me.XenonAlertBox3.Name = "XenonAlertBox3"
         Me.XenonAlertBox3.Size = New System.Drawing.Size(532, 43)
         Me.XenonAlertBox3.TabIndex = 207
@@ -945,7 +993,7 @@ Partial Class Wallpaper_Editor
         Me.LB.Image = Nothing
         Me.LB.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.LB.LineSize = 1
-        Me.LB.Location = New System.Drawing.Point(462, 136)
+        Me.LB.Location = New System.Drawing.Point(462, 133)
         Me.LB.Name = "LB"
         Me.LB.Size = New System.Drawing.Size(34, 24)
         Me.LB.TabIndex = 151
@@ -960,7 +1008,7 @@ Partial Class Wallpaper_Editor
         Me.SB.Image = Nothing
         Me.SB.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.SB.LineSize = 1
-        Me.SB.Location = New System.Drawing.Point(462, 106)
+        Me.SB.Location = New System.Drawing.Point(462, 103)
         Me.SB.Name = "SB"
         Me.SB.Size = New System.Drawing.Size(34, 24)
         Me.SB.TabIndex = 150
@@ -975,7 +1023,7 @@ Partial Class Wallpaper_Editor
         Me.HB.Image = Nothing
         Me.HB.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.HB.LineSize = 1
-        Me.HB.Location = New System.Drawing.Point(462, 76)
+        Me.HB.Location = New System.Drawing.Point(462, 73)
         Me.HB.Name = "HB"
         Me.HB.Size = New System.Drawing.Size(34, 24)
         Me.HB.TabIndex = 149
@@ -984,7 +1032,7 @@ Partial Class Wallpaper_Editor
         'PictureBox9
         '
         Me.PictureBox9.Image = CType(resources.GetObject("PictureBox9.Image"), System.Drawing.Image)
-        Me.PictureBox9.Location = New System.Drawing.Point(6, 106)
+        Me.PictureBox9.Location = New System.Drawing.Point(6, 103)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -993,7 +1041,7 @@ Partial Class Wallpaper_Editor
         '
         'Label17
         '
-        Me.Label17.Location = New System.Drawing.Point(36, 106)
+        Me.Label17.Location = New System.Drawing.Point(36, 103)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(65, 24)
         Me.Label17.TabIndex = 147
@@ -1003,7 +1051,7 @@ Partial Class Wallpaper_Editor
         'PictureBox10
         '
         Me.PictureBox10.Image = CType(resources.GetObject("PictureBox10.Image"), System.Drawing.Image)
-        Me.PictureBox10.Location = New System.Drawing.Point(6, 136)
+        Me.PictureBox10.Location = New System.Drawing.Point(6, 133)
         Me.PictureBox10.Name = "PictureBox10"
         Me.PictureBox10.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1012,7 +1060,7 @@ Partial Class Wallpaper_Editor
         '
         'Label18
         '
-        Me.Label18.Location = New System.Drawing.Point(36, 136)
+        Me.Label18.Location = New System.Drawing.Point(36, 133)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(65, 24)
         Me.Label18.TabIndex = 145
@@ -1022,7 +1070,7 @@ Partial Class Wallpaper_Editor
         'PictureBox11
         '
         Me.PictureBox11.Image = CType(resources.GetObject("PictureBox11.Image"), System.Drawing.Image)
-        Me.PictureBox11.Location = New System.Drawing.Point(6, 76)
+        Me.PictureBox11.Location = New System.Drawing.Point(6, 73)
         Me.PictureBox11.Name = "PictureBox11"
         Me.PictureBox11.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1031,7 +1079,7 @@ Partial Class Wallpaper_Editor
         '
         'Label20
         '
-        Me.Label20.Location = New System.Drawing.Point(36, 76)
+        Me.Label20.Location = New System.Drawing.Point(36, 73)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(65, 24)
         Me.Label20.TabIndex = 143
@@ -1046,7 +1094,7 @@ Partial Class Wallpaper_Editor
         Me.LBar.H = 0
         Me.LBar.L = 0!
         Me.LBar.LargeChange = 10
-        Me.LBar.Location = New System.Drawing.Point(107, 139)
+        Me.LBar.Location = New System.Drawing.Point(107, 136)
         Me.LBar.Maximum = 200
         Me.LBar.Minimum = 0
         Me.LBar.Mode = WinPaletter.XenonColorBar.ModesList.Light
@@ -1065,7 +1113,7 @@ Partial Class Wallpaper_Editor
         Me.SBar.H = 0
         Me.SBar.L = 0!
         Me.SBar.LargeChange = 10
-        Me.SBar.Location = New System.Drawing.Point(107, 109)
+        Me.SBar.Location = New System.Drawing.Point(107, 106)
         Me.SBar.Maximum = 200
         Me.SBar.Minimum = 0
         Me.SBar.Mode = WinPaletter.XenonColorBar.ModesList.Saturation
@@ -1084,7 +1132,7 @@ Partial Class Wallpaper_Editor
         Me.HBar.H = 0
         Me.HBar.L = 0!
         Me.HBar.LargeChange = 10
-        Me.HBar.Location = New System.Drawing.Point(107, 79)
+        Me.HBar.Location = New System.Drawing.Point(107, 76)
         Me.HBar.Maximum = 360
         Me.HBar.Minimum = 0
         Me.HBar.Mode = WinPaletter.XenonColorBar.ModesList.Hue
@@ -1094,20 +1142,6 @@ Partial Class Wallpaper_Editor
         Me.HBar.SmallChange = 1
         Me.HBar.TabIndex = 140
         Me.HBar.Value = 180
-        '
-        'TabPage4
-        '
-        Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage4.Controls.Add(Me.XenonAlertBox2)
-        Me.TabPage4.Controls.Add(Me.Label15)
-        Me.TabPage4.Controls.Add(Me.PictureBox3)
-        Me.TabPage4.Controls.Add(Me.color_pick)
-        Me.TabPage4.Location = New System.Drawing.Point(144, 4)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(544, 340)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "Color"
         '
         'XenonAlertBox2
         '
@@ -1119,16 +1153,16 @@ Partial Class Wallpaper_Editor
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(6, 39)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(6, 106)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(532, 22)
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(531, 22)
         Me.XenonAlertBox2.TabIndex = 161
         Me.XenonAlertBox2.TabStop = False
         Me.XenonAlertBox2.Text = "This color is shared between Classic Colors (Window Objects > Background color)"
         '
         'Label15
         '
-        Me.Label15.Location = New System.Drawing.Point(37, 6)
+        Me.Label15.Location = New System.Drawing.Point(36, 73)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(65, 25)
         Me.Label15.TabIndex = 140
@@ -1138,9 +1172,9 @@ Partial Class Wallpaper_Editor
         'PictureBox3
         '
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox3.Location = New System.Drawing.Point(6, 73)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(25, 25)
+        Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox3.TabIndex = 94
         Me.PictureBox3.TabStop = False
@@ -1150,7 +1184,7 @@ Partial Class Wallpaper_Editor
         Me.color_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.color_pick.DefaultColor = System.Drawing.Color.Black
         Me.color_pick.ForceNoNerd = False
-        Me.color_pick.Location = New System.Drawing.Point(109, 6)
+        Me.color_pick.Location = New System.Drawing.Point(107, 73)
         Me.color_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color_pick.Name = "color_pick"
         Me.color_pick.Size = New System.Drawing.Size(97, 25)
@@ -1539,50 +1573,16 @@ Partial Class Wallpaper_Editor
         Me.SaveFileDialog2.DefaultExt = "wpt"
         Me.SaveFileDialog2.Filter = "PNG File|*.png"
         '
-        'XenonButton21
+        'XenonSeparator4
         '
-        Me.XenonButton21.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton21.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton21.ForeColor = System.Drawing.Color.White
-        Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
-        Me.XenonButton21.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
-        Me.XenonButton21.LineSize = 1
-        Me.XenonButton21.Location = New System.Drawing.Point(502, 136)
-        Me.XenonButton21.Name = "XenonButton21"
-        Me.XenonButton21.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton21.TabIndex = 211
-        Me.XenonButton21.UseVisualStyleBackColor = False
-        '
-        'XenonButton22
-        '
-        Me.XenonButton22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton22.ForeColor = System.Drawing.Color.White
-        Me.XenonButton22.Image = CType(resources.GetObject("XenonButton22.Image"), System.Drawing.Image)
-        Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
-        Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(502, 106)
-        Me.XenonButton22.Name = "XenonButton22"
-        Me.XenonButton22.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton22.TabIndex = 210
-        Me.XenonButton22.UseVisualStyleBackColor = False
-        '
-        'XenonButton23
-        '
-        Me.XenonButton23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton23.ForeColor = System.Drawing.Color.White
-        Me.XenonButton23.Image = CType(resources.GetObject("XenonButton23.Image"), System.Drawing.Image)
-        Me.XenonButton23.LineColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(100, Byte), Integer))
-        Me.XenonButton23.LineSize = 1
-        Me.XenonButton23.Location = New System.Drawing.Point(502, 76)
-        Me.XenonButton23.Name = "XenonButton23"
-        Me.XenonButton23.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton23.TabIndex = 209
-        Me.XenonButton23.UseVisualStyleBackColor = False
+        Me.XenonSeparator4.AlternativeLook = False
+        Me.XenonSeparator4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonSeparator4.Location = New System.Drawing.Point(6, 66)
+        Me.XenonSeparator4.Name = "XenonSeparator4"
+        Me.XenonSeparator4.Size = New System.Drawing.Size(531, 1)
+        Me.XenonSeparator4.TabIndex = 162
+        Me.XenonSeparator4.TabStop = False
         '
         'Wallpaper_Editor
         '
@@ -1620,7 +1620,6 @@ Partial Class Wallpaper_Editor
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage4.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1708,7 +1707,6 @@ Partial Class Wallpaper_Editor
     Friend WithEvents Label14 As Label
     Friend WithEvents Panel2 As Panel
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents Label15 As Label
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents color_pick As XenonCP
@@ -1741,4 +1739,5 @@ Partial Class Wallpaper_Editor
     Friend WithEvents XenonButton21 As XenonButton
     Friend WithEvents XenonButton22 As XenonButton
     Friend WithEvents XenonButton23 As XenonButton
+    Friend WithEvents XenonSeparator4 As XenonSeparator
 End Class

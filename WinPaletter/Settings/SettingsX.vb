@@ -129,6 +129,8 @@ Public Class SettingsX
             XenonCheckBox26.Checked = .Store_Search_Descriptions
             XenonCheckBox27.Checked = .Store_Search_AuthorsNames
             XenonCheckBox29.Checked = .Store_Offline_SubFolders
+
+            XenonCheckBox32.Checked = .Classic_Color_Picker
         End With
     End Sub
     Sub SaveSettings()
@@ -305,6 +307,8 @@ Public Class SettingsX
             .Store_Search_AuthorsNames = XenonCheckBox27.Checked
             .Store_Offline_SubFolders = XenonCheckBox29.Checked
 
+            .Classic_Color_Picker = XenonCheckBox32.Checked
+
             .Save(Mode, File)
         End With
     End Sub
@@ -385,6 +389,8 @@ Public Class SettingsX
             If .Store_Search_Descriptions <> XenonCheckBox26.Checked Then Changed = True
             If .Store_Search_AuthorsNames <> XenonCheckBox27.Checked Then Changed = True
             If .Store_Offline_SubFolders <> XenonCheckBox29.Checked Then Changed = True
+
+            If .Classic_Color_Picker <> XenonCheckBox32.Checked Then Changed = True
         End With
 
         If e.CloseReason = CloseReason.UserClosing And Changed Then

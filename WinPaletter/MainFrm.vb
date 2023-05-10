@@ -438,12 +438,12 @@ Public Class MainFrm
         DoubleBuffer
 
         If My.PreviewStyle = WindowStyle.W11 Then
-            AdjustWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(CP, My.PreviewStyle,
                     W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
                     W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
 
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            AdjustWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(CP, My.PreviewStyle,
                     W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
                     W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
 
@@ -462,6 +462,14 @@ Public Class MainFrm
             setting_icon_preview.Text = "♣"
         End If
         Visible = True
+
+        BetaBadge.Visible = My.IsBeta
+        If My.IsBeta Then
+            status_lbl.Width = BetaBadge.Left - 5 - status_lbl.Left
+        Else
+            status_lbl.Width = BetaBadge.Right - status_lbl.Left
+        End If
+
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -651,21 +659,21 @@ Public Class MainFrm
     End Sub
 
     Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
@@ -1065,21 +1073,21 @@ Public Class MainFrm
     End Sub
 
     Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
-        If _Shown Then
+        If _Shown And sender.Checked Then
             CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
@@ -2512,12 +2520,12 @@ Public Class MainFrm
         My.Animator.HideSync(tabs_preview, True)
 
         If My.PreviewStyle = WindowStyle.W11 Then
-            AdjustWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(CP, My.PreviewStyle,
                     W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
                     W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
 
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            AdjustWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(CP, My.PreviewStyle,
                     W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
                     W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
 

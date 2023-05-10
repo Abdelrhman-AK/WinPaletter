@@ -11,6 +11,7 @@ Imports WinPaletter.PreviewHelpers
 Public Class Store
 
 #Region "Variables"
+    Private StartedAsOnlineOrOffline As Boolean = True
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
     Dim w As Integer = 528 * 0.6
@@ -823,19 +824,23 @@ Public Class Store
     Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
 
         If My.Settings.Store_Online_or_Offline Then
+
             If Not IsNetworkAvailable() Then
                 Status_lbl.SetText(My.Lang.Store_NoNetwork)
 
                 If MsgBox(My.Lang.Store_NoNetwork, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Store_TryOffline) = MsgBoxResult.Yes Then
+                    StartedAsOnlineOrOffline = False
                     OfflineMode()
                     Exit Sub
                 End If
 
             Else
+                StartedAsOnlineOrOffline = True
                 OnlineMode()
             End If
 
         Else
+            StartedAsOnlineOrOffline = False
             OfflineMode()
         End If
 
@@ -1245,7 +1250,7 @@ Public Class Store
 
         My.Animator.HideSync(Tabs)
 
-        If selectedItem.CP.AppTheme.Enabled Then
+        If selectedItem IsNot Nothing AndAlso selectedItem.CP.AppTheme.Enabled Then
             My.Settings = New XeSettings(XeSettings.Mode.Registry)
             ApplyDarkMode(Me)
         End If
@@ -1303,31 +1308,36 @@ Public Class Store
     Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click
         ApplyOrEditToggle = sender Is Apply_btn
 
-        Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
-        Dim FileName As String = temp.Split("/").Last
-        temp = temp.Replace("/" & FileName, "")
-        Dim FolderName As String = temp.Split("/").Last
-        Dim Dir As String
-        If File.Exists(selectedItem.FileName) Then
-            Dir = New FileInfo(selectedItem.FileName).Directory.FullName
-        Else
-            Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
-        End If
-        If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
+        If StartedAsOnlineOrOffline Then
+            Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
+            Dim FileName As String = temp.Split("/").Last
+            temp = temp.Replace("/" & FileName, "")
+            Dim FolderName As String = temp.Split("/").Last
+            Dim Dir As String
+            If File.Exists(selectedItem.FileName) Then
+                Dir = New FileInfo(selectedItem.FileName).Directory.FullName
+            Else
+                Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
+            End If
+            If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
 
-        Status_pnl.Visible = True
+            Status_pnl.Visible = True
 
-        If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(FileName) OrElse selectedItem.MD5_PackFile = "0" Then
+            If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(FileName) OrElse selectedItem.MD5_PackFile = "0" Then
 
-            Try
-                ProgressBar1.Visible = True
-                ProgressBar1.Value = 0
-                ThemeDownloader.DownloadFileAsync(New Uri(selectedItem.URL_PackFile), Dir & "\" & FileName)
-            Catch
-                ProgressBar1.Value = 0
-                Status_pnl.Visible = False
-            End Try
+                Try
+                    ProgressBar1.Visible = True
+                    ProgressBar1.Value = 0
+                    ThemeDownloader.DownloadFileAsync(New Uri(selectedItem.URL_PackFile), Dir & "\" & FileName)
+                Catch
+                    ProgressBar1.Value = 0
+                    Status_pnl.Visible = False
+                End Try
 
+            Else
+                DoActionsAfterPackDownload()
+
+            End If
         Else
             DoActionsAfterPackDownload()
 

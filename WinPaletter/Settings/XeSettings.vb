@@ -19,7 +19,7 @@ Public Class XeSettings
     Public Property SaveForLegacyWP As Boolean = False
     Public Property AlwaysExportThemePack As Boolean = False
     Public Property Win7LivePreview As Boolean = True
-    Public Property UpdateChannel As UpdateChannels = UpdateChannels.Stable   ' Don't forget to make it beta when you design a beta one
+    Public Property UpdateChannel As UpdateChannels = If(My.IsBeta, UpdateChannels.Beta, UpdateChannels.Stable)
 
     Public Property Appearance_Dark As Boolean = True
     Public Property Appearance_Auto As Boolean = True
@@ -78,6 +78,7 @@ Public Class XeSettings
     Public Property Store_Offline_Directories As String()
     Public Property Store_Offline_SubFolders As Boolean = True
 
+    Public Property Classic_Color_Picker As Boolean = False
 #End Region
 
     Public Enum OverwriteOptions
@@ -185,6 +186,8 @@ Public Class XeSettings
                 MainFormHeight = GetReg(REG, "MainFormHeight", 725)
                 MainFormStatus = GetReg(REG, "MainFormStatus", FormWindowState.Normal)
 
+                Classic_Color_Picker = GetReg(REG, "Classic_Color_Picker", False)
+
             Case Mode.File
                 Dim l As List(Of String) = IO.File.ReadAllText(File).CList
                 For Each x As String In l
@@ -258,6 +261,7 @@ Public Class XeSettings
                     If x.StartsWith("Nerd_Stats_HexHash= ", My._ignore) Then Nerd_Stats_HexHash = x.Remove(0, "Nerd_Stats_HexHash= ".Count)
                     If x.StartsWith("Nerd_Stats_Kind= ", My._ignore) Then Nerd_Stats_Kind = x.Remove(0, "Nerd_Stats_Kind= ".Count)
 
+                    If x.StartsWith("Classic_Color_Picker= ", My._ignore) Then Classic_Color_Picker = x.Remove(0, "Classic_Color_Picker= ".Count)
                 Next
         End Select
 
@@ -363,6 +367,8 @@ Public Class XeSettings
                 EditReg(REG, "MainFormHeight", MainFormHeight, RegistryValueKind.DWord)
                 EditReg(REG, "MainFormStatus", MainFormStatus, RegistryValueKind.DWord)
 
+                EditReg(REG, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord)
+
             Case Mode.File
                 Dim l As New List(Of String)
                 l.Clear()
@@ -439,6 +445,8 @@ Public Class XeSettings
                 l.Add(String.Format("Nerd_Stats= {0}", Nerd_Stats))
                 l.Add(String.Format("Nerd_Stats_HexHash= {0}", Nerd_Stats_HexHash))
                 l.Add(String.Format("Nerd_Stats_Kind= {0}", CInt(Nerd_Stats_Kind)))
+
+                l.Add(String.Format("Classic_Color_Picker= {0}", Classic_Color_Picker))
 
                 IO.File.WriteAllText(File, l.CString)
         End Select

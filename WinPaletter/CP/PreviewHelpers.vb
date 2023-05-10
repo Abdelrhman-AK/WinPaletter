@@ -2,8 +2,8 @@
 Imports WinPaletter.XenonCore
 
 Public Class PreviewHelpers
-    Private Shared Steps As Integer = 30 'keep it 30 to prevent preview bug
-    Private Shared Delay As Integer = 1
+    Private Shared ReadOnly Steps As Integer = 15
+    Private Shared ReadOnly Delay As Integer = 1
 
     Enum WindowStyle
         W11
@@ -14,13 +14,13 @@ Public Class PreviewHelpers
         WXP
     End Enum
 
-    Public Shared Sub AdjustWin10xLegends([CP] As CP, [PV] As WindowStyle,
+    Public Shared Sub ApplyWin10xLegends([CP] As CP, [Style] As WindowStyle,
                                    lbl1 As Label, lbl2 As Label, lbl3 As Label, lbl4 As Label, lbl5 As Label, lbl6 As Label, lbl7 As Label, lbl8 As Label, lbl9 As Label,
                                    pic1 As PictureBox, pic2 As PictureBox, pic3 As PictureBox, pic4 As PictureBox, pic5 As PictureBox, pic6 As PictureBox, pic7 As PictureBox, pic8 As PictureBox, pic9 As PictureBox)
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 
-        Select Case My.PreviewStyle
+        Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
                 lbl6.Text = My.Lang.CP_11_SomePressedButtons
@@ -253,12 +253,12 @@ Public Class PreviewHelpers
 
     End Sub
 
-    Public Shared Sub ApplyWinElementsColors([CP] As CP, [PV] As WindowStyle, AnimateColorChange As Boolean, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
+    Public Shared Sub ApplyWinElementsColors([CP] As CP, [Style] As WindowStyle, AnimateColorChange As Boolean, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
                                       setting_icon_preview As Label, settings_label As Label, Link_preview As Label)
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 
-        Select Case [PV]
+        Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
                 Dim TB_Alpha, S_Alpha, AC_Alpha As Byte
@@ -319,7 +319,7 @@ Public Class PreviewHelpers
                                     S_Color = Color.FromArgb(Start.BackColor.A, [CP].Windows11.Color_Index5)
                                 End If
 
-                                AC_Normal = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5)
+                                AC_Color = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5)
 
                         End Select
 
@@ -676,7 +676,12 @@ Public Class PreviewHelpers
                         Taskbar.BackColorAlpha = 255
                 End Select
 
-                Taskbar.BackColor = [CP].Windows8.ColorizationColor
+                If AnimateColorChange Then
+                    Visual.FadeColor(Taskbar, "BackColor", Taskbar.BackColor, [CP].Windows8.ColorizationColor, Steps, Delay)
+                Else
+                    Taskbar.BackColor = [CP].Windows8.ColorizationColor
+                End If
+
                 Taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
 #End Region
             Case WindowStyle.W7
@@ -783,7 +788,7 @@ Public Class PreviewHelpers
         End Select
 
     End Sub
-    Public Shared Sub ApplyWinElementsStyle([CP] As CP, [PV] As WindowStyle, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
+    Public Shared Sub ApplyWinElementsStyle([CP] As CP, [Style] As WindowStyle, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
                                          XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow,
                                          Settings_Container As Panel, Link_preview As Label,
                                          ClassicTaskbar As RetroPanelRaised, ClassicStartButton As RetroButton, ClassicAppButton1 As RetroButton, ClassicAppButton2 As RetroButton,
@@ -795,12 +800,12 @@ Public Class PreviewHelpers
         Dim Taskbar_Style As XenonWinElement.Styles = Taskbar.Style
         Dim XenonWindow_Style As XenonWindow.Preview_Enum = XenonWindow1.Preview
 
-        Settings_Container.Visible = ([PV] = WindowStyle.W11 Or [PV] = WindowStyle.W10)
-        Link_preview.Visible = ([PV] = WindowStyle.W11 Or [PV] = WindowStyle.W10)
-        Start.Visible = (Not [PV] = WindowStyle.W8)
-        ActionCenter.Visible = ([PV] = WindowStyle.W11 Or [PV] = WindowStyle.W10)
+        Settings_Container.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
+        Link_preview.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
+        Start.Visible = (Not [Style] = WindowStyle.W8)
+        ActionCenter.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
 
-        Select Case [PV]
+        Select Case [Style]
             Case WindowStyle.W11
                 XenonWindow_Style = XenonWindow.Preview_Enum.W11
 
@@ -945,8 +950,8 @@ Public Class PreviewHelpers
         Start.Style = Start_Style
         Taskbar.Style = Taskbar_Style
         ActionCenter.Style = AC_Style
-        XenonWindow1.WinVista = ([PV] = WindowStyle.WVista)
-        XenonWindow2.WinVista = ([PV] = WindowStyle.WVista)
+        XenonWindow1.WinVista = ([Style] = WindowStyle.WVista)
+        XenonWindow2.WinVista = ([Style] = WindowStyle.WVista)
         XenonWindow2.Preview = XenonWindow1.Preview
 
         SetModernWindowMetrics([CP], XenonWindow1)
@@ -960,10 +965,7 @@ Public Class PreviewHelpers
         SetClassicButtonColors([CP], ClassicAppButton2)
         SetClassicRaisedPanelColors([CP], ClassicTaskbar)
 
-        ClassicWindow2.Font = CP.MetricsFonts.CaptionFont
-        ClassicWindow1.Font = CP.MetricsFonts.CaptionFont
-
-        If [PV] <> WindowStyle.WVista And [PV] <> WindowStyle.WXP Then
+        If [Style] <> WindowStyle.WVista And [Style] <> WindowStyle.WXP Then
             ClassicTaskbar.Height = 44
             ClassicAppButton1.Image = My.Resources.SampleApp_Active
             ClassicAppButton2.Image = My.Resources.SampleApp_Inactive
@@ -981,14 +983,8 @@ Public Class PreviewHelpers
             ClassicAppButton1.HatchBrush = False
         End If
 
-        Select Case [PV]
+        Select Case [Style]
             Case WindowStyle.W11
-                ActionCenter.Dock = Nothing
-                ActionCenter.BlurPower = 6
-                ActionCenter.NoisePower = 0.3
-                ActionCenter.Size = New Size(120, 85)
-                ActionCenter.Location = New Point(398, 161)
-
                 If My.W11 Then My.EP = New ExplorerPatcher
 
                 If ExplorerPatcher.IsAllowed Then
@@ -1010,7 +1006,7 @@ Public Class PreviewHelpers
                             Start.BlurPower = 6
                             Start.NoisePower = 0.3
                             Start.Size = New Size(135, 200)
-                            Start.Location = New Point(9, Taskbar.Bottom - Taskbar.Height - Start.Height - 9)
+                            Start.Location = New Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10)
                         Else
                             Start.BlurPower = 7
                             Start.NoisePower = 0.3
@@ -1032,7 +1028,7 @@ Public Class PreviewHelpers
 
                                 Case ExplorerPatcher.StartStyles.RoundedCornersFloatingMenu
                                     Start.Size = New Size(182, 201)
-                                    Start.Location = New Point(9, Taskbar.Bottom - Taskbar.Height - Start.Height - 9)
+                                    Start.Location = New Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10)
                                     Start.UseWin11RoundedCorners_WithWin10_Level1 = False
                                     Start.UseWin11RoundedCorners_WithWin10_Level2 = True
 
@@ -1049,8 +1045,14 @@ Public Class PreviewHelpers
                     Start.BlurPower = 6
                     Start.NoisePower = 0.3
                     Start.Size = New Size(135, 200)
-                    Start.Location = New Point(9, Taskbar.Bottom - 42 - Start.Height - 9)
+                    Start.Location = New Point(10, Taskbar.Bottom - Taskbar.Height - Start.Height - 10)
                 End If
+
+                ActionCenter.Dock = Nothing
+                ActionCenter.BlurPower = 6
+                ActionCenter.NoisePower = 0.3
+                ActionCenter.Size = New Size(120, 85)
+                ActionCenter.Location = New Point(ActionCenter.Parent.Width - ActionCenter.Width - 10, ActionCenter.Parent.Height - ActionCenter.Height - Taskbar.Height - 10)
 
             Case WindowStyle.W10
                 ActionCenter.Dock = DockStyle.Right
@@ -1110,6 +1112,7 @@ Public Class PreviewHelpers
                 Start.Height = 191
                 Start.Left = 0
                 Start.Top = Taskbar.Top - Start.Height
+
                 ClassicTaskbar.Height = Taskbar.Height
                 ClassicAppButton1.Image = My.Resources.SampleApp_Active.Resize(23, 23)
                 ClassicAppButton2.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
@@ -1132,6 +1135,7 @@ Public Class PreviewHelpers
                 Start.Height = 190
                 Start.Left = 0
                 Start.Top = Taskbar.Top - Start.Height
+
                 ClassicTaskbar.Height = Taskbar.Height
                 ClassicAppButton1.Image = My.Resources.SampleApp_Active.Resize(23, 23)
                 ClassicAppButton2.Image = My.Resources.SampleApp_Inactive.Resize(23, 23)
@@ -1150,32 +1154,24 @@ Public Class PreviewHelpers
 
         End Select
 
-        If [PV] = WindowStyle.W10 Or [PV] = WindowStyle.W11 Then
-            If My.W11 And My.EP.UseStart10 Then
-                XenonWindow1.Top = Start.Top - 35
-                XenonWindow1.Left = Start.Right + 15
-            Else
-                XenonWindow1.Top = Start.Top - If([PV] = WindowStyle.W11, 30, 35)
-                XenonWindow1.Left = Start.Right + If([PV] = WindowStyle.W11, 30, 15)
-            End If
-
-            XenonWindow2.Top = XenonWindow1.Bottom + 1
-            XenonWindow2.Left = XenonWindow1.Left
+        If [Style] = WindowStyle.W10 Or [Style] = WindowStyle.W11 Then
+            XenonWindow1.Left = Start.Right + (XenonWindow1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - XenonWindow1.Width) / 2
         Else
-            XenonWindow1.Top = 10
             XenonWindow1.Left = (XenonWindow1.Parent.Width - XenonWindow1.Width) / 2
-
-            XenonWindow2.Top = XenonWindow1.Bottom + 5
-            XenonWindow2.Left = XenonWindow1.Left
         End If
+
+        XenonWindow1.Top = (XenonWindow1.Parent.Height - Taskbar.Height - (XenonWindow1.Height + XenonWindow2.Height)) / 2
+        XenonWindow2.Top = XenonWindow1.Bottom
+        XenonWindow2.Left = XenonWindow1.Left
+
     End Sub
-    Public Shared Sub ApplyWindowStyles(ByVal [CP] As CP, [PV] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
+    Public Shared Sub ApplyWindowStyles(ByVal [CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
         XenonWindow1.Active = True
         XenonWindow2.Active = False
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 
-        Select Case [PV]
+        Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
                 XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
@@ -1373,11 +1369,11 @@ Public Class PreviewHelpers
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()
     End Sub
-    Public Shared Sub AdjustPreview_ModernOrClassic(ByVal [CP] As CP, [PV] As WindowStyle, tabs_preview As TablessControl, WXP_Alert As XenonAlertBox)
-        Dim condition0 As Boolean = [PV] = WindowStyle.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = [PV] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
-        Dim condition2 As Boolean = [PV] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
-        WXP_Alert.Visible = [PV] = WindowStyle.WXP AndAlso My.StartedWithClassicTheme
+    Public Shared Sub AdjustPreview_ModernOrClassic(ByVal [CP] As CP, [Style] As WindowStyle, tabs_preview As TablessControl, WXP_Alert As XenonAlertBox)
+        Dim condition0 As Boolean = [Style] = WindowStyle.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
+        Dim condition1 As Boolean = [Style] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
+        Dim condition2 As Boolean = [Style] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        WXP_Alert.Visible = [Style] = WindowStyle.WXP AndAlso My.StartedWithClassicTheme
         tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
     End Sub
 

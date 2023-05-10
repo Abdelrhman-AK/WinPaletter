@@ -12,7 +12,7 @@ Public Class Win32UI
         XenonComboBox1.PopulateThemes
         XenonComboBox1.SelectedIndex = 0
         MainFrm.Visible = False
-        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
         LoadCP(MainFrm.CP)
         SetMetics(MainFrm.CP)
@@ -614,27 +614,10 @@ Public Class Win32UI
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
             XenonToggle1.Checked = False
+            Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+                LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32)
+            End Using
 
-            Dim _Def As CP
-            If My.PreviewStyle = WindowStyle.W11 Then
-                _Def = New CP_Defaults().Default_Windows11
-            ElseIf My.PreviewStyle = WindowStyle.W10 Then
-                _Def = New CP_Defaults().Default_Windows10
-            ElseIf My.PreviewStyle = WindowStyle.W8 Then
-                _Def = New CP_Defaults().Default_Windows8
-            ElseIf My.PreviewStyle = WindowStyle.W7 Then
-                _Def = New CP_Defaults().Default_Windows7
-            ElseIf My.PreviewStyle = WindowStyle.WVista Then
-                _Def = New CP_Defaults().Default_WindowsVista
-            ElseIf My.PreviewStyle = WindowStyle.WXP Then
-                _Def = New CP_Defaults().Default_WindowsXP
-            Else
-                _Def = New CP_Defaults().Default_Windows11
-            End If
-
-            LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32)
-
-            _Def.Dispose()
         End If
     End Sub
 

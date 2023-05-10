@@ -16,7 +16,7 @@ Public Class Wallpaper_Editor
     Private Sub Wallpaper_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyFromCP(MainFrm.CP)
         index = 0
         ApplyPreviewStyle()
@@ -144,9 +144,9 @@ Public Class Wallpaper_Editor
             .Wallpaper_Slideshow_Interval = XenonTrackbar1.Value
             .Wallpaper_Slideshow_Shuffle = XenonCheckBox3.Checked
 
-            CP.Win32.Background = color_pick.BackColor
-
         End With
+
+        CP.Win32.Background = color_pick.BackColor
 
         Cursor = Cursors.Default
     End Sub
@@ -194,25 +194,9 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
-        Dim _Def As CP
-        If My.PreviewStyle = WindowStyle.W11 Then
-            _Def = New CP_Defaults().Default_Windows11
-        ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            _Def = New CP_Defaults().Default_Windows10
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
-            _Def = New CP_Defaults().Default_Windows8
-        ElseIf My.PreviewStyle = WindowStyle.W7 Then
-            _Def = New CP_Defaults().Default_Windows7
-        ElseIf My.PreviewStyle = WindowStyle.WVista Then
-            _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            _Def = New CP_Defaults().Default_WindowsXP
-        Else
-            _Def = New CP_Defaults().Default_Windows11
-        End If
-
-        ApplyFromCP(_Def)
-        _Def.Dispose()
+        Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+            ApplyFromCP(_Def)
+        End Using
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
@@ -230,6 +214,7 @@ Public Class Wallpaper_Editor
         ApplyWT()
 
         CPx.Wallpaper.Apply(source_wallpapertone.Checked)
+        CPx.Win32.Apply()
 
         If source_wallpapertone.Checked Then
             WT.Apply()
@@ -348,7 +333,7 @@ Public Class Wallpaper_Editor
     Function GetWall(file As String) As Bitmap
         If IO.File.Exists(file) Then
             Try
-                Using bmp As Bitmap = Bitmap_Mgr.Load(file)
+                Using bmp As New Bitmap(Bitmap_Mgr.Load(file))
 
                     Dim ScaleW As Single = 1
                     Dim ScaleH As Single = 1
@@ -498,8 +483,11 @@ Public Class Wallpaper_Editor
             End If
 
         ElseIf source_wallpapertone.Checked Then
-            img_untouched_forTint = GetWall(XenonTextBox3.Text)
-            ApplyHSLPreview()
+            If IO.File.Exists(XenonTextBox3.Text) Then
+                img_untouched_forTint = GetWall(XenonTextBox3.Text)
+                ApplyHSLPreview()
+            End If
+
         End If
 
         Cursor = Cursors.Default
@@ -587,7 +575,7 @@ Public Class Wallpaper_Editor
                 ImgF.Saturation(SBar.Value - 100)
                 ImgF.Brightness(LBar.Value - 100)
 
-                img_tinted = ImgF.Image
+                img_tinted = ImgF.Image.Clone
                 img_tinted_filled = FillScale(img_tinted.Clone, pnl_preview.Size)
                 img_tinted_tile = DirectCast(img_tinted.Clone, Bitmap).Tile(pnl_preview.Size)
             End Using

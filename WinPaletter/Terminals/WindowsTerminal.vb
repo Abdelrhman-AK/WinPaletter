@@ -10,7 +10,7 @@ Public Class WindowsTerminal
 
     Private Sub WindowsTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MainFrm.Visible = False
-        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
         XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
 

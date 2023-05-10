@@ -57,26 +57,10 @@ Public Class Uninstall
                 cpx.Dispose()
             End If
         ElseIf XenonRadioImage3.Checked Then
-            Dim _Def As CP
-            If My.W11 = WindowStyle.W11 Then
-                _Def = New CP_Defaults().Default_Windows11
-            ElseIf My.W10 = WindowStyle.W10 Then
-                _Def = New CP_Defaults().Default_Windows10
-            ElseIf My.W8 = WindowStyle.W8 Then
-                _Def = New CP_Defaults().Default_Windows8
-            ElseIf My.W7 = WindowStyle.W7 Then
-                _Def = New CP_Defaults().Default_Windows7
-            ElseIf My.W7 = WindowStyle.WVista Then
-                _Def = New CP_Defaults().Default_WindowsVista
-            ElseIf My.W7 = WindowStyle.WXP Then
-                _Def = New CP_Defaults().Default_WindowsXP
-            Else
-                _Def = New CP_Defaults().Default_Windows11
-            End If
-
-            _Def.Save(CP.CP_Type.Registry)
-            If My.[Settings].AutoRestartExplorer Then RestartExplorer()
-            _Def.Dispose()
+            Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+                _Def.Save(CP.CP_Type.Registry)
+                If My.[Settings].AutoRestartExplorer Then RestartExplorer()
+            End Using
         End If
 
         Dim guidText As String = My.Application.Info.ProductName

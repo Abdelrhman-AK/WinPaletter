@@ -3440,7 +3440,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If Not My.WXP Then
 
-                        If IO.File.Exists(Snd_Imageres_SystemStart) And IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
+                        If IO.File.Exists(Snd_Imageres_SystemStart) AndAlso IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
 
                             Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                             Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStart)
@@ -3463,19 +3463,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     If My.W8 Or My.W10 Or My.W11 Then
-                        If IO.File.Exists(Snd_Win_SystemExit) And IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
+                        If IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
                         Else
                             TaskMgmt(TaskType.Shutdown, Actions.Delete)
                         End If
 
-                        If IO.File.Exists(Snd_Win_WindowsLogoff) And IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
+                        If IO.File.Exists(Snd_Win_WindowsLogoff) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff)
                         Else
                             TaskMgmt(TaskType.Logoff, Actions.Delete)
                         End If
 
-                        If IO.File.Exists(Snd_Win_WindowsLogon) And IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
+                        If IO.File.Exists(Snd_Win_WindowsLogon) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon)
                         Else
                             TaskMgmt(TaskType.Logon, Actions.Delete)
@@ -5118,145 +5118,129 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Select Case CP_Type
             Case CP_Type.Registry
-                Dim _Def As CP
-                If My.PreviewStyle = WindowStyle.W11 Then
-                    _Def = New CP_Defaults().Default_Windows11
-                ElseIf My.PreviewStyle = WindowStyle.W10 Then
-                    _Def = New CP_Defaults().Default_Windows10
-                ElseIf My.PreviewStyle = WindowStyle.W8 Then
-                    _Def = New CP_Defaults().Default_Windows8
-                ElseIf My.PreviewStyle = WindowStyle.W7 Then
-                    _Def = New CP_Defaults().Default_Windows7
-                ElseIf My.PreviewStyle = WindowStyle.WVista Then
-                    _Def = New CP_Defaults().Default_WindowsVista
-                ElseIf My.PreviewStyle = WindowStyle.WXP Then
-                    _Def = New CP_Defaults().Default_WindowsXP
-                Else
-                    _Def = New CP_Defaults().Default_Windows11
-                End If
 
-                My.Loading_Exceptions.Clear()
+                Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+                    My.Loading_Exceptions.Clear()
 
 #Region "Registry"
-                Info.Load()
-                StoreInfo.Load()
-                Windows11.Load(New CP_Defaults().Default_Windows11.Windows11, New CP_Defaults().Default_Windows11Accents_Bytes)
-                Windows10.Load(New CP_Defaults().Default_Windows10.Windows10, New CP_Defaults().Default_Windows10Accents_Bytes)
-                Windows8.Load(_Def.Windows8)
-                Windows7.Load(_Def.Windows7)
-                WindowsVista.Load(_Def.WindowsVista)
-                WindowsXP.Load(_Def.WindowsXP)
-                WindowsEffects.Load(_Def.WindowsEffects)
-                LogonUI10x.Load(_Def.LogonUI10x)
-                LogonUI7.Load(_Def.LogonUI7)
-                LogonUIXP.Load(_Def.LogonUIXP)
-                Win32.Load()
-                MetricsFonts.Load(_Def.MetricsFonts)
-                AltTab.Load(_Def.AltTab)
-                ScreenSaver.Load(_Def.ScreenSaver)
-                Sounds.Load(_Def.Sounds)
-                AppTheme.Load(_Def.AppTheme)
+                    Info.Load()
+                    StoreInfo.Load()
+                    Windows11.Load(New CP_Defaults().Default_Windows11.Windows11, New CP_Defaults().Default_Windows11Accents_Bytes)
+                    Windows10.Load(New CP_Defaults().Default_Windows10.Windows10, New CP_Defaults().Default_Windows10Accents_Bytes)
+                    Windows8.Load(_Def.Windows8)
+                    Windows7.Load(_Def.Windows7)
+                    WindowsVista.Load(_Def.WindowsVista)
+                    WindowsXP.Load(_Def.WindowsXP)
+                    WindowsEffects.Load(_Def.WindowsEffects)
+                    LogonUI10x.Load(_Def.LogonUI10x)
+                    LogonUI7.Load(_Def.LogonUI7)
+                    LogonUIXP.Load(_Def.LogonUIXP)
+                    Win32.Load()
+                    MetricsFonts.Load(_Def.MetricsFonts)
+                    AltTab.Load(_Def.AltTab)
+                    ScreenSaver.Load(_Def.ScreenSaver)
+                    Sounds.Load(_Def.Sounds)
+                    AppTheme.Load(_Def.AppTheme)
 
-                WallpaperTone_W11.Load("Win11")
-                WallpaperTone_W10.Load("Win10")
-                WallpaperTone_W8.Load("Win8.1")
-                WallpaperTone_W7.Load("Win7")
-                WallpaperTone_WVista.Load("WinVista")
-                WallpaperTone_WXP.Load("WinXP")
-                Wallpaper.Load(_Def.Wallpaper)
+                    WallpaperTone_W11.Load("Win11")
+                    WallpaperTone_W10.Load("Win10")
+                    WallpaperTone_W8.Load("Win8.1")
+                    WallpaperTone_W7.Load("Win7")
+                    WallpaperTone_WVista.Load("WinVista")
+                    WallpaperTone_WXP.Load("WinXP")
+                    Wallpaper.Load(_Def.Wallpaper)
 
-                CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt)
-                If IO.Directory.Exists(My.PATH_PS86_app) Then
-                    Try : Registry.CurrentUser.CreateSubKey("Console\" & My.PATH_PS86_reg, True).Close() : Catch : End Try
-                    PowerShellx86.Load(My.PATH_PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86)
-                Else
-                    PowerShellx86 = _Def.PowerShellx86
-                End If
-                If IO.Directory.Exists(My.PATH_PS64_app) Then
-                    Try : Registry.CurrentUser.CreateSubKey("Console\" & My.PATH_PS64_reg, True).Close() : Catch : End Try
-                    PowerShellx64.Load(My.PATH_PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64)
-                Else
-                    PowerShellx64 = _Def.PowerShellx64
-                End If
+                    CommandPrompt.Load("", "Terminal_CMD_Enabled", _Def.CommandPrompt)
+                    If IO.Directory.Exists(My.PATH_PS86_app) Then
+                        Try : Registry.CurrentUser.CreateSubKey("Console\" & My.PATH_PS86_reg, True).Close() : Catch : End Try
+                        PowerShellx86.Load(My.PATH_PS86_reg, "Terminal_PS_32_Enabled", _Def.PowerShellx86)
+                    Else
+                        PowerShellx86 = _Def.PowerShellx86
+                    End If
+                    If IO.Directory.Exists(My.PATH_PS64_app) Then
+                        Try : Registry.CurrentUser.CreateSubKey("Console\" & My.PATH_PS64_reg, True).Close() : Catch : End Try
+                        PowerShellx64.Load(My.PATH_PS64_reg, "Terminal_PS_64_Enabled", _Def.PowerShellx64)
+                    Else
+                        PowerShellx64 = _Def.PowerShellx64
+                    End If
 
 
 #Region "Windows Terminal"
-                Terminal.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean
-                TerminalPreview.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)).ToBoolean
+                    Terminal.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)).ToBoolean
+                    TerminalPreview.Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)).ToBoolean
 
-                If My.W10 Or My.W11 Then
-                    Dim TerDir As String
-                    Dim TerPreDir As String
+                    If My.W10 Or My.W11 Then
+                        Dim TerDir As String
+                        Dim TerPreDir As String
 
-                    If Not My.[Settings].Terminal_Path_Deflection Then
-                        TerDir = My.PATH_TerminalJSON
-                        TerPreDir = My.PATH_TerminalPreviewJSON
-                    Else
-                        If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
-                            TerDir = My.[Settings].Terminal_Stable_Path
-                        Else
+                        If Not My.[Settings].Terminal_Path_Deflection Then
                             TerDir = My.PATH_TerminalJSON
-                        End If
-
-                        If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
-                            TerPreDir = My.[Settings].Terminal_Preview_Path
-                        Else
                             TerPreDir = My.PATH_TerminalPreviewJSON
+                        Else
+                            If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
+                                TerDir = My.[Settings].Terminal_Stable_Path
+                            Else
+                                TerDir = My.PATH_TerminalJSON
+                            End If
+
+                            If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
+                                TerPreDir = My.[Settings].Terminal_Preview_Path
+                            Else
+                                TerPreDir = My.PATH_TerminalPreviewJSON
+                            End If
                         End If
-                    End If
 
 
-                    If IO.File.Exists(TerDir) Then
-                        Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
+                        If IO.File.Exists(TerDir) Then
+                            Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
+                        Else
+                            Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                        End If
+
+                        If IO.File.Exists(TerPreDir) Then
+                            TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                        Else
+                            TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                        End If
+
                     Else
                         Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                    End If
-
-                    If IO.File.Exists(TerPreDir) Then
-                        TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
-                    Else
                         TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
                     End If
-
-                Else
-                    Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                    TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
-                End If
 #End Region
 
 #Region "Cursors"
-                Cursor_Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", False)
+                    Cursor_Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", False)
 
-                If Fixer.SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, Cursor_Shadow, SPIF.None) = 0 Then Cursor_Shadow = _Def.Cursor_Shadow
-                If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSETRAILS, 0, Cursor_Trails, SPIF.None) = 0 Then Cursor_Trails = _Def.Cursor_Trails
-                If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSESONAR, 0, Cursor_Sonar, SPIF.None) = 0 Then Cursor_Sonar = _Def.Cursor_Sonar
+                    If Fixer.SystemParametersInfo(SPI.Cursors.GETCURSORSHADOW, 0, Cursor_Shadow, SPIF.None) = 0 Then Cursor_Shadow = _Def.Cursor_Shadow
+                    If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSETRAILS, 0, Cursor_Trails, SPIF.None) = 0 Then Cursor_Trails = _Def.Cursor_Trails
+                    If Fixer.SystemParametersInfo(SPI.Cursors.GETMOUSESONAR, 0, Cursor_Sonar, SPIF.None) = 0 Then Cursor_Sonar = _Def.Cursor_Sonar
 
-                Cursor_Arrow.Load("Arrow")
-                Cursor_Help.Load("Help")
-                Cursor_AppLoading.Load("AppLoading")
-                Cursor_Busy.Load("Busy")
-                Cursor_Move.Load("Move")
-                Cursor_NS.Load("NS")
-                Cursor_EW.Load("EW")
-                Cursor_NESW.Load("NESW")
-                Cursor_NWSE.Load("NWSE")
-                Cursor_Up.Load("Up")
-                Cursor_Pen.Load("Pen")
-                Cursor_None.Load("None")
-                Cursor_Link.Load("Link")
-                Cursor_Pin.Load("Pin")
-                Cursor_Person.Load("Person")
-                Cursor_IBeam.Load("IBeam")
-                Cursor_Cross.Load("Cross")
+                    Cursor_Arrow.Load("Arrow")
+                    Cursor_Help.Load("Help")
+                    Cursor_AppLoading.Load("AppLoading")
+                    Cursor_Busy.Load("Busy")
+                    Cursor_Move.Load("Move")
+                    Cursor_NS.Load("NS")
+                    Cursor_EW.Load("EW")
+                    Cursor_NESW.Load("NESW")
+                    Cursor_NWSE.Load("NWSE")
+                    Cursor_Up.Load("Up")
+                    Cursor_Pen.Load("Pen")
+                    Cursor_None.Load("None")
+                    Cursor_Link.Load("Link")
+                    Cursor_Pin.Load("Pin")
+                    Cursor_Person.Load("Person")
+                    Cursor_IBeam.Load("IBeam")
+                    Cursor_Cross.Load("Cross")
 #End Region
 
-                If My.Loading_Exceptions.Count > 0 Then
-                    Saving_ex_list.ex_List = My.Loading_Exceptions
-                    Saving_ex_list.ShowDialog()
-                End If
+                    If My.Loading_Exceptions.Count > 0 Then
+                        Saving_ex_list.ex_List = My.Loading_Exceptions
+                        Saving_ex_list.ShowDialog()
+                    End If
 #End Region
-
-                _Def.Dispose()
+                End Using
 
             Case CP_Type.File
 #Region "File"

@@ -78,6 +78,10 @@ Public Class DragPreviewer
         Invalidate()
     End Sub
 
+    Private Sub DragPreviewer_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Invalidate()
+    End Sub
+
     Sub ApplyColorsToElements([CP] As CP)
         ApplyWinElementsColors([CP], My.PreviewStyle, False, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
         ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2)
@@ -425,5 +429,6 @@ Public Class DragPreviewer
         RetroShadow1.BringToFront()
         Menu_Window.BringToFront()
     End Sub
+
 
 End Class

@@ -395,6 +395,7 @@ Partial Class MainFrm
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.MainToolbar = New WinPaletter.XenonGroupBox()
+        Me.BetaBadge = New WinPaletter.XenonAlertBox()
         Me.XenonButton31 = New WinPaletter.XenonButton()
         Me.XenonButton20 = New WinPaletter.XenonButton()
         Me.XenonButton18 = New WinPaletter.XenonButton()
@@ -1355,7 +1356,7 @@ Partial Class MainFrm
         'W11_pic9
         '
         Me.W11_pic9.BackColor = System.Drawing.Color.Transparent
-        Me.W11_pic9.Image = CType(resources.GetObject("W11_pic9.Image"), System.Drawing.Image)
+        Me.W11_pic9.Image = Global.WinPaletter.My.Resources.Resources.Mini_Undefined
         Me.W11_pic9.Location = New System.Drawing.Point(2, 2)
         Me.W11_pic9.Name = "W11_pic9"
         Me.W11_pic9.Size = New System.Drawing.Size(24, 24)
@@ -2466,7 +2467,7 @@ Partial Class MainFrm
         'W10_pic9
         '
         Me.W10_pic9.BackColor = System.Drawing.Color.Transparent
-        Me.W10_pic9.Image = CType(resources.GetObject("W10_pic9.Image"), System.Drawing.Image)
+        Me.W10_pic9.Image = Global.WinPaletter.My.Resources.Resources.Mini_Undefined
         Me.W10_pic9.Location = New System.Drawing.Point(2, 2)
         Me.W10_pic9.Name = "W10_pic9"
         Me.W10_pic9.Size = New System.Drawing.Size(24, 24)
@@ -5604,6 +5605,7 @@ Partial Class MainFrm
         Me.MainToolbar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.MainToolbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.MainToolbar.Controls.Add(Me.BetaBadge)
         Me.MainToolbar.Controls.Add(Me.XenonButton31)
         Me.MainToolbar.Controls.Add(Me.XenonButton20)
         Me.MainToolbar.Controls.Add(Me.XenonButton18)
@@ -5624,6 +5626,24 @@ Partial Class MainFrm
         Me.MainToolbar.Name = "MainToolbar"
         Me.MainToolbar.Size = New System.Drawing.Size(1070, 60)
         Me.MainToolbar.TabIndex = 1
+        '
+        'BetaBadge
+        '
+        Me.BetaBadge.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.BetaBadge.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BetaBadge.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.BetaBadge.CenterText = True
+        Me.BetaBadge.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.BetaBadge.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.BetaBadge.Image = Nothing
+        Me.BetaBadge.Location = New System.Drawing.Point(1012, 19)
+        Me.BetaBadge.Name = "BetaBadge"
+        Me.BetaBadge.Size = New System.Drawing.Size(47, 22)
+        Me.BetaBadge.TabIndex = 55
+        Me.BetaBadge.TabStop = False
+        Me.BetaBadge.Text = "BETA"
+        Me.BetaBadge.Visible = False
         '
         'XenonButton31
         '
@@ -5786,7 +5806,7 @@ Partial Class MainFrm
         Me.status_lbl.Location = New System.Drawing.Point(549, 5)
         Me.status_lbl.Name = "status_lbl"
         Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.status_lbl.Size = New System.Drawing.Size(516, 50)
+        Me.status_lbl.Size = New System.Drawing.Size(457, 50)
         Me.status_lbl.TabIndex = 19
         Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -6627,4 +6647,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton34 As XenonButton
     Friend WithEvents XenonButton35 As XenonButton
     Friend WithEvents XenonButton26 As XenonButton
+    Friend WithEvents BetaBadge As XenonAlertBox
 End Class

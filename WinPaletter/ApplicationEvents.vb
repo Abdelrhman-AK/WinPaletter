@@ -139,6 +139,11 @@ Namespace My
         ''' </summary>
         Public PreviewStyle As WindowStyle = WindowStyle.W11
 
+        ''' <summary>
+        ''' Gets if WinPaletter's current version is designed as Beta or not
+        ''' <br>Don't forget to make it beta when you design a beta one</br>
+        ''' </summary>
+        Public ReadOnly IsBeta As Boolean = True
 
     End Module
 

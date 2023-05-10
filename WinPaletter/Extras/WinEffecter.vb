@@ -179,25 +179,9 @@ Public Class WinEffecter
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
-        Dim _Def As CP
-        If My.PreviewStyle = WindowStyle.W11 Then
-            _Def = New CP_Defaults().Default_Windows11
-        ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            _Def = New CP_Defaults().Default_Windows10
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
-            _Def = New CP_Defaults().Default_Windows8
-        ElseIf My.PreviewStyle = WindowStyle.W7 Then
-            _Def = New CP_Defaults().Default_Windows7
-        ElseIf My.PreviewStyle = WindowStyle.WVista Then
-            _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            _Def = New CP_Defaults().Default_WindowsXP
-        Else
-            _Def = New CP_Defaults().Default_Windows11
-        End If
-
-        ApplyFromCP(_Def)
-        _Def.Dispose()
+        Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+            ApplyFromCP(_Def)
+        End Using
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click

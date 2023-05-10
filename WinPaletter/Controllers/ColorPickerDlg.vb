@@ -106,67 +106,80 @@ Public Class ColorPickerDlg
 
 
     Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing, Optional ShowAlpha As Boolean = False) As Color
-        fr = Ctrl(0).FindForm
-        Dim PrevoiusMin As Size = fr.MinimumSize
 
-        If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
+        If Not My.Settings.Classic_Color_Picker Then
+            fr = Ctrl(0).FindForm
+            Dim PrevoiusMin As Size = fr.MinimumSize
 
-            MainFrm.previewContainer.Visible = False
-            MainFrm.SuspendLayout()
+            If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
 
-            For Each ct As Control In fr.Controls
-                If ct IsNot MainFrm.previewContainer Then ct.Visible = False
-            Next
+                MainFrm.previewContainer.Visible = False
+                MainFrm.SuspendLayout()
 
-            PreviousWidth = MainFrm.Width
-            DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
-            MainFrm.MinimumSize = Size.Empty
-            MainFrm.Width = DestinatedWidth
+                For Each ct As Control In fr.Controls
+                    If ct IsNot MainFrm.previewContainer Then ct.Visible = False
+                Next
 
-            MainFrm.ResumeLayout()
-            MainFrm.previewContainer.Visible = True
-        End If
+                PreviousWidth = MainFrm.Width
+                DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
+                MainFrm.MinimumSize = Size.Empty
+                MainFrm.Width = DestinatedWidth
 
-        Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
-        ColorEditorManager1.Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
-        InitColor = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+                MainFrm.ResumeLayout()
+                MainFrm.previewContainer.Visible = True
+            End If
 
-        CList = Ctrl
+            Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+            ColorEditorManager1.Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+            InitColor = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
 
-        If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
+            CList = Ctrl
 
-        ColorEditorManager1.ColorEditor.ShowAlphaChannel = ShowAlpha
+            If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
 
-        AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
+            ColorEditorManager1.ColorEditor.ShowAlphaChannel = ShowAlpha
+
+            AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
 
-        If Me.ShowDialog() = DialogResult.OK Then
-            c = ColorEditorManager1.Color
+            If Me.ShowDialog() = DialogResult.OK Then
+                c = ColorEditorManager1.Color
+            Else
+                'ColorEditorManager1.Color = InitColor
+                'CHANGECOLORPREVIEW()
+                'c = InitColor
+            End If
+
+            RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
+
+            If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
+                MainFrm.previewContainer.Visible = False
+
+                MainFrm.Width = PreviousWidth
+
+                For Each ct As Control In fr.Controls
+                    If ct IsNot MainFrm.previewContainer Then ct.Visible = True
+                Next
+
+                MainFrm.previewContainer.Visible = True
+            End If
+
+            MainFrm.MinimumSize = PrevoiusMin
+
+            fr = Nothing
+
+            Return c
         Else
-            'ColorEditorManager1.Color = InitColor
-            'CHANGECOLORPREVIEW()
-            'c = InitColor
+            Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
+            Using CCP As New ColorDialog With {.AllowFullOpen = True, .AnyColor = True, .Color = c, .FullOpen = True, .SolidColorOnly = False}
+                If CCP.ShowDialog = DialogResult.OK Then
+                    Return CCP.Color
+                Else
+                    Return c
+                End If
+            End Using
+
         End If
-
-        RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
-
-        If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-            MainFrm.previewContainer.Visible = False
-
-            MainFrm.Width = PreviousWidth
-
-            For Each ct As Control In fr.Controls
-                If ct IsNot MainFrm.previewContainer Then ct.Visible = True
-            Next
-
-            MainFrm.previewContainer.Visible = True
-        End If
-
-        MainFrm.MinimumSize = PrevoiusMin
-
-        fr = Nothing
-
-        Return c
 
     End Function
 

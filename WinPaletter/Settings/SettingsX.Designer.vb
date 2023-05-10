@@ -279,6 +279,8 @@ Partial Class SettingsX
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.PictureBox43 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox32 = New WinPaletter.XenonCheckBox()
         Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
         Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
         Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
@@ -389,6 +391,7 @@ Partial Class SettingsX
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PictureBox43, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -3716,6 +3719,8 @@ Partial Class SettingsX
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.PictureBox43)
+        Me.TabPage6.Controls.Add(Me.XenonCheckBox32)
         Me.TabPage6.Controls.Add(Me.XenonAlertBox7)
         Me.TabPage6.Controls.Add(Me.XenonCheckBox11)
         Me.TabPage6.Controls.Add(Me.XenonComboBox3)
@@ -3732,6 +3737,30 @@ Partial Class SettingsX
         Me.TabPage6.Size = New System.Drawing.Size(823, 471)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Miscellaneous"
+        '
+        'PictureBox43
+        '
+        Me.PictureBox43.Image = CType(resources.GetObject("PictureBox43.Image"), System.Drawing.Image)
+        Me.PictureBox43.Location = New System.Drawing.Point(17, 210)
+        Me.PictureBox43.Name = "PictureBox43"
+        Me.PictureBox43.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox43.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox43.TabIndex = 28
+        Me.PictureBox43.TabStop = False
+        '
+        'XenonCheckBox32
+        '
+        Me.XenonCheckBox32.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox32.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox32.Checked = False
+        Me.XenonCheckBox32.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox32.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox32.Location = New System.Drawing.Point(47, 210)
+        Me.XenonCheckBox32.Name = "XenonCheckBox32"
+        Me.XenonCheckBox32.Size = New System.Drawing.Size(770, 24)
+        Me.XenonCheckBox32.TabIndex = 29
+        Me.XenonCheckBox32.Text = "Use classic color picker"
         '
         'XenonAlertBox7
         '
@@ -4120,6 +4149,7 @@ Partial Class SettingsX
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage6.ResumeLayout(False)
+        CType(Me.PictureBox43, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4403,4 +4433,6 @@ Partial Class SettingsX
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents XenonCheckBox31 As XenonCheckBox
     Friend WithEvents PictureBox42 As PictureBox
+    Friend WithEvents PictureBox43 As PictureBox
+    Friend WithEvents XenonCheckBox32 As XenonCheckBox
 End Class

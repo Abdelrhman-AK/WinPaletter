@@ -1,4 +1,6 @@
-﻿Public Class CP_Defaults : Implements IDisposable
+﻿Imports WinPaletter.PreviewHelpers
+
+Public Class CP_Defaults : Implements IDisposable
 
     Public Default_Windows11Accents_Bytes As Byte() = {Default_Windows11.Windows11.Color_Index0.R, Default_Windows11.Windows11.Color_Index0.G, Default_Windows11.Windows11.Color_Index0.B, 255,
                                                     Default_Windows11.Windows11.Color_Index1.R, Default_Windows11.Windows11.Color_Index1.G, Default_Windows11.Windows11.Color_Index1.B, 255,
@@ -17,6 +19,35 @@
                                                     Default_Windows10.Windows11.Color_Index5.R, Default_Windows10.Windows11.Color_Index5.G, Default_Windows10.Windows11.Color_Index5.B, 255,
                                                     Default_Windows10.Windows11.Color_Index6.R, Default_Windows10.Windows11.Color_Index6.G, Default_Windows10.Windows11.Color_Index6.B, 255,
                                                     Default_Windows10.Windows11.Color_Index7.R, Default_Windows10.Windows11.Color_Index7.G, Default_Windows10.Windows11.Color_Index7.B, 255}
+
+    Public Shared Function From([PreviewStyle] As WindowStyle) As CP
+        Dim _Def As CP
+
+        If [PreviewStyle] = WindowStyle.W11 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows11 : End Using
+
+        ElseIf [PreviewStyle] = WindowStyle.W10 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows10 : End Using
+
+        ElseIf [PreviewStyle] = WindowStyle.W8 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows8 : End Using
+
+        ElseIf [PreviewStyle] = WindowStyle.W7 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows7 : End Using
+
+        ElseIf [PreviewStyle] = WindowStyle.WVista Then
+            Using X As New CP_Defaults() : _Def = X.Default_WindowsVista : End Using
+
+        ElseIf [PreviewStyle] = WindowStyle.WXP Then
+            Using X As New CP_Defaults() : _Def = X.Default_WindowsXP : End Using
+
+        Else
+            Using X As New CP_Defaults() : _Def = X.Default_Windows11 : End Using
+
+        End If
+
+        Return _Def
+    End Function
 
     Public Function Default_Windows11() As CP
         Dim [CP] As New CP(CP.CP_Type.Empty)
@@ -1684,6 +1715,8 @@
 
         Return [CP]
     End Function
+
+
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls

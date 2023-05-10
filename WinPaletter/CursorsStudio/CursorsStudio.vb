@@ -138,7 +138,7 @@ Public Class CursorsStudio
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         MainFrm.Visible = False
-        Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         FlowLayoutPanel1.DoubleBuffer
 
         AnimateList.Clear()
@@ -673,25 +673,9 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        Dim _Def As CP
-        If My.PreviewStyle = WindowStyle.W11 Then
-            _Def = New CP_Defaults().Default_Windows11
-        ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            _Def = New CP_Defaults().Default_Windows10
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
-            _Def = New CP_Defaults().Default_Windows8
-        ElseIf My.PreviewStyle = WindowStyle.W7 Then
-            _Def = New CP_Defaults().Default_Windows7
-        ElseIf My.PreviewStyle = WindowStyle.WVista Then
-            _Def = New CP_Defaults().Default_WindowsVista
-        ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            _Def = New CP_Defaults().Default_WindowsXP
-        Else
-            _Def = New CP_Defaults().Default_Windows11
-        End If
-
-        LoadFromCP(_Def)
-        _Def.Dispose()
+        Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
+            LoadFromCP(_Def)
+        End Using
 
         For Each x In FlowLayoutPanel1.Controls.OfType(Of CursorControl)
             If x._Focused Then
