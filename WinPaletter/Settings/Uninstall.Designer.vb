@@ -45,6 +45,7 @@ Partial Class Uninstall
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -151,7 +152,7 @@ Partial Class Uninstall
         'PictureBox3
         '
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(29, 244)
+        Me.PictureBox3.Location = New System.Drawing.Point(29, 292)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -164,7 +165,7 @@ Partial Class Uninstall
         Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
         Me.XenonRadioImage1.Image = Nothing
-        Me.XenonRadioImage1.Location = New System.Drawing.Point(156, 244)
+        Me.XenonRadioImage1.Location = New System.Drawing.Point(156, 292)
         Me.XenonRadioImage1.Name = "XenonRadioImage1"
         Me.XenonRadioImage1.ShowText = True
         Me.XenonRadioImage1.Size = New System.Drawing.Size(280, 24)
@@ -177,7 +178,7 @@ Partial Class Uninstall
         Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
         Me.XenonRadioImage2.Image = Nothing
-        Me.XenonRadioImage2.Location = New System.Drawing.Point(156, 274)
+        Me.XenonRadioImage2.Location = New System.Drawing.Point(156, 322)
         Me.XenonRadioImage2.Name = "XenonRadioImage2"
         Me.XenonRadioImage2.ShowText = True
         Me.XenonRadioImage2.Size = New System.Drawing.Size(280, 24)
@@ -190,7 +191,7 @@ Partial Class Uninstall
         Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
         Me.XenonRadioImage3.Image = Nothing
-        Me.XenonRadioImage3.Location = New System.Drawing.Point(156, 304)
+        Me.XenonRadioImage3.Location = New System.Drawing.Point(156, 352)
         Me.XenonRadioImage3.Name = "XenonRadioImage3"
         Me.XenonRadioImage3.ShowText = True
         Me.XenonRadioImage3.Size = New System.Drawing.Size(280, 24)
@@ -200,7 +201,7 @@ Partial Class Uninstall
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(59, 244)
+        Me.Label4.Location = New System.Drawing.Point(59, 292)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(91, 24)
         Me.Label4.TabIndex = 15
@@ -212,7 +213,7 @@ Partial Class Uninstall
         Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 379)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 387)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(671, 1)
         Me.XenonSeparator1.TabIndex = 16
@@ -228,7 +229,7 @@ Partial Class Uninstall
         Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(88, Byte), Integer), CType(CType(59, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(578, 392)
+        Me.XenonButton6.Location = New System.Drawing.Point(578, 400)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(105, 34)
         Me.XenonButton6.TabIndex = 21
@@ -244,7 +245,7 @@ Partial Class Uninstall
         Me.XenonButton2.Image = Nothing
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(492, 392)
+        Me.XenonButton2.Location = New System.Drawing.Point(492, 400)
         Me.XenonButton2.Name = "XenonButton2"
         Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton2.TabIndex = 22
@@ -261,7 +262,7 @@ Partial Class Uninstall
         Me.XenonAlertBox4.Image = Nothing
         Me.XenonAlertBox4.Location = New System.Drawing.Point(59, 215)
         Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(484, 22)
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(624, 22)
         Me.XenonAlertBox4.TabIndex = 23
         Me.XenonAlertBox4.TabStop = False
         Me.XenonAlertBox4.Text = "Note: This will reset cursors to Aero as the custom cursors are rendered and save" &
@@ -299,7 +300,7 @@ Partial Class Uninstall
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 397)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 405)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(474, 24)
         Me.XenonAlertBox1.TabIndex = 26
@@ -327,12 +328,30 @@ Partial Class Uninstall
         Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.MixedColors
         Me.XenonAnimatedBox1.TabIndex = 27
         '
+        'XenonAlertBox2
+        '
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox2.CenterText = False
+        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox2.Image = Nothing
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(59, 243)
+        Me.XenonAlertBox2.Name = "XenonAlertBox2"
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(624, 40)
+        Me.XenonAlertBox2.TabIndex = 28
+        Me.XenonAlertBox2.TabStop = False
+        Me.XenonAlertBox2.Text = "Note: Windows (Vista and later) Startup backup wave file is located there. If you" &
+    " delete this folder, you won't be able to restore this sound. Restore this sound" &
+    " first then you can do an uninstall."
+        '
         'Uninstall
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(695, 438)
+        Me.ClientSize = New System.Drawing.Size(695, 446)
+        Me.Controls.Add(Me.XenonAlertBox2)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonCheckBox3)
         Me.Controls.Add(Me.PictureBox4)
@@ -392,4 +411,5 @@ Partial Class Uninstall
     Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
+    Friend WithEvents XenonAlertBox2 As XenonAlertBox
 End Class

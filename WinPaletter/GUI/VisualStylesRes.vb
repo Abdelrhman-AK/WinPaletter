@@ -31,6 +31,7 @@ Public Class VisualStylesRes
 
     Public Sub Draw(G As Graphics, [Rectangle] As Rectangle, element As Element, Active As Boolean, ToolWindow As Boolean)
         Dim el As VisualStyleElement
+
         Select Case element
             Case Element.Titlebar
                 Dim CS As WindowCaptionState = If(Active, WindowCaptionState.Active, WindowCaptionState.Inactive)
@@ -79,6 +80,9 @@ Public Class VisualStylesRes
 
             Case Element.Taskbar
                 el = VisualStyleElement.TaskBar.BackgroundBottom.GetElement(_VisualStyleFile)
+
+            Case Else
+                el = Nothing
 
         End Select
 

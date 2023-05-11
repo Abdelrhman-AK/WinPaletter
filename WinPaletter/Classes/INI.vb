@@ -15,7 +15,7 @@ Public Class INI : Implements IDisposable
     End Sub
 
     Public Function IniReadValue(ByVal Section As String, ByVal Key As String, Optional DefaultValue As String = Nothing) As String
-        Dim temp As StringBuilder = New StringBuilder(65535)
+        Dim temp As New StringBuilder(65535)
         Dim i As Integer = GetPrivateProfileString(Section, Key, DefaultValue, temp, temp.Capacity, Me.path)
         Return temp.ToString()
     End Function

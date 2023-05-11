@@ -32,16 +32,6 @@ Public Class XenonStyle
     ReadOnly Dark As Boolean = True
 
     Sub New(BaseColor As Color, BackColor As Color)
-
-        'Try  'Try is a must because designer can't access My.[Settings] in designer mode
-        'If My.[Settings].Appearance_AdaptColors Then
-        'Dim x As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Nothing)
-        'Dim Cx As Color = Color.FromArgb(255, x(12), x(13), x(14))
-        'BaseColor = Cx 'If(GetDarkMode(), Cx, 0.2), Cx, 0.5))
-        'End If
-        'Catch
-        'End Try
-
         Dark = GetDarkMode()
 
         Colors.BaseColor = BaseColor

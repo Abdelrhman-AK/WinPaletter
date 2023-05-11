@@ -812,7 +812,7 @@ Public Class ColorPickerDlg
         End Try
     End Sub
 
-    Private Sub ttl_h_Click(sender As Object, e As EventArgs) Handles val1.Click
+    Private Sub Ttl_h_Click(sender As Object, e As EventArgs) Handles val1.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
     End Sub

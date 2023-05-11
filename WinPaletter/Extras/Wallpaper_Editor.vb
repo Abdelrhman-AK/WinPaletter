@@ -353,7 +353,7 @@ Public Class Wallpaper_Editor
         End If
     End Function
 
-    Private Sub source_pic_CheckedChanged(sender As Object) Handles source_pic.CheckedChanged, source_color.CheckedChanged, source_wallpapertone.CheckedChanged
+    Private Sub Source_pic_CheckedChanged(sender As Object) Handles source_pic.CheckedChanged, source_color.CheckedChanged, source_wallpapertone.CheckedChanged
         If sender.Checked Then
             Set_PicSource()
             ApplyHSLPreview()
@@ -363,7 +363,7 @@ Public Class Wallpaper_Editor
         Panel1.Visible = False
     End Sub
 
-    Private Sub source_slideshow_CheckedChanged(sender As Object) Handles source_slideshow.CheckedChanged
+    Private Sub Source_slideshow_CheckedChanged(sender As Object) Handles source_slideshow.CheckedChanged
         If sender.Checked Then
             Set_SlideshowSource()
             ApplyPreviewStyle()
@@ -493,7 +493,7 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+    Private Sub Color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             Dim clr As Color = SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -559,7 +559,7 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub style_fill_CheckedChanged(sender As Object) Handles style_fill.CheckedChanged, style_fit.CheckedChanged, style_stretch.CheckedChanged, style_center.CheckedChanged, style_tile.CheckedChanged
+    Private Sub Style_fill_CheckedChanged(sender As Object) Handles style_fill.CheckedChanged, style_fit.CheckedChanged, style_stretch.CheckedChanged, style_center.CheckedChanged, style_tile.CheckedChanged
         If sender.Checked Then ApplyPreviewStyle()
     End Sub
 

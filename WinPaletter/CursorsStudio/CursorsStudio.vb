@@ -700,7 +700,7 @@ Public Class CursorsStudio
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub ttl_h_Click(sender As Object, e As EventArgs) Handles trails_btn.Click
+    Private Sub Ttl_h_Click(sender As Object, e As EventArgs) Handles trails_btn.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
     End Sub

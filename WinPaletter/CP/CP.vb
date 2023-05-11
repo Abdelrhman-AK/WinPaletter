@@ -55,7 +55,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         Ribbon
         Bar
     End Enum
-    Enum ApplyAccentonTaskbar_Level
+    Enum ApplyAccentOnTaskbar_Level
         None
         Taskbar_Start_AC
         Taskbar
@@ -264,8 +264,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Titlebar_Active As Color
             Public Titlebar_Inactive As Color
             Public StartMenu_Accent As Color
-            Public ApplyAccentonTitlebars As Boolean
-            Public ApplyAccentonTaskbar As ApplyAccentonTaskbar_Level
+            Public ApplyAccentOnTitlebars As Boolean
+            Public ApplyAccentOnTaskbar As ApplyAccentOnTaskbar_Level
             Public IncreaseTBTransparency As Boolean
             Public TB_Blur As Boolean
 
@@ -519,7 +519,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Case AeroTheme.AeroLite
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
-                            My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
+
+                            Try
+                                My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
+                            Finally
+                                My.Computer.Registry.CurrentUser.Close()
+                            End Try
+
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String)
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", "", RegistryValueKind.String)
 
@@ -1480,7 +1486,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Public Sub Update_UPM_DEFAULT()
                 If My.Settings.UPM_HKU_DEFAULT Then
-                    Dim source As Byte() = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                    Dim source As Byte()
+
+                    Try
+                        source = My.Computer.Registry.GetValue("Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                    Finally
+                        My.Computer.Registry.CurrentUser.Close()
+                    End Try
+
                     If source IsNot Nothing Then EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
                 End If
             End Sub
@@ -1548,7 +1561,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public MenuSelectionFade As Boolean
             Public MenuShowDelay As UInteger            'Microsoft uses this as DWORD, which its equivalent is UInteger, not Integer
 
-            Public ComboboxAnimation As Boolean
+            Public ComboBoxAnimation As Boolean
             Public ListBoxSmoothScrolling As Boolean
 
             Public TooltipAnimation As Boolean
@@ -1635,19 +1648,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ShakeToMinimize = Not temp
 
                 Try
-                    Win11ClassicContextMenu = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing
+                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") IsNot Nothing Then
+                        Win11ClassicContextMenu = True
+                    Else
+                        Win11ClassicContextMenu = False
+                    End If
                 Catch
                     Win11ClassicContextMenu = _DefEffects.Win11ClassicContextMenu
+                Finally
+                    My.Computer.Registry.CurrentUser.Close()
                 End Try
 
                 Try
-                    SysListView32 = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") IsNot Nothing
+                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") IsNot Nothing Then
+                        SysListView32 = True
+                    Else
+                        SysListView32 = False
+                    End If
                 Catch
                     SysListView32 = _DefEffects.SysListView32
+                Finally
+                    My.Computer.Registry.CurrentUser.Close()
                 End Try
 
                 If GetReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", Nothing) Is Nothing Then
-                    Win11BootDots = If(My.W11, False, True)
+                    Win11BootDots = Not My.W11
 
                 Else
                     Select Case GetReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", If(My.W11, 1, 0))
@@ -1666,9 +1691,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Win11ExplorerBar = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", _DefEffects.Win11ExplorerBar)
 
                 Try
-                    DisableNavBar = My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") IsNot Nothing
+                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID").OpenSubKey("{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") IsNot Nothing Then
+                        DisableNavBar = True
+                    Else
+                        DisableNavBar = False
+                    End If
                 Catch
                     DisableNavBar = _DefEffects.DisableNavBar
+                Finally
+                    My.Computer.Registry.CurrentUser.Close()
                 End Try
 
                 AutoHideScrollBars = GetReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", _DefEffects.AutoHideScrollBars)
@@ -1724,13 +1755,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton.ToInteger)
                     End If
 
-                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
-                        EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
-                    End If
+                    Try
+                        If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
+                            EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
+                        End If
+                    Finally
+                        My.Computer.Registry.CurrentUser.Close()
+                    End Try
 
-                    If My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
-                        EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
-                    End If
+                    Try
+                        If My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
+                            EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
+                        End If
+                    Finally
+                        My.Computer.Registry.CurrentUser.Close()
+                    End Try
 
                     EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar)
 
@@ -1776,7 +1815,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Else
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
                             End If
-                        Catch
+                        Finally
+                            My.Computer.Registry.CurrentUser.Close()
                         End Try
                     End If
 
@@ -1787,7 +1827,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Else
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
                             End If
-                        Catch
+                        Finally
+                            My.Computer.Registry.CurrentUser.Close()
                         End Try
                     End If
 
@@ -1797,7 +1838,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Else
                             My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", False)
                         End If
-                    Catch
+                    Finally
+                        My.Computer.Registry.CurrentUser.Close()
                     End Try
 
                 End If
@@ -4705,8 +4747,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Dim AllThemes As List(Of String) = [String].CList
         Dim SelectedTheme As String = ""
-        Dim SelectedThemeList As New List(Of String)
-
         Dim Found As Boolean = False
 
         For Each th As String In AllThemes
@@ -4722,8 +4762,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Exit Function
         End If
 
-        SelectedThemeList = SelectedTheme.CList
-
+        Dim SelectedThemeList As List(Of String) = SelectedTheme.CList
 
         For Each x As String In SelectedThemeList
             Try
@@ -5002,6 +5041,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Select Case PropName.ToLower
             Case "Name".ToLower
+                If PropValue.ToUpper = "MS SANS SERIF" Then PropValue = "Microsoft Sans Serif"
                 F = New Font(PropValue, Font.Size, Font.Style)
 
             Case "Size".ToLower

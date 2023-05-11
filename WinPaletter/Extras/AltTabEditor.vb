@@ -92,13 +92,17 @@ Public Class AltTabEditor
         XenonAlertBox1.Visible = (My.PreviewStyle = WindowStyle.W7)
 
         If ExplorerPatcher.IsAllowed Then
-            If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) = 3 Then
-                XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
-                XenonWinElement1.DarkMode = Not MainFrm.CP.Windows11.WinMode_Light
-            End If
+            Try
+                If My.Computer.Registry.CurrentUser.GetValue("Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) = 3 Then
+                    XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
+                    XenonWinElement1.DarkMode = Not MainFrm.CP.Windows11.WinMode_Light
+                End If
+            Finally
+                My.Computer.Registry.CurrentUser.Close()
+            End Try
         End If
 
-            If XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Basic Then
+        If XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Basic Then
             XenonWinElement1.Size = New Size(360, 100)
         Else
             XenonWinElement1.Size = New Size(450, 150)
@@ -107,6 +111,7 @@ Public Class AltTabEditor
         XenonWinElement1.Left = (XenonWinElement1.Parent.Width - XenonWinElement1.Width) / 2
         XenonWinElement1.Top = (XenonWinElement1.Parent.Height - XenonWinElement1.Height) / 2
 
+        tabs_preview_1.DoubleBuffer
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -170,7 +175,7 @@ Public Class AltTabEditor
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
-    Private Sub opacity_btn_Click(sender As Object, e As EventArgs) Handles opacity_btn.Click
+    Private Sub Opacity_btn_Click(sender As Object, e As EventArgs) Handles opacity_btn.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
     End Sub

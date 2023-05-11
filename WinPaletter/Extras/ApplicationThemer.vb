@@ -130,7 +130,7 @@ Public Class ApplicationThemer
         AdjustPreview()
     End Sub
 
-    Private Sub appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
+    Private Sub Appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
 
         With My.Settings
             .Appearance_Custom = BackupSettings.Appearance_Custom
@@ -152,7 +152,7 @@ Public Class ApplicationThemer
         AdjustPreview()
     End Sub
 
-    Private Sub appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
+    Private Sub Appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
         With My.Settings
             .Appearance_Custom = BackupSettings.Appearance_Custom
             .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
@@ -178,7 +178,7 @@ Public Class ApplicationThemer
         AdjustPreview()
     End Sub
 
-    Private Sub appearance_list_SelectedIndexChanged(sender As Object, e As EventArgs) Handles appearance_list.SelectedIndexChanged
+    Private Sub Appearance_list_SelectedIndexChanged(sender As Object, e As EventArgs) Handles appearance_list.SelectedIndexChanged
         If _Shown Then
             Select Case appearance_list.SelectedItem.ToString.ToLower
                 Case "Default Dark".ToLower

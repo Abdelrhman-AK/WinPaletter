@@ -7534,15 +7534,15 @@ Public Class XenonColorBar
         End Set
     End Property
 
-    Private Color1 As Color = Color.FromArgb(255, 23, 0)
-    Private Color2 As Color = Color.FromArgb(253, 253, 0)
-    Private Color3 As Color = Color.FromArgb(58, 255, 0)
-    Private Color4 As Color = Color.FromArgb(0, 255, 240)
-    Private Color5 As Color = Color.FromArgb(0, 17, 255)
-    Private Color6 As Color = Color.FromArgb(255, 0, 212)
-    Private Color7 As Color = Color.FromArgb(255, 0, 23)
+    Private ReadOnly Color1 As Color = Color.FromArgb(255, 23, 0)
+    Private ReadOnly Color2 As Color = Color.FromArgb(253, 253, 0)
+    Private ReadOnly Color3 As Color = Color.FromArgb(58, 255, 0)
+    Private ReadOnly Color4 As Color = Color.FromArgb(0, 255, 240)
+    Private ReadOnly Color5 As Color = Color.FromArgb(0, 17, 255)
+    Private ReadOnly Color6 As Color = Color.FromArgb(255, 0, 212)
+    Private ReadOnly Color7 As Color = Color.FromArgb(255, 0, 23)
 
-    Dim cb_H As New ColorBlend() With {.Positions = {0, 1 / 6.0F, 2 / 6.0F, 3 / 6.0F, 4 / 6.0F, 5 / 6.0F, 1},
+    ReadOnly cb_H As New ColorBlend() With {.Positions = {0, 1 / 6.0F, 2 / 6.0F, 3 / 6.0F, 4 / 6.0F, 5 / 6.0F, 1},
                     .Colors = {Color1, Color2, Color3, Color4, Color5, Color6, Color7}}
 
     Dim cb_L As New ColorBlend() With {.Positions = {0, 1 / 2.0F, 1}, .Colors = {Color.Black, _AccentColor, Color.White}}
@@ -7565,28 +7565,24 @@ Public Class XenonColorBar
         Select Case Mode
             Case ModesList.Hue
                 back = New LinearGradientBrush(middleRect, Color.Black, Color.Black, 0, False) With {.InterpolationColors = cb_H}
-                Dim HSL_ As New HSL_Structure
-                HSL_ = Color.FromArgb(0, 255, 240).ToHSL()
+                Dim HSL_ As HSL_Structure = Color.FromArgb(0, 255, 240).ToHSL()
                 HSL_.H = (Value / Maximum) * 359
                 C = HSL_.ToRGB
 
             Case ModesList.Saturation
-                Dim HSL_x1, HSL_x2 As New HSL_Structure
-                HSL_x1 = _AccentColor.ToHSL()
-                HSL_x2 = _AccentColor.ToHSL()
+                Dim HSL_x1 As HSL_Structure = _AccentColor.ToHSL()
+                Dim HSL_x2 As HSL_Structure = _AccentColor.ToHSL()
                 HSL_x1.S = 0
                 HSL_x2.S = 1
                 back = New LinearGradientBrush(middleRect, HSL_x1.ToRGB, HSL_x2.ToRGB, LinearGradientMode.Horizontal)
-                Dim HSL_ As New HSL_Structure
-                HSL_ = _AccentColor.ToHSL()
+                Dim HSL_ As HSL_Structure = _AccentColor.ToHSL()
                 HSL_.S = Value / Maximum
                 C = HSL_.ToRGB
 
             Case ModesList.Light
                 cb_L = New ColorBlend() With {.Positions = {0, 1 / 2.0F, 1}, .Colors = {Color.Black, _AccentColor, Color.White}}
                 back = New LinearGradientBrush(middleRect, Color.Black, Color.Black, 0, False) With {.InterpolationColors = cb_L}
-                Dim HSL_ As New HSL_Structure
-                HSL_ = _AccentColor.ToHSL()
+                Dim HSL_ As HSL_Structure = _AccentColor.ToHSL()
                 HSL_.L = Value / Maximum
                 C = HSL_.ToRGB
 
@@ -7664,15 +7660,9 @@ Public Class XenonColorBar
             If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
         End If
 
-
         Invalidate()
 
         If ThumbDown Then
-            'Dim ThumbPosition As Integer = e.X '- LSA.Width - (ThumbSize \ 2)
-            'Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
-            'I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
-            'Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
-
             Value = Math.Min(Math.Max((e.X / Width) * Maximum, _Minimum), _Maximum)
             InvalidatePosition()
         End If
@@ -7680,10 +7670,6 @@ Public Class XenonColorBar
         Tmr.Enabled = True
         Tmr.Start()
     End Sub
-
-    Private Function GetProgress() As Double
-        Return (_Value - _Minimum) / (_Maximum - _Minimum)
-    End Function
 
     Private Sub NSVScrollBar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
         ThumbDown = False

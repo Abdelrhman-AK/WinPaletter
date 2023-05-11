@@ -236,8 +236,18 @@ Public Class XenonCore
                 Try
                     If My.Settings.Appearance_Auto Then
                         If My.W11 Or My.W10 Then
-                            i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
-                            Return Not (i = 1)
+                            Try
+                                i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
+                                Return Not (i = 1)
+                            Catch ex As Exception
+                                Try
+                                    Return My.Settings.Appearance_Dark
+                                Catch
+                                    Return My.W11 Or My.W10
+                                End Try
+                            Finally
+                                My.Computer.Registry.CurrentUser.Close()
+                            End Try
                         Else
                             Return False
                         End If
@@ -728,10 +738,12 @@ Public Module FormDWMEffects
         Dim Temp As Boolean
         Dim Transparency_W11_10 As Boolean
         Try
-            Temp = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", False)
+            Temp = My.Computer.Registry.CurrentUser.GetValue("SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", False)
             Transparency_W11_10 = (My.W10 Or My.W11) AndAlso Temp
         Catch
             Transparency_W11_10 = False
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
         End Try
 
         Try
@@ -1043,11 +1055,7 @@ Public Class Visual
         If backgroundWorkers.TryGetValue(CType(sender, BackgroundWorker), info) Then
 
             If Not e.Cancelled Then
-
-                If info.CallBack IsNot Nothing Then
-                    info.CallBack.Invoke(info.Container, info.ColorProperty)
-                End If
-
+                info.CallBack?.Invoke(info.Container, info.ColorProperty)
                 backgroundWorkers.Remove(CType(sender, BackgroundWorker))
                 colorsFading.Remove(GenerateHashCode(info.Container, info.ColorProperty))
             Else

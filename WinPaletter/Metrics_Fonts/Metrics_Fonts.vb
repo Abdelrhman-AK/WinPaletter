@@ -743,7 +743,7 @@ Public Class Metrics_Fonts
         i_s_s_s.Text = sender.Value
     End Sub
 
-    Private Sub i_s_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s_s.Click
+    Private Sub I_s_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s_s.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar15.Maximum), XenonTrackbar15.Minimum) : XenonTrackbar15.Value = Val(sender.Text)
     End Sub

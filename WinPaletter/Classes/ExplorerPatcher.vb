@@ -1,4 +1,6 @@
 ﻿
+Imports System.Net.Security
+
 Public Class ExplorerPatcher
     Public Shared IsInstalled As Boolean = False
     Public UseStart10 As Boolean = False
@@ -13,22 +15,38 @@ Public Class ExplorerPatcher
     End Enum
 
     Sub New()
-        IsInstalled = My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing
+
+        Try
+            If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
+                IsInstalled = True
+            Else
+                IsInstalled = False
+            End If
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
+        End Try
 
         If Not My.Settings.EP_Enabled_Force Then
 
             If IsInstalled And My.W11 Then
 
-                With My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced")
-                    UseStart10 = .GetValue("Start_ShowClassicMode")
-                End With
+                Try
+                    With My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced")
+                        UseStart10 = .GetValue("Start_ShowClassicMode")
+                    End With
+                Finally
+                    My.Computer.Registry.CurrentUser.Close()
+                End Try
 
-                With My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher")
-                    UseTaskbar10 = .GetValue("OldTaskbar")
-                    TaskbarButton10 = .GetValue("OrbStyle") = 0
-                    StartStyle = .GetValue("StartUI_EnableRoundedCorners")
-                End With
-
+                Try
+                    With My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher")
+                        UseTaskbar10 = .GetValue("OldTaskbar")
+                        TaskbarButton10 = .GetValue("OrbStyle") = 0
+                        StartStyle = .GetValue("StartUI_EnableRoundedCorners")
+                    End With
+                Finally
+                    My.Computer.Registry.CurrentUser.Close()
+                End Try
             Else
                 UseStart10 = False
                 UseTaskbar10 = False

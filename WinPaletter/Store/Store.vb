@@ -14,8 +14,8 @@ Public Class Store
     Private StartedAsOnlineOrOffline As Boolean = True
     Private FinishedLoadingInitialCPs As Boolean
     Dim CPList As New Dictionary(Of String, CP)
-    Dim w As Integer = 528 * 0.6
-    Dim h As Integer = 297 * 0.6
+    ReadOnly w As Integer = 528 * 0.6
+    ReadOnly h As Integer = 297 * 0.6
 
     Private apply_elapsedSecs As Integer = 0
 
@@ -1238,7 +1238,7 @@ Public Class Store
 #End Region
 
 #Region "Buttons Events"
-    Private Sub back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
+    Private Sub Back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
 
         If ThemeDownloader.IsBusy Then
             ProgressBar1.Value = 0
@@ -1352,7 +1352,7 @@ Public Class Store
 #End Region
 
 #Region "   Log row"
-    Private Sub ok_btn_Click(sender As Object, e As EventArgs) Handles ok_btn.Click
+    Private Sub Ok_btn_Click(sender As Object, e As EventArgs) Handles ok_btn.Click
         log_lbl.Text = ""
         Log_Timer.Enabled = False
         Log_Timer.Stop()
@@ -1393,24 +1393,24 @@ Public Class Store
 #End Region
 
 #Region "   Search"
-    Private Sub search_btn_Click(sender As Object, e As EventArgs) Handles search_btn.Click
+    Private Sub Search_btn_Click(sender As Object, e As EventArgs) Handles search_btn.Click
         PerformSearch()
     End Sub
-    Private Sub search_filter_btn_Click(sender As Object, e As EventArgs) Handles search_filter_btn.Click
+    Private Sub Search_filter_btn_Click(sender As Object, e As EventArgs) Handles search_filter_btn.Click
         Store_SearchFilter.ShowDialog()
     End Sub
 
 #End Region
 
 #Region "   Cursors"
-    Private Sub cur_anim_btn_Click(sender As Object, e As EventArgs) Handles cur_anim_btn.Click
+    Private Sub Cur_anim_btn_Click(sender As Object, e As EventArgs) Handles cur_anim_btn.Click
         Angle = 180
         Cycles = 0
         Cursor_Timer.Enabled = True
         Cursor_Timer.Start()
     End Sub
 
-    Private Sub cur_tip_btn_Click(sender As Object, e As EventArgs) Handles cur_tip_btn.Click
+    Private Sub Cur_tip_btn_Click(sender As Object, e As EventArgs) Handles cur_tip_btn.Click
         MsgBox(My.Lang.ScalingTip, MsgBoxStyle.Information)
     End Sub
 #End Region
@@ -1461,7 +1461,7 @@ Public Class Store
         Label17.Text = String.Format("{0} ({1}x)", My.Lang.Scaling, sender.value / 100)
     End Sub
 
-    Private Sub search_box_KeyPress(sender As Object, e As KeyPressEventArgs) Handles search_box.KeyboardPress
+    Private Sub Search_box_KeyPress(sender As Object, e As KeyPressEventArgs) Handles search_box.KeyboardPress
         If e.KeyChar = ChrW(Keys.Enter) Then PerformSearch()
     End Sub
 

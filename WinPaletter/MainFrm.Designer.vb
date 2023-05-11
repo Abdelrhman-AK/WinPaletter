@@ -5003,7 +5003,7 @@ Partial Class MainFrm
         Me.WXP_Alert1.Image = Nothing
         Me.WXP_Alert1.Location = New System.Drawing.Point(3, 419)
         Me.WXP_Alert1.Name = "WXP_Alert1"
-        Me.WXP_Alert1.Size = New System.Drawing.Size(513, 28)
+        Me.WXP_Alert1.Size = New System.Drawing.Size(519, 28)
         Me.WXP_Alert1.TabIndex = 53
         Me.WXP_Alert1.TabStop = False
         Me.WXP_Alert1.Text = "External theme\visual styles require a UX-theme-patched Windows"
@@ -5068,7 +5068,7 @@ Partial Class MainFrm
         Me.WXP_Alert3.Image = Nothing
         Me.WXP_Alert3.Location = New System.Drawing.Point(3, 450)
         Me.WXP_Alert3.Name = "WXP_Alert3"
-        Me.WXP_Alert3.Size = New System.Drawing.Size(513, 64)
+        Me.WXP_Alert3.Size = New System.Drawing.Size(519, 64)
         Me.WXP_Alert3.TabIndex = 48
         Me.WXP_Alert3.TabStop = False
         Me.WXP_Alert3.Text = "WinPaletter on Windows XP maybe unstable, you might always face crashes on applyi" &
@@ -5093,7 +5093,7 @@ Partial Class MainFrm
         Me.XenonGroupBox48.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox48.Name = "XenonGroupBox48"
         Me.XenonGroupBox48.Padding = New System.Windows.Forms.Padding(1)
-        Me.XenonGroupBox48.Size = New System.Drawing.Size(513, 102)
+        Me.XenonGroupBox48.Size = New System.Drawing.Size(519, 102)
         Me.XenonGroupBox48.TabIndex = 42
         '
         'WXP_VS_ColorsList
@@ -5110,7 +5110,7 @@ Partial Class MainFrm
         Me.WXP_VS_ColorsList.ItemHeight = 20
         Me.WXP_VS_ColorsList.Location = New System.Drawing.Point(93, 72)
         Me.WXP_VS_ColorsList.Name = "WXP_VS_ColorsList"
-        Me.WXP_VS_ColorsList.Size = New System.Drawing.Size(414, 26)
+        Me.WXP_VS_ColorsList.Size = New System.Drawing.Size(420, 26)
         Me.WXP_VS_ColorsList.TabIndex = 5
         '
         'PictureBox38
@@ -5133,7 +5133,7 @@ Partial Class MainFrm
         Me.WXP_VS_Browse.Image = CType(resources.GetObject("WXP_VS_Browse.Image"), System.Drawing.Image)
         Me.WXP_VS_Browse.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(68, Byte), Integer))
         Me.WXP_VS_Browse.LineSize = 1
-        Me.WXP_VS_Browse.Location = New System.Drawing.Point(473, 43)
+        Me.WXP_VS_Browse.Location = New System.Drawing.Point(479, 43)
         Me.WXP_VS_Browse.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.WXP_VS_Browse.Name = "WXP_VS_Browse"
         Me.WXP_VS_Browse.Size = New System.Drawing.Size(35, 24)
@@ -5148,7 +5148,7 @@ Partial Class MainFrm
         Me.Label71.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label71.Location = New System.Drawing.Point(44, 3)
         Me.Label71.Name = "Label71"
-        Me.Label71.Size = New System.Drawing.Size(465, 35)
+        Me.Label71.Size = New System.Drawing.Size(471, 35)
         Me.Label71.TabIndex = 0
         Me.Label71.Text = "External theme"
         Me.Label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -5214,7 +5214,7 @@ Partial Class MainFrm
         Me.WXP_VS_textbox.SelectedText = ""
         Me.WXP_VS_textbox.SelectionLength = 0
         Me.WXP_VS_textbox.SelectionStart = 0
-        Me.WXP_VS_textbox.Size = New System.Drawing.Size(376, 24)
+        Me.WXP_VS_textbox.Size = New System.Drawing.Size(382, 24)
         Me.WXP_VS_textbox.TabIndex = 5
         Me.WXP_VS_textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.WXP_VS_textbox.UseSystemPasswordChar = False
@@ -5242,13 +5242,13 @@ Partial Class MainFrm
         Me.XenonGroupBox47.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox47.Name = "XenonGroupBox47"
         Me.XenonGroupBox47.Padding = New System.Windows.Forms.Padding(1)
-        Me.XenonGroupBox47.Size = New System.Drawing.Size(513, 145)
+        Me.XenonGroupBox47.Size = New System.Drawing.Size(519, 145)
         Me.XenonGroupBox47.TabIndex = 41
         '
         'XenonSeparatorVertical3
         '
         Me.XenonSeparatorVertical3.AlternativeLook = False
-        Me.XenonSeparatorVertical3.Location = New System.Drawing.Point(309, 47)
+        Me.XenonSeparatorVertical3.Location = New System.Drawing.Point(312, 47)
         Me.XenonSeparatorVertical3.Name = "XenonSeparatorVertical3"
         Me.XenonSeparatorVertical3.Size = New System.Drawing.Size(1, 91)
         Me.XenonSeparatorVertical3.TabIndex = 44
@@ -5259,7 +5259,7 @@ Partial Class MainFrm
         Me.Label68.AutoEllipsis = True
         Me.Label68.BackColor = System.Drawing.Color.Transparent
         Me.Label68.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label68.Location = New System.Drawing.Point(312, 116)
+        Me.Label68.Location = New System.Drawing.Point(315, 116)
         Me.Label68.Name = "Label68"
         Me.Label68.Size = New System.Drawing.Size(90, 22)
         Me.Label68.TabIndex = 43
@@ -5272,7 +5272,7 @@ Partial Class MainFrm
         Me.WXP_CustomTheme.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_CustomTheme.ForeColor = System.Drawing.Color.White
         Me.WXP_CustomTheme.Image = CType(resources.GetObject("WXP_CustomTheme.Image"), System.Drawing.Image)
-        Me.WXP_CustomTheme.Location = New System.Drawing.Point(325, 47)
+        Me.WXP_CustomTheme.Location = New System.Drawing.Point(328, 47)
         Me.WXP_CustomTheme.Name = "WXP_CustomTheme"
         Me.WXP_CustomTheme.ShowText = False
         Me.WXP_CustomTheme.Size = New System.Drawing.Size(64, 64)
@@ -5284,7 +5284,7 @@ Partial Class MainFrm
         Me.WXP_Classic.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Classic.ForeColor = System.Drawing.Color.White
         Me.WXP_Classic.Image = CType(resources.GetObject("WXP_Classic.Image"), System.Drawing.Image)
-        Me.WXP_Classic.Location = New System.Drawing.Point(417, 47)
+        Me.WXP_Classic.Location = New System.Drawing.Point(420, 47)
         Me.WXP_Classic.Name = "WXP_Classic"
         Me.WXP_Classic.ShowText = False
         Me.WXP_Classic.Size = New System.Drawing.Size(64, 64)
@@ -5295,7 +5295,7 @@ Partial Class MainFrm
         Me.Label66.AutoEllipsis = True
         Me.Label66.BackColor = System.Drawing.Color.Transparent
         Me.Label66.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label66.Location = New System.Drawing.Point(404, 116)
+        Me.Label66.Location = New System.Drawing.Point(407, 116)
         Me.Label66.Name = "Label66"
         Me.Label66.Size = New System.Drawing.Size(90, 22)
         Me.Label66.TabIndex = 33
@@ -5307,7 +5307,7 @@ Partial Class MainFrm
         Me.Label62.AutoEllipsis = True
         Me.Label62.BackColor = System.Drawing.Color.Transparent
         Me.Label62.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label62.Location = New System.Drawing.Point(19, 116)
+        Me.Label62.Location = New System.Drawing.Point(22, 116)
         Me.Label62.Name = "Label62"
         Me.Label62.Size = New System.Drawing.Size(90, 22)
         Me.Label62.TabIndex = 39
@@ -5331,7 +5331,7 @@ Partial Class MainFrm
         Me.WXP_Luna_Blue.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Luna_Blue.ForeColor = System.Drawing.Color.White
         Me.WXP_Luna_Blue.Image = CType(resources.GetObject("WXP_Luna_Blue.Image"), System.Drawing.Image)
-        Me.WXP_Luna_Blue.Location = New System.Drawing.Point(32, 47)
+        Me.WXP_Luna_Blue.Location = New System.Drawing.Point(35, 47)
         Me.WXP_Luna_Blue.Name = "WXP_Luna_Blue"
         Me.WXP_Luna_Blue.ShowText = False
         Me.WXP_Luna_Blue.Size = New System.Drawing.Size(64, 64)
@@ -5345,7 +5345,7 @@ Partial Class MainFrm
         Me.Label63.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
         Me.Label63.Location = New System.Drawing.Point(44, 3)
         Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(465, 35)
+        Me.Label63.Size = New System.Drawing.Size(471, 35)
         Me.Label63.TabIndex = 0
         Me.Label63.Text = "Theme"
         Me.Label63.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -5355,7 +5355,7 @@ Partial Class MainFrm
         Me.Label64.AutoEllipsis = True
         Me.Label64.BackColor = System.Drawing.Color.Transparent
         Me.Label64.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label64.Location = New System.Drawing.Point(115, 116)
+        Me.Label64.Location = New System.Drawing.Point(118, 116)
         Me.Label64.Name = "Label64"
         Me.Label64.Size = New System.Drawing.Size(90, 22)
         Me.Label64.TabIndex = 37
@@ -5368,7 +5368,7 @@ Partial Class MainFrm
         Me.WXP_Luna_Silver.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Luna_Silver.ForeColor = System.Drawing.Color.White
         Me.WXP_Luna_Silver.Image = CType(resources.GetObject("WXP_Luna_Silver.Image"), System.Drawing.Image)
-        Me.WXP_Luna_Silver.Location = New System.Drawing.Point(227, 47)
+        Me.WXP_Luna_Silver.Location = New System.Drawing.Point(230, 47)
         Me.WXP_Luna_Silver.Name = "WXP_Luna_Silver"
         Me.WXP_Luna_Silver.ShowText = False
         Me.WXP_Luna_Silver.Size = New System.Drawing.Size(64, 64)
@@ -5379,7 +5379,7 @@ Partial Class MainFrm
         Me.Label65.AutoEllipsis = True
         Me.Label65.BackColor = System.Drawing.Color.Transparent
         Me.Label65.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Label65.Location = New System.Drawing.Point(214, 116)
+        Me.Label65.Location = New System.Drawing.Point(217, 116)
         Me.Label65.Name = "Label65"
         Me.Label65.Size = New System.Drawing.Size(90, 22)
         Me.Label65.TabIndex = 35
@@ -5392,7 +5392,7 @@ Partial Class MainFrm
         Me.WXP_Luna_OliveGreen.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.WXP_Luna_OliveGreen.ForeColor = System.Drawing.Color.White
         Me.WXP_Luna_OliveGreen.Image = CType(resources.GetObject("WXP_Luna_OliveGreen.Image"), System.Drawing.Image)
-        Me.WXP_Luna_OliveGreen.Location = New System.Drawing.Point(128, 47)
+        Me.WXP_Luna_OliveGreen.Location = New System.Drawing.Point(131, 47)
         Me.WXP_Luna_OliveGreen.Name = "WXP_Luna_OliveGreen"
         Me.WXP_Luna_OliveGreen.ShowText = False
         Me.WXP_Luna_OliveGreen.Size = New System.Drawing.Size(64, 64)
@@ -5426,7 +5426,7 @@ Partial Class MainFrm
         Me.XenonButton25.Image = Nothing
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton25.LineSize = 1
-        Me.XenonButton25.Location = New System.Drawing.Point(290, 482)
+        Me.XenonButton25.Location = New System.Drawing.Point(297, 482)
         Me.XenonButton25.Name = "XenonButton25"
         Me.XenonButton25.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton25.TabIndex = 22
@@ -5443,7 +5443,7 @@ Partial Class MainFrm
         Me.XenonButton22.Image = Nothing
         Me.XenonButton22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton22.LineSize = 1
-        Me.XenonButton22.Location = New System.Drawing.Point(372, 482)
+        Me.XenonButton22.Location = New System.Drawing.Point(379, 482)
         Me.XenonButton22.Name = "XenonButton22"
         Me.XenonButton22.Size = New System.Drawing.Size(85, 34)
         Me.XenonButton22.TabIndex = 21
@@ -5457,10 +5457,10 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.log_lbl.BackColor = System.Drawing.Color.Transparent
         Me.log_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.log_lbl.Location = New System.Drawing.Point(7, 454)
+        Me.log_lbl.Location = New System.Drawing.Point(6, 454)
         Me.log_lbl.Name = "log_lbl"
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.log_lbl.Size = New System.Drawing.Size(510, 25)
+        Me.log_lbl.Size = New System.Drawing.Size(519, 25)
         Me.log_lbl.TabIndex = 20
         Me.log_lbl.Text = "Error\s happened. Press on 'Show errors' for details"
         Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -5475,7 +5475,7 @@ Partial Class MainFrm
         Me.XenonButton14.Image = Nothing
         Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(206, 482)
+        Me.XenonButton14.Location = New System.Drawing.Point(213, 482)
         Me.XenonButton14.Name = "XenonButton14"
         Me.XenonButton14.Size = New System.Drawing.Size(82, 34)
         Me.XenonButton14.TabIndex = 7
@@ -5492,7 +5492,7 @@ Partial Class MainFrm
         Me.XenonButton8.Image = Nothing
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(459, 482)
+        Me.XenonButton8.Location = New System.Drawing.Point(466, 482)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(59, 34)
         Me.XenonButton8.TabIndex = 6
@@ -5512,7 +5512,7 @@ Partial Class MainFrm
         Me.TreeView1.Location = New System.Drawing.Point(6, 54)
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.ShowLines = False
-        Me.TreeView1.Size = New System.Drawing.Size(512, 397)
+        Me.TreeView1.Size = New System.Drawing.Size(519, 397)
         Me.TreeView1.TabIndex = 5
         '
         'XenonSeparator1
@@ -5522,7 +5522,7 @@ Partial Class MainFrm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonSeparator1.Location = New System.Drawing.Point(6, 47)
         Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(512, 1)
+        Me.XenonSeparator1.Size = New System.Drawing.Size(519, 1)
         Me.XenonSeparator1.TabIndex = 4
         Me.XenonSeparator1.TabStop = False
         '

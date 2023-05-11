@@ -87,7 +87,7 @@ Public Class EditInfo
         Me.Close()
     End Sub
 
-    Private Sub color1_Click(sender As Object, e As EventArgs) Handles color1.Click
+    Private Sub Color1_Click(sender As Object, e As EventArgs) Handles color1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             sender.BackColor = SubMenu.ShowMenu(sender)
             StoreItem1.CP.StoreInfo.Color1 = sender.BackColor
@@ -102,7 +102,7 @@ Public Class EditInfo
         clist.Clear()
     End Sub
 
-    Private Sub color2_Click(sender As Object, e As EventArgs) Handles color2.Click
+    Private Sub Color2_Click(sender As Object, e As EventArgs) Handles color2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             sender.BackColor = SubMenu.ShowMenu(sender)
             StoreItem1.CP.StoreInfo.Color2 = sender.BackColor

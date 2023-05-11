@@ -41,7 +41,7 @@ Public Class SettingsX
             XenonCheckBox5.Checked = .AutoUpdatesChecking
             XenonCheckBox9.Checked = .Win7LivePreview
 
-            XenonComboBox2.SelectedIndex = If(.UpdateChannel = .UpdateChannels.Stable, 0, 1)
+            XenonComboBox2.SelectedIndex = If(.UpdateChannel = XeSettings.UpdateChannels.Stable, 0, 1)
             XenonCheckBox17.Checked = .ShowSaveConfirmation
             XenonCheckBox4.Checked = .SaveForLegacyWP
             XenonCheckBox31.Checked = .AlwaysExportThemePack
