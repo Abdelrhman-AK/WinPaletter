@@ -463,6 +463,12 @@
     <Compile Include="Store\Store_CPToggles.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Store\Store_DownloadProgress.Designer.vb">
+      <DependentUpon>Store_DownloadProgress.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_DownloadProgress.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Store\Store_Hover.Designer.vb">
       <DependentUpon>Store_Hover.vb</DependentUpon>
     </Compile>
@@ -855,6 +861,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_CPToggles.resx">
       <DependentUpon>Store_CPToggles.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_DownloadProgress.resx">
+      <DependentUpon>Store_DownloadProgress.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_Hover.resx">
       <DependentUpon>Store_Hover.vb</DependentUpon>

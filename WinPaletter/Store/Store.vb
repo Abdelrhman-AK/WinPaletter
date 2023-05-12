@@ -28,7 +28,8 @@ Public Class Store
     ReadOnly Increment As Single = 5
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
-    Dim WithEvents ThemeDownloader As New WebClient
+
+
     Private ApplyOrEditToggle As Boolean = True
 #End Region
 
@@ -666,7 +667,6 @@ Public Class Store
 
                 'Download the theme (*.wpth)
                 If File.Exists(Dir & "\" & FileName) Then
-
                     'If it exists, check MD5, if it is changed, redownload the theme
                     If CalculateMD5(Dir & "\" & FileName) <> MD5_ThemeFile Then
                         File.Delete(Dir & "\" & FileName)
@@ -925,6 +925,13 @@ Public Class Store
                     Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL_ThemeFile), .URL_ThemeFile.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
+
+                    If My.Application.Info.Version.ToString >= .CP.Info.AppVersion Then
+                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_AppVersionAlert1, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
+                    Else
+                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_AppVersionAlert0, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
+                    End If
+
                     Dim os_list As New List(Of String)
                     os_list.Clear()
 
@@ -980,28 +987,6 @@ Public Class Store
 #Region "Subs\Functions"
 
 #Region "   Store"
-    Private Sub ThemeDownloader_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles ThemeDownloader.DownloadProgressChanged
-
-        If e.TotalBytesToReceive <> 0 Then
-            ProgressBar1.Value = (e.BytesReceived / e.TotalBytesToReceive) * 100
-            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadingThemePack, e.BytesReceived.SizeString, e.TotalBytesToReceive.SizeString))
-        Else
-            ProgressBar1.Value = 0
-            Status_lbl.SetText(String.Format(My.Lang.Store_DownloadingThemePack, e.BytesReceived.SizeString, "Unknown total size"))
-        End If
-
-    End Sub
-
-    Private Sub ThemeDownloader_DownloadFileCompleted(sender As Object, e As System.ComponentModel.AsyncCompletedEventArgs) Handles ThemeDownloader.DownloadFileCompleted
-        ProgressBar1.Value = 0
-        Status_lbl.SetText("")
-        ProgressBar1.Visible = False
-        Status_pnl.Visible = False
-
-        DoActionsAfterPackDownload()
-    End Sub
-
-
     Sub Apply_Theme()
         Cursor = Cursors.WaitCursor
 
@@ -1184,13 +1169,15 @@ Public Class Store
 
 #Region "   Helpers"
     Private Function CalculateMD5(ByVal path As String) As String
-
-        Using md5 As MD5 = MD5.Create()
-            Dim txt = IO.File.ReadAllText(path)
-            Dim hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(txt))
-            Dim result = BitConverter.ToString(hash).Replace("-", "")
-            Return result.ToUpper
-        End Using
+        If IO.File.Exists(path) Then
+            Using md5 As MD5 = MD5.Create()
+                Dim hash = md5.ComputeHash(IO.File.ReadAllBytes(path))
+                Dim result = BitConverter.ToString(hash).Replace("-", "")
+                Return result.ToUpper
+            End Using
+        Else
+            Return "0"
+        End If
 
     End Function
 
@@ -1239,14 +1226,6 @@ Public Class Store
 
 #Region "Buttons Events"
     Private Sub Back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
-
-        If ThemeDownloader.IsBusy Then
-            ProgressBar1.Value = 0
-            Status_lbl.SetText("")
-            ProgressBar1.Visible = False
-            Status_pnl.Visible = False
-            ThemeDownloader.CancelAsync()
-        End If
 
         My.Animator.HideSync(Tabs)
 
@@ -1321,26 +1300,25 @@ Public Class Store
             End If
             If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
 
-            Status_pnl.Visible = True
-
-            If (File.Exists(FileName) AndAlso CalculateMD5(FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(FileName) OrElse selectedItem.MD5_PackFile = "0" Then
-
-                Try
-                    ProgressBar1.Visible = True
-                    ProgressBar1.Value = 0
-                    ThemeDownloader.DownloadFileAsync(New Uri(selectedItem.URL_PackFile), Dir & "\" & FileName)
-                Catch
-                    ProgressBar1.Value = 0
-                    Status_pnl.Visible = False
-                End Try
+            If selectedItem.MD5_PackFile <> "0" Then
+                If (File.Exists(Dir & "\" & FileName) AndAlso CalculateMD5(Dir & "\" & FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(Dir & "\" & FileName) Then
+                    Try
+                        Store_DownloadProgress.URL = selectedItem.URL_PackFile
+                        Store_DownloadProgress.File = Dir & "\" & FileName
+                        Store_DownloadProgress.ThemeName = selectedItem.CP.Info.ThemeName
+                        Store_DownloadProgress.ThemeVersion = selectedItem.CP.Info.ThemeVersion
+                        If Store_DownloadProgress.ShowDialog = DialogResult.OK Then DoActionsAfterPackDownload()
+                    Catch
+                    End Try
+                Else
+                    DoActionsAfterPackDownload()
+                End If
 
             Else
                 DoActionsAfterPackDownload()
-
             End If
         Else
             DoActionsAfterPackDownload()
-
         End If
 
     End Sub

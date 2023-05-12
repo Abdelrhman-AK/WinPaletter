@@ -156,7 +156,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", AppVersion, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
             End Sub
 
@@ -165,13 +165,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 tx.Clear()
                 tx.Add("<General>")
                 tx.Add("*Palette Name= " & ThemeName)
-
                 If String.IsNullOrWhiteSpace(Description) Then
                     tx.Add("*Palette Description= ")
                 Else
                     tx.Add("*Palette Description= " & Description.Replace(vbCrLf, "<br>"))
                 End If
-
                 tx.Add("*Palette File Version= " & ThemeVersion)
                 tx.Add("*Author= " & Author)
                 tx.Add("*AuthorSocialMediaLink= " & AuthorSocialMediaLink)
@@ -5386,7 +5384,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If line.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = line.Remove(0, "*Palette File Version= ".Count)
                     If line.StartsWith("*Author= ", My._ignore) Then Info.Author = line.Remove(0, "*Author= ".Count)
                     If line.StartsWith("*AuthorSocialMediaLink= ", My._ignore) Then Info.AuthorSocialMediaLink = line.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                    If line.StartsWith("*Palette File Version= ", My._ignore) Then Info.ThemeVersion = line.Remove(0, "*Palette File Version= ".Count)
 #End Region
 
 #Region "Store Info"

@@ -421,7 +421,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Long) As String
+    Public Function SizeString(ByVal length As Long, Optional ShowSecondUnit As Boolean = False) As String
         Dim B As Long = 0, KB As Long = 1024, MB As Long = KB * 1024, GB As Long = MB * 1024, TB As Long = GB * 1024
         Dim size As Double = length
         Dim suffix As String = My.Lang.ByteSizeUnit
@@ -444,6 +444,8 @@ Public Module IntegerExtensions
 
         End If
 
+        If ShowSecondUnit Then suffix &= My.Lang.SecondUnit
+
         Return $"{size} {suffix}"
     End Function
 
@@ -451,40 +453,40 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Short) As String
-        Return SizeString(CLng(length))
+    Public Function SizeString(ByVal length As Short, Optional ShowSecondUnit As Boolean = False) As String
+        Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
     '''<summary>
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Single) As String
-        Return SizeString(CLng(length))
+    Public Function SizeString(ByVal length As Single, Optional ShowSecondUnit As Boolean = False) As String
+        Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
     '''<summary>
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Double) As String
-        Return SizeString(CLng(length))
+    Public Function SizeString(ByVal length As Double, Optional ShowSecondUnit As Boolean = False) As String
+        Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
     '''<summary>
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Decimal) As String
-        Return SizeString(CLng(length))
+    Public Function SizeString(ByVal length As Decimal, Optional ShowSecondUnit As Boolean = False) As String
+        Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
     '''<summary>
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Integer) As String
-        Return SizeString(CLng(length))
+    Public Function SizeString(ByVal length As Integer, Optional ShowSecondUnit As Boolean = False) As String
+        Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 End Module
 

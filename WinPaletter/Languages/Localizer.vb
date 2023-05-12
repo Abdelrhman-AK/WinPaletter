@@ -80,6 +80,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Store".ToLower Then Return Store
         If Name.ToLower = "Store_CPToggles".ToLower Then Return Store_CPToggles
         If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
+        If Name.ToLower = "Store_DownloadProgress".ToLower Then Return Store_DownloadProgress
         If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
         If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
         If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
@@ -128,6 +129,7 @@ Public Class Localizer : Implements IDisposable
                         "Store",
                         "Store_CPToggles",
                         "Store_SearchFilter",
+                        "Store_DownloadProgress",
                         "ScreenSaver_Editor",
                         "Sounds_Editor",
                         "Wallpaper_Editor",
@@ -171,6 +173,7 @@ Public Class Localizer : Implements IDisposable
     Property MBSizeUnit As String = "MB"
     Property KBSizeUnit As String = "KB"
     Property ByteSizeUnit As String = "B"
+    Property SecondUnit As String = "/s"
     Property Stable As String = "Stable"
     Property Beta As String = "Beta"
     Property Channel As String = "Channel"
@@ -409,11 +412,12 @@ Public Class Localizer : Implements IDisposable
     Property Store_Accessing As String = "Accessing themes database from ""{0}"""
     Property Store_UpdateTheme As String = "Updating theme ""{0}"" from ""{1}"""
     Property Store_DownloadTheme As String = "Downloading theme ""{0}"" from ""{1}"""
-    Property Store_DownloadingThemePack As String = "Downloading theme resource pack: {0}/{1}"
+    Property Store_DownloadingPackForTheme As String = "Downloading resources pack for theme '{0}' version {1}"
     Property Store_LoadingTheme As String = "Loading theme ""{0}"""
+    Property Store_AppVersionAlert0 As String = "This theme is designed by WinPaletter {0} which is higher than current version ({1}). please update WinPaletter to enjoy all new themes aspects and avoid errors."
+    Property Store_AppVersionAlert1 As String = "This theme is designed by WinPaletter {0} and this is compatible with current WinPaletter version ({1}). It is advisable to keep WinPaletter up-to-date."
     Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
     Property Store_NoIncludedData As String = "There is no included data"
-
 #End Region
 
     Public Sub ExportJSON(File As String)
