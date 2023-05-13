@@ -180,58 +180,31 @@ Public Class Reg_IO
         Dim R As RegistryKey = Nothing
 
         If KeyName.StartsWith("Computer\", My._ignore) Then KeyName = KeyName.Remove(0, "Computer\".Count)
-        Dim scope As Reg_scope
+
         If KeyName.StartsWith("HKEY_CURRENT_USER", My._ignore) Then
-            scope = Reg_scope.HKEY_CURRENT_USER
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_USER\".Count)
+            R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
 
         ElseIf KeyName.StartsWith("HKEY_USERS", My._ignore) Then
-            scope = Reg_scope.HKEY_USERS
             KeyName = KeyName.Remove(0, "HKEY_USERS\".Count)
+            R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32)
 
         ElseIf KeyName.StartsWith("HKEY_LOCAL_MACHINE", My._ignore) Then
-            scope = Reg_scope.HKEY_LOCAL_MACHINE
             KeyName = KeyName.Remove(0, "HKEY_LOCAL_MACHINE\".Count)
+            R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, If(Environment.Is64BitOperatingSystem, RegistryView.Registry64, RegistryView.Default))
 
         ElseIf KeyName.StartsWith("HKEY_CLASSES_ROOT", My._ignore) Then
-            scope = Reg_scope.HKEY_CLASSES_ROOT
             KeyName = KeyName.Remove(0, "HKEY_CLASSES_ROOT\".Count)
+            R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32)
 
         ElseIf KeyName.StartsWith("HKEY_CURRENT_CONFIG", My._ignore) Then
-            scope = Reg_scope.HKEY_CURRENT_CONFIG
             KeyName = KeyName.Remove(0, "HKEY_CURRENT_CONFIG\".Count)
+            R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
 
         End If
 
-        Select Case scope
-            Case Reg_scope.HKEY_CURRENT_USER
-                R = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
-                If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
-
-            Case Reg_scope.HKEY_CURRENT_CONFIG
-                R = RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
-                If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
-
-            Case Reg_scope.HKEY_CLASSES_ROOT
-                R = RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32)
-                If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
-
-            Case Reg_scope.HKEY_LOCAL_MACHINE
-                R = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, If(Environment.Is64BitOperatingSystem, RegistryView.Registry64, RegistryView.Default))
-                If My.isElevated Then
-                    If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
-                End If
-
-            Case Reg_scope.HKEY_USERS
-                R = RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32)
-                If My.isElevated Then
-                    If R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree) Is Nothing Then R.CreateSubKey(KeyName, True)
-                End If
-
-        End Select
-
         Try
-            If R.OpenSubKey(KeyName) IsNot Nothing Then Result = R.OpenSubKey(KeyName).GetValue(ValueName, DefaultValue)
+            If R.OpenSubKey(KeyName, False, RegistryRights.ReadKey) IsNot Nothing Then Result = R.OpenSubKey(KeyName, False, RegistryRights.ReadKey).GetValue(ValueName, DefaultValue)
             Try
                 If R IsNot Nothing Then
                     R.Flush()
@@ -254,8 +227,6 @@ Public Class Reg_IO
             End Try
             Return DefaultValue
         End Try
-
-
 
     End Function
     Shared Sub DelReg_AdministratorDeflector(ByVal RegistryKeyPath As String, ByVal ValueName As String)

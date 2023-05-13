@@ -514,7 +514,6 @@ Public Class Store
 
 #Region "Store form events"
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
-
         Titlebar_panel.BackColor = Style.Colors.Back
 
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
@@ -525,11 +524,6 @@ Public Class Store
         ApplyDarkMode(Me)
 
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
-
-        If Not IsFontInstalled("Segoe MDL2 Assets") Then
-            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
-            setting_icon_preview.Text = "♣"
-        End If
 
         DoubleBuffer
         Cursors_Container.DoubleBuffer
@@ -549,7 +543,6 @@ Public Class Store
         themeSize_lbl.Font = My.Application.ConsoleFontMedium
         theme_ver_lbl.Font = My.Application.ConsoleFontMedium
         desc_txt.Font = My.Application.ConsoleFontLarge
-
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -935,12 +928,12 @@ Public Class Store
                     Dim os_list As New List(Of String)
                     os_list.Clear()
 
-                    If .CP.StoreInfo.DesignedFor_Win11 Then os_list.Add(My.Lang.OS_Win11)
-                    If .CP.StoreInfo.DesignedFor_Win10 Then os_list.Add(My.Lang.OS_Win10)
-                    If .CP.StoreInfo.DesignedFor_Win8 Then os_list.Add(My.Lang.OS_Win8)
-                    If .CP.StoreInfo.DesignedFor_Win7 Then os_list.Add(My.Lang.OS_Win7)
-                    If .CP.StoreInfo.DesignedFor_WinVista Then os_list.Add(My.Lang.OS_WinVista)
-                    If .CP.StoreInfo.DesignedFor_WinXP Then os_list.Add(My.Lang.OS_WinXP)
+                    If .CP.Info.DesignedFor_Win11 Then os_list.Add(My.Lang.OS_Win11)
+                    If .CP.Info.DesignedFor_Win10 Then os_list.Add(My.Lang.OS_Win10)
+                    If .CP.Info.DesignedFor_Win8 Then os_list.Add(My.Lang.OS_Win8)
+                    If .CP.Info.DesignedFor_Win7 Then os_list.Add(My.Lang.OS_Win7)
+                    If .CP.Info.DesignedFor_WinVista Then os_list.Add(My.Lang.OS_WinVista)
+                    If .CP.Info.DesignedFor_WinXP Then os_list.Add(My.Lang.OS_WinXP)
 
                     Dim os_format As String = ""
                     If os_list.Count = 1 Then
@@ -959,14 +952,14 @@ Public Class Store
 
                     My.Animator.ShowSync(Tabs)
 
-                    Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.StoreInfo.Color2, 10, 15)
+                    Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
                 End With
         End Select
     End Sub
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
         hoveredItem = DirectCast(sender, StoreItem)
-        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.StoreInfo.Color1, 10, 15)
+        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.Info.Color1, 10, 15)
     End Sub
 
     Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
@@ -1051,16 +1044,14 @@ Public Class Store
         If ApplyOrEditToggle Then
             'Apply button is pressed
             Store_CPToggles.CP = selectedItem.CP
-            Store_CPToggles.ShowDialog()
-            Apply_Theme()
-
-            MainFrm.CP = selectedItem.CP
-            MainFrm.CP_Original = MainFrm.CP.Clone
-
-            MainFrm.ApplyStylesToElements(MainFrm.CP, False)
-            MainFrm.ApplyCPValues(MainFrm.CP)
-            MainFrm.ApplyColorsToElements(MainFrm.CP)
-
+            If Store_CPToggles.ShowDialog() = DialogResult.OK Then
+                Apply_Theme()
+                MainFrm.CP = selectedItem.CP
+                MainFrm.CP_Original = MainFrm.CP.Clone
+                MainFrm.ApplyStylesToElements(MainFrm.CP, False)
+                MainFrm.ApplyColorsToElements(MainFrm.CP)
+                MainFrm.ApplyCPValues(MainFrm.CP)
+            End If
         Else
             'Edit button is pressed
             WindowState = FormWindowState.Minimized

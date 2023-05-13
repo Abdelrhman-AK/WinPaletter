@@ -22,7 +22,7 @@ Public Class StoreItem : Inherits Panel
             If value IsNot Nothing Then
                 _CP = value.Clone
                 UpdateBadges()
-                UpdatePattern(_CP.StoreInfo.Pattern)
+                UpdatePattern(_CP.Info.Pattern)
                 RaiseEvent CPChanged(Me, New EventArgs())
             End If
         End Set
@@ -37,12 +37,12 @@ Public Class StoreItem : Inherits Panel
 
     Public Sub UpdateBadges()
         DesignedFor_Badges.Clear()
-        If _CP.StoreInfo.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
-        If _CP.StoreInfo.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
-        If _CP.StoreInfo.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
-        If _CP.StoreInfo.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
-        If _CP.StoreInfo.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
-        If _CP.StoreInfo.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
+        If _CP.Info.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
+        If _CP.Info.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
+        If _CP.Info.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
+        If _CP.Info.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
+        If _CP.Info.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
+        If _CP.Info.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)
         Refresh()
     End Sub
 
@@ -188,9 +188,9 @@ Public Class StoreItem : Inherits Panel
         Dim bkCC As Color
 
         If GetDarkMode() Then
-            bkCC = Color.FromArgb(alpha, CP.StoreInfo.Color1.Dark)
+            bkCC = Color.FromArgb(alpha, CP.Info.Color1.Dark)
         Else
-            bkCC = Color.FromArgb(alpha, CP.StoreInfo.Color1.Light)
+            bkCC = Color.FromArgb(alpha, CP.Info.Color1.Light)
         End If
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
@@ -205,11 +205,11 @@ Public Class StoreItem : Inherits Panel
         Dim Circle1 As New Rectangle(rect_inner.X + 10 + factor_max - factor1, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
         Dim Circle2 As New Rectangle(rect_inner.X + 10 + CircleR + CircleR * 0.4 - factor2, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
 
-        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.StoreInfo.Color2)), Circle2)
-        G.DrawEllipse(New Pen(CP.StoreInfo.Color2.CB(0.3)), Circle2)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color2)), Circle2)
+        G.DrawEllipse(New Pen(CP.Info.Color2.CB(0.3)), Circle2)
 
-        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.StoreInfo.Color1)), Circle1)
-        G.DrawEllipse(New Pen(CP.StoreInfo.Color1.CB(0.3)), Circle1)
+        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color1)), Circle1)
+        G.DrawEllipse(New Pen(CP.Info.Color1.CB(0.3)), Circle1)
 
         If BackgroundImage IsNot Nothing Then
             Select Case State

@@ -12,6 +12,7 @@ Public Class Store_DownloadProgress
 
     Private Sub Store_DownloadProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        Icon = Store.Icon
 
         Label1.Text = String.Format(My.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion)
         Label2.Text = ""

@@ -5,6 +5,7 @@ Imports System.IO.Compression
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
@@ -587,6 +588,39 @@ Public Module StringExtensions
 
         Return result
     End Function
+
+
+    <Extension()>
+    Public Function Compress(ByVal uncompressedString As String) As String
+        Dim compressedBytes As Byte()
+
+        Using uncompressedStream = New MemoryStream(Encoding.UTF8.GetBytes(uncompressedString))
+            Using compressedStream = New MemoryStream()
+                Using compressorStream = New DeflateStream(compressedStream, CompressionLevel.Fastest, True)
+                    uncompressedStream.CopyTo(compressorStream)
+                End Using
+                compressedBytes = compressedStream.ToArray()
+            End Using
+        End Using
+
+        Return Convert.ToBase64String(compressedBytes)
+    End Function
+
+
+    <Extension()>
+    Public Function Decompress(ByVal compressedString As String) As String
+        Dim decompressedBytes As Byte()
+        Dim compressedStream = New MemoryStream(Convert.FromBase64String(compressedString))
+
+        Using decompressorStream = New DeflateStream(compressedStream, CompressionMode.Decompress)
+            Using decompressedStream = New MemoryStream()
+                decompressorStream.CopyTo(decompressedStream)
+                decompressedBytes = decompressedStream.ToArray()
+            End Using
+        End Using
+
+        Return Encoding.UTF8.GetString(decompressedBytes)
+    End Function
 End Module
 
 Public Module ListOfStringExtensions
@@ -847,22 +881,22 @@ Public Module BitmapExtensions
     '''</summary>
     <Extension()>
     Public Function Resize(bmSource As Bitmap, TargetWidth As Integer, TargetHeight As Integer) As Bitmap
-        If bmSource Is Nothing Then
-            Return Nothing
-        End If
+        If bmSource Is Nothing Then Return Nothing
 
-        Using bmDest As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
-            Using grDest = Graphics.FromImage(bmDest)
-                With grDest
-                    .CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
-                    .InterpolationMode = Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
-                    .PixelOffsetMode = Drawing.Drawing2D.PixelOffsetMode.HighQuality
-                    .SmoothingMode = Drawing.Drawing2D.SmoothingMode.AntiAlias
-                    .CompositingMode = Drawing.Drawing2D.CompositingMode.SourceOver
+        Using B As New Bitmap(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb)
+            Using G As Graphics = Graphics.FromImage(B)
+                With G
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .InterpolationMode = InterpolationMode.HighQualityBicubic
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+                    .CompositingMode = CompositingMode.SourceOver
                     .DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight)
                 End With
             End Using
-            Return bmDest.Clone
+
+            B.SetResolution(TargetWidth, TargetHeight)
+            Return B.Clone
         End Using
     End Function
 
@@ -1022,6 +1056,7 @@ Public Module BitmapExtensions
         Return bmpDest
     End Function
 
+
     <Extension()>
     Public Function Tile(bmp As Bitmap, Size As Size) As Bitmap
         Using B As New Bitmap(Size.Width, Size.Height)
@@ -1033,7 +1068,6 @@ Public Module BitmapExtensions
             Return B.Clone
         End Using
     End Function
-
 End Module
 
 Public Module ControlExtensions
@@ -1074,6 +1108,7 @@ Public Module ControlExtensions
         pi.SetValue([Control], setting, Nothing)
     End Sub
 
+
     <Extension()>
     Public Sub DoubleBuffer(ByVal Parent As Control)
         DoubleBufferedControl(Parent, True)
@@ -1088,7 +1123,6 @@ Public Module ControlExtensions
             DoubleBufferedControl(ctrl, True)
         Next
     End Sub
-
 End Module
 
 Public Module ComboBoxExtensions
@@ -1164,7 +1198,6 @@ Public Module TreeViewExtensions
         End If
     End Sub
 
-
     '''<summary>
     '''Serialize a node to JSON Formatted String
     '''</summary>
@@ -1196,7 +1229,6 @@ Public Module TreeViewExtensions
             End If
         Next
     End Sub
-
 End Module
 
 Public Module Icons
@@ -1218,35 +1250,6 @@ Public Module Icons
         End Using
     End Function
 
-End Module
-
-Public Module Zips
-    <Extension()>
-    Public Sub ExtractToDirectory(ByVal archive As ZipArchive, ByVal destinationDirectoryName As String, ByVal overwrite As Boolean)
-        If Not overwrite Then
-            archive.ExtractToDirectory(destinationDirectoryName)
-            Return
-        End If
-
-        For Each file As ZipArchiveEntry In archive.Entries
-            Dim completeFileName As String = Path.Combine(destinationDirectoryName, file.FullName)
-
-            If file.Name = "" Then
-                Directory.CreateDirectory(Path.GetDirectoryName(completeFileName))
-                Continue For
-            End If
-
-            Dim dirToCreate = destinationDirectoryName
-
-            For i = 0 To file.FullName.Split("/"c).Length - 1 - 1
-                Dim s = file.FullName.Split("/"c)(i)
-                dirToCreate = Path.Combine(dirToCreate, s)
-                If Not Directory.Exists(dirToCreate) Then Directory.CreateDirectory(dirToCreate)
-            Next
-
-            file.ExtractToFile(completeFileName, True)
-        Next
-    End Sub
 End Module
 
 Public Module Others

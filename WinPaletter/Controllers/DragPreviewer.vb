@@ -70,11 +70,6 @@ Public Class DragPreviewer
         XenonAlertBox11.Size = XenonAlertBox11.Parent.Size - New Size(40, 40)
         XenonAlertBox11.Location = New Point(20, 20)
 
-        If Not IsFontInstalled("Segoe MDL2 Assets") Then
-            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
-            setting_icon_preview.Text = "♣"
-        End If
-
         Invalidate()
     End Sub
 
@@ -429,6 +424,4 @@ Public Class DragPreviewer
         RetroShadow1.BringToFront()
         Menu_Window.BringToFront()
     End Sub
-
-
 End Class

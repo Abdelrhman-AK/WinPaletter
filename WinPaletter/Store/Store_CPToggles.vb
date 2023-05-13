@@ -5,6 +5,7 @@ Public Class Store_CPToggles
     Private Sub Store_CPToggles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         Opacity = 0
+        Icon = Store.Icon
 
         CheckedListBox1.Items.Clear()
 
@@ -77,10 +78,17 @@ Public Class Store_CPToggles
         Next
 
         Store.selectedItem.CP = CP
+        DialogResult = DialogResult.OK
         Close()
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+        DialogResult = DialogResult.OK
+        Close()
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        DialogResult = DialogResult.Cancel
         Close()
     End Sub
 End Class

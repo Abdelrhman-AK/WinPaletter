@@ -1759,7 +1759,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 262)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 268)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1775,7 +1775,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 262)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 268)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -2511,7 +2511,7 @@ Partial Class Store
         '
         Me.PictureBox12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 260)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 266)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2521,7 +2521,7 @@ Partial Class Store
         '
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 260)
+        Me.Label17.Location = New System.Drawing.Point(33, 266)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2533,7 +2533,7 @@ Partial Class Store
         Me.CursorsSize_Bar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 263)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 269)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"

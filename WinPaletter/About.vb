@@ -1,7 +1,6 @@
 ﻿Imports WinPaletter.XenonCore
 
 Public Class About
-
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Process.Start("https://icons8.com/app/windows")
     End Sub
@@ -61,15 +60,15 @@ Public Class About
         Process.Start("https://github.com/ookii-dialogs/ookii-dialogs-winforms")
     End Sub
 
-    Private Sub XenonLinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) 
-        Process.Start("https://www.codeproject.com/Articles/19077/Hue-Saturation-Lightness-Filter")
-    End Sub
-
     Private Sub XenonLinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel3.LinkClicked
         Process.Start("https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper")
     End Sub
 
     Private Sub XenonLinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel4.LinkClicked
         Process.Start("https://imageprocessor.org")
+    End Sub
+
+    Private Sub XenonLinkLabel2_LinkClicked_1(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
+        Process.Start("https://github.com/evanolds/AnimCur")
     End Sub
 End Class

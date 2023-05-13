@@ -787,6 +787,11 @@ Public Class PreviewHelpers
 #End Region
         End Select
 
+        If Not IsFontInstalled("Segoe MDL2 Assets") Then
+            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
+            setting_icon_preview.Text = "♣"
+        End If
+
     End Sub
     Public Shared Sub ApplyWinElementsStyle([CP] As CP, [Style] As WindowStyle, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
                                          XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow,
@@ -1163,7 +1168,6 @@ Public Class PreviewHelpers
         XenonWindow1.Top = (XenonWindow1.Parent.Height - Taskbar.Height - (XenonWindow1.Height + XenonWindow2.Height)) / 2
         XenonWindow2.Top = XenonWindow1.Bottom
         XenonWindow2.Left = XenonWindow1.Left
-
     End Sub
     Public Shared Sub ApplyWindowStyles(ByVal [CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
         XenonWindow1.Active = True

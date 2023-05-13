@@ -29,15 +29,7 @@ Public Class ExplorerPatcher
         If Not My.Settings.EP_Enabled_Force Then
 
             If IsInstalled And My.W11 Then
-
-                Try
-                    With My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced")
-                        UseStart10 = .GetValue("Start_ShowClassicMode")
-                    End With
-                Finally
-                    My.Computer.Registry.CurrentUser.Close()
-                End Try
-
+                UseStart10 = Reg_IO.GetReg("Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", False)
                 Try
                     With My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher")
                         UseTaskbar10 = .GetValue("OldTaskbar")

@@ -457,10 +457,6 @@ Public Class MainFrm
         WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
         WXP_Alert2.Location = New Point(20, 20)
 
-        If Not IsFontInstalled("Segoe MDL2 Assets") Then
-            setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
-            setting_icon_preview.Text = "♣"
-        End If
         Visible = True
 
         BetaBadge.Visible = My.IsBeta
@@ -2222,7 +2218,6 @@ Public Class MainFrm
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
-
 
             If CP <> CP_Original And My.[Settings].ShowSaveConfirmation Then
                 Select Case ComplexSave.ShowDialog

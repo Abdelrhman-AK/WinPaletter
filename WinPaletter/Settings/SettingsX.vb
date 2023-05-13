@@ -45,6 +45,7 @@ Public Class SettingsX
             XenonCheckBox17.Checked = .ShowSaveConfirmation
             XenonCheckBox4.Checked = .SaveForLegacyWP
             XenonCheckBox31.Checked = .AlwaysExportThemePack
+            XenonCheckBox33.Checked = .CompressThemeFile
 
             XenonRadioButton3.Checked = .Appearance_Dark
             XenonRadioButton4.Checked = Not .Appearance_Dark
@@ -259,6 +260,7 @@ Public Class SettingsX
             .ShowSaveConfirmation = XenonCheckBox17.Checked
             .SaveForLegacyWP = XenonCheckBox4.Checked
             .AlwaysExportThemePack = XenonCheckBox31.Checked
+            .CompressThemeFile = XenonCheckBox33.Checked
 
             .Language = XenonCheckBox8.Checked
             .Language_File = XenonTextBox3.Text
@@ -330,6 +332,7 @@ Public Class SettingsX
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
             If .AlwaysExportThemePack <> XenonCheckBox31.Checked Then Changed = True
+            If .CompressThemeFile <> XenonCheckBox33.Checked Then Changed = True
 
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then Changed = True

@@ -17,6 +17,7 @@ Public Class XeSettings
     Public Property ComplexSaveResult As String = "2.1"
     Public Property ShowSaveConfirmation As Boolean = True
     Public Property SaveForLegacyWP As Boolean = False
+    Public Property CompressThemeFile As Boolean = True
     Public Property AlwaysExportThemePack As Boolean = False
     Public Property Win7LivePreview As Boolean = True
     Public Property UpdateChannel As UpdateChannels = If(My.IsBeta, UpdateChannels.Beta, UpdateChannels.Stable)
@@ -135,6 +136,7 @@ Public Class XeSettings
                 OpeningPreviewInApp_or_AppliesIt = GetReg(REG, "OpeningPreviewInApp_or_AppliesIt", True)
                 SaveForLegacyWP = GetReg(REG, "SaveForLegacyWP", False)
                 AlwaysExportThemePack = GetReg(REG, "AlwaysExportThemePack", False)
+                CompressThemeFile = GetReg(REG, "CompressThemeFile", True)
 
                 AutoRestartExplorer = GetReg(REG, "AutoRestartExplorer", True)
                 ShowSaveConfirmation = GetReg(REG, "ShowSaveConfirmation", True)
@@ -214,6 +216,7 @@ Public Class XeSettings
                     If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ", My._ignore) Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
                     If x.StartsWith("SaveForLegacyWP= ", My._ignore) Then SaveForLegacyWP = x.Remove(0, "SaveForLegacyWP= ".Count)
                     If x.StartsWith("AlwaysExportThemePack= ", My._ignore) Then AlwaysExportThemePack = x.Remove(0, "AlwaysExportThemePack= ".Count)
+                    If x.StartsWith("CompressThemeFile= ", My._ignore) Then CompressThemeFile = x.Remove(0, "CompressThemeFile= ".Count)
 
                     If x.StartsWith("AutoRestartExplorer= ", My._ignore) Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
                     If x.StartsWith("ShowSaveConfirmation= ", My._ignore) Then ShowSaveConfirmation = x.Remove(0, "ShowSaveConfirmation= ".Count)
@@ -316,6 +319,7 @@ Public Class XeSettings
                 EditReg(REG, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 EditReg(REG, "SaveForLegacyWP", SaveForLegacyWP, RegistryValueKind.DWord)
                 EditReg(REG, "AlwaysExportThemePack", AlwaysExportThemePack, RegistryValueKind.DWord)
+                EditReg(REG, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord)
 
                 EditReg(REG, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
                 EditReg(REG, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord)
@@ -399,6 +403,7 @@ Public Class XeSettings
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
                 l.Add(String.Format("SaveForLegacyWP= {0}", SaveForLegacyWP))
                 l.Add(String.Format("AlwaysExportThemePack= {0}", AlwaysExportThemePack))
+                l.Add(String.Format("CompressThemeFile= {0}", CompressThemeFile))
 
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))
                 l.Add(String.Format("ShowSaveConfirmation= {0}", ShowSaveConfirmation))

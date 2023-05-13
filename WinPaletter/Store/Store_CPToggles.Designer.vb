@@ -28,6 +28,7 @@ Partial Class Store_CPToggles
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.XenonButton3 = New WinPaletter.XenonButton()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -39,7 +40,7 @@ Partial Class Store_CPToggles
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(45, 56)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(379, 234)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(522, 234)
         Me.CheckedListBox1.TabIndex = 0
         '
         'XenonButton1
@@ -51,7 +52,7 @@ Partial Class Store_CPToggles
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(237, 321)
+        Me.XenonButton1.Location = New System.Drawing.Point(380, 315)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton1.TabIndex = 1
@@ -67,7 +68,7 @@ Partial Class Store_CPToggles
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(44, 321)
+        Me.XenonButton7.Location = New System.Drawing.Point(187, 315)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton7.TabIndex = 205
@@ -82,7 +83,7 @@ Partial Class Store_CPToggles
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(42, 12)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(382, 35)
+        Me.Label17.Size = New System.Drawing.Size(525, 35)
         Me.Label17.TabIndex = 207
         Me.Label17.Text = "To prevent accidental actions, this theme enables editing the following (in addit" &
     "ion to main Windows colors):"
@@ -97,12 +98,30 @@ Partial Class Store_CPToggles
         Me.PictureBox6.TabIndex = 206
         Me.PictureBox6.TabStop = False
         '
+        'XenonButton3
+        '
+        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton3.ForeColor = System.Drawing.Color.White
+        Me.XenonButton3.Image = Nothing
+        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton3.LineSize = 1
+        Me.XenonButton3.Location = New System.Drawing.Point(101, 315)
+        Me.XenonButton3.Name = "XenonButton3"
+        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
+        Me.XenonButton3.TabIndex = 208
+        Me.XenonButton3.Text = "Cancel"
+        Me.XenonButton3.UseVisualStyleBackColor = False
+        '
         'Store_CPToggles
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(436, 367)
+        Me.ClientSize = New System.Drawing.Size(579, 361)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.PictureBox6)
         Me.Controls.Add(Me.XenonButton7)
@@ -129,4 +148,5 @@ Partial Class Store_CPToggles
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents Label17 As Label
     Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents XenonButton3 As XenonButton
 End Class

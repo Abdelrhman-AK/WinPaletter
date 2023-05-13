@@ -35,7 +35,6 @@ Partial Class About
         Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.LinkLabel4 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
@@ -59,6 +58,7 @@ Partial Class About
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.XenonLinkLabel1 = New WinPaletter.XenonLinkLabel()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
+        Me.XenonButton2 = New WinPaletter.XenonButton()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -230,23 +230,6 @@ Partial Class About
         Me.XenonButton1.TabIndex = 16
         Me.XenonButton1.Text = "Github"
         Me.XenonButton1.UseVisualStyleBackColor = False
-        '
-        'XenonButton2
-        '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
-        Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(362, 578)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(79, 34)
-        Me.XenonButton2.TabIndex = 17
-        Me.XenonButton2.Text = "Reddit"
-        Me.XenonButton2.UseVisualStyleBackColor = False
         '
         'XenonButton3
         '
@@ -584,6 +567,23 @@ Partial Class About
         Me.PictureBox10.TabIndex = 34
         Me.PictureBox10.TabStop = False
         '
+        'XenonButton2
+        '
+        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton2.ForeColor = System.Drawing.Color.White
+        Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
+        Me.XenonButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(106, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.XenonButton2.LineSize = 1
+        Me.XenonButton2.Location = New System.Drawing.Point(362, 578)
+        Me.XenonButton2.Name = "XenonButton2"
+        Me.XenonButton2.Size = New System.Drawing.Size(79, 34)
+        Me.XenonButton2.TabIndex = 17
+        Me.XenonButton2.Text = "Reddit"
+        Me.XenonButton2.UseVisualStyleBackColor = False
+        '
         'About
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -639,7 +639,6 @@ Partial Class About
     Friend WithEvents LinkLabel3 As XenonLinkLabel
     Friend WithEvents Label3 As Label
     Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents LinkLabel4 As XenonLinkLabel
     Friend WithEvents PictureBox5 As PictureBox
@@ -663,4 +662,5 @@ Partial Class About
     Friend WithEvents PictureBox14 As PictureBox
     Friend WithEvents XenonLinkLabel2 As XenonLinkLabel
     Friend WithEvents PictureBox12 As PictureBox
+    Friend WithEvents XenonButton2 As XenonButton
 End Class
