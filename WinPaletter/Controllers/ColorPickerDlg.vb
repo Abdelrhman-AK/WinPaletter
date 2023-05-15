@@ -40,7 +40,7 @@ Public Class ColorPickerDlg
         For Each c As Color In CP.ListColors
 
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
                 .BackColor = c
             }
 
@@ -536,13 +536,13 @@ Public Class ColorPickerDlg
 
         Next
 
-        If (My.WVista Or My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
+        If (My.WVista Or My.W7 Or My.W8) And My.Settings.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
-                UpdateWin7Preview(ColorEditorManager1.Color, MainFrm.CP.Windows7.ColorizationAfterglow)
+                UpdateWin7Preview(ColorEditorManager1.Color, My.CP.Windows7.ColorizationAfterglow)
             End If
 
             If _Conditions.Win7LivePreview_AfterGlow Then
-                UpdateWin7Preview(MainFrm.CP.Windows7.ColorizationColor, ColorEditorManager1.Color)
+                UpdateWin7Preview(My.CP.Windows7.ColorizationColor, ColorEditorManager1.Color)
             End If
         End If
     End Sub
@@ -559,24 +559,24 @@ Public Class ColorPickerDlg
                     .clrAfterGlow = Color2.ToArgb}
 
                 If My.PreviewStyle = WindowStyle.W8 Then
-                    temp.nIntensity = MainFrm.CP.Windows8.ColorizationColorBalance
+                    temp.nIntensity = My.CP.Windows8.ColorizationColorBalance
 
                 ElseIf My.PreviewStyle = WindowStyle.W7 Then
-                    temp.nIntensity = MainFrm.CP.Windows7.ColorizationColorBalance
+                    temp.nIntensity = My.CP.Windows7.ColorizationColorBalance
 
-                    temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
-                    temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
-                    temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (MainFrm.CP.Windows7.Theme = Structures.Windows7.Themes.AeroOpaque)
+                    temp.clrAfterGlowBalance = My.CP.Windows7.ColorizationAfterglowBalance
+                    temp.clrBlurBalance = My.CP.Windows7.ColorizationBlurBalance
+                    temp.clrGlassReflectionIntensity = My.CP.Windows7.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (My.CP.Windows7.Theme = Structures.Windows7.Themes.AeroOpaque)
 
                 ElseIf My.PreviewStyle = WindowStyle.WVista Then
-                    temp.clrColor = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
-                    temp.clrAfterGlowBalance = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
+                    temp.clrColor = Color.FromArgb(My.CP.WindowsVista.Alpha, My.CP.WindowsVista.ColorizationColor).ToArgb
+                    temp.clrAfterGlowBalance = Color.FromArgb(My.CP.WindowsVista.Alpha, My.CP.WindowsVista.ColorizationColor).ToArgb
 
-                    'temp.nIntensity = MainFrm.CP.WindowsVista.ColorizationColorBalance
-                    'temp.clrBlurBalance = MainFrm.CP.WindowsVista.ColorizationBlurBalance
-                    'temp.clrGlassReflectionIntensity = MainFrm.CP.WindowsVista.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (MainFrm.CP.WindowsVista.Theme = Structures.Windows7.Themes.AeroOpaque)
+                    'temp.nIntensity = My.CP.WindowsVista.ColorizationColorBalance
+                    'temp.clrBlurBalance = My.CP.WindowsVista.ColorizationBlurBalance
+                    'temp.clrGlassReflectionIntensity = My.CP.WindowsVista.ColorizationGlassReflectionIntensity
+                    temp.fOpaque = (My.CP.WindowsVista.Theme = Structures.Windows7.Themes.AeroOpaque)
                 End If
 
                 Dwmapi.DwmSetColorizationParameters(temp, False)
@@ -648,7 +648,7 @@ Public Class ColorPickerDlg
 
         For Each C As Color In ColorsList
             Dim pnl As New XenonCP With {
-                    .Size = New Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                    .Size = New Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
                     .BackColor = Color.FromArgb(255, C)
                 }
             ImgPaletteContainer.Controls.Add(pnl)
@@ -705,7 +705,7 @@ Public Class ColorPickerDlg
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
                         Dim pnl As New XenonCP With {
-                            .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                            .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
                             .BackColor = Color.FromArgb(255, C)
                         }
                         ThemePaletteContainer.Controls.Add(pnl)
@@ -725,7 +725,7 @@ Public Class ColorPickerDlg
                         If field.FieldType.Name.ToLower = "color" Then
 
                             Dim pnl As New XenonCP With {
-                                .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                                .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
                                 .BackColor = field.GetValue(vs.Metrics.Colors)
                                     }
                             ThemePaletteContainer.Controls.Add(pnl)
@@ -754,7 +754,7 @@ Public Class ColorPickerDlg
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
         Select Case XenonComboBox2.SelectedIndex
             Case 0
-                GetColorsFromPalette(MainFrm.CP)
+                GetColorsFromPalette(My.CP)
             Case 1
                 GetColorsFromPalette(New CP_Defaults().Default_Windows11)
             Case 2
@@ -768,18 +768,18 @@ Public Class ColorPickerDlg
             Case 6
                 GetColorsFromPalette(New CP_Defaults().Default_Windows7)
             Case Else
-                GetColorsFromPalette(MainFrm.CP)
+                GetColorsFromPalette(My.CP)
         End Select
     End Sub
 
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then
+        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.Settings.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
-                UpdateWin7Preview(InitColor, MainFrm.CP.Windows7.ColorizationAfterglow)
+                UpdateWin7Preview(InitColor, My.CP.Windows7.ColorizationAfterglow)
             End If
 
             If _Conditions.Win7LivePreview_AfterGlow Then
-                UpdateWin7Preview(MainFrm.CP.Windows7.ColorizationColor, InitColor)
+                UpdateWin7Preview(My.CP.Windows7.ColorizationColor, InitColor)
             End If
         End If
     End Sub
@@ -800,7 +800,7 @@ Public Class ColorPickerDlg
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
                     Dim pnl As New XenonCP With {
-                        .Size = New Drawing.Size(If(My.[Settings].Nerd_Stats, 90, 30), 25),
+                        .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
                         .BackColor = Color.FromArgb(255, C)
                     }
                     ThemePaletteContainer.Controls.Add(pnl)

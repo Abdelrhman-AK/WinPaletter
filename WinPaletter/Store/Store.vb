@@ -7,6 +7,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports System.Text
 Imports System.Net
 Imports WinPaletter.PreviewHelpers
+Imports Microsoft.Win32
 
 Public Class Store
 
@@ -679,7 +680,7 @@ Public Class Store
                     Try
                         Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 
-                        Using CP As New CP(CP_Type.File, Dir & "\" & FileName, False, True)
+                        Using CP As New CP(CP_Type.File, Dir & "\" & FileName, True)
 
                             Dim ctrl As New StoreItem With {
                                            .FileName = Dir & "\" & FileName,
@@ -760,7 +761,7 @@ Public Class Store
 
                             Status_lbl.SetText("Enumerating themes: """ & file & """")
 
-                            Using CPx As New CP(CP.CP_Type.File, file, False, True)
+                            Using CPx As New CP(CP.CP_Type.File, file, True)
                                 CPList.Add(file, CPx)
                             End Using
                         End If
@@ -990,7 +991,7 @@ Public Class Store
         ExportDetails_btn.Visible = False
         StopTimer_btn.Visible = False
 
-        If My.[Settings].Log_ShowApplying Then
+        If My.Settings.Log_ShowApplying Then
             Tabs.SelectedIndex = Tabs.TabCount - 1
             Tabs.Refresh()
         End If
@@ -1005,19 +1006,19 @@ Public Class Store
         ApplyDarkMode()
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
-            CPx.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, log, Nothing))
-            MainFrm.CP_Original = CPx.Clone
+            CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing))
+            My.CP_Original = CPx.Clone
         End Using
 
         Cursor = Cursors.Default
 
-        If My.[Settings].AutoRestartExplorer Then
-            XenonCore.RestartExplorer(If(My.[Settings].Log_ShowApplying, log, Nothing))
+        If My.Settings.AutoRestartExplorer Then
+            XenonCore.RestartExplorer(If(My.Settings.Log_ShowApplying, log, Nothing))
         Else
-            If My.[Settings].Log_ShowApplying Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
+            If My.Settings.Log_ShowApplying Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.[Settings].Log_ShowApplying Then CP.AddNode(log, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+        If My.Settings.Log_ShowApplying Then CP.AddNode(log, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
         If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(log, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
@@ -1030,8 +1031,8 @@ Public Class Store
             log_lbl.Text = My.Lang.CP_ErrorHappened
             ShowErrors_btn.Visible = True
         Else
-            If My.[Settings].Log_Countdown_Enabled Then
-                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
+            If My.Settings.Log_Countdown_Enabled Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown)
                 apply_elapsedSecs = 1
                 Log_Timer.Enabled = True
                 Log_Timer.Start()
@@ -1046,48 +1047,25 @@ Public Class Store
             Store_CPToggles.CP = selectedItem.CP
             If Store_CPToggles.ShowDialog() = DialogResult.OK Then
                 Apply_Theme()
-                MainFrm.CP = selectedItem.CP
-                MainFrm.CP_Original = MainFrm.CP.Clone
-                MainFrm.ApplyStylesToElements(MainFrm.CP, False)
-                MainFrm.ApplyColorsToElements(MainFrm.CP)
-                MainFrm.ApplyCPValues(MainFrm.CP)
+                My.CP = selectedItem.CP
+                My.CP_Original = My.CP.Clone
+                MainFrm.ApplyStylesToElements(My.CP, False)
+                MainFrm.ApplyColorsToElements(My.CP)
+                MainFrm.ApplyCPValues(My.CP)
             End If
         Else
             'Edit button is pressed
             WindowState = FormWindowState.Minimized
 
-            Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-            Dim r1 As String = r(0)
-            Dim r2 As String = r(1)
+            If ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing) Then
+                My.CP = selectedItem.CP
+                My.CP_Original = My.CP.Clone
 
-            Select Case r1
-                Case 0              '' Save
-                    If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                        MainFrm.CP_Original = MainFrm.CP.Clone
-                    Else
-                        If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                            MainFrm.CP_Original = MainFrm.CP.Clone
-                        Else
-                            Exit Sub
-                        End If
-                    End If
-                Case 1              '' Save As
-                    If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                        MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                        MainFrm.CP_Original = MainFrm.CP.Clone
-                    Else
-                        Exit Sub
-                    End If
-            End Select
+                MainFrm.ApplyStylesToElements(My.CP, False)
+                MainFrm.ApplyCPValues(My.CP)
+                MainFrm.ApplyColorsToElements(My.CP)
+            End If
 
-            MainFrm.CP = selectedItem.CP
-            MainFrm.CP_Original = MainFrm.CP.Clone
-
-            MainFrm.ApplyStylesToElements(MainFrm.CP, False)
-            MainFrm.ApplyCPValues(MainFrm.CP)
-            MainFrm.ApplyColorsToElements(MainFrm.CP)
         End If
     End Sub
 
@@ -1178,9 +1156,9 @@ Public Class Store
 
 #Region "Timers"
     Private Sub Log_Timer_Tick(sender As Object, e As EventArgs) Handles Log_Timer.Tick
-        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - apply_elapsedSecs)
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown - apply_elapsedSecs)
 
-        If apply_elapsedSecs + 1 <= My.[Settings].Log_Countdown Then
+        If apply_elapsedSecs + 1 <= My.Settings.Log_Countdown Then
             apply_elapsedSecs += 1
         Else
             log_lbl.Text = ""

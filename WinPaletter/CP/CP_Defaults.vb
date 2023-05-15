@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.PreviewHelpers
+﻿Imports System.Security.Cryptography
+Imports WinPaletter.PreviewHelpers
 
 Public Class CP_Defaults : Implements IDisposable
 
@@ -39,6 +40,35 @@ Public Class CP_Defaults : Implements IDisposable
             Using X As New CP_Defaults() : _Def = X.Default_WindowsVista : End Using
 
         ElseIf [PreviewStyle] = WindowStyle.WXP Then
+            Using X As New CP_Defaults() : _Def = X.Default_WindowsXP : End Using
+
+        Else
+            Using X As New CP_Defaults() : _Def = X.Default_Windows11 : End Using
+
+        End If
+
+        Return _Def
+    End Function
+
+    Public Shared Function From() As CP
+        Dim _Def As CP
+
+        If My.W11 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows11 : End Using
+
+        ElseIf My.W10 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows10 : End Using
+
+        ElseIf My.W8 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows8 : End Using
+
+        ElseIf My.W7 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows7 : End Using
+
+        ElseIf My.WVista Then
+            Using X As New CP_Defaults() : _Def = X.Default_WindowsVista : End Using
+
+        ElseIf My.WXP Then
             Using X As New CP_Defaults() : _Def = X.Default_WindowsXP : End Using
 
         Else

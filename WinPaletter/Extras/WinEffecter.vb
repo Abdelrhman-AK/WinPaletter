@@ -5,8 +5,8 @@ Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        ApplyFromCP(MainFrm.CP)
-        SetClassicButtonColors(MainFrm.CP, RetroButton1)
+        ApplyFromCP(My.CP)
+        SetClassicButtonColors(My.CP, RetroButton1)
 
     End Sub
 
@@ -192,7 +192,7 @@ Public Class WinEffecter
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         MainFrm.ApplyColorsToElements(CPx)
         CPx.WindowsEffects.Apply()
         CPx.Win32.Update_UPM_DEFAULT()
@@ -201,8 +201,8 @@ Public Class WinEffecter
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
-        MainFrm.ApplyColorsToElements(MainFrm.CP)
+        ApplyToCP(My.CP)
+        MainFrm.ApplyColorsToElements(My.CP)
         Close()
     End Sub
 

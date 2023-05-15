@@ -5,7 +5,7 @@ Public Class LogonUIXP
         ApplyDarkMode(Me)
         Icon = LogonUI.Icon
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -61,14 +61,14 @@ Public Class LogonUIXP
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CPx.LogonUIXP.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         Me.Close()
     End Sub
 

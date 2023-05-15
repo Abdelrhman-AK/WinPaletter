@@ -22,30 +22,30 @@ Public Class Metrics_Fonts
         CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
         CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
 
-        SetClassicWindowColors(MainFrm.CP, RetroWindow1)
-        SetClassicWindowColors(MainFrm.CP, RetroWindow2, False)
-        SetClassicWindowColors(MainFrm.CP, RetroWindow3)
-        SetClassicWindowColors(MainFrm.CP, RetroWindow5)
-        SetClassicPanelColors(MainFrm.CP, RetroPanel1)
-        SetClassicPanelColors(MainFrm.CP, RetroPanel2)
-        SetClassicButtonColors(MainFrm.CP, RetroButton1)
-        SetClassicButtonColors(MainFrm.CP, RetroButton2)
-        SetClassicButtonColors(MainFrm.CP, RetroButton3)
-        SetClassicButtonColors(MainFrm.CP, RetroButton10)
-        SetClassicButtonColors(MainFrm.CP, RetroButton11)
-        SetClassicButtonColors(MainFrm.CP, RetroButton12)
+        SetClassicWindowColors(My.CP, RetroWindow1)
+        SetClassicWindowColors(My.CP, RetroWindow2, False)
+        SetClassicWindowColors(My.CP, RetroWindow3)
+        SetClassicWindowColors(My.CP, RetroWindow5)
+        SetClassicPanelColors(My.CP, RetroPanel1)
+        SetClassicPanelColors(My.CP, RetroPanel2)
+        SetClassicButtonColors(My.CP, RetroButton1)
+        SetClassicButtonColors(My.CP, RetroButton2)
+        SetClassicButtonColors(My.CP, RetroButton3)
+        SetClassicButtonColors(My.CP, RetroButton10)
+        SetClassicButtonColors(My.CP, RetroButton11)
+        SetClassicButtonColors(My.CP, RetroButton12)
 
-        RetroScrollBar2.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
-        RetroScrollBar2.BackColor = MainFrm.CP.Win32.ButtonFace
-        RetroScrollBar1.ButtonHilight = MainFrm.CP.Win32.ButtonHilight
-        RetroScrollBar1.BackColor = MainFrm.CP.Win32.ButtonFace
+        RetroScrollBar2.ButtonHilight = My.CP.Win32.ButtonHilight
+        RetroScrollBar2.BackColor = My.CP.Win32.ButtonFace
+        RetroScrollBar1.ButtonHilight = My.CP.Win32.ButtonHilight
+        RetroScrollBar1.BackColor = My.CP.Win32.ButtonFace
 
-        Label13.ForeColor = MainFrm.CP.Win32.ButtonText
-        Label14.ForeColor = MainFrm.CP.Win32.ButtonText
+        Label13.ForeColor = My.CP.Win32.ButtonText
+        Label14.ForeColor = My.CP.Win32.ButtonText
         Refresh17BitPreference()
 
         ApplyDarkMode(Me)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
 
         DoubleBuffer
 
@@ -53,9 +53,9 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Title = "Icon 2"
         XenonFakeIcon3.Title = "Icon 3"
 
-        Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
-        Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
-        Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
+        Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
+        Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
+        Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
 
         If condition0 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1
@@ -116,14 +116,14 @@ Public Class Metrics_Fonts
 
     Sub Refresh17BitPreference()
 
-        If MainFrm.CP.Win32.EnableTheming Then
-            MenuStrip2.BackColor = MainFrm.CP.Win32.MenuBar
+        If My.CP.Win32.EnableTheming Then
+            MenuStrip2.BackColor = My.CP.Win32.MenuBar
         Else
-            MenuStrip2.BackColor = MainFrm.CP.Win32.Menu
+            MenuStrip2.BackColor = My.CP.Win32.Menu
         End If
 
-        ToolStripMenuItem1.ForeColor = MainFrm.CP.Win32.MenuText
-        ToolStripMenuItem4.ForeColor = MainFrm.CP.Win32.MenuText
+        ToolStripMenuItem1.ForeColor = My.CP.Win32.MenuText
+        ToolStripMenuItem4.ForeColor = My.CP.Win32.MenuText
 
     End Sub
 
@@ -370,12 +370,12 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         Me.Close()
-        SetModernWindowMetrics(MainFrm.CP, MainFrm.XenonWindow1)
-        SetModernWindowMetrics(MainFrm.CP, MainFrm.XenonWindow2)
-        SetClassicWindowMetrics(MainFrm.CP, MainFrm.ClassicWindow1)
-        SetClassicWindowMetrics(MainFrm.CP, MainFrm.ClassicWindow2)
+        SetModernWindowMetrics(My.CP, MainFrm.XenonWindow1)
+        SetModernWindowMetrics(My.CP, MainFrm.XenonWindow2)
+        SetClassicWindowMetrics(My.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowMetrics(My.CP, MainFrm.ClassicWindow2)
 
     End Sub
 
@@ -387,7 +387,7 @@ Public Class Metrics_Fonts
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         SetModernWindowMetrics(CPx, MainFrm.XenonWindow1)
         SetModernWindowMetrics(CPx, MainFrm.XenonWindow2)
         SetClassicWindowMetrics(CPx, MainFrm.ClassicWindow1)

@@ -17,7 +17,7 @@ Public Class Wallpaper_Editor
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
         index = 0
         ApplyPreviewStyle()
 
@@ -162,19 +162,19 @@ Public Class Wallpaper_Editor
 
         Select Case My.PreviewStyle
             Case WindowStyle.W11
-                MainFrm.CP.WallpaperTone_W11 = WT
+                My.CP.WallpaperTone_W11 = WT
             Case WindowStyle.W10
-                MainFrm.CP.WallpaperTone_W10 = WT
+                My.CP.WallpaperTone_W10 = WT
             Case WindowStyle.W8
-                MainFrm.CP.WallpaperTone_W8 = WT
+                My.CP.WallpaperTone_W8 = WT
             Case WindowStyle.W7
-                MainFrm.CP.WallpaperTone_W7 = WT
+                My.CP.WallpaperTone_W7 = WT
             Case WindowStyle.WVista
-                MainFrm.CP.WallpaperTone_WVista = WT
+                My.CP.WallpaperTone_WVista = WT
             Case WindowStyle.WXP
-                MainFrm.CP.WallpaperTone_WXP = WT
+                My.CP.WallpaperTone_WXP = WT
             Case Else
-                MainFrm.CP.WallpaperTone_W11 = WT
+                My.CP.WallpaperTone_W11 = WT
 
         End Select
     End Sub
@@ -200,9 +200,9 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         ApplyWT()
-        MainFrm.ApplyStylesToElements(MainFrm.CP)
+        MainFrm.ApplyStylesToElements(My.CP)
         Close()
     End Sub
 
@@ -210,7 +210,7 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         ApplyWT()
 
         CPx.Wallpaper.Apply(source_wallpapertone.Checked)

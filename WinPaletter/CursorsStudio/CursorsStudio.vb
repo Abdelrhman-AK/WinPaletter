@@ -159,7 +159,7 @@ Public Class CursorsStudio
 
         XenonButton8.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
-        LoadFromCP(MainFrm.CP)
+        LoadFromCP(My.CP)
     End Sub
 
     Private Sub CursorsStudio_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
@@ -639,7 +639,7 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        SaveToCP(MainFrm.CP)
+        SaveToCP(My.CP)
         Me.Close()
     End Sub
 
@@ -693,7 +693,7 @@ Public Class CursorsStudio
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         SaveToCP(CPx)
-        SaveToCP(MainFrm.CP)
+        SaveToCP(My.CP)
         CPx.Apply_Cursors()
         CPx.Win32.Update_UPM_DEFAULT()
         CPx.Dispose()

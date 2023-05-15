@@ -10,9 +10,9 @@ Public Class ComplexSave
         If XenonRadioButton3.Checked Then i1 = 2
         If XenonCheckBox1.Checked Then i2 = 1 Else i2 = 0
 
-        My.[Settings].ComplexSaveResult = String.Format("{0}.{1}", i1, i2)
-        My.[Settings].ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.[Settings].Save(XeSettings.Mode.Registry)
+        My.Settings.ComplexSaveResult = String.Format("{0}.{1}", i1, i2)
+        My.Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.Settings.Save(XeSettings.Mode.Registry)
 
         Me.DialogResult = DialogResult.Yes
         Me.Close()
@@ -29,7 +29,7 @@ Public Class ComplexSave
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
 
-        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
+        Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
         Dim r1 As String = r(0)
         Dim r2 As String = r(1)
 
@@ -45,14 +45,14 @@ Public Class ComplexSave
 
         XenonCheckBox1.Checked = (r2 = 1)
 
-        XenonCheckBox2.Checked = My.[Settings].ShowSaveConfirmation
+        XenonCheckBox2.Checked = My.Settings.ShowSaveConfirmation
 
         Me.DialogResult = DialogResult.None
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        My.[Settings].ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.[Settings].Save(XeSettings.Mode.Registry)
+        My.Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.Settings.Save(XeSettings.Mode.Registry)
         Me.DialogResult = DialogResult.No
         Me.Close()
     End Sub
@@ -61,4 +61,53 @@ Public Class ComplexSave
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
+
+    Public Function GetResponse(SaveFileDialog As System.Windows.Forms.SaveFileDialog, Apply_Theme_Sub As MethodInvoker) As Boolean
+        If My.CP <> My.CP_Original AndAlso My.Settings.ShowSaveConfirmation Then
+            Select Case ShowDialog()
+                Case DialogResult.Yes
+
+                    Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
+                    Dim r1 As String = r(0)
+                    Dim r2 As String = r(1)
+
+                    Select Case r1
+                        Case 0              '' Save
+                            If IO.File.Exists(SaveFileDialog.FileName) Then
+                                My.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName)
+                                My.CP_Original = My.CP.Clone
+                            Else
+                                If SaveFileDialog.ShowDialog = DialogResult.OK Then
+                                    My.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName)
+                                    My.CP_Original = My.CP.Clone
+                                Else
+                                    Return False
+                                End If
+                            End If
+                        Case 1              '' Save As
+                            If SaveFileDialog.ShowDialog = DialogResult.OK Then
+                                My.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName)
+                                My.CP_Original = My.CP.Clone
+                            Else
+                                Return False
+                            End If
+                    End Select
+
+                    Select Case r2
+                        Case 1      '' Apply   ' Case 0= Don't Apply
+                            If Apply_Theme_Sub IsNot Nothing Then Apply_Theme_Sub()
+                    End Select
+
+                Case DialogResult.No
+
+                Case DialogResult.Cancel
+                    Return False
+            End Select
+
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
 End Class

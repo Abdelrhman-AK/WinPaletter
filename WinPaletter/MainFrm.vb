@@ -10,7 +10,6 @@ Imports WinPaletter.PreviewHelpers
 
 Public Class MainFrm
     Private _Shown As Boolean = False
-    Public CP, CP_Original, CP_FirstTime, CP_BeforeDrag As CP
     Dim RaiseUpdate As Boolean = False
     Dim ver As String = ""
     Dim StableInt, BetaInt, UpdateChannel As Integer
@@ -259,15 +258,15 @@ Public Class MainFrm
 
         WVista_ColorizationColor_pick.DefaultColor = DefCP.WindowsVista.ColorizationColor
 
-        CP.Dispose()
+        DefCP.Dispose()
     End Sub
     Public Sub Update_Wallpaper_Preview()
         Cursor = Cursors.AppStarting
-        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(CP, My.PreviewStyle)
+        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(My.CP, My.PreviewStyle)
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
-        ApplyColorsToElements(CP)
-        ApplyCPValues(CP)
-        ApplyStylesToElements(CP, False)
+        ApplyColorsToElements(My.CP)
+        ApplyCPValues(My.CP)
+        ApplyStylesToElements(My.CP, False)
         ReValidateLivePreview(pnl_preview)
         ReValidateLivePreview(pnl_preview_classic)
         Cursor = Cursors.Default
@@ -315,8 +314,8 @@ Public Class MainFrm
         If My.WXP OrElse My.WVista Then Exit Sub
 
         StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
-        If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
-        If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
+        If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
+        If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -376,21 +375,8 @@ Public Class MainFrm
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
 
-        Me.Size = New Size(My.[Settings].MainFormWidth, My.[Settings].MainFormHeight)
-        Me.WindowState = My.[Settings].MainFormStatus
-
-        If Not My.Application.ExternalLink Then
-            CP = New CP(CP_Type.Registry)
-        Else
-            CP = New CP(CP_Type.File, My.Application.ExternalLink_File)
-            OpenFileDialog1.FileName = My.Application.ExternalLink_File
-            SaveFileDialog1.FileName = My.Application.ExternalLink_File
-            My.Application.ExternalLink = False
-            My.Application.ExternalLink_File = ""
-        End If
-
-        CP_Original = CP.Clone
-        CP_FirstTime = CP.Clone
+        Me.Size = New Size(My.Settings.MainFormWidth, My.Settings.MainFormHeight)
+        Me.WindowState = My.Settings.MainFormStatus
 
         Select_W11.Image = My.Resources.Native11
         Select_W10.Image = My.Resources.Native10
@@ -440,20 +426,20 @@ Public Class MainFrm
         DoubleBuffer
 
         If My.PreviewStyle = WindowStyle.W11 Then
-            ApplyWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
                     W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
                     W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
 
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            ApplyWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
                     W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
                     W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
 
         End If
 
-        ApplyColorsToElements(CP)
-        ApplyStylesToElements(CP)
-        ApplyCPValues(CP)
+        ApplyColorsToElements(My.CP)
+        ApplyStylesToElements(My.CP)
+        ApplyCPValues(My.CP)
         ApplyDefaultCPValues()
 
         WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
@@ -494,7 +480,7 @@ Public Class MainFrm
             AddHandler btn.Leave, AddressOf EraseHint
         Next
 
-        If My.[Settings].AutoUpdatesChecking Then AutoUpdatesCheck()
+        If My.Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
 
         If My.Application.ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
@@ -522,34 +508,34 @@ Public Class MainFrm
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        If CP <> CP_Original Then
+        If My.CP <> My.CP_Original Then
 
-            If My.[Settings].ShowSaveConfirmation AndAlso Not LoggingOff Then
+            If My.Settings.ShowSaveConfirmation AndAlso Not LoggingOff Then
 
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
+                        Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
                         Select Case r1
                             Case 0              '' Save
                                 If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
+                                    My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
+                                    My.CP_Original = My.CP.Clone
                                 Else
                                     If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP.Clone
+                                        My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
+                                        My.CP_Original = My.CP.Clone
                                     Else
                                         e.Cancel = True
                                     End If
                                 End If
                             Case 1              '' Save As
                                 If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
+                                    My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
+                                    My.CP_Original = My.CP.Clone
                                 Else
                                     e.Cancel = True
                                 End If
@@ -562,7 +548,7 @@ Public Class MainFrm
 
                     Case DialogResult.No
                         e.Cancel = False
-                        If (My.W7 Or My.W8) And My.[Settings].Win7LivePreview Then RefreshDWM(CP_Original)
+                        If (My.W7 Or My.W8) And My.Settings.Win7LivePreview Then RefreshDWM(My.CP_Original)
                         MyBase.OnFormClosing(e)
 
                     Case DialogResult.Cancel
@@ -583,9 +569,9 @@ Public Class MainFrm
     Private Sub W11_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Titlebar_Active = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Titlebar_Active = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -593,8 +579,8 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows11.Titlebar_Active = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Titlebar_Active = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -606,9 +592,9 @@ Public Class MainFrm
     Private Sub W11_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Titlebar_Inactive = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Titlebar_Inactive = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -618,9 +604,9 @@ Public Class MainFrm
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows11.Titlebar_Inactive = Color.FromArgb(255, C)
+        My.CP.Windows11.Titlebar_Inactive = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -630,59 +616,59 @@ Public Class MainFrm
 
     Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows11.WinMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.WinMode_Light = Not sender.Checked
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_AppMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows11.AppMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.AppMode_Light = Not sender.Checked
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_Transparency_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows11.Transparency = sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.Transparency = sender.Checked
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows11.ApplyAccentOnTitlebars = sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.ApplyAccentOnTitlebars = sender.Checked
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
+            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W11_Color_Index1_Click(sender As Object, e As EventArgs) Handles W11_Color_Index1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index1 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index1 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -694,7 +680,7 @@ Public Class MainFrm
         If ExplorerPatcher.IsAllowed Then
             CList.Add(taskbar)
 
-            If Not CP.Windows11.WinMode_Light Then
+            If Not My.CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 Dim _Conditions As New Conditions With {.AppUnderlineOnly = True, .ActionCenterBtn = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -703,7 +689,7 @@ Public Class MainFrm
                 C = ColorPickerDlg.Pick(CList, _Conditions)
             End If
         Else
-            If Not CP.Windows11.WinMode_Light Then
+            If Not My.CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
 
@@ -714,8 +700,8 @@ Public Class MainFrm
             End If
         End If
 
-        CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index1 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -726,9 +712,9 @@ Public Class MainFrm
     Private Sub W11_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W11_TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index5 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index5 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -736,7 +722,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         If ExplorerPatcher.IsAllowed Then
-            If Not CP.Windows11.WinMode_Light Then
+            If Not My.CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
                 If Not My.EP.UseStart10 Then
@@ -747,7 +733,7 @@ Public Class MainFrm
             End If
 
         Else
-            If Not CP.Windows11.WinMode_Light Then
+            If Not My.CP.Windows11.WinMode_Light Then
                 CList.Add(taskbar)
                 CList.Add(start)
                 CList.Add(ActionCenter)
@@ -758,8 +744,8 @@ Public Class MainFrm
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows11.Color_Index5 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index5 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -770,9 +756,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index0_Click(sender As Object, e As EventArgs) Handles W11_Color_Index0.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index0 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index0 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -782,7 +768,7 @@ Public Class MainFrm
 
         CList.Add(sender)
 
-        If CP.Windows11.WinMode_Light Then
+        If My.CP.Windows11.WinMode_Light Then
             CList.Add(start)
             CList.Add(ActionCenter)
             C = ColorPickerDlg.Pick(CList)
@@ -792,8 +778,8 @@ Public Class MainFrm
             C = ColorPickerDlg.Pick(CList, _Conditions)
         End If
 
-        CP.Windows11.Color_Index0 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index0 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -805,9 +791,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index3_Click(sender As Object, e As EventArgs) Handles W11_Color_Index3.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index3 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index3 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -822,8 +808,8 @@ Public Class MainFrm
         Dim _Conditions As New Conditions With {.AppUnderlineOnly = True}
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows11.Color_Index3 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index3 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -834,9 +820,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index6_Click(sender As Object, e As EventArgs) Handles W11_Color_Index6.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index6 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index6 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -854,8 +840,8 @@ Public Class MainFrm
 
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows11.Color_Index6 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index6 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -866,9 +852,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index5_Click(sender As Object, e As EventArgs) Handles W11_Color_Index5.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.StartMenu_Accent = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.StartMenu_Accent = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -877,8 +863,8 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.StartMenu_Accent = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -890,9 +876,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W11_Color_Index4.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index2 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index2 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -901,8 +887,8 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows11.Color_Index2 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index2 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -913,9 +899,9 @@ Public Class MainFrm
     Private Sub W11_Color_Index2_Click(sender As Object, e As EventArgs) Handles W11_Color_Index2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows11.Color_Index4 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows11.Color_Index4 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -931,7 +917,7 @@ Public Class MainFrm
                 C = ColorPickerDlg.Pick(CList)
 
             Else
-                If CP.Windows11.WinMode_Light Then
+                If My.CP.Windows11.WinMode_Light Then
                     CList.Add(ActionCenter)
 
                     Dim _Conditions As New Conditions With {.ActionCenterBtn = True}
@@ -945,7 +931,7 @@ Public Class MainFrm
             End If
         Else
 
-            If CP.Windows11.WinMode_Light Then
+            If My.CP.Windows11.WinMode_Light Then
                 CList.Add(ActionCenter)
                 CList.Add(taskbar)
 
@@ -962,8 +948,8 @@ Public Class MainFrm
         End If
 
 
-        CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
+        My.CP.Windows11.Color_Index4 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -973,14 +959,14 @@ Public Class MainFrm
 
     Private Sub W11_Color_Index7_Click(sender As Object, e As EventArgs) Handles W11_Color_Index7.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            CP.Windows11.Color_Index7 = SubMenu.ShowMenu(sender)
+            My.CP.Windows11.Color_Index7 = SubMenu.ShowMenu(sender)
             Exit Sub
         End If
 
         Dim CList As New List(Of Control) From {sender}
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows11.Color_Index7 = Color.FromArgb(255, C)
+        My.CP.Windows11.Color_Index7 = Color.FromArgb(255, C)
 
         sender.backcolor = C
         sender.invalidate
@@ -998,9 +984,9 @@ Public Class MainFrm
     Private Sub W10_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Titlebar_Active = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Titlebar_Active = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1008,8 +994,8 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender, XenonWindow1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10.Titlebar_Active = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Titlebar_Active = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1020,9 +1006,9 @@ Public Class MainFrm
     Private Sub W10_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Titlebar_Inactive = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Titlebar_Inactive = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1032,9 +1018,9 @@ Public Class MainFrm
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Titlebar_Inactive = Color.FromArgb(255, C)
+        My.CP.Windows10.Titlebar_Inactive = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1044,66 +1030,66 @@ Public Class MainFrm
 
     Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.WinMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.WinMode_Light = Not sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_AppMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_AppMode_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.AppMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.AppMode_Light = Not sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_Transparency_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.Transparency = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.Transparency = sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.ApplyAccentOnTitlebars = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.ApplyAccentOnTitlebars = sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_TBTransparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TBTransparency_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.IncreaseTBTransparency = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.IncreaseTBTransparency = sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W10_Color_Index1_Click(sender As Object, e As EventArgs) Handles W10_Color_Index1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index1 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index1 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1114,12 +1100,12 @@ Public Class MainFrm
 
         Dim _Conditions As New Conditions
 
-        Select Case Not CP.Windows10.WinMode_Light
+        Select Case Not My.CP.Windows10.WinMode_Light
             Case True
                 CList.Add(taskbar)  ''AppUnderline
                 _Conditions.AppUnderlineOnly = True
             Case False
-                If CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
+                If My.CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                     CList.Add(taskbar)  ''AppUnderline
                     _Conditions.AppUnderlineOnly = True
                 End If
@@ -1127,8 +1113,8 @@ Public Class MainFrm
 
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Color_Index1 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index1 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1139,24 +1125,24 @@ Public Class MainFrm
     Private Sub W10_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W10_TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index5 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index5 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
 
         Dim CList As New List(Of Control) From {sender}
 
-        If [CP].Windows10.Transparency Then
+        If My.CP.Windows10.Transparency Then
             'CList.Add(start) ''Hamburger
         Else
             CList.Add(taskbar)
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10.Color_Index5 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index5 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1168,9 +1154,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index0_Click(sender As Object, e As EventArgs) Handles W10_Color_Index0.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index0 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index0 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1183,13 +1169,13 @@ Public Class MainFrm
 
         Dim _Conditions As New Conditions
 
-        Select Case Not CP.Windows10.WinMode_Light
+        Select Case Not My.CP.Windows10.WinMode_Light
             Case True
                 CList.Add(ActionCenter) ''Link
                 _Conditions.ActionCenterLink = True
 
             Case False
-                If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
+                If My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                     CList.Add(ActionCenter) ''Link
                     _Conditions.ActionCenterLink = True
                 End If
@@ -1197,8 +1183,8 @@ Public Class MainFrm
 
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Color_Index0 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index0 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1210,9 +1196,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index3_Click(sender As Object, e As EventArgs) Handles W10_Color_Index3.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index3 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index3 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1224,13 +1210,13 @@ Public Class MainFrm
 
         Dim _Conditions As New Conditions
 
-        Select Case Not [CP].Windows10.WinMode_Light
+        Select Case Not My.CP.Windows10.WinMode_Light
             Case True
-                If [CP].Windows10.Transparency Then
+                If My.CP.Windows10.Transparency Then
                     CList.Add(setting_icon_preview)
                     CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                     CList.Add(lnk_preview)
-                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
+                    If My.CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                         CList.Add(taskbar)  ''AppBackground
                         _Conditions.AppBackgroundOnly = True
 
@@ -1245,7 +1231,7 @@ Public Class MainFrm
                 CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                 CList.Add(lnk_preview)
 
-                If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
+                If My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                     CList.Add(taskbar)  ''AppBackground
                     _Conditions.AppBackgroundOnly = True
                     _Conditions.AppUnderlineOnly = True
@@ -1254,8 +1240,8 @@ Public Class MainFrm
         End Select
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Color_Index3 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index3 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1266,9 +1252,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index6_Click(sender As Object, e As EventArgs) Handles W10_Color_Index6.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index6 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index6 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1280,25 +1266,25 @@ Public Class MainFrm
 
         Dim _Conditions As New Conditions
 
-        Select Case Not [CP].Windows10.WinMode_Light
+        Select Case Not My.CP.Windows10.WinMode_Light
             Case True
 
-                If [CP].Windows10.Transparency Then
+                If My.CP.Windows10.Transparency Then
                     CList.Add(taskbar)
                 End If
 
             Case False
 
-                If [CP].Windows10.Transparency Then
+                If My.CP.Windows10.Transparency Then
                     CList.Add(taskbar)
 
-                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
+                    If My.CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                         CList.Add(ActionCenter) ''ActionCenterLinks
                         _Conditions.ActionCenterLink = True
                     End If
 
                 Else
-                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
+                    If My.CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                         CList.Add(ActionCenter) ''ActionCenterLinks
                         _Conditions.ActionCenterLink = True
 
@@ -1308,8 +1294,8 @@ Public Class MainFrm
 
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Color_Index6 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index6 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1320,9 +1306,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index5_Click(sender As Object, e As EventArgs) Handles W10_Color_Index5.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.StartMenu_Accent = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.StartMenu_Accent = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1332,8 +1318,8 @@ Public Class MainFrm
 
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10.StartMenu_Accent = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.StartMenu_Accent = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1345,9 +1331,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W10_Color_Index4.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index2 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index2 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1360,8 +1346,8 @@ Public Class MainFrm
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
-        CP.Windows10.Color_Index2 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index2 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1373,9 +1359,9 @@ Public Class MainFrm
     Private Sub W10_Color_Index2_Click(sender As Object, e As EventArgs) Handles W10_Color_Index2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows10.Color_Index4 = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows10.Color_Index4 = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1388,10 +1374,10 @@ Public Class MainFrm
 
         Dim _Conditions As New Conditions
 
-        Select Case Not [CP].Windows10.WinMode_Light
+        Select Case Not My.CP.Windows10.WinMode_Light
             Case True
 
-                If [CP].Windows10.Transparency Then
+                If My.CP.Windows10.Transparency Then
                     CList.Add(start)
                     CList.Add(ActionCenter)
                 Else
@@ -1402,14 +1388,14 @@ Public Class MainFrm
                 End If
 
             Case False
-                If [CP].Windows10.Transparency Then
+                If My.CP.Windows10.Transparency Then
                     CList.Add(start)
                     CList.Add(ActionCenter)
                 Else
-                    If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
+                    If My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
-                    ElseIf [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
+                    ElseIf My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
                         CList.Add(taskbar)  'Start Button Hover
@@ -1425,8 +1411,8 @@ Public Class MainFrm
 
         C = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows10.Color_Index4 = Color.FromArgb(255, C)
-        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+        My.CP.Windows10.Color_Index4 = Color.FromArgb(255, C)
+        If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1436,14 +1422,14 @@ Public Class MainFrm
 
     Private Sub W10_Color_Index7_Click(sender As Object, e As EventArgs) Handles W10_Color_Index7.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            CP.Windows10.Color_Index7 = SubMenu.ShowMenu(sender)
+            My.CP.Windows10.Color_Index7 = SubMenu.ShowMenu(sender)
             Exit Sub
         End If
 
         Dim CList As New List(Of Control) From {sender}
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows10.Color_Index7 = Color.FromArgb(255, C)
+        My.CP.Windows10.Color_Index7 = Color.FromArgb(255, C)
 
         sender.backcolor = C
         sender.invalidate
@@ -1465,9 +1451,9 @@ Public Class MainFrm
     Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W8_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.ColorizationColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows8.ColorizationColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1484,9 +1470,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows8.ColorizationColor = Color.FromArgb(255, C)
+        My.CP.Windows8.ColorizationColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1497,17 +1483,17 @@ Public Class MainFrm
     Private Sub W8_ColorizationBalance_bar_Scroll(sender As Object) Handles W8_ColorizationBalance_bar.Scroll
         If _Shown Then
             W8_ColorizationBalance_val.Text = sender.Value.ToString()
-            CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            My.CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W8_start_pick_Click(sender As Object, e As EventArgs) Handles W8_start_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.StartColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows8.StartColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1516,9 +1502,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows8.StartColor = Color.FromArgb(255, C)
+        My.CP.Windows8.StartColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1529,9 +1515,9 @@ Public Class MainFrm
     Private Sub W8_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.AccentColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows8.AccentColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1540,9 +1526,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows8.AccentColor = Color.FromArgb(255, C)
+        My.CP.Windows8.AccentColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1553,9 +1539,9 @@ Public Class MainFrm
     Private Sub W8_personalcls_background_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcls_background_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.PersonalColors_Background = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows8.PersonalColors_Background = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1564,9 +1550,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
+        My.CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1577,9 +1563,9 @@ Public Class MainFrm
     Private Sub W8_personalcolor_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcolor_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows8.PersonalColors_Accent = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows8.PersonalColors_Accent = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1588,9 +1574,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
+        My.CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1605,26 +1591,26 @@ Public Class MainFrm
 
     Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
         If W8_theme_aero.Checked Then
-            CP.Windows8.Theme = CP.Structures.Windows7.Themes.Aero
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            My.CP.Windows8.Theme = CP.Structures.Windows7.Themes.Aero
+            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W8_theme_aerolite.CheckedChanged
         If W8_theme_aerolite.Checked Then
-            CP.Windows8.Theme = CP.Structures.Windows7.Themes.AeroLite
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+            My.CP.Windows8.Theme = CP.Structures.Windows7.Themes.AeroLite
+            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W8_start_Click(sender As Object, e As EventArgs) Handles W8_start.Click
         Start8Selector.ShowDialog()
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
     End Sub
 
     Private Sub W8_logonui_Click(sender As Object, e As EventArgs) Handles W8_logonui.Click
         LogonUI8Colors.ShowDialog()
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
     End Sub
 #End Region
 
@@ -1632,9 +1618,9 @@ Public Class MainFrm
     Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows7.ColorizationColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1651,9 +1637,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
+        My.CP.Windows7.ColorizationColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1664,9 +1650,9 @@ Public Class MainFrm
     Private Sub W7_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglow_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.Windows7.ColorizationAfterglow = sender.BackColor
-                ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.Windows7.ColorizationAfterglow = sender.BackColor
+                ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1683,9 +1669,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
+        My.CP.Windows7.ColorizationAfterglow = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1694,43 +1680,43 @@ Public Class MainFrm
     End Sub
 
     Private Sub W7_EnableAeroPeek_toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_EnableAeroPeek_toggle.CheckedChanged
-        If _Shown Then CP.Windows7.EnableAeroPeek = W7_EnableAeroPeek_toggle.Checked
+        If _Shown Then My.CP.Windows7.EnableAeroPeek = W7_EnableAeroPeek_toggle.Checked
     End Sub
 
     Private Sub W7_AlwaysHibernateThumbnails_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W7_AlwaysHibernateThumbnails_Toggle.CheckedChanged
-        If _Shown Then CP.Windows7.AlwaysHibernateThumbnails = W7_AlwaysHibernateThumbnails_Toggle.Checked
+        If _Shown Then My.CP.Windows7.AlwaysHibernateThumbnails = W7_AlwaysHibernateThumbnails_Toggle.Checked
     End Sub
 
     Private Sub W7_ColorizationColorBalance_bar_Scroll(sender As Object) Handles W7_ColorizationColorBalance_bar.Scroll
         If _Shown Then
             W7_ColorizationColorBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+            My.CP.Windows7.ColorizationColorBalance = W7_ColorizationColorBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W7_ColorizationBlurBalance_bar_Scroll(sender As Object) Handles W7_ColorizationBlurBalance_bar.Scroll
         If _Shown Then
             W7_ColorizationBlurBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+            My.CP.Windows7.ColorizationBlurBalance = W7_ColorizationBlurBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W7_ColorizationGlassReflectionIntensity_bar_Scroll(sender As Object) Handles W7_ColorizationGlassReflectionIntensity_bar.Scroll
         If _Shown Then
             W7_ColorizationGlassReflectionIntensity_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
-            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+            My.CP.Windows7.ColorizationGlassReflectionIntensity = W7_ColorizationGlassReflectionIntensity_bar.Value
+            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
         If W7_theme_classic.Checked Then
-            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
+            My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
             If My.PreviewStyle = WindowStyle.W7 Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
 
@@ -1738,30 +1724,30 @@ Public Class MainFrm
 
     Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
         If W7_theme_basic.Checked Then
-            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Basic
+            My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Basic
             If My.PreviewStyle = WindowStyle.W7 Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
 
     Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
         If W7_theme_aeroopaque.Checked Then
-            CP.Windows7.Theme = CP.Structures.Windows7.Themes.AeroOpaque
+            My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.AeroOpaque
             If My.PreviewStyle = WindowStyle.W7 Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
 
     Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
         If W7_theme_aero.Checked Then
-            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Aero
+            My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Aero
             If My.PreviewStyle = WindowStyle.W7 Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
@@ -1769,8 +1755,8 @@ Public Class MainFrm
     Private Sub W7_ColorizationAfterglowBalance_bar_Scroll(sender As Object) Handles W7_ColorizationAfterglowBalance_bar.Scroll
         If _Shown Then
             W7_ColorizationAfterglowBalance_val.Text = sender.Value.ToString()
-            CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(CP)
+            My.CP.Windows7.ColorizationAfterglowBalance = W7_ColorizationAfterglowBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
     Private Sub W7_ColorizationColorBalance_val_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColorBalance_val.Click
@@ -1799,9 +1785,9 @@ Public Class MainFrm
     Private Sub WVista_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                CP.WindowsVista.ColorizationColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(CP)
+            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+                My.CP.WindowsVista.ColorizationColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1818,9 +1804,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        CP.WindowsVista.ColorizationColor = Color.FromArgb(255, C)
+        My.CP.WindowsVista.ColorizationColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(CP)
+        If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1831,17 +1817,17 @@ Public Class MainFrm
     Private Sub WVista_ColorizationColorBalance_bar_Scroll(sender As Object) Handles WVista_ColorizationColorBalance_bar.Scroll
         If _Shown Then
             WVista_ColorizationColorBalance_val.Text = sender.Value.ToString()
-            CP.WindowsVista.Alpha = WVista_ColorizationColorBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(CP)
+            My.CP.WindowsVista.Alpha = WVista_ColorizationColorBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
     Private Sub WVista_theme_classic_CheckedChanged(sender As Object) Handles WVista_theme_classic.CheckedChanged
         If WVista_theme_classic.Checked Then
-            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
+            My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
             If My.PreviewStyle = WindowStyle.WVista Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
 
@@ -1849,30 +1835,30 @@ Public Class MainFrm
 
     Private Sub WVista_theme_basic_CheckedChanged(sender As Object) Handles WVista_theme_basic.CheckedChanged
         If WVista_theme_basic.Checked Then
-            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Basic
+            My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Basic
             If My.PreviewStyle = WindowStyle.WVista Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
 
     Private Sub WVista_theme_aeroopaque_CheckedChanged(sender As Object) Handles WVista_theme_aeroopaque.CheckedChanged
         If WVista_theme_aeroopaque.Checked Then
-            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.AeroOpaque
+            My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.AeroOpaque
             If My.PreviewStyle = WindowStyle.WVista Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
 
     Private Sub WVista_theme_Vista_CheckedChanged(sender As Object) Handles WVista_theme_aero.CheckedChanged
         If WVista_theme_aero.Checked Then
-            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Aero
+            My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Aero
             If My.PreviewStyle = WindowStyle.WVista Then
-                ApplyColorsToElements(CP)
-                ApplyStylesToElements(CP, False)
+                ApplyColorsToElements(My.CP)
+                ApplyStylesToElements(My.CP, False)
             End If
         End If
     End Sub
@@ -1887,36 +1873,36 @@ Public Class MainFrm
 #Region "Windows XP"
     Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
         If WXP_Luna_Blue.Checked Then
-            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaBlue
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaBlue
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
     Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
         If WXP_Luna_OliveGreen.Checked Then
-            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaOliveGreen
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaOliveGreen
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
     Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
         If WXP_Luna_Silver.Checked Then
-            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaSilver
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaSilver
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
     Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
         If WXP_CustomTheme.Checked Then
-            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Custom
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Custom
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
     Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
         If WXP_Classic.Checked Then
-            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
@@ -1932,7 +1918,7 @@ Public Class MainFrm
 
         End If
 
-        CP.WindowsXP.ThemeFile = WXP_VS_textbox.Text
+        My.CP.WindowsXP.ThemeFile = WXP_VS_textbox.Text
 
         If File.Exists(WXP_VS_textbox.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
 
@@ -1950,7 +1936,7 @@ Public Class MainFrm
 
             If WXP_VS_ColorsList.Items.Count > 0 Then WXP_VS_ColorsList.SelectedIndex = 0
 
-            If WXP_CustomTheme.Checked And My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            If WXP_CustomTheme.Checked And My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 
@@ -1962,8 +1948,8 @@ Public Class MainFrm
 
     Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles WXP_VS_ColorsList.SelectedIndexChanged
         If _Shown AndAlso WXP_CustomTheme.Checked Then
-            CP.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem
-            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
+            My.CP.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem
+            If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
         End If
     End Sub
 #End Region
@@ -1982,26 +1968,26 @@ Public Class MainFrm
         XenonButton22.Visible = False
         XenonButton25.Visible = False
 
-        If My.[Settings].Log_ShowApplying Then
+        If My.Settings.Log_ShowApplying Then
             TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
             TablessControl1.Refresh()
         End If
 
-        CP.Save(CP.CP_Type.Registry, "", If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
+        My.CP.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
 
-        CP_Original = New CP(CP_Type.Registry)
+        My.CP_Original = New CP(CP_Type.Registry)
 
         Cursor = Cursors.Default
 
-        If My.[Settings].AutoRestartExplorer Then
-            RestartExplorer(If(My.[Settings].Log_ShowApplying, TreeView1, Nothing))
+        If My.Settings.AutoRestartExplorer Then
+            RestartExplorer(If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
         Else
-            If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
+            If My.Settings.Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.[Settings].Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+        If My.Settings.Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
-        If CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
+        If My.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
         log_lbl.Visible = True
         XenonButton8.Visible = True
@@ -2012,8 +1998,8 @@ Public Class MainFrm
             log_lbl.Text = My.Lang.CP_ErrorHappened
             XenonButton14.Visible = True
         Else
-            If My.[Settings].Log_Countdown_Enabled Then
-                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown)
+            If My.Settings.Log_Countdown_Enabled Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown)
                 elapsedSecs = 1
                 Timer1.Enabled = True
                 Timer1.Start()
@@ -2025,9 +2011,9 @@ Public Class MainFrm
     Private elapsedSecs As Integer = 0
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.[Settings].Log_Countdown - elapsedSecs)
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown - elapsedSecs)
 
-        If elapsedSecs + 1 <= My.[Settings].Log_Countdown Then
+        If elapsedSecs + 1 <= My.Settings.Log_Countdown Then
             elapsedSecs += 1
         Else
             log_lbl.Text = ""
@@ -2071,14 +2057,14 @@ Public Class MainFrm
     End Sub
 
     Private Sub Apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
-        If My.[Settings].AutoRestartExplorer Then
+        If My.Settings.AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
             status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
     Private Sub Apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
-        If My.[Settings].AutoRestartExplorer Then
+        If My.Settings.AutoRestartExplorer Then
             status_lbl.Text = ""
             status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
         End If
@@ -2109,9 +2095,9 @@ Public Class MainFrm
             wpth_or_wpsf = True
             e.Effect = DragDropEffects.Copy
 
-            If My.[Settings].DragAndDropPreview Then
+            If My.Settings.DragAndDropPreview Then
                 DragAccepted = True
-                CP_BeforeDrag = CP.Clone
+                My.CP_BeforeDrag = My.CP.Clone
                 DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
                 DragPreviewer.File = files(0)
                 DragPreviewer.Show()
@@ -2131,13 +2117,13 @@ Public Class MainFrm
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         Dropped = False
         If DragAccepted Then
-            If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
-            CP = CP_BeforeDrag.Clone
+            If My.Settings.DragAndDropPreview Then DragPreviewer.Close()
+            My.CP = My.CP_BeforeDrag.Clone
         End If
     End Sub
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, tabs_preview.DragOver, TablessControl1.DragOver
-        If DragAccepted And My.[Settings].DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        If DragAccepted And My.Settings.DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
         Dropped = Me.Bounds.Contains(New Point(e.X, e.Y))
     End Sub
 
@@ -2145,59 +2131,15 @@ Public Class MainFrm
         If Dropped And DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If wpth_or_wpsf Then
-                If My.[Settings].DragAndDropPreview Then DragPreviewer.Close()
+                If My.Settings.DragAndDropPreview Then DragPreviewer.Close()
 
-                If CP <> CP_Original Then
-                    If My.[Settings].ShowSaveConfirmation Then
-                        Select Case ComplexSave.ShowDialog
-                            Case DialogResult.Yes
 
-                                Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-                                Dim r1 As String = r(0)
-                                Dim r2 As String = r(1)
 
-                                Select Case r1
-                                    Case 0              '' Save
-                                        If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                            CP_Original = CP.Clone
-                                        Else
-                                            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                                CP_Original = CP.Clone
-                                            Else
-                                                '''''''' If My.[Settings].DragPreview then ReleaseBlur()
-                                                Exit Sub
-                                            End If
-                                        End If
-                                    Case 1              '' Save As
-                                        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                            CP_Original = CP.Clone
-                                        Else
-                                            '''''''' If My.[Settings].DragPreview then ReleaseBlur()
-                                            Exit Sub
-                                        End If
-                                End Select
-
-                                Select Case r2
-                                    Case 1      '' Apply   ' Case 0= Don't Apply
-                                        Apply_Theme()
-                                End Select
-
-                            Case DialogResult.No
-
-                            Case DialogResult.Cancel
-                                Exit Sub
-                        End Select
-                    End If
-                End If
-
-                CP = New CP(CP.CP_Type.File, files(0))
+                My.CP = New CP(CP.CP_Type.File, files(0))
                 tabs_preview.Visible = False
-                ApplyStylesToElements(CP, False)
-                ApplyCPValues(CP)
-                ApplyColorsToElements(CP)
+                ApplyStylesToElements(My.CP, False)
+                ApplyCPValues(My.CP)
+                ApplyColorsToElements(My.CP)
                 tabs_preview.Visible = True
             Else
                 SettingsX._External = True
@@ -2211,127 +2153,55 @@ Public Class MainFrm
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
+                My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
             End If
         Else
-            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
+            My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
-            If CP <> CP_Original And My.[Settings].ShowSaveConfirmation Then
-                Select Case ComplexSave.ShowDialog
-                    Case DialogResult.Yes
+            If ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                            Apply_Theme()
+                                                        End Sub) Then
 
-                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-                        Dim r1 As String = r(0)
-                        Dim r2 As String = r(1)
 
-                        Select Case r1
-                            Case 0              '' Save
-                                If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP.Clone
-                                    Else
-                                        Exit Sub
-                                    End If
-                                End If
-                            Case 1              '' Save As
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    Exit Sub
-                                End If
-                        End Select
+                SaveFileDialog1.FileName = OpenFileDialog1.FileName
+                My.CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
+                My.CP_Original = My.CP.Clone
 
-                        Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                Apply_Theme()
-                        End Select
-
-                    Case DialogResult.No
-
-                    Case DialogResult.Cancel
-                        Exit Sub
-                End Select
+                ApplyStylesToElements(My.CP, False)
+                ApplyCPValues(My.CP)
+                ApplyColorsToElements(My.CP)
 
             End If
 
-            SaveFileDialog1.FileName = OpenFileDialog1.FileName
-            CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
-            CP_Original = CP.Clone
-
-            ApplyStylesToElements(CP, False)
-            ApplyCPValues(CP)
-            ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-            CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
+            My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If CP <> CP_Original Then
-            If My.[Settings].ShowSaveConfirmation Then
-                Select Case ComplexSave.ShowDialog
-                    Case DialogResult.Yes
 
-                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-                        Dim r1 As String = r(0)
-                        Dim r2 As String = r(1)
+        If ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                        Apply_Theme()
+                                                    End Sub) Then
 
-                        Select Case r1
-                            Case 0              '' Save
-                                If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP.Clone
-                                    Else
-                                        Exit Sub
-                                    End If
-                                End If
-                            Case 1              '' Save As
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    Exit Sub
-                                End If
-                        End Select
+            My.CP = New CP(CP.CP_Type.Registry)
+            My.CP_Original = My.CP.Clone
+            SaveFileDialog1.FileName = Nothing
+            ApplyStylesToElements(My.CP, False)
+            ApplyCPValues(My.CP)
+            ApplyColorsToElements(My.CP)
 
-                        Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                Apply_Theme()
-
-                        End Select
-
-                    Case DialogResult.No
-
-                    Case DialogResult.Cancel
-                        Exit Sub
-                End Select
-            End If
         End If
 
-        CP = New CP(CP.CP_Type.Registry)
-        CP_Original = CP.Clone
-        SaveFileDialog1.FileName = Nothing
-        ApplyStylesToElements(CP, False)
-        ApplyCPValues(CP)
-        ApplyColorsToElements(CP)
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
@@ -2388,17 +2258,17 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
-        CP = CP_Original.Clone
-        ApplyStylesToElements(CP, False)
-        ApplyCPValues(CP)
-        ApplyColorsToElements(CP)
+        My.CP = My.CP_Original.Clone
+        ApplyStylesToElements(My.CP, False)
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
     End Sub
 
     Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
-        CP = CP_FirstTime.Clone
-        ApplyStylesToElements(CP, False)
-        ApplyCPValues(CP)
-        ApplyColorsToElements(CP)
+        My.CP = My.CP_FirstTime.Clone
+        ApplyStylesToElements(My.CP, False)
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
     End Sub
 
     Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
@@ -2406,75 +2276,16 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
-        If CP <> CP_Original Then
-            If My.[Settings].ShowSaveConfirmation Then
-                Select Case ComplexSave.ShowDialog
-                    Case DialogResult.Yes
+        If ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                        Apply_Theme()
+                                                    End Sub) Then
 
-                        Dim r As String() = My.[Settings].ComplexSaveResult.Split(".")
-                        Dim r1 As String = r(0)
-                        Dim r2 As String = r(1)
-
-                        Select Case r1
-                            Case 0              '' Save
-                                If IO.File.Exists(SaveFileDialog1.FileName) Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                        CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                        CP_Original = CP.Clone
-                                    Else
-                                        Exit Sub
-                                    End If
-                                End If
-                            Case 1              '' Save As
-                                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                    CP.Save(CP.CP_Type.File, SaveFileDialog1.FileName)
-                                    CP_Original = CP.Clone
-                                Else
-                                    Exit Sub
-                                End If
-                        End Select
-
-                        Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
-                                Apply_Theme()
-                        End Select
-
-                    Case DialogResult.No
-
-                    Case DialogResult.Cancel
-                        Exit Sub
-                End Select
-            End If
+            My.CP = CP_Defaults.From.Clone
+            SaveFileDialog1.FileName = Nothing
+            ApplyCPValues(My.CP)
+            ApplyStylesToElements(My.CP, False)
+            ApplyColorsToElements(My.CP)
         End If
-
-        Dim Def As New CP_Defaults
-
-        If My.W11 Then
-            CP = Def.Default_Windows11.Clone
-        ElseIf My.W10 Then
-            CP = Def.Default_Windows10.Clone
-        ElseIf My.W8 Then
-            CP = Def.Default_Windows8.Clone
-        ElseIf My.W7 Then
-            CP = Def.Default_Windows7.Clone
-        ElseIf My.WVista Then
-            CP = Def.Default_WindowsVista.Clone
-        ElseIf My.WXP Then
-            CP = Def.Default_WindowsXP.Clone
-        Else
-            CP = Def.Default_Windows11.Clone
-        End If
-
-        Def.Dispose()
-
-        SaveFileDialog1.FileName = Nothing
-
-        ApplyCPValues(CP)
-        ApplyStylesToElements(CP, False)
-        ApplyColorsToElements(CP)
     End Sub
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
@@ -2517,19 +2328,19 @@ Public Class MainFrm
         My.Animator.HideSync(tabs_preview, True)
 
         If My.PreviewStyle = WindowStyle.W11 Then
-            ApplyWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
                     W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
                     W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
 
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            ApplyWin10xLegends(CP, My.PreviewStyle,
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
                     W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
                     W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
 
         End If
 
-        ApplyColorsToElements(CP)
-        ApplyStylesToElements(CP)
+        ApplyColorsToElements(My.CP)
+        ApplyStylesToElements(My.CP)
         ApplyDefaultCPValues()
         SelectLeftPanelIndex()
 
@@ -2606,8 +2417,8 @@ Public Class MainFrm
 
     Private Sub W10_TB_Blur_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TB_Blur.CheckedChanged
         If _Shown Then
-            CP.Windows10.TB_Blur = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
+            My.CP.Windows10.TB_Blur = sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
     Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
@@ -2633,19 +2444,19 @@ Public Class MainFrm
 
     Private Sub XenonButton35_Click(sender As Object, e As EventArgs) Handles XenonButton35.Click
         If My.PreviewStyle = WindowStyle.W11 Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_W11
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W11
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_W10
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W10
         ElseIf My.PreviewStyle = WindowStyle.W8 Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_W8
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W8
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_W7
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W7
         ElseIf My.PreviewStyle = WindowStyle.WVista Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_WVista
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_WVista
         ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            Wallpaper_Editor.WT = CP.WallpaperTone_WXP
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_WXP
         Else
-            Wallpaper_Editor.WT = CP.WallpaperTone_W11
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W11
         End If
 
         Wallpaper_Editor.ShowDialog()

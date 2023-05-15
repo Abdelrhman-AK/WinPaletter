@@ -4,7 +4,7 @@ Public Class EditInfo
 
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        Load_Info(MainFrm.CP)
+        Load_Info(My.CP)
         MainFrm.Visible = False
         XenonTextBox3.Font = My.Application.ConsoleFontMedium
 
@@ -37,9 +37,9 @@ Public Class EditInfo
         End With
 
 
-        Save_Info(MainFrm.CP)
-        MainFrm.themename_lbl.Text = String.Format("{0} ({1})", MainFrm.CP.Info.ThemeName, MainFrm.CP.Info.ThemeVersion)
-        MainFrm.author_lbl.Text = String.Format("{0} {1}", My.Lang.By, MainFrm.CP.Info.Author)
+        Save_Info(My.CP)
+        MainFrm.themename_lbl.Text = String.Format("{0} ({1})", My.CP.Info.ThemeName, My.CP.Info.ThemeVersion)
+        MainFrm.author_lbl.Text = String.Format("{0} {1}", My.Lang.By, My.CP.Info.Author)
 
         Me.Close()
     End Sub

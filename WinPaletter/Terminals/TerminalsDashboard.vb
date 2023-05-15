@@ -110,7 +110,7 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 
-        If My.[Settings].Terminal_Bypass Then
+        If My.Settings.Terminal_Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Stable
             Me.Close()
             WindowsTerminal.ShowDialog()
@@ -119,11 +119,11 @@ Public Class TerminalsDashboard
             If My.W10 Or My.W11 Then
                 Dim TerDir As String
 
-                If Not My.[Settings].Terminal_Path_Deflection Then
+                If Not My.Settings.Terminal_Path_Deflection Then
                     TerDir = My.PATH_TerminalJSON
                 Else
-                    If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
-                        TerDir = My.[Settings].Terminal_Stable_Path
+                    If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
+                        TerDir = My.Settings.Terminal_Stable_Path
                     Else
                         TerDir = My.PATH_TerminalJSON
                     End If
@@ -146,7 +146,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If My.[Settings].Terminal_Bypass Then
+        If My.Settings.Terminal_Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Preview
             Me.Close()
             WindowsTerminal.ShowDialog()
@@ -154,11 +154,11 @@ Public Class TerminalsDashboard
             If My.W10 Or My.W11 Then
                 Dim TerPreDir As String
 
-                If Not My.[Settings].Terminal_Path_Deflection Then
+                If Not My.Settings.Terminal_Path_Deflection Then
                     TerPreDir = My.PATH_TerminalPreviewJSON
                 Else
-                    If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
-                        TerPreDir = My.[Settings].Terminal_Preview_Path
+                    If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
+                        TerPreDir = My.Settings.Terminal_Preview_Path
                     Else
                         TerPreDir = My.PATH_TerminalPreviewJSON
                     End If
@@ -190,7 +190,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        If My.[Settings].Terminal_Bypass Then
+        If My.Settings.Terminal_Bypass Then
             cmd._Edition = CMD.Edition.PowerShellx86
             Me.Close()
             cmd.ShowDialog()
@@ -211,7 +211,7 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If My.[Settings].Terminal_Bypass Then
+        If My.Settings.Terminal_Bypass Then
             cmd._Edition = CMD.Edition.PowerShellx64
             Me.Close()
             cmd.ShowDialog()

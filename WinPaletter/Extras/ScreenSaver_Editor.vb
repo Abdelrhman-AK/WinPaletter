@@ -9,7 +9,7 @@ Public Class ScreenSaver_Editor
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         pnl_preview.DoubleBuffer
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
     End Sub
 
 
@@ -53,7 +53,7 @@ Public Class ScreenSaver_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         Close()
     End Sub
 
@@ -61,7 +61,7 @@ Public Class ScreenSaver_Editor
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CPx.ScreenSaver.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default

@@ -13,7 +13,7 @@ Public Class ExternalTerminal
         FillTerminals(XenonComboBox1)
         RasterList.BringToFront()
 
-        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
         MainFrm.Visible = False
 
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
@@ -952,7 +952,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
         FontDialog1.Font = f_extterminal
         If FontDialog1.ShowDialog = DialogResult.OK Then
             f_extterminal = FontDialog1.Font

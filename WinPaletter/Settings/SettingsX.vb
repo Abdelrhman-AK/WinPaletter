@@ -11,7 +11,7 @@ Public Class SettingsX
     Sub LoadSettings()
         Dim sets As XeSettings
 
-        If Not _External Then sets = My.[Settings] Else sets = New XeSettings(XeSettings.Mode.File, _File)
+        If Not _External Then sets = My.Settings Else sets = New XeSettings(XeSettings.Mode.File, _File)
         Read(sets)
 
         With My.Lang
@@ -24,7 +24,7 @@ Public Class SettingsX
         End With
 
         If _External Then OpenFileDialog1.FileName = _File
-        XenonTextBox3.Text = My.[Settings].Language_File
+        XenonTextBox3.Text = My.Settings.Language_File
     End Sub
     Sub Read(Sets As XeSettings)
         With Sets
@@ -143,7 +143,7 @@ Public Class SettingsX
         Dim ch_appearance As Boolean = False
         Dim ch_EP As Boolean = False
 
-        With My.[Settings]
+        With My.Settings
             If .Appearance_Dark <> XenonRadioButton3.Checked Then ch_appearance = True
             If .Appearance_Auto <> XenonCheckBox6.Checked Then ch_appearance = True
             If .Appearance_ManagedByTheme <> XenonCheckBox30.Checked Then ch_appearance = True
@@ -167,7 +167,7 @@ Public Class SettingsX
             If .EP_TaskbarButton10 <> EP_ORB_10.Checked Then ch_EP = True
         End With
 
-        Write(My.[Settings], XeSettings.Mode.Registry)
+        Write(My.Settings, XeSettings.Mode.Registry)
 
         If ch_appearance Then ApplyDarkMode()
 
@@ -182,18 +182,18 @@ Public Class SettingsX
                 Dim TerDir As String
                 Dim TerPreDir As String
 
-                If Not My.[Settings].Terminal_Path_Deflection Then
+                If Not My.Settings.Terminal_Path_Deflection Then
                     TerDir = My.PATH_TerminalJSON
                     TerPreDir = My.PATH_TerminalPreviewJSON
                 Else
-                    If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
-                        TerDir = My.[Settings].Terminal_Stable_Path
+                    If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
+                        TerDir = My.Settings.Terminal_Stable_Path
                     Else
                         TerDir = My.PATH_TerminalJSON
                     End If
 
-                    If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
-                        TerPreDir = My.[Settings].Terminal_Preview_Path
+                    If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
+                        TerPreDir = My.Settings.Terminal_Preview_Path
                     Else
                         TerPreDir = My.PATH_TerminalPreviewJSON
                     End If
@@ -201,20 +201,20 @@ Public Class SettingsX
 
 
                 If IO.File.Exists(TerDir) Then
-                    MainFrm.CP.Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
+                    My.CP.Terminal = New WinTerminal(TerDir, WinTerminal.Mode.JSONFile)
                 Else
-                    MainFrm.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                    My.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
                 End If
 
                 If IO.File.Exists(TerPreDir) Then
-                    MainFrm.CP.TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
+                    My.CP.TerminalPreview = New WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview)
                 Else
-                    MainFrm.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                    My.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
                 End If
 
             Else
-                MainFrm.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
-                MainFrm.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
+                My.CP.Terminal = New WinTerminal("", WinTerminal.Mode.Empty)
+                My.CP.TerminalPreview = New WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview)
             End If
         End If
 
@@ -229,9 +229,9 @@ Public Class SettingsX
 
         If ch_EP Then
             My.EP = New ExplorerPatcher
-            MainFrm.ApplyColorsToElements(MainFrm.CP)
-            MainFrm.ApplyCPValues(MainFrm.CP)
-            MainFrm.ApplyStylesToElements(MainFrm.CP, False)
+            MainFrm.ApplyColorsToElements(My.CP)
+            MainFrm.ApplyCPValues(My.CP)
+            MainFrm.ApplyStylesToElements(My.CP, False)
             PreviewHelpers.ReValidateLivePreview(MainFrm.pnl_preview)
         End If
 
@@ -317,7 +317,7 @@ Public Class SettingsX
 
         Changed = False
 
-        With My.[Settings]
+        With My.Settings
             If .AutoAddExt <> XenonCheckBox1.Checked Then Changed = True
             If .DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
             If .OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True

@@ -11,7 +11,7 @@ Public Class LogonUI7
         ID = 0
         ApplyDarkMode(Me)
         _Shown = False
-        LoadFromCP(MainFrm.CP)
+        LoadFromCP(My.CP)
         ApplyPreview()
         Icon = LogonUI.Icon
 
@@ -283,7 +283,7 @@ Public Class LogonUI7
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        LoadToCP(MainFrm.CP)
+        LoadToCP(My.CP)
         Me.Close()
     End Sub
 

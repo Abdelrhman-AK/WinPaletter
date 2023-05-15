@@ -12,24 +12,24 @@ Public Class WindowsTerminal
         MainFrm.Visible = False
         If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
-        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
 
         ApplyDarkMode(Me)
         _Shown = False
 
         Select Case _Mode
             Case WinTerminal.Version.Stable
-                _Terminal = MainFrm.CP.Terminal
-                _TerminalDefault = MainFrm.CP.Terminal
+                _Terminal = My.CP.Terminal
+                _TerminalDefault = My.CP.Terminal
                 Text = My.Lang.TerminalStable
-                TerEnabled.Checked = MainFrm.CP.Terminal.Enabled
+                TerEnabled.Checked = My.CP.Terminal.Enabled
 
             Case WinTerminal.Version.Preview
-                _Terminal = MainFrm.CP.TerminalPreview
-                _TerminalDefault = MainFrm.CP.TerminalPreview
+                _Terminal = My.CP.TerminalPreview
+                _TerminalDefault = My.CP.TerminalPreview
 
                 Text = My.Lang.TerminalPreview
-                TerEnabled.Checked = MainFrm.CP.TerminalPreview.Enabled
+                TerEnabled.Checked = My.CP.TerminalPreview.Enabled
 
         End Select
 
@@ -77,19 +77,19 @@ Public Class WindowsTerminal
 
             Select Case My.PreviewStyle
                 Case WindowStyle.W11
-                    TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
-                    XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
-                    XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+                    TerMode.Checked = Not My.CP.Windows11.AppMode_Light
+                    XenonTerminal1.Light = My.CP.Windows11.AppMode_Light
+                    XenonTerminal2.Light = My.CP.Windows11.AppMode_Light
 
                 Case WindowStyle.W10
-                    TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
-                    XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
-                    XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
+                    TerMode.Checked = Not My.CP.Windows10.AppMode_Light
+                    XenonTerminal1.Light = My.CP.Windows10.AppMode_Light
+                    XenonTerminal2.Light = My.CP.Windows10.AppMode_Light
 
                 Case Else
-                    TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
-                    XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
-                    XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+                    TerMode.Checked = Not My.CP.Windows11.AppMode_Light
+                    XenonTerminal1.Light = My.CP.Windows11.AppMode_Light
+                    XenonTerminal2.Light = My.CP.Windows11.AppMode_Light
             End Select
 
 
@@ -745,16 +745,16 @@ Public Class WindowsTerminal
                 ElseIf TerThemes.SelectedItem.ToString.ToLower = "system" Then
                     Select Case My.PreviewStyle
                         Case WindowStyle.W11
-                            XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
-                            XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+                            XenonTerminal1.Light = My.CP.Windows11.AppMode_Light
+                            XenonTerminal2.Light = My.CP.Windows11.AppMode_Light
 
                         Case WindowStyle.W10
-                            XenonTerminal1.Light = MainFrm.CP.Windows10.AppMode_Light
-                            XenonTerminal2.Light = MainFrm.CP.Windows10.AppMode_Light
+                            XenonTerminal1.Light = My.CP.Windows10.AppMode_Light
+                            XenonTerminal2.Light = My.CP.Windows10.AppMode_Light
 
                         Case Else
-                            XenonTerminal1.Light = MainFrm.CP.Windows11.AppMode_Light
-                            XenonTerminal2.Light = MainFrm.CP.Windows11.AppMode_Light
+                            XenonTerminal1.Light = My.CP.Windows11.AppMode_Light
+                            XenonTerminal2.Light = My.CP.Windows11.AppMode_Light
                     End Select
 
                 Else
@@ -829,13 +829,13 @@ Public Class WindowsTerminal
 
             Select Case My.PreviewStyle
                 Case WindowStyle.W11
-                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not My.CP.Windows11.AppMode_Light
 
                 Case WindowStyle.W10
-                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows10.AppMode_Light
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not My.CP.Windows10.AppMode_Light
 
                 Case Else
-                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not MainFrm.CP.Windows11.AppMode_Light
+                    If TerThemes.SelectedIndex = 2 Then TerMode.Checked = Not My.CP.Windows11.AppMode_Light
 
             End Select
 
@@ -930,8 +930,8 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
-        My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
-        My.[Settings].Save(XeSettings.Mode.Registry)
+        My.Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
+        My.Settings.Save(XeSettings.Mode.Registry)
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
@@ -944,18 +944,18 @@ Public Class WindowsTerminal
         Dim TerDir As String
         Dim TerPreDir As String
 
-        If Not My.[Settings].Terminal_Path_Deflection Then
+        If Not My.Settings.Terminal_Path_Deflection Then
             TerDir = My.PATH_TerminalJSON
             TerPreDir = My.PATH_TerminalPreviewJSON
         Else
-            If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
-                TerDir = My.[Settings].Terminal_Stable_Path
+            If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
+                TerDir = My.Settings.Terminal_Stable_Path
             Else
                 TerDir = My.PATH_TerminalJSON
             End If
 
-            If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
-                TerPreDir = My.[Settings].Terminal_Preview_Path
+            If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
+                TerPreDir = My.Settings.Terminal_Preview_Path
             Else
                 TerPreDir = My.PATH_TerminalPreviewJSON
             End If
@@ -1015,12 +1015,12 @@ Public Class WindowsTerminal
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         Select Case _Mode
             Case WinTerminal.Version.Stable
-                MainFrm.CP.Terminal.Enabled = TerEnabled.Checked
-                MainFrm.CP.Terminal = _Terminal
+                My.CP.Terminal.Enabled = TerEnabled.Checked
+                My.CP.Terminal = _Terminal
 
             Case WinTerminal.Version.Preview
-                MainFrm.CP.TerminalPreview.Enabled = TerEnabled.Checked
-                MainFrm.CP.TerminalPreview = _Terminal
+                My.CP.TerminalPreview.Enabled = TerEnabled.Checked
+                My.CP.TerminalPreview = _Terminal
 
         End Select
 
@@ -1035,10 +1035,10 @@ Public Class WindowsTerminal
 
             Select Case _Mode
                 Case WinTerminal.Version.Stable
-                    MainFrm.CP.Terminal = _TerminalDefault
+                    My.CP.Terminal = _TerminalDefault
 
                 Case WinTerminal.Version.Preview
-                    MainFrm.CP.TerminalPreview = _TerminalDefault
+                    My.CP.TerminalPreview = _TerminalDefault
 
             End Select
 
@@ -1058,18 +1058,18 @@ Public Class WindowsTerminal
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.[Settings].Terminal_Path_Deflection Then
+                    If Not My.Settings.Terminal_Path_Deflection Then
                         TerDir = My.PATH_TerminalJSON
                         TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
-                        If IO.File.Exists(My.[Settings].Terminal_Stable_Path) Then
-                            TerDir = My.[Settings].Terminal_Stable_Path
+                        If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
+                            TerDir = My.Settings.Terminal_Stable_Path
                         Else
                             TerDir = My.PATH_TerminalJSON
                         End If
 
-                        If IO.File.Exists(My.[Settings].Terminal_Preview_Path) Then
-                            TerPreDir = My.[Settings].Terminal_Preview_Path
+                        If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
+                            TerPreDir = My.Settings.Terminal_Preview_Path
                         Else
                             TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
@@ -1539,7 +1539,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
         FontDialog1.Font = XenonTerminal1.Font
         If FontDialog1.ShowDialog = DialogResult.OK Then
             TerFontName.Text = FontDialog1.Font.Name

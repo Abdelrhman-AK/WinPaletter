@@ -42,8 +42,8 @@ Public Class Updates
                         End If
                     Next
 
-                    If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then UpdateChannel = StableInt
-                    If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then UpdateChannel = BetaInt
+                    If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then UpdateChannel = StableInt
+                    If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then UpdateChannel = BetaInt
 
                     ver = ls(UpdateChannel).Split(" ")(1)
 
@@ -129,8 +129,8 @@ Public Class Updates
         UC = New WebClient
         LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
-        Label3.Text = String.Format(F, If(My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
-        XenonCheckBox1.Checked = My.[Settings].AutoUpdatesChecking
+        Label3.Text = String.Format(F, If(My.Settings.UpdateChannel = XeSettings.UpdateChannels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
+        XenonCheckBox1.Checked = My.Settings.AutoUpdatesChecking
         _Shown = False
         XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
         XenonAlertBox2.Visible = False
@@ -152,8 +152,8 @@ Public Class Updates
                 End If
             Next
 
-            If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Stable Then UpdateChannel = StableInt
-            If My.[Settings].UpdateChannel = XeSettings.UpdateChannels.Beta Then UpdateChannel = BetaInt
+            If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then UpdateChannel = StableInt
+            If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then UpdateChannel = BetaInt
 
             url = ls(UpdateChannel).Split(" ")(4)
             UpdateSize = ls(UpdateChannel).Split(" ")(2)
@@ -200,8 +200,8 @@ Public Class Updates
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
-            My.[Settings].AutoUpdatesChecking = XenonCheckBox1.Checked
-            My.[Settings].Save(XeSettings.Mode.Registry)
+            My.Settings.AutoUpdatesChecking = XenonCheckBox1.Checked
+            My.Settings.Save(XeSettings.Mode.Registry)
         End If
     End Sub
 

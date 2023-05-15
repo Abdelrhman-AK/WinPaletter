@@ -4,7 +4,7 @@ Imports WinPaletter.PreviewHelpers
 Public Class LogonUI
     Private Sub LogonUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        Load_FromCP(MainFrm.CP)
+        Load_FromCP(My.CP)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
     End Sub
 
@@ -61,7 +61,7 @@ Public Class LogonUI
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        Save(MainFrm.CP)
+        Save(My.CP)
         Me.Close()
     End Sub
 End Class

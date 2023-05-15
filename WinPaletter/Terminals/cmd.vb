@@ -17,10 +17,10 @@ Public Class CMD
     Private Sub CMD_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         ApplyDarkMode(Me)
-        XenonCheckBox1.Checked = My.[Settings].Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
         RasterList.BringToFront()
 
-        ApplyFromCP(MainFrm.CP, _Edition)
+        ApplyFromCP(My.CP, _Edition)
         ApplyPreview()
 
         CMD_PopupForegroundLbl.Font = My.Application.ConsoleFont
@@ -52,8 +52,8 @@ Public Class CMD
     End Sub
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
-            My.[Settings].Terminal_OtherFonts = XenonCheckBox1.Checked
-            My.[Settings].Save(XeSettings.Mode.Registry)
+            My.Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
+            My.Settings.Save(XeSettings.Mode.Registry)
         End If
     End Sub
 
@@ -63,7 +63,7 @@ Public Class CMD
             Cursor = Cursors.WaitCursor
             Dim CPx As New CP(CP.CP_Type.Registry)
             ApplyToCP(CPx, _Edition)
-            ApplyToCP(MainFrm.CP, _Edition)
+            ApplyToCP(My.CP, _Edition)
 
             Select Case _Edition
                 Case Edition.CMD
@@ -89,7 +89,7 @@ Public Class CMD
 
     End Sub
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        ApplyToCP(MainFrm.CP, _Edition)
+        ApplyToCP(My.CP, _Edition)
         Me.Close()
     End Sub
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
@@ -916,7 +916,7 @@ Public Class CMD
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        FontDialog1.FixedPitchOnly = Not My.[Settings].Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
         FontDialog1.Font = F_cmd
         If FontDialog1.ShowDialog = DialogResult.OK Then
             F_cmd = FontDialog1.Font

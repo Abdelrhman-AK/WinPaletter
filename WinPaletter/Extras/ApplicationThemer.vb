@@ -12,7 +12,7 @@ Public Class ApplicationThemer
         BackupSettings = New XeSettings(XeSettings.Mode.Registry)
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
         AdjustPreview()
         CloseAndApply = False
     End Sub
@@ -103,7 +103,7 @@ Public Class ApplicationThemer
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CloseAndApply = False
         Close()
     End Sub
@@ -112,7 +112,7 @@ Public Class ApplicationThemer
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CPx.AppTheme.Apply()
         CloseAndApply = True
         BackupSettings = New XeSettings(XeSettings.Mode.Registry)

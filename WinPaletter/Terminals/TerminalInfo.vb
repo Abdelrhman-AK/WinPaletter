@@ -12,7 +12,7 @@ Public Class TerminalInfo
         TerTabTitle.Text = Profile.TabTitle
         TerTabIcon.Text = Profile.Icon
         TerTabColor.BackColor = Profile.TabColor
-        TerAcrylic.Checked = MainFrm.CP.TerminalPreview.useAcrylicInTabRow
+        TerAcrylic.Checked = My.CP.TerminalPreview.useAcrylicInTabRow
 
         If IsDefault Then
             TerName.Text = ""
@@ -41,7 +41,7 @@ Public Class TerminalInfo
         Profile.TabTitle = TerTabTitle.Text
         Profile.Icon = TerTabIcon.Text
         Profile.TabColor = TerTabColor.BackColor
-        MainFrm.CP.TerminalPreview.useAcrylicInTabRow = TerAcrylic.Checked
+        My.CP.TerminalPreview.useAcrylicInTabRow = TerAcrylic.Checked
         DialogResult = DialogResult.OK
     End Sub
 

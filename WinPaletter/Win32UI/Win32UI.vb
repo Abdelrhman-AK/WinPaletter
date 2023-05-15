@@ -14,8 +14,8 @@ Public Class Win32UI
         MainFrm.Visible = False
         If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
-        LoadCP(MainFrm.CP)
-        SetMetics(MainFrm.CP)
+        LoadCP(My.CP)
+        SetMetics(My.CP)
         DoubleBuffer
     End Sub
 
@@ -152,13 +152,13 @@ Public Class Win32UI
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        ApplyToCP(MainFrm.CP)
-        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow1)
-        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow2, False)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton2)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton3)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton4)
-        SetClassicRaisedPanelColors(MainFrm.CP, MainFrm.ClassicTaskbar)
+        ApplyToCP(My.CP)
+        SetClassicWindowColors(My.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowColors(My.CP, MainFrm.ClassicWindow2, False)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton2)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton3)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton4)
+        SetClassicRaisedPanelColors(My.CP, MainFrm.ClassicTaskbar)
         Me.Close()
     End Sub
 
@@ -1053,14 +1053,14 @@ Public Class Win32UI
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
 
-        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow1)
-        SetClassicWindowColors(MainFrm.CP, MainFrm.ClassicWindow2, False)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton2)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton3)
-        SetClassicButtonColors(MainFrm.CP, MainFrm.RetroButton4)
-        SetClassicRaisedPanelColors(MainFrm.CP, MainFrm.ClassicTaskbar)
+        SetClassicWindowColors(My.CP, MainFrm.ClassicWindow1)
+        SetClassicWindowColors(My.CP, MainFrm.ClassicWindow2, False)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton2)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton3)
+        SetClassicButtonColors(My.CP, MainFrm.RetroButton4)
+        SetClassicRaisedPanelColors(My.CP, MainFrm.ClassicTaskbar)
 
         Try
             CPx.Win32.Apply()
@@ -1077,10 +1077,10 @@ Public Class Win32UI
             s.Clear()
             s.Add("; " & String.Format(My.Lang.OldMSTheme_Copyrights, Now.Year))
             s.Add("; " & String.Format(My.Lang.OldMSTheme_ProgrammedBy, My.Application.Info.CompanyName))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedFromAppVer, MainFrm.CP.Info.AppVersion))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedBy, MainFrm.CP.Info.Author))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeName, MainFrm.CP.Info.ThemeName))
-            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeVersion, MainFrm.CP.Info.ThemeVersion))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedFromAppVer, My.CP.Info.AppVersion))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_CreatedBy, My.CP.Info.Author))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeName, My.CP.Info.ThemeName))
+            s.Add("; " & String.Format(My.Lang.OldMSTheme_ThemeVersion, My.CP.Info.ThemeVersion))
             s.Add("")
 
             s.Add(String.Format("[Control Panel\Colors]"))

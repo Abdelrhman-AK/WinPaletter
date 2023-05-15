@@ -61,7 +61,7 @@ Public Class DragPreviewer
     Private Sub DragPreviewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
-        Using CP As New CP(CP_Type.File, File, True, True)
+        Using CP As New CP(CP_Type.File, File, True)
             ApplyColorsToElements(CP)
             ApplyStylesToElements(CP)
         End Using

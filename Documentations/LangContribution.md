@@ -1,13 +1,5 @@
 # Instructions for Language Creation\Modification for WinPaletter Versions equal or higher than 1.0.6.9
 
-> If you are using WinPaletter less than 1.0.6.9, please [read this instead](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/TranslationContribution.md)
-
----
-
-# This new method has been made instead of the old one, being dependent on JSON
-
-to try to minimize errors as much as possible, increase functionality and make it easier to modify.
-
 ---
 
 # Get Languages and apply them
@@ -63,7 +55,8 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 - In `Information`'s part, `righttoleft` can be `"righttoleft": false` or `"righttoleft": true` (Not TRUE or True, keep it the same as explained before)
 
 - Don't remove or modify brackets (`{0}`), slashes (`\` or `/`) or quotation marks (`"`), keep them consistent with your new translation.
-    > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
+  
+  > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
 
 - Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
 

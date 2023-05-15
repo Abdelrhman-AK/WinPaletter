@@ -146,7 +146,7 @@ Public Class Sounds_Editor
     Private Sub Sounds_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
 
         For Each page As TabPage In XenonTabControl1.TabPages
             For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
@@ -379,7 +379,7 @@ Public Class Sounds_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         Close()
     End Sub
 
@@ -387,7 +387,7 @@ Public Class Sounds_Editor
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CPx.Sounds.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default

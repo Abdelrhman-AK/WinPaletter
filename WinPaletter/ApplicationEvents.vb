@@ -145,6 +145,11 @@ Namespace My
         ''' </summary>
         Public ReadOnly IsBeta As Boolean = True
 
+        ''' <summary>
+        ''' CP is a short name for Color Palette (It was intentionally for Colors only in WinPaletter 1.0.0.0, not it include various parameters (not colors only)
+        ''' </summary>
+        Public CP, CP_Original, CP_FirstTime, CP_BeforeDrag As CP
+
     End Module
 
     Partial Friend Class MyApplication
@@ -197,7 +202,7 @@ Namespace My
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(MainFrm.CP, My.PreviewStyle)
+                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(My.CP, My.PreviewStyle)
                                                                             MainFrm.pnl_preview.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview_classic.BackgroundImage = Wall
                                                                             DragPreviewer.pnl_preview.BackgroundImage = Wall
@@ -881,6 +886,20 @@ Namespace My
             If My.WVista Then PreviewStyle = WindowStyle.WVista
             If My.WXP Then PreviewStyle = WindowStyle.WXP
 
+            'Load CP
+            If Not My.Application.ExternalLink Then
+                My.CP = New CP(CP.CP_Type.Registry)
+            Else
+                My.CP = New CP(CP.CP_Type.File, My.Application.ExternalLink_File)
+                MainFrm.OpenFileDialog1.FileName = My.Application.ExternalLink_File
+                MainFrm.SaveFileDialog1.FileName = My.Application.ExternalLink_File
+                My.Application.ExternalLink = False
+                My.Application.ExternalLink_File = ""
+            End If
+
+            My.CP_Original = My.CP.Clone
+            My.CP_FirstTime = My.CP.Clone
+
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
@@ -901,7 +920,7 @@ Namespace My
                         If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) Then
 
                             If Path.GetExtension(arg).ToLower = ".wpth" Then
-                                If MainFrm.CP <> MainFrm.CP_Original Then
+                                If My.CP <> My.CP_Original Then
                                     If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
                                             Case DialogResult.Yes
@@ -911,12 +930,12 @@ Namespace My
                                                 Select Case r1
                                                     Case 0              '' Save
                                                         If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                            My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                            My.CP_Original = My.CP.Clone
                                                         Else
                                                             If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                                MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                                                My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                                My.CP_Original = My.CP.Clone
                                                             Else
                                                                 Exit Sub
                                                             End If
@@ -924,8 +943,8 @@ Namespace My
 
                                                     Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                            My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                            My.CP_Original = My.CP.Clone
                                                         Else
                                                             Exit Sub
                                                         End If
@@ -946,12 +965,12 @@ Namespace My
 
                                 End If
 
-                                MainFrm.CP = New CP(CP.CP_Type.File, arg)
-                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                My.CP = New CP(CP.CP_Type.File, arg)
+                                My.CP_Original = My.CP.Clone
                                 MainFrm.OpenFileDialog1.FileName = arg
                                 MainFrm.SaveFileDialog1.FileName = arg
-                                MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyColorsToElements(MainFrm.CP)
+                                MainFrm.ApplyCPValues(My.CP)
+                                MainFrm.ApplyColorsToElements(My.CP)
 
                                 If Not [Settings].OpeningPreviewInApp_or_AppliesIt Then
                                     MainFrm.Apply_Theme()
@@ -979,7 +998,7 @@ Namespace My
                                 Dim File As String = arg.Remove(0, "/edit:".Count)
                                 File = File.Replace("""", "")
 
-                                If MainFrm.CP <> MainFrm.CP_Original Then
+                                If My.CP <> My.CP_Original Then
 
                                     If [Settings].ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
@@ -990,12 +1009,12 @@ Namespace My
                                                 Select Case r1
                                                     Case 0              '' Save
                                                         If IO.File.Exists(MainFrm.SaveFileDialog1.FileName) Then
-                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                            My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                            My.CP_Original = My.CP.Clone
                                                         Else
                                                             If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                                MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                                                My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                                My.CP_Original = My.CP.Clone
                                                             Else
                                                                 Exit Sub
                                                             End If
@@ -1003,8 +1022,8 @@ Namespace My
 
                                                     Case 1              '' Save As
                                                         If MainFrm.SaveFileDialog1.ShowDialog = DialogResult.OK Then
-                                                            MainFrm.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
-                                                            MainFrm.CP_Original = MainFrm.CP.Clone
+                                                            My.CP.Save(CP.CP_Type.File, MainFrm.SaveFileDialog1.FileName)
+                                                            My.CP_Original = My.CP.Clone
                                                         Else
                                                             Exit Sub
                                                         End If
@@ -1025,12 +1044,12 @@ Namespace My
 
                                 End If
 
-                                MainFrm.CP = New CP(CP.CP_Type.File, File)
-                                MainFrm.CP_Original = MainFrm.CP.Clone
+                                My.CP = New CP(CP.CP_Type.File, File)
+                                My.CP_Original = My.CP.Clone
                                 MainFrm.OpenFileDialog1.FileName = File
                                 MainFrm.SaveFileDialog1.FileName = File
-                                MainFrm.ApplyCPValues(MainFrm.CP)
-                                MainFrm.ApplyColorsToElements(MainFrm.CP)
+                                MainFrm.ApplyCPValues(My.CP)
+                                MainFrm.ApplyColorsToElements(My.CP)
 
                             End If
                         End If

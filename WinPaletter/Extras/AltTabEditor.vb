@@ -5,7 +5,7 @@ Public Class AltTabEditor
     Private Sub AltTabEditor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
-        ApplyFromCP(MainFrm.CP)
+        ApplyFromCP(My.CP)
 
         Select Case My.PreviewStyle
             Case WindowStyle.W11
@@ -33,38 +33,38 @@ Public Class AltTabEditor
         pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview1.BackgroundImage = MainFrm.pnl_preview_classic.BackgroundImage
 
-        SetClassicRaisedPanelColors(MainFrm.CP, RetroPanelRaised1)
-        SetClassicPanelColors(MainFrm.CP, RetroPanel1)
+        SetClassicRaisedPanelColors(My.CP, RetroPanelRaised1)
+        SetClassicPanelColors(My.CP, RetroPanel1)
 
-        Panel1.BackColor = MainFrm.CP.Win32.Hilight
+        Panel1.BackColor = My.CP.Win32.Hilight
 
         Select Case My.PreviewStyle
             Case WindowStyle.W11
                 XenonWinElement1.Style = XenonWinElement.Styles.AltTab11
-                XenonWinElement1.DarkMode = Not MainFrm.CP.Windows11.WinMode_Light
+                XenonWinElement1.DarkMode = Not My.CP.Windows11.WinMode_Light
 
             Case WindowStyle.W10
                 XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
-                XenonWinElement1.DarkMode = Not MainFrm.CP.Windows10.WinMode_Light
+                XenonWinElement1.DarkMode = Not My.CP.Windows10.WinMode_Light
 
             Case WindowStyle.W8
-                Select Case MainFrm.CP.Windows8.Theme
+                Select Case My.CP.Windows8.Theme
                     Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
-                        XenonWinElement1.BackColor = MainFrm.CP.Windows8.PersonalColors_Background
-                        XenonWinElement1.BackColor2 = MainFrm.CP.Windows8.PersonalColors_Background
+                        XenonWinElement1.BackColor = My.CP.Windows8.PersonalColors_Background
+                        XenonWinElement1.BackColor2 = My.CP.Windows8.PersonalColors_Background
 
                     Case CP.Structures.Windows7.Themes.AeroLite
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8AeroLite
-                        XenonWinElement1.BackColor = MainFrm.CP.Win32.Window
-                        XenonWinElement1.BackColor2 = MainFrm.CP.Win32.Hilight
-                        XenonWinElement1.LinkColor = MainFrm.CP.Win32.ButtonText
-                        XenonWinElement1.ForeColor = MainFrm.CP.Win32.WindowText
+                        XenonWinElement1.BackColor = My.CP.Win32.Window
+                        XenonWinElement1.BackColor2 = My.CP.Win32.Hilight
+                        XenonWinElement1.LinkColor = My.CP.Win32.ButtonText
+                        XenonWinElement1.ForeColor = My.CP.Win32.WindowText
 
                 End Select
 
             Case WindowStyle.W7
-                Select Case MainFrm.CP.Windows7.Theme
+                Select Case My.CP.Windows7.Theme
                     Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Aero
 
@@ -76,17 +76,17 @@ Public Class AltTabEditor
 
                 End Select
 
-                XenonWinElement1.BackColor = MainFrm.CP.Windows7.ColorizationColor
-                XenonWinElement1.BackColor2 = MainFrm.CP.Windows7.ColorizationAfterglow
-                XenonWinElement1.BackColorAlpha = MainFrm.CP.Windows7.ColorizationBlurBalance
-                XenonWinElement1.Win7ColorBal = MainFrm.CP.Windows7.ColorizationColorBalance
-                XenonWinElement1.Win7GlowBal = MainFrm.CP.Windows7.ColorizationAfterglowBalance
-                XenonWinElement1.NoisePower = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
-                XenonWinElement1.Shadow = MainFrm.CP.WindowsEffects.WindowShadow
+                XenonWinElement1.BackColor = My.CP.Windows7.ColorizationColor
+                XenonWinElement1.BackColor2 = My.CP.Windows7.ColorizationAfterglow
+                XenonWinElement1.BackColorAlpha = My.CP.Windows7.ColorizationBlurBalance
+                XenonWinElement1.Win7ColorBal = My.CP.Windows7.ColorizationColorBalance
+                XenonWinElement1.Win7GlowBal = My.CP.Windows7.ColorizationAfterglowBalance
+                XenonWinElement1.NoisePower = My.CP.Windows7.ColorizationGlassReflectionIntensity
+                XenonWinElement1.Shadow = My.CP.WindowsEffects.WindowShadow
         End Select
 
         Panel2.BackColor = RetroPanelRaised1.BackColor
-        RetroLabel1.Font = MainFrm.CP.MetricsFonts.CaptionFont
+        RetroLabel1.Font = My.CP.MetricsFonts.CaptionFont
 
         XenonGroupBox4.Enabled = (XenonWinElement1.Style = XenonWinElement.Styles.AltTab10) Or ExplorerPatcher.IsAllowed
         XenonAlertBox1.Visible = (My.PreviewStyle = WindowStyle.W7)
@@ -95,7 +95,7 @@ Public Class AltTabEditor
             Try
                 If My.Computer.Registry.CurrentUser.GetValue("Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) = 3 Then
                     XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
-                    XenonWinElement1.DarkMode = Not MainFrm.CP.Windows11.WinMode_Light
+                    XenonWinElement1.DarkMode = Not My.CP.Windows11.WinMode_Light
                 End If
             Finally
                 My.Computer.Registry.CurrentUser.Close()
@@ -160,14 +160,14 @@ Public Class AltTabEditor
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         CPx.AltTab.Apply()
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        ApplyToCP(MainFrm.CP)
+        ApplyToCP(My.CP)
         Me.Close()
     End Sub
 

@@ -195,7 +195,7 @@ Public Class SubMenu
 
         XenonComboBox1.SelectedIndex = 0
 
-        GetColorsFromPalette(MainFrm.CP)
+        GetColorsFromPalette(My.CP)
 
         If My.Application.CopiedColor = Nothing Then
 
@@ -265,7 +265,7 @@ Public Class SubMenu
 
         For Each c As Color In CP.ListColors
             Dim pnl As New XenonCP With {
-                .Size = New Size(If(My.[Settings].Nerd_Stats, 85, 30), 20),
+                .Size = New Size(If(My.Settings.Nerd_Stats, 85, 30), 20),
                 .BackColor = c
             }
             PaletteContainer.Controls.Add(pnl)
@@ -319,7 +319,7 @@ Public Class SubMenu
         If _shown Then
             Select Case XenonComboBox1.SelectedIndex
                 Case 0
-                    GetColorsFromPalette(MainFrm.CP)
+                    GetColorsFromPalette(My.CP)
                 Case 1
                     GetColorsFromPalette(New CP_Defaults().Default_Windows11)
                 Case 2
@@ -333,7 +333,7 @@ Public Class SubMenu
                 Case 6
                     GetColorsFromPalette(New CP_Defaults().Default_WindowsXP)
                 Case Else
-                    GetColorsFromPalette(MainFrm.CP)
+                    GetColorsFromPalette(My.CP)
             End Select
         End If
     End Sub
