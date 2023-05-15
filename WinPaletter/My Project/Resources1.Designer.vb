@@ -740,7 +740,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.exe.
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.zip.
         '''</summary>
         Public ReadOnly Property Link_Converter() As String
             Get
