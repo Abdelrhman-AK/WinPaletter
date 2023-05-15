@@ -458,7 +458,7 @@ Namespace My
                         End Select
                     Else
 
-                        If CP.Wallpaper.WallpaperType = CP.WallpaperType.Picture Then
+                        If CP.Wallpaper.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture Then
                             If IO.File.Exists(CP.Wallpaper.ImageFile) Then
                                 Wall = Bitmap_Mgr.Load(CP.Wallpaper.ImageFile)
 
@@ -467,10 +467,10 @@ Namespace My
                                 Return Wall
                             End If
 
-                        ElseIf CP.Wallpaper.WallpaperType = CP.WallpaperType.SolidColor Then
+                        ElseIf CP.Wallpaper.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SolidColor Then
                             Wall = Nothing
 
-                        ElseIf CP.Wallpaper.WallpaperType = CP.WallpaperType.SlideShow Then
+                        ElseIf CP.Wallpaper.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SlideShow Then
 
                             If CP.Wallpaper.SlideShow_Folder_or_ImagesList Then
                                 Dim ls As String() = Directory.EnumerateFiles(CP.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(Function(s)
@@ -514,20 +514,20 @@ Namespace My
 
                     Wall = Wall.Resize(Wall.Width / ScaleW, Wall.Height / ScaleH)
 
-                    If CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fill Then
+                    If CP.Wallpaper.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fill Then
                         picbox.SizeMode = PictureBoxSizeMode.CenterImage
                         Wall = DirectCast(Wall.Clone, Bitmap).FillScale(picbox.Size)
 
-                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Fit Then
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fit Then
                         picbox.SizeMode = PictureBoxSizeMode.Zoom
 
-                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Stretched Then
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Stretched Then
                         picbox.SizeMode = PictureBoxSizeMode.StretchImage
 
-                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Centered Then
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Centered Then
                         picbox.SizeMode = PictureBoxSizeMode.CenterImage
 
-                    ElseIf CP.Wallpaper.WallpaperStyle = CP.WallpaperStyle.Tile Then
+                    ElseIf CP.Wallpaper.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Tile Then
                         picbox.SizeMode = PictureBoxSizeMode.Normal
                         Wall = DirectCast(Wall.Clone, Bitmap).Tile(picbox.Size)
 
@@ -635,6 +635,8 @@ Namespace My
 
 #Region "   Application Startup and Shutdown Subs"
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            RemoveHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+
             If Not My.WXP Then
                 Try
                     WallMon_Watcher1.Stop()

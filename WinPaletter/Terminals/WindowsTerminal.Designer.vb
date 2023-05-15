@@ -232,7 +232,7 @@ Partial Class WindowsTerminal
         '
         'OpenWPTHDlg
         '
-        Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth"
+        Me.OpenWPTHDlg.Filter = "WinPaletter Theme File (*.wpth)|*.wpth|All files (*.*)|*.*"
         '
         'OpenJSONDlg
         '

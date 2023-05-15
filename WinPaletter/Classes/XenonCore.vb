@@ -61,7 +61,7 @@ Public Class XenonCore
                     temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance
                     temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance
                     temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (CP.Windows7.Theme = AeroTheme.AeroOpaque)
+                    temp.fOpaque = (CP.Windows7.Theme = Structures.Windows7.Themes.AeroOpaque)
 
                 ElseIf My.WVista Then
                     temp.clrColor = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor).ToArgb
@@ -71,7 +71,7 @@ Public Class XenonCore
                     'temp.clrAfterGlowBalance = CP.WindowsVista.ColorizationAfterglowBalance
                     'temp.clrBlurBalance = CP.WindowsVista.ColorizationBlurBalance
                     'temp.clrGlassReflectionIntensity = CP.WindowsVista.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (CP.WindowsVista.Theme = AeroTheme.AeroOpaque)
+                    temp.fOpaque = (CP.WindowsVista.Theme = Structures.Windows7.Themes.AeroOpaque)
                 End If
 
                 Dwmapi.DwmSetColorizationParameters(temp, False)

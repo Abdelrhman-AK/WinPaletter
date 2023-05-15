@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
 
 Public Class LogonUIXP
     Private Sub LogonUIXP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -13,9 +12,9 @@ Public Class LogonUIXP
         With CP.LogonUIXP
             XenonToggle1.Checked = .Enabled
             Select Case .Mode
-                Case CP.LogonUIXP_Modes.Default
+                Case CP.Structures.LogonUIXP.Modes.Default
                     XenonRadioImage1.Checked = True
-                Case CP.LogonUIXP_Modes.Win2000
+                Case CP.Structures.LogonUIXP.Modes.Win2000
                     XenonRadioImage2.Checked = True
                 Case Else
                     XenonRadioImage1.Checked = True
@@ -28,7 +27,7 @@ Public Class LogonUIXP
     Sub ApplyToCP(CP As CP)
         With CP.LogonUIXP
             .Enabled = XenonToggle1.Checked
-            If XenonRadioImage1.Checked Then .Mode = CP.LogonUIXP_Modes.Default Else .Mode = CP.LogonUIXP_Modes.Win2000
+            If XenonRadioImage1.Checked Then .Mode = CP.Structures.LogonUIXP.Modes.Default Else .Mode = CP.Structures.LogonUIXP.Modes.Win2000
             .BackColor = color_pick.BackColor
             .ShowMoreOptions = XenonCheckBox1.Checked
         End With

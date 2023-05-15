@@ -66,7 +66,7 @@ Public Class Store
 
     Sub SetClassicMetrics(CP As CP)
         Try
-            If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+            If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                 If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                     Dim vs As New VisualStyleFile(My.VS)
                     CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
@@ -143,7 +143,7 @@ Public Class Store
 
     Sub ApplyRetroPreview([CP] As CP)
         Try
-            If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+            If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                 If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                     Dim vs As New VisualStyleFile(My.VS)
                     CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)

@@ -16,7 +16,6 @@ Public Class XeSettings
     Public Property AutoUpdatesChecking As Boolean = True
     Public Property ComplexSaveResult As String = "2.1"
     Public Property ShowSaveConfirmation As Boolean = True
-    Public Property SaveForLegacyWP As Boolean = False
     Public Property CompressThemeFile As Boolean = True
     Public Property AlwaysExportThemePack As Boolean = False
     Public Property Win7LivePreview As Boolean = True
@@ -134,7 +133,6 @@ Public Class XeSettings
                 AutoAddExt = GetReg(REG, "AutoAddExt", True)
                 DragAndDropPreview = GetReg(REG, "DragAndDropPreview", True)
                 OpeningPreviewInApp_or_AppliesIt = GetReg(REG, "OpeningPreviewInApp_or_AppliesIt", True)
-                SaveForLegacyWP = GetReg(REG, "SaveForLegacyWP", False)
                 AlwaysExportThemePack = GetReg(REG, "AlwaysExportThemePack", False)
                 CompressThemeFile = GetReg(REG, "CompressThemeFile", True)
 
@@ -214,7 +212,6 @@ Public Class XeSettings
                     If x.StartsWith("AutoAddExt= ", My._ignore) Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
                     If x.StartsWith("DragAndDropPreview= ", My._ignore) Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
                     If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ", My._ignore) Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
-                    If x.StartsWith("SaveForLegacyWP= ", My._ignore) Then SaveForLegacyWP = x.Remove(0, "SaveForLegacyWP= ".Count)
                     If x.StartsWith("AlwaysExportThemePack= ", My._ignore) Then AlwaysExportThemePack = x.Remove(0, "AlwaysExportThemePack= ".Count)
                     If x.StartsWith("CompressThemeFile= ", My._ignore) Then CompressThemeFile = x.Remove(0, "CompressThemeFile= ".Count)
 
@@ -317,7 +314,6 @@ Public Class XeSettings
                 EditReg(REG, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
                 EditReg(REG, "DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
                 EditReg(REG, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
-                EditReg(REG, "SaveForLegacyWP", SaveForLegacyWP, RegistryValueKind.DWord)
                 EditReg(REG, "AlwaysExportThemePack", AlwaysExportThemePack, RegistryValueKind.DWord)
                 EditReg(REG, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord)
 
@@ -401,7 +397,6 @@ Public Class XeSettings
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))
                 l.Add(String.Format("DragAndDropPreview= {0}", DragAndDropPreview))
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
-                l.Add(String.Format("SaveForLegacyWP= {0}", SaveForLegacyWP))
                 l.Add(String.Format("AlwaysExportThemePack= {0}", AlwaysExportThemePack))
                 l.Add(String.Format("CompressThemeFile= {0}", CompressThemeFile))
 

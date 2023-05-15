@@ -567,7 +567,7 @@ Public Class ColorPickerDlg
                     temp.clrAfterGlowBalance = MainFrm.CP.Windows7.ColorizationAfterglowBalance
                     temp.clrBlurBalance = MainFrm.CP.Windows7.ColorizationBlurBalance
                     temp.clrGlassReflectionIntensity = MainFrm.CP.Windows7.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (MainFrm.CP.Windows7.Theme = AeroTheme.AeroOpaque)
+                    temp.fOpaque = (MainFrm.CP.Windows7.Theme = Structures.Windows7.Themes.AeroOpaque)
 
                 ElseIf My.PreviewStyle = WindowStyle.WVista Then
                     temp.clrColor = Color.FromArgb(MainFrm.CP.WindowsVista.Alpha, MainFrm.CP.WindowsVista.ColorizationColor).ToArgb
@@ -576,7 +576,7 @@ Public Class ColorPickerDlg
                     'temp.nIntensity = MainFrm.CP.WindowsVista.ColorizationColorBalance
                     'temp.clrBlurBalance = MainFrm.CP.WindowsVista.ColorizationBlurBalance
                     'temp.clrGlassReflectionIntensity = MainFrm.CP.WindowsVista.ColorizationGlassReflectionIntensity
-                    temp.fOpaque = (MainFrm.CP.WindowsVista.Theme = AeroTheme.AeroOpaque)
+                    temp.fOpaque = (MainFrm.CP.WindowsVista.Theme = Structures.Windows7.Themes.AeroOpaque)
                 End If
 
                 Dwmapi.DwmSetColorizationParameters(temp, False)

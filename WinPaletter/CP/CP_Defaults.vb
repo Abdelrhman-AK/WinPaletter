@@ -410,10 +410,10 @@ Public Class CP_Defaults : Implements IDisposable
             .StartColor = Color.FromArgb(30, 0, 84)
             .AccentColor = Color.FromArgb(72, 29, 178)
             .Start = 0
-            .Theme = CP.AeroTheme.Aero
+            .Theme = CP.Structures.Windows7.Themes.Aero
             .LogonUI = 0
             .NoLockScreen = False
-            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenType = CP.Structures.LogonUI7.Modes.Default_
             .LockScreenSystemID = 0
         End With
 
@@ -612,10 +612,10 @@ Public Class CP_Defaults : Implements IDisposable
             .StartColor = Color.FromArgb(30, 0, 84)
             .AccentColor = Color.FromArgb(72, 29, 178)
             .Start = 0
-            .Theme = CP.AeroTheme.Aero
+            .Theme = CP.Structures.Windows7.Themes.Aero
             .LogonUI = 0
             .NoLockScreen = False
-            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenType = CP.Structures.LogonUI7.Modes.Default_
             .LockScreenSystemID = 0
         End With
 
@@ -628,7 +628,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ColorizationGlassReflectionIntensity = 0
             .EnableAeroPeek = True
             .AlwaysHibernateThumbnails = False
-            .Theme = CP.AeroTheme.Aero
+            .Theme = CP.Structures.Windows7.Themes.Aero
         End With
 
         With [CP].WindowsVista
@@ -813,10 +813,10 @@ Public Class CP_Defaults : Implements IDisposable
             .StartColor = Color.FromArgb(30, 0, 84)
             .AccentColor = Color.FromArgb(72, 29, 178)
             .Start = 0
-            .Theme = CP.AeroTheme.Aero
+            .Theme = CP.Structures.Windows7.Themes.Aero
             .LogonUI = 0
             .NoLockScreen = False
-            .LockScreenType = CP.LogonUI_Modes.Default_
+            .LockScreenType = CP.Structures.LogonUI7.Modes.Default_
             .LockScreenSystemID = 0
         End With
 
@@ -829,7 +829,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ColorizationGlassReflectionIntensity = 0
             .EnableAeroPeek = True
             .AlwaysHibernateThumbnails = False
-            .Theme = CP.AeroTheme.Aero
+            .Theme = CP.Structures.Windows7.Themes.Aero
         End With
 
         With [CP].WindowsVista
@@ -1710,7 +1710,7 @@ Public Class CP_Defaults : Implements IDisposable
 
         With [CP].Wallpaper
             .ImageFile = My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp"
-            .WallpaperStyle = CP.WallpaperStyle.Stretched
+            .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Stretched
         End With
 
         Return [CP]

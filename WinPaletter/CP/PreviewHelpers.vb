@@ -136,7 +136,7 @@ Public Class PreviewHelpers
                             pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                             pic8.Image = My.Resources.Mini_Taskbar
 
-                            If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_Taskbar_SomeBtns
                             End If
 
@@ -145,7 +145,7 @@ Public Class PreviewHelpers
                             pic1.Image = My.Resources.Mini_Taskbar
                             pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
 
-                            If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC_TaskbarActiveApp
                             Else
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC
@@ -170,7 +170,7 @@ Public Class PreviewHelpers
                             pic7.Image = My.Resources.Mini_UWPDlg
                             pic8.Image = My.Resources.Mini_Taskbar
 
-                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_Undefined
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
@@ -179,7 +179,7 @@ Public Class PreviewHelpers
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_Undefined
 
-                            ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                            ElseIf [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
@@ -207,7 +207,7 @@ Public Class PreviewHelpers
                             pic6.Image = My.Resources.Native10
                             pic7.Image = My.Resources.Mini_UWPDlg
 
-                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_Undefined
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC
@@ -220,7 +220,7 @@ Public Class PreviewHelpers
                                 pic5.Image = My.Resources.Mini_Settings_Icons
                                 pic8.Image = My.Resources.Mini_ACHover_Links
 
-                            ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                            ElseIf [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl4.Text = My.Lang.CP_10_TaskbarFocusedApp_StartButtonHover
@@ -299,18 +299,18 @@ Public Class PreviewHelpers
                             S_Alpha = 90
                         End If
 
-                        Select Case [CP].Windows11.ApplyAccentonTaskbar
-                            Case ApplyAccentonTaskbar_Level.None
+                        Select Case [CP].Windows11.ApplyAccentOnTaskbar
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                 TB_Color = Color.FromArgb(28, 28, 28)
                                 S_Color = Color.FromArgb(28, 28, 28)
                                 AC_Color = Color.FromArgb(28, 28, 28)
 
-                            Case ApplyAccentonTaskbar_Level.Taskbar
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                 TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
                                 S_Color = Color.FromArgb(28, 28, 28)
                                 AC_Color = Color.FromArgb(28, 28, 28)
 
-                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                 TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
@@ -353,18 +353,18 @@ Public Class PreviewHelpers
                             S_Alpha = 180
                         End If
 
-                        Select Case [CP].Windows11.ApplyAccentonTaskbar
-                            Case ApplyAccentonTaskbar_Level.None
+                        Select Case [CP].Windows11.ApplyAccentOnTaskbar
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                 TB_Color = Color.FromArgb(255, 255, 255)
                                 S_Color = Color.FromArgb(255, 255, 255)
                                 AC_Color = Color.FromArgb(255, 255, 255)
 
-                            Case ApplyAccentonTaskbar_Level.Taskbar
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                 TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
                                 S_Color = Color.FromArgb(255, 255, 255)
                                 AC_Color = Color.FromArgb(255, 255, 255)
 
-                            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                 TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
@@ -467,8 +467,8 @@ Public Class PreviewHelpers
                     Case True
 
                         If [CP].Windows10.Transparency Then
-                            Select Case [CP].Windows10.ApplyAccentonTaskbar
-                                Case ApplyAccentonTaskbar_Level.None
+                            Select Case [CP].Windows10.ApplyAccentOnTaskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                     TB_Color = Color.FromArgb(16, 16, 16)
                                     TB_StartBtnColor = Color.FromArgb(150, 150, 150, 150)
                                     S_Color = Color.FromArgb(31, 31, 31)
@@ -481,7 +481,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                     TB_Color = [CP].Windows10.Color_Index6
                                     TB_StartBtnColor = Color.FromArgb(0, 0, 0, 0)
                                     S_Color = Color.FromArgb(31, 31, 31)
@@ -494,7 +494,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                     TB_Color = [CP].Windows10.Color_Index6
                                     TB_StartBtnColor = Color.FromArgb(0, 0, 0, 0)
                                     S_Color = [CP].Windows10.Color_Index4
@@ -510,27 +510,27 @@ Public Class PreviewHelpers
                             End Select
 
                         Else
-                            Select Case [CP].Windows10.ApplyAccentonTaskbar
-                                Case ApplyAccentonTaskbar_Level.None
+                            Select Case [CP].Windows10.ApplyAccentOnTaskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                     TB_Color = Color.FromArgb(16, 16, 16)
                                     TB_StartBtnColor = Color.FromArgb(31, 31, 31)
                                     S_Color = Color.FromArgb(31, 31, 31)
                                     AC_Color = Color.FromArgb(31, 31, 31)
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                     TB_Color = [CP].Windows10.Color_Index5
                                     TB_StartBtnColor = [CP].Windows10.Color_Index4
                                     S_Color = Color.FromArgb(31, 31, 31)
                                     AC_Color = Color.FromArgb(31, 31, 31)
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                     TB_Color = [CP].Windows10.Color_Index5
                                     TB_StartBtnColor = [CP].Windows10.Color_Index4
                                     S_Color = [CP].Windows10.Color_Index4
                                     AC_Color = [CP].Windows10.Color_Index4
                             End Select
 
-                            If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                            If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                                 TB_AppBack_Color = Color.FromArgb(150, 100, 100, 100)
                             Else
                                 TB_AppBack_Color = [CP].Windows10.Color_Index4
@@ -547,8 +547,8 @@ Public Class PreviewHelpers
                     Case False
                         If [CP].Windows10.Transparency Then
 
-                            Select Case [CP].Windows10.ApplyAccentonTaskbar
-                                Case ApplyAccentonTaskbar_Level.None
+                            Select Case [CP].Windows10.ApplyAccentOnTaskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                     TB_Color = Color.FromArgb(238, 238, 238)
                                     TB_StartBtnColor = Color.Transparent
                                     S_Color = Color.FromArgb(228, 228, 228)
@@ -561,7 +561,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                     TB_Color = [CP].Windows10.Color_Index6
                                     TB_StartBtnColor = Color.Transparent
                                     S_Color = Color.FromArgb(228, 228, 228)
@@ -574,7 +574,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                     TB_Color = [CP].Windows10.Color_Index6
                                     TB_StartBtnColor = Color.Transparent
                                     S_Color = [CP].Windows10.Color_Index4
@@ -591,8 +591,8 @@ Public Class PreviewHelpers
 
                         Else
 
-                            Select Case [CP].Windows10.ApplyAccentonTaskbar
-                                Case ApplyAccentonTaskbar_Level.None
+                            Select Case [CP].Windows10.ApplyAccentOnTaskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                                     TB_Color = Color.FromArgb(238, 238, 238)
                                     TB_StartBtnColor = Color.FromArgb(241, 241, 241)
                                     S_Color = Color.FromArgb(228, 228, 228)
@@ -605,7 +605,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                                     TB_Color = [CP].Windows10.Color_Index5
                                     TB_StartBtnColor = [CP].Windows10.Color_Index4
                                     S_Color = Color.FromArgb(228, 228, 228)
@@ -618,7 +618,7 @@ Public Class PreviewHelpers
                                     Link_preview_Color = [CP].Windows10.Color_Index3
                                     AC_Normal = [CP].Windows10.Color_Index3
 
-                                Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+                                Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                                     TB_Color = [CP].Windows10.Color_Index5
                                     TB_StartBtnColor = [CP].Windows10.Color_Index4
                                     S_Color = [CP].Windows10.Color_Index4
@@ -668,10 +668,10 @@ Public Class PreviewHelpers
             Case WindowStyle.W8
 #Region "Win8.1"
                 Select Case [CP].Windows8.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         Taskbar.Transparency = True
                         Taskbar.BackColorAlpha = 100
-                    Case CP.AeroTheme.AeroLite
+                    Case CP.Structures.Windows7.Themes.AeroLite
                         Taskbar.Transparency = False
                         Taskbar.BackColorAlpha = 255
                 End Select
@@ -686,11 +686,11 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.W7
 #Region "Win7"
-                Start.Transparency = Not [CP].Windows7.Theme = AeroTheme.Basic And Not [CP].Windows7.Theme = AeroTheme.Classic
-                Taskbar.Transparency = Not [CP].Windows7.Theme = AeroTheme.Basic And Not [CP].Windows7.Theme = AeroTheme.Classic
+                Start.Transparency = Not [CP].Windows7.Theme = Structures.Windows7.Themes.Basic And Not [CP].Windows7.Theme = Structures.Windows7.Themes.Classic
+                Taskbar.Transparency = Not [CP].Windows7.Theme = Structures.Windows7.Themes.Basic And Not [CP].Windows7.Theme = Structures.Windows7.Themes.Classic
 
                 Select Case [CP].Windows7.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         With Start
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
@@ -708,7 +708,7 @@ Public Class PreviewHelpers
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
-                    Case CP.AeroTheme.AeroOpaque
+                    Case CP.Structures.Windows7.Themes.AeroOpaque
                         With Taskbar
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
                             .BackColor = [CP].Windows7.ColorizationColor
@@ -722,7 +722,7 @@ Public Class PreviewHelpers
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
-                    Case CP.AeroTheme.Basic
+                    Case CP.Structures.Windows7.Themes.Basic
                         Taskbar.BackColor = Color.FromArgb(166, 190, 218)
                         Taskbar.BackColorAlpha = 100
                         Start.BackColor = Color.FromArgb(166, 190, 218)
@@ -733,11 +733,11 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.WVista
 #Region "WinVista"
-                Start.Transparency = Not [CP].WindowsVista.Theme = AeroTheme.Basic And Not [CP].WindowsVista.Theme = AeroTheme.Classic
-                Taskbar.Transparency = Not [CP].WindowsVista.Theme = AeroTheme.Basic And Not [CP].WindowsVista.Theme = AeroTheme.Classic
+                Start.Transparency = Not [CP].WindowsVista.Theme = Structures.Windows7.Themes.Basic And Not [CP].WindowsVista.Theme = Structures.Windows7.Themes.Classic
+                Taskbar.Transparency = Not [CP].WindowsVista.Theme = Structures.Windows7.Themes.Basic And Not [CP].WindowsVista.Theme = Structures.Windows7.Themes.Classic
 
                 Select Case [CP].WindowsVista.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         With Start
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
                             .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
@@ -756,7 +756,7 @@ Public Class PreviewHelpers
                         End With
 
 
-                    Case CP.AeroTheme.AeroOpaque
+                    Case CP.Structures.Windows7.Themes.AeroOpaque
                         With Taskbar
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
                             .BackColor = [CP].WindowsVista.ColorizationColor
@@ -770,7 +770,7 @@ Public Class PreviewHelpers
                             .NoisePower = 100
                         End With
 
-                    Case CP.AeroTheme.Basic
+                    Case CP.Structures.Windows7.Themes.Basic
                         Taskbar.BackColor = Color.FromArgb(166, 190, 218)
                         Taskbar.BackColorAlpha = 100
                         Start.BackColor = Color.FromArgb(166, 190, 218)
@@ -842,22 +842,22 @@ Public Class PreviewHelpers
                 Start_Style = XenonWinElement.Styles.Start10
 
             Case WindowStyle.W8
-                XenonWindow_Style = If(CP.Windows8.Theme = AeroTheme.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
-                Taskbar_Style = If(CP.Windows8.Theme = AeroTheme.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
+                XenonWindow_Style = If(CP.Windows8.Theme = Structures.Windows7.Themes.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+                Taskbar_Style = If(CP.Windows8.Theme = Structures.Windows7.Themes.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
 
             Case WindowStyle.W7
                 Select Case CP.Windows7.Theme
-                    Case AeroTheme.Aero
+                    Case Structures.Windows7.Themes.Aero
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Aero
                         Taskbar_Style = XenonWinElement.Styles.Taskbar7Aero
                         Start_Style = XenonWinElement.Styles.Start7Aero
 
-                    Case AeroTheme.AeroOpaque
+                    Case Structures.Windows7.Themes.AeroOpaque
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Opaque
                         Taskbar_Style = XenonWinElement.Styles.Taskbar7Opaque
                         Start_Style = XenonWinElement.Styles.Start7Opaque
 
-                    Case AeroTheme.Basic
+                    Case Structures.Windows7.Themes.Basic
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Basic
                         Taskbar_Style = XenonWinElement.Styles.Taskbar7Basic
                         Start_Style = XenonWinElement.Styles.Start7Basic
@@ -866,17 +866,17 @@ Public Class PreviewHelpers
 
             Case WindowStyle.WVista
                 Select Case CP.WindowsVista.Theme     'Windows Vista uses the same aero of Windows 7
-                    Case AeroTheme.Aero
+                    Case Structures.Windows7.Themes.Aero
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Aero
                         Taskbar_Style = XenonWinElement.Styles.TaskbarVistaAero
                         Start_Style = XenonWinElement.Styles.StartVistaAero
 
-                    Case AeroTheme.AeroOpaque
+                    Case Structures.Windows7.Themes.AeroOpaque
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Opaque
                         Taskbar_Style = XenonWinElement.Styles.TaskbarVistaOpaque
                         Start_Style = XenonWinElement.Styles.StartVistaOpaque
 
-                    Case AeroTheme.Basic
+                    Case Structures.Windows7.Themes.Basic
                         XenonWindow_Style = XenonWindow.Preview_Enum.W7Basic
                         Taskbar_Style = XenonWinElement.Styles.TaskbarVistaBasic
                         Start_Style = XenonWinElement.Styles.StartVistaBasic
@@ -889,25 +889,25 @@ Public Class PreviewHelpers
                 Start_Style = XenonWinElement.Styles.StartXP
 
                 Select Case CP.WindowsXP.Theme
-                    Case WinXPTheme.LunaBlue
+                    Case CP.Structures.WindowsXP.Themes.LunaBlue
                         My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
                         IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Blue)
                         My.resVS = New VisualStylesRes(My.VS)
 
-                    Case WinXPTheme.LunaOliveGreen
+                    Case CP.Structures.WindowsXP.Themes.LunaOliveGreen
                         My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
                         IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.OliveGreen)
                         My.resVS = New VisualStylesRes(My.VS)
 
-                    Case WinXPTheme.LunaSilver
+                    Case CP.Structures.WindowsXP.Themes.LunaSilver
                         My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
                         IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Silver)
                         My.resVS = New VisualStylesRes(My.VS)
 
-                    Case WinXPTheme.Custom
+                    Case CP.Structures.WindowsXP.Themes.Custom
                         If IO.File.Exists(CP.WindowsXP.ThemeFile) Then
                             If IO.Path.GetExtension(CP.WindowsXP.ThemeFile) = ".theme" Then
                                 My.VS = CP.WindowsXP.ThemeFile
@@ -919,7 +919,7 @@ Public Class PreviewHelpers
                         My.LunaRes = New Luna(Luna.ColorStyles.Empty)
                         My.resVS = New VisualStylesRes(My.VS)
 
-                    Case WinXPTheme.Classic
+                    Case CP.Structures.WindowsXP.Themes.Classic
                         My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
                         IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Empty)
@@ -928,21 +928,21 @@ Public Class PreviewHelpers
                 End Select
 
                 Try
-                    If WXP_VS_ReplaceColors And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceColors And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                         If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
                             CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
                         End If
                     End If
 
-                    If WXP_VS_ReplaceMetrics And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceMetrics And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                         If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
                             CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
                         End If
                     End If
 
-                    If WXP_VS_ReplaceFonts And CP.WindowsXP.Theme <> WinXPTheme.Classic Then
+                    If WXP_VS_ReplaceFonts And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                         If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
                             Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
                             CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
@@ -1178,8 +1178,8 @@ Public Class PreviewHelpers
         Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
-                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
-                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentonTitlebars
+                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
 
                 XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
                 XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
@@ -1196,8 +1196,8 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.W10
 #Region "Win10"
-                XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
-                XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentonTitlebars
+                XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
+                XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
 
                 XenonWindow1.AccentColor_Active = [CP].Windows10.Titlebar_Active
                 XenonWindow2.AccentColor_Active = [CP].Windows10.Titlebar_Active
@@ -1221,10 +1221,10 @@ Public Class PreviewHelpers
                 If LogonUIButton IsNot Nothing Then ApplyBackLogonUI([CP], LogonUIButton)
 
                 Select Case [CP].Windows8.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8
-                    Case CP.AeroTheme.AeroLite
+                    Case CP.Structures.Windows7.Themes.AeroLite
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8Lite
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8Lite
                 End Select
@@ -1246,7 +1246,7 @@ Public Class PreviewHelpers
                 XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].Windows7.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
@@ -1270,7 +1270,7 @@ Public Class PreviewHelpers
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
-                    Case CP.AeroTheme.AeroOpaque
+                    Case CP.Structures.Windows7.Themes.AeroOpaque
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
@@ -1286,7 +1286,7 @@ Public Class PreviewHelpers
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
-                    Case CP.AeroTheme.Basic
+                    Case CP.Structures.Windows7.Themes.Basic
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
@@ -1311,7 +1311,7 @@ Public Class PreviewHelpers
                 XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].WindowsVista.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Aero
                             .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
@@ -1335,7 +1335,7 @@ Public Class PreviewHelpers
                             .Win7Noise = 100
                         End With
 
-                    Case CP.AeroTheme.AeroOpaque
+                    Case CP.Structures.Windows7.Themes.AeroOpaque
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Opaque
                             .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
@@ -1351,7 +1351,7 @@ Public Class PreviewHelpers
                             .Win7Noise = 100
                         End With
 
-                    Case CP.AeroTheme.Basic
+                    Case CP.Structures.Windows7.Themes.Basic
                         With XenonWindow1
                             .Preview = XenonWindow.Preview_Enum.W7Basic
                             .Win7Alpha = 100
@@ -1374,9 +1374,9 @@ Public Class PreviewHelpers
         XenonWindow2.Invalidate()
     End Sub
     Public Shared Sub AdjustPreview_ModernOrClassic(ByVal [CP] As CP, [Style] As WindowStyle, tabs_preview As TablessControl, WXP_Alert As XenonAlertBox)
-        Dim condition0 As Boolean = [Style] = WindowStyle.W7 AndAlso CP.Windows7.Theme = AeroTheme.Classic
-        Dim condition1 As Boolean = [Style] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = AeroTheme.Classic
-        Dim condition2 As Boolean = [Style] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = WinXPTheme.Classic
+        Dim condition0 As Boolean = [Style] = WindowStyle.W7 AndAlso CP.Windows7.Theme = Structures.Windows7.Themes.Classic
+        Dim condition1 As Boolean = [Style] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = Structures.Windows7.Themes.Classic
+        Dim condition2 As Boolean = [Style] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
         WXP_Alert.Visible = [Style] = WindowStyle.WXP AndAlso My.StartedWithClassicTheme
         tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
     End Sub

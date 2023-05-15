@@ -49,12 +49,12 @@ Public Class AltTabEditor
 
             Case WindowStyle.W8
                 Select Case MainFrm.CP.Windows8.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
                         XenonWinElement1.BackColor = MainFrm.CP.Windows8.PersonalColors_Background
                         XenonWinElement1.BackColor2 = MainFrm.CP.Windows8.PersonalColors_Background
 
-                    Case CP.AeroTheme.AeroLite
+                    Case CP.Structures.Windows7.Themes.AeroLite
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8AeroLite
                         XenonWinElement1.BackColor = MainFrm.CP.Win32.Window
                         XenonWinElement1.BackColor2 = MainFrm.CP.Win32.Hilight
@@ -65,13 +65,13 @@ Public Class AltTabEditor
 
             Case WindowStyle.W7
                 Select Case MainFrm.CP.Windows7.Theme
-                    Case CP.AeroTheme.Aero
+                    Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Aero
 
-                    Case CP.AeroTheme.AeroOpaque
+                    Case CP.Structures.Windows7.Themes.AeroOpaque
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Opaque
 
-                    Case CP.AeroTheme.Basic
+                    Case CP.Structures.Windows7.Themes.Basic
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Basic
 
                 End Select
@@ -117,8 +117,8 @@ Public Class AltTabEditor
     Sub ApplyFromCP(CP As CP)
         With CP.AltTab
             AltTabEnabled.Checked = .Enabled
-            XenonRadioImage1.Checked = .Style = CP.AltTabStyles.Default Or .Style = CP.AltTabStyles.EP_Win10
-            XenonRadioImage2.Checked = .Style = CP.AltTabStyles.ClassicNT
+            XenonRadioImage1.Checked = .Style = CP.Structures.AltTab.Styles.Default Or .Style = CP.Structures.AltTab.Styles.EP_Win10
+            XenonRadioImage2.Checked = .Style = CP.Structures.AltTab.Styles.ClassicNT
             XenonTrackbar1.Value = .Win10Opacity
         End With
     End Sub
@@ -126,8 +126,8 @@ Public Class AltTabEditor
     Sub ApplyToCP(CP As CP)
         With CP.AltTab
             .Enabled = AltTabEnabled.Checked
-            .Style = If(XenonRadioImage1.Checked, CP.AltTabStyles.Default, CP.AltTabStyles.ClassicNT)
-            If ExplorerPatcher.IsAllowed And XenonWinElement1.Style = XenonWinElement.Styles.AltTab10 Then .Style = CP.AltTabStyles.EP_Win10
+            .Style = If(XenonRadioImage1.Checked, CP.Structures.AltTab.Styles.Default, CP.Structures.AltTab.Styles.ClassicNT)
+            If ExplorerPatcher.IsAllowed And XenonWinElement1.Style = XenonWinElement.Styles.AltTab10 Then .Style = CP.Structures.AltTab.Styles.EP_Win10
             .Win10Opacity = XenonTrackbar1.Value
         End With
     End Sub

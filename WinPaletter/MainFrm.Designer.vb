@@ -395,6 +395,7 @@ Partial Class MainFrm
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.MainToolbar = New WinPaletter.XenonGroupBox()
+        Me.BetaBadge = New WinPaletter.XenonAlertBox()
         Me.XenonButton31 = New WinPaletter.XenonButton()
         Me.XenonButton20 = New WinPaletter.XenonButton()
         Me.XenonButton18 = New WinPaletter.XenonButton()
@@ -422,7 +423,6 @@ Partial Class MainFrm
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.BetaBadge = New WinPaletter.XenonAlertBox()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -5627,6 +5627,24 @@ Partial Class MainFrm
         Me.MainToolbar.Size = New System.Drawing.Size(1070, 60)
         Me.MainToolbar.TabIndex = 1
         '
+        'BetaBadge
+        '
+        Me.BetaBadge.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.BetaBadge.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BetaBadge.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.BetaBadge.CenterText = True
+        Me.BetaBadge.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.BetaBadge.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.BetaBadge.Image = Nothing
+        Me.BetaBadge.Location = New System.Drawing.Point(1010, 19)
+        Me.BetaBadge.Name = "BetaBadge"
+        Me.BetaBadge.Size = New System.Drawing.Size(47, 22)
+        Me.BetaBadge.TabIndex = 55
+        Me.BetaBadge.TabStop = False
+        Me.BetaBadge.Text = "BETA"
+        Me.BetaBadge.Visible = False
+        '
         'XenonButton31
         '
         Me.XenonButton31.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
@@ -6064,24 +6082,6 @@ Partial Class MainFrm
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Tag = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
-        '
-        'BetaBadge
-        '
-        Me.BetaBadge.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
-        Me.BetaBadge.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BetaBadge.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.BetaBadge.CenterText = True
-        Me.BetaBadge.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.BetaBadge.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.BetaBadge.Image = Nothing
-        Me.BetaBadge.Location = New System.Drawing.Point(1010, 19)
-        Me.BetaBadge.Name = "BetaBadge"
-        Me.BetaBadge.Size = New System.Drawing.Size(47, 22)
-        Me.BetaBadge.TabIndex = 55
-        Me.BetaBadge.TabStop = False
-        Me.BetaBadge.Text = "BETA"
-        Me.BetaBadge.Visible = False
         '
         'MainFrm
         '

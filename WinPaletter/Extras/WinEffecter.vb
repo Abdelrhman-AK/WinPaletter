@@ -17,13 +17,13 @@ Public Class WinEffecter
             XenonCheckBox2.Checked = .WindowShadow
             XenonCheckBox3.Checked = .WindowUIEffects
             XenonCheckBox6.Checked = .MenuAnimation
-            If .MenuFade = CP.MenuAnimType.Fade Then XenonComboBox1.SelectedIndex = 0 Else XenonComboBox1.SelectedIndex = 1
+            If .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Then XenonComboBox1.SelectedIndex = 0 Else XenonComboBox1.SelectedIndex = 1
             XenonCheckBox5.Checked = .MenuSelectionFade
             XenonTrackbar1.Value = .MenuShowDelay
             XenonCheckBox8.Checked = .ComboboxAnimation
             XenonCheckBox7.Checked = .ListBoxSmoothScrolling
             XenonCheckBox9.Checked = .TooltipAnimation
-            If .TooltipFade = CP.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
+            If .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
             XenonCheckBox4.Checked = .IconsShadow
             XenonCheckBox10.Checked = .IconsDesktopTranslSel
             XenonCheckBox11.Checked = .ShowWinContentDrag
@@ -44,9 +44,9 @@ Public Class WinEffecter
             XenonCheckBox21.Checked = .ShakeToMinimize
             XenonCheckBox22.Checked = .Win11BootDots
 
-            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Default)
-            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Ribbon)
-            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.ExplorerBar.Bar)
+            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default)
+            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon)
+            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar)
             XenonCheckBox23.Checked = .DisableNavBar
             XenonCheckBox24.Checked = .AutoHideScrollBars
 
@@ -54,22 +54,22 @@ Public Class WinEffecter
                 XenonRadioImage1.Checked = True
             Else
                 Select Case .ColorFilter
-                    Case CP.ColorFilters.Grayscale
+                    Case CP.Structures.WinEffects.ColorFilters.Grayscale
                         XenonRadioImage5.Checked = True
 
-                    Case CP.ColorFilters.Inverted
+                    Case CP.Structures.WinEffects.ColorFilters.Inverted
                         XenonRadioImage7.Checked = True
 
-                    Case CP.ColorFilters.GrayscaleInverted
+                    Case CP.Structures.WinEffects.ColorFilters.GrayscaleInverted
                         XenonRadioImage6.Checked = True
 
-                    Case CP.ColorFilters.RedGreen_deuteranopia
+                    Case CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia
                         XenonRadioImage2.Checked = True
 
-                    Case CP.ColorFilters.RedGreen_protanopia
+                    Case CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia
                         XenonRadioImage3.Checked = True
 
-                    Case CP.ColorFilters.BlueYellow
+                    Case CP.Structures.WinEffects.ColorFilters.BlueYellow
                         XenonRadioImage4.Checked = True
 
                     Case Else
@@ -91,13 +91,13 @@ Public Class WinEffecter
             .WindowShadow = XenonCheckBox2.Checked
             .WindowUIEffects = XenonCheckBox3.Checked
             .MenuAnimation = XenonCheckBox6.Checked
-            If XenonComboBox1.SelectedIndex = 0 Then .MenuFade = CP.MenuAnimType.Fade Else .MenuFade = CP.MenuAnimType.Scroll
+            If XenonComboBox1.SelectedIndex = 0 Then .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .MenuFade = CP.Structures.WinEffects.MenuAnimType.Scroll
             .MenuSelectionFade = XenonCheckBox5.Checked
             .MenuShowDelay = XenonTrackbar1.Value
-            .ComboboxAnimation = XenonCheckBox8.Checked
+            .ComboBoxAnimation = XenonCheckBox8.Checked
             .ListBoxSmoothScrolling = XenonCheckBox7.Checked
             .TooltipAnimation = XenonCheckBox9.Checked
-            If XenonComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.MenuAnimType.Fade Else .TooltipFade = CP.MenuAnimType.Scroll
+            If XenonComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Scroll
             .IconsShadow = XenonCheckBox4.Checked
             .IconsDesktopTranslSel = XenonCheckBox10.Checked
             .ShowWinContentDrag = XenonCheckBox11.Checked
@@ -119,13 +119,13 @@ Public Class WinEffecter
             .Win11BootDots = XenonCheckBox22.Checked
 
             If XenonRadioButton1.Checked Then
-                .Win11ExplorerBar = CP.ExplorerBar.Default
+                .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default
 
             ElseIf XenonRadioButton2.Checked Then
-                .Win11ExplorerBar = CP.ExplorerBar.Ribbon
+                .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon
 
             ElseIf XenonRadioButton3.Checked Then
-                .Win11ExplorerBar = CP.ExplorerBar.Bar
+                .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar
 
             End If
 
@@ -137,27 +137,27 @@ Public Class WinEffecter
 
             ElseIf XenonRadioImage5.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.Grayscale
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.Grayscale
 
             ElseIf XenonRadioImage7.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.Inverted
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.Inverted
 
             ElseIf XenonRadioImage6.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.GrayscaleInverted
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.GrayscaleInverted
 
             ElseIf XenonRadioImage2.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.RedGreen_deuteranopia
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia
 
             ElseIf XenonRadioImage3.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.RedGreen_protanopia
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia
 
             ElseIf XenonRadioImage4.Checked Then
                 .ColorFilter_Enabled = True
-                .ColorFilter = CP.ColorFilters.BlueYellow
+                .ColorFilter = CP.Structures.WinEffects.ColorFilters.BlueYellow
 
             End If
 

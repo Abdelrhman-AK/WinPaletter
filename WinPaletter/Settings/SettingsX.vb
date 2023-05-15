@@ -43,7 +43,6 @@ Public Class SettingsX
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = XeSettings.UpdateChannels.Stable, 0, 1)
             XenonCheckBox17.Checked = .ShowSaveConfirmation
-            XenonCheckBox4.Checked = .SaveForLegacyWP
             XenonCheckBox31.Checked = .AlwaysExportThemePack
             XenonCheckBox33.Checked = .CompressThemeFile
 
@@ -258,7 +257,6 @@ Public Class SettingsX
             .Appearance_ManagedByTheme = XenonCheckBox30.Checked
 
             .ShowSaveConfirmation = XenonCheckBox17.Checked
-            .SaveForLegacyWP = XenonCheckBox4.Checked
             .AlwaysExportThemePack = XenonCheckBox31.Checked
             .CompressThemeFile = XenonCheckBox33.Checked
 
@@ -328,7 +326,6 @@ Public Class SettingsX
             If .ResetCursorsToAero <> XenonCheckBox16.Checked Then Changed = True
             If .AutoUpdatesChecking <> XenonCheckBox5.Checked Then Changed = True
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
-            If .SaveForLegacyWP <> XenonCheckBox4.Checked Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
             If .AlwaysExportThemePack <> XenonCheckBox31.Checked Then Changed = True

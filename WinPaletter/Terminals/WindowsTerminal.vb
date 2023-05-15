@@ -121,9 +121,11 @@ Public Class WindowsTerminal
     Sub FillTerminalSchemes(Terminal As WinTerminal, Combobox As ComboBox)
         Combobox.Items.Clear()
 
-        For x = 0 To Terminal.Colors.Count - 1
-            Combobox.Items.Add(Terminal.Colors(x).Name)
-        Next
+        If Terminal.Colors.Count > 0 Then
+            For x = 0 To Terminal.Colors.Count - 1
+                Combobox.Items.Add(Terminal.Colors(x).Name)
+            Next
+        End If
 
     End Sub
 
@@ -134,20 +136,23 @@ Public Class WindowsTerminal
         Combobox.Items.Add("Light")
         Combobox.Items.Add("System")
 
-        For x = 0 To Terminal.Themes.Count - 1
-            Combobox.Items.Add(Terminal.Themes(x).Name)
-        Next
+        If Terminal.Themes.Count > 0 Then
+            For x = 0 To Terminal.Themes.Count - 1
+                Combobox.Items.Add(Terminal.Themes(x).Name)
+            Next
+        End If
 
     End Sub
 
     Sub FillTerminalProfiles(Terminal As WinTerminal, Combobox As ComboBox)
         Combobox.Items.Clear()
-
         Combobox.Items.Add("Default")
 
-        For x = 0 To Terminal.Profiles.Count - 1
-            Combobox.Items.Add(Terminal.Profiles(x).Name)
-        Next
+        If Terminal.Profiles.Count > 0 Then
+            For x = 0 To Terminal.Profiles.Count - 1
+                Combobox.Items.Add(Terminal.Profiles(x).Name)
+            Next
+        End If
 
     End Sub
 
@@ -1145,24 +1150,14 @@ Public Class WindowsTerminal
             SaveState = _Mode
             If WindowsTerminalDecide.ShowDialog = DialogResult.OK Then
                 If SaveState = WinTerminal.Version.Stable Then
-                    Dim ls_stable As New List(Of String)
-                    ls_stable.Clear()
-                    For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.StartsWith("terminal.", My._ignore) Then ls_stable.Add(lin)
-                    Next
-                    _Terminal = New WinTerminal(ls_stable.CString, WinTerminal.Mode.WinPaletterFile)
-                    Load_FromTerminal()
+                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile)
+
+                ElseIf SaveState = WinTerminal.Version.Preview Then
+                    _Terminal = New WinTerminal(OpenWPTHDlg.FileName, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+
                 End If
 
-                If SaveState = WinTerminal.Version.Preview Then
-                    Dim ls_preview As New List(Of String)
-                    ls_preview.Clear()
-                    For Each lin In IO.File.ReadAllLines(OpenWPTHDlg.FileName)
-                        If lin.StartsWith("terminalpreview.", My._ignore) Then ls_preview.Add(lin)
-                    Next
-                    _Terminal = New WinTerminal(ls_preview.CString, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
-                    Load_FromTerminal()
-                End If
+                Load_FromTerminal()
             End If
 
         End If

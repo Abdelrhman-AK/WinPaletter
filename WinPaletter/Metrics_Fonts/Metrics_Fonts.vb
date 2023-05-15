@@ -53,9 +53,9 @@ Public Class Metrics_Fonts
         XenonFakeIcon2.Title = "Icon 2"
         XenonFakeIcon3.Title = "Icon 3"
 
-        Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.AeroTheme.Classic
-        Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.AeroTheme.Classic
-        Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.WinXPTheme.Classic
+        Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso MainFrm.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
+        Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso MainFrm.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
+        Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
 
         If condition0 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1

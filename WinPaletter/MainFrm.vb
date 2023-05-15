@@ -74,13 +74,13 @@ Public Class MainFrm
         W11_Transparency_Toggle.Checked = [CP].Windows11.Transparency
         W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows11.ApplyAccentonTitlebars
         Select Case [CP].Windows11.ApplyAccentonTaskbar
-            Case ApplyAccentonTaskbar_Level.None
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                 W11_Accent_None.Checked = True
 
-            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                 W11_Accent_StartTaskbar.Checked = True
 
-            Case ApplyAccentonTaskbar_Level.Taskbar
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                 W11_Accent_Taskbar.Checked = True
 
         End Select
@@ -103,13 +103,13 @@ Public Class MainFrm
         W10_TB_Blur.Checked = [CP].Windows10.TB_Blur
         W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentonTitlebars
         Select Case [CP].Windows10.ApplyAccentonTaskbar
-            Case ApplyAccentonTaskbar_Level.None
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                 W10_Accent_None.Checked = True
 
-            Case ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
                 W10_Accent_StartTaskbar.Checked = True
 
-            Case ApplyAccentonTaskbar_Level.Taskbar
+            Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
                 W10_Accent_Taskbar.Checked = True
         End Select
         W10_ActiveTitlebar_pick.BackColor = [CP].Windows10.Titlebar_Active
@@ -125,10 +125,10 @@ Public Class MainFrm
         W10_Color_Index7.BackColor = [CP].Windows10.Color_Index7
 
         Select Case [CP].Windows8.Theme
-            Case CP.AeroTheme.Aero
+            Case CP.Structures.Windows7.Themes.Aero
                 W8_theme_aero.Checked = True
 
-            Case CP.AeroTheme.AeroLite
+            Case CP.Structures.Windows7.Themes.AeroLite
                 W8_theme_aerolite.Checked = True
         End Select
         W8_ColorizationColor_pick.BackColor = [CP].Windows8.ColorizationColor
@@ -152,16 +152,16 @@ Public Class MainFrm
         W7_EnableAeroPeek_toggle.Checked = [CP].Windows7.EnableAeroPeek
         W7_AlwaysHibernateThumbnails_Toggle.Checked = [CP].Windows7.AlwaysHibernateThumbnails
         Select Case [CP].Windows7.Theme
-            Case CP.AeroTheme.Aero
+            Case CP.Structures.Windows7.Themes.Aero
                 W7_theme_aero.Checked = True
 
-            Case CP.AeroTheme.AeroOpaque
+            Case CP.Structures.Windows7.Themes.AeroOpaque
                 W7_theme_aeroopaque.Checked = True
 
-            Case CP.AeroTheme.Basic
+            Case CP.Structures.Windows7.Themes.Basic
                 W7_theme_basic.Checked = True
 
-            Case CP.AeroTheme.Classic
+            Case CP.Structures.Windows7.Themes.Classic
                 W7_theme_classic.Checked = True
         End Select
 
@@ -169,33 +169,33 @@ Public Class MainFrm
         WVista_ColorizationColorBalance_bar.Value = [CP].WindowsVista.Alpha
         WVista_ColorizationColorBalance_val.Text = [CP].WindowsVista.Alpha
         Select Case [CP].WindowsVista.Theme
-            Case CP.AeroTheme.Aero
+            Case CP.Structures.Windows7.Themes.Aero
                 WVista_theme_aero.Checked = True
 
-            Case CP.AeroTheme.AeroOpaque
+            Case CP.Structures.Windows7.Themes.AeroOpaque
                 WVista_theme_aeroopaque.Checked = True
 
-            Case CP.AeroTheme.Basic
+            Case CP.Structures.Windows7.Themes.Basic
                 WVista_theme_basic.Checked = True
 
-            Case CP.AeroTheme.Classic
+            Case CP.Structures.Windows7.Themes.Classic
                 WVista_theme_classic.Checked = True
         End Select
 
         Select Case [CP].WindowsXP.Theme
-            Case CP.WinXPTheme.LunaBlue
+            Case CP.Structures.WindowsXP.Themes.LunaBlue
                 WXP_Luna_Blue.Checked = True
 
-            Case CP.WinXPTheme.LunaOliveGreen
+            Case CP.Structures.WindowsXP.Themes.LunaOliveGreen
                 WXP_Luna_OliveGreen.Checked = True
 
-            Case CP.WinXPTheme.LunaSilver
+            Case CP.Structures.WindowsXP.Themes.LunaSilver
                 WXP_Luna_Silver.Checked = True
 
-            Case CP.WinXPTheme.Custom
+            Case CP.Structures.WindowsXP.Themes.Custom
                 WXP_CustomTheme.Checked = True
 
-            Case CP.WinXPTheme.Classic
+            Case CP.Structures.WindowsXP.Themes.Classic
                 WXP_Classic.Checked = True
 
         End Select
@@ -649,28 +649,28 @@ Public Class MainFrm
 
     Private Sub W11_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows11.ApplyAccentonTitlebars = sender.Checked
+            CP.Windows11.ApplyAccentOnTitlebars = sender.Checked
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows11.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
             If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(CP)
         End If
     End Sub
@@ -1063,28 +1063,28 @@ Public Class MainFrm
 
     Private Sub W10_ShowAccentOnTitlebarAndBorders_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_ShowAccentOnTitlebarAndBorders_Toggle.CheckedChanged
         If _Shown Then
-            CP.Windows10.ApplyAccentonTitlebars = sender.Checked
+            CP.Windows10.ApplyAccentOnTitlebars = sender.Checked
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None
+            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar
+            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
-            CP.Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC
+            CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
             If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(CP)
         End If
     End Sub
@@ -1117,7 +1117,7 @@ Public Class MainFrm
                 CList.Add(taskbar)  ''AppUnderline
                 _Conditions.AppUnderlineOnly = True
             Case False
-                If CP.Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                If CP.Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                     CList.Add(taskbar)  ''AppUnderline
                     _Conditions.AppUnderlineOnly = True
                 End If
@@ -1187,7 +1187,7 @@ Public Class MainFrm
                 _Conditions.ActionCenterLink = True
 
             Case False
-                If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                     CList.Add(ActionCenter) ''Link
                     _Conditions.ActionCenterLink = True
                 End If
@@ -1228,7 +1228,7 @@ Public Class MainFrm
                     CList.Add(setting_icon_preview)
                     CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                     CList.Add(lnk_preview)
-                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.None Then
+                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                         CList.Add(taskbar)  ''AppBackground
                         _Conditions.AppBackgroundOnly = True
 
@@ -1243,7 +1243,7 @@ Public Class MainFrm
                 CList.Add(ActionCenter) : _Conditions.ActionCenterBtn = True
                 CList.Add(lnk_preview)
 
-                If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                     CList.Add(taskbar)  ''AppBackground
                     _Conditions.AppBackgroundOnly = True
                     _Conditions.AppUnderlineOnly = True
@@ -1290,13 +1290,13 @@ Public Class MainFrm
                 If [CP].Windows10.Transparency Then
                     CList.Add(taskbar)
 
-                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                         CList.Add(ActionCenter) ''ActionCenterLinks
                         _Conditions.ActionCenterLink = True
                     End If
 
                 Else
-                    If [CP].Windows10.ApplyAccentonTaskbar <> ApplyAccentonTaskbar_Level.Taskbar_Start_AC Then
+                    If [CP].Windows10.ApplyAccentOnTaskbar <> CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC Then
                         CList.Add(ActionCenter) ''ActionCenterLinks
                         _Conditions.ActionCenterLink = True
 
@@ -1404,10 +1404,10 @@ Public Class MainFrm
                     CList.Add(start)
                     CList.Add(ActionCenter)
                 Else
-                    If [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.None Then
+                    If [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
-                    ElseIf [CP].Windows10.ApplyAccentonTaskbar = ApplyAccentonTaskbar_Level.Taskbar Then
+                    ElseIf [CP].Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
                         CList.Add(taskbar)  'Start Button Hover
@@ -1603,14 +1603,14 @@ Public Class MainFrm
 
     Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
         If W8_theme_aero.Checked Then
-            CP.Windows8.Theme = CP.AeroTheme.Aero
+            CP.Windows8.Theme = CP.Structures.Windows7.Themes.Aero
             If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
         End If
     End Sub
 
     Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W8_theme_aerolite.CheckedChanged
         If W8_theme_aerolite.Checked Then
-            CP.Windows8.Theme = CP.AeroTheme.AeroLite
+            CP.Windows8.Theme = CP.Structures.Windows7.Themes.AeroLite
             If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(CP)
         End If
     End Sub
@@ -1725,7 +1725,7 @@ Public Class MainFrm
 
     Private Sub W7_theme_classic_CheckedChanged(sender As Object) Handles W7_theme_classic.CheckedChanged
         If W7_theme_classic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Classic
+            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
             If My.PreviewStyle = WindowStyle.W7 Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1736,7 +1736,7 @@ Public Class MainFrm
 
     Private Sub W7_theme_basic_CheckedChanged(sender As Object) Handles W7_theme_basic.CheckedChanged
         If W7_theme_basic.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Basic
+            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Basic
             If My.PreviewStyle = WindowStyle.W7 Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1746,7 +1746,7 @@ Public Class MainFrm
 
     Private Sub W7_theme_aeroopaque_CheckedChanged(sender As Object) Handles W7_theme_aeroopaque.CheckedChanged
         If W7_theme_aeroopaque.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.AeroOpaque
+            CP.Windows7.Theme = CP.Structures.Windows7.Themes.AeroOpaque
             If My.PreviewStyle = WindowStyle.W7 Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1756,7 +1756,7 @@ Public Class MainFrm
 
     Private Sub W7_theme_Aero_CheckedChanged(sender As Object) Handles W7_theme_aero.CheckedChanged
         If W7_theme_aero.Checked Then
-            CP.Windows7.Theme = CP.AeroTheme.Aero
+            CP.Windows7.Theme = CP.Structures.Windows7.Themes.Aero
             If My.PreviewStyle = WindowStyle.W7 Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1836,7 +1836,7 @@ Public Class MainFrm
 
     Private Sub WVista_theme_classic_CheckedChanged(sender As Object) Handles WVista_theme_classic.CheckedChanged
         If WVista_theme_classic.Checked Then
-            CP.WindowsVista.Theme = CP.AeroTheme.Classic
+            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
             If My.PreviewStyle = WindowStyle.WVista Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1847,7 +1847,7 @@ Public Class MainFrm
 
     Private Sub WVista_theme_basic_CheckedChanged(sender As Object) Handles WVista_theme_basic.CheckedChanged
         If WVista_theme_basic.Checked Then
-            CP.WindowsVista.Theme = CP.AeroTheme.Basic
+            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Basic
             If My.PreviewStyle = WindowStyle.WVista Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1857,7 +1857,7 @@ Public Class MainFrm
 
     Private Sub WVista_theme_aeroopaque_CheckedChanged(sender As Object) Handles WVista_theme_aeroopaque.CheckedChanged
         If WVista_theme_aeroopaque.Checked Then
-            CP.WindowsVista.Theme = CP.AeroTheme.AeroOpaque
+            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.AeroOpaque
             If My.PreviewStyle = WindowStyle.WVista Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1867,7 +1867,7 @@ Public Class MainFrm
 
     Private Sub WVista_theme_Vista_CheckedChanged(sender As Object) Handles WVista_theme_aero.CheckedChanged
         If WVista_theme_aero.Checked Then
-            CP.WindowsVista.Theme = CP.AeroTheme.Aero
+            CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Aero
             If My.PreviewStyle = WindowStyle.WVista Then
                 ApplyColorsToElements(CP)
                 ApplyStylesToElements(CP, False)
@@ -1885,35 +1885,35 @@ Public Class MainFrm
 #Region "Windows XP"
     Private Sub WXP_Luna_Blue_CheckedChanged(sender As Object) Handles WXP_Luna_Blue.CheckedChanged
         If WXP_Luna_Blue.Checked Then
-            CP.WindowsXP.Theme = WinXPTheme.LunaBlue
+            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaBlue
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
         End If
     End Sub
 
     Private Sub WXP_Luna_OliveGreen_CheckedChanged(sender As Object) Handles WXP_Luna_OliveGreen.CheckedChanged
         If WXP_Luna_OliveGreen.Checked Then
-            CP.WindowsXP.Theme = WinXPTheme.LunaOliveGreen
+            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaOliveGreen
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
         End If
     End Sub
 
     Private Sub WXP_Luna_Silver_CheckedChanged(sender As Object) Handles WXP_Luna_Silver.CheckedChanged
         If WXP_Luna_Silver.Checked Then
-            CP.WindowsXP.Theme = WinXPTheme.LunaSilver
+            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.LunaSilver
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
         End If
     End Sub
 
     Private Sub WXP_CustomTheme_CheckedChanged(sender As Object) Handles WXP_CustomTheme.CheckedChanged
         If WXP_CustomTheme.Checked Then
-            CP.WindowsXP.Theme = WinXPTheme.Custom
+            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Custom
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
         End If
     End Sub
 
     Private Sub WXP_Classic_CheckedChanged(sender As Object) Handles WXP_Classic.CheckedChanged
         If WXP_Classic.Checked Then
-            CP.WindowsXP.Theme = WinXPTheme.Classic
+            CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(CP, False)
         End If
     End Sub

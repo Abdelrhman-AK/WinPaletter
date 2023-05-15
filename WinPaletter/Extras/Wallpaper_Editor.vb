@@ -52,11 +52,11 @@ Public Class Wallpaper_Editor
             Else
                 Select Case .WallpaperType
 
-                    Case CP.WallpaperType.Picture
+                    Case CP.Structures.Wallpaper.WallpaperTypes.Picture
                         source_pic.Checked = True
-                    Case CP.WallpaperType.SolidColor
+                    Case CP.Structures.Wallpaper.WallpaperTypes.SolidColor
                         source_color.Checked = True
-                    Case CP.WallpaperType.SlideShow
+                    Case CP.Structures.Wallpaper.WallpaperTypes.SlideShow
                         source_slideshow.Checked = True
                     Case Else
                         source_pic.Checked = True
@@ -65,15 +65,15 @@ Public Class Wallpaper_Editor
 
             XenonTextBox1.Text = .ImageFile
             Select Case .WallpaperStyle
-                Case CP.WallpaperStyle.Tile
+                Case CP.Structures.Wallpaper.WallpaperStyles.Tile
                     style_tile.Checked = True
-                Case CP.WallpaperStyle.Centered
+                Case CP.Structures.Wallpaper.WallpaperStyles.Centered
                     style_center.Checked = True
-                Case CP.WallpaperStyle.Stretched
+                Case CP.Structures.Wallpaper.WallpaperStyles.Stretched
                     style_stretch.Checked = True
-                Case CP.WallpaperStyle.Fill
+                Case CP.Structures.Wallpaper.WallpaperStyles.Fill
                     style_fill.Checked = True
-                Case CP.WallpaperStyle.Fit
+                Case CP.Structures.Wallpaper.WallpaperStyles.Fit
                     style_fit.Checked = True
                 Case Else
                     style_fill.Checked = True
@@ -104,19 +104,19 @@ Public Class Wallpaper_Editor
             .SlideShow_Folder_or_ImagesList = XenonRadioButton1.Checked
 
             If source_pic.Checked Then
-                .WallpaperType = CP.WallpaperType.Picture
+                .WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture
                 WT.Enabled = False
 
             ElseIf source_color.Checked Then
-                .WallpaperType = CP.WallpaperType.SolidColor
+                .WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SolidColor
                 WT.Enabled = False
 
             ElseIf source_slideshow.Checked Then
-                .WallpaperType = CP.WallpaperType.SlideShow
+                .WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SlideShow
                 WT.Enabled = False
 
             ElseIf source_wallpapertone.Checked Then
-                .WallpaperType = CP.WallpaperType.Picture
+                .WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture
                 WT.Enabled = True
 
             End If
@@ -124,17 +124,17 @@ Public Class Wallpaper_Editor
             .ImageFile = XenonTextBox1.Text
 
             If style_tile.Checked Then
-                .WallpaperStyle = CP.WallpaperStyle.Tile
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Tile
             ElseIf style_center.Checked Then
-                .WallpaperStyle = CP.WallpaperStyle.Centered
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Centered
             ElseIf style_stretch.Checked Then
-                .WallpaperStyle = CP.WallpaperStyle.Stretched
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Stretched
             ElseIf style_fill.Checked Then
-                .WallpaperStyle = CP.WallpaperStyle.Fill
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fill
             ElseIf style_fit.Checked Then
-                .WallpaperStyle = CP.WallpaperStyle.Fit
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fit
             Else
-                .WallpaperStyle = CP.WallpaperStyle.Fill
+                .WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fill
             End If
 
             .Wallpaper_Slideshow_ImagesRootPath = XenonTextBox2.Text

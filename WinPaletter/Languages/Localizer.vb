@@ -404,6 +404,10 @@ Public Class Localizer : Implements IDisposable
     Property OldMSTheme_ThemeName As String = "Theme name: {0}"
     Property OldMSTheme_ThemeVersion As String = "Theme version: {0}"
 
+    Property OldWPTH_Alert0 As String = "You are loading an old-formatted WinPaletter theme file. Please use WinPaletter conversion tool to convert this theme to a new JSON-internally-formatted theme so you can reuse your previously designed theme"
+    Property OldWPTH_Alert1 As String = "Visit WinPaletter repository to download WinPaletter conversion tool"
+
+
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
     Property Store_NoNetwork As String = "No internet connection"
     Property Store_TryOffline As String = "Press 'Yes' if you want to continue in offline Store mode. You can select its folders from Settings > Store."
