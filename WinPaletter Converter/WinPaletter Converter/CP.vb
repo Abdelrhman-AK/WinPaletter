@@ -3,39 +3,8 @@ Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
 Imports System.Drawing.Drawing2D
 
-Public Class CP : Implements IDisposable
+Public Class CP
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
-
-#Region "IDisposable Support"
-    Private disposedValue As Boolean ' To detect redundant calls
-
-    ' IDisposable
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not Me.disposedValue Then
-            If disposing Then
-                ' TODO: dispose managed state (managed objects).
-            End If
-
-            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-            ' TODO: set large fields to null.
-        End If
-        Me.disposedValue = True
-    End Sub
-
-    ' TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
-    'Protected Overrides Sub Finalize()
-    '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-    '    Dispose(False)
-    '    MyBase.Finalize()
-    'End Sub
-
-    ' This code added by Visual Basic to correctly implement the disposable pattern.
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-        Dispose(True)
-        GC.SuppressFinalize(Me)
-    End Sub
-#End Region
 
     Public Class Structures
         Structure Info
@@ -685,6 +654,14 @@ Public Class CP : Implements IDisposable
             Public FontSubstitute_MSShellDlg As String
             Public FontSubstitute_MSShellDlg2 As String
             Public FontSubstitute_SegoeUI As String
+
+            Function AddFontsToThemeFile(PropName As String, Font As Font) As String
+                Dim s As New List(Of String) : s.Clear()
+                s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name))
+                s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Size", Font.SizeInPoints))
+                s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Style", Font.Style))
+                Return s.CString
+            End Function
 
             Public Overrides Function ToString() As String
                 Dim tx As New List(Of String)
@@ -2267,48 +2244,6 @@ Public Class CP : Implements IDisposable
 
 #End Region
 
-#Region "Functions"
-
-    Public Shared Function IsFontInstalled(ByVal fontName As String) As Boolean
-        Dim installed As Boolean = IsFontInstalled(fontName, FontStyle.Regular)
-
-        If Not installed Then
-            installed = IsFontInstalled(fontName, FontStyle.Bold)
-        End If
-
-        If Not installed Then
-            installed = IsFontInstalled(fontName, FontStyle.Italic)
-        End If
-
-        Return installed
-    End Function
-    Public Shared Function IsFontInstalled(ByVal fontName As String, ByVal style As FontStyle) As Boolean
-        Dim installed As Boolean = False
-        Const emSize As Single = 8.0F
-
-        Try
-
-            Using testFont = New Font(fontName, emSize, style)
-                installed = (0 = String.Compare(fontName, testFont.Name, StringComparison.InvariantCultureIgnoreCase))
-            End Using
-
-        Catch
-        End Try
-
-        Return installed
-    End Function
-
-
-    Shared Function AddFontsToThemeFile(PropName As String, Font As Font) As String
-        Dim s As New List(Of String) : s.Clear()
-        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Name", Font.Name))
-        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Size", Font.SizeInPoints))
-        s.Add(String.Format("*Fonts_{0}_{1}= {2}", PropName, "Style", Font.Style))
-        Return s.CString
-    End Function
-
-#End Region
-
 #Region "CP Handling (Loading/Applying)"
     Sub New(File As String)
         Dim txt As String = String.Join(vbCrLf, Decompress(File))
@@ -2740,7 +2675,6 @@ Public Class CP : Implements IDisposable
             Return False
         End If
     End Function
-
 #End Region
 
 End Class
