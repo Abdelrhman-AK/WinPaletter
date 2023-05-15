@@ -367,6 +367,8 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Icon = Icon.ExtractAssociatedIcon(Reflection.Assembly.GetExecutingAssembly().Location)
+
         _Shown = False
         Visible = False
         LoggingOff = False
@@ -2651,6 +2653,10 @@ Public Class MainFrm
 
     Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
         ApplicationThemer.ShowDialog()
+    End Sub
+
+    Private Sub XenonButton36_Click(sender As Object, e As EventArgs) Handles XenonButton36.Click
+        Process.Start(My.Resources.Link_Converter)
     End Sub
 
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click

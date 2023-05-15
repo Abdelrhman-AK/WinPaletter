@@ -1284,11 +1284,10 @@ Partial Class SettingsX
         Me.XenonAlertBox21.Image = Nothing
         Me.XenonAlertBox21.Location = New System.Drawing.Point(51, 280)
         Me.XenonAlertBox21.Name = "XenonAlertBox21"
-        Me.XenonAlertBox21.Size = New System.Drawing.Size(466, 40)
+        Me.XenonAlertBox21.Size = New System.Drawing.Size(466, 60)
         Me.XenonAlertBox21.TabIndex = 30
         Me.XenonAlertBox21.TabStop = False
-        Me.XenonAlertBox21.Text = "You're responsible for copyrights of included resources (images and sounds), espe" &
-    "cially after uploading to WinPaletter Store."
+        Me.XenonAlertBox21.Text = resources.GetString("XenonAlertBox21.Text")
         '
         'XenonCheckBox31
         '
@@ -2975,7 +2974,7 @@ Partial Class SettingsX
         Me.Label56.Name = "Label56"
         Me.Label56.Size = New System.Drawing.Size(772, 24)
         Me.Label56.TabIndex = 65
-        Me.Label56.Text = "Search through (filer):"
+        Me.Label56.Text = "Search through (filter):"
         Me.Label56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonCheckBox28

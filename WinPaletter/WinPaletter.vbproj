@@ -560,10 +560,10 @@
     <Compile Include="Win32UI\Win32UI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win8\Start8Selector.Designer.vb">
+    <Compile Include="Extras\Start8Selector.Designer.vb">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </Compile>
-    <Compile Include="Win8\Start8Selector.vb">
+    <Compile Include="Extras\Start8Selector.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Extras\WinEffecter.Designer.vb">
@@ -910,7 +910,7 @@
     <EmbeddedResource Include="Win32UI\Win32UI.resx">
       <DependentUpon>Win32UI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win8\Start8Selector.resx">
+    <EmbeddedResource Include="Extras\Start8Selector.resx">
       <DependentUpon>Start8Selector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\WinEffecter.resx">

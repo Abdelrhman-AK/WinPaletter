@@ -740,6 +740,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.exe.
+        '''</summary>
+        Public ReadOnly Property Link_Converter() As String
+            Get
+                Return ResourceManager.GetString("Link_Converter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true.
         '''</summary>
         Public ReadOnly Property Link_License() As String

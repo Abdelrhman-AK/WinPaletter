@@ -18296,6 +18296,9 @@
   <data name="Link_Changelog" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md</value>
   </data>
+  <data name="Link_Converter" xml:space="preserve">
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.exe</value>
+  </data>
   <data name="Link_License" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true</value>
   </data>
