@@ -9,8 +9,8 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("WinPaletter Converter")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("Convert between new themes format (JSON) and old themes format for WinPaletter")>
+<Assembly: AssemblyCompany("Abdelrhman-AK")>
 <Assembly: AssemblyProduct("WinPaletter Converter")>
 <Assembly: AssemblyCopyright("Copyright ©  2023")>
 <Assembly: AssemblyTrademark("")>
