@@ -16,6 +16,7 @@ Public Class MainFrm
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
     Private LoggingOff As Boolean = False
+    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
 
 #Region "Preview Subs"
     Sub ApplyColorsToElements(ByVal [CP] As CP)
@@ -2085,7 +2086,6 @@ Public Class MainFrm
     Dim DragAccepted As Boolean
     Dim Dropped As Boolean
 
-
     Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, tabs_preview.DragEnter, TablessControl1.DragEnter
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
@@ -2093,14 +2093,25 @@ Public Class MainFrm
 
         If Path.GetExtension(files(0)).ToLower = ".wpth" Then
             wpth_or_wpsf = True
-            e.Effect = DragDropEffects.Copy
 
-            If My.Settings.DragAndDropPreview Then
+            If _Converter.FetchFile(files(0)) = WinPaletter_Converter.Converter_CP.WP_Format.JSON Then
+                e.Effect = DragDropEffects.Copy
+
+                If My.Settings.DragAndDropPreview Then
+                    DragAccepted = True
+                    My.CP_BeforeDrag = My.CP.Clone
+                    DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+                    DragPreviewer.File = files(0)
+                    DragPreviewer.Show()
+                End If
+            ElseIf _Converter.FetchFile(files(0)) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
                 DragAccepted = True
-                My.CP_BeforeDrag = My.CP.Clone
-                DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
-                DragPreviewer.File = files(0)
-                DragPreviewer.Show()
+                e.Effect = DragDropEffects.Copy
+
+            Else
+                DragAccepted = False
+                e.Effect = DragDropEffects.None
+
             End If
 
         ElseIf Path.GetExtension(files(0)).ToLower = ".wpsf" Then
@@ -2133,8 +2144,6 @@ Public Class MainFrm
             If wpth_or_wpsf Then
                 If My.Settings.DragAndDropPreview Then DragPreviewer.Close()
 
-
-
                 My.CP = New CP(CP.CP_Type.File, files(0))
                 tabs_preview.Visible = False
                 ApplyStylesToElements(My.CP, False)
@@ -2163,21 +2172,17 @@ Public Class MainFrm
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
-            If ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                            Apply_Theme()
-                                                        End Sub) Then
+            ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                         Apply_Theme()
+                                                     End Sub)
 
+            SaveFileDialog1.FileName = OpenFileDialog1.FileName
+            My.CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
+            My.CP_Original = My.CP.Clone
 
-                SaveFileDialog1.FileName = OpenFileDialog1.FileName
-                My.CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
-                My.CP_Original = My.CP.Clone
-
-                ApplyStylesToElements(My.CP, False)
-                ApplyCPValues(My.CP)
-                ApplyColorsToElements(My.CP)
-
-            End If
-
+            ApplyStylesToElements(My.CP, False)
+            ApplyCPValues(My.CP)
+            ApplyColorsToElements(My.CP)
         End If
     End Sub
 
@@ -2189,19 +2194,16 @@ Public Class MainFrm
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
 
-        If ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                        Apply_Theme()
-                                                    End Sub) Then
+        ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                     Apply_Theme()
+                                                 End Sub)
 
-            My.CP = New CP(CP.CP_Type.Registry)
-            My.CP_Original = My.CP.Clone
-            SaveFileDialog1.FileName = Nothing
-            ApplyStylesToElements(My.CP, False)
-            ApplyCPValues(My.CP)
-            ApplyColorsToElements(My.CP)
-
-        End If
-
+        My.CP = New CP(CP.CP_Type.Registry)
+        My.CP_Original = My.CP.Clone
+        SaveFileDialog1.FileName = Nothing
+        ApplyStylesToElements(My.CP, False)
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
@@ -2276,16 +2278,15 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
-        If ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                        Apply_Theme()
-                                                    End Sub) Then
+        ComplexSave.GetResponse(SaveFileDialog1, Sub()
+                                                     Apply_Theme()
+                                                 End Sub)
 
-            My.CP = CP_Defaults.From.Clone
-            SaveFileDialog1.FileName = Nothing
-            ApplyCPValues(My.CP)
-            ApplyStylesToElements(My.CP, False)
-            ApplyColorsToElements(My.CP)
-        End If
+        My.CP = CP_Defaults.From.Clone
+        SaveFileDialog1.FileName = Nothing
+        ApplyCPValues(My.CP)
+        ApplyStylesToElements(My.CP, False)
+        ApplyColorsToElements(My.CP)
     End Sub
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
@@ -2467,7 +2468,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton36_Click(sender As Object, e As EventArgs) Handles XenonButton36.Click
-        Process.Start(My.Resources.Link_Converter)
+        Converter.ShowDialog()
     End Sub
 
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click

@@ -7,7 +7,6 @@ Imports Devcorp.Controls.VisualStyles
 Imports System.Text
 Imports System.Net
 Imports WinPaletter.PreviewHelpers
-Imports Microsoft.Win32
 
 Public Class Store
 
@@ -30,7 +29,7 @@ Public Class Store
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
 
-
+    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
     Private ApplyOrEditToggle As Boolean = True
 #End Region
 
@@ -619,7 +618,7 @@ Public Class Store
             'Add valid lines (Correct format) in a themes list
             For Each item In response
                 Dim valid As Boolean = True
-                If item.Contains("|") Then
+                If item.Contains("|") AndAlso item.Split("|").Count >= 3 Then
                     For Each x In item.Split("|")
                         If String.IsNullOrWhiteSpace(x) Then
                             valid = False
@@ -643,10 +642,13 @@ Public Class Store
 
             'Loop through valid lines from the themes list
             For Each item In items
-                Dim URL_ThemeFile As String = item.Split("|")(2)
-                Dim MD5_ThemeFile As String = item.Split("|")(0).ToUpper
-                Dim URL_PackFile As String = item.Split("|")(3)
-                Dim MD5_PackFile As String = item.Split("|")(1).ToUpper
+                Dim item_splitted As String() = item.Split("|")
+
+                Dim MD5_ThemeFile As String = item_splitted(0).ToUpper
+                Dim MD5_PackFile As String = item_splitted(1).ToUpper
+                Dim URL_ThemeFile As String = item_splitted(2)
+                Dim URL_PackFile As String = ""
+                If item_splitted.Count = 4 Then URL_PackFile = item_splitted(3)
 
                 'Create a folder inside AppData folder
                 Dim temp As String = URL_ThemeFile.Replace("?raw=true", "")
@@ -675,8 +677,8 @@ Public Class Store
                 i += 1
                 If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
 
-                'Convert themes CPs into StoreItems
-                If File.Exists(Dir & "\" & FileName) Then
+                'Convert themes CPs into StoreItems, and exclude the old formats of WPTH
+                If File.Exists(Dir & "\" & FileName) AndAlso _Converter.FetchFile(Dir & "\" & FileName) = WinPaletter_Converter.Converter_CP.WP_Format.JSON Then
                     Try
                         Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 
@@ -1057,15 +1059,13 @@ Public Class Store
             'Edit button is pressed
             WindowState = FormWindowState.Minimized
 
-            If ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing) Then
-                My.CP = selectedItem.CP
-                My.CP_Original = My.CP.Clone
+            ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing)
 
-                MainFrm.ApplyStylesToElements(My.CP, False)
-                MainFrm.ApplyCPValues(My.CP)
-                MainFrm.ApplyColorsToElements(My.CP)
-            End If
-
+            My.CP = selectedItem.CP
+            My.CP_Original = My.CP.Clone
+            MainFrm.ApplyStylesToElements(My.CP, False)
+            MainFrm.ApplyCPValues(My.CP)
+            MainFrm.ApplyColorsToElements(My.CP)
         End If
     End Sub
 

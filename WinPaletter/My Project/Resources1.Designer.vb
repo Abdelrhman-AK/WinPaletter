@@ -740,15 +740,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.zip.
-        '''</summary>
-        Public ReadOnly Property Link_Converter() As String
-            Get
-                Return ResourceManager.GetString("Link_Converter", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true.
         '''</summary>
         Public ReadOnly Property Link_License() As String
@@ -2078,6 +2069,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Win8ORB", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Public ReadOnly Property WinPaletter_Converter() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("WinPaletter_Converter", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
         

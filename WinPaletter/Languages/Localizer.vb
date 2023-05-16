@@ -404,10 +404,6 @@ Public Class Localizer : Implements IDisposable
     Property OldMSTheme_ThemeName As String = "Theme name: {0}"
     Property OldMSTheme_ThemeVersion As String = "Theme version: {0}"
 
-    Property OldWPTH_Alert0 As String = "You are loading an old-formatted WinPaletter theme file. Please use WinPaletter conversion tool to convert this theme to a new JSON-internally-formatted theme so you can reuse your previously designed theme"
-    Property OldWPTH_Alert1 As String = "Visit WinPaletter repository to download WinPaletter conversion tool"
-
-
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
     Property Store_NoNetwork As String = "No internet connection"
     Property Store_TryOffline As String = "Press 'Yes' if you want to continue in offline Store mode. You can select its folders from Settings > Store."
@@ -422,6 +418,14 @@ Public Class Localizer : Implements IDisposable
     Property Store_AppVersionAlert1 As String = "This theme is designed by WinPaletter {0} and this is compatible with current version ({1}). It is advisable to keep WinPaletter up-to-date."
     Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
     Property Store_NoIncludedData As String = "There is no included data"
+
+    Property Convert_JSON_To_Old As String = "Theme file is JSON-internally-formatted. When you export this theme, it will be with old formatting system (valid for WinPaletter 1.0.7.6 and less)."
+    Property Convert_Old_To_JSON As String = "Theme file is old-formatted. When you export this theme, it will be JSON-internally-formatted (valid for WinPaletter 1.0.7.7 and higher). It supports contents compression that is useful for uploading more amount of themes to WinPaletter Store with less downloading duration, and used resources pack export that is useful for downloading missing used resources (wallpapers, images and sounds) from WinPaletter Store (or by external sharing) and applying them automatically with the theme."
+    Property Convert_Error_Phrasing As String = "Error occurred while phrasing theme file"
+    Property Convert_Done As String = "Theme file is converted and exported successfully"
+    Property Convert_Detect_Old_OnLoading0 As String = "WinPaletter detected that you are using an old theme format"
+    Property Convert_Detect_Old_OnLoading1 As String = "Do you want to convert it and load it automatically?"
+    Property Convert_Detect_Old_OnLoading2 As String = "Pressing 'No' will load a default Windows preset"
 #End Region
 
     Public Sub ExportJSON(File As String)

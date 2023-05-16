@@ -1247,7 +1247,7 @@ Partial Class SettingsX
         Me.XenonAlertBox22.TabIndex = 33
         Me.XenonAlertBox22.TabStop = False
         Me.XenonAlertBox22.Text = "Compressed themes files won't work with WinPaletter versions less than 1.0.7.7" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "I" &
-    "f you want to design a theme for older versions, use WinPaletter conversion tool" &
+    "f you want to design a theme for older versions, use WinPaletter theme converter" &
     "."
         '
         'XenonCheckBox33

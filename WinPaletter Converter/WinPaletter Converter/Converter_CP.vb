@@ -3,7 +3,7 @@ Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
 Imports System.Drawing.Drawing2D
 
-Public Class CP
+Public Class Converter_CP
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
 
     Public Class Structures
@@ -31,15 +31,6 @@ Public Class CP
                 tx.Add("</General>" & vbCrLf)
                 Return tx.CString
             End Function
-            Public Sub FromListOfString(Lines As IEnumerable(Of String))
-                For Each line As String In Lines
-                    If line.StartsWith("*Palette Name= ", 5) Then ThemeName = line.Remove(0, "*Palette Name= ".Count)
-                    If line.StartsWith("*Palette Description= ", 5) Then Description = line.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
-                    If line.StartsWith("*Palette File Version= ", 5) Then ThemeVersion = line.Remove(0, "*Palette File Version= ".Count)
-                    If line.StartsWith("*Author= ", 5) Then Author = line.Remove(0, "*Author= ".Count)
-                    If line.StartsWith("*AuthorSocialMediaLink= ", 5) Then AuthorSocialMediaLink = line.Remove(0, "*AuthorSocialMediaLink= ".Count)
-                Next
-            End Sub
         End Structure
 
         Structure Windows10x
@@ -120,24 +111,24 @@ Public Class CP
                     If Line.StartsWith("AccentOnStartTBAC= ", 5) Then
                         Select Case Line.Remove(0, "AccentOnStartTBAC= ".Count).ToLower
                             Case "false"
-                                ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
+                                ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.None
 
                             Case "true"
-                                ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
+                                ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
 
                             Case Else
                                 Select Case Line.Remove(0, "AccentOnStartTBAC= ".Count)
                                     Case 0
-                                        ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
+                                        ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.None
 
                                     Case 1
-                                        ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
+                                        ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
 
                                     Case 2
-                                        ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
+                                        ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
 
                                     Case Else
-                                        ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
+                                        ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.None
                                 End Select
                         End Select
                     End If
@@ -1357,7 +1348,7 @@ Public Class CP
             .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentOnTitlebars = False,
-            .ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None,
+            .ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.None,
             .IncreaseTBTransparency = False,
             .TB_Blur = True}
 
@@ -1377,7 +1368,7 @@ Public Class CP
             .AppMode_Light = True,
             .Transparency = True,
             .ApplyAccentOnTitlebars = False,
-            .ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None,
+            .ApplyAccentOnTaskbar = Converter_CP.Structures.Windows10x.AccentTaskbarLevels.None,
             .IncreaseTBTransparency = False,
             .TB_Blur = True}
 
@@ -1407,11 +1398,11 @@ Public Class CP
             .ColorizationGlassReflectionIntensity = 0,
             .EnableAeroPeek = True,
             .AlwaysHibernateThumbnails = False,
-            .Theme = CP.Structures.Windows7.Themes.Aero}
+            .Theme = Converter_CP.Structures.Windows7.Themes.Aero}
 
     Public WindowsVista As New Structures.WindowsVista With {
             .ColorizationColor = Color.FromArgb(64, 158, 254),
-            .Theme = CP.Structures.Windows7.Themes.Aero}
+            .Theme = Converter_CP.Structures.Windows7.Themes.Aero}
 
     Public WindowsXP As New Structures.WindowsXP With {
         .Theme = Structures.WindowsXP.Themes.LunaBlue,
@@ -2252,14 +2243,14 @@ Public Class CP
 
         If JSON Then
             LoadFromJSON(txt)
-            Form1.Format = WP_Format.JSON
+            Converter.Format = WP_Format.JSON
 
         ElseIf WPTH Then
             LoadFromOldWPTHFile(File)
-            Form1.Format = WP_Format.WPTH
+            Converter.Format = WP_Format.WPTH
 
         Else
-            Form1.Format = WP_Format.Error
+            Converter.Format = WP_Format.Error
 
         End If
     End Sub
@@ -2305,7 +2296,13 @@ Public Class CP
             End If
         Next
 
-        Info.FromListOfString(txt.Where(Function(l) l.StartsWith("*Info", 5)))
+        For Each lin As String In txt
+            If lin.StartsWith("*Palette Name= ", 5) Then Info.ThemeName = lin.Remove(0, "*Palette Name= ".Count)
+            If lin.StartsWith("*Palette Description= ", 5) Then Info.Description = lin.Remove(0, "*Palette Description= ".Count).Replace("<br>", vbCrLf)
+            If lin.StartsWith("*Palette File Version= ", 5) Then Info.ThemeVersion = lin.Remove(0, "*Palette File Version= ".Count)
+            If lin.StartsWith("*Author= ", 5) Then Info.Author = lin.Remove(0, "*Author= ".Count)
+            If lin.StartsWith("*AuthorSocialMediaLink= ", 5) Then Info.AuthorSocialMediaLink = lin.Remove(0, "*AuthorSocialMediaLink= ".Count)
+        Next
 
         Windows11.FromListOfString(txt.Where(Function(l) l.StartsWith("*Win_11", 5)))
         Windows10.FromListOfString(txt.Where(Function(l) l.StartsWith("*Win_10", 5)))

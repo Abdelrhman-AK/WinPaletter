@@ -697,17 +697,22 @@ Namespace My
                     MsgBox(Lang.LngExported, MsgBoxStyle.Information)
                     Process.GetCurrentProcess.Kill()
                     Exit For
-                End If
 
-                If arg.ToLower = "/uninstall" Then
+                ElseIf arg.ToLower = "/uninstall" Then
                     Uninstall.ShowDialog()
                     Process.GetCurrentProcess.Kill()
                     Exit For
-                End If
 
-                If arg.ToLower = "/uninstall-quiet" Then
+                ElseIf arg.ToLower = "/uninstall-quiet" Then
                     Uninstall_Quiet()
                     Exit For
+
+                ElseIf arg.StartsWith("/convert:", _ignore) Then
+                    CMD_Convert(arg, True)
+
+                ElseIf arg.StartsWith("/convert-list:", _ignore) Then
+                    CMD_Convert_List(arg, True)
+
                 End If
             Next
 
@@ -727,8 +732,7 @@ Namespace My
             ExternalLink_File = ""
 
             For Each arg As String In ArgsList
-
-                If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) Then
+                If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) And Not arg.StartsWith("/convert:", _ignore) And Not arg.StartsWith("/convert-list:", _ignore) Then
 
                     If Path.GetExtension(arg).ToLower = ".wpth" Then
                         If [Settings].OpeningPreviewInApp_or_AppliesIt Then
@@ -759,9 +763,8 @@ Namespace My
                             If [Settings].AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
-                    End If
 
-                    If arg.StartsWith("/edit:", _ignore) Then
+                    ElseIf arg.StartsWith("/edit:", _ignore) Then
                         Dim File As String = arg.Remove(0, "/edit:".Count)
                         File = File.Replace("""", "")
                         ExternalLink = True
@@ -914,8 +917,16 @@ Namespace My
 
                     ElseIf arg.ToLower = "/uninstall" Then
                         Uninstall.ShowDialog()
+
                     ElseIf arg.ToLower = "/uninstall-quiet" Then
                         Uninstall_Quiet()
+
+                    ElseIf arg.StartsWith("/convert:", _ignore) Then
+                        CMD_Convert(arg, False)
+
+                    ElseIf arg.StartsWith("/convert-list:", _ignore) Then
+                        CMD_Convert_List(arg, False)
+
                     Else
                         If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) Then
 
@@ -1059,6 +1070,79 @@ Namespace My
                 e.BringToForeground = True
             End Try
         End Sub
+
+        Sub CMD_Convert(arg As String, KillProcessAfterConvert As Boolean)
+            Try
+                Dim arr As String() = arg.Remove(0, "/convert:".Count).Split("|")
+                Dim Source As String = arr(0)
+                Dim Destination As String = arr(1)
+                Dim Compress As String = If(My.Settings.CompressThemeFile, "1", "0")
+                Dim OldWPTH As String = "0"
+                If arr.Count = 3 Then Compress = arr(2)
+                If arr.Count = 4 Then OldWPTH = arr(3)
+
+                Dim _Convert As New WinPaletter_Converter.Converter
+
+                If IO.File.Exists(Source) AndAlso Not _Convert.FetchFile(Source) = WinPaletter_Converter.Converter_CP.WP_Format.Error Then
+                    _Convert.Convert(Source, Destination, Compress = "1", OldWPTH = "1")
+                Else
+                    MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical, Source)
+                End If
+
+            Catch ex As Exception
+                BugReport.ThrowError(ex)
+            End Try
+
+            If KillProcessAfterConvert Then Process.GetCurrentProcess.Kill()
+        End Sub
+
+        Sub CMD_Convert_List(arg As String, KillProcessAfterConvert As Boolean)
+            Try
+                Dim source As String = arg.Remove(0, "/convert-list:".Count)
+                Dim _Convert As New WinPaletter_Converter.Converter
+
+                If IO.File.Exists(source) Then
+
+                    For Each File As String In IO.File.ReadAllLines(source)
+
+                        Dim f As String
+                        Dim compress As String = If(My.Settings.CompressThemeFile, "1", "0")
+                        Dim OldWPTH As String = "0"
+
+                        If Not String.IsNullOrWhiteSpace(File) Then
+                            If Not File.Contains("|") Then
+                                f = File.Replace("""", "")
+                            Else
+                                Dim arr As String() = File.Split("|")
+                                f = arr(0).Replace("""", "")
+                                If arr.Count = 2 Then compress = arr(1)
+                                If arr.Count = 3 Then compress = arr(2)
+                            End If
+
+                            Dim FI As New FileInfo(f)
+                            Dim Name As String = Path.GetFileNameWithoutExtension(FI.Name)
+                            Dim Dir As String = FI.FullName.Replace(FI.FullName.Split("\").Last, "WinPaletterConversion")
+                            Dim SaveAs As String = Dir & "\" & Name & ".wpth"
+
+                            If Not _Convert.FetchFile(f) = WinPaletter_Converter.Converter_CP.WP_Format.Error Then
+                                If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
+                                _Convert.Convert(f, SaveAs, compress = "1", OldWPTH = "1")
+                            Else
+                                MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical, f)
+                            End If
+                        End If
+
+                    Next
+
+                End If
+
+            Catch ex As Exception
+                BugReport.ThrowError(ex)
+            End Try
+
+            If KillProcessAfterConvert Then Process.GetCurrentProcess.Kill()
+        End Sub
+
 #End Region
 
 #Region "   Domain (External Resources) and Exceptions Handling"
@@ -1104,6 +1188,9 @@ Namespace My
             Catch : End Try
 
             Try : If e.Name.ToUpper.Contains("System.ValueTuple".ToUpper) Then Return Assembly.Load(Resources.System_ValueTuple)
+            Catch : End Try
+
+            Try : If e.Name.ToUpper.Contains("WinPaletter.Converter".ToUpper) Then Return Assembly.Load(Resources.WinPaletter_Converter)
             Catch : End Try
 
             Return Nothing

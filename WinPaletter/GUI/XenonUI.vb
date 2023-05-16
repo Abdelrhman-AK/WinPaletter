@@ -1533,12 +1533,27 @@ Public Class XenonCheckBox
             Dim TextRect As New Rectangle(Height - 1, (CLng((Height - SZ1.Height)) \ 2) + 1, Width - InnerCheckRect.Width, Height - 1)
 
 #Region "Colors System"
-            Dim HoverRect_Color As Color = Color.FromArgb(alpha2, Style.Colors.Back_Checked)
-            Dim HoverCheckedRect_Color As Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
-            Dim CheckRect_Color As Color = Color.FromArgb(alpha2, Style.Colors.Core)
-            Dim NonHoverRect_Color As Color = Style.Colors.Border
-            Dim BackRect_Color As Color = Style.Colors.Back
+            Dim HoverRect_Color As Color
+            Dim HoverCheckedRect_Color As Color
+            Dim CheckRect_Color As Color
+            Dim NonHoverRect_Color As Color
+            Dim BackRect_Color As Color
             Dim ParentColor As Color = GetParentColor
+
+            If Enabled Then
+                HoverRect_Color = Color.FromArgb(alpha2, Style.Colors.Back_Checked)
+                HoverCheckedRect_Color = Color.FromArgb(alpha, Style.Colors.Border_Checked_Hover)
+                CheckRect_Color = Color.FromArgb(alpha2, Style.Colors.Core)
+                NonHoverRect_Color = Style.Colors.Border
+                BackRect_Color = Style.Colors.Back
+            Else
+                HoverRect_Color = Color.FromArgb(alpha2, Style.Disabled_Colors.Back_Checked)
+                HoverCheckedRect_Color = Color.FromArgb(alpha, Style.Disabled_Colors.Border_Checked_Hover)
+                CheckRect_Color = Color.FromArgb(alpha2, Style.Disabled_Colors.Core)
+                NonHoverRect_Color = Style.Disabled_Colors.Border
+                BackRect_Color = Style.Disabled_Colors.Back
+            End If
+
 #End Region
 
             Dim RTL As Boolean = (RightToLeft = 1)

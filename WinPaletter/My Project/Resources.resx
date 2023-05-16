@@ -18296,9 +18296,6 @@
   <data name="Link_Changelog" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md</value>
   </data>
-  <data name="Link_Converter" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter%20Converter.zip</value>
-  </data>
   <data name="Link_License" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md?raw=true</value>
   </data>
@@ -30658,6 +30655,9 @@
         vAAADrwBlbxySQAAACxJREFUGFdj+A8FDFAA5UL4UDYcgAVhACqGKggCUHHsqmEARRDMAQII7/9/AFp/
         T7FNooGcAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="WinPaletter_Converter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WinPaletter.Converter.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WP_Admin" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

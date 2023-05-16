@@ -78,5 +78,6 @@ Public Class XenonStyle
             Disabled_Colors.Border = Color.FromArgb(190, 190, 190)
             Disabled_Colors.Back = Color.FromArgb(180, 180, 180)
         End If
+
     End Sub
 End Class

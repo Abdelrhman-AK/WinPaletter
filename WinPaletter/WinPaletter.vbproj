@@ -81,7 +81,7 @@
       <HintPath>..\References\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ColorThief.Desktop.v46">
       <HintPath>..\References\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -189,6 +189,10 @@
     <Reference Include="WindowsBase">
       <Private>False</Private>
     </Reference>
+    <Reference Include="WinPaletter.Converter">
+      <HintPath>..\WinPaletter Converter\WinPaletter Converter\bin\Release\WinPaletter.Converter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -235,6 +239,12 @@
     </Compile>
     <Compile Include="Classes\Bitmap_Mgr.vb" />
     <Compile Include="Classes\INI.vb" />
+    <Compile Include="Converter.Designer.vb">
+      <DependentUpon>Converter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Converter.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CP\PreviewHelpers.vb" />
     <Compile Include="Extras\AltTabEditor.Designer.vb">
       <DependentUpon>AltTabEditor.vb</DependentUpon>
@@ -580,6 +590,7 @@
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\WinPaletter.Converter.dll" />
     <None Include="Resources\XML_Shutdown.xml" />
     <None Include="Resources\XML_Logon.xml" />
     <None Include="Resources\XML_Logoff.xml" />
@@ -764,6 +775,9 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Converter.resx">
+      <DependentUpon>Converter.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.vb</DependentUpon>

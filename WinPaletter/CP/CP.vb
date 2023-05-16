@@ -18,6 +18,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Private _ErrorHappened As Boolean = False
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
+    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean
@@ -4509,13 +4510,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Case CP_Type.File
 
 #Region "File"
+Start:
                 If Not IO.File.Exists(File) Then Exit Sub
 
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
-                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0
+                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = WinPaletter_Converter.Converter_CP.WP_Format.JSON
                 Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
                 Dim external_pack As String = cache & "\WinPaletterTheme_SpecificForPack.wpth"
+                Dim Source As String
 
                 '## Extract embedded wpth file inside theme resources pack
                 Try
@@ -4541,16 +4544,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     If Pack_IsValid AndAlso IO.File.Exists(external_pack) AndAlso Not IgnoreExtractionThemePack Then
-                        txt = Decompress(external_pack)
+                        Source = external_pack
                     Else
-                        txt = Decompress(File)
+                        Source = File
                     End If
 
                 Catch ex As Exception
                     Pack_IsValid = False
                     BugReport.ThrowError(ex)
-                    txt = Decompress(File)
+                    Source = File
                 End Try
+
+                txt = Decompress(Source)
 
                 If IsValidJson(String.Join(vbCrLf, txt)) Then
                     '## Replace %WinPaletterAppData% variable with a valid AppData folder path
@@ -4575,7 +4580,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         End If
                     Next
                 Else
-                    MsgBox(My.Lang.OldWPTH_Alert0, MsgBoxStyle.Information, My.Lang.OldWPTH_Alert1)
+
+                    If _Converter.FetchFile(Source) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
+                        If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
+                            _Converter.Convert(Source, Source, My.Settings.CompressThemeFile, False)
+                            GoTo Start
+                        End If
+                    Else
+                        MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical)
+                    End If
 
                 End If
 
