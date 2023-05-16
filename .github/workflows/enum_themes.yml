@@ -27,4 +27,4 @@ jobs:
       - name: execute py script # run main.py
         id: getfiles
         # arguments: Directory Extension OutputFile
-        run: python Store/buildDB.py Store/Themes .wpth Store/store.wpdb 
+        run: python Store/buildDB.py Store/Themes Store/store.wpdb 
