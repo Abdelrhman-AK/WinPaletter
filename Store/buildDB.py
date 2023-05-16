@@ -24,8 +24,8 @@ def CalcMD5(file):
     
 def main():
     path = sys.argv[1]
-    extension = sys.argv[2]
-    outputfile = sys.argv[3]
+    extension = '.wpth'
+    outputfile = sys.argv[2]
     repo = git.Repo('.', search_parent_directories=True)
     repo.working_tree_dir
     
