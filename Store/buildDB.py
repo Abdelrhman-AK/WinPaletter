@@ -4,6 +4,7 @@ from datetime import datetime
 from git.repo import Repo
 import git
 import hashlib
+from os.path import exists
 
 def set_action_output(name: str, value: str):
     with open(os.environ["GITHUB_OUTPUT"], "a") as myfile:
@@ -44,7 +45,11 @@ def main():
                 url_file = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetfile + '?raw=true'
                 url_pack = 'https://github.com/Abdelrhman-AK/WinPaletter/blob/master/' + targetpack + '?raw=true'
 
-                paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
+                if exists(targetpack):
+                    paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '|' + url_pack + '\n'
+                else:
+                    paths = paths + md5_hash_file_result + '|' + md5_hash_pack_result + '|' +  url_file + '\n'
+                    
                 path_count = path_count + 1
 
     set_action_output('path_count', path_count)
