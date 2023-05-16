@@ -8,7 +8,7 @@
 
 ### **1. You are responsible for the copyrights of the themes\resources pack in the server\repository you build. WinPaletter developer is not responsible for copyrights violation by other users.**
 
-### 2. Themes that are included online in a server\repository must be made by WinPaletter `1.0.7.7` and higher, otherwise the themes won't be loaded. If you insist on uploading a theme made by an old version of WinPaletter, use WinPaletter `1.0.7.7` or higher to convert this theme (You can find convert button in main form in the upper part that has buttons)
+### 2. Themes that are included online in a server\repository must be made by WinPaletter `1.0.7.7` and higher, otherwise the themes won't be loaded. If you insist on uploading a theme made by an old version of WinPaletter, use WinPaletter `1.0.7.7` or higher to convert this theme into the new format version (You can find convert button in main form in the upper part that has buttons)
 
 ### 3. Offline source mode can load themes made by any WinPaletter version
 
@@ -65,11 +65,11 @@
    
    1. don't forget to add `?raw=true` to the end of any link (source link or links inside the source file), to make it a direct link
    
-   2. You can fork and edit [WinPaletter-Theme repository]([GitHub - Abdelrhman-AK/WinPaletter-Store: WinPaletter Store for themes](https://github.com/Abdelrhman-AK/WinPaletter-Store)) to understand the previous points 
+   2. You can fork and edit [WinPaletter-Theme repository](https://github.com/Abdelrhman-AK/WinPaletter-Store) to understand the previous points 
    
    3. [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb "store.wpdb") is the source file
    
-   4. [main.py](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/main.py "main.py") is a Python script that updates [store.wpdb]([WinPaletter-Store/store.wpdb at main · Abdelrhman-AK/WinPaletter-Store · GitHub](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb) "store.wpdb") (Will be discussed later)
+   4. [main.py](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/main.py "main.py") is a Python script that updates [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb) "store.wpdb") (Will be discussed later)
    
    5. Add your exported themes inside [Themes](https://github.com/Abdelrhman-AK/WinPaletter-Store/tree/main/Themes "Themes") directory 
    
@@ -79,7 +79,7 @@
       
       #### [A. main.py](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/main.py "main.py"):
       
-      Edit these two lines to make it fetch the themes and their packs from the right folder\link
+      Edit these two lines to make it fetch the themes and their packs from the right GitHub Repository (Without modifying `+ targetfile + '?raw=true'` and `+ targetpack + '?raw=true'`):
       
       ```
          url_file = 'https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/' + targetfile + '?raw=true'
@@ -107,6 +107,7 @@
          - Make paths have the name of themes directory, for example: `paths: Themes/**` or `paths: MyWinPaletterThemes/**` or something else.
          - The benefit of line `paths: Themes/**` is that when any change is made to this folder, this action will run automatically and update the source list
          
+         
          ```
          run: python main.py Themes store.wpdb 
          ```
@@ -115,4 +116,4 @@
          
          - `Themes` is the path of themes directory
          
-         - `store.wpdb ` is the target source file that will be updated
+         - `store.wpdb` is the target source file that will be updated
