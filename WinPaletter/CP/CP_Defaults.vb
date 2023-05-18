@@ -1,5 +1,4 @@
-﻿Imports System.Security.Cryptography
-Imports WinPaletter.PreviewHelpers
+﻿Imports WinPaletter.PreviewHelpers
 
 Public Class CP_Defaults : Implements IDisposable
 
@@ -50,7 +49,7 @@ Public Class CP_Defaults : Implements IDisposable
         Return _Def
     End Function
 
-    Public Shared Function From() As CP
+    Public Shared Function GetDefault() As CP
         Dim _Def As CP
 
         If My.W11 Then
@@ -1209,6 +1208,7 @@ Public Class CP_Defaults : Implements IDisposable
             .SmCaptionWidth = 17
             .DesktopIconSize = 48
             .ShellIconSize = 32
+            .Fonts_SingleBitPP = True
             .CaptionFont = New Font("Trebuchet MS", 9.75, FontStyle.Bold)
             .SmCaptionFont = New Font("Tahoma", 8.25, FontStyle.Regular)
             .IconFont = New Font("Tahoma", 8.25, FontStyle.Regular)
@@ -1745,8 +1745,6 @@ Public Class CP_Defaults : Implements IDisposable
 
         Return [CP]
     End Function
-
-
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls

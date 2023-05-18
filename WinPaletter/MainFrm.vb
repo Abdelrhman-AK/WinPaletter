@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
 Imports System.Net
 Imports System.Text
 Imports WinPaletter.CP
@@ -543,8 +542,15 @@ Public Class MainFrm
                         End Select
 
                         Select Case r2
-                            Case 1      '' Apply   ' Case 0= Don't Apply
+                            Case 1
                                 Apply_Theme()
+
+                            Case 2
+                                Apply_Theme(My.CP_FirstTime)
+
+                            Case 3
+                                Apply_Theme(CP_Defaults.GetDefault)
+
                         End Select
 
                     Case DialogResult.No
@@ -1910,18 +1916,18 @@ Public Class MainFrm
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles WXP_VS_textbox.TextChanged
         Dim theme As String = ""
 
-        If Path.GetExtension(WXP_VS_textbox.Text) = ".theme" Then
+        If IO.Path.GetExtension(WXP_VS_textbox.Text) = ".theme" Then
             theme = WXP_VS_textbox.Text
 
-        ElseIf Path.GetExtension(WXP_VS_textbox.Text) = ".msstyles" Then
+        ElseIf IO.Path.GetExtension(WXP_VS_textbox.Text) = ".msstyles" Then
             theme = My.Application.appData & "\VisualStyles\Luna\custom.theme"
-            File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, vbCrLf))
+            IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, vbCrLf))
 
         End If
 
         My.CP.WindowsXP.ThemeFile = WXP_VS_textbox.Text
 
-        If File.Exists(WXP_VS_textbox.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
+        If IO.File.Exists(WXP_VS_textbox.Text) AndAlso IO.File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
 
             Dim vs As New VisualStyleFile(theme)
 
@@ -1959,7 +1965,9 @@ Public Class MainFrm
         Apply_Theme()
     End Sub
 
-    Sub Apply_Theme()
+    Sub Apply_Theme(Optional [CP] As CP = Nothing)
+        If [CP] Is Nothing Then [CP] = My.CP
+
         Cursor = Cursors.WaitCursor
 
         log_lbl.Visible = False
@@ -1974,7 +1982,7 @@ Public Class MainFrm
             TablessControl1.Refresh()
         End If
 
-        My.CP.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
+        [CP].Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
 
         My.CP_Original = New CP(CP_Type.Registry)
 
@@ -1988,7 +1996,7 @@ Public Class MainFrm
 
         If My.Settings.Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
-        If My.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
+        If [CP].MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
         log_lbl.Visible = True
         XenonButton8.Visible = True
@@ -2091,7 +2099,7 @@ Public Class MainFrm
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         Dropped = False
 
-        If Path.GetExtension(files(0)).ToLower = ".wpth" Then
+        If IO.Path.GetExtension(files(0)).ToLower = ".wpth" Then
             wpth_or_wpsf = True
 
             If _Converter.FetchFile(files(0)) = WinPaletter_Converter.Converter_CP.WP_Format.JSON Then
@@ -2114,7 +2122,7 @@ Public Class MainFrm
 
             End If
 
-        ElseIf Path.GetExtension(files(0)).ToLower = ".wpsf" Then
+        ElseIf IO.Path.GetExtension(files(0)).ToLower = ".wpsf" Then
             wpth_or_wpsf = False
             DragAccepted = True
             e.Effect = DragDropEffects.Copy
@@ -2172,9 +2180,7 @@ Public Class MainFrm
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
-            ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                         Apply_Theme()
-                                                     End Sub)
+            ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
 
             SaveFileDialog1.FileName = OpenFileDialog1.FileName
             My.CP = New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
@@ -2194,9 +2200,7 @@ Public Class MainFrm
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
 
-        ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                     Apply_Theme()
-                                                 End Sub)
+        ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
 
         My.CP = New CP(CP.CP_Type.Registry)
         My.CP_Original = My.CP.Clone
@@ -2278,11 +2282,9 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
-        ComplexSave.GetResponse(SaveFileDialog1, Sub()
-                                                     Apply_Theme()
-                                                 End Sub)
+        ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
 
-        My.CP = CP_Defaults.From.Clone
+        My.CP = CP_Defaults.GetDefault.Clone
         SaveFileDialog1.FileName = Nothing
         ApplyCPValues(My.CP)
         ApplyStylesToElements(My.CP, False)

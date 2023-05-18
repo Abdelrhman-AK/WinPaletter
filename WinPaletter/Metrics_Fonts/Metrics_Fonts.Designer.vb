@@ -173,6 +173,11 @@ Partial Class Metrics_Fonts
         Me.Label46 = New System.Windows.Forms.Label()
         Me.Label47 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.XenonGroupBox17 = New WinPaletter.XenonGroupBox()
+        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox31 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox44 = New System.Windows.Forms.PictureBox()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
         Me.tabs_preview_3 = New WinPaletter.TablessControl()
@@ -259,6 +264,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.Label30 = New System.Windows.Forms.Label()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -320,6 +326,9 @@ Partial Class Metrics_Fonts
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
+        Me.XenonGroupBox17.SuspendLayout()
+        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox44, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox15.SuspendLayout()
         Me.tabs_preview_3.SuspendLayout()
         Me.TabPage9.SuspendLayout()
@@ -2325,6 +2334,7 @@ Partial Class Metrics_Fonts
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage5.Controls.Add(Me.XenonGroupBox17)
         Me.TabPage5.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox15)
         Me.TabPage5.Controls.Add(Me.XenonGroupBox10)
@@ -2335,6 +2345,66 @@ Partial Class Metrics_Fonts
         Me.TabPage5.Size = New System.Drawing.Size(958, 439)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Micsellaneous"
+        '
+        'XenonGroupBox17
+        '
+        Me.XenonGroupBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox17.Controls.Add(Me.Label30)
+        Me.XenonGroupBox17.Controls.Add(Me.XenonCheckBox1)
+        Me.XenonGroupBox17.Controls.Add(Me.PictureBox31)
+        Me.XenonGroupBox17.Controls.Add(Me.PictureBox44)
+        Me.XenonGroupBox17.Controls.Add(Me.Label26)
+        Me.XenonGroupBox17.Location = New System.Drawing.Point(6, 271)
+        Me.XenonGroupBox17.Name = "XenonGroupBox17"
+        Me.XenonGroupBox17.Size = New System.Drawing.Size(402, 111)
+        Me.XenonGroupBox17.TabIndex = 204
+        '
+        'XenonCheckBox1
+        '
+        Me.XenonCheckBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonCheckBox1.Checked = False
+        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(47, 44)
+        Me.XenonCheckBox1.Name = "XenonCheckBox1"
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(347, 24)
+        Me.XenonCheckBox1.TabIndex = 121
+        Me.XenonCheckBox1.Text = "Font smoothing (Clear Type or Single bit per pixel)"
+        '
+        'PictureBox31
+        '
+        Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
+        Me.PictureBox31.Location = New System.Drawing.Point(17, 44)
+        Me.PictureBox31.Name = "PictureBox31"
+        Me.PictureBox31.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox31.TabIndex = 120
+        Me.PictureBox31.TabStop = False
+        '
+        'PictureBox44
+        '
+        Me.PictureBox44.Image = CType(resources.GetObject("PictureBox44.Image"), System.Drawing.Image)
+        Me.PictureBox44.Location = New System.Drawing.Point(6, 7)
+        Me.PictureBox44.Name = "PictureBox44"
+        Me.PictureBox44.Size = New System.Drawing.Size(35, 31)
+        Me.PictureBox44.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox44.TabIndex = 83
+        Me.PictureBox44.TabStop = False
+        '
+        'Label26
+        '
+        Me.Label26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label26.BackColor = System.Drawing.Color.Transparent
+        Me.Label26.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.Location = New System.Drawing.Point(47, 7)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(348, 31)
+        Me.Label26.TabIndex = 84
+        Me.Label26.Text = "Others:"
+        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonAlertBox4
         '
@@ -3573,6 +3643,16 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
         '
+        'Label30
+        '
+        Me.Label30.Location = New System.Drawing.Point(53, 71)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(342, 35)
+        Me.Label30.TabIndex = 122
+        Me.Label30.Text = "To show all effects (as the preview won't give you a complete figure about it), t" &
+    "oogle this option and apply."
+        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'Metrics_Fonts
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3659,6 +3739,9 @@ Partial Class Metrics_Fonts
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox23, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
+        Me.XenonGroupBox17.ResumeLayout(False)
+        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox44, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox15.ResumeLayout(False)
         Me.tabs_preview_3.ResumeLayout(False)
         Me.TabPage9.ResumeLayout(False)
@@ -3935,4 +4018,10 @@ Partial Class Metrics_Fonts
     Friend WithEvents XenonGroupBox11 As XenonGroupBox
     Friend WithEvents PictureBox32 As PictureBox
     Friend WithEvents Label29 As Label
+    Friend WithEvents XenonGroupBox17 As XenonGroupBox
+    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents PictureBox31 As PictureBox
+    Friend WithEvents PictureBox44 As PictureBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label30 As Label
 End Class

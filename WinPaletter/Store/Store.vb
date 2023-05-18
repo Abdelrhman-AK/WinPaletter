@@ -555,6 +555,8 @@ Public Class Store
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         'To prevent effect of a store theme on the other forms
         My.Settings = New XeSettings(XeSettings.Mode.Registry)
+        My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
+
         ApplyDarkMode(Me)
 
         Status_pnl.Visible = True
@@ -1059,7 +1061,7 @@ Public Class Store
             'Edit button is pressed
             WindowState = FormWindowState.Minimized
 
-            ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing)
+            ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing, Nothing, Nothing)
 
             My.CP = selectedItem.CP
             My.CP_Original = My.CP.Clone
@@ -1197,6 +1199,7 @@ Public Class Store
     Private Sub Back_btn_Click(sender As Object, e As EventArgs) Handles back_btn.Click
 
         My.Animator.HideSync(Tabs)
+        My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
         If selectedItem IsNot Nothing AndAlso selectedItem.CP.AppTheme.Enabled Then
             My.Settings = New XeSettings(XeSettings.Mode.Registry)

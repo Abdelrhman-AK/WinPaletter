@@ -95,7 +95,7 @@ Public Module DLL_ResourcesManager
 
     Public Function BackupRights(SourceFile As String, BackupFile As String) As Boolean
         Try
-            Wow64DisableWow64FsRedirection(IntPtr.Zero)
+            Reg_IO.Takeown_File(SourceFile)
             Dim accessControl = File.GetAccessControl(SourceFile)
             If accessControl Is Nothing Then
                 Return False
@@ -107,10 +107,9 @@ Public Module DLL_ResourcesManager
             File.SetAccessControl(SourceFile, accessControl)
             accessControl.AddAccessRule(fsRule)
             File.SetAccessControl(SourceFile, accessControl)
-            Wow64RevertWow64FsRedirection(IntPtr.Zero)
             Return True
-        Catch
-            Wow64RevertWow64FsRedirection(IntPtr.Zero)
+        Catch ex As Exception
+            BugReport.ThrowError(ex)
             Return False
         End Try
     End Function

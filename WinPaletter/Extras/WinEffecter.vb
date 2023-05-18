@@ -49,6 +49,7 @@ Public Class WinEffecter
             XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar)
             XenonCheckBox23.Checked = .DisableNavBar
             XenonCheckBox24.Checked = .AutoHideScrollBars
+            XenonCheckBox25.Checked = .FullScreenStartMenu
 
             If Not .ColorFilter_Enabled Then
                 XenonRadioImage1.Checked = True
@@ -131,6 +132,7 @@ Public Class WinEffecter
 
             .DisableNavBar = XenonCheckBox23.Checked
             .AutoHideScrollBars = XenonCheckBox24.Checked
+            .FullScreenStartMenu = XenonCheckBox25.Checked
 
             If XenonRadioImage1.Checked Then
                 .ColorFilter_Enabled = False
@@ -201,8 +203,11 @@ Public Class WinEffecter
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        Cursor = Cursors.WaitCursor
         ApplyToCP(My.CP)
         MainFrm.ApplyColorsToElements(My.CP)
+        MainFrm.ApplyStylesToElements(My.CP, False)
+        Cursor = Cursors.Default
         Close()
     End Sub
 

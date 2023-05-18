@@ -698,6 +698,26 @@ Namespace NativeMethods
                 ''' </summary>
                 SETFOCUSBORDERHEIGHT = &H2011
             End Enum
+
+            Enum Fonts
+                ''' <summary>
+                ''' <b>Determines whether the font smoothing feature is enabled. This feature uses font antialiasing to make font curves appear smoother by painting pixels at different gray levels.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if the feature is enabled, or FALSE if it is not.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95:  This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.</i>
+                ''' </summary>
+                GETFONTSMOOTHING = &H4A
+
+                ''' <summary>
+                ''' <b>Enables or disables the font smoothing feature, which uses font antialiasing to make font curves appear smoother by painting pixels at different gray levels.</b>
+                ''' <br></br>
+                ''' <br></br> • To enable the feature, set the uiParam parameter to TRUE. To disable the feature, set uiParam to FALSE.
+                ''' <br></br>
+                ''' <br></br> <i>(!) Windows 95: This flag is supported only if Windows Plus! is installed. See SPI_GETWINDOWSEXTENSION.</i>
+                ''' </summary>
+                SETFONTSMOOTHING = &H4B
+            End Enum
         End Class
 
         <Flags>

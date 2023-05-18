@@ -2,30 +2,36 @@
 
 Public Class ComplexSave
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        Me.DialogResult = DialogResult.Yes
+        Me.Close()
+    End Sub
+
+    Private Sub ComplexSave_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Dim i1 As Integer = 0
         Dim i2 As Integer = 0
 
-        If XenonRadioButton1.Checked Then i1 = 0
-        If XenonRadioButton2.Checked Then i1 = 1
-        If XenonRadioButton3.Checked Then i1 = 2
-        If XenonCheckBox1.Checked Then i2 = 1 Else i2 = 0
+        If XenonRadioImage1.Checked Then i1 = 0
+        If XenonRadioImage2.Checked Then i1 = 1
+        If XenonRadioImage3.Checked Then i1 = 2
 
-        My.Settings.ComplexSaveResult = String.Format("{0}.{1}", i1, i2)
+        If XenonRadioImage6.Checked Then i2 = 1
+        If XenonRadioImage5.Checked Then i2 = 2
+        If XenonRadioImage7.Checked Then i2 = 3
+        If XenonRadioImage4.Checked Then i2 = 0
+
+        My.Settings.ComplexSaveResult = i1 & "." & i2
         My.Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
         My.Settings.Save(XeSettings.Mode.Registry)
-
-        Me.DialogResult = DialogResult.Yes
-        Me.Close()
     End Sub
 
     Private Sub ComplexSave_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
 
         Dim c As Color = PictureBox1.Image.AverageColor
-        Dim c1 As Color = c.CB(If(GetDarkMode(), -0.5, 0.5))
-        Dim c2 As Color = c.CB(If(GetDarkMode(), -0.85, 0.85))
-        Panel1.BackColor = c1
-        BackColor = c2
+
+        XenonAnimatedBox1.Color = c
+        XenonAnimatedBox1.Color1 = c
+        XenonAnimatedBox1.Color2 = c
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
 
@@ -33,17 +39,50 @@ Public Class ComplexSave
         Dim r1 As String = r(0)
         Dim r2 As String = r(1)
 
-        If r1 = 0 Then
-            XenonRadioButton1.Checked = True
-        ElseIf r1 = 1 Then
-            XenonRadioButton2.Checked = True
-        ElseIf r1 = 2 Then
-            XenonRadioButton3.Checked = True
+        If My.W11 Then
+            XenonRadioImage7.Image = My.Resources.Native11
+
+        ElseIf My.W10 Then
+            XenonRadioImage7.Image = My.Resources.Native10
+
+        ElseIf My.W8 Then
+            XenonRadioImage7.Image = My.Resources.Native8
+
+        ElseIf My.W7 Then
+            XenonRadioImage7.Image = My.Resources.Native7
+
+        ElseIf My.WVista Then
+            XenonRadioImage7.Image = My.Resources.NativeVista
+
+        ElseIf My.WXP Then
+            XenonRadioImage7.Image = My.Resources.NativeXP
+
         Else
-            XenonRadioButton3.Checked = True
+            XenonRadioImage7.Image = My.Resources.Native11
         End If
 
-        XenonCheckBox1.Checked = (r2 = 1)
+
+        If r1 = 0 Then
+            XenonRadioImage1.Checked = True
+        ElseIf r1 = 1 Then
+            XenonRadioImage2.Checked = True
+        ElseIf r1 = 2 Then
+            XenonRadioImage3.Checked = True
+        Else
+            XenonRadioImage3.Checked = True
+        End If
+
+        If r2 = 0 Then
+            XenonRadioImage4.Checked = True
+        ElseIf r2 = 1 Then
+            XenonRadioImage6.Checked = True
+        ElseIf r2 = 2 Then
+            XenonRadioImage5.Checked = True
+        ElseIf r2 = 3 Then
+            XenonRadioImage7.Checked = True
+        Else
+            XenonRadioImage6.Checked = True
+        End If
 
         XenonCheckBox2.Checked = My.Settings.ShowSaveConfirmation
 
@@ -62,8 +101,10 @@ Public Class ComplexSave
         Me.Close()
     End Sub
 
-    Public Function GetResponse(SaveFileDialog As System.Windows.Forms.SaveFileDialog, Apply_Theme_Sub As MethodInvoker) As Boolean
+    Public Function GetResponse(SaveFileDialog As System.Windows.Forms.SaveFileDialog, Apply_Theme_Sub As MethodInvoker, Apply_FirstTheme_Sub As MethodInvoker, Apply_DefaultWin_Sub As MethodInvoker) As Boolean
         If My.CP <> My.CP_Original AndAlso My.Settings.ShowSaveConfirmation Then
+            XenonGroupBox2.Enabled = Apply_Theme_Sub IsNot Nothing Or Apply_FirstTheme_Sub IsNot Nothing Or Apply_DefaultWin_Sub IsNot Nothing
+
             Select Case ShowDialog()
                 Case DialogResult.Yes
 
@@ -94,8 +135,15 @@ Public Class ComplexSave
                     End Select
 
                     Select Case r2
-                        Case 1      '' Apply   ' Case 0= Don't Apply
+                        Case 1
                             If Apply_Theme_Sub IsNot Nothing Then Apply_Theme_Sub()
+
+                        Case 2
+                            If Apply_FirstTheme_Sub IsNot Nothing Then Apply_FirstTheme_Sub()
+
+                        Case 3
+                            If Apply_DefaultWin_Sub IsNot Nothing Then Apply_DefaultWin_Sub()
+
                     End Select
 
                 Case DialogResult.No

@@ -4098,11 +4098,10 @@ Public Class XenonWinElement : Inherits ContainerControl
         End If
     End Sub
 
-
-
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
         Dim Rect As New Rectangle(-1, -1, Width + 2, Height + 2)
         Dim RRect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -5362,7 +5361,7 @@ Public Class XenonWindow : Inherits Panel
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '### Adjust Limits

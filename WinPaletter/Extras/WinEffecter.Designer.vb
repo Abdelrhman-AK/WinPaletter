@@ -98,6 +98,10 @@ Partial Class WinEffecter
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox13 = New WinPaletter.XenonCheckBox()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.PictureBox34 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox25 = New WinPaletter.XenonCheckBox()
+        Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
         Me.PictureBox31 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox24 = New WinPaletter.XenonCheckBox()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
@@ -176,8 +180,6 @@ Partial Class WinEffecter
         Me.XenonButton12 = New WinPaletter.XenonButton()
         Me.EffectsEnabled = New WinPaletter.XenonToggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -211,6 +213,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -260,10 +263,10 @@ Partial Class WinEffecter
         Me.XenonTabControl1.Controls.Add(Me.TabPage6)
         Me.XenonTabControl1.Controls.Add(Me.TabPage7)
         Me.XenonTabControl1.Controls.Add(Me.TabPage8)
-        Me.XenonTabControl1.Controls.Add(Me.TabPage9)
         Me.XenonTabControl1.Controls.Add(Me.TabPage11)
         Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Controls.Add(Me.TabPage12)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage9)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonTabControl1.ItemSize = New System.Drawing.Size(30, 170)
@@ -1213,6 +1216,8 @@ Partial Class WinEffecter
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.PictureBox34)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox25)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox6)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox5)
         Me.TabPage9.Controls.Add(Me.PictureBox31)
@@ -1230,11 +1235,69 @@ Partial Class WinEffecter
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "Miscellaneous"
         '
+        'PictureBox34
+        '
+        Me.PictureBox34.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
+        Me.PictureBox34.Location = New System.Drawing.Point(6, 171)
+        Me.PictureBox34.Name = "PictureBox34"
+        Me.PictureBox34.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox34.TabIndex = 243
+        Me.PictureBox34.TabStop = False
+        '
+        'XenonCheckBox25
+        '
+        Me.XenonCheckBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox25.Checked = False
+        Me.XenonCheckBox25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox25.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox25.Location = New System.Drawing.Point(36, 171)
+        Me.XenonCheckBox25.Name = "XenonCheckBox25"
+        Me.XenonCheckBox25.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox25.TabIndex = 242
+        Me.XenonCheckBox25.Text = "Fullscreen Start menu (for Windows 10 and requires logoff and logon)"
+        '
+        'XenonAlertBox6
+        '
+        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox6.CenterText = False
+        Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox6.Image = Nothing
+        Me.XenonAlertBox6.Location = New System.Drawing.Point(36, 94)
+        Me.XenonAlertBox6.Name = "XenonAlertBox6"
+        Me.XenonAlertBox6.Size = New System.Drawing.Size(549, 40)
+        Me.XenonAlertBox6.TabIndex = 241
+        Me.XenonAlertBox6.TabStop = False
+        Me.XenonAlertBox6.Text = "If you are using Windows 11 lower than May 2023 update, use ExplorerPatcher to fo" &
+    "rce applying this effect"
+        '
+        'XenonAlertBox5
+        '
+        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox5.CenterText = False
+        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox5.Image = Nothing
+        Me.XenonAlertBox5.Location = New System.Drawing.Point(36, 66)
+        Me.XenonAlertBox5.Name = "XenonAlertBox5"
+        Me.XenonAlertBox5.Size = New System.Drawing.Size(115, 22)
+        Me.XenonAlertBox5.TabIndex = 240
+        Me.XenonAlertBox5.TabStop = False
+        Me.XenonAlertBox5.Text = "Uses more power"
+        '
         'PictureBox31
         '
         Me.PictureBox31.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
-        Me.PictureBox31.Location = New System.Drawing.Point(6, 171)
+        Me.PictureBox31.Location = New System.Drawing.Point(6, 201)
         Me.PictureBox31.Name = "PictureBox31"
         Me.PictureBox31.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -1249,11 +1312,11 @@ Partial Class WinEffecter
         Me.XenonCheckBox24.Checked = False
         Me.XenonCheckBox24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox24.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox24.Location = New System.Drawing.Point(36, 171)
+        Me.XenonCheckBox24.Location = New System.Drawing.Point(36, 201)
         Me.XenonCheckBox24.Name = "XenonCheckBox24"
         Me.XenonCheckBox24.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox24.TabIndex = 227
-        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and Later)"
+        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and later)"
         '
         'PictureBox21
         '
@@ -1362,7 +1425,7 @@ Partial Class WinEffecter
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox3.Image = Nothing
-        Me.XenonAlertBox3.Location = New System.Drawing.Point(73, 254)
+        Me.XenonAlertBox3.Location = New System.Drawing.Point(73, 258)
         Me.XenonAlertBox3.Name = "XenonAlertBox3"
         Me.XenonAlertBox3.Size = New System.Drawing.Size(512, 24)
         Me.XenonAlertBox3.TabIndex = 238
@@ -1382,7 +1445,7 @@ Partial Class WinEffecter
         Me.XenonAlertBox2.Image = Nothing
         Me.XenonAlertBox2.Location = New System.Drawing.Point(73, 181)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(512, 36)
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(512, 40)
         Me.XenonAlertBox2.TabIndex = 237
         Me.XenonAlertBox2.TabStop = False
         Me.XenonAlertBox2.Text = "Due to limitations in Windows 11, styles can't be changed by registry. So you sho" &
@@ -1421,7 +1484,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox30.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox30.Image = CType(resources.GetObject("PictureBox30.Image"), System.Drawing.Image)
-        Me.PictureBox30.Location = New System.Drawing.Point(6, 224)
+        Me.PictureBox30.Location = New System.Drawing.Point(6, 228)
         Me.PictureBox30.Name = "PictureBox30"
         Me.PictureBox30.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -1473,7 +1536,7 @@ Partial Class WinEffecter
         Me.XenonCheckBox23.Checked = False
         Me.XenonCheckBox23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonCheckBox23.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox23.Location = New System.Drawing.Point(36, 224)
+        Me.XenonCheckBox23.Location = New System.Drawing.Point(36, 228)
         Me.XenonCheckBox23.Name = "XenonCheckBox23"
         Me.XenonCheckBox23.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox23.TabIndex = 227
@@ -1610,9 +1673,9 @@ Partial Class WinEffecter
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox4.Image = Nothing
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(6, 335)
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(6, 337)
         Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(579, 43)
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(579, 40)
         Me.XenonAlertBox4.TabIndex = 239
         Me.XenonAlertBox4.TabStop = False
         Me.XenonAlertBox4.Text = "This is for Windows 10 & 11 and requires logoff. The colors of preview may be inc" &
@@ -2220,39 +2283,6 @@ Partial Class WinEffecter
         Me.checker_img.TabIndex = 83
         Me.checker_img.TabStop = False
         '
-        'XenonAlertBox5
-        '
-        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox5.CenterText = False
-        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox5.Image = Nothing
-        Me.XenonAlertBox5.Location = New System.Drawing.Point(36, 66)
-        Me.XenonAlertBox5.Name = "XenonAlertBox5"
-        Me.XenonAlertBox5.Size = New System.Drawing.Size(115, 22)
-        Me.XenonAlertBox5.TabIndex = 240
-        Me.XenonAlertBox5.TabStop = False
-        Me.XenonAlertBox5.Text = "Uses more power"
-        '
-        'XenonAlertBox6
-        '
-        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox6.CenterText = False
-        Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox6.Image = Nothing
-        Me.XenonAlertBox6.Location = New System.Drawing.Point(36, 94)
-        Me.XenonAlertBox6.Name = "XenonAlertBox6"
-        Me.XenonAlertBox6.Size = New System.Drawing.Size(549, 40)
-        Me.XenonAlertBox6.TabIndex = 241
-        Me.XenonAlertBox6.TabStop = False
-        Me.XenonAlertBox6.Text = "If you are using Windows 11 lower than May 2023 update, use ExplorerPatcher to fo" &
-    "rce applying this effect"
-        '
         'WinEffecter
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2307,6 +2337,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2488,4 +2519,6 @@ Partial Class WinEffecter
     Friend WithEvents XenonAlertBox4 As XenonAlertBox
     Friend WithEvents XenonAlertBox6 As XenonAlertBox
     Friend WithEvents XenonAlertBox5 As XenonAlertBox
+    Friend WithEvents PictureBox34 As PictureBox
+    Friend WithEvents XenonCheckBox25 As XenonCheckBox
 End Class

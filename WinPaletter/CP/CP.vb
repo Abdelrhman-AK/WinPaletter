@@ -1730,6 +1730,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public DesktopIconSize As Integer
             Public ShellIconSize As Integer
             Public ShellSmallIconSize As Integer
+            Public Fonts_SingleBitPP As Boolean
 
             Public CaptionFont As Font
             Public IconFont As Font
@@ -1800,6 +1801,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 FontSubstitute_MSShellDlg2 = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
                 FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
+                Dim temp As Boolean = True
+                Fixer.SystemParametersInfo(SPI.Fonts.GETFONTSMOOTHING, Nothing, temp, SPIF.None)
+                Fonts_SingleBitPP = Not temp
             End Sub
 
             Public Sub Apply()
@@ -1821,6 +1825,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim lfMessageFont As New LogFont : MessageFont.ToLogFont(lfMessageFont)
                     Dim lfSMCaptionFont As New LogFont : SmCaptionFont.ToLogFont(lfSMCaptionFont)
                     Dim lfStatusFont As New LogFont : StatusFont.ToLogFont(lfStatusFont)
+
+                    SystemParametersInfo(SPI.Fonts.SETFONTSMOOTHING, Not Fonts_SingleBitPP, Nothing, SPIF.UpdateINIFile)
 
                     If Not My.Settings.DelayMetrics Then
                         Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
@@ -1980,6 +1986,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public DisableNavBar As Boolean
 
             Public AutoHideScrollBars As Boolean
+            Public FullScreenStartMenu As Boolean
             Public ColorFilter_Enabled As Boolean
             Public ColorFilter As ColorFilters
 
@@ -2111,7 +2118,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End Try
 
                 AutoHideScrollBars = GetReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", _DefEffects.AutoHideScrollBars)
-
+                FullScreenStartMenu = If(GetReg("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(_DefEffects.FullScreenStartMenu, 2, 0)) = 2, True, False)
                 ColorFilter_Enabled = GetReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", _DefEffects.ColorFilter_Enabled)
                 ColorFilter = GetReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", _DefEffects.ColorFilter)
             End Sub
@@ -2214,6 +2221,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
                     Catch
                         EditReg_CMD("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                    End Try
+
+                    'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
+                    Try
+                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
+                    Catch
+                        EditReg_CMD("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
                     End Try
 
                     If My.W11 Then
@@ -3267,6 +3281,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 .DesktopIconSize = 48,
                 .ShellIconSize = 32,
                 .ShellSmallIconSize = 16,
+                .Fonts_SingleBitPP = False,
                 .CaptionFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .IconFont = New Font("Segoe UI", 9, FontStyle.Regular),
                 .MenuFont = New Font("Segoe UI", 9, FontStyle.Regular),
@@ -4510,8 +4525,27 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Case CP_Type.File
 
 #Region "File"
+                Using CPx As CP = CP_Defaults.GetDefault
+                    For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
+                        Dim type As Type = field.FieldType
+                        Try
+                            field.SetValue(Me, field.GetValue(CPx))
+                        Catch
+                        End Try
+                    Next
+                End Using
+
 Start:
+
                 If Not IO.File.Exists(File) Then Exit Sub
+
+                'Rough method to get theme name to create its proper resources pack folder
+                For Each line In Decompress(File)
+                    If line.Trim.StartsWith("""ThemeName"":") Then
+                        Info.ThemeName = line.Split(":")(1).ToString.Replace("""", "").Replace(",", "").Trim
+                        Exit For
+                    End If
+                Next
 
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
@@ -4591,10 +4625,7 @@ Start:
                     End If
 
                 End If
-
 #End Region
-
-            Case Else
 
         End Select
     End Sub

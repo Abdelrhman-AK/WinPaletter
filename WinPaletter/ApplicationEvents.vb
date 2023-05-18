@@ -11,6 +11,7 @@ Imports System.IO.Compression
 Imports System.IO
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.PreviewHelpers
+Imports System.Drawing.Text
 
 Namespace My
     Module Env
@@ -150,6 +151,10 @@ Namespace My
         ''' </summary>
         Public CP, CP_Original, CP_FirstTime, CP_BeforeDrag As CP
 
+        ''' <summary>
+        ''' Used to make custom controls follow CP's font smoothing
+        ''' </summary>
+        Public RenderingHint As TextRenderingHint = TextRenderingHint.SystemDefault
     End Module
 
     Partial Friend Class MyApplication

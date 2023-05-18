@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 
 Public Module Helpers
@@ -105,7 +104,7 @@ Public Class RetroButton : Inherits Button
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -593,7 +592,7 @@ End Class
         G = Graphics.FromImage(B)
         DoubleBuffered = True
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
 
         MyBase.OnPaint(e)
         TB.ForeColor = ForeColor
@@ -670,7 +669,7 @@ Public Class RetroGroupBox : Inherits GroupBox
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
         G.Clear(BackColor)
 
@@ -761,7 +760,7 @@ Public Class RetroPanel : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -814,7 +813,7 @@ Public Class RetroPanelRaised : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -1162,7 +1161,7 @@ Public Class RetroWindow : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -1244,7 +1243,7 @@ Public Class RetroScrollBar : Inherits Panel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer
@@ -1294,7 +1293,7 @@ Public Class Retro3DPreview : Inherits Control
         Dim B As New Bitmap(Width, Height)
         Dim G As Graphics = Graphics.FromImage(B)
         G.SmoothingMode = SmoothingMode.HighSpeed
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         '################################################################################# Customizer

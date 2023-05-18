@@ -965,8 +965,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox1.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox1.TabIndex = 8
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "Startup sound in Windows Vista and later is changed by patching ""imageres.dll"" in" &
-    " system32 directory, so there are two entries for startup sounds."
+        Me.XenonAlertBox1.Text = resources.GetString("XenonAlertBox1.Text")
         '
         'XenonGroupBox65
         '

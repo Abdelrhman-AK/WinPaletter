@@ -1,6 +1,7 @@
 ﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
+Imports System.Drawing.Text
 
 Public Class Metrics_Fonts
 
@@ -190,6 +191,8 @@ Public Class Metrics_Fonts
         XenonTextBox2.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg2
         XenonTextBox3.Text = CP.MetricsFonts.FontSubstitute_SegoeUI
 
+        XenonCheckBox1.Checked = CP.MetricsFonts.Fonts_SingleBitPP
+
         XenonTrackbar1.Value = CP.MetricsFonts.BorderWidth
         XenonTrackbar2.Value = CP.MetricsFonts.CaptionHeight
         XenonTrackbar3.Value = CP.MetricsFonts.CaptionWidth
@@ -289,6 +292,7 @@ Public Class Metrics_Fonts
         CP.MetricsFonts.DesktopIconSize = XenonTrackbar7.Value
         CP.MetricsFonts.ShellIconSize = XenonTrackbar5.Value
         CP.MetricsFonts.ShellSmallIconSize = XenonTrackbar15.Value
+        CP.MetricsFonts.Fonts_SingleBitPP = XenonCheckBox1.Checked
 
         CP.MetricsFonts.FontSubstitute_MSShellDlg = XenonTextBox1.Text
         CP.MetricsFonts.FontSubstitute_MSShellDlg2 = XenonTextBox2.Text
@@ -662,6 +666,7 @@ Public Class Metrics_Fonts
     End Sub
 
     Private Sub Metrics_Fonts_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
         MainFrm.Visible = True
     End Sub
 
@@ -746,5 +751,17 @@ Public Class Metrics_Fonts
     Private Sub I_s_s_s_Click(sender As Object, e As EventArgs) Handles i_s_s_s.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar15.Maximum), XenonTrackbar15.Minimum) : XenonTrackbar15.Value = Val(sender.Text)
+    End Sub
+
+    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+        My.RenderingHint = If(XenonCheckBox1.Checked, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
+        XenonWindow1.Refresh()
+        XenonWindow2.Refresh()
+        XenonWindow4.Refresh()
+        XenonWindow6.Refresh()
+        RetroWindow1.Refresh()
+        RetroWindow2.Refresh()
+        RetroWindow3.Refresh()
+        RetroWindow5.Refresh()
     End Sub
 End Class

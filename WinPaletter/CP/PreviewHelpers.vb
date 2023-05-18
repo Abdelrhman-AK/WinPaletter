@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.CP
+﻿Imports System.Drawing.Text
+Imports WinPaletter.CP
 Imports WinPaletter.XenonCore
 
 Public Class PreviewHelpers
@@ -257,6 +258,8 @@ Public Class PreviewHelpers
                                       setting_icon_preview As Label, settings_label As Label, Link_preview As Label)
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
+
+        My.RenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
 
         Select Case [Style]
             Case WindowStyle.W11
@@ -800,6 +803,8 @@ Public Class PreviewHelpers
                                          ClassicWindow1 As RetroWindow, ClassicWindow2 As RetroWindow,
                                          WXP_VS_ReplaceColors As Boolean, WXP_VS_ReplaceMetrics As Boolean, WXP_VS_ReplaceFonts As Boolean)
 
+        My.RenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
+
         Dim AC_Style As XenonWinElement.Styles = ActionCenter.Style
         Dim Start_Style As XenonWinElement.Styles = Start.Style
         Dim Taskbar_Style As XenonWinElement.Styles = Taskbar.Style
@@ -807,7 +812,7 @@ Public Class PreviewHelpers
 
         Settings_Container.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
         Link_preview.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
-        Start.Visible = (Not [Style] = WindowStyle.W8)
+        Start.Visible = (Not [Style] = WindowStyle.W8) And Not ([Style] = WindowStyle.W10 And [CP].WindowsEffects.FullScreenStartMenu)
         ActionCenter.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
 
         Select Case [Style]
@@ -1159,7 +1164,7 @@ Public Class PreviewHelpers
 
         End Select
 
-        If [Style] = WindowStyle.W10 Or [Style] = WindowStyle.W11 Then
+        If ([Style] = WindowStyle.W10 And Not [CP].WindowsEffects.FullScreenStartMenu) Or [Style] = WindowStyle.W11 Then
             XenonWindow1.Left = Start.Right + (XenonWindow1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - XenonWindow1.Width) / 2
         Else
             XenonWindow1.Left = (XenonWindow1.Parent.Width - XenonWindow1.Width) / 2
