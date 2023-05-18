@@ -4997,6 +4997,8 @@ Start:
         Dim JSON_Overall As New JObject()
         JSON_Overall.RemoveAll()
 
+        Info.AppVersion = My.Application.Info.Version.ToString
+
         For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
             Dim type As Type = field.FieldType
 
