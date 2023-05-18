@@ -69,7 +69,7 @@
    
    3. [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb "store.wpdb") is the source file
    
-   4. [main.py](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/main.py "main.py") is a Python script that updates [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb) "store.wpdb") (Will be discussed later)
+   4. [main.py](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/main.py "main.py") is a Python script that updates [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb) (Will be discussed later)
    
    5. Add your exported themes inside [Themes](https://github.com/Abdelrhman-AK/WinPaletter-Store/tree/main/Themes "Themes") directory 
    
