@@ -6,7 +6,7 @@
 
 1. Open 'Settings' > 'Theme file type management'
 
-2. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if are going to design a theme contains sounds and images not included inside system directories
+2. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if you are going to design a theme contains sounds and images not included inside system directories
    
    ```
    By checking this option, you're responsible for copyrights of 
@@ -15,6 +15,8 @@
    WinPaletter developer is not responsible for users' uploaded 
    themes copyrights.
    ```
+   
+   - Files inside `%windir%\Web`, `%windir%\Media`, `Windows XP: %windir%\Resources\Themes\Luna` and `Screen Savers: %windir\System32%` are not included inside themes resources pack. If you insist on a file inside these folders, copy them first to a new folder outside these folders and design your theme by WinPaletter and depend on the new files inside new folder.
    
    - When you save a theme with this option enabled, a file with extension `.wptp` is made, having exactly the same file name of the theme.
    
