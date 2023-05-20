@@ -92,3 +92,7 @@
          - `Themes` is the path of themes directory
          
          - `store.wpdb` is the target source file that will be updated
+
+---
+
+### [How to test the source you have built, being dependent on its URL](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/SourceExtension.md)
