@@ -1,4 +1,4 @@
-# How to create an online WinPaletter Store source
+# Create an online WinPaletter Store source (server\GitHub repository) for hosting WinPaletter themes
 
 - WinPaletter allows adding sources to the Store, it can be online or offline. In this documentation, you will learn the mechanism of an online store source (How to build a theme server\repository and how to add sources to current WinPaletter setup).
 
