@@ -6,9 +6,9 @@
 4. Fork (You will find this button in the upper part of the page).
 5. Now visit your personal account main page, you will find WinPaletter Store Repository Forked (as if cloned to your account if you don't know the meaning of Fork).
 6. Navigate to folder `Themes` and create a directory that have your name, then a new directory inside it with theme name and upload your theme (.wpth) *<u>(plus your theme resources pack (.wptp) if you included resources; images and sounds not included natively inside system directories)</u>*
-7. Create a pull request, once this request is approved and merged (*see note #2), your theme will be visible publicly to everyone through WinPaletter Store
+7. Create a pull request, once this request is approved and merged***, your theme will be visible publicly to everyone through WinPaletter Store
    
-   > WinPaletter developer is not available all time, once he has free time, he will merge theme pull request
+   > *** WinPaletter developer is not available all time, once he has free time, he will merge themes pull request
 
 #### Notes:
 
