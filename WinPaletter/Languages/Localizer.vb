@@ -81,10 +81,12 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Store_CPToggles".ToLower Then Return Store_CPToggles
         If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
         If Name.ToLower = "Store_DownloadProgress".ToLower Then Return Store_DownloadProgress
+        If Name.ToLower = "Store_Intro".ToLower Then Return Store_Intro
         If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
         If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
         If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
         If Name.ToLower = "ApplicationThemer".ToLower Then Return ApplicationThemer
+
         Return Nothing
     End Function
 
@@ -130,6 +132,7 @@ Public Class Localizer : Implements IDisposable
                         "Store_CPToggles",
                         "Store_SearchFilter",
                         "Store_DownloadProgress",
+                        "Store_Intro",
                         "ScreenSaver_Editor",
                         "Sounds_Editor",
                         "Wallpaper_Editor",

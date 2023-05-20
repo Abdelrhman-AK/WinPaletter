@@ -47,6 +47,11 @@ Partial Class Store_Intro
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.StoreItem1 = New WinPaletter.StoreItem()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -68,6 +73,8 @@ Partial Class Store_Intro
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage7.SuspendLayout()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.XenonAnimatedBox2.SuspendLayout()
@@ -136,6 +143,7 @@ Partial Class Store_Intro
         Me.TablessControl1.Controls.Add(Me.TabPage2)
         Me.TablessControl1.Controls.Add(Me.TabPage4)
         Me.TablessControl1.Controls.Add(Me.TabPage3)
+        Me.TablessControl1.Controls.Add(Me.TabPage7)
         Me.TablessControl1.Controls.Add(Me.TabPage5)
         Me.TablessControl1.Controls.Add(Me.TabPage6)
         Me.TablessControl1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -175,11 +183,11 @@ Partial Class Store_Intro
         '
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(176, 227)
+        Me.Label2.Location = New System.Drawing.Point(117, 227)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(301, 24)
+        Me.Label2.Size = New System.Drawing.Size(419, 24)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "To know important tips, click on 'Next'"
+        Me.Label2.Text = "You will know important tips as you proceed"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PictureBox1
@@ -238,7 +246,7 @@ Partial Class Store_Intro
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(635, 40)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "There are two sources for WinPaletter Store"
+        Me.Label3.Text = "There are two ways for WinPaletter Store"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox2
@@ -383,6 +391,70 @@ Partial Class Store_Intro
         Me.PictureBox3.TabIndex = 0
         Me.PictureBox3.TabStop = False
         '
+        'TabPage7
+        '
+        Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage7.Controls.Add(Me.PictureBox6)
+        Me.TabPage7.Controls.Add(Me.XenonButton5)
+        Me.TabPage7.Controls.Add(Me.Label14)
+        Me.TabPage7.Controls.Add(Me.Label15)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Size = New System.Drawing.Size(652, 302)
+        Me.TabPage7.TabIndex = 6
+        Me.TabPage7.Text = "4"
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
+        Me.PictureBox6.Location = New System.Drawing.Point(414, 64)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(235, 235)
+        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox6.TabIndex = 11
+        Me.PictureBox6.TabStop = False
+        '
+        'XenonButton5
+        '
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = Nothing
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(33, 134)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(157, 33)
+        Me.XenonButton5.TabIndex = 10
+        Me.XenonButton5.Text = "Documentation"
+        Me.XenonButton5.UseVisualStyleBackColor = False
+        '
+        'Label14
+        '
+        Me.Label14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label14.BackColor = System.Drawing.Color.Transparent
+        Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(29, 79)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(379, 52)
+        Me.Label14.TabIndex = 9
+        Me.Label14.Text = "Visit this documentation to know more about Store source extension"
+        '
+        'Label15
+        '
+        Me.Label15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label15.BackColor = System.Drawing.Color.Transparent
+        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(8, 11)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(636, 60)
+        Me.Label15.TabIndex = 8
+        Me.Label15.Text = "You can extend the sources from which WinPaletter Store can get themes!"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -393,7 +465,7 @@ Partial Class Store_Intro
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Size = New System.Drawing.Size(652, 302)
         Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "4"
+        Me.TabPage5.Text = "5"
         '
         'StoreItem1
         '
@@ -444,7 +516,7 @@ Partial Class Store_Intro
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Size = New System.Drawing.Size(652, 302)
         Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "5"
+        Me.TabPage6.Text = "6"
         '
         'XenonAnimatedBox2
         '
@@ -467,7 +539,7 @@ Partial Class Store_Intro
         '
         Me.Label13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(8, 247)
@@ -510,7 +582,7 @@ Partial Class Store_Intro
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(301, 40)
         Me.Label12.TabIndex = 1
-        Me.Label12.Text = "That's it"
+        Me.Label12.Text = "That's it!"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Store_Intro
@@ -540,6 +612,8 @@ Partial Class Store_Intro
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage7.ResumeLayout(False)
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
         Me.XenonAnimatedBox2.ResumeLayout(False)
@@ -582,4 +656,9 @@ Partial Class Store_Intro
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label12 As Label
     Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents TabPage7 As TabPage
+    Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents Label14 As Label
+    Friend WithEvents Label15 As Label
 End Class

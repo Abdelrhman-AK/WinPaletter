@@ -18314,6 +18314,12 @@
   <data name="Link_StoreReposDB" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true</value>
   </data>
+  <data name="Link_StoreSourcesExtension" xml:space="preserve">
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/SourceExtension.md</value>
+  </data>
+  <data name="Link_StoreUpload" xml:space="preserve">
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/Upload_Help.md</value>
+  </data>
   <data name="Link_Updates" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Updates?raw=true</value>
   </data>

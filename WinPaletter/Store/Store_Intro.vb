@@ -56,4 +56,12 @@ Public Class Store_Intro
         End If
 
     End Sub
+
+    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+        Process.Start(My.Resources.Link_StoreUpload)
+    End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        Process.Start(My.Resources.Link_StoreSourcesExtension)
+    End Sub
 End Class
