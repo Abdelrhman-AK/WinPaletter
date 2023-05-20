@@ -1,6 +1,6 @@
-# How to create an online WinPaletter Store source
+# Create an online WinPaletter Store source (server\GitHub repository) for hosting WinPaletter themes
 
-- WinPaletter allows adding sources to the Store, it can be online or offline. In this documentation, you will learn the mechanism of an online store source (How to build a theme server\repository and how to add sources to current WinPaletter setup).
+- WinPaletter allows adding sources to the Store, it can be online or offline. In this documentation, you will learn the mechanism of an online store source.
 
 ---
 
@@ -14,34 +14,9 @@
 
 ---
 
-### 1. Add an online source to my WinPaletter setup:
+## Build an online source (server\repository):
 
-1. Open WinPaletter
-2. Open `Settings`
-3. Click on `Store`
-4. Toggle `Online` option
-5. Press on `+` button and add source link that you have from a friend or obtained it online or even built it. This link must be a direct link
-6. Don't forget to add `?raw=true` to the end of link if it is from a GitHub Repository to make it a direct link. If this part already exists, skip this step.
-7. You can change order of the sources or remove the sources you want except the essential two that are made specifically for WinPaletter
-8. Click on `Save` button and open `WinPaletter Store` from the main form
-
----
-
-### 2. Add an offline source to my WinPaletter setup:
-
-1. Open WinPaletter
-2. Open `Settings`
-3. Click on `Store`
-4. Toggle `Offline` option
-5. Press on `+` button and add folder\s in which the themes you saved are located
-6. You can change order of the sources or remove the sources you want
-7. Click on `Save` button and open `WinPaletter Store` from the main form
-
----
-
-### 3. Build an online source (server\repository):
-
-1. You should have your own files server or a files uploading service, and the links you provide in the source must be direct links (that doesn't prompt user to wait before download or click to download or anything else that interrupt direct download process).
+1. You should have your own files server or a files uploading service, and the links you provide in the source must be direct links (that doesn't prompt users to wait before download or click to download or anything else that interrupts direct download process).
 
 2. If you don't have a server, you can create a GitHub repository.
 
@@ -53,7 +28,7 @@
    
    - "|" (without the quotes) is a separator between arguments in the line
    
-   - Example for a source file: 
+   - Example for a source file (that has 3 themes): 
      
      ```
      3D503317FA22B4999A980E8B6C23E916|4FBC9EE7157F580D036129EA26AD307A|https://link_to_theme_1|https://link_to_theme_resources_pack1
@@ -65,7 +40,7 @@
    
    1. don't forget to add `?raw=true` to the end of any link (source link or links inside the source file), to make it a direct link
    
-   2. You can fork and edit [WinPaletter-Theme repository](https://github.com/Abdelrhman-AK/WinPaletter-Store) to understand the rules 
+   2. You can fork\clone and edit [WinPaletter-Theme repository](https://github.com/Abdelrhman-AK/WinPaletter-Store) to understand the rules 
    
    3. [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb "store.wpdb") is the source file
    

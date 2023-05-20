@@ -14,7 +14,7 @@
 
 2. Open 'Settings' > 'Theme file type management'
 
-3. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if you are going to design a theme contains sounds and images not included inside system directories
+3. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if you are going to design a theme contains sounds and images not included natively inside system directories
    
    > By checking this option, you're responsible for copyrights of 
    included resources (images and sounds), especially after 
@@ -24,7 +24,7 @@
    
    - Files inside `%windir%\Web`, `%windir%\Media`, `Windows XP: %windir%\Resources\Themes\Luna` and `Screen Savers: %windir\System32%` are not included inside themes resources pack. If you insist on a file inside these folders, copy them first to a new folder outside these folders and design your theme by WinPaletter and depend on the new files inside new folder.
    
-   - When you save a theme with this option enabled, a file with extension `.wptp` is made, having exactly the same file name of the theme.
+   - When you save a theme with this option enabled, a file with extension `.wptp` will be created, having exactly the same file name of the theme.
    
    - When this theme is loaded, WinPaletter tries to get resources pack file from the file name of the theme, if the pack exists with the same name, WinPaletter will open this theme and extract the associated resources pack file.
    
@@ -68,7 +68,7 @@
       
       2. Choose a decoration pattern for your theme
       
-      3. Choose the operation systems that your theme is designed especially for
+      3. Choose the operation systems for which your theme is designed especially
       
       4. Load into current theme
 
@@ -76,4 +76,4 @@
 
 6. `Optional` test your theme (and theme resources pack file if it is created) inside a Virtual Machine using all supported operation systems (from Windows XP to Windows 11) to check if the theme is working as it should
 
-7. Publish theme file (and theme resources pack file if it is created) into server\GitHub repository as explained in their documentation
+7. Publish theme file (and theme resources pack file if it is created) into server\GitHub repository as explained in [their documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/Upload_Help.md)
