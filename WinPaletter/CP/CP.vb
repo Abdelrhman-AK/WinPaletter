@@ -5814,7 +5814,7 @@ Start:
 
     End Sub
 
-    Function Decompress(File As String) As IEnumerable(Of String)
+    Public Shared Function Decompress(File As String) As IEnumerable(Of String)
         Dim DecompressedData As IEnumerable(Of String)
 
         Try
