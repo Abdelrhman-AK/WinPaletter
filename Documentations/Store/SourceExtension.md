@@ -4,7 +4,9 @@
 
 ---
 
-* Examples of sources that you can add to your WinPaletter setup: https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true
+* Examples of sources that you can add to your WinPaletter setup: 
+
+  https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true
   
   https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true
 
