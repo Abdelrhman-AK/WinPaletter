@@ -2,19 +2,25 @@
 
 ---
 
-## A. Steps that are done for one time before designing themes:
+## A. Summary:
 
-1. Open 'Settings' > 'Theme file type management'
+- Design theme with WinPaletter 1.0.7.7 and higher (not lower) and make this theme included with its theme resources pack (if there are sounds and images not included inside system directories) and edit theme info to make it previewed correctly on the store, and test your theme before publishing.
 
-2. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if you are going to design a theme contains sounds and images not included inside system directories
+---
+
+## B. Steps that are done for one time before designing themes:
+
+1. Use WinPaletter 1.0.7.7 and higher (not lower)
+
+2. Open 'Settings' > 'Theme file type management'
+
+3. Optional: Check `Make saving a theme file exports a resources pack that contains files used in theme` if you are going to design a theme contains sounds and images not included inside system directories
    
-   ```
-   By checking this option, you're responsible for copyrights of 
+   > By checking this option, you're responsible for copyrights of 
    included resources (images and sounds), especially after 
    uploading to WinPaletter Store. 
    WinPaletter developer is not responsible for users' uploaded 
    themes copyrights.
-   ```
    
    - Files inside `%windir%\Web`, `%windir%\Media`, `Windows XP: %windir%\Resources\Themes\Luna` and `Screen Savers: %windir\System32%` are not included inside themes resources pack. If you insist on a file inside these folders, copy them first to a new folder outside these folders and design your theme by WinPaletter and depend on the new files inside new folder.
    
@@ -40,17 +46,19 @@
    
    - This pack is extracted at `%localappdata%\Abdelrhman-AK\WinPaletter\ThemeResPack_Cache`
 
-3. Always make `Save theme files compressed` checked
+4. Always make `Save theme files compressed` checked
    
 ---
 
-## B. Steps that are done each time you design themes:
+## C. Steps that are done each time you design themes:
 
-1. Design the theme as you want
+1. Use WinPaletter 1.0.7.7 and higher (not lower)
 
-2. `Optional` On main form, open 'WinPaletter application theme' (You will find it in the lower part of the form with other images buttons) and design a UI that fits your theme colors
+2. Design the theme as you want
 
-3. Edit theme info (From pencil button in the upper part of the form)
+3. `Optional` On main form, open 'WinPaletter application theme' (You will find it in the lower part of the form with other images buttons) and design a UI that fits your theme colors
+
+4. Edit theme info (From pencil button in the upper part of the form)
    
    1. Enter all required info, especially description box (You can include tags in it to make Store search easier)
    
@@ -64,8 +72,8 @@
       
       4. Load into current theme
 
-4. Save your theme
+5. Save your theme
 
-5. `Optional` test your theme (and theme resources pack file if it is created) inside a Virtual Machine to check if the theme is working as it should
+6. `Optional` test your theme (and theme resources pack file if it is created) inside a Virtual Machine using all supported operation systems (from Windows XP to Windows 11) to check if the theme is working as it should
 
-6. Publish theme file (and theme resources pack file if it is created) into server\GitHub repository as explained in their documentation
+7. Publish theme file (and theme resources pack file if it is created) into server\GitHub repository as explained in their documentation
