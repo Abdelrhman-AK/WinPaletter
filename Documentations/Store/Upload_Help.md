@@ -14,4 +14,6 @@
 
 1. You are responsible for the copyrights of the themes\resources pack you upload. WinPaletter developer is not responsible for copyrights violation by other users.
 
-2. If you want to update your uploaded theme, do the same steps starting from step #5 and override the themes you uploaded and create a pull request
+2. Themes that are included online in a server\repository must be made by WinPaletter 1.0.7.7 and higher, otherwise the themes won't be loaded. If you insist on uploading a theme made by an old version of WinPaletter, use WinPaletter 1.0.7.7 or higher to convert this theme into the new format version (You can find convert button in main form in the upper part that has buttons)
+
+3. If you want to update your uploaded theme, do the same steps starting from step #5 and override the themes you uploaded and create a pull request
