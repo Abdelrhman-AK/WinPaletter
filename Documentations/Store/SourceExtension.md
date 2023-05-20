@@ -1,10 +1,12 @@
 # You can extend the scope of WinPaletter sources or even [create your own themes hosting server](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md).
 
-## Source extension is done by links you get online from a friend, obtained it online, or even built it.
+## Source extension is done by links you get from a friend, obtained it online, or even built it.
 
 ---
 
-* Examples of sources that you can add to your WinPaletter setup: https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true
+* Examples of sources that you can add to your WinPaletter setup: 
+
+  https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true
   
   https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true
 

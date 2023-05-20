@@ -139,5 +139,5 @@ Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have Antivirus or Browser issue?
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
 [Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/AntivirusIssue.md)
