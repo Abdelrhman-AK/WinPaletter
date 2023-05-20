@@ -65,7 +65,7 @@
    
    1. don't forget to add `?raw=true` to the end of any link (source link or links inside the source file), to make it a direct link
    
-   2. You can fork and edit [WinPaletter-Theme repository](https://github.com/Abdelrhman-AK/WinPaletter-Store) to understand the previous points 
+   2. You can fork and edit [WinPaletter-Theme repository](https://github.com/Abdelrhman-AK/WinPaletter-Store) to understand the rules 
    
    3. [store.wpdb](https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb "store.wpdb") is the source file
    
