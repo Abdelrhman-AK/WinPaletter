@@ -291,14 +291,14 @@
 </value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>WinPaletter Store can preview themes from online sources (servers\GitHub repositories) or offline from a folder containing themes in your device.
+    <value>WinPaletter Store can get themes from online sources (servers\GitHub repositories) or offline from a folder containing themes in your device.
 
 To edit the source, go to Settings &gt; Store and then select and edit the source as you want.</value>
   </data>
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAnEAAABjCAYAAAD0DFaBAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAVUVJREFUeF7tnQV4FEcbgNHgrhFCCEmQoMHdXVpcSoFiwYK7JWhwSXCHJDilLdL2
+        vAAADrwBlbxySQAAVUVJREFUeF7tnQV4FEcbgNHgrhFCCEmQoMHdXVpcSoFiwYK7JWhwSXCHJDilLdL2
         L6VIcShWaClWLCSQhECIy/d/395Nsrc7Z8khDTPP8z5zuzszOzeXGV5mVjIoAwAIBAKBQCAQCD5xVIGX
         SCAQCAQCgUDwaaEKvEQCgUAgEAgEgk8LVeAlEggEAoFAIBB8WqgCL5FAIBAIBAKB4NNCFXiJBAKBQCAQ
         CASfFqrASyQQCAQCgUAg+LRQBV4igUAgEAgEAsGnhSrwEgkEAsHHBkNGS8M7j0AgEPxXUAVeIoFAIPgQ

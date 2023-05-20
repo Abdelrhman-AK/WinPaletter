@@ -539,8 +539,8 @@ Public Class Store
         pnl_preview.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
-        MD5_lbl.Font = My.Application.ConsoleFontMedium
         themeSize_lbl.Font = My.Application.ConsoleFontMedium
+        respacksize_lbl.Font = My.Application.ConsoleFontMedium
         theme_ver_lbl.Font = My.Application.ConsoleFontMedium
         desc_txt.Font = My.Application.ConsoleFontLarge
     End Sub
@@ -882,6 +882,7 @@ Public Class Store
 
             Case Else
                 selectedItem = DirectCast(sender, StoreItem)
+                Cursor = Cursors.AppStarting
 
                 With selectedItem
                     My.Animator.HideSync(Tabs)
@@ -919,25 +920,24 @@ Public Class Store
                     theme_name_lbl.Text = .CP.Info.ThemeName
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
-                    MD5_lbl.Text = .MD5_ThemeFile
 
                     Try
                         If IO.File.ReadAllLines(.FileName) Is IO.File.ReadAllText(.FileName).Decompress Then
-                            themeSize_lbl.Text = String.Format("{0} without themes resources pack",
+                            themeSize_lbl.Text = String.Format("{0}",
                                                                My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
                         Else
-                            themeSize_lbl.Text = String.Format("{0} ({1} after data decompression) without themes resources pack",
-                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString,
-                                                               File.ReadAllText(.FileName).Decompress.ToArray.Length.SizeString)
-
+                            themeSize_lbl.Text = String.Format("{0} ({1} after data decompression)",
+                                                                   My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString,
+                                                                   File.ReadAllText(.FileName).Decompress.ToArray.Length.SizeString)
                         End If
                     Catch
-                        themeSize_lbl.Text = String.Format("{0} without themes resources pack",
+                        themeSize_lbl.Text = String.Format("{0}",
                                                                My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
                     End Try
+                    Dim Pack_Size As Long = GetFileSizeFromURL(.URL_PackFile)
+                    respacksize_lbl.Text = If(Pack_Size > 0, Pack_Size.SizeString, My.Lang.Store_NoIncludedData)
 
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
-                    Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL_ThemeFile), .URL_ThemeFile.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
                     If My.Application.Info.Version.ToString >= .CP.Info.AppVersion Then
@@ -975,6 +975,9 @@ Public Class Store
 
                     Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
                 End With
+
+                Cursor = Cursors.Default
+
         End Select
     End Sub
 
@@ -1167,6 +1170,22 @@ Public Class Store
 
     End Function
 
+    Public Function GetFileSizeFromURL(ByVal url As String) As Long
+        Dim result As Long = 0
+        Dim req As WebRequest = WebRequest.Create(url)
+        req.Method = "HEAD"
+        Dim contentLength As Long = Nothing
+
+        Using resp As WebResponse = req.GetResponse()
+
+            If Long.TryParse(resp.Headers.[Get]("Content-Length"), contentLength) Then
+                result = contentLength
+            End If
+        End Using
+
+        Return result
+    End Function
+
 #End Region
 
 #End Region
@@ -1254,21 +1273,6 @@ Public Class Store
     End Sub
 #End Region
 
-#Region "   Links"
-    Private Sub Author_link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
-        Try
-            If (Uri.IsWellFormedUriString(Author_link.Text, UriKind.Absolute)) And Not Author_link.Text.Contains(" ") Then Process.Start(Author_link.Text)
-        Catch
-        End Try
-    End Sub
-
-    Private Sub Download_Link_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
-        Try
-            If (Uri.IsWellFormedUriString(Download_Link.Text, UriKind.Absolute)) And Not Download_Link.Text.Contains(" ") Then Process.Start(Download_Link.Text)
-        Catch
-        End Try
-    End Sub
-#End Region
 
 #Region "   Applying row"
     Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click

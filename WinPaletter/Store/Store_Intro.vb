@@ -19,14 +19,17 @@ Public Class Store_Intro
 
         If TablessControl1.SelectedIndex = TablessControl1.TabPages.Count - 1 Then
             XenonButton1.Text = My.Lang.Finish
+            XenonCheckBox1.Visible = True
         Else
             XenonButton1.Text = My.Lang.Next
+            XenonCheckBox1.Visible = False
         End If
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         If TablessControl1.SelectedIndex - 1 >= 0 Then TablessControl1.SelectedIndex -= 1
         XenonButton1.Text = My.Lang.Next
+        XenonCheckBox1.Visible = False
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
@@ -36,5 +39,21 @@ Public Class Store_Intro
     Private Sub Store_Intro_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.Store_ShowTips = XenonCheckBox1.Checked
         My.Settings.Save(XeSettings.Mode.Registry)
+    End Sub
+
+    Private Sub StoreItem1_Click(sender As Object, e As MouseEventArgs) Handles StoreItem1.Click
+
+        If e.Button = MouseButtons.Right Then
+            With StoreItem1
+                Store.Adjust_Preview(.CP)
+                Store_Hover.Close()
+                Store.tabs_preview.SelectedIndex = 0
+                Store_Hover.img0 = Store.tabs_preview.ToBitmap
+                Store.tabs_preview.SelectedIndex = 1
+                Store_Hover.img1 = Store.tabs_preview.ToBitmap
+                Store_Hover.ShowDialog()
+            End With
+        End If
+
     End Sub
 End Class

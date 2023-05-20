@@ -98,6 +98,7 @@ Partial Class Store_Intro
         Me.XenonCheckBox1.Size = New System.Drawing.Size(464, 23)
         Me.XenonCheckBox1.TabIndex = 2
         Me.XenonCheckBox1.Text = "Always show this on opening WinPaletter Store"
+        Me.XenonCheckBox1.Visible = False
         '
         'XenonButton2
         '
@@ -245,7 +246,7 @@ Partial Class Store_Intro
         Me.PictureBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(8, 189)
+        Me.PictureBox2.Location = New System.Drawing.Point(8, 187)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(635, 106)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -269,7 +270,7 @@ Partial Class Store_Intro
         '
         Me.PictureBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(510, 172)
+        Me.PictureBox4.Location = New System.Drawing.Point(505, 167)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(139, 127)
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -375,7 +376,7 @@ Partial Class Store_Intro
         '
         Me.PictureBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(522, 172)
+        Me.PictureBox3.Location = New System.Drawing.Point(517, 167)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(127, 127)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -466,15 +467,17 @@ Partial Class Store_Intro
         '
         Me.Label13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(8, 247)
         Me.Label13.Name = "Label13"
+        Me.Label13.Padding = New System.Windows.Forms.Padding(4)
         Me.Label13.Size = New System.Drawing.Size(636, 47)
         Me.Label13.TabIndex = 4
-        Me.Label13.Text = "WinPaletter Store is under early phases of developments, you might face bugs. If " &
-    "so, post an issue in GitHub repos." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Never forget to create a theme backup before" &
-    " using WinPaletter Store."
+        Me.Label13.Text = "WinPaletter Store is under early phases of development, you might face bugs. If s" &
+    "o, post an issue in GitHub repos." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Never forget to create a theme backup before " &
+    "using WinPaletter Store."
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label11
