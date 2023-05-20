@@ -47,7 +47,7 @@
 
 3. A **store source** is a text file contains lines, each line is responsible for a theme. And the composition of this line is: `MD5_ThemeFile|MD5_ResourcesPackFile|DirectLink_To_ThemeFile|DirectLink_To_PackFile`
    
-   - `MD5` is used to make WinPaletter check if the downloaded theme has been updated\changed or not, if `MD5` inside source doesn't equal `MD5` of downloaded theme, WinPaletter will redownload the theme and override the old one. If they are not equal, no change will be made.
+   - `MD5` is used to make WinPaletter check if the downloaded theme has been updated\changed or not, if `MD5` inside source doesn't equal `MD5` of downloaded theme, WinPaletter will redownload the theme and override the old one. If they equal each other, no change will be made.
    
    - If the theme doesn't have a resources pack, its `MD5` will be `0` and ignore the last part of line: `|DirectLink_To_PackFile`
    
