@@ -4,4 +4,4 @@
 
 2. [How to upload themes to WinPaletter Store repository to be public to everyone](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/Upload_Help.md)
 
-3. [Create your own server\GitHub repository for publishing themes](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md)
+3. `Optional` [Create your own server\GitHub repository for hosting themes](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md)
