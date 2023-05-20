@@ -550,6 +550,8 @@ Public Class Store
         _Shown = True
         RemoveAllStoreItems(store_container)
         FilesFetcher.RunWorkerAsync()
+
+        If My.Settings.Store_ShowTips Then Store_Intro.ShowDialog()
     End Sub
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -918,11 +920,25 @@ Public Class Store
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
                     author_lbl.Text = .CP.Info.Author
                     MD5_lbl.Text = .MD5_ThemeFile
-                    themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
+
+                    Try
+                        If IO.File.ReadAllLines(.FileName) Is IO.File.ReadAllText(.FileName).Decompress Then
+                            themeSize_lbl.Text = String.Format("{0} without themes resources pack",
+                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
+                        Else
+                            themeSize_lbl.Text = String.Format("{0} ({1} after data decompression) without themes resources pack",
+                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString,
+                                                               File.ReadAllText(.FileName).Decompress.ToArray.Length.SizeString)
+
+                        End If
+                    Catch
+                        themeSize_lbl.Text = String.Format("{0} without themes resources pack",
+                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
+                    End Try
+
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
                     Download_Link.Text = If(Not String.IsNullOrWhiteSpace(.URL_ThemeFile), .URL_ThemeFile.Replace("?raw=true", ""), My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
-
 
                     If My.Application.Info.Version.ToString >= .CP.Info.AppVersion Then
                         VersionAlert_lbl.Text = String.Format(My.Lang.Store_AppVersionAlert1, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
@@ -1060,11 +1076,10 @@ Public Class Store
         Else
             'Edit button is pressed
             WindowState = FormWindowState.Minimized
-
             ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing, Nothing, Nothing)
 
-            My.CP = selectedItem.CP
             My.CP_Original = My.CP.Clone
+            My.CP = New CP(CP_Type.File, selectedItem.FileName)
             MainFrm.ApplyStylesToElements(My.CP, False)
             MainFrm.ApplyCPValues(My.CP)
             MainFrm.ApplyColorsToElements(My.CP)

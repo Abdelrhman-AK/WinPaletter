@@ -77,6 +77,7 @@ Public Class XeSettings
     Public Property Store_Online_Repositories As String() = {My.Resources.Link_StoreMainDB, My.Resources.Link_StoreReposDB}
     Public Property Store_Offline_Directories As String()
     Public Property Store_Offline_SubFolders As Boolean = True
+    Public Property Store_ShowTips As Boolean = True
 
     Public Property Classic_Color_Picker As Boolean = False
 #End Region
@@ -159,6 +160,7 @@ Public Class XeSettings
                 Store_Search_ThemeNames = GetReg(REG, "Store_Search_ThemeNames", True)
                 Store_Search_AuthorsNames = GetReg(REG, "Store_Search_AuthorsNames", True)
                 Store_Search_Descriptions = GetReg(REG, "Store_Search_Descriptions", True)
+                Store_ShowTips = GetReg(REG, "Store_ShowTips", True)
 
                 Log_ShowApplying = GetReg(REG, "Log_ShowApplying", True)
                 Log_Countdown_Enabled = GetReg(REG, "Log_Countdown_Enabled", True)
@@ -238,6 +240,7 @@ Public Class XeSettings
                     If x.StartsWith("Store_Search_ThemeNames= ", My._ignore) Then Store_Search_ThemeNames = x.Remove(0, "Store_Search_ThemeNames= ".Count)
                     If x.StartsWith("Store_Search_AuthorsNames= ", My._ignore) Then Store_Search_AuthorsNames = x.Remove(0, "Store_Search_AuthorsNames= ".Count)
                     If x.StartsWith("Store_Search_Descriptions= ", My._ignore) Then Store_Search_Descriptions = x.Remove(0, "Store_Search_Descriptions= ".Count)
+                    If x.StartsWith("Store_ShowTips= ", My._ignore) Then Store_ShowTips = x.Remove(0, "Store_ShowTips= ".Count)
 
                     If x.StartsWith("Log_ShowApplying= ", My._ignore) Then Log_ShowApplying = x.Remove(0, "Log_ShowApplying= ".Count)
                     If x.StartsWith("Log_Countdown_Enabled= ", My._ignore) Then Log_Countdown_Enabled = x.Remove(0, "Log_Countdown_Enabled= ".Count)
@@ -340,6 +343,7 @@ Public Class XeSettings
                 EditReg(REG, "Store_Online_Repositories", Store_Online_Repositories, RegistryValueKind.MultiString)
                 EditReg(REG, "Store_Offline_Directories", Store_Offline_Directories, RegistryValueKind.MultiString)
                 EditReg(REG, "Store_Offline_SubFolders", Store_Offline_SubFolders, RegistryValueKind.DWord)
+                EditReg(REG, "Store_ShowTips", Store_ShowTips, RegistryValueKind.DWord)
 
                 EditReg(REG, "Log_ShowApplying", Log_ShowApplying, RegistryValueKind.DWord)
                 EditReg(REG, "Log_Countdown_Enabled", Log_Countdown_Enabled, RegistryValueKind.DWord)
@@ -423,6 +427,7 @@ Public Class XeSettings
                 l.Add(String.Format("Store_Search_ThemeNames= {0}", Store_Search_ThemeNames))
                 l.Add(String.Format("Store_Search_AuthorsNames= {0}", Store_Search_AuthorsNames))
                 l.Add(String.Format("Store_Search_Descriptions= {0}", Store_Search_Descriptions))
+                l.Add(String.Format("Store_ShowTips= {0}", Store_ShowTips))
 
                 l.Add(String.Format("Log_ShowApplying= {0}", Log_ShowApplying))
                 l.Add(String.Format("Log_Countdown_Enabled= {0}", Log_Countdown_Enabled))

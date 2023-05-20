@@ -18308,6 +18308,9 @@
   <data name="Link_StoreMainDB" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true</value>
   </data>
+  <data name="Link_StoreOnlineSourceCreation" xml:space="preserve">
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md</value>
+  </data>
   <data name="Link_StoreReposDB" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true</value>
   </data>

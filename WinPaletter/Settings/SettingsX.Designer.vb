@@ -302,6 +302,8 @@ Partial Class SettingsX
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox4 = New WinPaletter.XenonCheckBox()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -398,6 +400,7 @@ Partial Class SettingsX
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -2564,6 +2567,8 @@ Partial Class SettingsX
         'TabPage16
         '
         Me.TabPage16.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage16.Controls.Add(Me.PictureBox2)
+        Me.TabPage16.Controls.Add(Me.XenonCheckBox4)
         Me.TabPage16.Controls.Add(Me.PictureBox54)
         Me.TabPage16.Controls.Add(Me.XenonCheckBox29)
         Me.TabPage16.Controls.Add(Me.XenonSeparator16)
@@ -2597,6 +2602,8 @@ Partial Class SettingsX
         '
         'XenonCheckBox29
         '
+        Me.XenonCheckBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonCheckBox29.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.XenonCheckBox29.Checked = True
         Me.XenonCheckBox29.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -4053,6 +4060,30 @@ Partial Class SettingsX
         Me.Label17.Text = "Settings"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
+        Me.PictureBox2.Location = New System.Drawing.Point(13, 292)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox2.TabIndex = 67
+        Me.PictureBox2.TabStop = False
+        '
+        'XenonCheckBox4
+        '
+        Me.XenonCheckBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox4.Checked = True
+        Me.XenonCheckBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox4.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox4.Location = New System.Drawing.Point(43, 293)
+        Me.XenonCheckBox4.Name = "XenonCheckBox4"
+        Me.XenonCheckBox4.Size = New System.Drawing.Size(766, 23)
+        Me.XenonCheckBox4.TabIndex = 66
+        Me.XenonCheckBox4.Text = "Always show tips on opening WinPaletter Store"
+        '
         'SettingsX
         '
         Me.AllowDrop = True
@@ -4175,6 +4206,7 @@ Partial Class SettingsX
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonAnimatedBox1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -4456,4 +4488,6 @@ Partial Class SettingsX
     Friend WithEvents XenonCheckBox33 As XenonCheckBox
     Friend WithEvents PictureBox44 As PictureBox
     Friend WithEvents XenonAlertBox22 As XenonAlertBox
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents XenonCheckBox4 As XenonCheckBox
 End Class

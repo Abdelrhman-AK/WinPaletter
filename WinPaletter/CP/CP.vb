@@ -4550,11 +4550,9 @@ Start:
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
                 Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = WinPaletter_Converter.Converter_CP.WP_Format.JSON
-                Dim cache As String = My.Application.appData & "\ThemeUnpackedCache\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
-                Dim external_pack As String = cache & "\WinPaletterTheme_SpecificForPack.wpth"
-                Dim Source As String
+                Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
 
-                '## Extract embedded wpth file inside theme resources pack
+                'Extract theme resources pack
                 Try
                     If Pack_IsValid And Not IgnoreExtractionThemePack Then
                         If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
@@ -4577,33 +4575,28 @@ Start:
 
                     End If
 
-                    If Pack_IsValid AndAlso IO.File.Exists(external_pack) AndAlso Not IgnoreExtractionThemePack Then
-                        Source = external_pack
-                    Else
-                        Source = File
-                    End If
-
                 Catch ex As Exception
                     Pack_IsValid = False
                     BugReport.ThrowError(ex)
-                    Source = File
                 End Try
 
-                txt = Decompress(Source)
+                txt = Decompress(File)
 
                 If IsValidJson(String.Join(vbCrLf, txt)) Then
-                    '## Replace %WinPaletterAppData% variable with a valid AppData folder path
-                    For x = 0 To txt.Count - 1
-                        If txt(x).Contains(":") Then
-                            Dim arr As String() = txt(x).Split(":")
-                            If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
-                                txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.Application.appData.Replace("\", "\\"))
+
+                    'Replace %WinPaletterAppData% variable with a valid AppData folder path
+                    If Pack_IsValid Then
+                        For x = 0 To txt.Count - 1
+                            If txt(x).Contains(":") Then
+                                Dim arr As String() = txt(x).Split(":")
+                                If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
+                                    txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.Application.appData.Replace("\", "\\"))
+                                End If
                             End If
-                        End If
-                    Next
+                        Next
+                    End If
 
                     Dim J As JObject = JObject.Parse(String.Join(vbCrLf, txt))
-
 
                     For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
                         Dim type As Type = field.FieldType
@@ -4615,9 +4608,9 @@ Start:
                     Next
                 Else
 
-                    If _Converter.FetchFile(Source) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
+                    If _Converter.FetchFile(File) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
                         If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
-                            _Converter.Convert(Source, Source, My.Settings.CompressThemeFile, False)
+                            _Converter.Convert(File, File, My.Settings.CompressThemeFile, False)
                             GoTo Start
                         End If
                     Else
@@ -4984,9 +4977,10 @@ Start:
                 End If
 
                 Using CPx As CP = Me.Clone
-                    IO.File.WriteAllText(File, CPx.ToString)
                     If My.Settings.AlwaysExportThemePack Then
-                        PackThemeResources(CPx, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
+                        PackThemeResources(CPx, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
+                    Else
+                        IO.File.WriteAllText(File, CPx.ToString)
                     End If
                 End Using
 
@@ -5021,8 +5015,8 @@ Start:
         Return type.IsValueType AndAlso Not type.IsPrimitive AndAlso type.Namespace IsNot Nothing AndAlso Not type.Namespace.StartsWith("System.")
     End Function
 
-    Sub PackThemeResources(CP As CP, Package As String)
-        Dim cache As String = "%WinPaletterAppData%\ThemeUnpackedCache\" & String.Concat(CP.Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & "\"
+    Sub PackThemeResources(CP As CP, CP_File As String, Package As String)
+        Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(CP.Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & "\"
         Dim filesList As New Dictionary(Of String, String) : filesList.Clear()
         Dim x As String
         Dim ZipEntry As String
@@ -5815,10 +5809,7 @@ Start:
 
             End If
 
-            Dim Temp As String = IO.Path.GetTempFileName
-            IO.File.WriteAllText(Temp, CP.ToString)
-            If IO.File.Exists(Temp) Then archive.CreateEntryFromFile(Temp, "WinPaletterTheme_SpecificForPack.wpth")
-            Try : IO.File.Delete(Temp) : Catch : End Try
+            IO.File.WriteAllText(CP_File, CP.ToString)
         End Using
 
     End Sub

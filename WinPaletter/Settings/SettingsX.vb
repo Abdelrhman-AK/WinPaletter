@@ -129,6 +129,7 @@ Public Class SettingsX
             XenonCheckBox26.Checked = .Store_Search_Descriptions
             XenonCheckBox27.Checked = .Store_Search_AuthorsNames
             XenonCheckBox29.Checked = .Store_Offline_SubFolders
+            XenonCheckBox4.Checked = .Store_ShowTips
 
             XenonCheckBox32.Checked = .Classic_Color_Picker
         End With
@@ -306,6 +307,7 @@ Public Class SettingsX
             .Store_Search_Descriptions = XenonCheckBox26.Checked
             .Store_Search_AuthorsNames = XenonCheckBox27.Checked
             .Store_Offline_SubFolders = XenonCheckBox29.Checked
+            .Store_ShowTips = XenonCheckBox4.Checked
 
             .Classic_Color_Picker = XenonCheckBox32.Checked
 
@@ -389,6 +391,7 @@ Public Class SettingsX
             If .Store_Search_Descriptions <> XenonCheckBox26.Checked Then Changed = True
             If .Store_Search_AuthorsNames <> XenonCheckBox27.Checked Then Changed = True
             If .Store_Offline_SubFolders <> XenonCheckBox29.Checked Then Changed = True
+            If .Store_ShowTips <> XenonCheckBox4.Checked Then Changed = True
 
             If .Classic_Color_Picker <> XenonCheckBox32.Checked Then Changed = True
         End With
@@ -464,8 +467,8 @@ Public Class SettingsX
     End Function
 
     Function CalcThemesResCache() As Integer
-        If IO.Directory.Exists(My.Application.appData & "\ThemeUnpackedCache") Then
-            Return Directory.EnumerateFiles(My.Application.appData & "\ThemeUnpackedCache", "*", SearchOption.AllDirectories).Sum(Function(fileInfo) New FileInfo(fileInfo).Length)
+        If IO.Directory.Exists(My.PATH_ThemeResPackCache) Then
+            Return Directory.EnumerateFiles(My.PATH_ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(Function(fileInfo) New FileInfo(fileInfo).Length)
         Else
             Return 0
         End If
@@ -631,7 +634,7 @@ Public Class SettingsX
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
         Try
-            Directory.Delete(My.Application.appData & "\ThemeUnpackedCache", True)
+            Directory.Delete(My.PATH_ThemeResPackCache, True)
         Catch
         End Try
         Label43.Text = CalcThemesResCache().SizeString

@@ -148,6 +148,8 @@ Public Class Localizer : Implements IDisposable
 #Region "Deep-In-Code Strings"
     Property OK As String = "OK"
     Property [Next] As String = "Next"
+
+    Property Finish As String = "Finish"
     Property Yes As String = "Yes"
     Property No As String = "No"
     Property Cancel As String = "Cancel"
