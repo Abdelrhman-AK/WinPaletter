@@ -1,6 +1,6 @@
 # How to upload themes to WinPaletter Store repository
 
-1. [Read first how to design themes to be uploaded to WinPaletter Store repository](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/DesigningThemesRules.md)
+1. [Read this first: how to design themes to be uploaded to WinPaletter Store repository](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/DesigningThemesRules.md)
 2. Create a GitHub Account if you don't have an account, or login if you already have one.
 3. Visit [WinPaletter Store Repository](https://github.com/Abdelrhman-AK/WinPaletter-Store), not the main WinPaletter repository
 4. Fork (You will find this button in the upper part of the page).
