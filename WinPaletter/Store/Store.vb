@@ -514,6 +514,8 @@ Public Class Store
 
 #Region "Store form events"
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
+        CenterToScreen()
+
         Titlebar_panel.BackColor = Style.Colors.Back
 
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)

@@ -288,6 +288,19 @@ Public Class MainFrm
             TablessControl1.SelectedIndex = 0
         End If
     End Sub
+    Sub UpdateLegends()
+        If My.PreviewStyle = WindowStyle.W11 Then
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
+                    W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
+                    W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
+
+        ElseIf My.PreviewStyle = WindowStyle.W10 Then
+            ApplyWin10xLegends(My.CP, My.PreviewStyle,
+                    W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
+                    W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
+
+        End If
+    End Sub
 #End Region
 
 #Region "Misc"
@@ -424,19 +437,7 @@ Public Class MainFrm
 
         ApplyDarkMode(Me)
         DoubleBuffer
-
-        If My.PreviewStyle = WindowStyle.W11 Then
-            ApplyWin10xLegends(My.CP, My.PreviewStyle,
-                    W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
-                    W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
-
-        ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            ApplyWin10xLegends(My.CP, My.PreviewStyle,
-                    W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
-                    W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
-
-        End If
-
+        UpdateLegends
         ApplyColorsToElements(My.CP)
         ApplyStylesToElements(My.CP)
         ApplyCPValues(My.CP)
@@ -624,7 +625,10 @@ Public Class MainFrm
     Private Sub W11_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_WinMode_Toggle.CheckedChanged
         If _Shown Then
             My.CP.Windows11.WinMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W11 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -638,7 +642,10 @@ Public Class MainFrm
     Private Sub W11_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W11_Transparency_Toggle.CheckedChanged
         If _Shown Then
             My.CP.Windows11.Transparency = sender.Checked
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W11 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -652,21 +659,30 @@ Public Class MainFrm
     Private Sub W11_Accent_None_CheckedChanged(sender As Object) Handles W11_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W11 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
     Private Sub W11_Accent_Taskbar_CheckedChanged(sender As Object) Handles W11_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W11 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
     Private Sub W11_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W11_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows11.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-            If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W11 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -1038,7 +1054,10 @@ Public Class MainFrm
     Private Sub W10_WinMode_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_WinMode_Toggle.CheckedChanged
         If _Shown Then
             My.CP.Windows10.WinMode_Light = Not sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W10 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -1052,7 +1071,10 @@ Public Class MainFrm
     Private Sub W10_Transparency_Toggle_CheckedChanged(sender As Object, e As EventArgs) Handles W10_Transparency_Toggle.CheckedChanged
         If _Shown Then
             My.CP.Windows10.Transparency = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W10 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -1066,21 +1088,30 @@ Public Class MainFrm
     Private Sub W10_Accent_None_CheckedChanged(sender As Object) Handles W10_Accent_None.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.None
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W10 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
     Private Sub W10_Accent_Taskbar_CheckedChanged(sender As Object) Handles W10_Accent_Taskbar.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W10 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
     Private Sub W10_Accent_StartTaskbar_CheckedChanged(sender As Object) Handles W10_Accent_StartTaskbar.CheckedChanged
         If _Shown And sender.Checked Then
             My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+            If My.PreviewStyle = WindowStyle.W10 Then
+                UpdateLegends()
+                ApplyColorsToElements(My.CP)
+            End If
         End If
     End Sub
 
@@ -2330,17 +2361,7 @@ Public Class MainFrm
         My.Animator.HideSync(TablessControl1, True)
         My.Animator.HideSync(tabs_preview, True)
 
-        If My.PreviewStyle = WindowStyle.W11 Then
-            ApplyWin10xLegends(My.CP, My.PreviewStyle,
-                    W11_lbl1, W11_lbl2, W11_lbl3, W11_lbl4, W11_lbl5, W11_lbl6, W11_lbl7, W11_lbl8, W11_lbl9,
-                    W11_pic1, W11_pic2, W11_pic3, W11_pic4, W11_pic5, W11_pic6, W11_pic7, W11_pic8, W11_pic9)
-
-        ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            ApplyWin10xLegends(My.CP, My.PreviewStyle,
-                    W10_lbl1, W10_lbl2, W10_lbl3, W10_lbl4, W10_lbl5, W10_lbl6, W10_lbl7, W10_lbl8, W10_lbl9,
-                    W10_pic1, W10_pic2, W10_pic3, W10_pic4, W10_pic5, W10_pic6, W10_pic7, W10_pic8, W10_pic9)
-
-        End If
+        UpdateLegends
 
         ApplyColorsToElements(My.CP)
         ApplyStylesToElements(My.CP)
