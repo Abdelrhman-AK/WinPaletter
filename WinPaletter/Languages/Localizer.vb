@@ -86,6 +86,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
         If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
         If Name.ToLower = "ApplicationThemer".ToLower Then Return ApplicationThemer
+        If Name.ToLower = "Converter_Form".ToLower Then Return Converter_Form
 
         Return Nothing
     End Function
@@ -136,7 +137,8 @@ Public Class Localizer : Implements IDisposable
                         "ScreenSaver_Editor",
                         "Sounds_Editor",
                         "Wallpaper_Editor",
-                        "ApplicationThemer"
+                        "ApplicationThemer",
+                        "Converter_Form"
                         }
 
 #Region "Language Info"
@@ -422,6 +424,7 @@ Public Class Localizer : Implements IDisposable
     Property Store_AppVersionAlert1 As String = "This theme is designed by WinPaletter {0} and this is compatible with current version ({1}). It is advisable to keep WinPaletter up-to-date."
     Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
     Property Store_NoIncludedData As String = "There is no included data"
+    Property Store_WontWork_Protocol As String = "Unfortunately, WinPaletter store won't work as TLS 1.2 protocol isn't enabled in {0}. Do you want to continue?"
 
     Property Convert_JSON_To_Old As String = "Theme file is JSON-internally-formatted. When you export this theme, it will be with old formatting system (valid for WinPaletter 1.0.7.6 and less)."
     Property Convert_Old_To_JSON As String = "Theme file is old-formatted. When you export this theme, it will be JSON-internally-formatted (valid for WinPaletter 1.0.7.7 and higher). It supports contents compression that is useful for uploading more amount of themes to WinPaletter Store with less downloading duration, and used resources pack export that is useful for downloading missing used resources (wallpapers, images and sounds) from WinPaletter Store (or by external sharing) and applying them automatically with the theme."

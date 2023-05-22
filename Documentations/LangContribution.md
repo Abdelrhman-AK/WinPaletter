@@ -56,11 +56,11 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 
 - Don't remove or modify brackets (`{0}`), slashes (`\` or `/`) or quotation marks (`"`), keep them consistent with your new translation.
   
-  > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
+  > For example: `There are {0} files` is translated into Arabic like that: `يوجد {0} ملفات`
 
-- Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
+- Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution.md#get-languages-and-applying-them) to test it.
 
-- [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
+- [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution.md#upload-your-language-file-to-github-so-others-can-use-it)
 
 ---
 
@@ -90,11 +90,11 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    - When you finish, press on `Save As ...` and close the form
    
-   - Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#get-languages-and-applying-them) to test it.
+   - Load your language file as explained above in [*Get Languages and applying them*](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution.md#get-languages-and-applying-them) to test it.
      
      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/2.png?raw=true)
 
-4. [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
+4. [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9 md#upload-your-language-file-to-github-so-others-can-use-it)
 
 5. Important notes:
    
@@ -104,7 +104,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
    
    - Numbers in Curly brackets should be left unchanged.
    
-   - > For example: `There is {0} files` is translated into Arabic like that: `يوجد {0} ملف`
+   - > For example: `There are {0} files` is translated into Arabic like that: `يوجد {0} ملفات`
 
 ---
 
@@ -126,7 +126,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
 
 7. Load your language file as explained above in *"Get Languages and applying them"* to test it.
 
-8. [Upload Your Language File to GitHub (Will be explained)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
+8. [Upload Your Language File to GitHub (Will be explained)](https://github.com/Abdelrhman-AK/WinPaletter/edit/master/Documentations/LangContribution.md#upload-your-language-file-to-github-so-others-can-use-it)
    
      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/4.png?raw=true)
 

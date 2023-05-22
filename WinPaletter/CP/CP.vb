@@ -18,7 +18,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Private _ErrorHappened As Boolean = False
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
-    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
+    Private ReadOnly _Converter As New Converter
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean
@@ -4549,7 +4549,7 @@ Start:
 
                 Dim txt As New List(Of String) : txt.Clear()
                 Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
-                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = WinPaletter_Converter.Converter_CP.WP_Format.JSON
+                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = Converter_CP.WP_Format.JSON
                 Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
 
                 'Extract theme resources pack
@@ -4608,7 +4608,7 @@ Start:
                     Next
                 Else
 
-                    If _Converter.FetchFile(File) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
+                    If _Converter.FetchFile(File) = Converter_CP.WP_Format.WPTH Then
                         If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
                             _Converter.Convert(File, File, My.Settings.CompressThemeFile, False)
                             GoTo Start

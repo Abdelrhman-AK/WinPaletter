@@ -4,7 +4,7 @@ WinPaletter 1.0.7.7 now uses a new format for themes files, it is JSON-internall
 
 To reuse a theme you made in earlier versions of WinPaletter, you can convert between old format and new format using WinPaletter conversion tool (Inside WinPaletter).
 
-When you open a theme file with old format, WinPaletter will offer you instant conversion of this file. If you want to convert other themes files, You can use converter by any of these 3 methods: **GUI converter, Command line, or Command line with a list file of themes**
+When you open a theme file with old format, WinPaletter will offer you instant conversion of this file. If you want to convert other themes files, you can use converter by any of these 3 methods: **GUI converter, Command line, or Command line with a list file of themes**
 
 ---
 

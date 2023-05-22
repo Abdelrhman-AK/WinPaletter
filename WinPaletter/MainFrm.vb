@@ -15,7 +15,7 @@ Public Class MainFrm
     Dim ChannelFixer As Integer
     Dim Updates_ls As New List(Of String)
     Private LoggingOff As Boolean = False
-    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
+    Private ReadOnly _Converter As New Converter
 
 #Region "Preview Subs"
     Sub ApplyColorsToElements(ByVal [CP] As CP)
@@ -2133,7 +2133,7 @@ Public Class MainFrm
         If IO.Path.GetExtension(files(0)).ToLower = ".wpth" Then
             wpth_or_wpsf = True
 
-            If _Converter.FetchFile(files(0)) = WinPaletter_Converter.Converter_CP.WP_Format.JSON Then
+            If _Converter.FetchFile(files(0)) = Converter_CP.WP_Format.JSON Then
                 e.Effect = DragDropEffects.Copy
 
                 If My.Settings.DragAndDropPreview Then
@@ -2143,7 +2143,7 @@ Public Class MainFrm
                     DragPreviewer.File = files(0)
                     DragPreviewer.Show()
                 End If
-            ElseIf _Converter.FetchFile(files(0)) = WinPaletter_Converter.Converter_CP.WP_Format.WPTH Then
+            ElseIf _Converter.FetchFile(files(0)) = Converter_CP.WP_Format.WPTH Then
                 DragAccepted = True
                 e.Effect = DragDropEffects.Copy
 
@@ -2491,7 +2491,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton36_Click(sender As Object, e As EventArgs) Handles XenonButton36.Click
-        Converter.ShowDialog()
+        Converter_Form.ShowDialog()
     End Sub
 
     Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
@@ -2519,6 +2519,12 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
+        If My.WXP Then
+            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinXP), MsgBoxStyle.Question + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
+        ElseIf My.WVista Then
+            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinVista), MsgBoxStyle.Question + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
+        End If
+
         If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
         Store.Show()
     End Sub

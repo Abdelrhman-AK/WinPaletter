@@ -2,7 +2,6 @@
 Imports System.Reflection
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.ProfilesList
-Imports WinPaletter.XenonCore
 
 Public Class WinTerminal : Implements ICloneable
 
@@ -171,8 +170,6 @@ Public Class WinTerminal : Implements ICloneable
                            .White = "FFCCCCCC".FromHEXToColor(True),
                            .Yellow = "FFC19C00".FromHEXToColor(True)
                            })
-
-                    MsgBox(My.Lang.Terminal_SettingsNotExist, MsgBoxStyle.Critical, str)
                 End If
 
             Case Mode.WinPaletterFile
@@ -486,6 +483,7 @@ Public Class WinTerminal : Implements ICloneable
 
         End Select
     End Function
+
 
     Public Shared Sub TakeOwnership(ByVal filepath As String)
         Dim proc = New Process()

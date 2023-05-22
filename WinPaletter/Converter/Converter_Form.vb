@@ -1,8 +1,8 @@
 ﻿Imports WinPaletter.XenonCore
 
-Public Class Converter
+Public Class Converter_Form
 
-    Private ReadOnly _Convert As New WinPaletter_Converter.Converter
+    Private ReadOnly _Convert As New Converter
 
     Private Sub Converter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
@@ -21,17 +21,17 @@ Public Class Converter
 
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
         Select Case _Convert.FetchFile(XenonTextBox1.Text)
-            Case WinPaletter_Converter.Converter_CP.WP_Format.JSON
+            Case Converter_CP.WP_Format.JSON
                 Label3.Text = My.Lang.Convert_JSON_To_Old
                 XenonCheckBox2.Enabled = True
                 XenonCheckBox1.Enabled = False
 
-            Case WinPaletter_Converter.Converter_CP.WP_Format.WPTH
+            Case Converter_CP.WP_Format.WPTH
                 Label3.Text = My.Lang.Convert_Old_To_JSON
                 XenonCheckBox2.Enabled = False
                 XenonCheckBox1.Enabled = True
 
-            Case WinPaletter_Converter.Converter_CP.WP_Format.Error
+            Case Converter_CP.WP_Format.Error
                 Label3.Text = My.Lang.Convert_Error_Phrasing
                 XenonCheckBox2.Enabled = False
                 XenonCheckBox1.Enabled = False
@@ -39,7 +39,7 @@ Public Class Converter
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If Not _Convert.FetchFile(XenonTextBox1.Text) = WinPaletter_Converter.Converter_CP.WP_Format.Error Then
+        If Not _Convert.FetchFile(XenonTextBox1.Text) = Converter_CP.WP_Format.Error Then
             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                 _Convert.Convert(XenonTextBox1.Text, SaveFileDialog1.FileName, XenonCheckBox1.Checked, XenonCheckBox2.Checked)
                 MsgBox(My.Lang.Convert_Done, MsgBoxStyle.Information)

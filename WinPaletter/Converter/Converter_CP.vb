@@ -1658,9 +1658,9 @@ Public Class Converter_CP
                         .W10_1909_TerminalScrolling = False,
                         .W10_1909_WindowAlpha = 255}
 
-    Public Terminal As New WinTerminal("", WinTerminal.Mode.Empty)
+    Public Terminal As New WinTerminal_Converter("", WinTerminal_Converter.Mode.Empty)
 
-    Public TerminalPreview As New WinTerminal("", WinTerminal.Mode.Empty)
+    Public TerminalPreview As New WinTerminal_Converter("", WinTerminal_Converter.Mode.Empty)
 
 #Region "Cursors"
     Public Cursor_Enabled As Boolean = False
@@ -2449,8 +2449,8 @@ Public Class Converter_CP
         Dim str_stable, str_preview As String
         str_stable = String.Join(vbCrLf, txt.Where(Function(l) l.StartsWith("terminal.", 5)))
         str_preview = String.Join(vbCrLf, txt.Where(Function(l) l.StartsWith("terminalpreview.", 5)))
-        Terminal = New WinTerminal(str_stable, WinTerminal.Mode.WinPaletterFile)
-        TerminalPreview = New WinTerminal(str_preview, WinTerminal.Mode.WinPaletterFile, WinTerminal.Version.Preview)
+        Terminal = New WinTerminal_Converter(str_stable, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Stable)
+        TerminalPreview = New WinTerminal_Converter(str_preview, WinTerminal_Converter.Mode.WinPaletterFile, WinTerminal_Converter.Version.Preview)
 
         WallpaperTone_W11.FromListOfString(txt.Where(Function(l) l.StartsWith("*WallpaperTone_Win11_", 5)))
         WallpaperTone_W10.FromListOfString(txt.Where(Function(l) l.StartsWith("*WallpaperTone_Win10_", 5)))

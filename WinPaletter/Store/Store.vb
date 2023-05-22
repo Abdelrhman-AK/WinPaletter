@@ -29,7 +29,7 @@ Public Class Store
     Dim Cycles As Integer = 0
     Dim WithEvents WebCL As New WebClient
 
-    Private ReadOnly _Converter As New WinPaletter_Converter.Converter
+    Private ReadOnly _Converter As New Converter
     Private ApplyOrEditToggle As Boolean = True
 #End Region
 
@@ -684,7 +684,7 @@ Public Class Store
                 If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
 
                 'Convert themes CPs into StoreItems, and exclude the old formats of WPTH
-                If File.Exists(Dir & "\" & FileName) AndAlso _Converter.FetchFile(Dir & "\" & FileName) = WinPaletter_Converter.Converter_CP.WP_Format.JSON Then
+                If File.Exists(Dir & "\" & FileName) AndAlso _Converter.FetchFile(Dir & "\" & FileName) = Converter_CP.WP_Format.JSON Then
                     Try
                         Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 

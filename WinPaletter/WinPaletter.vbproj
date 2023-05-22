@@ -196,10 +196,6 @@
     <Reference Include="WindowsBase">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WinPaletter.Converter">
-      <HintPath>..\WinPaletter Converter\WinPaletter Converter\bin\Release\WinPaletter.Converter.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -246,12 +242,15 @@
     </Compile>
     <Compile Include="Classes\Bitmap_Mgr.vb" />
     <Compile Include="Classes\INI.vb" />
-    <Compile Include="Converter.Designer.vb">
-      <DependentUpon>Converter.vb</DependentUpon>
+    <Compile Include="Converter\Converter_CP.vb" />
+    <Compile Include="Converter\Converter_Form.Designer.vb">
+      <DependentUpon>Converter_Form.vb</DependentUpon>
     </Compile>
-    <Compile Include="Converter.vb">
+    <Compile Include="Converter\Converter_Form.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Converter\Converter.vb" />
+    <Compile Include="Converter\Converter_WT.vb" />
     <Compile Include="CP\PreviewHelpers.vb" />
     <Compile Include="Extras\AltTabEditor.Designer.vb">
       <DependentUpon>AltTabEditor.vb</DependentUpon>
@@ -789,8 +788,8 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Converter.resx">
-      <DependentUpon>Converter.vb</DependentUpon>
+    <EmbeddedResource Include="Converter\Converter_Form.resx">
+      <DependentUpon>Converter_Form.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.vb</DependentUpon>

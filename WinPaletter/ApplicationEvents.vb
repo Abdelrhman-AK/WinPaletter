@@ -825,7 +825,9 @@ Namespace My
             Saving_Exceptions.Clear()
             Loading_Exceptions.Clear()
 
-            If W7 Or WVista Or WXP Then ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            If W7 Or WVista Or WXP Then
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 Or SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls
+            End If
 
             'Detects if WinPaletter started with Classic Theme
             Dim vsFile As New Text.StringBuilder(260)
@@ -1087,9 +1089,9 @@ Namespace My
                 If arr.Count = 3 Then Compress = arr(2)
                 If arr.Count = 4 Then OldWPTH = arr(3)
 
-                Dim _Convert As New WinPaletter_Converter.Converter
+                Dim _Convert As New Converter
 
-                If IO.File.Exists(Source) AndAlso Not _Convert.FetchFile(Source) = WinPaletter_Converter.Converter_CP.WP_Format.Error Then
+                If IO.File.Exists(Source) AndAlso Not _Convert.FetchFile(Source) = Converter_CP.WP_Format.Error Then
                     _Convert.Convert(Source, Destination, Compress = "1", OldWPTH = "1")
                 Else
                     MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical, Source)
@@ -1105,7 +1107,7 @@ Namespace My
         Sub CMD_Convert_List(arg As String, KillProcessAfterConvert As Boolean)
             Try
                 Dim source As String = arg.Remove(0, "/convert-list:".Count)
-                Dim _Convert As New WinPaletter_Converter.Converter
+                Dim _Convert As New Converter
 
                 If IO.File.Exists(source) Then
 
@@ -1130,7 +1132,7 @@ Namespace My
                             Dim Dir As String = FI.FullName.Replace(FI.FullName.Split("\").Last, "WinPaletterConversion")
                             Dim SaveAs As String = Dir & "\" & Name & ".wpth"
 
-                            If Not _Convert.FetchFile(f) = WinPaletter_Converter.Converter_CP.WP_Format.Error Then
+                            If Not _Convert.FetchFile(f) = Converter_CP.WP_Format.Error Then
                                 If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
                                 _Convert.Convert(f, SaveAs, compress = "1", OldWPTH = "1")
                             Else
@@ -1194,9 +1196,6 @@ Namespace My
             Catch : End Try
 
             Try : If e.Name.ToUpper.Contains("System.ValueTuple".ToUpper) Then Return Assembly.Load(Resources.System_ValueTuple)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("WinPaletter.Converter".ToUpper) Then Return Assembly.Load(Resources.WinPaletter_Converter)
             Catch : End Try
 
             Return Nothing
