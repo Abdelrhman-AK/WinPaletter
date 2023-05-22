@@ -10,7 +10,7 @@ When you open a theme file with old format, WinPaletter will offer you instant c
 
 ## A. GUI converter
 
-1. Open WinPaletter and press on button
+1. Open WinPaletter and press on this button (![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Converter.png?raw=true))
 
 2. Open file. If it is an old-formatted file, it will be converted to new format, and vise versa
 
