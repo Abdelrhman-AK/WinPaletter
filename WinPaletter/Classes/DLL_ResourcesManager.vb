@@ -3,12 +3,13 @@ Imports System.Runtime.InteropServices
 Imports System.Security.AccessControl
 Imports System.Security.Principal
 Imports WinPaletter.NativeMethods.Kernel32
+Imports WinPaletter.XenonCore
 
 Public Module DLL_ResourcesManager
 
     Private ReadOnly identifier As New SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, Nothing)
-    Private ReadOnly AdmAccount As NTAccount = CType(identifier.Translate(GetType(NTAccount)), NTAccount)
-    Private ReadOnly fsRule As New FileSystemAccessRule(AdmAccount, FileSystemRights.FullControl, AccessControlType.Allow)
+    Private ReadOnly AdminAccount As NTAccount = CType(identifier.Translate(GetType(NTAccount)), NTAccount)
+    Private ReadOnly AccessRule As New FileSystemAccessRule(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow)
 
 #Region "Subs"
 
@@ -36,45 +37,55 @@ Public Module DLL_ResourcesManager
     End Function
 
     Public Function ReplaceResource(SourceFile As String, ResourceType As String, ID As Integer, NewRes As Byte(), Optional LangID As UShort = 1033) As Boolean
-        Wow64DisableWow64FsRedirection(IntPtr.Zero)
-        Prepare()
+        If My.isElevated Then
+            Wow64DisableWow64FsRedirection(IntPtr.Zero)
+            Prepare()
 
-        Dim tempFileName As String = Path.GetTempFileName()
-        Dim flag As Boolean
+            Dim tempFileName As String = Path.GetTempFileName()
+            Dim flag As Boolean
 
-        If Not BackupRights(SourceFile, tempFileName) Then
+            If Not BackupRights(SourceFile, tempFileName) Then
+                Return False
+            End If
+            If PrepareFileCopy(SourceFile) Then
+                Dim hModule = LoadLibraryEx(SourceFile, System.IntPtr.Zero, 2UI)
+                Dim _intPtr = FindResource(hModule, ID, ResourceType)
+                FreeLibrary(hModule)
+                If _intPtr = IntPtr.Zero Then
+                    Return False
+                End If
+                Dim intPtr2 = BeginUpdateResource(SourceFile, bDeleteExistingResources:=False)
+                If intPtr2 = IntPtr.Zero Then
+                    Return False
+                End If
+
+                flag = UpdateResource(intPtr2, ResourceType, ID, LangID, NewRes, CUInt(NewRes.Length))
+
+                Prepare()
+                If Not EndUpdateResource(intPtr2, Not flag) Then
+                    Throw New Exception("EndUpdateResource Failed:" & Marshal.GetLastWin32Error())
+                End If
+                For Each path In Directory.GetFiles(IO.Path.GetDirectoryName(SourceFile), IO.Path.GetFileNameWithoutExtension(SourceFile) & "*.dll_bak")
+                    Try
+                        File.Delete(path)
+                    Catch
+                    End Try
+                Next
+            Else
+                flag = False
+            End If
+
+            RestoreRights(SourceFile, tempFileName)
+            Wow64RevertWow64FsRedirection(IntPtr.Zero)
+            Return flag
+        Else
+            MsgBox(String.Format(My.Lang.CP_UpdateDLL_AsAdmin_Error0, SourceFile), MsgBoxStyle.Exclamation, My.Lang.CP_UpdateDLL_AsAdmin_Error1)
             Return False
         End If
-        If PrepareFileCopy(SourceFile) Then
-            Dim hModule = LoadLibraryEx(SourceFile, System.IntPtr.Zero, 2UI)
-            Dim _intPtr = FindResource(hModule, ID, ResourceType)
-            FreeLibrary(hModule)
-            If _intPtr = IntPtr.Zero Then
-                Return False
-            End If
-            Dim intPtr2 = BeginUpdateResource(SourceFile, bDeleteExistingResources:=False)
-            If intPtr2 = IntPtr.Zero Then
-                Return False
-            End If
-
-            flag = UpdateResource(intPtr2, ResourceType, ID, LangID, NewRes, CUInt(NewRes.Length))
-
-            Prepare()
-            If Not EndUpdateResource(intPtr2, Not flag) Then
-                Throw New Exception("EndUpdateResource Failed:" & Marshal.GetLastWin32Error())
-            End If
-        Else
-            flag = False
-        End If
-
-        RestoreRights(SourceFile, tempFileName)
-        Wow64RevertWow64FsRedirection(IntPtr.Zero)
-        Return flag
     End Function
 
     Private Function PrepareFileCopy(SourceFile) As Boolean
-        Dim files = Directory.GetFiles(Path.GetDirectoryName(SourceFile), Path.GetFileNameWithoutExtension(SourceFile) & "*.ssc")
-        For Each path In files
+        For Each path In Directory.GetFiles(IO.Path.GetDirectoryName(SourceFile), IO.Path.GetFileNameWithoutExtension(SourceFile) & "*.dll_bak")
             Try
                 File.Delete(path)
             Catch
@@ -84,7 +95,13 @@ Public Module DLL_ResourcesManager
         Dim result = True
         Try
             Prepare()
-            Dim text = Path.GetDirectoryName(SourceFile) & "\" & Path.GetFileNameWithoutExtension(SourceFile) & Date.Now.Day & Date.Now.Month & Date.Now.Year & Date.Now.Hour & Date.Now.Minute & Date.Now.Second & ".ssc"
+            Dim text = Path.GetDirectoryName(SourceFile) & "\" & Path.GetFileNameWithoutExtension(SourceFile) & Date.Now.ToBinary & ".dll_bak"
+
+            If Not My.isElevated Then
+                Reg_IO.Takeown_File(SourceFile)
+                Reg_IO.ICACLS(SourceFile)
+            End If
+
             File.Move(SourceFile, text)
             File.Copy(text, SourceFile)
             Return result
@@ -95,18 +112,23 @@ Public Module DLL_ResourcesManager
 
     Public Function BackupRights(SourceFile As String, BackupFile As String) As Boolean
         Try
-            Reg_IO.Takeown_File(SourceFile)
             Dim accessControl = File.GetAccessControl(SourceFile)
             If accessControl Is Nothing Then
                 Return False
             End If
-            Dim fileStream = File.Create(BackupFile, 1, FileOptions.None, accessControl)
-            fileStream.Close()
-            fileStream.Dispose()
-            accessControl.SetOwner(AdmAccount)
-            File.SetAccessControl(SourceFile, accessControl)
-            accessControl.AddAccessRule(fsRule)
-            File.SetAccessControl(SourceFile, accessControl)
+
+            Using fileStream = File.Create(BackupFile, 1, FileOptions.None, accessControl)
+                fileStream.Close()
+            End Using
+
+            If My.isElevated Then
+                accessControl.SetOwner(AdminAccount) : File.SetAccessControl(SourceFile, accessControl)
+                accessControl.AddAccessRule(AccessRule) : File.SetAccessControl(SourceFile, accessControl)
+            Else
+                Reg_IO.Takeown_File(SourceFile, True)
+                Reg_IO.ICACLS(SourceFile, True)
+            End If
+
             Return True
         Catch ex As Exception
             BugReport.ThrowError(ex)

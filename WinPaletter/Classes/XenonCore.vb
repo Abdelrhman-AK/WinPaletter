@@ -147,12 +147,10 @@ Public Class XenonCore
         Logoff
         Logon
     End Enum
-
     Enum Actions
         Add
         Delete
     End Enum
-
     Public Shared Sub TaskMgmt(TaskType As TaskType, Action As Actions, Optional File As String = "")
 
         DeleteTask(TaskType)
@@ -192,7 +190,6 @@ Public Class XenonCore
             If IO.File.Exists(tmp) Then Kill(tmp)
         End If
     End Sub
-
     Private Shared Sub DeleteTask(TaskType As TaskType)
         Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
                .FileName = My.PATH_System32 & "\schtasks",
@@ -377,13 +374,20 @@ Public Class XenonCore
         ElseIf TypeOf ctrl Is XenonLinkLabel Then
             DirectCast(ctrl, XenonLinkLabel).LinkColor = If(DarkMode, Color.White, Color.Black)
 
-        ElseIf TypeOf ctrl Is TreeView Or TypeOf ctrl Is XenonTreeView Then
-            With TryCast(ctrl, TreeView)
+        ElseIf TypeOf ctrl Is TreeView Then
+            With DirectCast(ctrl, TreeView)
                 .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
+            End With
+
+        ElseIf TypeOf ctrl Is XenonTreeView Then
+            With DirectCast(ctrl, XenonTreeView)
+                .BackColor = ctrl.Parent.BackColor
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
         ElseIf TypeOf ctrl Is ListView Then
-            With TryCast(ctrl, ListView)
+            With DirectCast(ctrl, ListView)
                 .BackColor = ctrl.Parent.BackColor
             End With
 
@@ -391,18 +395,18 @@ Public Class XenonCore
             ctrl.BackColor = ctrl.Parent.BackColor
 
         ElseIf TypeOf ctrl Is CheckedListBox Then
-            With TryCast(ctrl, CheckedListBox)
+            With DirectCast(ctrl, CheckedListBox)
                 .BackColor = ctrl.Parent.BackColor
                 .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
         ElseIf TypeOf ctrl Is NumericUpDown Then
-            With TryCast(ctrl, NumericUpDown)
+            With DirectCast(ctrl, NumericUpDown)
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
             End With
 
         ElseIf TypeOf ctrl Is ComboBox Then
-            With TryCast(ctrl, ComboBox)
+            With DirectCast(ctrl, ComboBox)
                 .FlatStyle = FlatStyle.Flat
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
             End With

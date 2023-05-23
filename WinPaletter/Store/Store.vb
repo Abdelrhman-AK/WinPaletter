@@ -1173,19 +1173,27 @@ Public Class Store
     End Function
 
     Public Function GetFileSizeFromURL(ByVal url As String) As Long
-        Dim result As Long = 0
-        Dim req As WebRequest = WebRequest.Create(url)
-        req.Method = "HEAD"
-        Dim contentLength As Long = Nothing
+        Try
+            If Not String.IsNullOrWhiteSpace(url) Then
+                Dim result As Long = 0
+                Dim req As WebRequest = WebRequest.Create(url)
+                req.Method = "HEAD"
+                Dim contentLength As Long = Nothing
 
-        Using resp As WebResponse = req.GetResponse()
+                Using resp As WebResponse = req.GetResponse()
 
-            If Long.TryParse(resp.Headers.[Get]("Content-Length"), contentLength) Then
-                result = contentLength
+                    If Long.TryParse(resp.Headers.[Get]("Content-Length"), contentLength) Then
+                        result = contentLength
+                    End If
+                End Using
+
+                Return result
+            Else
+                Return 0
             End If
-        End Using
-
-        Return result
+        Catch
+            Return 0
+        End Try
     End Function
 
 #End Region

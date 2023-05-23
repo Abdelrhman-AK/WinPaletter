@@ -252,12 +252,36 @@ Public Class Reg_IO
         process.Start()
         process.WaitForExit()
     End Sub
-    Shared Sub Takeown_File(File As String)
+    Shared Sub Takeown_File(File As String, Optional AsAdministrator As Boolean = False)
         If IO.File.Exists(File) Then
             Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
-                    .FileName = "takeown",
+                    .FileName = My.PATH_System32 & "\takeown.exe",
                     .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
-                    .Arguments = String.Format("/f {0}", File),
+                    .Arguments = String.Format("/f ""{0}"" /r /d Y{1}", File, If(AsAdministrator, " /a", "")),
+                    .WindowStyle = ProcessWindowStyle.Hidden,
+                    .CreateNoWindow = True,
+                    .UseShellExecute = True
+                 }}
+
+            process.Start()
+            process.WaitForExit()
+
+            Try
+                Dim fSecurity As FileSecurity = IO.File.GetAccessControl(File)
+                fSecurity.AddAccessRule(New FileSystemAccessRule(Security.Principal.WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow))
+                IO.File.SetAccessControl(File, fSecurity)
+            Catch
+            End Try
+
+        End If
+    End Sub
+
+    Shared Sub ICACLS(File As String, Optional AsAdministrator As Boolean = False)
+        If IO.File.Exists(File) Then
+            Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+                    .FileName = My.PATH_System32 & "\ICACLS.exe",
+                    .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
+                    .Arguments = String.Format("""{0}"" /grant {1}:F", File, If(AsAdministrator, "administrators", "%username%")),
                     .WindowStyle = ProcessWindowStyle.Hidden,
                     .CreateNoWindow = True,
                     .UseShellExecute = True

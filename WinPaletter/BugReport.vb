@@ -4,23 +4,16 @@ Imports WinPaletter.XenonCore
 Public Class BugReport
     Private Sub BugReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        Dim c As Color = PictureBox1.Image.AverageColor
-        Dim c1 As Color = c.CB(If(GetDarkMode(), -0.35, 0.35))
-        Dim c2 As Color = c.CB(If(GetDarkMode(), -0.75, 0.75))
-        'XenonTreeView1.BackColor = c2
-
-        XenonAnimatedBox1.BackColor = c1
-        'BackColor = c2
+        Dim c As Color = PictureBox1.Image.AverageColor.CB(If(GetDarkMode(), -0.35, 0.35))
+        XenonAnimatedBox1.BackColor = c
+        DrawCustomTitlebar(c)
 
         Label2.Font = My.Application.ConsoleFontMedium
         Label3.Font = My.Application.ConsoleFontMedium
-
         XenonTreeView1.Font = My.Application.ConsoleFontMedium
 
         Try : BK.Close() : Catch : End Try
         Try : BK.Show() : Catch : End Try
-
-        DrawCustomTitlebar(c1)
 
         For Each lbl In XenonAnimatedBox1.Controls.OfType(Of Label)
             lbl.ForeColor = Color.White
@@ -180,5 +173,12 @@ Public Class BugReport
             MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), MsgBoxStyle.Critical)
         End If
 
+    End Sub
+
+    Private Sub XenonTreeView1_DoubleClick(sender As Object, e As EventArgs) Handles XenonTreeView1.DoubleClick
+        Try
+            If XenonTreeView1.SelectedNode IsNot Nothing Then Clipboard.SetText(XenonTreeView1.SelectedNode.Text)
+        Catch
+        End Try
     End Sub
 End Class

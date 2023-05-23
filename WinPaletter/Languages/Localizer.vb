@@ -333,6 +333,8 @@ Public Class Localizer : Implements IDisposable
     Property CP_RestoreCursorsError As String = "Error occurred during resetting cursors to aero. Anyway, process will continue."
     Property CP_RestoreCursorsErrorPressOK As String = "Pressing OK will show details of exception error."
     Property CP_RestoreCursorsTip As String = "If you want to restore default cursors, go to Control Panel > Mouse > Pointers"
+    Property CP_UpdateDLL_AsAdmin_Error0 As String = "You must be running WinPaletter as Administrator to update resources of ""{0}"""
+    Property CP_UpdateDLL_AsAdmin_Error1 As String = "This process is required for changing Windows startup sound"
     Property Lang_HasLeftToRight As String = "It has left to right layout"
     Property Lang_HasRightToLeft As String = "It has right to left layout"
     Property CommandPrompt As String = "Command Prompt"
