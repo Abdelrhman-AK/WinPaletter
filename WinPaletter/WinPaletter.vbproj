@@ -503,6 +503,12 @@
     <Compile Include="Store\Store_SearchFilter.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Store\Store_ThemeLicense.Designer.vb">
+      <DependentUpon>Store_ThemeLicense.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_ThemeLicense.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Terminals\CMD.Designer.vb">
       <DependentUpon>CMD.vb</DependentUpon>
     </Compile>
@@ -679,6 +685,7 @@
     <Content Include="Resources\Mini_PressedButton.png" />
     <Content Include="Resources\Mini_SettingsIcons.png" />
     <None Include="Resources\Mini_StartMenu.png" />
+    <None Include="Resources\Mini_StartContextMenu.png" />
     <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
     <Content Include="Resources\Mini_Taskbar.png" />
     <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
@@ -899,6 +906,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_SearchFilter.resx">
       <DependentUpon>Store_SearchFilter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
+      <DependentUpon>Store_ThemeLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Terminals\CMD.resx">
       <DependentUpon>CMD.vb</DependentUpon>

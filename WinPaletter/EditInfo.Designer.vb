@@ -78,6 +78,11 @@ Partial Class EditInfo
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.PictureBox18 = New System.Windows.Forms.PictureBox()
+        Me.XenonTextBox6 = New WinPaletter.XenonTextBox()
+        Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,6 +103,8 @@ Partial Class EditInfo
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
+        CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox2
@@ -366,6 +373,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage3)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
         Me.XenonTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed
         Me.XenonTabControl1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -871,6 +879,83 @@ Partial Class EditInfo
         Me.PictureBox7.TabIndex = 14
         Me.PictureBox7.TabStop = False
         '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.XenonAlertBox3)
+        Me.TabPage3.Controls.Add(Me.Label14)
+        Me.TabPage3.Controls.Add(Me.PictureBox18)
+        Me.TabPage3.Controls.Add(Me.XenonTextBox6)
+        Me.TabPage3.Location = New System.Drawing.Point(144, 4)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(683, 385)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Credits\License"
+        '
+        'Label14
+        '
+        Me.Label14.BackColor = System.Drawing.Color.Transparent
+        Me.Label14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Label14.Location = New System.Drawing.Point(36, 6)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(641, 24)
+        Me.Label14.TabIndex = 18
+        Me.Label14.Text = "Type here the credits or license\s of any resource you used in the theme (images," &
+    " audios, screensavers, ...)"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox18
+        '
+        Me.PictureBox18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.PictureBox18.Image = CType(resources.GetObject("PictureBox18.Image"), System.Drawing.Image)
+        Me.PictureBox18.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox18.Name = "PictureBox18"
+        Me.PictureBox18.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox18.TabIndex = 17
+        Me.PictureBox18.TabStop = False
+        '
+        'XenonTextBox6
+        '
+        Me.XenonTextBox6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTextBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox6.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox6.Location = New System.Drawing.Point(6, 36)
+        Me.XenonTextBox6.MaxLength = 32767
+        Me.XenonTextBox6.Multiline = True
+        Me.XenonTextBox6.Name = "XenonTextBox6"
+        Me.XenonTextBox6.ReadOnly = False
+        Me.XenonTextBox6.Scrollbars = System.Windows.Forms.ScrollBars.Vertical
+        Me.XenonTextBox6.SelectedText = ""
+        Me.XenonTextBox6.SelectionLength = 0
+        Me.XenonTextBox6.SelectionStart = 0
+        Me.XenonTextBox6.Size = New System.Drawing.Size(671, 315)
+        Me.XenonTextBox6.TabIndex = 19
+        Me.XenonTextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox6.UseSystemPasswordChar = False
+        Me.XenonTextBox6.WordWrap = True
+        '
+        'XenonAlertBox3
+        '
+        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox3.CenterText = False
+        Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox3.Image = Nothing
+        Me.XenonAlertBox3.Location = New System.Drawing.Point(6, 357)
+        Me.XenonAlertBox3.Name = "XenonAlertBox3"
+        Me.XenonAlertBox3.Size = New System.Drawing.Size(671, 22)
+        Me.XenonAlertBox3.TabIndex = 139
+        Me.XenonAlertBox3.TabStop = False
+        Me.XenonAlertBox3.Text = "This is used especially in WinPaletter store, if a user didn't accept this, the t" &
+    "heme won't be applied"
+        '
         'EditInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -911,6 +996,8 @@ Partial Class EditInfo
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -970,4 +1057,9 @@ Partial Class EditInfo
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents XenonAlertBox2 As XenonAlertBox
     Friend WithEvents Label13 As Label
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents XenonAlertBox3 As XenonAlertBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents PictureBox18 As PictureBox
+    Friend WithEvents XenonTextBox6 As XenonTextBox
 End Class

@@ -97,19 +97,6 @@ Partial Class WinEffecter
         Me.XenonCheckBox14 = New WinPaletter.XenonCheckBox()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox13 = New WinPaletter.XenonCheckBox()
-        Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox25 = New WinPaletter.XenonCheckBox()
-        Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
-        Me.PictureBox31 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox24 = New WinPaletter.XenonCheckBox()
-        Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox15 = New WinPaletter.XenonCheckBox()
-        Me.PictureBox24 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox18 = New WinPaletter.XenonCheckBox()
-        Me.PictureBox25 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox19 = New WinPaletter.XenonCheckBox()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
         Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
@@ -170,6 +157,19 @@ Partial Class WinEffecter
         Me.R1 = New System.Windows.Forms.Panel()
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.PictureBox34 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox25 = New WinPaletter.XenonCheckBox()
+        Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
+        Me.PictureBox31 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox24 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox21 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox15 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox24 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox18 = New WinPaletter.XenonCheckBox()
+        Me.PictureBox25 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox19 = New WinPaletter.XenonCheckBox()
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -212,12 +212,6 @@ Partial Class WinEffecter
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage9.SuspendLayout()
-        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage11.SuspendLayout()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox26, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -235,6 +229,12 @@ Partial Class WinEffecter
         Me.Panel4.SuspendLayout()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage9.SuspendLayout()
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -1213,186 +1213,6 @@ Partial Class WinEffecter
         Me.XenonCheckBox13.TabIndex = 4
         Me.XenonCheckBox13.Text = "Enabled (focus follows the cursor)"
         '
-        'TabPage9
-        '
-        Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage9.Controls.Add(Me.PictureBox34)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox25)
-        Me.TabPage9.Controls.Add(Me.XenonAlertBox6)
-        Me.TabPage9.Controls.Add(Me.XenonAlertBox5)
-        Me.TabPage9.Controls.Add(Me.PictureBox31)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox24)
-        Me.TabPage9.Controls.Add(Me.PictureBox21)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox15)
-        Me.TabPage9.Controls.Add(Me.PictureBox24)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox18)
-        Me.TabPage9.Controls.Add(Me.PictureBox25)
-        Me.TabPage9.Controls.Add(Me.XenonCheckBox19)
-        Me.TabPage9.Location = New System.Drawing.Point(174, 4)
-        Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(591, 384)
-        Me.TabPage9.TabIndex = 8
-        Me.TabPage9.Text = "Miscellaneous"
-        '
-        'PictureBox34
-        '
-        Me.PictureBox34.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
-        Me.PictureBox34.Location = New System.Drawing.Point(6, 171)
-        Me.PictureBox34.Name = "PictureBox34"
-        Me.PictureBox34.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox34.TabIndex = 243
-        Me.PictureBox34.TabStop = False
-        '
-        'XenonCheckBox25
-        '
-        Me.XenonCheckBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox25.Checked = False
-        Me.XenonCheckBox25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox25.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox25.Location = New System.Drawing.Point(36, 171)
-        Me.XenonCheckBox25.Name = "XenonCheckBox25"
-        Me.XenonCheckBox25.Size = New System.Drawing.Size(549, 24)
-        Me.XenonCheckBox25.TabIndex = 242
-        Me.XenonCheckBox25.Text = "Fullscreen Start menu (for Windows 10 and requires logoff and logon)"
-        '
-        'XenonAlertBox6
-        '
-        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox6.CenterText = False
-        Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox6.Image = Nothing
-        Me.XenonAlertBox6.Location = New System.Drawing.Point(36, 94)
-        Me.XenonAlertBox6.Name = "XenonAlertBox6"
-        Me.XenonAlertBox6.Size = New System.Drawing.Size(549, 40)
-        Me.XenonAlertBox6.TabIndex = 241
-        Me.XenonAlertBox6.TabStop = False
-        Me.XenonAlertBox6.Text = "If you are using Windows 11 lower than May 2023 update, use ExplorerPatcher to fo" &
-    "rce applying this effect"
-        '
-        'XenonAlertBox5
-        '
-        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox5.CenterText = False
-        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox5.Image = Nothing
-        Me.XenonAlertBox5.Location = New System.Drawing.Point(36, 66)
-        Me.XenonAlertBox5.Name = "XenonAlertBox5"
-        Me.XenonAlertBox5.Size = New System.Drawing.Size(115, 22)
-        Me.XenonAlertBox5.TabIndex = 240
-        Me.XenonAlertBox5.TabStop = False
-        Me.XenonAlertBox5.Text = "Uses more power"
-        '
-        'PictureBox31
-        '
-        Me.PictureBox31.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
-        Me.PictureBox31.Location = New System.Drawing.Point(6, 201)
-        Me.PictureBox31.Name = "PictureBox31"
-        Me.PictureBox31.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox31.TabIndex = 228
-        Me.PictureBox31.TabStop = False
-        '
-        'XenonCheckBox24
-        '
-        Me.XenonCheckBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox24.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox24.Checked = False
-        Me.XenonCheckBox24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox24.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox24.Location = New System.Drawing.Point(36, 201)
-        Me.XenonCheckBox24.Name = "XenonCheckBox24"
-        Me.XenonCheckBox24.Size = New System.Drawing.Size(549, 24)
-        Me.XenonCheckBox24.TabIndex = 227
-        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and later)"
-        '
-        'PictureBox21
-        '
-        Me.PictureBox21.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox21.Image = CType(resources.GetObject("PictureBox21.Image"), System.Drawing.Image)
-        Me.PictureBox21.Location = New System.Drawing.Point(6, 6)
-        Me.PictureBox21.Name = "PictureBox21"
-        Me.PictureBox21.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox21.TabIndex = 145
-        Me.PictureBox21.TabStop = False
-        '
-        'XenonCheckBox15
-        '
-        Me.XenonCheckBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox15.Checked = False
-        Me.XenonCheckBox15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox15.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox15.Location = New System.Drawing.Point(36, 6)
-        Me.XenonCheckBox15.Name = "XenonCheckBox15"
-        Me.XenonCheckBox15.Size = New System.Drawing.Size(549, 24)
-        Me.XenonCheckBox15.TabIndex = 144
-        Me.XenonCheckBox15.Text = "Snap cursor to default button"
-        '
-        'PictureBox24
-        '
-        Me.PictureBox24.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox24.Image = CType(resources.GetObject("PictureBox24.Image"), System.Drawing.Image)
-        Me.PictureBox24.Location = New System.Drawing.Point(6, 141)
-        Me.PictureBox24.Name = "PictureBox24"
-        Me.PictureBox24.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox24.TabIndex = 226
-        Me.PictureBox24.TabStop = False
-        '
-        'XenonCheckBox18
-        '
-        Me.XenonCheckBox18.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox18.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox18.Checked = False
-        Me.XenonCheckBox18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox18.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox18.Location = New System.Drawing.Point(36, 141)
-        Me.XenonCheckBox18.Name = "XenonCheckBox18"
-        Me.XenonCheckBox18.Size = New System.Drawing.Size(549, 24)
-        Me.XenonCheckBox18.TabIndex = 225
-        Me.XenonCheckBox18.Text = "Paint Windows version in desktop (Might require Windows restart)"
-        '
-        'PictureBox25
-        '
-        Me.PictureBox25.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox25.Image = CType(resources.GetObject("PictureBox25.Image"), System.Drawing.Image)
-        Me.PictureBox25.Location = New System.Drawing.Point(6, 36)
-        Me.PictureBox25.Name = "PictureBox25"
-        Me.PictureBox25.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox25.TabIndex = 224
-        Me.PictureBox25.TabStop = False
-        '
-        'XenonCheckBox19
-        '
-        Me.XenonCheckBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox19.Checked = False
-        Me.XenonCheckBox19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox19.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox19.Location = New System.Drawing.Point(36, 36)
-        Me.XenonCheckBox19.Name = "XenonCheckBox19"
-        Me.XenonCheckBox19.Size = New System.Drawing.Size(549, 24)
-        Me.XenonCheckBox19.TabIndex = 223
-        Me.XenonCheckBox19.Text = "Show seconds in taskbar tray clock (Windows 10 or Windows 11 May 2023 update)"
-        '
         'TabPage11
         '
         Me.TabPage11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
@@ -2128,6 +1948,186 @@ Partial Class WinEffecter
         Me.PictureBox32.TabIndex = 84
         Me.PictureBox32.TabStop = False
         '
+        'TabPage9
+        '
+        Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.PictureBox34)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox25)
+        Me.TabPage9.Controls.Add(Me.XenonAlertBox6)
+        Me.TabPage9.Controls.Add(Me.XenonAlertBox5)
+        Me.TabPage9.Controls.Add(Me.PictureBox31)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox24)
+        Me.TabPage9.Controls.Add(Me.PictureBox21)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox15)
+        Me.TabPage9.Controls.Add(Me.PictureBox24)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox18)
+        Me.TabPage9.Controls.Add(Me.PictureBox25)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox19)
+        Me.TabPage9.Location = New System.Drawing.Point(174, 4)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage9.Size = New System.Drawing.Size(591, 384)
+        Me.TabPage9.TabIndex = 8
+        Me.TabPage9.Text = "Miscellaneous"
+        '
+        'PictureBox34
+        '
+        Me.PictureBox34.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox34.Image = CType(resources.GetObject("PictureBox34.Image"), System.Drawing.Image)
+        Me.PictureBox34.Location = New System.Drawing.Point(6, 171)
+        Me.PictureBox34.Name = "PictureBox34"
+        Me.PictureBox34.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox34.TabIndex = 243
+        Me.PictureBox34.TabStop = False
+        '
+        'XenonCheckBox25
+        '
+        Me.XenonCheckBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox25.Checked = False
+        Me.XenonCheckBox25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox25.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox25.Location = New System.Drawing.Point(36, 171)
+        Me.XenonCheckBox25.Name = "XenonCheckBox25"
+        Me.XenonCheckBox25.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox25.TabIndex = 242
+        Me.XenonCheckBox25.Text = "Fullscreen Start menu (for Windows 10 and requires logoff and logon)"
+        '
+        'XenonAlertBox6
+        '
+        Me.XenonAlertBox6.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox6.CenterText = False
+        Me.XenonAlertBox6.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox6.Image = Nothing
+        Me.XenonAlertBox6.Location = New System.Drawing.Point(36, 94)
+        Me.XenonAlertBox6.Name = "XenonAlertBox6"
+        Me.XenonAlertBox6.Size = New System.Drawing.Size(549, 40)
+        Me.XenonAlertBox6.TabIndex = 241
+        Me.XenonAlertBox6.TabStop = False
+        Me.XenonAlertBox6.Text = "If you are using Windows 11 lower than Moment 3 update, use ExplorerPatcher to fo" &
+    "rce applying this effect"
+        '
+        'XenonAlertBox5
+        '
+        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox5.CenterText = False
+        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox5.Image = Nothing
+        Me.XenonAlertBox5.Location = New System.Drawing.Point(36, 66)
+        Me.XenonAlertBox5.Name = "XenonAlertBox5"
+        Me.XenonAlertBox5.Size = New System.Drawing.Size(115, 22)
+        Me.XenonAlertBox5.TabIndex = 240
+        Me.XenonAlertBox5.TabStop = False
+        Me.XenonAlertBox5.Text = "Uses more power"
+        '
+        'PictureBox31
+        '
+        Me.PictureBox31.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox31.Image = CType(resources.GetObject("PictureBox31.Image"), System.Drawing.Image)
+        Me.PictureBox31.Location = New System.Drawing.Point(6, 201)
+        Me.PictureBox31.Name = "PictureBox31"
+        Me.PictureBox31.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox31.TabIndex = 228
+        Me.PictureBox31.TabStop = False
+        '
+        'XenonCheckBox24
+        '
+        Me.XenonCheckBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox24.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox24.Checked = False
+        Me.XenonCheckBox24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox24.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox24.Location = New System.Drawing.Point(36, 201)
+        Me.XenonCheckBox24.Name = "XenonCheckBox24"
+        Me.XenonCheckBox24.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox24.TabIndex = 227
+        Me.XenonCheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and later)"
+        '
+        'PictureBox21
+        '
+        Me.PictureBox21.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox21.Image = CType(resources.GetObject("PictureBox21.Image"), System.Drawing.Image)
+        Me.PictureBox21.Location = New System.Drawing.Point(6, 6)
+        Me.PictureBox21.Name = "PictureBox21"
+        Me.PictureBox21.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox21.TabIndex = 145
+        Me.PictureBox21.TabStop = False
+        '
+        'XenonCheckBox15
+        '
+        Me.XenonCheckBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox15.Checked = False
+        Me.XenonCheckBox15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox15.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox15.Location = New System.Drawing.Point(36, 6)
+        Me.XenonCheckBox15.Name = "XenonCheckBox15"
+        Me.XenonCheckBox15.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox15.TabIndex = 144
+        Me.XenonCheckBox15.Text = "Snap cursor to default button"
+        '
+        'PictureBox24
+        '
+        Me.PictureBox24.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox24.Image = CType(resources.GetObject("PictureBox24.Image"), System.Drawing.Image)
+        Me.PictureBox24.Location = New System.Drawing.Point(6, 141)
+        Me.PictureBox24.Name = "PictureBox24"
+        Me.PictureBox24.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox24.TabIndex = 226
+        Me.PictureBox24.TabStop = False
+        '
+        'XenonCheckBox18
+        '
+        Me.XenonCheckBox18.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox18.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox18.Checked = False
+        Me.XenonCheckBox18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox18.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox18.Location = New System.Drawing.Point(36, 141)
+        Me.XenonCheckBox18.Name = "XenonCheckBox18"
+        Me.XenonCheckBox18.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox18.TabIndex = 225
+        Me.XenonCheckBox18.Text = "Paint Windows version in desktop (Might require Windows restart)"
+        '
+        'PictureBox25
+        '
+        Me.PictureBox25.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox25.Image = CType(resources.GetObject("PictureBox25.Image"), System.Drawing.Image)
+        Me.PictureBox25.Location = New System.Drawing.Point(6, 36)
+        Me.PictureBox25.Name = "PictureBox25"
+        Me.PictureBox25.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox25.TabIndex = 224
+        Me.PictureBox25.TabStop = False
+        '
+        'XenonCheckBox19
+        '
+        Me.XenonCheckBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox19.Checked = False
+        Me.XenonCheckBox19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox19.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox19.Location = New System.Drawing.Point(36, 36)
+        Me.XenonCheckBox19.Name = "XenonCheckBox19"
+        Me.XenonCheckBox19.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox19.TabIndex = 223
+        Me.XenonCheckBox19.Text = "Show seconds in taskbar tray clock (Windows 10 or Windows 11 Moment 3 update)"
+        '
         'XenonButton10
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2336,12 +2336,6 @@ Partial Class WinEffecter
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage9.ResumeLayout(False)
-        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage11.ResumeLayout(False)
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox26, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2359,6 +2353,12 @@ Partial Class WinEffecter
         Me.Panel4.ResumeLayout(False)
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage9.ResumeLayout(False)
+        CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

@@ -1,0 +1,20 @@
+﻿Imports WinPaletter.XenonCore
+
+Public Class Store_ThemeLicense
+    Private Sub Store_ThemeLicense_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyDarkMode(Me)
+        Icon = LicenseForm.Icon
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+        DialogResult = DialogResult.OK
+        Close()
+    End Sub
+
+    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+        DialogResult = DialogResult.Cancel
+        Close()
+    End Sub
+
+
+End Class

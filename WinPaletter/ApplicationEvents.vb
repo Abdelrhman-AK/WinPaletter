@@ -665,7 +665,7 @@ Namespace My
             Catch : End Try
         End Sub
 
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        Private Async Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
@@ -910,7 +910,6 @@ Namespace My
 
             My.CP_Original = My.CP.Clone
             My.CP_FirstTime = My.CP.Clone
-
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance

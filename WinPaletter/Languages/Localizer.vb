@@ -82,6 +82,7 @@ Public Class Localizer : Implements IDisposable
         If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
         If Name.ToLower = "Store_DownloadProgress".ToLower Then Return Store_DownloadProgress
         If Name.ToLower = "Store_Intro".ToLower Then Return Store_Intro
+        If Name.ToLower = "Store_ThemeLicense".ToLower Then Return Store_ThemeLicense
         If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
         If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
         If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
@@ -134,6 +135,7 @@ Public Class Localizer : Implements IDisposable
                         "Store_SearchFilter",
                         "Store_DownloadProgress",
                         "Store_Intro",
+                        "Store_ThemeLicense",
                         "ScreenSaver_Editor",
                         "Sounds_Editor",
                         "Wallpaper_Editor",
@@ -224,6 +226,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_11_SomePressedButtons As String = "Some pressed buttons"
     Property CP_UWPBackground As String = "UWP dialogs background (Windows 8.1 remnants in {0})"
     Property CP_10_ACLinks As String = "Action center links"
+    Property CP_10_ACLinks_StartContextMenu As String = "Action center links and start's context menus"
     Property CP_10_TaskbarAppUnderline As String = "Taskbar app underline"
     Property CP_10_StartMenuIconHover As String = "Start menu icon hover"
     Property CP_10_Settings_Links_SomeBtns As String = "Settings icons, links && some pressed buttons"
@@ -236,8 +239,11 @@ Public Class Localizer : Implements IDisposable
     Property CP_EP_ActionCenterBackground As String = "Action center background"
     Property CP_10_StartMenu_AC_TaskbarActiveApp As String = "Start menu, action center && taskbar active app"
     Property CP_10_Taskbar As String = "Taskbar"
+    Property CP_10_Taskbar_StartContextMenu As String = "Taskbar and start's context menus"
+    Property CP_10_StartContextMenu As String = "Start's context menus"
     Property CP_EP_Taskbar_AppUnderline As String = "Taskbar && app underline"
     Property CP_10_Taskbar_ACLinks As String = "Taskbar background color && action center links"
+    Property CP_10_Taskbar_ACLinks_StartContextMenu As String = "Taskbar background color, action center links && start's context menus"
     Property CP_10_TaskbarFocusedApp_StartButtonHover As String = "Taskbar focused app && Start menu button hover"
     Property CP_Undefined As String = "Undefined"
     Property CP_AccentOnTaskbarTib As String = "Applying accent on taskbar only isn't effective only for Windows 10 2015 versions, but it is effective for higher versions."

@@ -7,6 +7,7 @@ Public Class EditInfo
         Load_Info(My.CP)
         MainFrm.Visible = False
         XenonTextBox3.Font = My.Application.ConsoleFontMedium
+        XenonTextBox6.Font = My.Application.ConsoleFontMedium
 
     End Sub
     Private Sub EditInfo_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
@@ -51,6 +52,7 @@ Public Class EditInfo
         XenonTextBox3.Text = [CP].Info.Description
         XenonTextBox4.Text = [CP].Info.Author
         XenonTextBox5.Text = [CP].Info.AuthorSocialMediaLink
+        XenonTextBox6.Text = [CP].Info.License
 
         color1.BackColor = [CP].Info.Color1
         color2.BackColor = [CP].Info.Color2
@@ -70,6 +72,7 @@ Public Class EditInfo
         [CP].Info.Description = XenonTextBox3.Text
         [CP].Info.Author = XenonTextBox4.Text
         [CP].Info.AuthorSocialMediaLink = XenonTextBox5.Text
+        [CP].Info.License = XenonTextBox6.Text
 
         [CP].Info.Color1 = color1.BackColor
         [CP].Info.Color2 = color2.BackColor

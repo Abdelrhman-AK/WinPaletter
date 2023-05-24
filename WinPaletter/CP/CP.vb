@@ -55,6 +55,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public AppVersion As String
             Public ThemeName As String
             Public Description As String
+            Public License As String
             Public ThemeVersion As String
             Public Author As String
             Public AuthorSocialMediaLink As String
@@ -80,26 +81,27 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Function
 
             Public Sub Load()
-                ThemeName = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", My.Lang.CurrentMode, False, True)
-                ThemeVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0", False, True)
-                Author = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Environment.UserName, False, True)
-                AuthorSocialMediaLink = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "", False, True)
-                AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, False, True)
-                Description = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "", False, True)
+                ThemeName = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", My.Lang.CurrentMode)
+                ThemeVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0")
+                Author = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Environment.UserName)
+                AuthorSocialMediaLink = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "")
+                AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString)
+                Description = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "")
+                License = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", "")
 
-                Dim y As Object = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color.FromArgb(0, 102, 204).ToArgb, False, True)
+                Dim y As Object = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color.FromArgb(0, 102, 204).ToArgb)
                 Color1 = Color.FromArgb(y)
 
-                y = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color.FromArgb(122, 9, 9).ToArgb, False, True)
+                y = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color.FromArgb(122, 9, 9).ToArgb)
                 Color2 = Color.FromArgb(y)
 
-                Pattern = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1, False, True)
-                DesignedFor_Win11 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", True, False, True)
-                DesignedFor_Win10 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", True, False, True)
-                DesignedFor_Win8 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", True, False, True)
-                DesignedFor_Win7 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", True, False, True)
-                DesignedFor_WinVista = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", True, False, True)
-                DesignedFor_WinXP = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", True, False, True)
+                Pattern = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1)
+                DesignedFor_Win11 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", True)
+                DesignedFor_Win10 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", True)
+                DesignedFor_Win8 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", True)
+                DesignedFor_Win7 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", True)
+                DesignedFor_WinVista = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", True)
+                DesignedFor_WinXP = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", True)
             End Sub
 
             Sub Apply()
@@ -109,6 +111,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String)
 
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color2.ToArgb, RegistryValueKind.DWord)
@@ -3071,6 +3074,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .AppVersion = My.Application.Info.Version.ToString,
             .ThemeName = My.Lang.CurrentMode,
             .Description = "",
+            .License = "",
             .ThemeVersion = "1.0.0.0",
             .Author = Environment.UserName,
             .AuthorSocialMediaLink = "",

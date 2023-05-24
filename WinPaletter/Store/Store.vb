@@ -1288,6 +1288,11 @@ Public Class Store
     Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click
         ApplyOrEditToggle = sender Is Apply_btn
 
+        If Not String.IsNullOrWhiteSpace(selectedItem.CP.Info.License) Then
+            Store_ThemeLicense.XenonTextBox1.Text = selectedItem.CP.Info.License
+            If Not Store_ThemeLicense.ShowDialog = DialogResult.OK Then Exit Sub
+        End If
+
         If StartedAsOnlineOrOffline Then
             Dim temp As String = selectedItem.URL_PackFile.Replace("?raw=true", "")
             Dim FileName As String = temp.Split("/").Last

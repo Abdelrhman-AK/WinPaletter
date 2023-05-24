@@ -131,7 +131,7 @@ Public Class PreviewHelpers
                         If [CP].Windows10.Transparency Then
                             lbl1.Text = My.Lang.CP_10_Hamburger
                             lbl4.Text = My.Lang.CP_10_StartMenu_AC
-                            lbl8.Text = My.Lang.CP_10_Taskbar
+                            lbl8.Text = My.Lang.CP_10_Taskbar_StartContextMenu
 
                             pic1.Image = My.Resources.Mini_Hamburger
                             pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
@@ -152,8 +152,8 @@ Public Class PreviewHelpers
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC
                             End If
 
-                            lbl8.Text = My.Lang.CP_Undefined
-                            pic8.Image = My.Resources.Mini_Undefined
+                            lbl8.Text = My.Lang.CP_10_StartContextMenu
+                            pic8.Image = My.Resources.Mini_StartContextMenu
 
                         End If
 
@@ -175,7 +175,7 @@ Public Class PreviewHelpers
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_Undefined
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks
+                                lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_Undefined
@@ -184,7 +184,7 @@ Public Class PreviewHelpers
                                 lbl2.Text = My.Lang.CP_Undefined
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks
+                                lbl8.Text = My.Lang.CP_10_Taskbar_ACLinks_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_TaskbarApp
@@ -193,7 +193,7 @@ Public Class PreviewHelpers
                                 lbl2.Text = My.Lang.CP_10_ACLinks
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Lang.CP_10_Taskbar
+                                lbl8.Text = My.Lang.CP_10_Taskbar_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_ACHover_Links
                                 pic3.Image = My.Resources.Mini_TaskbarApp
@@ -213,7 +213,7 @@ Public Class PreviewHelpers
                                 lbl3.Text = My.Lang.CP_Undefined
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns
-                                lbl8.Text = My.Lang.CP_10_ACLinks
+                                lbl8.Text = My.Lang.CP_10_ACLinks_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_Undefined
@@ -226,7 +226,7 @@ Public Class PreviewHelpers
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl4.Text = My.Lang.CP_10_TaskbarFocusedApp_StartButtonHover
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Lang.CP_10_ACLinks
+                                lbl8.Text = My.Lang.CP_10_ACLinks_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_Undefined
                                 pic3.Image = My.Resources.Mini_TaskbarApp
@@ -239,13 +239,13 @@ Public Class PreviewHelpers
                                 lbl3.Text = My.Lang.CP_10_TaskbarAppUnderline
                                 lbl4.Text = My.Lang.CP_10_StartMenu_AC_TaskbarActiveApp
                                 lbl5.Text = My.Lang.CP_10_Settings_Links_SomeBtns
-                                lbl8.Text = My.Lang.CP_Undefined
+                                lbl8.Text = My.Lang.CP_10_StartContextMenu
 
                                 pic2.Image = My.Resources.Mini_ACHover_Links
                                 pic3.Image = My.Resources.Mini_TaskbarApp
                                 pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC
                                 pic5.Image = My.Resources.Mini_Settings_Icons
-                                pic8.Image = My.Resources.Mini_Undefined
+                                pic8.Image = My.Resources.Mini_StartContextMenu
                             End If
                         End If
                 End Select
