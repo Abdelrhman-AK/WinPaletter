@@ -61,8 +61,10 @@
 4. Edit theme info (From pencil button in the upper part of the form)
    
    1. Enter all required info, especially description box (You can include tags in it to make Store search easier)
+
+   2. Open Credits\License tab and type the credits and licenses of files used in your theme (images, audios, screen savers, ...). You can leave it empty if you didn't use any file in the theme. This is previewed to the user in  WinPaletter Store, if the user didn't accept this, the theme won't be applied
    
-   2. Open Store item info:
+   3. Open Store item info:
       
       1. Choose two descriptive colors, they should give the user an idea or a figure about your theme
       
