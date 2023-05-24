@@ -4980,13 +4980,11 @@ Start:
                     Try : Kill(File) : Catch : End Try
                 End If
 
-                Using CPx As CP = Me.Clone
-                    If My.Settings.AlwaysExportThemePack Then
-                        PackThemeResources(CPx, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
-                    Else
-                        IO.File.WriteAllText(File, CPx.ToString)
-                    End If
-                End Using
+                If My.Settings.AlwaysExportThemePack Then
+                    PackThemeResources(Me, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
+                Else
+                    IO.File.WriteAllText(File, ToString)
+                End If
 
         End Select
     End Sub
@@ -5020,7 +5018,7 @@ Start:
     End Function
 
     Sub PackThemeResources(CP As CP, CP_File As String, Package As String)
-        Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(CP.Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & "\"
+        Dim cache As String = "%WinPaletterAppData%\ThemeResPack_Cache\" & String.Concat(CP.Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars())) & "\"
         Dim filesList As New Dictionary(Of String, String) : filesList.Clear()
         Dim x As String
         Dim ZipEntry As String

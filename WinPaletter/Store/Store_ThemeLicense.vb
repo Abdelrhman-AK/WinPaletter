@@ -3,6 +3,7 @@
 Public Class Store_ThemeLicense
     Private Sub Store_ThemeLicense_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
+        XenonTextBox1.Font = My.Application.ConsoleFontLarge
         Icon = LicenseForm.Icon
     End Sub
 
