@@ -255,7 +255,7 @@ Public Class PreviewHelpers
     End Sub
 
     Public Shared Sub ApplyWinElementsColors([CP] As CP, [Style] As WindowStyle, AnimateColorChange As Boolean, Taskbar As XenonWinElement, Start As XenonWinElement, ActionCenter As XenonWinElement,
-                                      setting_icon_preview As Label, settings_label As Label, Link_preview As Label)
+                                      setting_icon_preview As XenonLabel, settings_label As XenonLabel, Link_preview As XenonLabel)
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 

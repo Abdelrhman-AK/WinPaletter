@@ -9,7 +9,7 @@
 4. Extract the ZIP file you downloaded in step `2`.
 
 5. Move the .Net Framework installer into the main extracted folder, it will be like that:
-
+   
     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/dotNetPics/0.png?raw=true)
 
 6. Run `dotNetFx.cmd` as administrator and wait until it finishes processing the installer.
@@ -17,7 +17,7 @@
 7. Run `7zSFX.cmd` as administrator to recreate the modified installer.
 
 8. You will find the new file like that: 
-
+   
     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/dotNetPics/1.png?raw=true)
 
 9. Copy the new file to your real\virtual machine and setup it

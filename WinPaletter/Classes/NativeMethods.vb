@@ -93,6 +93,14 @@ Namespace NativeMethods
         Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As ANIMATIONINFO, fuWinIni As SPIF) As Integer
         End Function
 
+        <DllImport("user32.dll")>
+        Public Shared Function GetWindowDC(ByVal hWnd As IntPtr) As IntPtr
+        End Function
+
+        <DllImport("user32.dll")>
+        Public Shared Function ReleaseDC(ByVal hWnd As IntPtr, ByVal hDC As IntPtr) As Integer
+        End Function
+
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As UInteger, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As UInteger, lpvParam As Integer, fuWinIni As Integer) As Integer
@@ -935,6 +943,10 @@ Namespace NativeMethods
         Public Shared Function SetWindowTheme(ByVal hwnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As String) As Integer
         End Function
 
+        <DllImport("uxtheme.dll", CharSet:=CharSet.Unicode, SetLastError:=True)>
+        Public Shared Function DrawThemeTextEx(ByVal hTheme As IntPtr, ByVal hdc As IntPtr, ByVal iPartId As Integer, ByVal iStateId As Integer, ByVal text As String, ByVal iCharCount As Integer, ByVal dwFlags As Integer, ByRef pRect As Rect, ByRef pOptions As DttOpts) As Integer
+        End Function
+
         ''' <summary>
         ''' Set The Window's Theme Attributes
         ''' </summary>
@@ -967,6 +979,88 @@ Namespace NativeMethods
         Public Structure WTA_OPTIONS
             Public Flags As UInteger
             Public Mask As UInteger
+        End Structure
+
+        <StructLayout(LayoutKind.Sequential)>
+        Structure DttOpts
+            Public dwSize As Integer
+            Public dwFlags As DttOptsFlags
+            Public crText As Integer
+            Public crBorder As Integer
+            Public crShadow As Integer
+            Public iTextShadowType As Integer
+            Public ptShadowOffset As Point
+            Public iBorderSize As Integer
+            Public iFontPropId As Integer
+            Public iColorPropId As Integer
+            Public iStateId As Integer
+            Public fApplyOverlay As Boolean
+            Public iGlowSize As Integer
+            Public pfnDrawTextCallback As Integer
+            Public lParam As IntPtr
+        End Structure
+
+        <Flags>
+        Enum DttOptsFlags As Integer
+            DTT_TEXTCOLOR = 1
+            DTT_BORDERCOLOR = 2
+            DTT_SHADOWCOLOR = 4
+            DTT_SHADOWTYPE = 8
+            DTT_SHADOWOFFSET = 16
+            DTT_BORDERSIZE = 32
+            'DTT_FONTPROP = 64,		commented values are currently unused
+            'DTT_COLORPROP = 128,
+            'DTT_STATEID = 256,
+            DTT_CALCRECT = 512
+            DTT_APPLYOVERLAY = 1024
+            DTT_GLOWSIZE = 2048
+            'DTT_CALLBACK = 4096,
+            DTT_COMPOSITED = 8192
+        End Enum
+
+        <StructLayout(LayoutKind.Sequential)>
+        Structure Rect
+            Public Sub New(ByVal left As Integer, ByVal top As Integer, ByVal right As Integer, ByVal bottom As Integer)
+                Me.Left = left
+                Me.Top = top
+                Me.Right = right
+                Me.Bottom = bottom
+            End Sub
+
+            Public Sub New(ByVal rect As Drawing.Rectangle)
+                Left = rect.X
+                Top = rect.Y
+                Right = rect.Right
+                Bottom = rect.Bottom
+            End Sub
+
+            Public Left As Integer
+            Public Top As Integer
+            Public Right As Integer
+            Public Bottom As Integer
+
+            Public Property Width As Integer
+                Get
+                    Return Right - Left
+                End Get
+                Set(ByVal value As Integer)
+                    Right = Left + value
+                End Set
+            End Property
+
+            Public Property Height As Integer
+                Get
+                    Return Bottom - Top
+                End Get
+                Set(ByVal value As Integer)
+                    Bottom = Top + value
+                End Set
+            End Property
+
+            Public Function ToRectangle() As Drawing.Rectangle
+                Return New Drawing.Rectangle(Left, Top, Right - Left, Bottom - Top)
+            End Function
+
         End Structure
 
         ''' <summary>
@@ -1502,9 +1596,73 @@ Namespace NativeMethods
         Public Shared Function GetDeviceCaps(ByVal hDC As IntPtr, ByVal nIndex As Integer) As Integer
         End Function
 
+        <DllImport("gdi32.dll")>
+        Public Shared Function CreateCompatibleDC(ByVal hDC As IntPtr) As IntPtr
+        End Function
+
+        <DllImport("gdi32.dll", SetLastError:=True)>
+        Public Shared Function DeleteDC(ByVal hdc As IntPtr) As Boolean
+        End Function
+
+        <DllImport("gdi32.dll")>
+        Public Shared Function BitBlt(ByVal hdc As IntPtr, ByVal nXDest As Integer, ByVal nYDest As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal hdcSrc As IntPtr, ByVal nXSrc As Integer, ByVal nYSrc As Integer, ByVal dwRop As BitBltOp) As Boolean
+        End Function
+
+        <DllImport("gdi32.dll")>
+        Public Shared Function CreateDIBSection(ByVal hdc As IntPtr, ByRef pbmi As BitmapInfo, ByVal iUsage As UInteger, ByVal ppvBits As Integer, ByVal hSection As IntPtr, ByVal dwOffset As UInteger) As IntPtr
+        End Function
+
+        <DllImport("gdi32.dll", ExactSpelling:=True)>
+        Public Shared Function SelectObject(ByVal hDC As IntPtr, ByVal hObject As IntPtr) As IntPtr
+        End Function
+
+        <DllImport("gdi32.dll", ExactSpelling:=True)>
+        Public Shared Function DeleteObject(ByVal hObject As IntPtr) As Boolean
+        End Function
+
         Public Enum DeviceCap
             VERTRES = 10
             DESKTOPVERTRES = 117
+        End Enum
+
+        <StructLayout(LayoutKind.Sequential)>
+        Structure BitmapInfo
+            Public biSize As Integer
+            Public biWidth As Integer
+            Public biHeight As Integer
+            Public biPlanes As Short
+            Public biBitCount As Short
+            Public biCompression As Integer
+            Public biSizeImage As Integer
+            Public biXPelsPerMeter As Integer
+            Public biYPelsPerMeter As Integer
+            Public biClrUsed As Integer
+            Public biClrImportant As Integer
+            Public bmiColors_rgbBlue As Byte
+            Public bmiColors_rgbGreen As Byte
+            Public bmiColors_rgbRed As Byte
+            Public bmiColors_rgbReserved As Byte
+        End Structure
+
+        Enum BitBltOp As UInteger
+            SRCCOPY = &HCC0020   ' dest = source                   
+            SRCPAINT = &HEE0086   ' dest = source OR dest           
+            SRCAND = &H8800C6   ' dest = source AND dest          
+            SRCINVERT = &H660046   ' dest = source XOR dest          
+            SRCERASE = &H440328   ' dest = source AND (NOT dest )   
+            NOTSRCCOPY = &H330008   ' dest = (NOT source)             
+            NOTSRCERASE = &H1100A6   ' dest = (NOT src) AND (NOT dest) 
+            MERGECOPY = &HC000CA   ' dest = (source AND pattern)     
+            MERGEPAINT = &HBB0226   ' dest = (NOT source) OR dest     
+            PATCOPY = &HF00021   ' dest = pattern                  
+            PATPAINT = &HFB0A09   ' dest = DPSnoo                   
+            PATINVERT = &H5A0049   ' dest = pattern XOR dest         
+            DSTINVERT = &H550009   ' dest = (NOT dest)               
+            BLACKNESS = &H42   ' dest = BLACK                    
+            WHITENESS = &HFF0062   ' dest = WHITE                    
+
+            NOMIRRORBITMAP = &H80000000UI ' Do not Mirror the bitmap in this call 
+            CAPTUREBLT = &H40000000      ' Include layered windows 
         End Enum
     End Class
 
@@ -1575,25 +1733,8 @@ Namespace NativeMethods
 
 #Region "Dwmapi"
         Public Shared Sub DarkTitlebar(ByVal hWnd As IntPtr, DarkMode As Boolean)
-
-            If Dwmapi.DwmSetWindowAttribute(hWnd, 19, If(DarkMode, 1, 0), 4) <> 0 Then Dwmapi.DwmSetWindowAttribute(hWnd, 20, If(DarkMode, 1, 0), 4)
-
-            'Exit Sub
-
-            'If IsWindows10OrGreater(18362) Then
-            'SetProp(hWnd, "UseImmersiveDarkModeColors", New IntPtr(If(DarkMode, 1, 0)))
-            'Else
-            'Dim size As Integer = Marshal.SizeOf(DarkMode)
-            'Dim ptr As IntPtr = Marshal.AllocHGlobal(size)
-            'Marshal.StructureToPtr(DarkMode, ptr, False)
-            'Dim data As WindowCompositionAttributeData = New WindowCompositionAttributeData With {
-            '.Attribute = WindowCompositionAttribute.WCA_USEDARKMODECOLORS,
-            '.Data = ptr,
-            '.SizeOfData = size
-            '}
-            'SetWindowCompositionAttribute(hWnd, data)
-            'End If
-
+            Dwmapi.DwmSetWindowAttribute(hWnd, 20, If(DarkMode, 1, 0), Marshal.SizeOf(Of Integer))
+            Dwmapi.DwmSetWindowAttribute(hWnd, 19, If(DarkMode, 1, 0), Marshal.SizeOf(Of Integer))
         End Sub
 #End Region
 

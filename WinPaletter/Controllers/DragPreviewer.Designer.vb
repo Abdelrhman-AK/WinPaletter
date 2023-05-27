@@ -26,23 +26,23 @@ Partial Class DragPreviewer
         Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
-        Me.RetroLabel9 = New WinPaletter.RetroLabel()
+        Me.RetroLabel9 = New WinPaletter.XenonLabel()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
-        Me.RetroLabel5 = New WinPaletter.RetroLabel()
+        Me.RetroLabel5 = New WinPaletter.XenonLabel()
         Me.menucontainer1 = New System.Windows.Forms.Panel()
-        Me.RetroLabel6 = New WinPaletter.RetroLabel()
+        Me.RetroLabel6 = New WinPaletter.XenonLabel()
         Me.RetroWindow3 = New WinPaletter.RetroWindow()
         Me.RetroButton1 = New WinPaletter.RetroButton()
-        Me.RetroLabel4 = New WinPaletter.RetroLabel()
-        Me.RetroLabel13 = New WinPaletter.RetroLabel()
+        Me.RetroLabel4 = New WinPaletter.XenonLabel()
+        Me.RetroLabel13 = New WinPaletter.XenonLabel()
         Me.RetroWindow2 = New WinPaletter.RetroWindow()
         Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
         Me.menucontainer0 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel3 = New WinPaletter.RetroLabel()
-        Me.RetroLabel2 = New WinPaletter.RetroLabel()
-        Me.RetroLabel1 = New WinPaletter.RetroLabel()
+        Me.RetroLabel3 = New WinPaletter.XenonLabel()
+        Me.RetroLabel2 = New WinPaletter.XenonLabel()
+        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.RetroWindow1 = New WinPaletter.RetroWindow()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
         Me.programcontainer = New System.Windows.Forms.Panel()
@@ -57,9 +57,9 @@ Partial Class DragPreviewer
         Me.ActionCenter = New WinPaletter.XenonWinElement()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.setting_icon_preview = New System.Windows.Forms.Label()
-        Me.lnk_preview = New System.Windows.Forms.Label()
+        Me.Label8 = New WinPaletter.XenonLabel()
+        Me.setting_icon_preview = New WinPaletter.XenonLabel()
+        Me.lnk_preview = New WinPaletter.XenonLabel()
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.start = New WinPaletter.XenonWinElement()
         Me.taskbar = New WinPaletter.XenonWinElement()
@@ -1108,32 +1108,32 @@ Partial Class DragPreviewer
     Friend WithEvents RetroTextBox1 As RetroTextBox
     Friend WithEvents menucontainer0 As Panel
     Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents RetroLabel3 As RetroLabel
-    Friend WithEvents RetroLabel2 As RetroLabel
-    Friend WithEvents RetroLabel1 As RetroLabel
+    Friend WithEvents RetroLabel3 As XenonLabel
+    Friend WithEvents RetroLabel2 As XenonLabel
+    Friend WithEvents RetroLabel1 As XenonLabel
     Friend WithEvents pnl_preview As Panel
     Friend WithEvents ActionCenter As XenonWinElement
     Friend WithEvents XenonWindow1 As XenonWindow
-    Friend WithEvents lnk_preview As Label
+    Friend WithEvents lnk_preview As XenonLabel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents Label8 As Label
-    Friend WithEvents setting_icon_preview As Label
+    Friend WithEvents Label8 As XenonLabel
+    Friend WithEvents setting_icon_preview As XenonLabel
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents start As XenonWinElement
     Friend WithEvents taskbar As XenonWinElement
     Friend WithEvents pnlRetroPreview As Panel
     Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
-    Friend WithEvents RetroLabel9 As RetroLabel
+    Friend WithEvents RetroLabel9 As XenonLabel
     Friend WithEvents highlight As Panel
     Friend WithEvents menuhilight As Panel
-    Friend WithEvents RetroLabel5 As RetroLabel
+    Friend WithEvents RetroLabel5 As XenonLabel
     Friend WithEvents menucontainer1 As Panel
-    Friend WithEvents RetroLabel6 As RetroLabel
+    Friend WithEvents RetroLabel6 As XenonLabel
     Friend WithEvents RetroWindow3 As RetroWindow
     Friend WithEvents RetroButton1 As RetroButton
-    Friend WithEvents RetroLabel4 As RetroLabel
-    Friend WithEvents RetroLabel13 As RetroLabel
+    Friend WithEvents RetroLabel4 As XenonLabel
+    Friend WithEvents RetroLabel13 As XenonLabel
     Friend WithEvents RetroWindow2 As RetroWindow
     Friend WithEvents tabs_preview As TablessControl
     Friend WithEvents TabPage6 As TabPage

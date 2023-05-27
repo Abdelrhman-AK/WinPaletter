@@ -1804,9 +1804,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 FontSubstitute_MSShellDlg2 = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
                 FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
-                Dim temp As Boolean = True
+                Dim temp As Boolean
                 Fixer.SystemParametersInfo(SPI.Fonts.GETFONTSMOOTHING, Nothing, temp, SPIF.None)
-                Fonts_SingleBitPP = Not temp
+                Fonts_SingleBitPP = Not temp OrElse GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(My.WXP, 1, 2)) <> 2
             End Sub
 
             Public Sub Apply()
@@ -1829,6 +1829,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim lfSMCaptionFont As New LogFont : SmCaptionFont.ToLogFont(lfSMCaptionFont)
                     Dim lfStatusFont As New LogFont : StatusFont.ToLogFont(lfStatusFont)
 
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
                     SystemParametersInfo(SPI.Fonts.SETFONTSMOOTHING, Not Fonts_SingleBitPP, Nothing, SPIF.UpdateINIFile)
 
                     If Not My.Settings.DelayMetrics Then
@@ -1911,6 +1913,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
                         EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
+                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
                     End If
 
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String)
@@ -2199,7 +2203,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 If IO.File.Exists(My.PATH_System32 & "\UIRibbon.dll") Then
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll")
                                     Move_File(My.PATH_System32 & "\UIRibbon.dll", My.PATH_System32 & "\UIRibbon.dll_bak")
-
                                 End If
 
                                 'DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
@@ -2209,7 +2212,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll_bak")
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll")
                                     Move_File(My.PATH_System32 & "\UIRibbon.dll_bak", My.PATH_System32 & "\UIRibbon.dll")
-
                                 End If
 
                                 'TakeOwn_Reg(Registry.LocalMachine.OpenSubKey("SOFTWARE\Classes\CLSID"), "{926749fa-2615-4987-8845-c33e65f2b957}")
@@ -2263,6 +2265,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Else
                             My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", False)
                         End If
+                    Catch
+                        'Do nothing
+                        My.Computer.Registry.CurrentUser.Close()
                     Finally
                         My.Computer.Registry.CurrentUser.Close()
                     End Try

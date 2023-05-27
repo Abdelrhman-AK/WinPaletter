@@ -643,17 +643,6 @@ End Class
         Catch : End Try
     End Sub
 End Class
-Public Class RetroLabel : Inherits Label
-    Sub New()
-        Font = New Font("Microsoft Sans Serif", 8)
-        ForeColor = Color.Black
-        BackColor = Color.Transparent
-        AutoSize = False
-        TextAlign = ContentAlignment.MiddleLeft
-        DoubleBuffered = True
-    End Sub
-
-End Class
 Public Class RetroGroupBox : Inherits GroupBox
     Public Sub New()
         DoubleBuffered = True

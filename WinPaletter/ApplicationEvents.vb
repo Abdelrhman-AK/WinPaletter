@@ -208,7 +208,7 @@ Namespace My
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
-                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(My.CP, My.PreviewStyle)
+                                                                            Dim Wall As Bitmap = FetchSuitableWallpaper(CP, PreviewStyle)
                                                                             MainFrm.pnl_preview.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview_classic.BackgroundImage = Wall
                                                                             DragPreviewer.pnl_preview.BackgroundImage = Wall
@@ -419,21 +419,20 @@ Namespace My
 #End Region
 
 #Region "   Wallpaper and User Preferences System"
+        Private Sub FetchStockWallpaper(Size As Size)
+            Using wall_New As New Bitmap(CType(GetWallpaper().Clone, Bitmap))
+                Wallpaper_Unscaled = wall_New.Clone
+                Wallpaper = wall_New.Resize(Size)
+            End Using
+        End Sub
+
         Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As WindowStyle) As Bitmap
             Using picbox As New PictureBox With {.Size = MainFrm.pnl_preview.Size, .BackColor = CP.Win32.Background}
-
-                If Wallpaper Is Nothing OrElse Wallpaper_Unscaled Is Nothing Then
-                    Using wall_New As New Bitmap(GetWallpaper())
-                        If Wallpaper_Unscaled Is Nothing Then Wallpaper_Unscaled = wall_New.Clone
-                        If Wallpaper Is Nothing Then Wallpaper = wall_New.Resize(picbox.Size)
-                    End Using
-                End If
-
                 Dim Wall As Bitmap
 
                 If Not CP.Wallpaper.Enabled Then
+                    FetchStockWallpaper(picbox.Size)
                     Wall = Wallpaper
-                    Return Wall
                 Else
                     Dim condition0 As Boolean = PreviewConfig = WindowStyle.W11 And CP.WallpaperTone_W11.Enabled
                     Dim condition1 As Boolean = PreviewConfig = WindowStyle.W10 And CP.WallpaperTone_W10.Enabled
@@ -472,10 +471,9 @@ Namespace My
                         If CP.Wallpaper.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture Then
                             If IO.File.Exists(CP.Wallpaper.ImageFile) Then
                                 Wall = Bitmap_Mgr.Load(CP.Wallpaper.ImageFile)
-
                             Else
+                                FetchStockWallpaper(picbox.Size)
                                 Wall = Wallpaper
-                                Return Wall
                             End If
 
                         ElseIf CP.Wallpaper.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SolidColor Then
@@ -494,21 +492,21 @@ Namespace My
                                     Wall = Bitmap_Mgr.Load(ls(0))
 
                                 Else
+                                    FetchStockWallpaper(picbox.Size)
                                     Wall = Wallpaper
-                                    Return Wall
                                 End If
 
                             Else
                                 If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
                                     Wall = Bitmap_Mgr.Load(CP.Wallpaper.Wallpaper_Slideshow_Images(0))
                                 Else
+                                    FetchStockWallpaper(picbox.Size)
                                     Wall = Wallpaper
-                                    Return Wall
                                 End If
                             End If
                         Else
+                            FetchStockWallpaper(picbox.Size)
                             Wall = Wallpaper
-                            Return Wall
                         End If
                     End If
                 End If
@@ -636,10 +634,6 @@ Namespace My
             Invoke(UpdateDarkModeInvoker)
         End Sub
         Sub Wallpaper_Changed()
-            Using wall As New Bitmap(GetWallpaper())
-                Wallpaper_Unscaled = wall
-                Wallpaper = wall.Resize(528, 297)
-            End Using
             Invoke(UpdateWallpaperInvoker)
         End Sub
 #End Region
@@ -665,7 +659,7 @@ Namespace My
             Catch : End Try
         End Sub
 
-        Private Async Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")

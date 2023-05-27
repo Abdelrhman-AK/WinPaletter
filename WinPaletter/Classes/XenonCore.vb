@@ -6,6 +6,7 @@ Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports System.Runtime.CompilerServices
 Imports System.Net
+
 Public Class XenonCore
 
 #Region "Backgroundworker Fixers"
@@ -116,7 +117,7 @@ Public Class XenonCore
     Public Shared Function Ping(ByVal url As String) As Boolean
         Try
             Dim request As HttpWebRequest = CType(HttpWebRequest.Create(url), HttpWebRequest)
-            request.Timeout = 3000
+            request.Timeout = 60000
             request.AllowAutoRedirect = False
             request.Method = "HEAD"
 
@@ -266,7 +267,7 @@ Public Class XenonCore
     Public Shared ReadOnly DefaultBackColorDark As Color = Color.FromArgb(25, 25, 25)
     Public Shared ReadOnly DefaultBackColorLight As Color = Color.FromArgb(230, 230, 230)
 
-    Public Shared Sub ApplyDarkMode(Optional ByVal [Form] As Form = Nothing)
+    Public Shared Sub ApplyDarkMode(Optional [Form] As Form = Nothing, Optional IgnoreTitleBar As Boolean = False)
         Dim DarkMode As Boolean
         Dim BackColor As Color
         Dim AccentColor As Color
@@ -295,7 +296,7 @@ Public Class XenonCore
                     If FormWasVisible Then OFORM.Visible = False
                     OFORM.SuspendLayout()
                     OFORM.BackColor = BackColor
-                    DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode)
+                    If Not IgnoreTitleBar Then DLLFunc.DarkTitlebar(OFORM.Handle, DarkMode)
                     EnumControls(OFORM, DarkMode)
 
                     If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
@@ -313,7 +314,7 @@ Public Class XenonCore
             '####################### For Selected [Form]
             [Form].BackColor = BackColor
 
-            DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
+            If Not IgnoreTitleBar Then DLLFunc.DarkTitlebar([Form].Handle, DarkMode)
             EnumControls([Form], DarkMode)
 
             If My.W11 Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
@@ -339,7 +340,7 @@ Public Class XenonCore
         Dim b As Boolean = False
         If TypeOf ctrl Is RetroButton Then b = True
         If TypeOf ctrl Is RetroGroupBox Then b = True
-        If TypeOf ctrl Is RetroLabel Then b = True
+        If TypeOf ctrl Is XenonLabel Then b = True
         If TypeOf ctrl Is RetroPanel Then b = True
         If TypeOf ctrl Is RetroPanelRaised Then b = True
         If TypeOf ctrl Is RetroSeparatorH Then b = True
@@ -363,7 +364,12 @@ Public Class XenonCore
             DirectCast(ctrl, XenonRadioImage).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.05, -0.05))
 
         ElseIf TypeOf ctrl Is XenonButton Then
-            DirectCast(ctrl, XenonButton).BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.03))
+            With DirectCast(ctrl, XenonButton)
+                .BackColor = GetParentColor(ctrl).CB(If(GetParentColor(ctrl).IsDark, 0.04, -0.03))
+                If .DrawOnGlass Then
+                    .ForeColor = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(VisualStyles.ColorProperty.TextColor).Invert
+                End If
+            End With
 
         ElseIf TypeOf ctrl Is RichTextBox Then
             ctrl.BackColor = ctrl.Parent.BackColor
@@ -730,44 +736,41 @@ Public Module FormDWMEffects
     ''' Draw effect on form depending on both user choice (Tabbed\Mica\Acrylic\Aero) and current OS
     ''' </summary>
     <Extension()>
-    Public Sub DrawDWMEffect(ByVal [Form] As Form, Optional ByVal Border As Boolean = True, Optional FormStyle As FormStyle = FormStyle.Mica)
+    Public Sub DrawDWMEffect([Form] As Form, Margins As Padding, Optional Border As Boolean = True, Optional FormStyle As FormStyle = FormStyle.Mica)
 
-        Dim Transparency_W7 As Boolean
+        If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
+
+        Dim CompositionEnabled As Boolean
         Try
-            Dwmapi.DwmIsCompositionEnabled(Transparency_W7)
+            Dwmapi.DwmIsCompositionEnabled(CompositionEnabled)
         Catch
-            Transparency_W7 = False
+            CompositionEnabled = False
         End Try
 
-        Dim Temp As Boolean
         Dim Transparency_W11_10 As Boolean
-        Try
-            Temp = My.Computer.Registry.CurrentUser.GetValue("SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", False)
-            Transparency_W11_10 = (My.W10 Or My.W11) AndAlso Temp
-        Catch
-            Transparency_W11_10 = False
-        Finally
-            My.Computer.Registry.CurrentUser.Close()
-        End Try
+        Transparency_W11_10 = (My.W10 Or My.W11) AndAlso Reg_IO.GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
 
         Try
             If My.W11 AndAlso Transparency_W11_10 Then
                 If FormStyle = FormStyle.Mica Then
-                    [Form].DrawMica(MicaStyle.Mica)
+                    [Form].DrawMica(Margins, MicaStyle.Mica)
 
                 ElseIf FormStyle = FormStyle.Tabbed Then
-                    [Form].DrawMica(MicaStyle.Tabbed)
+                    [Form].DrawMica(Margins, MicaStyle.Tabbed)
 
                 ElseIf FormStyle = FormStyle.Acrylic Then
-                    [Form].DrawAcrylic(Border)
+                    [Form].DrawAcrylic(Margins, Border)
+
+                Else
+                    [Form].DrawMica(Margins, MicaStyle.Mica)
 
                 End If
 
             ElseIf My.W10 AndAlso Transparency_W11_10 Then
-                [Form].DrawAcrylic(Border)
+                [Form].DrawAcrylic(Margins, Border)
 
-            ElseIf (My.W7 Or My.WVista) AndAlso Transparency_W7 Then
-                [Form].DrawAero
+            ElseIf (My.W7 Or My.WVista) AndAlso CompositionEnabled Then
+                [Form].DrawAero(Margins)
 
             Else
                 [Form].DrawTransparentGray
@@ -782,8 +785,8 @@ Public Module FormDWMEffects
     End Sub
 
     <Extension()>
-    Sub DrawAcrylic(Form As Form, Optional ByVal Border As Boolean = True)
-        Dim accent = New User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_BLURBEHIND}
+    Sub DrawAcrylic(Form As Form, Margins As Padding, Optional Border As Boolean = True)
+        Dim accent = New User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND}
         If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
         Dim accentStructSize = Marshal.SizeOf(accent)
         Dim accentPtr = Marshal.AllocHGlobal(accentStructSize)
@@ -794,7 +797,6 @@ Public Module FormDWMEffects
                 .SizeOfData = accentStructSize,
                 .Data = accentPtr
             }
-
         User32.SetWindowCompositionAttribute(Form.Handle, Data)
         Marshal.FreeHGlobal(accentPtr)
     End Sub
@@ -803,20 +805,47 @@ Public Module FormDWMEffects
     ''' Draws Mica Style (Windows 11 and Higher - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
     ''' </summary>
     <Extension()>
-    Sub DrawMica(Form As Form, Optional Style As MicaStyle = MicaStyle.Mica)
+    Sub DrawMica(Form As Form, Margins As Padding, Optional Style As MicaStyle = MicaStyle.Mica)
+        Dim CompositionEnabled As Boolean
+        Try
+            Dwmapi.DwmIsCompositionEnabled(CompositionEnabled)
+        Catch
+            CompositionEnabled = False
+        End Try
+
         Dim FS As New FormStyle
         If Style = MicaStyle.Mica Then FS = FormStyle.Mica
-        If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
+            If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
 
-        DLLFunc.DarkTitlebar(Form.Handle, True)
-        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
-        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1})
+            If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
+            Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
+
+            DLLFunc.DarkTitlebar(Form.Handle, XenonCore.GetDarkMode)
+            Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
+        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, DWM_Margins)
     End Sub
 
     <Extension()>
-    Sub DrawAero(Form As Form)
-        Dim Margins As New Dwmapi.MARGINS With {.leftWidth = -1, .rightWidth = -1, .topHeight = -1, .bottomHeight = -1}
-        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, Margins)
+    Sub DrawAero(Form As Form, Margins As Padding)
+        Dim CompositionEnabled As Boolean
+        Try
+            Dwmapi.DwmIsCompositionEnabled(CompositionEnabled)
+        Catch
+            CompositionEnabled = False
+        End Try
+
+        If CompositionEnabled Then
+            If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
+            Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
+            Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, DWM_Margins)
+        Else
+            DrawBasic(Form, Margins)
+        End If
+
+    End Sub
+
+    Sub DrawBasic(Form As Form, Margins As Padding)
+
     End Sub
 
     <Extension()>

@@ -297,6 +297,7 @@
     <Compile Include="Extras\Sounds_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\ThemedText.vb" />
     <Compile Include="Settings\XeSettings.vb" />
     <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>

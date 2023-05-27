@@ -35,7 +35,7 @@ Partial Class AltTabEditor
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel1 = New WinPaletter.RetroLabel()
+        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -760,7 +760,7 @@ Partial Class AltTabEditor
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents RetroLabel1 As RetroLabel
+    Friend WithEvents RetroLabel1 As XenonLabel
     Friend WithEvents RetroPanelRaised1 As RetroPanelRaised
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents EP_Alert As XenonAlertBox

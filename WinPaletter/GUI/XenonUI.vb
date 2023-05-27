@@ -20,23 +20,36 @@ Module XenonModule
     Public Style As New XenonStyle(DefaultAccent, DefaultBackColorDark)
 
     <Extension()>
-    Public Sub DrawGlowString(ByVal G As Graphics, ByVal GlowSize As Integer, Text As String, ByVal Ctrl As Control, ByVal [ForeColor] As Color, ByVal GlowColor As Color, ByVal Rect As Rectangle, ByVal FormatX As StringFormat)
-        Dim bm As New Bitmap(CInt(Ctrl.Width / 5), CInt(Ctrl.Height / 5))
-        Dim g2 As Graphics = Graphics.FromImage(bm)
-        Dim pth As New GraphicsPath()
-        pth.AddString(Text, Ctrl.Font.FontFamily, Ctrl.Font.Style, Ctrl.Font.SizeInPoints + 3, Rect, FormatX)
-        Dim mx As New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
-        g2.SmoothingMode = SmoothingMode.AntiAlias
-        g2.Transform = mx
-        Dim p As New Pen(GlowColor, GlowSize)
-        g2.DrawPath(p, pth)
-        g2.FillPath(New SolidBrush(GlowColor), pth)
-        G.InterpolationMode = InterpolationMode.HighQualityBicubic
-        G.DrawImage(bm, Ctrl.ClientRectangle, 0, 0, bm.Width, bm.Height, GraphicsUnit.Pixel)
-        'G.FillPath(New SolidBrush([ForeColor]), pth)
-        G.DrawString(Text, Ctrl.Font, New SolidBrush([ForeColor]), Rect, FormatX)
-        g2.Dispose()
-        pth.Dispose()
+    Public Sub DrawGlowString(G As Graphics, GlowSize As Integer, Text As String, Font As Font, [ForeColor] As Color, GlowColor As Color, ClientRect As Rectangle, Rect As Rectangle, FormatX As StringFormat)
+        Dim w As Integer = Math.Max(8, ClientRect.Width / 5)
+        Dim h As Integer = Math.Max(8, ClientRect.Height / 5)
+        Dim emSize As Single = G.DpiY * Font.SizeInPoints / 72
+
+        Using b As New Bitmap(w, h)
+            Using gp As New GraphicsPath()
+                gp.AddString(Text, Font.FontFamily, Font.Style, emSize, Rect, FormatX)
+
+                Using gx As Graphics = Graphics.FromImage(b)
+                    Using m = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+                        gx.SmoothingMode = SmoothingMode.AntiAlias
+                        gx.Transform = m
+                        Using pn = New Pen(GlowColor, GlowSize)
+                            gx.DrawPath(pn, gp)
+                            gx.FillPath(pn.Brush, gp)
+                        End Using
+                    End Using
+                End Using
+
+                G.InterpolationMode = InterpolationMode.HighQualityBicubic
+                G.DrawImage(b, ClientRect, 0, 0, b.Width, b.Height, GraphicsUnit.Pixel)
+
+                G.SmoothingMode = SmoothingMode.AntiAlias
+                Using br = New SolidBrush(ForeColor)
+                    G.FillPath(br, gp)
+                End Using
+
+            End Using
+        End Using
     End Sub
 
     Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
@@ -2249,6 +2262,20 @@ Public Class XenonButton : Inherits Button
 
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
 
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            Dim cpar As CreateParams = MyBase.CreateParams
+            If DrawOnGlass And Not DesignMode Then
+                cpar.ExStyle = cpar.ExStyle Or &H20
+                Return cpar
+            Else
+                Return cpar
+            End If
+        End Get
+    End Property
+
+    Public Property DrawOnGlass As Boolean = False
+
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -2261,11 +2288,17 @@ Public Class XenonButton : Inherits Button
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
         '#################################################################################
 
-        G.Clear(ParentColor)
-        Dim c1, c1x As Color
+        If DrawOnGlass Then
+            G.Clear(Color.Transparent)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb((255 - alpha) * 0.5, BackColor)), InnerRect)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb((alpha) * 0.5, BackColor)), Rect)
+        Else
+            G.Clear(ParentColor)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
+            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+        End If
 
-        G.FillRoundedRect(New SolidBrush(Color.FromArgb(255 - alpha, BackColor)), InnerRect)
-        G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackColor)), Rect)
+        Dim c1, c1x As Color
 
         If Not State = MouseState.None Then G.FillRoundedRect(Noise, Rect)
 
@@ -2283,8 +2316,13 @@ Public Class XenonButton : Inherits Button
 
         End Select
 
-        c1 = Color.FromArgb(255 - alpha, c)
-        c1x = Color.FromArgb(alpha, c)
+        If DrawOnGlass Then
+            c1 = Color.FromArgb((255 - alpha) * 0.5, c)
+            c1x = Color.FromArgb((alpha) * 0.5, c)
+        Else
+            c1 = Color.FromArgb(255 - alpha, c)
+            c1x = Color.FromArgb(alpha, c)
+        End If
 
         G.DrawRoundedRect_LikeW11(New Pen(c1x), Rect)
         G.DrawRoundedRect_LikeW11(New Pen(c1), InnerRect)
@@ -2391,15 +2429,6 @@ Public Class XenonButton : Inherits Button
     End Sub
 
     Private _Shown As Boolean = False
-
-    Sub Loaded()
-        _Shown = False
-    End Sub
-
-    Sub Showed()
-        _Shown = True
-        Rfrsh()
-    End Sub
 
     Sub Rfrsh()
         Try
@@ -3208,6 +3237,22 @@ End Class
         End Try
     End Sub
 
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            Dim cpar As CreateParams = MyBase.CreateParams
+            If DrawOnGlass And Not DesignMode Then
+                cpar.ExStyle = cpar.ExStyle Or &H20
+                Return cpar
+            Else
+                Return cpar
+            End If
+        End Get
+    End Property
+
+    Public Property DrawOnGlass As Boolean = False
+
+    Private ActiveTTLColor As Color = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(VisualStyles.ColorProperty.TextColor).Invert
+
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
@@ -3216,12 +3261,17 @@ End Class
 
         MyBase.OnPaint(e)
 
-        If GetDarkMode() Then
-            If ForeColor <> Color.White Then ForeColor = Color.White
+        If Not DrawOnGlass Then
+            If GetDarkMode() Then
+                If ForeColor <> Color.White Then ForeColor = Color.White
+            Else
+                If ForeColor <> Color.Black Then ForeColor = Color.Black
+            End If
         Else
-            If ForeColor <> Color.Black Then ForeColor = Color.Black
+            ForeColor = ActiveTTLColor
         End If
 
+        TB.ForeColor = ForeColor
 
         Dim OuterRect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim InnerRect As New Rectangle(1, 1, Width - 3, Height - 3)
@@ -3230,29 +3280,51 @@ End Class
         Dim LineNone, LineHovered As Color
         Dim BackNone, BackHovered As Color
 
-        LineNone = If(GetDarkMode(), ParentColor.Light(0.3), ParentColor.Light(0.05))
-        LineHovered = Style.Colors.Border_Checked_Hover
+        If Not DrawOnGlass Then
+            LineNone = If(GetDarkMode(), ParentColor.Light(0.3), ParentColor.Light(0.05))
+            LineHovered = Style.Colors.Border_Checked_Hover
 
-        BackNone = If(GetDarkMode(), ParentColor.Light(0.05), ParentColor.Light(0.3))
-        BackHovered = Style.Colors.Back_Checked
+            BackNone = If(GetDarkMode(), ParentColor.Light(0.05), ParentColor.Light(0.3))
+            BackHovered = Style.Colors.Back_Checked
+        Else
+            LineNone = If(Not ActiveTTLColor.IsDark, ParentColor.Light(0.3), ParentColor.Light(0.05))
+            LineHovered = Style.Colors.Border_Checked_Hover
+
+            BackNone = If(Not ActiveTTLColor.IsDark, ParentColor.Light(0.05), ParentColor.Light(0.3))
+            BackHovered = Style.Colors.Back_Checked
+        End If
 
         Dim FadeInColor As Color = Color.FromArgb(alpha, LineHovered)
         Dim FadeOutColor As Color = Color.FromArgb(255 - alpha, LineNone)
 
-        G.Clear(GetParentColor)
-
-        TB.ForeColor = ForeColor
+        If DrawOnGlass Then
+            G.Clear(Color.Transparent)
+        Else
+            G.Clear(ParentColor)
+        End If
 
         If TB.Focused Or Focused Then
-            G.FillRoundedRect(New SolidBrush(BackHovered), OuterRect)
-            G.DrawRoundedRect_LikeW11(New Pen(LineHovered), OuterRect)
-            TB.BackColor = BackHovered
+            If Not DrawOnGlass Then
+                G.FillRoundedRect(New SolidBrush(BackHovered), OuterRect)
+                G.DrawRoundedRect_LikeW11(New Pen(LineHovered), OuterRect)
+                TB.BackColor = BackHovered
+            Else
+                G.DrawRoundedRect_LikeW11(New Pen(LineHovered), OuterRect)
+                TB.BackColor = ParentColor
+            End If
+
         Else
-            G.FillRoundedRect(New SolidBrush(BackNone), InnerRect)
-            G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackNone)), OuterRect)
-            G.DrawRoundedRect_LikeW11(New Pen(FadeInColor), OuterRect)
-            G.DrawRoundedRect_LikeW11(New Pen(FadeOutColor), InnerRect)
-            TB.BackColor = BackNone
+            If Not DrawOnGlass Then
+                G.FillRoundedRect(New SolidBrush(BackNone), InnerRect)
+                G.FillRoundedRect(New SolidBrush(Color.FromArgb(alpha, BackNone)), OuterRect)
+                G.DrawRoundedRect_LikeW11(New Pen(FadeInColor), OuterRect)
+                G.DrawRoundedRect_LikeW11(New Pen(FadeOutColor), InnerRect)
+                TB.BackColor = BackNone
+            Else
+                G.DrawRoundedRect_LikeW11(New Pen(FadeInColor.CB(0.1)), OuterRect)
+                G.DrawRoundedRect_LikeW11(New Pen(FadeOutColor.CB(0.1)), InnerRect)
+                TB.BackColor = ParentColor
+            End If
         End If
 
 
@@ -4800,7 +4872,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
-                G.DrawGlowString(2, "______", Me, Color.Black, Color.FromArgb(185, 225, 225, 225), TextRect, StringAligner(ContentAlignment.MiddleCenter))
+                G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, StringAligner(ContentAlignment.MiddleCenter))
 
 #End Region
 
@@ -4864,7 +4936,7 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Next
 
                 Dim TextRect As New Rectangle(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5)
-                G.DrawGlowString(2, "______", Me, Color.Black, Color.FromArgb(185, 225, 225, 225), TextRect, StringAligner(ContentAlignment.MiddleCenter))
+                G.DrawGlowString(2, "______", Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, StringAligner(ContentAlignment.MiddleCenter))
 
 #End Region
 
@@ -6030,7 +6102,7 @@ Public Class XenonWindow : Inherits Panel
             LabelRectModified.X -= 2
             LabelRectModified.Y -= 1
             Dim alpha As Integer = If(Active, 120, 75)
-            G.DrawGlowString(1, Text, Me, Color.Black, Color.FromArgb(alpha, Color.White), LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
+            G.DrawGlowString(1, Text, Font, Color.Black, Color.FromArgb(alpha, Color.White), RectBK, LabelRectModified, StringAligner(ContentAlignment.MiddleLeft))
 
         ElseIf Preview = Preview_Enum.W7Basic Then
             G.DrawString(Text, Font, New SolidBrush(If(Active, Color.Black, Color.FromArgb(76, 76, 76))), LabelRect, StringAligner(ContentAlignment.MiddleLeft))
@@ -6122,7 +6194,7 @@ Public Class XenonIcon : Inherits Panel
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.HighQuality
-        G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
         Dim IconRect As New Rectangle(0, 0, Width - 1, Height - 30)
@@ -6144,7 +6216,7 @@ Public Class XenonIcon : Inherits Panel
         If ColorGlow.A > 0 Then G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, StringAligner(ContentAlignment.MiddleCenter))
         'G.DrawString(Title, Font, Brushes.White, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
-        G.DrawGlowString(1, Title, Me, ColorText, ColorGlow, LabelRect, StringAligner(ContentAlignment.MiddleCenter))
+        G.DrawGlowString(1, Title, Font, ColorText, ColorGlow, New Rectangle(0, 0, Width - 1, Height - 1), LabelRect, StringAligner(ContentAlignment.MiddleCenter))
 
         'G.DrawRectangle(Pens.Red, New Rectangle(0, 0, Width - 1, Height - 1))
     End Sub
@@ -7767,5 +7839,46 @@ Public Class StripRenderer
     Protected Overrides Sub OnRenderToolStripBorder(ByVal e As ToolStripRenderEventArgs)
     End Sub
 End Class
+Public Class XenonLabel : Inherits Label
 
+    Public Property DrawOnGlass As Boolean = False
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality
+        e.Graphics.TextRenderingHint = My.RenderingHint
+        e.Graphics.FillRectangle(New SolidBrush(BackColor), New Rectangle(0, 0, Width, Height))
+
+        If Not DrawOnGlass OrElse DesignMode Then
+            e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
+        Else
+            Using _themeText As New ThemedText With {
+                    .Text = Text,
+                    .Font = Font,
+                    .Color = ForeColor,
+                    .FormatFlags = StringAligner(TextAlign).FormatFlags,
+                    .Padding = Padding,
+                    .GlowEnabled = True,
+                    .GlowSize = 10
+                   }
+                _themeText.Draw(e.Graphics, New Rectangle(0, 0, Width, Height))
+            End Using
+        End If
+
+    End Sub
+End Class
+Public Class XenonToolStripStatusLabel : Inherits ToolStripStatusLabel
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        e.Graphics.TextRenderingHint = My.RenderingHint
+        e.Graphics.FillRectangle(New SolidBrush(BackColor), New Rectangle(0, 0, Width, Height))
+        e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
+    End Sub
+End Class
+Class XenonToolStripMenuItem : Inherits System.Windows.Forms.ToolStripMenuItem
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        MyBase.OnPaint(e)
+        e.Graphics.TextRenderingHint = My.RenderingHint
+        e.Graphics.Clear(BackColor)
+        e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
+    End Sub
+End Class
 #End Region

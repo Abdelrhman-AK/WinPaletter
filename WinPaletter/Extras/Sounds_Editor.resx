@@ -147,9 +147,6 @@
         gg==
 </value>
   </data>
-  <data name="XenonAlertBox1.Text" xml:space="preserve">
-    <value>Startup sound in Windows Vista and later is changed by patching "imageres.dll" in system32 directory, so there are two entries for startup sounds. If an error occured while changing this sound, re-run WinPaletter as Administrator.</value>
-  </data>
   <data name="XenonButton201.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j

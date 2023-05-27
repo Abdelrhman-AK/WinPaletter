@@ -515,20 +515,25 @@ Public Class Store
 #Region "Store form events"
     Private Sub Store_Load(sender As Object, e As EventArgs) Handles Me.Load
         CenterToScreen()
-
-        Titlebar_panel.BackColor = Style.Colors.Back
+        UpdateExtendedTitlebar()
 
         DLLFunc.RemoveFormTitlebarTextAndIcon(Handle)
         ShowIcon = False
         FinishedLoadingInitialCPs = False
         _Shown = False
 
-        ApplyDarkMode(Me)
+        ApplyDarkMode(Me, True)
 
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
         DoubleBuffer
         Cursors_Container.DoubleBuffer
+
+        taskbar.CopycatFrom(MainFrm.taskbar)
+        ActionCenter.CopycatFrom(MainFrm.ActionCenter)
+        start.CopycatFrom(MainFrm.start)
+        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
+        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
 
         log.ImageList = My.Notifications_IL
         Apply_btn.Image = MainFrm.apply_btn.Image
@@ -895,7 +900,7 @@ Public Class Store
                         My.Settings.Appearance_Rounded = .CP.AppTheme.RoundCorners
                         My.Settings.Appearance_Back = .CP.AppTheme.BackColor
                         My.Settings.Appearance_Accent = .CP.AppTheme.AccentColor
-                        ApplyDarkMode(Me)
+                        ApplyDarkMode(Me, True)
                     End If
 
                     Adjust_Preview(.CP)
@@ -905,6 +910,7 @@ Public Class Store
                     ApplyCMDPreview(XenonCMD2, .CP.PowerShellx86, True)
                     ApplyCMDPreview(XenonCMD3, .CP.PowerShellx64, True)
                     LoadCursorsFromCP(.CP)
+                    My.RenderingHint = If(.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
                     For Each i As CursorControl In Cursors_Container.Controls
                         If TypeOf i Is CursorControl Then
@@ -975,7 +981,7 @@ Public Class Store
 
                     My.Animator.ShowSync(Tabs)
 
-                    Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
+                    '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
                 End With
 
                 Cursor = Cursors.Default
@@ -985,12 +991,11 @@ Public Class Store
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
         hoveredItem = DirectCast(sender, StoreItem)
-        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.Info.Color1, 10, 15)
+        '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.Info.Color1, 10, 15)
     End Sub
 
     Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
-
-        If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
+        '' '' ''If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
     Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
@@ -1028,7 +1033,7 @@ Public Class Store
             .Appearance_Custom_Dark = selectedItem.CP.AppTheme.DarkMode
             .Appearance_Rounded = selectedItem.CP.AppTheme.RoundCorners
         End With
-        ApplyDarkMode()
+        ApplyDarkMode(Nothing, True)
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
             CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing))
@@ -1077,6 +1082,7 @@ Public Class Store
                 MainFrm.ApplyStylesToElements(My.CP, False)
                 MainFrm.ApplyColorsToElements(My.CP)
                 MainFrm.ApplyCPValues(My.CP)
+                UpdateTitlebarColors()
             End If
         Else
             'Edit button is pressed
@@ -1196,6 +1202,111 @@ Public Class Store
         End Try
     End Function
 
+    Sub UpdateExtendedTitlebar()
+        Dim Pd As New Windows.Forms.Padding(0, Titlebar_panel.Height, 0, 0)
+        Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0)
+
+        If My.W11 Then
+            DrawMica(Pd)
+            Titlebar_lbl.DrawOnGlass = True
+
+        ElseIf My.W10 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
+            DrawAero(Pd)
+            If My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
+            Titlebar_lbl.DrawOnGlass = True
+
+        ElseIf My.WXP Then
+            'Titlebar_lbl.DrawOnGlass = False
+
+        Else
+
+        End If
+
+        UpdateTitlebarColors()
+    End Sub
+
+    'Protected Overrides Sub WndProc(ByRef m As Message)
+    '    Select Case m.Msg
+    '        Case &HF, &H85 ' WM_PAINT
+    '            MyBase.WndProc(m)
+    '            DrawTitleBar(m.HWnd)
+    '        Case Else
+    '            MyBase.WndProc(m)
+    '    End Select
+    'End Sub
+
+    'Private Sub DrawTitleBar(ByVal hwnd As IntPtr)
+
+
+    '    Dim hdc As IntPtr = User32.GetWindowDC(hwnd)
+    '    Try
+    '        Dim rect_titlebar As New Rectangle With {
+    '                .X = 0,
+    '                .Y = 0,
+    '                .Width = Width,
+    '                .Height = SystemInformation.CaptionHeight + SystemInformation.BorderSize.Width * 2
+    '            }
+
+    '        Dim rect_titlebar_extended As New Rectangle With {
+    '                .X = 0,
+    '                .Y = 0,
+    '                .Width = Width,
+    '                .Height = rect_titlebar.Height + Titlebar_panel.Height
+    '            }
+
+    '        Dim rect_titlebar_extended_lower As New Rectangle With {
+    '                .X = 0,
+    '                .Y = rect_titlebar.Height,
+    '                .Width = Width,
+    '                .Height = Titlebar_panel.Height
+    '            }
+
+    '        Using B As New Bitmap(rect_titlebar_extended.Width, rect_titlebar_extended.Height)
+    '            Using G As Graphics = Graphics.FromImage(B)
+    '                Try
+    '                    Dim renderer As System.Windows.Forms.VisualStyles.VisualStyleRenderer
+
+    '                    If ActiveForm Is Me Then
+    '                        renderer = New System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active)
+    '                    Else
+    '                        renderer = New System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Inactive)
+    '                    End If
+    '                    renderer.DrawBackground(G, rect_titlebar_extended)
+    '                    G.Save()
+    '                Finally
+    '                    G.Flush()
+    '                End Try
+    '            End Using
+
+    '            Using G_Titlebar_hwnd As Graphics = Graphics.FromHdc(hdc)
+    '                Try
+    '                    G_Titlebar_hwnd.DrawImage(B.Clone(rect_titlebar, Imaging.PixelFormat.Format32bppArgb), rect_titlebar)
+    '                Finally
+    '                    G_Titlebar_hwnd.Flush()
+    '                End Try
+    '            End Using
+
+    '            With Me.CreateGraphics()
+    '                Try
+    '                    Titlebar_panel.Visible = False
+    '                    .DrawImage(B.Clone(rect_titlebar_extended_lower, Imaging.PixelFormat.Format32bppArgb), rect_titlebar_extended_lower)
+    '                Finally
+    '                    .Flush()
+    '                End Try
+    '            End With
+
+    '        End Using
+
+    '    Finally
+    '        User32.ReleaseDC(hwnd, hdc)
+    '    End Try
+    'End Sub
+
+    Sub UpdateTitlebarColors()
+        Titlebar_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        search_box.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        back_btn.Image = If(GetDarkMode(), My.Resources.Store_BackBtn, My.Resources.Store_BackBtn.Invert)
+    End Sub
 #End Region
 
 #End Region
@@ -1247,7 +1358,7 @@ Public Class Store
 
         If selectedItem IsNot Nothing AndAlso selectedItem.CP.AppTheme.Enabled Then
             My.Settings = New XeSettings(XeSettings.Mode.Registry)
-            ApplyDarkMode(Me)
+            ApplyDarkMode(Me, True)
         End If
 
         RemoveAllStoreItems(search_results)
@@ -1259,7 +1370,7 @@ Public Class Store
         Titlebar_lbl.Text = Text
         My.Animator.ShowSync(Tabs)
 
-        Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
+        '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
 #Region "   Preview switchers"
@@ -1415,23 +1526,6 @@ Public Class Store
 #End Region
 
 #Region "Others"
-    Private Sub Titlebar_panel_BackColorChanged(sender As Object, e As EventArgs) Handles Titlebar_panel.BackColorChanged
-
-        Titlebar_lbl.ForeColor = If(Titlebar_panel.BackColor.IsDark, Color.White, Color.Black)
-        search_box.ForeColor = If(Titlebar_panel.BackColor.IsDark, Color.White, Color.Black)
-        back_btn.Image = If(Titlebar_panel.BackColor.IsDark, My.Resources.Store_BackBtn, My.Resources.Store_BackBtn.Invert)
-
-        For Each ctrl As Control In Titlebar_panel.Controls
-            ctrl.Refresh()
-        Next
-
-        For Each ctrl As Control In search_panel.Controls
-            ctrl.Invalidate()
-        Next
-
-        DrawCustomTitlebar(Titlebar_panel.BackColor, Titlebar_panel.BackColor)
-    End Sub
-
     Private Sub CursorsSize_Bar_Scroll(sender As Object) Handles CursorsSize_Bar.Scroll
         If Not _Shown Then Exit Sub
 

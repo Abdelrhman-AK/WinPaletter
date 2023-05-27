@@ -190,23 +190,23 @@ Partial Class Win32UI
         Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
-        Me.RetroLabel9 = New WinPaletter.RetroLabel()
+        Me.RetroLabel9 = New WinPaletter.XenonLabel()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
-        Me.RetroLabel5 = New WinPaletter.RetroLabel()
+        Me.RetroLabel5 = New WinPaletter.XenonLabel()
         Me.menucontainer1 = New System.Windows.Forms.Panel()
-        Me.RetroLabel6 = New WinPaletter.RetroLabel()
+        Me.RetroLabel6 = New WinPaletter.XenonLabel()
         Me.RetroWindow3 = New WinPaletter.RetroWindow()
         Me.RetroButton1 = New WinPaletter.RetroButton()
-        Me.RetroLabel4 = New WinPaletter.RetroLabel()
-        Me.RetroLabel13 = New WinPaletter.RetroLabel()
+        Me.RetroLabel4 = New WinPaletter.XenonLabel()
+        Me.RetroLabel13 = New WinPaletter.XenonLabel()
         Me.RetroWindow2 = New WinPaletter.RetroWindow()
         Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
         Me.menucontainer0 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel3 = New WinPaletter.RetroLabel()
-        Me.RetroLabel2 = New WinPaletter.RetroLabel()
-        Me.RetroLabel1 = New WinPaletter.RetroLabel()
+        Me.RetroLabel3 = New WinPaletter.XenonLabel()
+        Me.RetroLabel2 = New WinPaletter.XenonLabel()
+        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.RetroWindow1 = New WinPaletter.RetroWindow()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
         Me.programcontainer = New System.Windows.Forms.Panel()
@@ -2390,10 +2390,10 @@ Partial Class Win32UI
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl_preview.BackColor = System.Drawing.Color.Teal
         Me.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnl_preview.Controls.Add(Me.RetroLabel13)
         Me.pnl_preview.Controls.Add(Me.RetroShadow1)
         Me.pnl_preview.Controls.Add(Me.Menu_Window)
         Me.pnl_preview.Controls.Add(Me.RetroWindow3)
-        Me.pnl_preview.Controls.Add(Me.RetroLabel13)
         Me.pnl_preview.Controls.Add(Me.RetroWindow2)
         Me.pnl_preview.Controls.Add(Me.RetroWindow1)
         Me.pnl_preview.Controls.Add(Me.RetroWindow4)
@@ -2611,7 +2611,7 @@ Partial Class Win32UI
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel13.Location = New System.Drawing.Point(184, 82)
+        Me.RetroLabel13.Location = New System.Drawing.Point(184, 77)
         Me.RetroLabel13.Name = "RetroLabel13"
         Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
         Me.RetroLabel13.TabIndex = 5
@@ -3188,23 +3188,23 @@ Partial Class Win32UI
     Friend WithEvents RetroWindow1 As RetroWindow
     Friend WithEvents RetroWindow3 As RetroWindow
     Friend WithEvents RetroButton1 As RetroButton
-    Friend WithEvents RetroLabel4 As RetroLabel
+    Friend WithEvents RetroLabel4 As XenonLabel
     Friend WithEvents RetroWindow2 As RetroWindow
     Friend WithEvents RetroTextBox1 As RetroTextBox
     Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents RetroLabel3 As RetroLabel
-    Friend WithEvents RetroLabel2 As RetroLabel
-    Friend WithEvents RetroLabel1 As RetroLabel
+    Friend WithEvents RetroLabel3 As XenonLabel
+    Friend WithEvents RetroLabel2 As XenonLabel
+    Friend WithEvents RetroLabel1 As XenonLabel
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents programcontainer As Panel
     Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
-    Friend WithEvents RetroLabel9 As RetroLabel
+    Friend WithEvents RetroLabel9 As XenonLabel
     Friend WithEvents highlight As Panel
     Friend WithEvents menucontainer1 As Panel
-    Friend WithEvents RetroLabel6 As RetroLabel
+    Friend WithEvents RetroLabel6 As XenonLabel
     Friend WithEvents menucontainer0 As Panel
-    Friend WithEvents RetroLabel13 As RetroLabel
+    Friend WithEvents RetroLabel13 As XenonLabel
     Friend WithEvents RetroPanel2 As RetroScrollBar
     Friend WithEvents RetroButton11 As RetroButton
     Friend WithEvents RetroButton10 As RetroButton
@@ -3214,7 +3214,7 @@ Partial Class Win32UI
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents menuhilight As Panel
-    Friend WithEvents RetroLabel5 As RetroLabel
+    Friend WithEvents RetroLabel5 As XenonLabel
     Friend WithEvents XenonButton3 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
     Friend WithEvents XenonGroupBox2 As XenonGroupBox

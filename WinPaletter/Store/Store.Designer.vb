@@ -30,12 +30,14 @@ Partial Class Store
         Me.search_btn = New WinPaletter.XenonButton()
         Me.search_box = New WinPaletter.XenonTextBox()
         Me.search_filter_btn = New WinPaletter.XenonButton()
-        Me.Titlebar_lbl = New System.Windows.Forms.Label()
+        Me.Titlebar_lbl = New WinPaletter.XenonLabel()
         Me.back_btn = New WinPaletter.XenonButton()
         Me.Titlebar_img = New System.Windows.Forms.PictureBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Log_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Cursor_Timer = New System.Windows.Forms.Timer(Me.components)
+        Me.Status_pnl = New System.Windows.Forms.Panel()
+        Me.Status_lbl = New System.Windows.Forms.Label()
         Me.Tabs = New WinPaletter.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.store_container = New System.Windows.Forms.FlowLayoutPanel()
@@ -64,9 +66,9 @@ Partial Class Store
         Me.XenonWindow2 = New WinPaletter.XenonWindow()
         Me.XenonWindow1 = New WinPaletter.XenonWindow()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.setting_icon_preview = New System.Windows.Forms.Label()
-        Me.lnk_preview = New System.Windows.Forms.Label()
+        Me.Label8 = New WinPaletter.XenonLabel()
+        Me.setting_icon_preview = New WinPaletter.XenonLabel()
+        Me.lnk_preview = New WinPaletter.XenonLabel()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.pnl_preview_classic = New System.Windows.Forms.Panel()
         Me.ClassicWindow1 = New WinPaletter.RetroWindow()
@@ -80,23 +82,23 @@ Partial Class Store
         Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.RetroWindow()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
-        Me.RetroLabel9 = New WinPaletter.RetroLabel()
+        Me.RetroLabel9 = New WinPaletter.XenonLabel()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
-        Me.RetroLabel5 = New WinPaletter.RetroLabel()
+        Me.RetroLabel5 = New WinPaletter.XenonLabel()
         Me.menucontainer1 = New System.Windows.Forms.Panel()
-        Me.RetroLabel6 = New WinPaletter.RetroLabel()
+        Me.RetroLabel6 = New WinPaletter.XenonLabel()
         Me.RetroWindow3 = New WinPaletter.RetroWindow()
         Me.RetroButton5 = New WinPaletter.RetroButton()
-        Me.RetroLabel4 = New WinPaletter.RetroLabel()
-        Me.RetroLabel13 = New WinPaletter.RetroLabel()
+        Me.RetroLabel4 = New WinPaletter.XenonLabel()
+        Me.RetroLabel13 = New WinPaletter.XenonLabel()
         Me.RetroWindow2 = New WinPaletter.RetroWindow()
         Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
         Me.menucontainer0 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel3 = New WinPaletter.RetroLabel()
-        Me.RetroLabel2 = New WinPaletter.RetroLabel()
-        Me.RetroLabel1 = New WinPaletter.RetroLabel()
+        Me.RetroLabel3 = New WinPaletter.XenonLabel()
+        Me.RetroLabel2 = New WinPaletter.XenonLabel()
+        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.RetroWindow1 = New WinPaletter.RetroWindow()
         Me.RetroWindow4 = New WinPaletter.RetroWindow()
         Me.programcontainer = New System.Windows.Forms.Panel()
@@ -173,11 +175,10 @@ Partial Class Store
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.log_header = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.Status_pnl = New System.Windows.Forms.Panel()
-        Me.Status_lbl = New System.Windows.Forms.Label()
         Me.Titlebar_panel.SuspendLayout()
         Me.search_panel.SuspendLayout()
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Status_pnl.SuspendLayout()
         Me.Tabs.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -227,7 +228,6 @@ Partial Class Store
         Me.TabPage5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Status_pnl.SuspendLayout()
         Me.SuspendLayout()
         '
         'FilesFetcher
@@ -263,6 +263,7 @@ Partial Class Store
         '
         Me.search_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.search_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_btn.DrawOnGlass = True
         Me.search_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.search_btn.ForeColor = System.Drawing.Color.White
         Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
@@ -279,7 +280,8 @@ Partial Class Store
         Me.search_box.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.search_box.ForeColor = System.Drawing.Color.White
+        Me.search_box.DrawOnGlass = True
+        Me.search_box.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.search_box.Location = New System.Drawing.Point(3, 3)
         Me.search_box.MaxLength = 32767
         Me.search_box.Multiline = False
@@ -299,6 +301,7 @@ Partial Class Store
         '
         Me.search_filter_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.search_filter_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_filter_btn.DrawOnGlass = True
         Me.search_filter_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.search_filter_btn.ForeColor = System.Drawing.Color.White
         Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
@@ -315,11 +318,12 @@ Partial Class Store
         Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_lbl.DrawOnGlass = True
         Me.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 14)
+        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 0)
         Me.Titlebar_lbl.Name = "Titlebar_lbl"
-        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 37)
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 64)
         Me.Titlebar_lbl.TabIndex = 38
         Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
         Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -327,6 +331,7 @@ Partial Class Store
         'back_btn
         '
         Me.back_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.back_btn.DrawOnGlass = True
         Me.back_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.back_btn.ForeColor = System.Drawing.Color.White
         Me.back_btn.Image = Nothing
@@ -365,6 +370,30 @@ Partial Class Store
         'Cursor_Timer
         '
         Me.Cursor_Timer.Interval = 30
+        '
+        'Status_pnl
+        '
+        Me.Status_pnl.BackColor = System.Drawing.Color.Transparent
+        Me.Status_pnl.Controls.Add(Me.Status_lbl)
+        Me.Status_pnl.Controls.Add(Me.ProgressBar1)
+        Me.Status_pnl.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Status_pnl.Location = New System.Drawing.Point(0, 697)
+        Me.Status_pnl.Name = "Status_pnl"
+        Me.Status_pnl.Padding = New System.Windows.Forms.Padding(3)
+        Me.Status_pnl.Size = New System.Drawing.Size(1254, 24)
+        Me.Status_pnl.TabIndex = 6
+        '
+        'Status_lbl
+        '
+        Me.Status_lbl.AutoEllipsis = True
+        Me.Status_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Status_lbl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Status_lbl.Location = New System.Drawing.Point(3, 3)
+        Me.Status_lbl.Name = "Status_lbl"
+        Me.Status_lbl.Size = New System.Drawing.Size(1020, 18)
+        Me.Status_lbl.TabIndex = 39
+        Me.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Tabs
         '
@@ -456,6 +485,7 @@ Partial Class Store
         '
         Me.RestartExplorer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RestartExplorer.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.RestartExplorer.DrawOnGlass = False
         Me.RestartExplorer.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.RestartExplorer.ForeColor = System.Drawing.Color.White
         Me.RestartExplorer.Image = Nothing
@@ -473,6 +503,7 @@ Partial Class Store
         '
         Me.Edit_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Edit_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Edit_btn.DrawOnGlass = False
         Me.Edit_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Edit_btn.ForeColor = System.Drawing.Color.White
         Me.Edit_btn.Image = CType(resources.GetObject("Edit_btn.Image"), System.Drawing.Image)
@@ -490,6 +521,7 @@ Partial Class Store
         '
         Me.Apply_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Apply_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Apply_btn.DrawOnGlass = False
         Me.Apply_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Apply_btn.ForeColor = System.Drawing.Color.White
         Me.Apply_btn.Image = Nothing
@@ -581,6 +613,7 @@ Partial Class Store
         '
         Me.ShowPS64_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowPS64_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowPS64_btn.DrawOnGlass = False
         Me.ShowPS64_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowPS64_btn.ForeColor = System.Drawing.Color.White
         Me.ShowPS64_btn.Image = Nothing
@@ -597,6 +630,7 @@ Partial Class Store
         '
         Me.ShowPS86_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowPS86_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowPS86_btn.DrawOnGlass = False
         Me.ShowPS86_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowPS86_btn.ForeColor = System.Drawing.Color.White
         Me.ShowPS86_btn.Image = Nothing
@@ -613,6 +647,7 @@ Partial Class Store
         '
         Me.ShowCursors_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowCursors_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowCursors_btn.DrawOnGlass = False
         Me.ShowCursors_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowCursors_btn.ForeColor = System.Drawing.Color.White
         Me.ShowCursors_btn.Image = Nothing
@@ -850,6 +885,7 @@ Partial Class Store
         '
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label8.DrawOnGlass = False
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
@@ -862,6 +898,7 @@ Partial Class Store
         '
         Me.setting_icon_preview.BackColor = System.Drawing.Color.Transparent
         Me.setting_icon_preview.Dock = System.Windows.Forms.DockStyle.Top
+        Me.setting_icon_preview.DrawOnGlass = False
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
@@ -874,6 +911,7 @@ Partial Class Store
         '
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lnk_preview.DrawOnGlass = False
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
         Me.lnk_preview.Location = New System.Drawing.Point(4, 118)
@@ -1150,6 +1188,7 @@ Partial Class Store
         '
         Me.RetroLabel9.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel9.DrawOnGlass = False
         Me.RetroLabel9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel9.ForeColor = System.Drawing.Color.DimGray
         Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
@@ -1185,6 +1224,7 @@ Partial Class Store
         '
         Me.RetroLabel5.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel5.DrawOnGlass = False
         Me.RetroLabel5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel5.ForeColor = System.Drawing.Color.White
         Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
@@ -1210,6 +1250,7 @@ Partial Class Store
         '
         Me.RetroLabel6.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel6.DrawOnGlass = False
         Me.RetroLabel6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel6.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
@@ -1282,6 +1323,7 @@ Partial Class Store
         Me.RetroLabel4.AutoSize = True
         Me.RetroLabel4.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroLabel4.DrawOnGlass = False
         Me.RetroLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel4.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel4.Location = New System.Drawing.Point(4, 22)
@@ -1298,6 +1340,7 @@ Partial Class Store
         Me.RetroLabel13.AutoSize = True
         Me.RetroLabel13.BackColor = System.Drawing.Color.White
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.RetroLabel13.DrawOnGlass = False
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel13.Location = New System.Drawing.Point(287, 47)
@@ -1398,6 +1441,7 @@ Partial Class Store
         '
         Me.RetroLabel3.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel3.DrawOnGlass = False
         Me.RetroLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
@@ -1411,6 +1455,7 @@ Partial Class Store
         '
         Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RetroLabel2.DrawOnGlass = False
         Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.RetroLabel2.Location = New System.Drawing.Point(40, 0)
@@ -1425,6 +1470,7 @@ Partial Class Store
         '
         Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RetroLabel1.DrawOnGlass = False
         Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
@@ -1745,6 +1791,7 @@ Partial Class Store
         'cur_anim_btn
         '
         Me.cur_anim_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.cur_anim_btn.DrawOnGlass = False
         Me.cur_anim_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.cur_anim_btn.ForeColor = System.Drawing.Color.White
         Me.cur_anim_btn.Image = CType(resources.GetObject("cur_anim_btn.Image"), System.Drawing.Image)
@@ -1761,6 +1808,7 @@ Partial Class Store
         'cur_tip_btn
         '
         Me.cur_tip_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.cur_tip_btn.DrawOnGlass = False
         Me.cur_tip_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.cur_tip_btn.ForeColor = System.Drawing.Color.White
         Me.cur_tip_btn.Image = Nothing
@@ -2535,6 +2583,7 @@ Partial Class Store
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.desc_txt.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.desc_txt.DrawOnGlass = False
         Me.desc_txt.ForeColor = System.Drawing.Color.White
         Me.desc_txt.Location = New System.Drawing.Point(4, 443)
         Me.desc_txt.MaxLength = 32767
@@ -2555,6 +2604,7 @@ Partial Class Store
         '
         Me.ShowClassic_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowClassic_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowClassic_btn.DrawOnGlass = False
         Me.ShowClassic_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowClassic_btn.ForeColor = System.Drawing.Color.White
         Me.ShowClassic_btn.Image = Nothing
@@ -2581,6 +2631,7 @@ Partial Class Store
         '
         Me.ShowCMD_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowCMD_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ShowCMD_btn.DrawOnGlass = False
         Me.ShowCMD_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowCMD_btn.ForeColor = System.Drawing.Color.White
         Me.ShowCMD_btn.Image = Nothing
@@ -2622,6 +2673,7 @@ Partial Class Store
         '
         Me.Switch_M_C_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Switch_M_C_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Switch_M_C_btn.DrawOnGlass = False
         Me.Switch_M_C_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Switch_M_C_btn.ForeColor = System.Drawing.Color.White
         Me.Switch_M_C_btn.Image = Nothing
@@ -2919,6 +2971,7 @@ Partial Class Store
         '
         Me.StopTimer_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StopTimer_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.StopTimer_btn.DrawOnGlass = False
         Me.StopTimer_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.StopTimer_btn.ForeColor = System.Drawing.Color.White
         Me.StopTimer_btn.Image = Nothing
@@ -2936,6 +2989,7 @@ Partial Class Store
         '
         Me.ExportDetails_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExportDetails_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ExportDetails_btn.DrawOnGlass = False
         Me.ExportDetails_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExportDetails_btn.ForeColor = System.Drawing.Color.White
         Me.ExportDetails_btn.Image = Nothing
@@ -2968,6 +3022,7 @@ Partial Class Store
         '
         Me.ShowErrors_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ShowErrors_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ShowErrors_btn.DrawOnGlass = False
         Me.ShowErrors_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ShowErrors_btn.ForeColor = System.Drawing.Color.White
         Me.ShowErrors_btn.Image = Nothing
@@ -2985,6 +3040,7 @@ Partial Class Store
         '
         Me.ok_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ok_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.ok_btn.DrawOnGlass = False
         Me.ok_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ok_btn.ForeColor = System.Drawing.Color.White
         Me.ok_btn.Image = Nothing
@@ -3048,30 +3104,6 @@ Partial Class Store
         Me.PictureBox36.TabIndex = 23
         Me.PictureBox36.TabStop = False
         '
-        'Status_pnl
-        '
-        Me.Status_pnl.BackColor = System.Drawing.Color.Transparent
-        Me.Status_pnl.Controls.Add(Me.Status_lbl)
-        Me.Status_pnl.Controls.Add(Me.ProgressBar1)
-        Me.Status_pnl.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Status_pnl.Location = New System.Drawing.Point(0, 697)
-        Me.Status_pnl.Name = "Status_pnl"
-        Me.Status_pnl.Padding = New System.Windows.Forms.Padding(3)
-        Me.Status_pnl.Size = New System.Drawing.Size(1254, 24)
-        Me.Status_pnl.TabIndex = 6
-        '
-        'Status_lbl
-        '
-        Me.Status_lbl.AutoEllipsis = True
-        Me.Status_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Status_lbl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Status_lbl.Location = New System.Drawing.Point(3, 3)
-        Me.Status_lbl.Name = "Status_lbl"
-        Me.Status_lbl.Size = New System.Drawing.Size(1020, 18)
-        Me.Status_lbl.TabIndex = 39
-        Me.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Store
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -3092,6 +3124,7 @@ Partial Class Store
         Me.Titlebar_panel.ResumeLayout(False)
         Me.search_panel.ResumeLayout(False)
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Status_pnl.ResumeLayout(False)
         Me.Tabs.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
@@ -3143,7 +3176,6 @@ Partial Class Store
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Status_pnl.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -3159,9 +3191,9 @@ Partial Class Store
     Friend WithEvents XenonWindow2 As XenonWindow
     Friend WithEvents XenonWindow1 As XenonWindow
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents Label8 As Label
-    Friend WithEvents setting_icon_preview As Label
-    Friend WithEvents lnk_preview As Label
+    Friend WithEvents Label8 As XenonLabel
+    Friend WithEvents setting_icon_preview As XenonLabel
+    Friend WithEvents lnk_preview As XenonLabel
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents pnl_preview_classic As Panel
     Friend WithEvents ClassicWindow1 As RetroWindow
@@ -3176,7 +3208,7 @@ Partial Class Store
     Friend WithEvents back_btn As XenonButton
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
     Friend WithEvents Titlebar_panel As Panel
-    Friend WithEvents Titlebar_lbl As Label
+    Friend WithEvents Titlebar_lbl As XenonLabel
     Friend WithEvents Titlebar_img As PictureBox
     Friend WithEvents XenonGroupBox1 As XenonGroupBox
     Friend WithEvents themeSize_lbl As Label
@@ -3210,23 +3242,23 @@ Partial Class Store
     Friend WithEvents RetroShadow1 As TransparentPictureBox
     Friend WithEvents Menu_Window As RetroWindow
     Friend WithEvents menucontainer3 As Panel
-    Friend WithEvents RetroLabel9 As RetroLabel
+    Friend WithEvents RetroLabel9 As XenonLabel
     Friend WithEvents highlight As Panel
     Friend WithEvents menuhilight As Panel
-    Friend WithEvents RetroLabel5 As RetroLabel
+    Friend WithEvents RetroLabel5 As XenonLabel
     Friend WithEvents menucontainer1 As Panel
-    Friend WithEvents RetroLabel6 As RetroLabel
+    Friend WithEvents RetroLabel6 As XenonLabel
     Friend WithEvents RetroWindow3 As RetroWindow
     Friend WithEvents RetroButton5 As RetroButton
-    Friend WithEvents RetroLabel4 As RetroLabel
-    Friend WithEvents RetroLabel13 As RetroLabel
+    Friend WithEvents RetroLabel4 As XenonLabel
+    Friend WithEvents RetroLabel13 As XenonLabel
     Friend WithEvents RetroWindow2 As RetroWindow
     Friend WithEvents RetroTextBox1 As RetroTextBox
     Friend WithEvents menucontainer0 As Panel
     Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents RetroLabel3 As RetroLabel
-    Friend WithEvents RetroLabel2 As RetroLabel
-    Friend WithEvents RetroLabel1 As RetroLabel
+    Friend WithEvents RetroLabel3 As XenonLabel
+    Friend WithEvents RetroLabel2 As XenonLabel
+    Friend WithEvents RetroLabel1 As XenonLabel
     Friend WithEvents RetroWindow1 As RetroWindow
     Friend WithEvents RetroWindow4 As RetroWindow
     Friend WithEvents programcontainer As Panel

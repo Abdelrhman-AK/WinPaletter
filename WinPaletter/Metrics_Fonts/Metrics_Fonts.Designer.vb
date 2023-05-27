@@ -145,15 +145,15 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox12 = New WinPaletter.XenonAlertBox()
         Me.XenonWindow4 = New WinPaletter.XenonWindow()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.MenuParentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MenuParent2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuParentToolStripMenuItem = New WinPaletter.XenonToolStripMenuItem()
+        Me.MenuParent2ToolStripMenuItem = New WinPaletter.XenonToolStripMenuItem()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Classic_Preview3 = New System.Windows.Forms.Panel()
         Me.RetroWindow3 = New WinPaletter.RetroWindow()
         Me.RetroPanel2 = New WinPaletter.RetroPanel()
         Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New WinPaletter.XenonToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New WinPaletter.XenonToolStripMenuItem()
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
@@ -186,17 +186,17 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox13 = New WinPaletter.XenonAlertBox()
         Me.XenonWindow6 = New WinPaletter.XenonWindow()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.msgLbl = New System.Windows.Forms.Label()
+        Me.msgLbl = New WinPaletter.XenonLabel()
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
         Me.HScrollBar1 = New System.Windows.Forms.HScrollBar()
         Me.VScrollBar1 = New System.Windows.Forms.VScrollBar()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.statusLbl = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.statusLbl = New WinPaletter.XenonToolStripStatusLabel()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.Classic_Preview4 = New System.Windows.Forms.Panel()
         Me.RetroWindow5 = New WinPaletter.RetroWindow()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label13 = New WinPaletter.XenonLabel()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.RetroScrollBar1 = New WinPaletter.RetroScrollBar()
         Me.RetroButton3 = New WinPaletter.RetroButton()
@@ -208,7 +208,7 @@ Partial Class Metrics_Fonts
         Me.RetroButton10 = New WinPaletter.RetroButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label14 = New WinPaletter.XenonLabel()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
@@ -264,7 +264,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.Label30 = New System.Windows.Forms.Label()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -375,7 +374,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox10.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
+        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.XenonAlertBox10.CenterText = False
         Me.XenonAlertBox10.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -408,6 +407,7 @@ Partial Class Metrics_Fonts
         'XenonButton20
         '
         Me.XenonButton20.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton20.DrawOnGlass = False
         Me.XenonButton20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton20.ForeColor = System.Drawing.Color.White
         Me.XenonButton20.Image = CType(resources.GetObject("XenonButton20.Image"), System.Drawing.Image)
@@ -426,6 +426,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton9.DrawOnGlass = False
         Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton9.ForeColor = System.Drawing.Color.White
         Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
@@ -443,6 +444,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton13.DrawOnGlass = False
         Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton13.ForeColor = System.Drawing.Color.White
         Me.XenonButton13.Image = Nothing
@@ -474,6 +476,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton11.DrawOnGlass = False
         Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton11.ForeColor = System.Drawing.Color.White
         Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
@@ -492,6 +495,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton12.DrawOnGlass = False
         Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton12.ForeColor = System.Drawing.Color.White
         Me.XenonButton12.Image = Nothing
@@ -508,7 +512,7 @@ Partial Class Metrics_Fonts
         'MetricsEnabled
         '
         Me.MetricsEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer))
         Me.MetricsEnabled.Checked = False
         Me.MetricsEnabled.DarkLight_Toggler = False
         Me.MetricsEnabled.Location = New System.Drawing.Point(1031, 9)
@@ -569,7 +573,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonAlertBox3.CenterText = False
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -633,6 +637,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = Nothing
@@ -702,6 +707,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = Nothing
@@ -736,6 +742,7 @@ Partial Class Metrics_Fonts
         '
         Me.tw_w.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tw_w.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.tw_w.DrawOnGlass = False
         Me.tw_w.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.tw_w.ForeColor = System.Drawing.Color.White
         Me.tw_w.Image = Nothing
@@ -751,6 +758,7 @@ Partial Class Metrics_Fonts
         '
         Me.tw_h.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tw_h.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.tw_h.DrawOnGlass = False
         Me.tw_h.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.tw_h.ForeColor = System.Drawing.Color.White
         Me.tw_h.Image = Nothing
@@ -901,7 +909,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox11
         '
         Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonAlertBox11.CenterText = True
         Me.XenonAlertBox11.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1112,6 +1120,7 @@ Partial Class Metrics_Fonts
         '
         Me.ttl_p.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ttl_p.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ttl_p.DrawOnGlass = False
         Me.ttl_p.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ttl_p.ForeColor = System.Drawing.Color.White
         Me.ttl_p.Image = Nothing
@@ -1127,6 +1136,7 @@ Partial Class Metrics_Fonts
         '
         Me.ttl_b.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ttl_b.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ttl_b.DrawOnGlass = False
         Me.ttl_b.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ttl_b.ForeColor = System.Drawing.Color.White
         Me.ttl_b.Image = Nothing
@@ -1142,6 +1152,7 @@ Partial Class Metrics_Fonts
         '
         Me.ttl_w.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ttl_w.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ttl_w.DrawOnGlass = False
         Me.ttl_w.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ttl_w.ForeColor = System.Drawing.Color.White
         Me.ttl_w.Image = Nothing
@@ -1157,6 +1168,7 @@ Partial Class Metrics_Fonts
         '
         Me.ttl_h.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ttl_h.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ttl_h.DrawOnGlass = False
         Me.ttl_h.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ttl_h.ForeColor = System.Drawing.Color.White
         Me.ttl_h.Image = Nothing
@@ -1409,6 +1421,7 @@ Partial Class Metrics_Fonts
         '
         Me.i_s_s.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.i_s_s.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.i_s_s.DrawOnGlass = False
         Me.i_s_s.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.i_s_s.ForeColor = System.Drawing.Color.White
         Me.i_s_s.Image = Nothing
@@ -1442,6 +1455,7 @@ Partial Class Metrics_Fonts
         '
         Me.i_s_s_s.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.i_s_s_s.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.i_s_s_s.DrawOnGlass = False
         Me.i_s_s_s.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.i_s_s_s.ForeColor = System.Drawing.Color.White
         Me.i_s_s_s.Image = Nothing
@@ -1482,7 +1496,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1513,7 +1527,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1619,6 +1633,7 @@ Partial Class Metrics_Fonts
         '
         Me.i_d_s.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.i_d_s.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.i_d_s.DrawOnGlass = False
         Me.i_d_s.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.i_d_s.ForeColor = System.Drawing.Color.White
         Me.i_d_s.Image = Nothing
@@ -1723,6 +1738,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -1767,6 +1783,7 @@ Partial Class Metrics_Fonts
         '
         Me.i_s_h.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.i_s_h.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.i_s_h.DrawOnGlass = False
         Me.i_s_h.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.i_s_h.ForeColor = System.Drawing.Color.White
         Me.i_s_h.Image = Nothing
@@ -1782,6 +1799,7 @@ Partial Class Metrics_Fonts
         '
         Me.i_s_v.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.i_s_v.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.i_s_v.DrawOnGlass = False
         Me.i_s_v.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.i_s_v.ForeColor = System.Drawing.Color.White
         Me.i_s_v.Image = Nothing
@@ -1944,7 +1962,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox12
         '
         Me.XenonAlertBox12.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonAlertBox12.CenterText = True
         Me.XenonAlertBox12.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2151,6 +2169,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
@@ -2216,6 +2235,7 @@ Partial Class Metrics_Fonts
         '
         Me.m_w.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.m_w.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.m_w.DrawOnGlass = False
         Me.m_w.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.m_w.ForeColor = System.Drawing.Color.White
         Me.m_w.Image = Nothing
@@ -2231,6 +2251,7 @@ Partial Class Metrics_Fonts
         '
         Me.m_h.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.m_h.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.m_h.DrawOnGlass = False
         Me.m_h.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.m_h.ForeColor = System.Drawing.Color.White
         Me.m_h.Image = Nothing
@@ -2349,14 +2370,13 @@ Partial Class Metrics_Fonts
         'XenonGroupBox17
         '
         Me.XenonGroupBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox17.Controls.Add(Me.Label30)
         Me.XenonGroupBox17.Controls.Add(Me.XenonCheckBox1)
         Me.XenonGroupBox17.Controls.Add(Me.PictureBox31)
         Me.XenonGroupBox17.Controls.Add(Me.PictureBox44)
         Me.XenonGroupBox17.Controls.Add(Me.Label26)
         Me.XenonGroupBox17.Location = New System.Drawing.Point(6, 271)
         Me.XenonGroupBox17.Name = "XenonGroupBox17"
-        Me.XenonGroupBox17.Size = New System.Drawing.Size(402, 111)
+        Me.XenonGroupBox17.Size = New System.Drawing.Size(402, 75)
         Me.XenonGroupBox17.TabIndex = 204
         '
         'XenonCheckBox1
@@ -2371,7 +2391,7 @@ Partial Class Metrics_Fonts
         Me.XenonCheckBox1.Name = "XenonCheckBox1"
         Me.XenonCheckBox1.Size = New System.Drawing.Size(347, 24)
         Me.XenonCheckBox1.TabIndex = 121
-        Me.XenonCheckBox1.Text = "Font smoothing (Clear Type or Single bit per pixel)"
+        Me.XenonCheckBox1.Text = "Single bit per pixel font"
         '
         'PictureBox31
         '
@@ -2411,7 +2431,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
         Me.XenonAlertBox4.CenterText = False
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2472,7 +2492,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox13
         '
         Me.XenonAlertBox13.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonAlertBox13.CenterText = True
         Me.XenonAlertBox13.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2535,6 +2555,7 @@ Partial Class Metrics_Fonts
         'msgLbl
         '
         Me.msgLbl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.msgLbl.DrawOnGlass = False
         Me.msgLbl.Location = New System.Drawing.Point(52, 2)
         Me.msgLbl.Name = "msgLbl"
         Me.msgLbl.Size = New System.Drawing.Size(314, 140)
@@ -2657,6 +2678,7 @@ Partial Class Metrics_Fonts
         'Label13
         '
         Me.Label13.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label13.DrawOnGlass = False
         Me.Label13.ForeColor = System.Drawing.Color.Black
         Me.Label13.Location = New System.Drawing.Point(52, 2)
         Me.Label13.Name = "Label13"
@@ -2879,6 +2901,7 @@ Partial Class Metrics_Fonts
         '
         Me.Label14.BackColor = System.Drawing.Color.Transparent
         Me.Label14.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label14.DrawOnGlass = False
         Me.Label14.ForeColor = System.Drawing.Color.Black
         Me.Label14.Location = New System.Drawing.Point(0, 0)
         Me.Label14.Name = "Label14"
@@ -2931,6 +2954,7 @@ Partial Class Metrics_Fonts
         '
         Me.s_w.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.s_w.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.s_w.DrawOnGlass = False
         Me.s_w.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.s_w.ForeColor = System.Drawing.Color.White
         Me.s_w.Image = Nothing
@@ -2946,6 +2970,7 @@ Partial Class Metrics_Fonts
         '
         Me.s_h.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.s_h.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.s_h.DrawOnGlass = False
         Me.s_h.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.s_h.ForeColor = System.Drawing.Color.White
         Me.s_h.Image = Nothing
@@ -3110,6 +3135,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton6.DrawOnGlass = False
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = Nothing
@@ -3136,6 +3162,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = Nothing
@@ -3265,6 +3292,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton19.DrawOnGlass = False
         Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton19.ForeColor = System.Drawing.Color.White
         Me.XenonButton19.Image = CType(resources.GetObject("XenonButton19.Image"), System.Drawing.Image)
@@ -3280,6 +3308,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton18.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton18.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton18.DrawOnGlass = False
         Me.XenonButton18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton18.ForeColor = System.Drawing.Color.White
         Me.XenonButton18.Image = CType(resources.GetObject("XenonButton18.Image"), System.Drawing.Image)
@@ -3295,6 +3324,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton16.DrawOnGlass = False
         Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton16.ForeColor = System.Drawing.Color.White
         Me.XenonButton16.Image = CType(resources.GetObject("XenonButton16.Image"), System.Drawing.Image)
@@ -3329,6 +3359,7 @@ Partial Class Metrics_Fonts
         Me.XenonTextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox3.DrawOnGlass = False
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Location = New System.Drawing.Point(214, 326)
         Me.XenonTextBox3.MaxLength = 32767
@@ -3359,6 +3390,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton17.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton17.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton17.DrawOnGlass = False
         Me.XenonButton17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton17.ForeColor = System.Drawing.Color.White
         Me.XenonButton17.Image = Nothing
@@ -3393,6 +3425,7 @@ Partial Class Metrics_Fonts
         Me.XenonTextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox1.DrawOnGlass = False
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Location = New System.Drawing.Point(214, 266)
         Me.XenonTextBox1.MaxLength = 32767
@@ -3455,6 +3488,7 @@ Partial Class Metrics_Fonts
         Me.XenonTextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox2.DrawOnGlass = False
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Location = New System.Drawing.Point(214, 296)
         Me.XenonTextBox2.MaxLength = 32767
@@ -3475,6 +3509,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton15.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton15.DrawOnGlass = False
         Me.XenonButton15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton15.ForeColor = System.Drawing.Color.White
         Me.XenonButton15.Image = Nothing
@@ -3504,6 +3539,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton14.DrawOnGlass = False
         Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton14.ForeColor = System.Drawing.Color.White
         Me.XenonButton14.Image = Nothing
@@ -3597,6 +3633,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.DrawOnGlass = False
         Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton10.ForeColor = System.Drawing.Color.White
         Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
@@ -3614,6 +3651,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton7.DrawOnGlass = False
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = Nothing
@@ -3630,6 +3668,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton8.DrawOnGlass = False
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
@@ -3642,16 +3681,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.TabIndex = 82
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
-        '
-        'Label30
-        '
-        Me.Label30.Location = New System.Drawing.Point(53, 71)
-        Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(342, 35)
-        Me.Label30.TabIndex = 122
-        Me.Label30.Text = "To show all effects (as the preview won't give you a complete figure about it), t" &
-    "oogle this option and apply."
-        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Metrics_Fonts
         '
@@ -3915,11 +3944,11 @@ Partial Class Metrics_Fonts
     Friend WithEvents pnl_preview4 As Panel
     Friend WithEvents XenonWindow6 As XenonWindow
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents msgLbl As Label
+    Friend WithEvents msgLbl As XenonLabel
     Friend WithEvents PictureBox35 As PictureBox
     Friend WithEvents MenuStrip1 As MenuStrip
-    Friend WithEvents MenuParentToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MenuParent2ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MenuParentToolStripMenuItem As XenonToolStripMenuItem
+    Friend WithEvents MenuParent2ToolStripMenuItem As XenonToolStripMenuItem
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents ttl_h As XenonButton
     Friend WithEvents ttl_w As XenonButton
@@ -3956,12 +3985,12 @@ Partial Class Metrics_Fonts
     Friend WithEvents Classic_Preview4 As Panel
     Friend WithEvents RetroWindow5 As RetroWindow
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents Label13 As Label
+    Friend WithEvents Label13 As XenonLabel
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents HScrollBar1 As HScrollBar
     Friend WithEvents VScrollBar1 As VScrollBar
     Friend WithEvents StatusStrip1 As StatusStrip
-    Friend WithEvents statusLbl As ToolStripStatusLabel
+    Friend WithEvents statusLbl As XenonToolStripStatusLabel
     Friend WithEvents RetroScrollBar2 As RetroScrollBar
     Friend WithEvents RetroButton12 As RetroButton
     Friend WithEvents RetroButton11 As RetroButton
@@ -3971,11 +4000,11 @@ Partial Class Metrics_Fonts
     Friend WithEvents RetroButton1 As RetroButton
     Friend WithEvents RetroButton2 As RetroButton
     Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents Label14 As Label
+    Friend WithEvents Label14 As XenonLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MenuStrip2 As MenuStrip
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As XenonToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem4 As XenonToolStripMenuItem
     Friend WithEvents TabPage11 As TabPage
     Friend WithEvents XenonTextBox2 As XenonTextBox
     Friend WithEvents XenonTextBox1 As XenonTextBox
@@ -4023,5 +4052,4 @@ Partial Class Metrics_Fonts
     Friend WithEvents PictureBox31 As PictureBox
     Friend WithEvents PictureBox44 As PictureBox
     Friend WithEvents Label26 As Label
-    Friend WithEvents Label30 As Label
 End Class

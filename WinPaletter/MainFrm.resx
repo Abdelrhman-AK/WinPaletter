@@ -117,31 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>20, 11</value>
-  </data>
-  <data name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>162, 11</value>
-  </data>
-  <data name="BackgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="BackgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>299, 11</value>
-  </data>
-  <data name="SaveFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="SaveFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>462, 11</value>
-  </data>
-  <data name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>599, 11</value>
-  </data>
-  <data name="SaveFileDialog3.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="SaveFileDialog3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>688, 11</value>
-  </data>
-  <data name="NotifyUpdates.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="NotifyUpdates.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>825, 11</value>
-  </data>
-  <data name="OpenFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="OpenFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>955, 11</value>
-  </data>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="XenonButton28.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAphJREFUOE+1
@@ -1418,7 +1418,7 @@
   <data name="XenonButton31.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAA4RJREFUSEvNlWtIk1EYxy016AJ2g3IpSFlpkOgqKcXKLtSMMC8lplaykbUoLKoP
+        vAAADrwBlbxySQAAA4RJREFUSEvNlWtIk1EYxy016AJ2g3IpSFlpkOgqKcXKLtSMMC8lplaykbUoLKoP
         aUGXQaFFEVFUZEWWFawrdvlQ5DBajdaMLqBO92HTTV9v8zYV/j3n2JG1LboSHfh9eF+e8/ufs/PsvH7/
         wxj2A/5oBBLjiSnfYQLBan5rBGZkZESaTKa3BoPBZTQav4G9q3r//oNSqYyi2hGDU35+DM/NzZ1qs9lM
         NTW17TqdzqzX62vdqKmoqKitrq5us9vtn9RqdTibMzj150aAVqtd53Q6QYu8Rc9hxCQPwqqqqkpZTVlZ
@@ -1829,8 +1829,7 @@
         H6SuXiVQV/MEWdzyfw2P9w/bOw9O1xI88QAAAABJRU5ErkJggg==
 </value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>65</value>
-  </data>
+  </metadata>
 </root>
