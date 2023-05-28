@@ -418,9 +418,7 @@ Public Class XenonLinkLabel
     End Sub
 
 End Class
-Public Class TablessControl
-    Inherits TabControl
-
+Public Class TablessControl : Inherits TabControl
     Public Sub New()
         SetStyle(ControlStyles.ResizeRedraw, True)
         Me.DoubleBuffered = True
@@ -7840,31 +7838,116 @@ Public Class StripRenderer
     End Sub
 End Class
 Public Class XenonLabel : Inherits Label
+    Private _textHdc As IntPtr = IntPtr.Zero
+    Private _dibSectionRef As IntPtr
+    Private ActiveTitlebarRenderer As VisualStyles.VisualStyleRenderer
 
     Public Property DrawOnGlass As Boolean = False
+
+    Protected Function ReturnFormatFlags(Optional Text As String = "") As TextFormatFlags
+        Dim format As TextFormatFlags = TextFormatFlags.Default
+
+        If TextAlign = ContentAlignment.BottomCenter Then
+            format = format Or TextFormatFlags.HorizontalCenter
+            format = format Or TextFormatFlags.Bottom
+
+        ElseIf TextAlign = ContentAlignment.BottomRight Then
+            format = format Or TextFormatFlags.Right
+            format = format Or TextFormatFlags.Bottom
+
+        ElseIf TextAlign = ContentAlignment.BottomLeft Then
+            format = format Or TextFormatFlags.Left
+            format = format Or TextFormatFlags.Bottom
+
+        ElseIf TextAlign = ContentAlignment.MiddleCenter Then
+            format = format Or TextFormatFlags.HorizontalCenter
+            format = format Or TextFormatFlags.VerticalCenter
+
+        ElseIf TextAlign = ContentAlignment.MiddleRight Then
+            format = format Or TextFormatFlags.Right
+            format = format Or TextFormatFlags.VerticalCenter
+
+        ElseIf TextAlign = ContentAlignment.MiddleLeft Then
+            format = format Or TextFormatFlags.Left
+            format = format Or TextFormatFlags.VerticalCenter
+
+        ElseIf TextAlign = ContentAlignment.TopCenter Then
+            format = format Or TextFormatFlags.HorizontalCenter
+            format = format Or TextFormatFlags.Top
+
+        ElseIf TextAlign = ContentAlignment.TopRight Then
+            format = format Or TextFormatFlags.Right
+            format = format Or TextFormatFlags.Top
+
+        ElseIf TextAlign = ContentAlignment.TopLeft Then
+            format = format Or TextFormatFlags.Left
+            format = format Or TextFormatFlags.Top
+        End If
+
+        If Not Text.Contains(vbCrLf) Then format = format Or TextFormatFlags.SingleLine
+        If AutoEllipsis Then format = format Or TextFormatFlags.EndEllipsis
+        If RightToLeft = RightToLeft.Yes Then format = format Or TextFormatFlags.RightToLeft
+
+        Return format
+    End Function
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality
         e.Graphics.TextRenderingHint = My.RenderingHint
         e.Graphics.FillRectangle(New SolidBrush(BackColor), New Rectangle(0, 0, Width, Height))
 
-        If Not DrawOnGlass OrElse DesignMode Then
+        If DesignMode OrElse Not DrawOnGlass Then
             e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
         Else
-            Using _themeText As New ThemedText With {
-                    .Text = Text,
-                    .Font = Font,
-                    .Color = ForeColor,
-                    .FormatFlags = StringAligner(TextAlign).FormatFlags,
-                    .Padding = Padding,
-                    .GlowEnabled = True,
-                    .GlowSize = 10
-                   }
-                _themeText.Draw(e.Graphics, New Rectangle(0, 0, Width, Height))
-            End Using
+            Dim outputHdc = e.Graphics.GetHdc()
+            Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
+            NativeMethods.GDI32.BitBlt(outputHdc, 0, 0, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
+            e.Graphics.ReleaseHdc(outputHdc)
         End If
-
     End Sub
+
+    Private Function PrepareHdc(outputHdc As IntPtr, width As Integer, height As Integer) As IntPtr
+        If _textHdc <> IntPtr.Zero Then
+            NativeMethods.GDI32.DeleteObject(_dibSectionRef)
+            NativeMethods.GDI32.DeleteDC(_textHdc)
+        End If
+        _textHdc = NativeMethods.GDI32.CreateCompatibleDC(outputHdc)
+
+        Dim bmp_info As New NativeMethods.GDI32.BitmapInfo() With {
+                .biSize = Runtime.InteropServices.Marshal.SizeOf(GetType(NativeMethods.GDI32.BitmapInfo)),
+                .biWidth = width,
+                .biHeight = -height, 'DIB use top-down ref system, so use negative height
+                .biPlanes = 1,
+                .biBitCount = 32,
+                .biCompression = 0
+            }
+        _dibSectionRef = NativeMethods.GDI32.CreateDIBSection(outputHdc, bmp_info, 0, 0, IntPtr.Zero, 0)
+        NativeMethods.GDI32.SelectObject(_textHdc, _dibSectionRef)
+
+        Dim hFont As IntPtr = Font.ToHfont()
+        NativeMethods.GDI32.SelectObject(_textHdc, hFont)
+
+        Dim Options As New NativeMethods.UxTheme.DttOpts With {
+                .dwSize = Runtime.InteropServices.Marshal.SizeOf(GetType(NativeMethods.UxTheme.DttOpts)),
+                .dwFlags = NativeMethods.UxTheme.DttOptsFlags.DTT_COMPOSITED Or NativeMethods.UxTheme.DttOptsFlags.DTT_TEXTCOLOR,
+                .crText = ForeColor.ToArgb}
+
+        'Glow
+        Options.dwFlags = Options.dwFlags Or NativeMethods.UxTheme.DttOptsFlags.DTT_GLOWSIZE
+        Options.iGlowSize = 10
+
+        'Set full bounds with padding
+        Dim Rectangle As NativeMethods.UxTheme.Rect = New NativeMethods.UxTheme.Rect(Padding.Left, Padding.Top, width - Padding.Right, height - Padding.Bottom)
+
+        'Draw
+        ActiveTitlebarRenderer = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active)
+        Dim result As Integer = NativeMethods.UxTheme.DrawThemeTextEx(ActiveTitlebarRenderer.Handle, _textHdc, 0, 0, Text, -1, ReturnFormatFlags, Rectangle, Options)
+        If result <> 0 Then Runtime.InteropServices.Marshal.ThrowExceptionForHR(result)
+
+        NativeMethods.GDI32.DeleteObject(hFont)
+
+        Return _textHdc
+    End Function
 End Class
 Public Class XenonToolStripStatusLabel : Inherits ToolStripStatusLabel
     Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)

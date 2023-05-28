@@ -1205,102 +1205,55 @@ Public Class Store
     Sub UpdateExtendedTitlebar()
         Dim Pd As New Windows.Forms.Padding(0, Titlebar_panel.Height, 0, 0)
         Titlebar_panel.BackColor = Color.FromArgb(0, 0, 0)
+        Dim CompositionEnabled As Boolean
+        Dwmapi.DwmIsCompositionEnabled(CompositionEnabled)
 
-        If My.W11 Then
-            DrawMica(Pd)
+        If My.W11 Or My.W10 Then
+            CompositionEnabled = CompositionEnabled And Reg_IO.GetReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", True)
+        End If
+
+
+        If CompositionEnabled Then
             Titlebar_lbl.DrawOnGlass = True
 
-        ElseIf My.W10 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
-            DrawAero(Pd)
-            If My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
-            Titlebar_lbl.DrawOnGlass = True
+            If My.W11 Then
+                DrawMica(Pd)
 
-        ElseIf My.WXP Then
-            'Titlebar_lbl.DrawOnGlass = False
+            ElseIf My.W10 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
+                DrawAero(Pd)
+                If My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
+
+            Else
+                DrawMica(Pd)
+
+            End If
 
         Else
+            If My.W7 OrElse My.WVista Then
+                Titlebar_lbl.DrawOnGlass = False
+                Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234)
+
+            ElseIf My.WXP Then
+                Titlebar_lbl.DrawOnGlass = False
+                Titlebar_panel.BackColor = Style.Colors.Back
+
+            Else
+                Titlebar_lbl.DrawOnGlass = True
+                If My.W11 OrElse My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
+                DrawAero(Pd)
+
+            End If
 
         End If
 
+        Titlebar_lbl.DrawOnGlass = Titlebar_lbl.DrawOnGlass
+        back_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass
+        search_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass
+        search_filter_btn.DrawOnGlass = Titlebar_lbl.DrawOnGlass
+        search_box.DrawOnGlass = Titlebar_lbl.DrawOnGlass
+
         UpdateTitlebarColors()
     End Sub
-
-    'Protected Overrides Sub WndProc(ByRef m As Message)
-    '    Select Case m.Msg
-    '        Case &HF, &H85 ' WM_PAINT
-    '            MyBase.WndProc(m)
-    '            DrawTitleBar(m.HWnd)
-    '        Case Else
-    '            MyBase.WndProc(m)
-    '    End Select
-    'End Sub
-
-    'Private Sub DrawTitleBar(ByVal hwnd As IntPtr)
-
-
-    '    Dim hdc As IntPtr = User32.GetWindowDC(hwnd)
-    '    Try
-    '        Dim rect_titlebar As New Rectangle With {
-    '                .X = 0,
-    '                .Y = 0,
-    '                .Width = Width,
-    '                .Height = SystemInformation.CaptionHeight + SystemInformation.BorderSize.Width * 2
-    '            }
-
-    '        Dim rect_titlebar_extended As New Rectangle With {
-    '                .X = 0,
-    '                .Y = 0,
-    '                .Width = Width,
-    '                .Height = rect_titlebar.Height + Titlebar_panel.Height
-    '            }
-
-    '        Dim rect_titlebar_extended_lower As New Rectangle With {
-    '                .X = 0,
-    '                .Y = rect_titlebar.Height,
-    '                .Width = Width,
-    '                .Height = Titlebar_panel.Height
-    '            }
-
-    '        Using B As New Bitmap(rect_titlebar_extended.Width, rect_titlebar_extended.Height)
-    '            Using G As Graphics = Graphics.FromImage(B)
-    '                Try
-    '                    Dim renderer As System.Windows.Forms.VisualStyles.VisualStyleRenderer
-
-    '                    If ActiveForm Is Me Then
-    '                        renderer = New System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active)
-    '                    Else
-    '                        renderer = New System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Inactive)
-    '                    End If
-    '                    renderer.DrawBackground(G, rect_titlebar_extended)
-    '                    G.Save()
-    '                Finally
-    '                    G.Flush()
-    '                End Try
-    '            End Using
-
-    '            Using G_Titlebar_hwnd As Graphics = Graphics.FromHdc(hdc)
-    '                Try
-    '                    G_Titlebar_hwnd.DrawImage(B.Clone(rect_titlebar, Imaging.PixelFormat.Format32bppArgb), rect_titlebar)
-    '                Finally
-    '                    G_Titlebar_hwnd.Flush()
-    '                End Try
-    '            End Using
-
-    '            With Me.CreateGraphics()
-    '                Try
-    '                    Titlebar_panel.Visible = False
-    '                    .DrawImage(B.Clone(rect_titlebar_extended_lower, Imaging.PixelFormat.Format32bppArgb), rect_titlebar_extended_lower)
-    '                Finally
-    '                    .Flush()
-    '                End Try
-    '            End With
-
-    '        End Using
-
-    '    Finally
-    '        User32.ReleaseDC(hwnd, hdc)
-    '    End Try
-    'End Sub
 
     Sub UpdateTitlebarColors()
         Titlebar_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)

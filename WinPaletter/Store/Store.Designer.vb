@@ -369,7 +369,7 @@ Partial Class Store
         '
         'Cursor_Timer
         '
-        Me.Cursor_Timer.Interval = 30
+        Me.Cursor_Timer.Interval = 50
         '
         'Status_pnl
         '
@@ -892,7 +892,7 @@ Partial Class Store
         Me.Label8.Size = New System.Drawing.Size(179, 31)
         Me.Label8.TabIndex = 15
         Me.Label8.Text = "This is a setting icon"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'setting_icon_preview
         '
@@ -1197,7 +1197,6 @@ Partial Class Store
         Me.RetroLabel9.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel9.TabIndex = 3
         Me.RetroLabel9.Text = "Disabled item"
-        Me.RetroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'highlight
         '
@@ -1233,7 +1232,6 @@ Partial Class Store
         Me.RetroLabel5.Size = New System.Drawing.Size(85, 20)
         Me.RetroLabel5.TabIndex = 3
         Me.RetroLabel5.Text = "Hovered item"
-        Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menucontainer1
         '
@@ -1259,7 +1257,6 @@ Partial Class Store
         Me.RetroLabel6.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel6.TabIndex = 3
         Me.RetroLabel6.Text = "Menu item"
-        Me.RetroLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroWindow3
         '
@@ -1348,7 +1345,6 @@ Partial Class Store
         Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
         Me.RetroLabel13.TabIndex = 5
         Me.RetroLabel13.Text = "This is a tooltip"
-        Me.RetroLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroWindow2
         '
@@ -1449,7 +1445,7 @@ Partial Class Store
         Me.RetroLabel3.Size = New System.Drawing.Size(51, 12)
         Me.RetroLabel3.TabIndex = 1
         Me.RetroLabel3.Text = "Selected"
-        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroLabel2
         '
@@ -1798,7 +1794,7 @@ Partial Class Store
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.cur_anim_btn.LineSize = 1
-        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 242)
+        Me.cur_anim_btn.Location = New System.Drawing.Point(353, 239)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
         Me.cur_anim_btn.TabIndex = 72
@@ -1814,7 +1810,7 @@ Partial Class Store
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.cur_tip_btn.LineSize = 1
-        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 242)
+        Me.cur_tip_btn.Location = New System.Drawing.Point(497, 239)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
         Me.cur_tip_btn.TabIndex = 71
@@ -1846,7 +1842,7 @@ Partial Class Store
         Me.Cursors_Container.Location = New System.Drawing.Point(3, 4)
         Me.Cursors_Container.Name = "Cursors_Container"
         Me.Cursors_Container.Padding = New System.Windows.Forms.Padding(4, 4, 0, 4)
-        Me.Cursors_Container.Size = New System.Drawing.Size(514, 234)
+        Me.Cursors_Container.Size = New System.Drawing.Size(514, 218)
         Me.Cursors_Container.TabIndex = 67
         '
         'Arrow
@@ -2549,7 +2545,7 @@ Partial Class Store
         'PictureBox12
         '
         Me.PictureBox12.Image = CType(resources.GetObject("PictureBox12.Image"), System.Drawing.Image)
-        Me.PictureBox12.Location = New System.Drawing.Point(3, 240)
+        Me.PictureBox12.Location = New System.Drawing.Point(3, 237)
         Me.PictureBox12.Name = "PictureBox12"
         Me.PictureBox12.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox12.TabIndex = 70
@@ -2558,7 +2554,7 @@ Partial Class Store
         'Label17
         '
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(33, 240)
+        Me.Label17.Location = New System.Drawing.Point(33, 237)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(85, 24)
         Me.Label17.TabIndex = 69
@@ -2568,7 +2564,7 @@ Partial Class Store
         'CursorsSize_Bar
         '
         Me.CursorsSize_Bar.LargeChange = 50
-        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 243)
+        Me.CursorsSize_Bar.Location = New System.Drawing.Point(124, 240)
         Me.CursorsSize_Bar.Maximum = 320
         Me.CursorsSize_Bar.Minimum = 100
         Me.CursorsSize_Bar.Name = "CursorsSize_Bar"
@@ -2977,7 +2973,7 @@ Partial Class Store
         Me.StopTimer_btn.Image = Nothing
         Me.StopTimer_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.StopTimer_btn.LineSize = 1
-        Me.StopTimer_btn.Location = New System.Drawing.Point(1005, 555)
+        Me.StopTimer_btn.Location = New System.Drawing.Point(1010, 552)
         Me.StopTimer_btn.Name = "StopTimer_btn"
         Me.StopTimer_btn.Size = New System.Drawing.Size(80, 34)
         Me.StopTimer_btn.TabIndex = 31
@@ -2995,7 +2991,7 @@ Partial Class Store
         Me.ExportDetails_btn.Image = Nothing
         Me.ExportDetails_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.ExportDetails_btn.LineSize = 1
-        Me.ExportDetails_btn.Location = New System.Drawing.Point(1087, 555)
+        Me.ExportDetails_btn.Location = New System.Drawing.Point(1092, 552)
         Me.ExportDetails_btn.Name = "ExportDetails_btn"
         Me.ExportDetails_btn.Size = New System.Drawing.Size(85, 34)
         Me.ExportDetails_btn.TabIndex = 30
@@ -3009,10 +3005,10 @@ Partial Class Store
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.log_lbl.BackColor = System.Drawing.Color.Transparent
         Me.log_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.log_lbl.Location = New System.Drawing.Point(13, 555)
+        Me.log_lbl.Location = New System.Drawing.Point(13, 552)
         Me.log_lbl.Name = "log_lbl"
         Me.log_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.log_lbl.Size = New System.Drawing.Size(902, 34)
+        Me.log_lbl.Size = New System.Drawing.Size(907, 34)
         Me.log_lbl.TabIndex = 29
         Me.log_lbl.Text = "Error\s happened. Press on 'Show errors' for details"
         Me.log_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -3028,7 +3024,7 @@ Partial Class Store
         Me.ShowErrors_btn.Image = Nothing
         Me.ShowErrors_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.ShowErrors_btn.LineSize = 1
-        Me.ShowErrors_btn.Location = New System.Drawing.Point(921, 555)
+        Me.ShowErrors_btn.Location = New System.Drawing.Point(926, 552)
         Me.ShowErrors_btn.Name = "ShowErrors_btn"
         Me.ShowErrors_btn.Size = New System.Drawing.Size(82, 34)
         Me.ShowErrors_btn.TabIndex = 28
@@ -3046,7 +3042,7 @@ Partial Class Store
         Me.ok_btn.Image = Nothing
         Me.ok_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.ok_btn.LineSize = 1
-        Me.ok_btn.Location = New System.Drawing.Point(1174, 555)
+        Me.ok_btn.Location = New System.Drawing.Point(1179, 552)
         Me.ok_btn.Name = "ok_btn"
         Me.ok_btn.Size = New System.Drawing.Size(59, 34)
         Me.ok_btn.TabIndex = 27
@@ -3066,7 +3062,7 @@ Partial Class Store
         Me.log.Location = New System.Drawing.Point(13, 61)
         Me.log.Name = "log"
         Me.log.ShowLines = False
-        Me.log.Size = New System.Drawing.Size(1220, 488)
+        Me.log.Size = New System.Drawing.Size(1220, 485)
         Me.log.TabIndex = 26
         '
         'XenonSeparator1

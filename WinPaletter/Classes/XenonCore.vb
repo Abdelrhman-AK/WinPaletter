@@ -827,25 +827,9 @@ Public Module FormDWMEffects
 
     <Extension()>
     Sub DrawAero(Form As Form, Margins As Padding)
-        Dim CompositionEnabled As Boolean
-        Try
-            Dwmapi.DwmIsCompositionEnabled(CompositionEnabled)
-        Catch
-            CompositionEnabled = False
-        End Try
-
-        If CompositionEnabled Then
-            If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
-            Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
-            Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, DWM_Margins)
-        Else
-            DrawBasic(Form, Margins)
-        End If
-
-    End Sub
-
-    Sub DrawBasic(Form As Form, Margins As Padding)
-
+        If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
+        Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
+        Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, DWM_Margins)
     End Sub
 
     <Extension()>
