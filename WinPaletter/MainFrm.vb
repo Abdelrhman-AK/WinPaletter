@@ -437,7 +437,7 @@ Public Class MainFrm
 
         ApplyDarkMode(Me)
         DoubleBuffer
-        UpdateLegends
+        UpdateLegends()
         ApplyColorsToElements(My.CP)
         ApplyStylesToElements(My.CP)
         ApplyCPValues(My.CP)
@@ -454,7 +454,6 @@ Public Class MainFrm
         Else
             status_lbl.Width = BetaBadge.Right - status_lbl.Left
         End If
-
     End Sub
 
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown

@@ -27,11 +27,6 @@ Partial Class Store
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
         Me.Titlebar_panel = New System.Windows.Forms.Panel()
         Me.search_panel = New System.Windows.Forms.Panel()
-        Me.search_btn = New WinPaletter.XenonButton()
-        Me.search_box = New WinPaletter.XenonTextBox()
-        Me.search_filter_btn = New WinPaletter.XenonButton()
-        Me.Titlebar_lbl = New WinPaletter.XenonLabel()
-        Me.back_btn = New WinPaletter.XenonButton()
         Me.Titlebar_img = New System.Windows.Forms.PictureBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Log_Timer = New System.Windows.Forms.Timer(Me.components)
@@ -175,6 +170,11 @@ Partial Class Store
         Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
         Me.log_header = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
+        Me.search_btn = New WinPaletter.XenonButton()
+        Me.search_box = New WinPaletter.XenonTextBox()
+        Me.search_filter_btn = New WinPaletter.XenonButton()
+        Me.Titlebar_lbl = New WinPaletter.XenonLabel()
+        Me.back_btn = New WinPaletter.XenonButton()
         Me.Titlebar_panel.SuspendLayout()
         Me.search_panel.SuspendLayout()
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -258,91 +258,6 @@ Partial Class Store
         Me.search_panel.Name = "search_panel"
         Me.search_panel.Size = New System.Drawing.Size(343, 30)
         Me.search_panel.TabIndex = 42
-        '
-        'search_btn
-        '
-        Me.search_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.search_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.search_btn.DrawOnGlass = True
-        Me.search_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.search_btn.ForeColor = System.Drawing.Color.White
-        Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
-        Me.search_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
-        Me.search_btn.LineSize = 1
-        Me.search_btn.Location = New System.Drawing.Point(308, 3)
-        Me.search_btn.Name = "search_btn"
-        Me.search_btn.Size = New System.Drawing.Size(32, 24)
-        Me.search_btn.TabIndex = 40
-        Me.search_btn.UseVisualStyleBackColor = False
-        '
-        'search_box
-        '
-        Me.search_box.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.search_box.DrawOnGlass = True
-        Me.search_box.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.search_box.Location = New System.Drawing.Point(3, 3)
-        Me.search_box.MaxLength = 32767
-        Me.search_box.Multiline = False
-        Me.search_box.Name = "search_box"
-        Me.search_box.ReadOnly = False
-        Me.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None
-        Me.search_box.SelectedText = ""
-        Me.search_box.SelectionLength = 0
-        Me.search_box.SelectionStart = 0
-        Me.search_box.Size = New System.Drawing.Size(261, 24)
-        Me.search_box.TabIndex = 39
-        Me.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.search_box.UseSystemPasswordChar = False
-        Me.search_box.WordWrap = True
-        '
-        'search_filter_btn
-        '
-        Me.search_filter_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.search_filter_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.search_filter_btn.DrawOnGlass = True
-        Me.search_filter_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.search_filter_btn.ForeColor = System.Drawing.Color.White
-        Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
-        Me.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.search_filter_btn.LineSize = 1
-        Me.search_filter_btn.Location = New System.Drawing.Point(270, 3)
-        Me.search_filter_btn.Name = "search_filter_btn"
-        Me.search_filter_btn.Size = New System.Drawing.Size(32, 24)
-        Me.search_filter_btn.TabIndex = 41
-        Me.search_filter_btn.UseVisualStyleBackColor = False
-        '
-        'Titlebar_lbl
-        '
-        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
-        Me.Titlebar_lbl.DrawOnGlass = True
-        Me.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 0)
-        Me.Titlebar_lbl.Name = "Titlebar_lbl"
-        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 64)
-        Me.Titlebar_lbl.TabIndex = 38
-        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
-        Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'back_btn
-        '
-        Me.back_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.back_btn.DrawOnGlass = True
-        Me.back_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.back_btn.ForeColor = System.Drawing.Color.White
-        Me.back_btn.Image = Nothing
-        Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
-        Me.back_btn.LineSize = 1
-        Me.back_btn.Location = New System.Drawing.Point(5, 0)
-        Me.back_btn.Name = "back_btn"
-        Me.back_btn.Size = New System.Drawing.Size(64, 64)
-        Me.back_btn.TabIndex = 36
-        Me.back_btn.UseVisualStyleBackColor = False
-        Me.back_btn.Visible = False
         '
         'Titlebar_img
         '
@@ -925,10 +840,10 @@ Partial Class Store
         '
         Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage7.Controls.Add(Me.pnl_preview_classic)
-        Me.TabPage7.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage7.Size = New System.Drawing.Size(520, 271)
         Me.TabPage7.TabIndex = 1
         Me.TabPage7.Text = "1"
         '
@@ -1105,10 +1020,10 @@ Partial Class Store
         '
         Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage4.Controls.Add(Me.ClassicColorsPreview)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage4.Size = New System.Drawing.Size(520, 271)
         Me.TabPage4.TabIndex = 2
         Me.TabPage4.Text = "2"
         '
@@ -1646,9 +1561,9 @@ Partial Class Store
         '
         Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage8.Controls.Add(Me.XenonCMD1)
-        Me.TabPage8.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage8.Size = New System.Drawing.Size(520, 271)
         Me.TabPage8.TabIndex = 3
         Me.TabPage8.Text = "3"
         '
@@ -1681,16 +1596,16 @@ Partial Class Store
         Me.XenonCMD1.PowerShell = False
         Me.XenonCMD1.Raster = True
         Me.XenonCMD1.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
-        Me.XenonCMD1.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD1.Size = New System.Drawing.Size(520, 271)
         Me.XenonCMD1.TabIndex = 1
         '
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage9.Controls.Add(Me.XenonCMD2)
-        Me.TabPage9.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage9.Location = New System.Drawing.Point(4, 22)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage9.Size = New System.Drawing.Size(520, 271)
         Me.TabPage9.TabIndex = 4
         Me.TabPage9.Text = "4"
         '
@@ -1723,16 +1638,16 @@ Partial Class Store
         Me.XenonCMD2.PowerShell = False
         Me.XenonCMD2.Raster = True
         Me.XenonCMD2.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
-        Me.XenonCMD2.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD2.Size = New System.Drawing.Size(520, 271)
         Me.XenonCMD2.TabIndex = 2
         '
         'TabPage10
         '
         Me.TabPage10.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage10.Controls.Add(Me.XenonCMD3)
-        Me.TabPage10.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage10.Size = New System.Drawing.Size(520, 271)
         Me.TabPage10.TabIndex = 5
         Me.TabPage10.Text = "5"
         '
@@ -1765,7 +1680,7 @@ Partial Class Store
         Me.XenonCMD3.PowerShell = False
         Me.XenonCMD3.Raster = True
         Me.XenonCMD3.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
-        Me.XenonCMD3.Size = New System.Drawing.Size(520, 269)
+        Me.XenonCMD3.Size = New System.Drawing.Size(520, 271)
         Me.XenonCMD3.TabIndex = 2
         '
         'TabPage11
@@ -1777,10 +1692,10 @@ Partial Class Store
         Me.TabPage11.Controls.Add(Me.PictureBox12)
         Me.TabPage11.Controls.Add(Me.Label17)
         Me.TabPage11.Controls.Add(Me.CursorsSize_Bar)
-        Me.TabPage11.Location = New System.Drawing.Point(4, 24)
+        Me.TabPage11.Location = New System.Drawing.Point(4, 22)
         Me.TabPage11.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage11.Name = "TabPage11"
-        Me.TabPage11.Size = New System.Drawing.Size(520, 269)
+        Me.TabPage11.Size = New System.Drawing.Size(520, 271)
         Me.TabPage11.TabIndex = 6
         Me.TabPage11.Text = "6"
         '
@@ -3099,6 +3014,91 @@ Partial Class Store
         Me.PictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox36.TabIndex = 23
         Me.PictureBox36.TabStop = False
+        '
+        'search_btn
+        '
+        Me.search_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_btn.DrawOnGlass = True
+        Me.search_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.search_btn.ForeColor = System.Drawing.Color.White
+        Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
+        Me.search_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
+        Me.search_btn.LineSize = 1
+        Me.search_btn.Location = New System.Drawing.Point(308, 3)
+        Me.search_btn.Name = "search_btn"
+        Me.search_btn.Size = New System.Drawing.Size(32, 24)
+        Me.search_btn.TabIndex = 40
+        Me.search_btn.UseVisualStyleBackColor = False
+        '
+        'search_box
+        '
+        Me.search_box.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_box.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.search_box.DrawOnGlass = True
+        Me.search_box.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.search_box.Location = New System.Drawing.Point(3, 3)
+        Me.search_box.MaxLength = 32767
+        Me.search_box.Multiline = False
+        Me.search_box.Name = "search_box"
+        Me.search_box.ReadOnly = False
+        Me.search_box.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.search_box.SelectedText = ""
+        Me.search_box.SelectionLength = 0
+        Me.search_box.SelectionStart = 0
+        Me.search_box.Size = New System.Drawing.Size(261, 24)
+        Me.search_box.TabIndex = 39
+        Me.search_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.search_box.UseSystemPasswordChar = False
+        Me.search_box.WordWrap = True
+        '
+        'search_filter_btn
+        '
+        Me.search_filter_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.search_filter_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.search_filter_btn.DrawOnGlass = True
+        Me.search_filter_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.search_filter_btn.ForeColor = System.Drawing.Color.White
+        Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
+        Me.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.search_filter_btn.LineSize = 1
+        Me.search_filter_btn.Location = New System.Drawing.Point(270, 3)
+        Me.search_filter_btn.Name = "search_filter_btn"
+        Me.search_filter_btn.Size = New System.Drawing.Size(32, 24)
+        Me.search_filter_btn.TabIndex = 41
+        Me.search_filter_btn.UseVisualStyleBackColor = False
+        '
+        'Titlebar_lbl
+        '
+        Me.Titlebar_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
+        Me.Titlebar_lbl.DrawOnGlass = True
+        Me.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 0)
+        Me.Titlebar_lbl.Name = "Titlebar_lbl"
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 64)
+        Me.Titlebar_lbl.TabIndex = 38
+        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
+        Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'back_btn
+        '
+        Me.back_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.back_btn.DrawOnGlass = True
+        Me.back_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.back_btn.ForeColor = System.Drawing.Color.White
+        Me.back_btn.Image = Nothing
+        Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+        Me.back_btn.LineSize = 1
+        Me.back_btn.Location = New System.Drawing.Point(5, 0)
+        Me.back_btn.Name = "back_btn"
+        Me.back_btn.Size = New System.Drawing.Size(64, 64)
+        Me.back_btn.TabIndex = 36
+        Me.back_btn.UseVisualStyleBackColor = False
+        Me.back_btn.Visible = False
         '
         'Store
         '

@@ -893,6 +893,14 @@ Public Class Store
 
                 With selectedItem
                     My.Animator.HideSync(Tabs)
+                    search_panel.Visible = False
+
+                    Titlebar_lbl.Text = .CP.Info.ThemeName & " - " & My.Lang.By & " " & .CP.Info.Author
+                    If CP.IsFontInstalled(.CP.MetricsFonts.CaptionFont.Name) Then
+                        Titlebar_lbl.Font = New Font(.CP.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
+                    Else
+                        Titlebar_lbl.Font = New Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
+                    End If
 
                     If .CP.AppTheme.Enabled Then
                         My.Settings.Appearance_Custom = .CP.AppTheme.Enabled
@@ -917,13 +925,6 @@ Public Class Store
                             If i.Prop_Cursor = CursorType.AppLoading Or i.Prop_Cursor = CursorType.Busy Then AnimateList.Add(i)
                         End If
                     Next
-
-                    Titlebar_lbl.Text = .CP.Info.ThemeName & " - " & My.Lang.By & " " & .CP.Info.Author
-                    If CP.IsFontInstalled(.CP.MetricsFonts.CaptionFont.Name) Then
-                        Titlebar_lbl.Font = New Font(.CP.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
-                    Else
-                        Titlebar_lbl.Font = New Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style)
-                    End If
 
                     theme_name_lbl.Text = .CP.Info.ThemeName
                     theme_ver_lbl.Text = .CP.Info.ThemeVersion
@@ -1039,6 +1040,8 @@ Public Class Store
             CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing))
             My.CP_Original = CPx.Clone
         End Using
+
+        UpdateExtendedTitlebar()
 
         Cursor = Cursors.Default
 
@@ -1215,6 +1218,7 @@ Public Class Store
 
         If CompositionEnabled Then
             Titlebar_lbl.DrawOnGlass = True
+            Titlebar_panel.BackColor = Color.Black
 
             If My.W11 Then
                 DrawMica(Pd)
@@ -1231,11 +1235,31 @@ Public Class Store
         Else
             If My.W7 OrElse My.WVista Then
                 Titlebar_lbl.DrawOnGlass = False
-                Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234)
+
+                If My.W7 Then
+                    If My.CP.Windows7.Theme <> Structures.Windows7.Themes.Classic Then
+                        Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234)
+                    Else
+                        Titlebar_panel.BackColor = My.CP.Win32.ButtonFace
+                    End If
+
+                ElseIf My.WVista Then
+                    If My.CP.WindowsVista.Theme <> Structures.Windows7.Themes.Classic Then
+                        Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234)
+                    Else
+                        Titlebar_panel.BackColor = My.CP.Win32.ButtonFace
+                    End If
+
+                End If
 
             ElseIf My.WXP Then
                 Titlebar_lbl.DrawOnGlass = False
-                Titlebar_panel.BackColor = Style.Colors.Back
+
+                If My.CP.WindowsXP.Theme <> Structures.WindowsXP.Themes.Classic Then
+                    Titlebar_panel.BackColor = Style.Colors.Back
+                Else
+                    Titlebar_panel.BackColor = My.CP.Win32.ButtonFace
+                End If
 
             Else
                 Titlebar_lbl.DrawOnGlass = True

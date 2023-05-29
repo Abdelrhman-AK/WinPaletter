@@ -45,7 +45,7 @@ Module XenonModule
 
                 G.SmoothingMode = SmoothingMode.AntiAlias
                 Using br = New SolidBrush(ForeColor)
-                    G.FillPath(br, gp)
+                    G.DrawString(Text, Font, br, Rect, FormatX)
                 End Using
 
             End Using
@@ -3249,7 +3249,7 @@ End Class
 
     Public Property DrawOnGlass As Boolean = False
 
-    Private ActiveTTLColor As Color = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(VisualStyles.ColorProperty.TextColor).Invert
+    Private ActiveTTLColor As Color
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
@@ -3258,6 +3258,12 @@ End Class
         G.TextRenderingHint = TextRenderingHint.SystemDefault
 
         MyBase.OnPaint(e)
+
+        Try
+            ActiveTTLColor = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active).GetColor(VisualStyles.ColorProperty.TextColor).Invert
+        Catch
+            ActiveTTLColor = SystemColors.ActiveCaptionText
+        End Try
 
         If Not DrawOnGlass Then
             If GetDarkMode() Then
@@ -7901,7 +7907,7 @@ Public Class XenonLabel : Inherits Label
         Else
             Dim outputHdc = e.Graphics.GetHdc()
             Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
-            NativeMethods.GDI32.BitBlt(outputHdc, 0, 0, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
+            NativeMethods.GDI32.BitBlt(outputHdc, 1, 1, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
             e.Graphics.ReleaseHdc(outputHdc)
         End If
     End Sub

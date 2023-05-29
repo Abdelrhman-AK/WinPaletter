@@ -692,8 +692,6 @@ Namespace My
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then
                     Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.wplng", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
-                    Debug.WriteLine(Lang.LngExported)
-                    Console.WriteLine(Lang.LngExported)
                     MsgBox(Lang.LngExported, MsgBoxStyle.Information)
                     Process.GetCurrentProcess.Kill()
                     Exit For
