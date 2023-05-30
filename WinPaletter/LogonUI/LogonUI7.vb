@@ -1,6 +1,7 @@
 ﻿Imports ImageProcessor
 Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
+Imports System.Windows.Shell
 
 Public Class LogonUI7
     Private _Shown As Boolean = False
@@ -180,7 +181,9 @@ Public Class LogonUI7
             End If
 
         ElseIf XenonRadioButton2.Checked Then
-            bmpX = My.Wallpaper_Unscaled.Clone
+            Using b As New Bitmap(My.Application.GetWallpaper)
+                bmpX = b.Clone
+            End Using
 
         ElseIf XenonRadioButton3.Checked Then
             bmpX = color_pick.BackColor.ToBitmap(My.Computer.Screen.Bounds.Size)

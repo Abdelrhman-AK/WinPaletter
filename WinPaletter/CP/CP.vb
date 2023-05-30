@@ -4607,16 +4607,14 @@ Start:
                 If IsValidJson(String.Join(vbCrLf, txt)) Then
 
                     'Replace %WinPaletterAppData% variable with a valid AppData folder path
-                    If Pack_IsValid Then
-                        For x = 0 To txt.Count - 1
-                            If txt(x).Contains(":") Then
-                                Dim arr As String() = txt(x).Split(":")
-                                If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
-                                    txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.Application.appData.Replace("\", "\\"))
-                                End If
+                    For x = 0 To txt.Count - 1
+                        If txt(x).Contains(":") Then
+                            Dim arr As String() = txt(x).Split(":")
+                            If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
+                                txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.Application.appData.Replace("\", "\\"))
                             End If
-                        Next
-                    End If
+                        End If
+                    Next
 
                     Dim J As JObject = JObject.Parse(String.Join(vbCrLf, txt))
 
@@ -5936,7 +5934,9 @@ Start:
                     bmpList.Add([LogonElement].Color.ToBitmap(My.Computer.Screen.Bounds.Size))
 
                 Case Structures.LogonUI7.Modes.Wallpaper
-                    bmpList.Add(My.Wallpaper_Unscaled.Clone)
+                    Using b As New Bitmap(My.Application.GetWallpaper)
+                        bmpList.Add(b.Clone)
+                    End Using
 
             End Select
 
@@ -5953,8 +5953,6 @@ Start:
                         imgF.GaussianBlur([LogonElement].Blur_Intensity)
                         bmpList(x) = imgF.Image
                     End Using
-
-
 
                 End If
 
@@ -6028,7 +6026,9 @@ Start:
                     bmp = LogonUI7.Color.ToBitmap(My.Computer.Screen.Bounds.Size)
 
                 Case Structures.LogonUI7.Modes.Wallpaper
-                    bmp = My.Wallpaper_Unscaled
+                    Using b As New Bitmap(My.Application.GetWallpaper)
+                        bmp = b.Clone
+                    End Using
 
             End Select
 
