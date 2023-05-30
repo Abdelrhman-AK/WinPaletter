@@ -2513,6 +2513,20 @@ Public Class MainFrm
         status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
 
+    Private Sub XenonButton38_Click(sender As Object, e As EventArgs) Handles XenonButton38.Click
+        'Copycat from Windows 11 colors
+        My.CP.Windows10 = My.CP.Windows11.Clone
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
+    End Sub
+
+    Private Sub XenonButton37_Click(sender As Object, e As EventArgs) Handles XenonButton37.Click
+        'Copycat from Windows 10 colors
+        My.CP.Windows11 = My.CP.Windows10.Clone
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
+    End Sub
+
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
