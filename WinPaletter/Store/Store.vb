@@ -1415,6 +1415,10 @@ Public Class Store
                 End If
 
             Else
+                If IO.File.Exists(Dir & "\" & FileName) Then
+                    Try : Kill(Dir & "\" & FileName) : Catch : End Try
+                End If
+
                 DoActionsAfterPackDownload()
             End If
         Else
