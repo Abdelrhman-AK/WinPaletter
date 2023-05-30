@@ -68,7 +68,7 @@ Public Class EditInfo
     End Sub
 
     Sub Save_Info(ByVal [CP] As CP)
-        [CP].Info.ThemeName = XenonTextBox1.Text
+        [CP].Info.ThemeName = String.Concat(XenonTextBox1.Text.Split(IO.Path.GetInvalidFileNameChars())).Trim
         [CP].Info.ThemeVersion = XenonTextBox2.Text
         [CP].Info.Description = XenonTextBox3.Text
         [CP].Info.Author = XenonTextBox4.Text
