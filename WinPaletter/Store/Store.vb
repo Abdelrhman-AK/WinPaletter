@@ -1043,6 +1043,7 @@ Public Class Store
         ApplyDarkMode(Nothing, True)
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
+            If selectedItem.DoneByWinPaletter Then CPx.Info.Author = My.Application.Info.CompanyName
             CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing))
             My.CP_Original = CPx.Clone
         End Using
@@ -1086,6 +1087,7 @@ Public Class Store
             Store_CPToggles.CP = selectedItem.CP
             If Store_CPToggles.ShowDialog() = DialogResult.OK Then
                 Apply_Theme()
+                If selectedItem.DoneByWinPaletter Then My.CP.Info.Author = My.Application.Info.CompanyName
                 My.CP = selectedItem.CP
                 My.CP_Original = My.CP.Clone
                 MainFrm.ApplyStylesToElements(My.CP, False)
@@ -1097,9 +1099,9 @@ Public Class Store
             'Edit button is pressed
             WindowState = FormWindowState.Minimized
             ComplexSave.GetResponse(MainFrm.SaveFileDialog1, Nothing, Nothing, Nothing)
-
             My.CP_Original = My.CP.Clone
             My.CP = New CP(CP_Type.File, selectedItem.FileName)
+            If selectedItem.DoneByWinPaletter Then My.CP.Info.Author = My.Application.Info.CompanyName
             MainFrm.ApplyStylesToElements(My.CP, False)
             MainFrm.ApplyCPValues(My.CP)
             MainFrm.ApplyColorsToElements(My.CP)

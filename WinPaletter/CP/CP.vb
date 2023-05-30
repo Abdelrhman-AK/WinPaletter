@@ -1578,7 +1578,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     ' Setting WallpaperStyle must be before setting wallpaper itself
-                    If WallpaperStyle = WallpaperStyle.Tile Then
+                    If WallpaperStyle = WallpaperStyles.Tile Then
                         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
                     Else
                         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
@@ -1586,18 +1586,28 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     If Not SkipSettingWallpaper Then
-                        If WallpaperType = WallpaperType.SolidColor Then
+                        If WallpaperType = WallpaperTypes.SolidColor Then
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, "", SPIF.UpdateINIFile)
                             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
 
-                        ElseIf WallpaperType = WallpaperType.Picture Then
+                        ElseIf WallpaperType = WallpaperTypes.Picture Then
+                            If My.WXP Or My.WVista Or My.W7 Then
+                                Using bmp As New Bitmap(Bitmap_Mgr.Load(ImageFile))
+                                    If bmp.RawFormat IsNot Imaging.ImageFormat.Bmp Then
+                                        If MsgBox(My.Lang.CP_Wallpaper_NonBMP0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.CP_Wallpaper_NonBMP1) = MsgBoxResult.Yes Then
+                                            bmp.Save(ImageFile, Imaging.ImageFormat.Bmp)
+                                        End If
+                                    End If
+                                End Using
+                            End If
+
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, SPIF.UpdateINIFile)
                             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String)
 
                             'Necessary to make both WinPaletter and Windows remember last wallpaper that is not from slideshow and not a spotlight image
                             EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String)
 
-                        ElseIf WallpaperType = WallpaperType.SlideShow Then
+                        ElseIf WallpaperType = WallpaperTypes.SlideShow Then
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, SPIF.UpdateINIFile)
                             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
 
@@ -1611,14 +1621,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If Not SkipSettingWallpaper Then
                             Using _ini As New INI(slideshow_ini)
 
-                                If WallpaperType = WallpaperType.SlideShow AndAlso SlideShow_Folder_or_ImagesList AndAlso IO.Directory.Exists(Wallpaper_Slideshow_ImagesRootPath) Then
+                                If WallpaperType = WallpaperTypes.SlideShow AndAlso SlideShow_Folder_or_ImagesList AndAlso IO.Directory.Exists(Wallpaper_Slideshow_ImagesRootPath) Then
                                     _ini.IniWriteValue("Slideshow", "ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath)
                                 End If
 
                                 _ini.IniWriteValue("Slideshow", "Interval", Wallpaper_Slideshow_Interval)
                                 _ini.IniWriteValue("Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
 
-                                If WallpaperType = WallpaperType.SlideShow AndAlso Not SlideShow_Folder_or_ImagesList Then
+                                If WallpaperType = WallpaperTypes.SlideShow AndAlso Not SlideShow_Folder_or_ImagesList Then
                                     If IO.Directory.Exists(Wallpaper_Slideshow_Images(0)) Then
                                         _ini.IniWriteValue("Slideshow", "ImagesRootPath", New FileInfo(Wallpaper_Slideshow_Images(0)).Directory.FullName)
                                     End If
@@ -4691,6 +4701,11 @@ Start:
                             AppTheme.Apply()
                         End Sub, [TreeView], My.Lang.CP_Applying_AppTheme, My.Lang.CP_Error_AppTheme, My.Lang.CP_Time, sw_all, Not AppTheme.Enabled, My.Lang.CP_Skip_AppTheme, True)
 
+                'Wallpaper
+                'Make Wallpaper before the following LogonUI items, to make if a logonUI that depends on current wallpaper gets the correct file
+                Execute(CType(Sub()
+                                  Wallpaper.Apply()
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper, True)
 
                 If My.W11 Then
                     Execute(CType(Sub()
@@ -4770,11 +4785,6 @@ Start:
                 Execute(CType(Sub()
                                   AltTab.Apply()
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_AltTab, My.Lang.CP_Error_AltTab, My.Lang.CP_Time, sw_all, Not AltTab.Enabled, My.Lang.CP_Skip_AltTab, True)
-
-                'Wallpaper
-                Execute(CType(Sub()
-                                  Wallpaper.Apply()
-                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper, True)
 
                 'WallpaperTone
                 Execute(CType(Sub()

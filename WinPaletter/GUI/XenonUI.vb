@@ -7902,14 +7902,19 @@ Public Class XenonLabel : Inherits Label
         e.Graphics.TextRenderingHint = My.RenderingHint
         e.Graphics.FillRectangle(New SolidBrush(BackColor), New Rectangle(0, 0, Width, Height))
 
-        If DesignMode OrElse Not DrawOnGlass Then
+        Try
+            If DesignMode OrElse Not DrawOnGlass Then
+                e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
+            Else
+                Dim outputHdc = e.Graphics.GetHdc()
+                Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
+                NativeMethods.GDI32.BitBlt(outputHdc, 1, 1, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
+                e.Graphics.ReleaseHdc(outputHdc)
+            End If
+        Catch
             e.Graphics.DrawString(Text, Font, New SolidBrush(ForeColor), New Rectangle(0, 0, Width, Height), StringAligner(TextAlign))
-        Else
-            Dim outputHdc = e.Graphics.GetHdc()
-            Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
-            NativeMethods.GDI32.BitBlt(outputHdc, 1, 1, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
-            e.Graphics.ReleaseHdc(outputHdc)
-        End If
+        End Try
+
     End Sub
 
     Private Function PrepareHdc(outputHdc As IntPtr, width As Integer, height As Integer) As IntPtr
@@ -7948,7 +7953,6 @@ Public Class XenonLabel : Inherits Label
         'Draw
         ActiveTitlebarRenderer = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active)
         Dim result As Integer = NativeMethods.UxTheme.DrawThemeTextEx(ActiveTitlebarRenderer.Handle, _textHdc, 0, 0, Text, -1, ReturnFormatFlags, Rectangle, Options)
-        If result <> 0 Then Runtime.InteropServices.Marshal.ThrowExceptionForHR(result)
 
         NativeMethods.GDI32.DeleteObject(hFont)
 
