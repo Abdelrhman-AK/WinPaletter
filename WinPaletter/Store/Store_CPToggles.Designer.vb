@@ -47,6 +47,7 @@ Partial Class Store_CPToggles
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = Nothing
@@ -56,13 +57,14 @@ Partial Class Store_CPToggles
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton1.TabIndex = 1
-        Me.XenonButton1.Text = "Proceed with selections above"
+        Me.XenonButton1.Text = "Proceed with current selections"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonButton7
         '
         Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton7.DrawOnGlass = False
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = Nothing
@@ -72,7 +74,7 @@ Partial Class Store_CPToggles
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton7.TabIndex = 205
-        Me.XenonButton7.Text = "Proceed without modifications"
+        Me.XenonButton7.Text = "Proceed (with all are selected)"
         Me.XenonButton7.UseVisualStyleBackColor = False
         '
         'Label17
@@ -85,8 +87,8 @@ Partial Class Store_CPToggles
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(525, 35)
         Me.Label17.TabIndex = 207
-        Me.Label17.Text = "To prevent accidental actions, this theme enables editing the following (in addit" &
-    "ion to main Windows colors):"
+        Me.Label17.Text = "To prevent accidental actions, these features will be modified (in addition to ma" &
+    "in Windows colors):"
         '
         'PictureBox6
         '
@@ -102,6 +104,7 @@ Partial Class Store_CPToggles
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
@@ -119,7 +122,7 @@ Partial Class Store_CPToggles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(579, 361)
+        Me.ClientSize = New System.Drawing.Size(575, 357)
         Me.ControlBox = False
         Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.Label17)

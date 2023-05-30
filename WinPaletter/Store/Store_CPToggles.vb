@@ -9,21 +9,21 @@ Public Class Store_CPToggles
 
         CheckedListBox1.Items.Clear()
 
-        If CP.LogonUI7.Enabled And (My.W7 Or My.W8) Then CheckedListBox1.Items.Add("LogonUI screen", True)
-        If CP.LogonUIXP.Enabled And My.WXP Then CheckedListBox1.Items.Add("LogonUI screen", True)
-
-        If CP.Cursor_Enabled Then CheckedListBox1.Items.Add("Cursors", True)
-        If CP.CommandPrompt.Enabled Then CheckedListBox1.Items.Add("Command Prompt", True)
-        If CP.PowerShellx86.Enabled Then CheckedListBox1.Items.Add("PowerShell x86", True)
-        If CP.PowerShellx64.Enabled Then CheckedListBox1.Items.Add("PowerShell x64", True)
-        If CP.Terminal.Enabled Then CheckedListBox1.Items.Add("Windows Terminal Stable", True)
-        If CP.TerminalPreview.Enabled Then CheckedListBox1.Items.Add("Windows Terminal Preview", True)
-        If CP.MetricsFonts.Enabled Then CheckedListBox1.Items.Add("Metrics & Fonts", True)
-        If CP.WindowsEffects.Enabled Then CheckedListBox1.Items.Add("Windows Effects", True)
-        If CP.AltTab.Enabled Then CheckedListBox1.Items.Add("Windows Switcher (Alt+Tab appearance)", True)
-        If CP.Wallpaper.Enabled Then CheckedListBox1.Items.Add("Wallpaper", True)
-        If CP.Sounds.Enabled Then CheckedListBox1.Items.Add("Sounds", True)
-        If CP.ScreenSaver.Enabled Then CheckedListBox1.Items.Add("Screen Saver", True)
+        If CP.AppTheme.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_AppTheme, True)
+        If CP.LogonUI7.Enabled And (My.W7 Or My.W8) Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_LogonUI, True)
+        If CP.LogonUIXP.Enabled And My.WXP Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_LogonUI, True)
+        If CP.Cursor_Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_Cursors, True)
+        If CP.Wallpaper.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_Wallpaper, True)
+        If CP.Sounds.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_Sounds, True)
+        If CP.ScreenSaver.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_ScreenSaver, True)
+        If CP.MetricsFonts.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_MetricsFonts, True)
+        If CP.CommandPrompt.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_CMD, True)
+        If CP.PowerShellx86.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_PS86, True)
+        If CP.PowerShellx64.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_PS64, True)
+        If CP.Terminal.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_TerminalStable, True)
+        If CP.TerminalPreview.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_TerminalPreview, True)
+        If CP.WindowsEffects.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_WindowsEffects, True)
+        If CP.AltTab.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_AltTab, True)
 
         If CheckedListBox1.Items.Count = 0 Then Close()
         Opacity = 1
@@ -33,8 +33,9 @@ Public Class Store_CPToggles
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         For i = 0 To CheckedListBox1.Items.Count - 1
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_AppTheme Then CP.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i)
 
-            If CheckedListBox1.Items.Item(i) = "LogonUI screen" Then
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_LogonUI Then
                 If My.W7 Or My.W8 Then
                     CP.LogonUI7.Enabled = CheckedListBox1.GetItemChecked(i)
                 ElseIf My.WXP Then
@@ -42,39 +43,16 @@ Public Class Store_CPToggles
                 End If
             End If
 
-            If CheckedListBox1.Items.Item(i) = "Cursors" Then CP.Cursor_Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "Command Prompt" Then CP.CommandPrompt.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "PowerShell x86" Then CP.PowerShellx86.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "PowerShell x64" Then CP.PowerShellx64.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "Windows Terminal Stable" Then CP.Terminal.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "Windows Terminal Preview" Then CP.TerminalPreview.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "Metrics & Fonts" Then CP.MetricsFonts.Enabled = CheckedListBox1.GetItemChecked(i)
-
-            If CheckedListBox1.Items.Item(i) = "Wallpaper Tone" Then
-                If My.W11 Then
-                    CP.WallpaperTone_W11.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                ElseIf My.W10 Then
-                    CP.WallpaperTone_W10.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                ElseIf My.W8 Then
-                    CP.WallpaperTone_W8.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                ElseIf My.W7 Then
-                    CP.WallpaperTone_W7.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                ElseIf My.WVista Then
-                    CP.WallpaperTone_WVista.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                ElseIf My.WXP Then
-                    CP.WallpaperTone_WXP.Enabled = CheckedListBox1.GetItemChecked(i)
-
-                End If
-            End If
-
-            If CheckedListBox1.Items.Item(i) = "Windows Effects" Then CP.WindowsEffects.Enabled = CheckedListBox1.GetItemChecked(i)
-            If CheckedListBox1.Items.Item(i) = "Windows Switcher (Alt+Tab appearance)" Then CP.AltTab.Enabled = CheckedListBox1.GetItemChecked(i)
-
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_Cursors Then CP.Cursor_Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_CMD Then CP.CommandPrompt.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_PS86 Then CP.PowerShellx86.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_PS64 Then CP.PowerShellx64.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_TerminalStable Then CP.Terminal.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_TerminalPreview Then CP.TerminalPreview.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_MetricsFonts Then CP.MetricsFonts.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_Wallpaper Then CP.Wallpaper.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_WindowsEffects Then CP.WindowsEffects.Enabled = CheckedListBox1.GetItemChecked(i)
+            If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_AltTab Then CP.AltTab.Enabled = CheckedListBox1.GetItemChecked(i)
         Next
 
         Store.selectedItem.CP = CP

@@ -6209,6 +6209,7 @@ Partial Class MainFrm
         Me.Controls.Add(Me.XenonGroupBox3)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ForeColor = System.Drawing.Color.White
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MinimumSize = New System.Drawing.Size(1110, 728)
         Me.Name = "MainFrm"
