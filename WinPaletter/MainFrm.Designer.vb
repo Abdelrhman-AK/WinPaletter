@@ -894,6 +894,7 @@ Partial Class MainFrm
         '
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label8.DrawOnGlass = False
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
@@ -906,6 +907,7 @@ Partial Class MainFrm
         '
         Me.setting_icon_preview.BackColor = System.Drawing.Color.Transparent
         Me.setting_icon_preview.Dock = System.Windows.Forms.DockStyle.Top
+        Me.setting_icon_preview.DrawOnGlass = False
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
@@ -918,6 +920,7 @@ Partial Class MainFrm
         '
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lnk_preview.DrawOnGlass = False
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
         Me.lnk_preview.Location = New System.Drawing.Point(4, 118)
@@ -5962,7 +5965,7 @@ Partial Class MainFrm
         Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton26.ForeColor = System.Drawing.Color.White
         Me.XenonButton26.Image = CType(resources.GetObject("XenonButton26.Image"), System.Drawing.Image)
-        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(63, Byte), Integer), CType(CType(101, Byte), Integer), CType(CType(130, Byte), Integer))
+        Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(113, Byte), Integer))
         Me.XenonButton26.LineSize = 1
         Me.XenonButton26.Location = New System.Drawing.Point(77, 3)
         Me.XenonButton26.Name = "XenonButton26"

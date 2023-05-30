@@ -43,7 +43,6 @@ Public Class SettingsX
 
             XenonComboBox2.SelectedIndex = If(.UpdateChannel = XeSettings.UpdateChannels.Stable, 0, 1)
             XenonCheckBox17.Checked = .ShowSaveConfirmation
-            XenonCheckBox31.Checked = .AlwaysExportThemePack
             XenonCheckBox33.Checked = .CompressThemeFile
 
             XenonRadioButton3.Checked = .Appearance_Dark
@@ -258,7 +257,6 @@ Public Class SettingsX
             .Appearance_ManagedByTheme = XenonCheckBox30.Checked
 
             .ShowSaveConfirmation = XenonCheckBox17.Checked
-            .AlwaysExportThemePack = XenonCheckBox31.Checked
             .CompressThemeFile = XenonCheckBox33.Checked
 
             .Language = XenonCheckBox8.Checked
@@ -330,7 +328,6 @@ Public Class SettingsX
             If .UpdateChannel <> XenonComboBox2.SelectedIndex Then Changed = True
             If .Win7LivePreview <> XenonCheckBox9.Checked Then Changed = True
             If .ShowSaveConfirmation <> XenonCheckBox17.Checked Then Changed = True
-            If .AlwaysExportThemePack <> XenonCheckBox31.Checked Then Changed = True
             If .CompressThemeFile <> XenonCheckBox33.Checked Then Changed = True
 
             If .Appearance_Dark <> XenonRadioButton3.Checked Then Changed = True

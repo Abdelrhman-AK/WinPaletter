@@ -110,6 +110,7 @@ Partial Class Store_Intro
         'XenonButton2
         '
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -125,6 +126,7 @@ Partial Class Store_Intro
         'XenonButton1
         '
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = Nothing
@@ -142,8 +144,8 @@ Partial Class Store_Intro
         Me.TablessControl1.Controls.Add(Me.TabPage1)
         Me.TablessControl1.Controls.Add(Me.TabPage2)
         Me.TablessControl1.Controls.Add(Me.TabPage4)
-        Me.TablessControl1.Controls.Add(Me.TabPage3)
         Me.TablessControl1.Controls.Add(Me.TabPage7)
+        Me.TablessControl1.Controls.Add(Me.TabPage3)
         Me.TablessControl1.Controls.Add(Me.TabPage5)
         Me.TablessControl1.Controls.Add(Me.TabPage6)
         Me.TablessControl1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -205,11 +207,11 @@ Partial Class Store_Intro
         '
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(176, 187)
+        Me.Label1.Location = New System.Drawing.Point(149, 187)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(301, 40)
+        Me.Label1.Size = New System.Drawing.Size(355, 40)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Welcome to WinPaletter Store"
+        Me.Label1.Text = "Welcome to WinPaletter Store (Beta)"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage2
@@ -226,25 +228,25 @@ Partial Class Store_Intro
         '
         'Label4
         '
-        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(29, 65)
+        Me.Label4.Location = New System.Drawing.Point(0, 40)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(614, 104)
+        Me.Label4.Padding = New System.Windows.Forms.Padding(20, 10, 0, 0)
+        Me.Label4.Size = New System.Drawing.Size(652, 144)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = resources.GetString("Label4.Text")
         '
         'Label3
         '
-        Me.Label3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(8, 11)
+        Me.Label3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.Label3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 12.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(0, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(635, 40)
+        Me.Label3.Padding = New System.Windows.Forms.Padding(5, 5, 0, 0)
+        Me.Label3.Size = New System.Drawing.Size(652, 40)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "There are two ways for WinPaletter Store"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -276,11 +278,11 @@ Partial Class Store_Intro
         '
         'PictureBox4
         '
-        Me.PictureBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox4.Dock = System.Windows.Forms.DockStyle.Right
         Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(505, 167)
+        Me.PictureBox4.Location = New System.Drawing.Point(455, 103)
         Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(139, 127)
+        Me.PictureBox4.Size = New System.Drawing.Size(197, 199)
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox4.TabIndex = 9
         Me.PictureBox4.TabStop = False
@@ -288,12 +290,13 @@ Partial Class Store_Intro
         'XenonButton4
         '
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(33, 116)
+        Me.XenonButton4.Location = New System.Drawing.Point(25, 105)
         Me.XenonButton4.Name = "XenonButton4"
         Me.XenonButton4.Size = New System.Drawing.Size(157, 33)
         Me.XenonButton4.TabIndex = 8
@@ -302,26 +305,26 @@ Partial Class Store_Intro
         '
         'Label7
         '
-        Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.BackColor = System.Drawing.Color.Transparent
+        Me.Label7.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(29, 65)
+        Me.Label7.Location = New System.Drawing.Point(0, 40)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(620, 48)
+        Me.Label7.Padding = New System.Windows.Forms.Padding(20, 10, 0, 0)
+        Me.Label7.Size = New System.Drawing.Size(652, 63)
         Me.Label7.TabIndex = 7
         Me.Label7.Text = "Visit this documentation to know how to upload your themes to WinPaletter Store G" &
     "itHub repository"
         '
         'Label8
         '
-        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(8, 11)
+        Me.Label8.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.Label8.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 12.75!, System.Drawing.FontStyle.Bold)
+        Me.Label8.Location = New System.Drawing.Point(0, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(636, 40)
+        Me.Label8.Padding = New System.Windows.Forms.Padding(5, 5, 0, 0)
+        Me.Label8.Size = New System.Drawing.Size(652, 40)
         Me.Label8.TabIndex = 6
         Me.Label8.Text = "You can upload your themes to WinPaletter Store repository"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -329,25 +332,26 @@ Partial Class Store_Intro
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.PictureBox3)
         Me.TabPage3.Controls.Add(Me.XenonButton3)
         Me.TabPage3.Controls.Add(Me.Label5)
         Me.TabPage3.Controls.Add(Me.Label6)
-        Me.TabPage3.Controls.Add(Me.PictureBox3)
         Me.TabPage3.Location = New System.Drawing.Point(4, 24)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(652, 302)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "3"
+        Me.TabPage3.Text = "4"
         '
         'XenonButton3
         '
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(33, 92)
+        Me.XenonButton3.Location = New System.Drawing.Point(25, 105)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(157, 33)
         Me.XenonButton3.TabIndex = 6
@@ -356,37 +360,37 @@ Partial Class Store_Intro
         '
         'Label5
         '
-        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.BackColor = System.Drawing.Color.Transparent
+        Me.Label5.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(29, 65)
+        Me.Label5.Location = New System.Drawing.Point(0, 40)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(620, 24)
+        Me.Label5.Padding = New System.Windows.Forms.Padding(20, 10, 0, 0)
+        Me.Label5.Size = New System.Drawing.Size(652, 55)
         Me.Label5.TabIndex = 5
-        Me.Label5.Text = "Visit this documentation to know more about Store server\GitHub repository creati" &
-    "on."
+        Me.Label5.Text = "This is an optional feature. Visit this documentation to know more about Store se" &
+    "rver\GitHub repository creation."
         '
         'Label6
         '
-        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(8, 11)
+        Me.Label6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.Label6.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 12.75!, System.Drawing.FontStyle.Bold)
+        Me.Label6.Location = New System.Drawing.Point(0, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(636, 40)
+        Me.Label6.Padding = New System.Windows.Forms.Padding(5, 5, 0, 0)
+        Me.Label6.Size = New System.Drawing.Size(652, 40)
         Me.Label6.TabIndex = 4
         Me.Label6.Text = "You can create your own WinPaletter Store online source!"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox3
         '
-        Me.PictureBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox3.Dock = System.Windows.Forms.DockStyle.Right
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(517, 167)
+        Me.PictureBox3.Location = New System.Drawing.Point(455, 95)
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(127, 127)
+        Me.PictureBox3.Size = New System.Drawing.Size(197, 207)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox3.TabIndex = 0
         Me.PictureBox3.TabStop = False
@@ -394,23 +398,23 @@ Partial Class Store_Intro
         'TabPage7
         '
         Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage7.Controls.Add(Me.PictureBox6)
         Me.TabPage7.Controls.Add(Me.XenonButton5)
         Me.TabPage7.Controls.Add(Me.Label14)
+        Me.TabPage7.Controls.Add(Me.PictureBox6)
         Me.TabPage7.Controls.Add(Me.Label15)
         Me.TabPage7.Location = New System.Drawing.Point(4, 24)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Size = New System.Drawing.Size(652, 302)
         Me.TabPage7.TabIndex = 6
-        Me.TabPage7.Text = "4"
+        Me.TabPage7.Text = "3"
         '
         'PictureBox6
         '
-        Me.PictureBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox6.Dock = System.Windows.Forms.DockStyle.Right
         Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(414, 64)
+        Me.PictureBox6.Location = New System.Drawing.Point(394, 40)
         Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(235, 235)
+        Me.PictureBox6.Size = New System.Drawing.Size(258, 262)
         Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox6.TabIndex = 11
         Me.PictureBox6.TabStop = False
@@ -418,12 +422,13 @@ Partial Class Store_Intro
         'XenonButton5
         '
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = Nothing
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(33, 134)
+        Me.XenonButton5.Location = New System.Drawing.Point(25, 145)
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(157, 33)
         Me.XenonButton5.TabIndex = 10
@@ -432,25 +437,27 @@ Partial Class Store_Intro
         '
         'Label14
         '
-        Me.Label14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.BackColor = System.Drawing.Color.Transparent
+        Me.Label14.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(29, 79)
+        Me.Label14.Location = New System.Drawing.Point(0, 40)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(379, 52)
+        Me.Label14.Padding = New System.Windows.Forms.Padding(20, 10, 0, 0)
+        Me.Label14.Size = New System.Drawing.Size(394, 98)
         Me.Label14.TabIndex = 9
-        Me.Label14.Text = "Visit this documentation to know more about Store source extension"
+        Me.Label14.Text = "You can add links of servers\GitHub repositories to get more themes through WinPa" &
+    "letter Store. Visit this documentation to know more about Store source extension" &
+    ""
         '
         'Label15
         '
-        Me.Label15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label15.BackColor = System.Drawing.Color.Transparent
-        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(8, 11)
+        Me.Label15.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.Label15.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 12.75!, System.Drawing.FontStyle.Bold)
+        Me.Label15.Location = New System.Drawing.Point(0, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(636, 60)
+        Me.Label15.Padding = New System.Windows.Forms.Padding(5, 5, 0, 0)
+        Me.Label15.Size = New System.Drawing.Size(652, 40)
         Me.Label15.TabIndex = 8
         Me.Label15.Text = "You can extend the sources from which WinPaletter Store can get themes!"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -474,7 +481,7 @@ Partial Class Store_Intro
         Me.StoreItem1.DoneByWinPaletter = False
         Me.StoreItem1.FileName = Nothing
         Me.StoreItem1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.StoreItem1.Location = New System.Drawing.Point(327, 54)
+        Me.StoreItem1.Location = New System.Drawing.Point(327, 80)
         Me.StoreItem1.MD5_PackFile = Nothing
         Me.StoreItem1.MD5_ThemeFile = Nothing
         Me.StoreItem1.Name = "StoreItem1"
@@ -485,25 +492,25 @@ Partial Class Store_Intro
         '
         'Label9
         '
-        Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(29, 54)
+        Me.Label9.Location = New System.Drawing.Point(0, 40)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(292, 232)
+        Me.Label9.Padding = New System.Windows.Forms.Padding(20, 10, 0, 0)
+        Me.Label9.Size = New System.Drawing.Size(321, 262)
         Me.Label9.TabIndex = 9
         Me.Label9.Text = resources.GetString("Label9.Text")
         '
         'Label10
         '
-        Me.Label10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(8, 11)
+        Me.Label10.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(100, Byte), Integer))
+        Me.Label10.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label10.Font = New System.Drawing.Font("Segoe UI", 12.75!, System.Drawing.FontStyle.Bold)
+        Me.Label10.Location = New System.Drawing.Point(0, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(636, 40)
+        Me.Label10.Padding = New System.Windows.Forms.Padding(5, 5, 0, 0)
+        Me.Label10.Size = New System.Drawing.Size(652, 40)
         Me.Label10.TabIndex = 8
         Me.Label10.Text = "Store main page contains items that looks like this:"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -539,7 +546,7 @@ Partial Class Store_Intro
         '
         Me.Label13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label13.BackColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(8, 247)

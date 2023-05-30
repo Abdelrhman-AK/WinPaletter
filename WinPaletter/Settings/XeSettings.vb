@@ -17,7 +17,6 @@ Public Class XeSettings
     Public Property ComplexSaveResult As String = "2.1"
     Public Property ShowSaveConfirmation As Boolean = True
     Public Property CompressThemeFile As Boolean = True
-    Public Property AlwaysExportThemePack As Boolean = False
     Public Property Win7LivePreview As Boolean = True
     Public Property UpdateChannel As UpdateChannels = If(My.IsBeta, UpdateChannels.Beta, UpdateChannels.Stable)
 
@@ -134,7 +133,6 @@ Public Class XeSettings
                 AutoAddExt = GetReg(REG, "AutoAddExt", True)
                 DragAndDropPreview = GetReg(REG, "DragAndDropPreview", True)
                 OpeningPreviewInApp_or_AppliesIt = GetReg(REG, "OpeningPreviewInApp_or_AppliesIt", True)
-                AlwaysExportThemePack = GetReg(REG, "AlwaysExportThemePack", False)
                 CompressThemeFile = GetReg(REG, "CompressThemeFile", True)
 
                 AutoRestartExplorer = GetReg(REG, "AutoRestartExplorer", True)
@@ -214,7 +212,6 @@ Public Class XeSettings
                     If x.StartsWith("AutoAddExt= ", My._ignore) Then AutoAddExt = x.Remove(0, "AutoAddExt= ".Count)
                     If x.StartsWith("DragAndDropPreview= ", My._ignore) Then DragAndDropPreview = x.Remove(0, "DragAndDropPreview= ".Count)
                     If x.StartsWith("OpeningPreviewInApp_or_AppliesIt= ", My._ignore) Then OpeningPreviewInApp_or_AppliesIt = x.Remove(0, "OpeningPreviewInApp_or_AppliesIt= ".Count)
-                    If x.StartsWith("AlwaysExportThemePack= ", My._ignore) Then AlwaysExportThemePack = x.Remove(0, "AlwaysExportThemePack= ".Count)
                     If x.StartsWith("CompressThemeFile= ", My._ignore) Then CompressThemeFile = x.Remove(0, "CompressThemeFile= ".Count)
 
                     If x.StartsWith("AutoRestartExplorer= ", My._ignore) Then AutoRestartExplorer = x.Remove(0, "AutoRestartExplorer= ".Count)
@@ -317,7 +314,6 @@ Public Class XeSettings
                 EditReg(REG, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
                 EditReg(REG, "DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
                 EditReg(REG, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
-                EditReg(REG, "AlwaysExportThemePack", AlwaysExportThemePack, RegistryValueKind.DWord)
                 EditReg(REG, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord)
 
                 EditReg(REG, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord)
@@ -401,7 +397,6 @@ Public Class XeSettings
                 l.Add(String.Format("AutoAddExt= {0}", AutoAddExt))
                 l.Add(String.Format("DragAndDropPreview= {0}", DragAndDropPreview))
                 l.Add(String.Format("OpeningPreviewInApp_or_AppliesIt= {0}", OpeningPreviewInApp_or_AppliesIt))
-                l.Add(String.Format("AlwaysExportThemePack= {0}", AlwaysExportThemePack))
                 l.Add(String.Format("CompressThemeFile= {0}", CompressThemeFile))
 
                 l.Add(String.Format("AutoRestartExplorer= {0}", AutoRestartExplorer))

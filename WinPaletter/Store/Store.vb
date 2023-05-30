@@ -950,9 +950,10 @@ Public Class Store
                     desc_txt.Text = .CP.Info.Description
 
                     If My.Application.Info.Version.ToString >= .CP.Info.AppVersion Then
-                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_AppVersionAlert1, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
+                        XenonGroupBox4.Visible = False
                     Else
-                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_AppVersionAlert0, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
+                        XenonGroupBox4.Visible = True
+                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_LowAppVersionAlert, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
                     End If
 
                     Dim os_list As New List(Of String)
@@ -977,6 +978,11 @@ Public Class Store
                         os_format &= os_list(os_list.Count - 2) & " && " & os_list(os_list.Count - 1)
                     End If
                     SupportedOS_lbl.Text = os_format
+                    If os_list.Count < 6 Then
+                        Label26.Text = My.Lang.Store_ThemeDesignedFor0
+                    Else
+                        Label26.Text = My.Lang.Store_ThemeDesignedFor1
+                    End If
 
                     Tabs.SelectedIndex = 1
 

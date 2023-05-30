@@ -53,6 +53,7 @@ Public Class EditInfo
         XenonTextBox4.Text = [CP].Info.Author
         XenonTextBox5.Text = [CP].Info.AuthorSocialMediaLink
         XenonTextBox6.Text = [CP].Info.License
+        XenonCheckBox7.Checked = [CP].Info.ExportResThemePack
 
         color1.BackColor = [CP].Info.Color1
         color2.BackColor = [CP].Info.Color2
@@ -73,6 +74,7 @@ Public Class EditInfo
         [CP].Info.Author = XenonTextBox4.Text
         [CP].Info.AuthorSocialMediaLink = XenonTextBox5.Text
         [CP].Info.License = XenonTextBox6.Text
+        [CP].Info.ExportResThemePack = XenonCheckBox7.Checked
 
         [CP].Info.Color1 = color1.BackColor
         [CP].Info.Color2 = color2.BackColor

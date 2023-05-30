@@ -64,4 +64,5 @@ Public Class Store_Intro
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         Process.Start(My.Resources.Link_StoreSourcesExtension)
     End Sub
+
 End Class

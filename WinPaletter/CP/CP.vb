@@ -55,6 +55,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public AppVersion As String
             Public ThemeName As String
             Public Description As String
+            Public ExportResThemePack As Boolean
             Public License As String
             Public ThemeVersion As String
             Public Author As String
@@ -87,8 +88,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 AuthorSocialMediaLink = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "")
                 AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString)
                 Description = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "")
+                ExportResThemePack = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", False)
                 License = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", "")
-
                 Dim y As Object = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color.FromArgb(0, 102, 204).ToArgb)
                 Color1 = Color.FromArgb(y)
 
@@ -111,6 +112,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", ExportResThemePack, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String)
 
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb, RegistryValueKind.DWord)
@@ -3079,6 +3081,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .AppVersion = My.Application.Info.Version.ToString,
             .ThemeName = My.Lang.CurrentMode,
             .Description = "",
+            .ExportResThemePack = False,
             .License = "",
             .ThemeVersion = "1.0.0.0",
             .Author = Environment.UserName,
@@ -4985,7 +4988,7 @@ Start:
                     Try : Kill(File) : Catch : End Try
                 End If
 
-                If My.Settings.AlwaysExportThemePack Then
+                If Info.ExportResThemePack Then
                     PackThemeResources(Me, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
                 Else
                     IO.File.WriteAllText(File, ToString)
