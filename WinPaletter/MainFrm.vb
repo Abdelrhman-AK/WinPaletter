@@ -71,8 +71,8 @@ Public Class MainFrm
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
         W11_Transparency_Toggle.Checked = [CP].Windows11.Transparency
-        W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows11.ApplyAccentonTitlebars
-        Select Case [CP].Windows11.ApplyAccentonTaskbar
+        W11_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows11.ApplyAccentOnTitlebars
+        Select Case [CP].Windows11.ApplyAccentOnTaskbar
             Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                 W11_Accent_None.Checked = True
 
@@ -100,8 +100,8 @@ Public Class MainFrm
         W10_Transparency_Toggle.Checked = [CP].Windows10.Transparency
         W10_TBTransparency_Toggle.Checked = [CP].Windows10.IncreaseTBTransparency
         W10_TB_Blur.Checked = [CP].Windows10.TB_Blur
-        W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentonTitlebars
-        Select Case [CP].Windows10.ApplyAccentonTaskbar
+        W10_ShowAccentOnTitlebarAndBorders_Toggle.Checked = [CP].Windows10.ApplyAccentOnTitlebars
+        Select Case [CP].Windows10.ApplyAccentOnTaskbar
             Case CP.Structures.Windows10x.AccentTaskbarLevels.None
                 W10_Accent_None.Checked = True
 
@@ -2358,7 +2358,7 @@ Public Class MainFrm
         My.Animator.HideSync(TablessControl1, True)
         My.Animator.HideSync(tabs_preview, True)
 
-        UpdateLegends
+        UpdateLegends()
 
         ApplyColorsToElements(My.CP)
         ApplyStylesToElements(My.CP)

@@ -4997,7 +4997,7 @@ Start:
                 End If
 
                 If Info.ExportResThemePack Then
-                    PackThemeResources(Me, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
+                    PackThemeResources(Clone, File, New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp")
                 Else
                     IO.File.WriteAllText(File, ToString)
                 End If
@@ -5041,10 +5041,11 @@ Start:
 
         If IO.File.Exists(Package) Then IO.File.Delete(Package)
         Using archive As ZipArchive = ZipFile.Open(Package, ZipArchiveMode.Create)
-            If CP.LogonUI7.Enabled Then
+            If (CP.LogonUI7.Enabled AndAlso CP.LogonUI7.Mode = Structures.LogonUI7.Modes.CustomImage) OrElse
+                (Not CP.Windows8.NoLockScreen AndAlso CP.Windows8.LockScreenType = Structures.LogonUI7.Modes.CustomImage) Then
                 x = CP.LogonUI7.ImagePath
                 If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
-                    ZipEntry = cache & "logonui" & IO.Path.GetExtension(x)
+                    ZipEntry = cache & "LogonUI" & IO.Path.GetExtension(x)
                     If IO.File.Exists(x) Then CP.LogonUI7.ImagePath = ZipEntry
                     filesList.Add(ZipEntry, x)
                 End If
@@ -5762,9 +5763,9 @@ Start:
             End If
 #End Region
 
-            If CP.Wallpaper.Enabled Then
+            If CP.Wallpaper.Enabled AndAlso CP.Wallpaper.WallpaperType = Structures.Wallpaper.WallpaperTypes.Picture Then
                 x = CP.Wallpaper.ImageFile
-                If Not String.IsNullOrWhiteSpace(x) Then
+                If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
                     ZipEntry = cache & "wallpaper_file" & IO.Path.GetExtension(x)
                     If IO.File.Exists(x) Then CP.Wallpaper.ImageFile = ZipEntry
                     filesList.Add(ZipEntry, x)
@@ -5772,17 +5773,19 @@ Start:
             End If
 
             For Each _file In filesList
-                If IO.File.Exists(_file.Value) Then archive.CreateEntryFromFile(_file.Value, _file.Key.Split("\").Last)
+                If IO.File.Exists(_file.Value) Then archive.CreateEntryFromFile(_file.Value, _file.Key.Split("\").Last, CompressionLevel.Optimal)
             Next
 
-            x = CP.WindowsXP.ThemeFile
-            If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Resources\Themes\Luna", My._ignore) Then
-                ZipEntry = cache & "WXP_VS\" & IO.Path.GetFileName(x)
-                If IO.File.Exists(x) Then CP.WindowsXP.ThemeFile = ZipEntry
-                Dim DirName As String = New FileInfo(x).Directory.FullName
-                For Each file As String In Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories)
-                    archive.CreateEntryFromFile(file, "WXP_VS" & file.Replace(DirName, ""))
-                Next
+            If CP.WindowsXP.Theme = WindowsXP.Themes.Custom Then
+                x = CP.WindowsXP.ThemeFile
+                If Not String.IsNullOrWhiteSpace(x) AndAlso IO.File.Exists(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Resources\Themes\Luna", My._ignore) Then
+                    ZipEntry = cache & "WXP_VS\" & IO.Path.GetFileName(x)
+                    If IO.File.Exists(x) Then CP.WindowsXP.ThemeFile = ZipEntry
+                    Dim DirName As String = New FileInfo(x).Directory.FullName
+                    For Each file As String In Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories)
+                        If IO.File.Exists(file) Then archive.CreateEntryFromFile(file, "WXP_VS" & file.Replace(DirName, ""), CompressionLevel.Optimal)
+                    Next
+                End If
             End If
 
             If CP.Wallpaper.Enabled AndAlso CP.Wallpaper.WallpaperType = Structures.Wallpaper.WallpaperTypes.SlideShow Then
@@ -5799,7 +5802,7 @@ Start:
                                                                                                                   End Function)
 
 
-                            If IO.File.Exists(image) Then archive.CreateEntryFromFile(image, "wallpapers_slideshow\" & New FileInfo(image).Name)
+                            If IO.File.Exists(image) Then archive.CreateEntryFromFile(image, "wallpapers_slideshow\" & New FileInfo(image).Name, CompressionLevel.Optimal)
 
                         Next
 
@@ -5817,7 +5820,7 @@ Start:
                                     ZipEntry = cache & "WallpapersList\wallpaperlist_" & x0 & "_file" & IO.Path.GetExtension(x)
                                     If IO.File.Exists(x) Then
                                         CP.Wallpaper.Wallpaper_Slideshow_Images = CP.Wallpaper.Wallpaper_Slideshow_Images.Append(ZipEntry).ToArray
-                                        archive.CreateEntryFromFile(x, "WallpapersList\wallpaperlist_" & x0 & "_file" & IO.Path.GetExtension(x))
+                                        archive.CreateEntryFromFile(x, "WallpapersList\wallpaperlist_" & x0 & "_file" & IO.Path.GetExtension(x), CompressionLevel.Optimal)
                                     End If
                                 End If
                             Next

@@ -12,6 +12,7 @@ Imports System.IO
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.PreviewHelpers
 Imports System.Drawing.Text
+Imports SharpCompress.Archives
 
 Namespace My
     Module Env
