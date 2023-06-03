@@ -8,23 +8,27 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  01 Apr 2023 |
+| `Stable` | 01 Apr 2023  |
 
 > **What's New?**
+
 ## The same as [1.0.7.5](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1075), except for:
 
 ### 1. Windows 11 preview and description labels
+
 - Windows 11 preview is redesigned to make it closer to the latest stable builds.
 - Description labels are re-written, they are dependent on the latest stable Windows 11. If your Windows is outdated, these labels might not be the same as your current system.
 - If you installed ExplorerPatcher and uninstalled it, WinPaletter will detect ExplorerPatcher is still installed (due do ExplorerPatcher registry remnants) and so the descriptions will be different. You can solve this by going to Settings > ExplorerPatcher and then disable preview synchronization.
 
 ### 2. Cursors Shadow:
+
 - Now you can modify cursors shadow. You can control its color, blur power, opacity and its offset (X, Y).
 - Each cursor has its own separate shadow.
 - Shadow in "Miscellaneous" part is rendered by Windows, while custom shadow is rendered by WinPaletter itself.
 - The more you enable custom shadow, the more WinPaletter will take to render the cursor.
 
 ### 3. Improvements and fixes:
+
 - Fixing classic cursor main arrow to make it matches the classic NT cursor outline.
 - Improvements in Windows 7/Vista preview speed while customizing titlebar height in metrics. (There was a lag)
 - Fixing crashing bug during applying a classic color with classic theme enabled or applying classic colors with switching from a theme to classic mode in Windows XP, Vista & 7
@@ -50,19 +54,23 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  24 Mar 2023 |
+| `Stable` | 24 Mar 2023  |
 
 > **What's New?**
+
 ## The same as [1.0.7.4](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1074), except for:
 
 ### 1. Windows Effects new items:
+
 - Change Explorer Bar for Windows 11 (Requires [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)) #117, Windows 10 and 8.1 #123
 - Disable Navigation bar #122 #105
 
 ### 2. Windows 10
+
 - A new option is made to control Windows elements blur (Its toggle is located beside transparency's toggle)
 
 ### 3. Changes and fixes:
+
 - UI improvements: #124
 - Some options in Windows Effects and cursors lose their effects after logoff. Now they are fixed.
 - Mechanism of reading from\writing to registry improved a bit
@@ -84,20 +92,24 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  16 Mar 2023 |
+| `Stable` | 16 Mar 2023  |
 
 > **What's New?**
+
 #### The same as [1.0.7.3](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1073), except for:
 
 #### 1. Windows Effects new items (For Windows 11 only):
+
 - Change Explorer Bar for Windows 11 (Requires [ExplorerPatcher](https://github.com/valinet/ExplorerPatcher)) #117
 - Switch between Circle/Spinning Dots in Windows 11 boot screen
 
-#### 2. Classic Colors schemes: 
+#### 2. Classic Colors schemes:
+
 - The illustrator has been updated, it will follow the colors you choose.
 - You can change the scope in which classic colors can be applied. Go to `Settings > Theme Applying Behavior` to change its preferences. #114
 
 #### 3. Changes and fixes:
+
 - UI improvements: #120 #119 #118 #116  #115 #113
 
 > **Compare source code with:**
@@ -116,26 +128,32 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  11 Mar 2023 |
+| `Stable` | 11 Mar 2023  |
 
 > **What's New?**
+
 ### The same as [1.0.7.1](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1071) and [1.0.7.2](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1072), except for:
 
 ### New features:
+
 #### 1. Synchronize preview of Windows 11 with ExplorerPatcher #28:
+
 - For example, if you set a Windows 10 taskbar in Windows 11, WinPaletter will adjust the preview to make the taskbar as Windows 10, and so on.
 - If you didn't install ExplorerPatcher or even don't use Windows 11, you can force WinPaletter to pretend that ExplorerPatcher is used; Go to Settings > ExplorerPatcher > Check `Deflect` and save settings.
 
 #### 2. Cursors Studio redesigned:
+
 - Layout of Cursors studio is changed
 - New Styles for Default Cursor and Loading Cursor are made, it can be `Aero`, `Classic` or `Modern`.
 - If you use a language file, you may see this form incomplete or not perfect, so the translators should work on Cursors' section.
 
 #### 3. Windows Switcher
+
 - You can change its appearance now (Alt+Tab Switcher), it can be default Windows or Classic. #105
 - You can change Windows 10 background opacity (or Windows 11 + ExplorerPatcher).
 
 #### 4. New items in Windows Effects, including:
+
 - Shake a window to minimize the others
 - Underline menu items #110
 - Classic Context Menu for Windows 11 #105
@@ -149,13 +167,16 @@
 - Paint Windows version on desktop #105
 
 #### 5. Windows 10:
+
 - A new option is made to make the taskbar more transparent.
 
-#### 6. Classic Colors schemes: 
+#### 6. Classic Colors schemes:
+
 - Added Windows 1 and 2 classic schemes.
 - Windows 3.1 schemes are improved to have a closer look to Windows 3.1.
 
 ### Changes and fixes:
+
 - UI improvements: #98 #99 #100 #101 #106 #107 #109
 - A new option is added in `Settings` > `Theme Applying Behavior` is made to delay applying the Metrics and Fonts until the user logs-off and logs-on, and this is to escape from the situation of crashing in #102 and #74
 
@@ -175,16 +196,19 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  05 Mar 2023 |
+| `Stable` | 05 Mar 2023  |
 
 > **What's New?**
 
 ### The same as [1.0.7.1](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1071), except for:
+
 #### New features:
+
 - Adding Cursor Tracking (Sonar) option #88 and Cursor Trails option in Cursors
 - Adding "Show content while dragging" option in Windows Effects #87
 
 #### Changes and fixes:
+
 - There was a lag during changing the preview in main form. Now it is improved a bit.
 - Improvements in UI #97 #95 #93 #90
 - Making Icons labels in metrics preview follow the preset of shadow in Windows Effects #94
@@ -210,26 +234,31 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  28 Feb 2023 |
+| `Stable` | 28 Feb 2023  |
 
 > **What's New?**
 
 # New Features:
+
 ### 1. Extended support to Windows XP and Vista
+
 - In Windows XP, you can change specifically the themes and logonui preferences.
 - In Windows Vista, you can change specifically Windows colors.
 - It is necessary to read their [documentation in GitHub](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md)
 
 ### 2. Windows Effects:
+
 - You can change now effects and animations in Windows, like window shadow, window transition animation, desktop icons label shadow, combobox animation and other effects.
 - Partially suggested in #80 by @Annix
 
 # Redesigns:
+
 - Classic Colors’ 3D objects (Formerly Win32UI) redesigned to make it have an illustrative look, with doing this #79
 - Changed some icons in Classic Colors as the previous ones were not obvious in relation to their functions.
 - Main Form Extra Tools buttons are condensed to make their container able to contain new\more features.
 
 # Improvements and bugs fixes:
+
 1. Classic Colors and Metrics & Fonts now have a button that imports preferences from a Visual Styles file.
 2. Windows Animations toggle is moved from “Windows Metrics and Fonts” to “Windows Effects”.
 3. Fixed bug in color picker that occurs during picking a color from the screen.
@@ -259,32 +288,38 @@
 
 | Channel  | Release Date |
 |:--------:|:------------:|
-| `Stable` |  13 Feb 2023 |
+| `Stable` | 13 Feb 2023  |
 
 > **What's New?**
 
 # New Features:
-### 1. Windows Metrics & Fonts: 
+
+### 1. Windows Metrics & Fonts:
+
 - Suggested by @Anixx #17 
 - Now you can change Windows Metrics and fonts (e.g., Titlebar Height, Titlebar Font, Window Border Width, Icons Spacing & Fonts, .... etc.)
 - There are some limitations when you apply (not all items) that require logoff and logon
 - `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
 - Fixed issue occurs during reading Metrics from Registry (Fixed bug from 1.0.6.9) #66
 
-### 2. Fonts Substitutes (A part of Windows Metrics & Fonts): 
+### 2. Fonts Substitutes (A part of Windows Metrics & Fonts):
+
 - You can substitute some system fonts "MS Shell Dlg" and "Segoe UI" to give your Windows a different look. 
 - Please read its instructions in Metrics & Fonts > Fonts Substitutes
 
 ### 3. Wallpaper Tone:
+
 - For sure you saw some stock Windows wallpapers with different colors, you can now create your own wallpapers with the color you want.
 - This is dependent on modification of image's HSL (Hue\Saturation\Lightness) and this isn't professional as much as advanced images editors (Paint.NET\GIMP\Photoshop\...)
 
 ### 4. New defined color in Windows 10/11:
-- There were some undefined colors, now new 2 items are defined\known: 
-   1) Background of UWP Dialogs Remnants from Windows 8.1 in Windows 10/11
-   2) Taskbar Tray Overflow Background (Windows 11 22H2 with accent enabled in taskbar)
 
-### 5. Languages: 
+- There were some undefined colors, now new 2 items are defined\known: 
+  1) Background of UWP Dialogs Remnants from Windows 8.1 in Windows 10/11
+  2) Taskbar Tray Overflow Background (Windows 11 22H2 with accent enabled in taskbar)
+
+### 5. Languages:
+
 - Languages become stable (not experimental), and its mechanism has been changed, becoming dependent on JSON files not the old file (*.wplng)
 - This makes it easier to modify by a text\code editor like VSCode or by WinPaletter Language Developing Tools (In Settings > Language)
 - You can load language quickly (there is no delay) and without restarting WinPaletter (Except for returning to English)
@@ -294,17 +329,21 @@
 - `Known Issue`: People who are using old language files (*.wplng) and updated WinPaletter, an error will occur during loading the application, ignore this error, download newer language files (*.json), go to settings and load the new file and save.
 
 ### 6. Logs:
+
 Extended Details will be shown during applying the theme (including time info and errors), you can change the preferences in Settings > Theme Logging.
 
 ### 7. Preview Switch
+
  In main page, you can navigate between all supported versions of Windows, making it easier to design one theme file for all supported Windows editions. 
 
 ### 8. Theme File Blocks:
+
 Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows 11/10 (before it was one block applied to both Windows 11/10), making it easier to design a theme presented in one file for both versions of Windows (To avoid conflict between colors applied between these Windows Versions) (Themes File of WinPaletter earlier than 1.0.6.9 can be loaded/saved too)
 
 ---
 
 # Redesigns:
+
 - Application’s UI improved a lot, especially the light mode becomes better, with the ability to change WinPaletter’s Colors and Backgrounds (Theming WinPaletter itself). Also, legacy dialogs like message boxes are modernized.
 - Application's Controls become more consistent with System Dark\Light Mode
 - Themes Previews in all forms are redesigned to match Windows Metrics and fonts (becoming more realistic compared to previous versions of WinPaletter)
@@ -312,9 +351,11 @@ Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows
 - Windows Terminal forms are redesigned to have tabs instead of the condensed ones.
 - Name of "Win32UI" changed into "Classic Colors"
 - New 3 colors schemes in Classic Colors (Win32UI): Luna Fullback Blue, Silver and Olive Green
+
 ---
 
 # Multiple Improvements and Bugs Fixes:
+
 1. Added the ability to uninstall from Control Panel, with fixing issue during uninstall #68
 2. Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped) (Issue of #59 won't be experienced and it won't disturb the whole process of applying theme, the error will be known separately after applying theme)
 3. When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying (Become quicker than before)
@@ -349,20 +390,23 @@ Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows
 
 > **Info:**
 
-| Channel  | Release Date |
-|:--------:|:------------:|
-| `Beta`   |  27 Jan 2023 |
+| Channel | Release Date |
+|:-------:|:------------:|
+| `Beta`  | 27 Jan 2023  |
 
 > **What's New?**
 
 # New Features:
-### 1. Windows Metrics & Fonts: 
+
+### 1. Windows Metrics & Fonts:
+
 - Suggested by @Anixx #17 
 - Now you can change Windows Metrics and fonts (e.g., Titlebar Height, Titlebar Font, Window Border Width, Icons Spacing & Fonts, .... etc.)
 - There are some limitations when you apply (not all items) that require logoff and logon
 - `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
 
-### 2. Languages: 
+### 2. Languages:
+
 - Languages become stable (not experimental), and its mechanism has been changed, becoming dependent on JSON files not the old file (*.wplng)
 - This makes it easier to modify by a text\code editor like VSCode or by WinPaletter Language Developing Tools (In Settings > Language)
 - You can load language quickly (there is no delay) and without restarting WinPaletter (Except for returning to English)
@@ -372,17 +416,21 @@ Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows
 - `Known Issue`: People who are using old language files (*.wplng) and updated WinPaletter, an error will occur during loading the application, ignore this error, download newer language files (*.json), go to settings and load the new file and save.
 
 ### 3. Logs:
+
 Extended Details will be shown during applying the theme (including time info and errors), you can change the preferences in Settings > Theme Logging.
 
 ### 4. Preview Switch
+
  In main page, you can navigate between all supported versions of Windows, making it easier to design one theme file for all supported Windows editions. 
 
 ### 5. Theme File Blocks:
+
 Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows 11/10 (before it was one block applied to both Windows 11/10), making it easier to design a theme presented in one file for both versions of Windows (To avoid conflict between colors applied between these Windows Versions) (Themes File of WinPaletter earlier than 1.0.6.9 can be loaded/saved too)
 
 ---
 
 # Redesigns:
+
 - Application’s UI improved a lot, especially the light mode becomes better, with the ability to change WinPaletter’s Colors and Backgrounds (Theming WinPaletter itself). Also, legacy dialogs like message boxes are modernized.
 - Themes Previews in all forms are redesigned to match Windows Metrics and fonts (becoming more realistic compared to previous versions of WinPaletter)
 - Drag and Drop preview are redesigned to have a bigger size
@@ -391,6 +439,7 @@ Now the theme file that is saved by WinPaletter (.wpth) has 2 blocks for Windows
 ---
 
 # Multiple Improvements and Bugs Fixes:
+
 1. Added the ability to uninstall from Control Panel
 2. Loading Preferences of Windows Colors/Options from registry mechanism improved a lot, and WinPaletter will continue applying theme even if there is an error (exception error) happened (i.e., the error part will be skipped) (Issue of #59 won't be experienced and it won't disturb the whole process of applying theme, the error will be known separately after applying theme)
 3. When you switch Dark\Light Mode in theme, there was a great time delay during theme applying. It is now fixed and not causing any delay in theme applying (Become quicker than before)

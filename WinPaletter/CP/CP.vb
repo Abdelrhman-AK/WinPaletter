@@ -2528,7 +2528,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
 
-                ElseIf IO.File.Exists(Snd_Imageres_SystemStart) And IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
+                ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
 
                 ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
@@ -2536,6 +2536,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
                     EditReg_CMD(destination_StartupSnd, "DisableStartupSound", (Not My.W11).ToInteger)
+
+                Else
+                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
 
                 End If
 

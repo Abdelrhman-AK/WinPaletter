@@ -42,19 +42,19 @@ Public Class Store_Intro
     End Sub
 
     Private Sub StoreItem1_Click(sender As Object, e As MouseEventArgs) Handles StoreItem1.Click
-
-        If e.Button = MouseButtons.Right Then
-            With StoreItem1
-                Store.Adjust_Preview(.CP)
-                Store_Hover.Close()
-                Store.tabs_preview.SelectedIndex = 0
-                Store_Hover.img0 = Store.tabs_preview.ToBitmap
-                Store.tabs_preview.SelectedIndex = 1
-                Store_Hover.img1 = Store.tabs_preview.ToBitmap
-                Store_Hover.ShowDialog()
-            End With
+        If My.Application.OpenForms.OfType(Of Store).Count > 0 Then
+            If e.Button = MouseButtons.Right Then
+                With StoreItem1
+                    Store.Adjust_Preview(.CP)
+                    Store_Hover.Close()
+                    Store.tabs_preview.SelectedIndex = 0
+                    Store_Hover.img0 = Store.tabs_preview.ToBitmap
+                    Store.tabs_preview.SelectedIndex = 1
+                    Store_Hover.img1 = Store.tabs_preview.ToBitmap
+                    Store_Hover.ShowDialog()
+                End With
+            End If
         End If
-
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click

@@ -1080,6 +1080,7 @@ Partial Class DragPreviewer
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Preview"
+        Me.TopMost = True
         Me.pnlRetroPreview.ResumeLayout(False)
         Me.pnlRetroPreview.PerformLayout()
         CType(Me.RetroShadow1, System.ComponentModel.ISupportInitialize).EndInit()

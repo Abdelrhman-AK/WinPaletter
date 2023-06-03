@@ -42,6 +42,7 @@ Partial Class Store_Hover
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Store Hover"
+        Me.TopMost = True
         Me.ResumeLayout(False)
 
     End Sub

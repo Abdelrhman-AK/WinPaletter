@@ -3119,6 +3119,7 @@ Partial Class Store
         Me.Name = "Store"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter Store (Beta)"
+        Me.TopMost = True
         Me.Titlebar_panel.ResumeLayout(False)
         Me.search_panel.ResumeLayout(False)
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()
