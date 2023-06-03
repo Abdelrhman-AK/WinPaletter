@@ -1,5 +1,5 @@
-﻿Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
+﻿Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class LogonUI
     Private Sub LogonUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load

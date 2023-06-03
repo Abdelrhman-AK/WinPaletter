@@ -853,14 +853,21 @@ Public Class RetroWindow : Inherits Panel
         BackColor = Color.FromArgb(192, 192, 192)
         ForeColor = Color.White
         BorderStyle = BorderStyle.None
-        TitlebarText = "New Window"
+        Text = "New Window"
     End Sub
 
     Public Property Color1 As Color = Color.FromArgb(0, 0, 128)
     Public Property Color2 As Color = Color.FromArgb(16, 132, 208)
     Public Property ColorGradient As Boolean = True
     Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
-    Public Property TitlebarText As String = "New Window"
+
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String = "New window"
+
     Public Property UseItAsMenu As Boolean = False
     Public Property Flat As Boolean = False
 
@@ -891,7 +898,6 @@ Public Class RetroWindow : Inherits Panel
             Refresh()
         End Set
     End Property
-
 
     Private _ButtonHilight As Color = Color.White
     Public Property ButtonHilight As Color
@@ -1215,7 +1221,7 @@ Public Class RetroWindow : Inherits Panel
             Catch
             End Try
 
-            G.DrawString(TitlebarText, F, New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
+            G.DrawString(Text, F, New SolidBrush(ForeColor), TRect, StringAligner(ContentAlignment.MiddleLeft, RTL))
         End If
 
     End Sub

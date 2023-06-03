@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.Win32
 Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
 
 Public Class Uninstall
     Private Sub Uninstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load

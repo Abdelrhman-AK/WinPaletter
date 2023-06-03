@@ -1,6 +1,5 @@
 ﻿Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
 
 Public Class CMD
     Dim F_cmd As New Font("Consolas", 18, FontStyle.Regular)

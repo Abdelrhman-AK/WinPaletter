@@ -153,7 +153,7 @@ Partial Class DragPreviewer
         Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3, 3, 5, 5)
         Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
         Me.Menu_Window.TabIndex = 4
-        Me.Menu_Window.TitlebarText = "New Window"
+        Me.Menu_Window.Text = "New Window"
         Me.Menu_Window.UseItAsMenu = True
         '
         'menucontainer3
@@ -171,6 +171,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel9.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel9.DrawOnGlass = False
         Me.RetroLabel9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel9.ForeColor = System.Drawing.Color.DimGray
         Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
@@ -206,6 +207,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel5.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel5.DrawOnGlass = False
         Me.RetroLabel5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel5.ForeColor = System.Drawing.Color.White
         Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
@@ -231,6 +233,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel6.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel6.DrawOnGlass = False
         Me.RetroLabel6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel6.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
@@ -271,7 +274,7 @@ Partial Class DragPreviewer
         Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 80)
         Me.RetroWindow3.TabIndex = 2
-        Me.RetroWindow3.TitlebarText = "Message Box"
+        Me.RetroWindow3.Text = "Message box"
         Me.RetroWindow3.UseItAsMenu = False
         '
         'RetroButton1
@@ -303,14 +306,15 @@ Partial Class DragPreviewer
         Me.RetroLabel4.AutoSize = True
         Me.RetroLabel4.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.RetroLabel4.DrawOnGlass = False
         Me.RetroLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel4.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel4.Location = New System.Drawing.Point(4, 22)
         Me.RetroLabel4.Name = "RetroLabel4"
         Me.RetroLabel4.Padding = New System.Windows.Forms.Padding(4)
-        Me.RetroLabel4.Size = New System.Drawing.Size(82, 21)
+        Me.RetroLabel4.Size = New System.Drawing.Size(78, 21)
         Me.RetroLabel4.TabIndex = 1
-        Me.RetroLabel4.Text = "Message Text"
+        Me.RetroLabel4.Text = "Message text"
         Me.RetroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroLabel13
@@ -319,6 +323,7 @@ Partial Class DragPreviewer
         Me.RetroLabel13.AutoSize = True
         Me.RetroLabel13.BackColor = System.Drawing.Color.White
         Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.RetroLabel13.DrawOnGlass = False
         Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel13.Location = New System.Drawing.Point(169, 53)
@@ -358,7 +363,7 @@ Partial Class DragPreviewer
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
         Me.RetroWindow2.TabIndex = 1
-        Me.RetroWindow2.TitlebarText = "Active Window"
+        Me.RetroWindow2.Text = "Active window"
         Me.RetroWindow2.UseItAsMenu = False
         '
         'RetroTextBox1
@@ -380,7 +385,7 @@ Partial Class DragPreviewer
         Me.RetroTextBox1.Size = New System.Drawing.Size(188, 76)
         Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
-        Me.RetroTextBox1.Text = "Window Text"
+        Me.RetroTextBox1.Text = "Window text"
         Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.RetroTextBox1.UseSystemPasswordChar = False
         '
@@ -419,6 +424,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel3.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel3.DrawOnGlass = False
         Me.RetroLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
@@ -432,6 +438,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RetroLabel2.DrawOnGlass = False
         Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.RetroLabel2.Location = New System.Drawing.Point(40, 0)
@@ -446,6 +453,7 @@ Partial Class DragPreviewer
         '
         Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
         Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.RetroLabel1.DrawOnGlass = False
         Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
         Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
@@ -484,8 +492,7 @@ Partial Class DragPreviewer
         Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
         Me.RetroWindow1.TabIndex = 0
-        Me.RetroWindow1.Text = "New Window"
-        Me.RetroWindow1.TitlebarText = "Inactive Window"
+        Me.RetroWindow1.Text = "Inactive window"
         Me.RetroWindow1.UseItAsMenu = False
         '
         'RetroWindow4
@@ -517,7 +524,7 @@ Partial Class DragPreviewer
         Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
         Me.RetroWindow4.TabIndex = 3
-        Me.RetroWindow4.TitlebarText = "Program Container"
+        Me.RetroWindow4.Text = "Program container"
         Me.RetroWindow4.UseItAsMenu = False
         '
         'programcontainer
@@ -726,7 +733,7 @@ Partial Class DragPreviewer
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 148)
         Me.XenonWindow1.TabIndex = 2
-        Me.XenonWindow1.Text = "App Preview"
+        Me.XenonWindow1.Text = "App preview"
         Me.XenonWindow1.ToolWindow = False
         Me.XenonWindow1.Win7Alpha = 100
         Me.XenonWindow1.Win7ColorBal = 100
@@ -750,6 +757,7 @@ Partial Class DragPreviewer
         '
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label8.DrawOnGlass = False
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Label8.Location = New System.Drawing.Point(1, 46)
         Me.Label8.Name = "Label8"
@@ -762,6 +770,7 @@ Partial Class DragPreviewer
         '
         Me.setting_icon_preview.BackColor = System.Drawing.Color.Transparent
         Me.setting_icon_preview.Dock = System.Windows.Forms.DockStyle.Top
+        Me.setting_icon_preview.DrawOnGlass = False
         Me.setting_icon_preview.Font = New System.Drawing.Font("Segoe MDL2 Assets", 21.75!)
         Me.setting_icon_preview.Location = New System.Drawing.Point(1, 1)
         Me.setting_icon_preview.Name = "setting_icon_preview"
@@ -774,6 +783,7 @@ Partial Class DragPreviewer
         '
         Me.lnk_preview.BackColor = System.Drawing.Color.Transparent
         Me.lnk_preview.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lnk_preview.DrawOnGlass = False
         Me.lnk_preview.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.lnk_preview.ForeColor = System.Drawing.Color.Brown
         Me.lnk_preview.Location = New System.Drawing.Point(4, 119)
@@ -922,7 +932,7 @@ Partial Class DragPreviewer
         Me.ClassicWindow1.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow1.Size = New System.Drawing.Size(181, 146)
         Me.ClassicWindow1.TabIndex = 4
-        Me.ClassicWindow1.TitlebarText = "Active App"
+        Me.ClassicWindow1.Text = "App preview"
         Me.ClassicWindow1.UseItAsMenu = False
         '
         'ClassicWindow2
@@ -953,7 +963,7 @@ Partial Class DragPreviewer
         Me.ClassicWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow2.Size = New System.Drawing.Size(181, 60)
         Me.ClassicWindow2.TabIndex = 5
-        Me.ClassicWindow2.TitlebarText = "Inactive App"
+        Me.ClassicWindow2.Text = "Inactive app"
         Me.ClassicWindow2.UseItAsMenu = False
         '
         'ClassicTaskbar

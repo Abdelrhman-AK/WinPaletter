@@ -1,7 +1,6 @@
 ﻿Imports ImageProcessor
-Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
-Imports System.Windows.Shell
+Imports WinPaletter.XenonCore
 
 Public Class LogonUI7
     Private _Shown As Boolean = False

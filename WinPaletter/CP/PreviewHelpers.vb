@@ -1131,8 +1131,8 @@ Public Class PreviewHelpers
                 ClassicAppButton2.ImageAlign = ContentAlignment.BottomLeft
                 ClassicAppButton1.Width = 140
                 ClassicAppButton2.Width = 140
-                ClassicAppButton1.Text = ClassicWindow1.TitlebarText
-                ClassicAppButton2.Text = ClassicWindow2.TitlebarText
+                ClassicAppButton1.Text = ClassicWindow1.Text
+                ClassicAppButton2.Text = ClassicWindow2.Text
                 ClassicAppButton2.Left = ClassicAppButton1.Right + 3
                 ClassicAppButton1.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, ClassicAppButton1.Font.Style)
                 ClassicAppButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, ClassicAppButton2.Font.Style)
@@ -1154,8 +1154,8 @@ Public Class PreviewHelpers
                 ClassicAppButton2.ImageAlign = ContentAlignment.BottomLeft
                 ClassicAppButton1.Width = 140
                 ClassicAppButton2.Width = 140
-                ClassicAppButton1.Text = ClassicWindow1.TitlebarText
-                ClassicAppButton2.Text = ClassicWindow2.TitlebarText
+                ClassicAppButton1.Text = ClassicWindow1.Text
+                ClassicAppButton2.Text = ClassicWindow2.Text
                 ClassicAppButton2.Left = ClassicAppButton1.Right + 3
                 ClassicAppButton1.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, ClassicAppButton1.Font.Style)
                 ClassicAppButton2.Font = New Font(CP.MetricsFonts.CaptionFont.Name, 8, ClassicAppButton2.Font.Style)

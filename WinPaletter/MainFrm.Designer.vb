@@ -872,7 +872,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
         Me.XenonWindow1.TabIndex = 2
-        Me.XenonWindow1.Text = "App Preview"
+        Me.XenonWindow1.Text = "App preview"
         Me.XenonWindow1.ToolWindow = False
         Me.XenonWindow1.Win7Alpha = 100
         Me.XenonWindow1.Win7ColorBal = 100
@@ -983,7 +983,7 @@ Partial Class MainFrm
         Me.ClassicWindow1.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow1.Size = New System.Drawing.Size(181, 146)
         Me.ClassicWindow1.TabIndex = 4
-        Me.ClassicWindow1.TitlebarText = "Active App"
+        Me.ClassicWindow1.Text = "App preview"
         Me.ClassicWindow1.UseItAsMenu = False
         '
         'ClassicWindow2
@@ -1014,7 +1014,7 @@ Partial Class MainFrm
         Me.ClassicWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow2.Size = New System.Drawing.Size(181, 60)
         Me.ClassicWindow2.TabIndex = 5
-        Me.ClassicWindow2.TitlebarText = "Inactive App"
+        Me.ClassicWindow2.Text = "Inactive app"
         Me.ClassicWindow2.UseItAsMenu = False
         '
         'ClassicTaskbar

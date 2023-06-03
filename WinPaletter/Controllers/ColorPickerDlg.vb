@@ -5,8 +5,8 @@ Imports Cyotek.Windows.Forms
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
     Private _shown As Boolean = False

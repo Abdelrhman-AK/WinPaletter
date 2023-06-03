@@ -1,18 +1,17 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Text
+Imports System.IO
+Imports System.IO.Compression
 Imports System.Management
 Imports System.Net
 Imports System.Reflection
 Imports System.Security.Principal
 Imports System.Threading
-Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.IO.Compression
-Imports System.IO
-Imports WinPaletter.Reg_IO
+Imports Microsoft.Win32
 Imports WinPaletter.PreviewHelpers
-Imports System.Drawing.Text
-Imports SharpCompress.Archives
+Imports WinPaletter.Reg_IO
+Imports WinPaletter.XenonCore
 
 Namespace My
     Module Env
@@ -1147,51 +1146,36 @@ Namespace My
 
 #Region "   Domain (External Resources) and Exceptions Handling"
         Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As Assembly Handles Domain.AssemblyResolve
-
-            Try : If e.Name.ToUpper.Contains("Animator".ToUpper) Then Return Assembly.Load(Resources.Animator)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("Cyotek.Windows.Forms.ColorPicker".ToUpper) Then Return Assembly.Load(Resources.Cyotek_Windows_Forms_ColorPicker)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("ColorThief.Desktop.v46".ToUpper) Then Return Assembly.Load(Resources.ColorThief_Desktop_v46)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("AnimCur".ToUpper) Then Return Assembly.Load(Resources.AnimCur)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("Newtonsoft.Json".ToUpper) Then Return Assembly.Load(Resources.Newtonsoft_Json)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("Ookii.Dialogs.WinForms".ToUpper) Then Return Assembly.Load(Resources.Ookii_Dialogs_WinForms)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.Buffers".ToUpper) Then Return Assembly.Load(Resources.System_Buffers)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.Memory".ToUpper) Then Return Assembly.Load(Resources.System_Memory)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.Numerics.Vectors".ToUpper) Then Return Assembly.Load(Resources.System_Numerics_Vectors)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.Resources.Extensions".ToUpper) Then Return Assembly.Load(Resources.System_Resources_Extensions)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.Runtime.CompilerServices.Unsafe".ToUpper) Then Return Assembly.Load(Resources.System_Runtime_CompilerServices_Unsafe)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("Devcorp.Controls.VisualStyles".ToUpper) Then Return Assembly.Load(Resources.Devcorp_Controls_VisualStyles)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("ImageProcessor".ToUpper) Then Return Assembly.Load(Resources.ImageProcessor)
-            Catch : End Try
-
-            Try : If e.Name.ToUpper.Contains("System.ValueTuple".ToUpper) Then Return Assembly.Load(Resources.System_ValueTuple)
-            Catch : End Try
-
-            Return Nothing
+            Return GetAssemblyFromZIP(e.Name)
         End Function
+
+        Function GetAssemblyFromZIP(Name As String) As Assembly
+            Name = New AssemblyName(Name).Name
+
+            If Name.StartsWith("WinPaletter.resources", My._ignore) Then Return Nothing
+
+            Dim b As Byte() = Nothing
+
+            Using ms As New MemoryStream(My.Resources.Assemblies)
+                Using zip As New ZipArchive(ms)
+                    If zip.Entries.Any(Function(entry) entry.Name.EndsWith(Name & ".dll", My._ignore)) Then
+                        Using _as As New MemoryStream
+                            zip.GetEntry(Name & ".dll").Open().CopyTo(_as)
+                            _as.Seek(0, SeekOrigin.Begin)
+                            b = _as.ToArray
+                        End Using
+                    End If
+                End Using
+            End Using
+
+            If b IsNot Nothing Then
+                Return Assembly.Load(b)
+            Else
+                Return Nothing
+            End If
+
+        End Function
+
 
         Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)
             BugReport.ThrowError(e.Exception)

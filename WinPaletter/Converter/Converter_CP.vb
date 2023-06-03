@@ -1,7 +1,7 @@
-﻿Imports System.Reflection
-Imports Newtonsoft.Json.Linq
+﻿Imports System.Drawing.Drawing2D
+Imports System.Reflection
 Imports Newtonsoft.Json
-Imports System.Drawing.Drawing2D
+Imports Newtonsoft.Json.Linq
 
 Public Class Converter_CP
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
@@ -1554,7 +1554,7 @@ Public Class Converter_CP
                 .FontSubstitute_MSShellDlg = "Microsoft Sans Serif", .FontSubstitute_MSShellDlg2 = "Tahoma",
                 .FontSubstitute_SegoeUI = ""}
 
-    Public AltTab As New Structures.AltTab With {.Enabled = True, .Style = AltTab.Styles.Default, .Win10Opacity = 95}
+    Public AltTab As New Structures.AltTab With {.Enabled = True, .Style = Structures.AltTab.Styles.Default, .Win10Opacity = 95}
 
     Public CommandPrompt As New Structures.Console With {
                     .Enabled = False,

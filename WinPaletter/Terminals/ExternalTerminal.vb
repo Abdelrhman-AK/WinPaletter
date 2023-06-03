@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class ExternalTerminal
     Private _Shown As Boolean = False

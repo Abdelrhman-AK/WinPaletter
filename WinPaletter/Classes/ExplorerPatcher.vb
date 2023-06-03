@@ -1,7 +1,4 @@
-﻿
-Imports System.Net.Security
-
-Public Class ExplorerPatcher
+﻿Public Class ExplorerPatcher
     Public Shared IsInstalled As Boolean = False
     Public UseStart10 As Boolean = False
     Public UseTaskbar10 As Boolean = False

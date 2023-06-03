@@ -211,6 +211,51 @@
         gg==
 </value>
   </data>
+  <data name="XenonAlertBox21.Text" xml:space="preserve">
+    <value>By checking this, you're responsible for copyrights of included resources (images, sounds and screen savers). WinPaletter developer is not responsible for users' uploaded themes copyrights in WinPaletter Store.</value>
+  </data>
+  <data name="PictureBox42.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
+  </data>
+  <data name="PictureBox18.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAedJREFUSEtj
+        oDa4v38/x8nApHUn/eNXXw0NZYMKUwe8ePGC++7du4du7j98/GRA4r+TAQmroFKUg/+rGNju3Lm57vbt
+        2/9B+Pr23QdO+idshUpDgOGe9/sNdr77r7vt7X/tzW/+a2549V9t7cv/Kitf/Fda9uy/wuKn/2UXPPkv
+        Pffxf8lZD/+LT3vwX2Ty/f+Svef+b1xr+v/Artj/V67d+Hvz5s3/QLwNFFxQoyHAaM/7/6RaINV/6f+q
+        Ndb/3+5jAONd2+L+37h+ZTXQF+xQYxGAVAtkJ134v3GdOdxwEJ6z1OU/MLiYoUaiAlIskJ928f+m9aiG
+        z13m+p+v+dJ/qHGYgFgLFGdexjB83nLX/wJtl/5zt9+izALlOVf+b96Aavj8FW7/hTsv/+ftuk2ZBWrz
+        gIZvRDN8pdt/0Z4r/wV671BmgfqCq/+3bLJAMXzBKvf/4n1X/wtNuEuZBZpLbv7fudUSxfCFq93/S064
+        Cs4HFFtQtOvq/3enHeCGr1lv919u6lV4RqPMgjXP/0/fc+7/h3ev/r876/1/+QaP/7IzbqLkZIosUF35
+        6H9BWeX/6bvP/M/bdu2/4uwbGEUFhRY8+a+89OF/paVPsBYVVIkDbDl51AKaWXCYChYchBo3CogBDAwA
+        OD2Vf6Q8wAgAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="PictureBox17.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAJtJREFUSEvt
@@ -264,51 +309,6 @@
         cBA+zhVPGeaOx2oBMOtDLDjGEUMRPsoZjWkB0ODrcAvYIinCR9kjsVpwF2bBUZZwyjBrOKYF5SIGVkDD
         twHx5yPMIf8pwYdZQjEtQAaHGQP/U4SZgglYwBDwn0JM0ILbaBpIwkcYAiOhRmEHhxiCFIEKiw8xBJaT
         ig8zBIY/VWJghBo15AEDAwDDYcr7QG+R7gAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="PictureBox18.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAedJREFUSEtj
-        oDa4v38/x8nApHUn/eNXXw0NZYMKUwe8ePGC++7du4du7j98/GRA4r+TAQmroFKUg/+rGNju3Lm57vbt
-        2/9B+Pr23QdO+idshUpDgOGe9/sNdr77r7vt7X/tzW/+a2549V9t7cv/Kitf/Fda9uy/wuKn/2UXPPkv
-        Pffxf8lZD/+LT3vwX2Ty/f+Svef+b1xr+v/Artj/V67d+Hvz5s3/QLwNFFxQoyHAaM/7/6RaINV/6f+q
-        Ndb/3+5jAONd2+L+37h+ZTXQF+xQYxGAVAtkJ134v3GdOdxwEJ6z1OU/MLiYoUaiAlIskJ928f+m9aiG
-        z13m+p+v+dJ/qHGYgFgLFGdexjB83nLX/wJtl/5zt9+izALlOVf+b96Aavj8FW7/hTsv/+ftuk2ZBWrz
-        gIZvRDN8pdt/0Z4r/wV671BmgfqCq/+3bLJAMXzBKvf/4n1X/wtNuEuZBZpLbv7fudUSxfCFq93/S064
-        Cs4HFFtQtOvq/3enHeCGr1lv919u6lV4RqPMgjXP/0/fc+7/h3ev/r876/1/+QaP/7IzbqLkZIosUF35
-        6H9BWeX/6bvP/M/bdu2/4uwbGEUFhRY8+a+89OF/paVPsBYVVIkDbDl51AKaWXCYChYchBo3CogBDAwA
-        OD2Vf6Q8wAgAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="XenonAlertBox21.Text" xml:space="preserve">
-    <value>By checking this, you're responsible for copyrights of included resources (images, sounds and screen savers). WinPaletter developer is not responsible for users' uploaded themes copyrights in WinPaletter Store.</value>
-  </data>
-  <data name="PictureBox42.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

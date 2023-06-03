@@ -1,11 +1,11 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
 Imports System.Text
-Imports WinPaletter.CP
-Imports WinPaletter.XenonCore
 Imports Devcorp.Controls.VisualStyles
+Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class MainFrm
     Private _Shown As Boolean = False
@@ -574,7 +574,7 @@ Public Class MainFrm
     Private Sub W11_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Titlebar_Active = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -597,7 +597,7 @@ Public Class MainFrm
     Private Sub W11_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Titlebar_Inactive = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -686,7 +686,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index1_Click(sender As Object, e As EventArgs) Handles W11_Color_Index1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index1 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -732,7 +732,7 @@ Public Class MainFrm
     Private Sub W11_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W11_TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index5 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -776,7 +776,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index0_Click(sender As Object, e As EventArgs) Handles W11_Color_Index0.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index0 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -811,7 +811,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index3_Click(sender As Object, e As EventArgs) Handles W11_Color_Index3.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index3 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -840,7 +840,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index6_Click(sender As Object, e As EventArgs) Handles W11_Color_Index6.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index6 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -872,7 +872,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index5_Click(sender As Object, e As EventArgs) Handles W11_Color_Index5.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.StartMenu_Accent = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -896,7 +896,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W11_Color_Index4.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index2 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -919,7 +919,7 @@ Public Class MainFrm
     Private Sub W11_Color_Index2_Click(sender As Object, e As EventArgs) Handles W11_Color_Index2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows11.Color_Index4 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W11 Then ApplyColorsToElements(My.CP)
             End If
@@ -1004,7 +1004,7 @@ Public Class MainFrm
     Private Sub W10_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Titlebar_Active = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1026,7 +1026,7 @@ Public Class MainFrm
     Private Sub W10_InactiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_InactiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Titlebar_Inactive = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1122,7 +1122,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index1_Click(sender As Object, e As EventArgs) Handles W10_Color_Index1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index1 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1160,7 +1160,7 @@ Public Class MainFrm
     Private Sub W10_TaskbarFrontAndFoldersOnStart_pick_Click(sender As Object, e As EventArgs) Handles W10_TaskbarFrontAndFoldersOnStart_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index5 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1189,7 +1189,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index0_Click(sender As Object, e As EventArgs) Handles W10_Color_Index0.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index0 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1231,7 +1231,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index3_Click(sender As Object, e As EventArgs) Handles W10_Color_Index3.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index3 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1287,7 +1287,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index6_Click(sender As Object, e As EventArgs) Handles W10_Color_Index6.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index6 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1341,7 +1341,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index5_Click(sender As Object, e As EventArgs) Handles W10_Color_Index5.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.StartMenu_Accent = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1366,7 +1366,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index4_pick_Click(sender As Object, e As EventArgs) Handles W10_Color_Index4.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index2 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1394,7 +1394,7 @@ Public Class MainFrm
     Private Sub W10_Color_Index2_Click(sender As Object, e As EventArgs) Handles W10_Color_Index2.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows10.Color_Index4 = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
             End If
@@ -1486,7 +1486,7 @@ Public Class MainFrm
     Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W8_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows8.ColorizationColor = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
@@ -1526,7 +1526,7 @@ Public Class MainFrm
     Private Sub W8_start_pick_Click(sender As Object, e As EventArgs) Handles W8_start_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows8.StartColor = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
@@ -1550,7 +1550,7 @@ Public Class MainFrm
     Private Sub W8_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows8.AccentColor = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
@@ -1574,7 +1574,7 @@ Public Class MainFrm
     Private Sub W8_personalcls_background_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcls_background_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows8.PersonalColors_Background = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
@@ -1598,7 +1598,7 @@ Public Class MainFrm
     Private Sub W8_personalcolor_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcolor_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows8.PersonalColors_Accent = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
             End If
@@ -1653,7 +1653,7 @@ Public Class MainFrm
     Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows7.ColorizationColor = sender.BackColor
                 If My.PreviewStyle = WindowStyle.W7 Then ApplyColorsToElements(My.CP)
             End If
@@ -1685,7 +1685,7 @@ Public Class MainFrm
     Private Sub W7_ColorizationAfterglow_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationAfterglow_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.Windows7.ColorizationAfterglow = sender.BackColor
                 ApplyColorsToElements(My.CP)
             End If
@@ -1820,7 +1820,7 @@ Public Class MainFrm
     Private Sub WVista_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.Application.MenuEvent.Cut Or My.Application.ColorEvent = My.Application.MenuEvent.Paste Or My.Application.ColorEvent = My.Application.MenuEvent.Override Then
+            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
                 My.CP.WindowsVista.ColorizationColor = sender.BackColor
                 If My.PreviewStyle = WindowStyle.WVista Then ApplyColorsToElements(My.CP)
             End If
@@ -2531,9 +2531,9 @@ Public Class MainFrm
 
     Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
         If My.WXP Then
-            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinXP), MsgBoxStyle.Question + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
+            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinXP), MsgBoxStyle.Critical + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
         ElseIf My.WVista Then
-            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinVista), MsgBoxStyle.Question + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
+            If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinVista), MsgBoxStyle.Critical + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
         End If
 
         If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)

@@ -1093,7 +1093,7 @@ Partial Class Store
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
         Me.XenonWindow1.TabIndex = 2
-        Me.XenonWindow1.Text = "App Preview"
+        Me.XenonWindow1.Text = "App preview"
         Me.XenonWindow1.ToolWindow = False
         Me.XenonWindow1.Win7Alpha = 100
         Me.XenonWindow1.Win7ColorBal = 100
@@ -1204,7 +1204,7 @@ Partial Class Store
         Me.ClassicWindow1.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow1.Size = New System.Drawing.Size(181, 146)
         Me.ClassicWindow1.TabIndex = 4
-        Me.ClassicWindow1.TitlebarText = "Active App"
+        Me.ClassicWindow1.Text = "App preview"
         Me.ClassicWindow1.UseItAsMenu = False
         '
         'ClassicWindow2
@@ -1235,7 +1235,7 @@ Partial Class Store
         Me.ClassicWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.ClassicWindow2.Size = New System.Drawing.Size(181, 60)
         Me.ClassicWindow2.TabIndex = 5
-        Me.ClassicWindow2.TitlebarText = "Inactive App"
+        Me.ClassicWindow2.Text = "Inactive app"
         Me.ClassicWindow2.UseItAsMenu = False
         '
         'ClassicTaskbar
@@ -1402,7 +1402,7 @@ Partial Class Store
         Me.Menu_Window.Padding = New System.Windows.Forms.Padding(3, 3, 5, 5)
         Me.Menu_Window.Size = New System.Drawing.Size(115, 66)
         Me.Menu_Window.TabIndex = 4
-        Me.Menu_Window.TitlebarText = "New Window"
+        Me.Menu_Window.Text = "New Window"
         Me.Menu_Window.UseItAsMenu = True
         '
         'menucontainer3
@@ -1429,6 +1429,7 @@ Partial Class Store
         Me.RetroLabel9.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel9.TabIndex = 3
         Me.RetroLabel9.Text = "Disabled item"
+        Me.RetroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'highlight
         '
@@ -1464,6 +1465,7 @@ Partial Class Store
         Me.RetroLabel5.Size = New System.Drawing.Size(85, 20)
         Me.RetroLabel5.TabIndex = 3
         Me.RetroLabel5.Text = "Hovered item"
+        Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menucontainer1
         '
@@ -1489,6 +1491,7 @@ Partial Class Store
         Me.RetroLabel6.Size = New System.Drawing.Size(86, 20)
         Me.RetroLabel6.TabIndex = 3
         Me.RetroLabel6.Text = "Menu item"
+        Me.RetroLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroWindow3
         '
@@ -1520,7 +1523,7 @@ Partial Class Store
         Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow3.Size = New System.Drawing.Size(147, 80)
         Me.RetroWindow3.TabIndex = 2
-        Me.RetroWindow3.TitlebarText = "Message Box"
+        Me.RetroWindow3.Text = "Message box"
         Me.RetroWindow3.UseItAsMenu = False
         '
         'RetroButton5
@@ -1558,9 +1561,9 @@ Partial Class Store
         Me.RetroLabel4.Location = New System.Drawing.Point(4, 22)
         Me.RetroLabel4.Name = "RetroLabel4"
         Me.RetroLabel4.Padding = New System.Windows.Forms.Padding(4)
-        Me.RetroLabel4.Size = New System.Drawing.Size(82, 21)
+        Me.RetroLabel4.Size = New System.Drawing.Size(78, 21)
         Me.RetroLabel4.TabIndex = 1
-        Me.RetroLabel4.Text = "Message Text"
+        Me.RetroLabel4.Text = "Message text"
         Me.RetroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'RetroLabel13
@@ -1608,7 +1611,7 @@ Partial Class Store
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
         Me.RetroWindow2.TabIndex = 1
-        Me.RetroWindow2.TitlebarText = "Active Window"
+        Me.RetroWindow2.Text = "Active window"
         Me.RetroWindow2.UseItAsMenu = False
         '
         'RetroTextBox1
@@ -1630,7 +1633,7 @@ Partial Class Store
         Me.RetroTextBox1.Size = New System.Drawing.Size(188, 76)
         Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
-        Me.RetroTextBox1.Text = "Window Text"
+        Me.RetroTextBox1.Text = "Window text"
         Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.RetroTextBox1.UseSystemPasswordChar = False
         '
@@ -1737,8 +1740,7 @@ Partial Class Store
         Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
         Me.RetroWindow1.TabIndex = 0
-        Me.RetroWindow1.Text = "New Window"
-        Me.RetroWindow1.TitlebarText = "Inactive Window"
+        Me.RetroWindow1.Text = "Inactive window"
         Me.RetroWindow1.UseItAsMenu = False
         '
         'RetroWindow4
@@ -1770,7 +1772,7 @@ Partial Class Store
         Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
         Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
         Me.RetroWindow4.TabIndex = 3
-        Me.RetroWindow4.TitlebarText = "Program Container"
+        Me.RetroWindow4.Text = "Program container"
         Me.RetroWindow4.UseItAsMenu = False
         '
         'programcontainer

@@ -1,12 +1,12 @@
 ﻿Imports System.IO
-Imports WinPaletter.XenonCore
+Imports System.Net
 Imports System.Security.Cryptography
+Imports System.Text
+Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
-Imports Devcorp.Controls.VisualStyles
-Imports System.Text
-Imports System.Net
 Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class Store
 
@@ -1044,7 +1044,7 @@ Public Class Store
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
             If selectedItem.DoneByWinPaletter Then CPx.Info.Author = My.Application.Info.CompanyName
-            CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing))
+            CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing), True)
             My.CP_Original = CPx.Clone
         End Using
 

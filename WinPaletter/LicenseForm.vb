@@ -3,11 +3,9 @@
 Public Class LicenseForm
     Private Sub LicenseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-
         XenonTextBox1.Font = My.Application.ConsoleFontLarge
-
         XenonTextBox1.Text = My.Resources.LICENSE
-
+        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

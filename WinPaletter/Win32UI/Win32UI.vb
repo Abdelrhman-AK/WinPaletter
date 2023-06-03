@@ -1,6 +1,5 @@
-Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
-Imports System.Management
+Imports WinPaletter.XenonCore
 
 Public Class Win32UI
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click

@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class Wallpaper_Editor
 

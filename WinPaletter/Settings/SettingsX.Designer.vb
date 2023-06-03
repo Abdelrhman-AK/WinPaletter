@@ -1106,7 +1106,7 @@ Partial Class SettingsX
         '
         'PictureBox36
         '
-        Me.PictureBox36.Image = Global.WinPaletter.My.Resources.Resources.Native11
+        Me.PictureBox36.Image = Global.WinPaletter.My.Resources.Native11
         Me.PictureBox36.Location = New System.Drawing.Point(17, 114)
         Me.PictureBox36.Name = "PictureBox36"
         Me.PictureBox36.Size = New System.Drawing.Size(24, 24)

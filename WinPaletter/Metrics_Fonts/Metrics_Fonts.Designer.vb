@@ -374,7 +374,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox10.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.XenonAlertBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
         Me.XenonAlertBox10.CenterText = False
         Me.XenonAlertBox10.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -512,7 +512,7 @@ Partial Class Metrics_Fonts
         'MetricsEnabled
         '
         Me.MetricsEnabled.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.MetricsEnabled.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.MetricsEnabled.Checked = False
         Me.MetricsEnabled.DarkLight_Toggler = False
         Me.MetricsEnabled.Location = New System.Drawing.Point(1031, 9)
@@ -573,7 +573,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox3.CenterText = False
         Me.XenonAlertBox3.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -909,7 +909,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox11
         '
         Me.XenonAlertBox11.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.XenonAlertBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonAlertBox11.CenterText = True
         Me.XenonAlertBox11.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1034,7 +1034,7 @@ Partial Class Metrics_Fonts
         Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(6, 26, 6, 6)
         Me.RetroWindow2.Size = New System.Drawing.Size(100, 170)
         Me.RetroWindow2.TabIndex = 9
-        Me.RetroWindow2.TitlebarText = "Tool"
+        Me.RetroWindow2.Text = "Tool"
         Me.RetroWindow2.UseItAsMenu = False
         '
         'RetroWindow1
@@ -1065,7 +1065,7 @@ Partial Class Metrics_Fonts
         Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(6, 26, 6, 6)
         Me.RetroWindow1.Size = New System.Drawing.Size(189, 170)
         Me.RetroWindow1.TabIndex = 8
-        Me.RetroWindow1.TitlebarText = "Application"
+        Me.RetroWindow1.Text = "Application"
         Me.RetroWindow1.UseItAsMenu = False
         '
         'PictureBox41
@@ -1496,7 +1496,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1527,7 +1527,7 @@ Partial Class Metrics_Fonts
         '
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox2.CenterText = True
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1962,7 +1962,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox12
         '
         Me.XenonAlertBox12.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.XenonAlertBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonAlertBox12.CenterText = True
         Me.XenonAlertBox12.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2085,7 +2085,7 @@ Partial Class Metrics_Fonts
         Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(6, 26, 6, 6)
         Me.RetroWindow3.Size = New System.Drawing.Size(424, 168)
         Me.RetroWindow3.TabIndex = 9
-        Me.RetroWindow3.TitlebarText = "Application"
+        Me.RetroWindow3.Text = "Application"
         Me.RetroWindow3.UseItAsMenu = False
         '
         'RetroPanel2
@@ -2431,7 +2431,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(252, Byte), Integer), CType(CType(218, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox4.CenterText = False
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2492,7 +2492,7 @@ Partial Class Metrics_Fonts
         'XenonAlertBox13
         '
         Me.XenonAlertBox13.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
-        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.XenonAlertBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.XenonAlertBox13.CenterText = True
         Me.XenonAlertBox13.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -2656,7 +2656,7 @@ Partial Class Metrics_Fonts
         Me.RetroWindow5.Padding = New System.Windows.Forms.Padding(6, 26, 6, 6)
         Me.RetroWindow5.Size = New System.Drawing.Size(397, 218)
         Me.RetroWindow5.TabIndex = 204
-        Me.RetroWindow5.TitlebarText = "Application"
+        Me.RetroWindow5.Text = "Application"
         Me.RetroWindow5.UseItAsMenu = False
         '
         'Panel3

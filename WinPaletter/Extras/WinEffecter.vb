@@ -1,5 +1,5 @@
-﻿Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
+﻿Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load

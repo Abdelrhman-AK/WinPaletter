@@ -1,18 +1,18 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.IO.Compression
+Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports Devcorp.Controls.VisualStyles
 Imports Microsoft.Win32
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
+Imports WinPaletter.CP.Structures
 Imports WinPaletter.Metrics
-Imports WinPaletter.XenonCore
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
-Imports Devcorp.Controls.VisualStyles
-Imports WinPaletter.Reg_IO
-Imports WinPaletter.CP.Structures
-Imports System.IO.Compression
-Imports System.IO
 Imports WinPaletter.PreviewHelpers
-Imports Newtonsoft.Json.Linq
-Imports Newtonsoft.Json
+Imports WinPaletter.Reg_IO
+Imports WinPaletter.XenonCore
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -1549,7 +1549,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
                 If GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0") = "1" Then
-                    WallpaperStyle = WallpaperStyle.Tile
+                    WallpaperStyle = WallpaperStyles.Tile
                 Else
                     WallpaperStyle = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", _DefWallpaper.WallpaperStyle)
                 End If
@@ -1591,7 +1591,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
 
                         ElseIf WallpaperType = WallpaperTypes.Picture Then
-                            If My.WXP Or My.WVista Or My.W7 Then
+                            If (My.WXP Or My.WVista Or My.W7) AndAlso IO.File.Exists(ImageFile) AndAlso Not New FileInfo(ImageFile).FullName.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
                                 Using bmp As New Bitmap(Bitmap_Mgr.Load(ImageFile))
                                     If bmp.RawFormat IsNot Imaging.ImageFormat.Bmp Then
                                         If MsgBox(My.Lang.CP_Wallpaper_NonBMP0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.CP_Wallpaper_NonBMP1) = MsgBoxResult.Yes Then
@@ -4643,7 +4643,7 @@ Start:
         End Select
     End Sub
 
-    Sub Save([SaveTo] As CP_Type, Optional File As String = "", Optional [TreeView] As TreeView = Nothing)
+    Sub Save([SaveTo] As CP_Type, Optional File As String = "", Optional [TreeView] As TreeView = Nothing, Optional ResetToDefault As Boolean = False)
 
         Select Case [SaveTo]
             Case CP_Type.Registry
@@ -4687,6 +4687,35 @@ Start:
                         AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Admin_Msg1), "admin")
                     End If
 
+                End If
+
+                'Reset to default Windows theme
+                If ResetToDefault Then
+                    Execute(Sub()
+                                Using def As CP = CP_Defaults.GetDefault
+                                    def.LogonUI10x.NoLockScreen = False
+                                    def.LogonUI7.Enabled = False
+                                    def.Windows8.NoLockScreen = False
+                                    def.LogonUIXP.Enabled = True
+
+                                    If Not My.WXP Then ResetCursorsToAero() Else ResetCursorsToNone_XP()
+
+                                    def.CommandPrompt.Enabled = True
+                                    def.PowerShellx86.Enabled = True
+                                    def.PowerShellx64.Enabled = True
+
+                                    def.MetricsFonts.Enabled = True
+                                    def.Wallpaper.Enabled = True
+                                    def.WindowsEffects.Enabled = True
+                                    def.AltTab.Enabled = True
+                                    def.ScreenSaver.Enabled = True
+                                    def.Sounds.Enabled = True
+                                    def.AppTheme.Enabled = True
+
+                                    def.Save(CP_Type.Registry)
+                                End Using
+
+                            End Sub, [TreeView], My.Lang.CP_ThemeReset, My.Lang.CP_ThemeReset_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 'Theme info

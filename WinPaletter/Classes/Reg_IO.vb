@@ -1,7 +1,5 @@
-﻿Imports Microsoft.Win32
-Imports Newtonsoft.Json.Linq
-Imports System.Drawing.Drawing2D
-Imports System.Security.AccessControl
+﻿Imports System.Security.AccessControl
+Imports Microsoft.Win32
 
 ''' <summary>
 ''' Class contains custom Registry and IO functions

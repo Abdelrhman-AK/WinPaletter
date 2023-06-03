@@ -5,6 +5,7 @@ Public Class Store_ThemeLicense
         ApplyDarkMode(Me)
         XenonTextBox1.Font = My.Application.ConsoleFontLarge
         Icon = LicenseForm.Icon
+        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

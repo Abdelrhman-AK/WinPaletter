@@ -297,7 +297,7 @@ Partial Class TerminalInfo
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.Resources.notify_info
+        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.notify_info
         Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 174)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(437, 32)

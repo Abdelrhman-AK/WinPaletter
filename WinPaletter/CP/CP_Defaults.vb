@@ -81,6 +81,8 @@ Public Class CP_Defaults : Implements IDisposable
     Public Function Default_Windows11() As CP
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
+        [CP].Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32)
+
         With [CP].Info
             .ThemeName = "Windows 11 (Initial)"
             .Description = "Initial; Like first time after Windows Setup"

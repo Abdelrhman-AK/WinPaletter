@@ -114,7 +114,7 @@ Partial Class AltTabEditor
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
+        Me.PictureBox1.Image = Global.WinPaletter.My.Resources.SampleApp_Active
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
@@ -125,7 +125,7 @@ Partial Class AltTabEditor
         'PictureBox2
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox2.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
+        Me.PictureBox2.Image = Global.WinPaletter.My.Resources.SampleApp_Active
         Me.PictureBox2.Location = New System.Drawing.Point(149, 20)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(35, 35)
@@ -454,7 +454,7 @@ Partial Class AltTabEditor
         'PictureBox3
         '
         Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox3.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
+        Me.PictureBox3.Image = Global.WinPaletter.My.Resources.SampleApp_Active
         Me.PictureBox3.Location = New System.Drawing.Point(190, 20)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(35, 35)
@@ -631,7 +631,7 @@ Partial Class AltTabEditor
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(781, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

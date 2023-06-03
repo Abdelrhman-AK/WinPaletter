@@ -992,7 +992,7 @@ Partial Class Sounds_Editor
         Me.XenonButton199.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton199.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton199.ForeColor = System.Drawing.Color.White
-        Me.XenonButton199.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton199.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton199.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton199.LineSize = 1
         Me.XenonButton199.Location = New System.Drawing.Point(639, 3)
@@ -1009,7 +1009,7 @@ Partial Class Sounds_Editor
         Me.XenonButton200.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton200.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton200.ForeColor = System.Drawing.Color.White
-        Me.XenonButton200.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton200.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton200.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton200.LineSize = 1
         Me.XenonButton200.Location = New System.Drawing.Point(677, 3)
@@ -1102,7 +1102,7 @@ Partial Class Sounds_Editor
         Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton25.ForeColor = System.Drawing.Color.White
-        Me.XenonButton25.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton25.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton25.LineSize = 1
         Me.XenonButton25.Location = New System.Drawing.Point(639, 3)
@@ -1119,7 +1119,7 @@ Partial Class Sounds_Editor
         Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton26.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton26.LineSize = 1
         Me.XenonButton26.Location = New System.Drawing.Point(677, 3)
@@ -1281,7 +1281,7 @@ Partial Class Sounds_Editor
         Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton19.ForeColor = System.Drawing.Color.White
-        Me.XenonButton19.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton19.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton19.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton19.LineSize = 1
         Me.XenonButton19.Location = New System.Drawing.Point(639, 3)
@@ -1298,7 +1298,7 @@ Partial Class Sounds_Editor
         Me.XenonButton20.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton20.ForeColor = System.Drawing.Color.White
-        Me.XenonButton20.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton20.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton20.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton20.LineSize = 1
         Me.XenonButton20.Location = New System.Drawing.Point(677, 3)
@@ -1391,7 +1391,7 @@ Partial Class Sounds_Editor
         Me.XenonButton15.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton15.ForeColor = System.Drawing.Color.White
-        Me.XenonButton15.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton15.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton15.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton15.LineSize = 1
         Me.XenonButton15.Location = New System.Drawing.Point(639, 3)
@@ -1408,7 +1408,7 @@ Partial Class Sounds_Editor
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton5.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton5.LineSize = 1
         Me.XenonButton5.Location = New System.Drawing.Point(677, 3)
@@ -1501,7 +1501,7 @@ Partial Class Sounds_Editor
         Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton16.ForeColor = System.Drawing.Color.White
-        Me.XenonButton16.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton16.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton16.LineSize = 1
         Me.XenonButton16.Location = New System.Drawing.Point(639, 3)
@@ -1518,7 +1518,7 @@ Partial Class Sounds_Editor
         Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton13.ForeColor = System.Drawing.Color.White
-        Me.XenonButton13.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton13.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton13.LineSize = 1
         Me.XenonButton13.Location = New System.Drawing.Point(677, 3)
@@ -1611,7 +1611,7 @@ Partial Class Sounds_Editor
         Me.XenonButton17.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton17.ForeColor = System.Drawing.Color.White
-        Me.XenonButton17.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton17.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton17.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton17.LineSize = 1
         Me.XenonButton17.Location = New System.Drawing.Point(639, 3)
@@ -1628,7 +1628,7 @@ Partial Class Sounds_Editor
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton3.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(677, 3)
@@ -1721,7 +1721,7 @@ Partial Class Sounds_Editor
         Me.XenonButton18.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton18.ForeColor = System.Drawing.Color.White
-        Me.XenonButton18.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton18.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton18.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton18.LineSize = 1
         Me.XenonButton18.Location = New System.Drawing.Point(639, 3)
@@ -1738,7 +1738,7 @@ Partial Class Sounds_Editor
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton2.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton2.LineSize = 1
         Me.XenonButton2.Location = New System.Drawing.Point(677, 3)
@@ -1847,7 +1847,7 @@ Partial Class Sounds_Editor
         Me.XenonButton205.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton205.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton205.ForeColor = System.Drawing.Color.White
-        Me.XenonButton205.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton205.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton205.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton205.LineSize = 1
         Me.XenonButton205.Location = New System.Drawing.Point(639, 3)
@@ -1864,7 +1864,7 @@ Partial Class Sounds_Editor
         Me.XenonButton206.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton206.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton206.ForeColor = System.Drawing.Color.White
-        Me.XenonButton206.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton206.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton206.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton206.LineSize = 1
         Me.XenonButton206.Location = New System.Drawing.Point(677, 3)
@@ -1957,7 +1957,7 @@ Partial Class Sounds_Editor
         Me.XenonButton211.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton211.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton211.ForeColor = System.Drawing.Color.White
-        Me.XenonButton211.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton211.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton211.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton211.LineSize = 1
         Me.XenonButton211.Location = New System.Drawing.Point(639, 3)
@@ -1974,7 +1974,7 @@ Partial Class Sounds_Editor
         Me.XenonButton212.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton212.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton212.ForeColor = System.Drawing.Color.White
-        Me.XenonButton212.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton212.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton212.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton212.LineSize = 1
         Me.XenonButton212.Location = New System.Drawing.Point(677, 3)
@@ -2067,7 +2067,7 @@ Partial Class Sounds_Editor
         Me.XenonButton40.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton40.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton40.ForeColor = System.Drawing.Color.White
-        Me.XenonButton40.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton40.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton40.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton40.LineSize = 1
         Me.XenonButton40.Location = New System.Drawing.Point(639, 3)
@@ -2084,7 +2084,7 @@ Partial Class Sounds_Editor
         Me.XenonButton41.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton41.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton41.ForeColor = System.Drawing.Color.White
-        Me.XenonButton41.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton41.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton41.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton41.LineSize = 1
         Me.XenonButton41.Location = New System.Drawing.Point(677, 3)
@@ -2177,7 +2177,7 @@ Partial Class Sounds_Editor
         Me.XenonButton37.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton37.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton37.ForeColor = System.Drawing.Color.White
-        Me.XenonButton37.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton37.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton37.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton37.LineSize = 1
         Me.XenonButton37.Location = New System.Drawing.Point(639, 3)
@@ -2194,7 +2194,7 @@ Partial Class Sounds_Editor
         Me.XenonButton38.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton38.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton38.ForeColor = System.Drawing.Color.White
-        Me.XenonButton38.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton38.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton38.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton38.LineSize = 1
         Me.XenonButton38.Location = New System.Drawing.Point(677, 3)
@@ -2287,7 +2287,7 @@ Partial Class Sounds_Editor
         Me.XenonButton34.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton34.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton34.ForeColor = System.Drawing.Color.White
-        Me.XenonButton34.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton34.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton34.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton34.LineSize = 1
         Me.XenonButton34.Location = New System.Drawing.Point(639, 3)
@@ -2304,7 +2304,7 @@ Partial Class Sounds_Editor
         Me.XenonButton35.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton35.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton35.ForeColor = System.Drawing.Color.White
-        Me.XenonButton35.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton35.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton35.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton35.LineSize = 1
         Me.XenonButton35.Location = New System.Drawing.Point(677, 3)
@@ -2397,7 +2397,7 @@ Partial Class Sounds_Editor
         Me.XenonButton31.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton31.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton31.ForeColor = System.Drawing.Color.White
-        Me.XenonButton31.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton31.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton31.LineSize = 1
         Me.XenonButton31.Location = New System.Drawing.Point(639, 3)
@@ -2414,7 +2414,7 @@ Partial Class Sounds_Editor
         Me.XenonButton32.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton32.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton32.ForeColor = System.Drawing.Color.White
-        Me.XenonButton32.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton32.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton32.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton32.LineSize = 1
         Me.XenonButton32.Location = New System.Drawing.Point(677, 3)
@@ -2507,7 +2507,7 @@ Partial Class Sounds_Editor
         Me.XenonButton28.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton28.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton28.ForeColor = System.Drawing.Color.White
-        Me.XenonButton28.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton28.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton28.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton28.LineSize = 1
         Me.XenonButton28.Location = New System.Drawing.Point(639, 3)
@@ -2524,7 +2524,7 @@ Partial Class Sounds_Editor
         Me.XenonButton29.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton29.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton29.ForeColor = System.Drawing.Color.White
-        Me.XenonButton29.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton29.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton29.LineSize = 1
         Me.XenonButton29.Location = New System.Drawing.Point(677, 3)
@@ -2635,7 +2635,7 @@ Partial Class Sounds_Editor
         Me.XenonButton169.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton169.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton169.ForeColor = System.Drawing.Color.White
-        Me.XenonButton169.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton169.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton169.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton169.LineSize = 1
         Me.XenonButton169.Location = New System.Drawing.Point(639, 3)
@@ -2652,7 +2652,7 @@ Partial Class Sounds_Editor
         Me.XenonButton170.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton170.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton170.ForeColor = System.Drawing.Color.White
-        Me.XenonButton170.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton170.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton170.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton170.LineSize = 1
         Me.XenonButton170.Location = New System.Drawing.Point(677, 3)
@@ -2757,7 +2757,7 @@ Partial Class Sounds_Editor
         Me.XenonButton166.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton166.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton166.ForeColor = System.Drawing.Color.White
-        Me.XenonButton166.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton166.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton166.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton166.LineSize = 1
         Me.XenonButton166.Location = New System.Drawing.Point(639, 3)
@@ -2774,7 +2774,7 @@ Partial Class Sounds_Editor
         Me.XenonButton167.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton167.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton167.ForeColor = System.Drawing.Color.White
-        Me.XenonButton167.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton167.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton167.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton167.LineSize = 1
         Me.XenonButton167.Location = New System.Drawing.Point(677, 3)
@@ -2867,7 +2867,7 @@ Partial Class Sounds_Editor
         Me.XenonButton58.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton58.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton58.ForeColor = System.Drawing.Color.White
-        Me.XenonButton58.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton58.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton58.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton58.LineSize = 1
         Me.XenonButton58.Location = New System.Drawing.Point(639, 3)
@@ -2884,7 +2884,7 @@ Partial Class Sounds_Editor
         Me.XenonButton59.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton59.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton59.ForeColor = System.Drawing.Color.White
-        Me.XenonButton59.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton59.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton59.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton59.LineSize = 1
         Me.XenonButton59.Location = New System.Drawing.Point(677, 3)
@@ -2977,7 +2977,7 @@ Partial Class Sounds_Editor
         Me.XenonButton43.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton43.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton43.ForeColor = System.Drawing.Color.White
-        Me.XenonButton43.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton43.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton43.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton43.LineSize = 1
         Me.XenonButton43.Location = New System.Drawing.Point(639, 3)
@@ -2994,7 +2994,7 @@ Partial Class Sounds_Editor
         Me.XenonButton44.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton44.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton44.ForeColor = System.Drawing.Color.White
-        Me.XenonButton44.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton44.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton44.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton44.LineSize = 1
         Me.XenonButton44.Location = New System.Drawing.Point(677, 3)
@@ -3087,7 +3087,7 @@ Partial Class Sounds_Editor
         Me.XenonButton46.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton46.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton46.ForeColor = System.Drawing.Color.White
-        Me.XenonButton46.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton46.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton46.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton46.LineSize = 1
         Me.XenonButton46.Location = New System.Drawing.Point(639, 3)
@@ -3104,7 +3104,7 @@ Partial Class Sounds_Editor
         Me.XenonButton47.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton47.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton47.ForeColor = System.Drawing.Color.White
-        Me.XenonButton47.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton47.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton47.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton47.LineSize = 1
         Me.XenonButton47.Location = New System.Drawing.Point(677, 3)
@@ -3197,7 +3197,7 @@ Partial Class Sounds_Editor
         Me.XenonButton49.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton49.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton49.ForeColor = System.Drawing.Color.White
-        Me.XenonButton49.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton49.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton49.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton49.LineSize = 1
         Me.XenonButton49.Location = New System.Drawing.Point(639, 3)
@@ -3214,7 +3214,7 @@ Partial Class Sounds_Editor
         Me.XenonButton50.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton50.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton50.ForeColor = System.Drawing.Color.White
-        Me.XenonButton50.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton50.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton50.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton50.LineSize = 1
         Me.XenonButton50.Location = New System.Drawing.Point(677, 3)
@@ -3307,7 +3307,7 @@ Partial Class Sounds_Editor
         Me.XenonButton52.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton52.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton52.ForeColor = System.Drawing.Color.White
-        Me.XenonButton52.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton52.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton52.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton52.LineSize = 1
         Me.XenonButton52.Location = New System.Drawing.Point(639, 3)
@@ -3324,7 +3324,7 @@ Partial Class Sounds_Editor
         Me.XenonButton53.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton53.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton53.ForeColor = System.Drawing.Color.White
-        Me.XenonButton53.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton53.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton53.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton53.LineSize = 1
         Me.XenonButton53.Location = New System.Drawing.Point(677, 3)
@@ -3417,7 +3417,7 @@ Partial Class Sounds_Editor
         Me.XenonButton55.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton55.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton55.ForeColor = System.Drawing.Color.White
-        Me.XenonButton55.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton55.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton55.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton55.LineSize = 1
         Me.XenonButton55.Location = New System.Drawing.Point(639, 3)
@@ -3434,7 +3434,7 @@ Partial Class Sounds_Editor
         Me.XenonButton56.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton56.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton56.ForeColor = System.Drawing.Color.White
-        Me.XenonButton56.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton56.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton56.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton56.LineSize = 1
         Me.XenonButton56.Location = New System.Drawing.Point(677, 3)
@@ -3543,7 +3543,7 @@ Partial Class Sounds_Editor
         Me.XenonButton163.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton163.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton163.ForeColor = System.Drawing.Color.White
-        Me.XenonButton163.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton163.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton163.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton163.LineSize = 1
         Me.XenonButton163.Location = New System.Drawing.Point(639, 3)
@@ -3560,7 +3560,7 @@ Partial Class Sounds_Editor
         Me.XenonButton164.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton164.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton164.ForeColor = System.Drawing.Color.White
-        Me.XenonButton164.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton164.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton164.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton164.LineSize = 1
         Me.XenonButton164.Location = New System.Drawing.Point(677, 3)
@@ -3653,7 +3653,7 @@ Partial Class Sounds_Editor
         Me.XenonButton157.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton157.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton157.ForeColor = System.Drawing.Color.White
-        Me.XenonButton157.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton157.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton157.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton157.LineSize = 1
         Me.XenonButton157.Location = New System.Drawing.Point(639, 3)
@@ -3670,7 +3670,7 @@ Partial Class Sounds_Editor
         Me.XenonButton158.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton158.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton158.ForeColor = System.Drawing.Color.White
-        Me.XenonButton158.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton158.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton158.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton158.LineSize = 1
         Me.XenonButton158.Location = New System.Drawing.Point(677, 3)
@@ -3763,7 +3763,7 @@ Partial Class Sounds_Editor
         Me.XenonButton154.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton154.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton154.ForeColor = System.Drawing.Color.White
-        Me.XenonButton154.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton154.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton154.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton154.LineSize = 1
         Me.XenonButton154.Location = New System.Drawing.Point(639, 3)
@@ -3780,7 +3780,7 @@ Partial Class Sounds_Editor
         Me.XenonButton155.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton155.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton155.ForeColor = System.Drawing.Color.White
-        Me.XenonButton155.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton155.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton155.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton155.LineSize = 1
         Me.XenonButton155.Location = New System.Drawing.Point(677, 3)
@@ -3873,7 +3873,7 @@ Partial Class Sounds_Editor
         Me.XenonButton151.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton151.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton151.ForeColor = System.Drawing.Color.White
-        Me.XenonButton151.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton151.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton151.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton151.LineSize = 1
         Me.XenonButton151.Location = New System.Drawing.Point(639, 3)
@@ -3890,7 +3890,7 @@ Partial Class Sounds_Editor
         Me.XenonButton152.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton152.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton152.ForeColor = System.Drawing.Color.White
-        Me.XenonButton152.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton152.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton152.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton152.LineSize = 1
         Me.XenonButton152.Location = New System.Drawing.Point(677, 3)
@@ -3983,7 +3983,7 @@ Partial Class Sounds_Editor
         Me.XenonButton148.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton148.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton148.ForeColor = System.Drawing.Color.White
-        Me.XenonButton148.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton148.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton148.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton148.LineSize = 1
         Me.XenonButton148.Location = New System.Drawing.Point(639, 3)
@@ -4000,7 +4000,7 @@ Partial Class Sounds_Editor
         Me.XenonButton149.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton149.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton149.ForeColor = System.Drawing.Color.White
-        Me.XenonButton149.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton149.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton149.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton149.LineSize = 1
         Me.XenonButton149.Location = New System.Drawing.Point(677, 3)
@@ -4093,7 +4093,7 @@ Partial Class Sounds_Editor
         Me.XenonButton145.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton145.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton145.ForeColor = System.Drawing.Color.White
-        Me.XenonButton145.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton145.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton145.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton145.LineSize = 1
         Me.XenonButton145.Location = New System.Drawing.Point(639, 3)
@@ -4110,7 +4110,7 @@ Partial Class Sounds_Editor
         Me.XenonButton146.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton146.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton146.ForeColor = System.Drawing.Color.White
-        Me.XenonButton146.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton146.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton146.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton146.LineSize = 1
         Me.XenonButton146.Location = New System.Drawing.Point(677, 3)
@@ -4203,7 +4203,7 @@ Partial Class Sounds_Editor
         Me.XenonButton142.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton142.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton142.ForeColor = System.Drawing.Color.White
-        Me.XenonButton142.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton142.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton142.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton142.LineSize = 1
         Me.XenonButton142.Location = New System.Drawing.Point(639, 3)
@@ -4220,7 +4220,7 @@ Partial Class Sounds_Editor
         Me.XenonButton143.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton143.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton143.ForeColor = System.Drawing.Color.White
-        Me.XenonButton143.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton143.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton143.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton143.LineSize = 1
         Me.XenonButton143.Location = New System.Drawing.Point(677, 3)
@@ -4327,7 +4327,7 @@ Partial Class Sounds_Editor
         Me.XenonButton241.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton241.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton241.ForeColor = System.Drawing.Color.White
-        Me.XenonButton241.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton241.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton241.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton241.LineSize = 1
         Me.XenonButton241.Location = New System.Drawing.Point(639, 3)
@@ -4344,7 +4344,7 @@ Partial Class Sounds_Editor
         Me.XenonButton242.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton242.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton242.ForeColor = System.Drawing.Color.White
-        Me.XenonButton242.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton242.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton242.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton242.LineSize = 1
         Me.XenonButton242.Location = New System.Drawing.Point(677, 3)
@@ -4437,7 +4437,7 @@ Partial Class Sounds_Editor
         Me.XenonButton244.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton244.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton244.ForeColor = System.Drawing.Color.White
-        Me.XenonButton244.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton244.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton244.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton244.LineSize = 1
         Me.XenonButton244.Location = New System.Drawing.Point(639, 3)
@@ -4454,7 +4454,7 @@ Partial Class Sounds_Editor
         Me.XenonButton245.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton245.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton245.ForeColor = System.Drawing.Color.White
-        Me.XenonButton245.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton245.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton245.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton245.LineSize = 1
         Me.XenonButton245.Location = New System.Drawing.Point(677, 3)
@@ -4547,7 +4547,7 @@ Partial Class Sounds_Editor
         Me.XenonButton238.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton238.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton238.ForeColor = System.Drawing.Color.White
-        Me.XenonButton238.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton238.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton238.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton238.LineSize = 1
         Me.XenonButton238.Location = New System.Drawing.Point(639, 3)
@@ -4564,7 +4564,7 @@ Partial Class Sounds_Editor
         Me.XenonButton239.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton239.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton239.ForeColor = System.Drawing.Color.White
-        Me.XenonButton239.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton239.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton239.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton239.LineSize = 1
         Me.XenonButton239.Location = New System.Drawing.Point(677, 3)
@@ -4657,7 +4657,7 @@ Partial Class Sounds_Editor
         Me.XenonButton235.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton235.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton235.ForeColor = System.Drawing.Color.White
-        Me.XenonButton235.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton235.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton235.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton235.LineSize = 1
         Me.XenonButton235.Location = New System.Drawing.Point(639, 3)
@@ -4674,7 +4674,7 @@ Partial Class Sounds_Editor
         Me.XenonButton236.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton236.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton236.ForeColor = System.Drawing.Color.White
-        Me.XenonButton236.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton236.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton236.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton236.LineSize = 1
         Me.XenonButton236.Location = New System.Drawing.Point(677, 3)
@@ -4767,7 +4767,7 @@ Partial Class Sounds_Editor
         Me.XenonButton160.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton160.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton160.ForeColor = System.Drawing.Color.White
-        Me.XenonButton160.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton160.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton160.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton160.LineSize = 1
         Me.XenonButton160.Location = New System.Drawing.Point(639, 3)
@@ -4784,7 +4784,7 @@ Partial Class Sounds_Editor
         Me.XenonButton161.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton161.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton161.ForeColor = System.Drawing.Color.White
-        Me.XenonButton161.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton161.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton161.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton161.LineSize = 1
         Me.XenonButton161.Location = New System.Drawing.Point(677, 3)
@@ -4895,7 +4895,7 @@ Partial Class Sounds_Editor
         Me.XenonButton232.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton232.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton232.ForeColor = System.Drawing.Color.White
-        Me.XenonButton232.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton232.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton232.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton232.LineSize = 1
         Me.XenonButton232.Location = New System.Drawing.Point(639, 3)
@@ -4912,7 +4912,7 @@ Partial Class Sounds_Editor
         Me.XenonButton233.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton233.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton233.ForeColor = System.Drawing.Color.White
-        Me.XenonButton233.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton233.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton233.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton233.LineSize = 1
         Me.XenonButton233.Location = New System.Drawing.Point(677, 3)
@@ -5005,7 +5005,7 @@ Partial Class Sounds_Editor
         Me.XenonButton196.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton196.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton196.ForeColor = System.Drawing.Color.White
-        Me.XenonButton196.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton196.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton196.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton196.LineSize = 1
         Me.XenonButton196.Location = New System.Drawing.Point(639, 3)
@@ -5022,7 +5022,7 @@ Partial Class Sounds_Editor
         Me.XenonButton197.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton197.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton197.ForeColor = System.Drawing.Color.White
-        Me.XenonButton197.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton197.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton197.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton197.LineSize = 1
         Me.XenonButton197.Location = New System.Drawing.Point(677, 3)
@@ -5115,7 +5115,7 @@ Partial Class Sounds_Editor
         Me.XenonButton175.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton175.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton175.ForeColor = System.Drawing.Color.White
-        Me.XenonButton175.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton175.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton175.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton175.LineSize = 1
         Me.XenonButton175.Location = New System.Drawing.Point(639, 3)
@@ -5132,7 +5132,7 @@ Partial Class Sounds_Editor
         Me.XenonButton176.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton176.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton176.ForeColor = System.Drawing.Color.White
-        Me.XenonButton176.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton176.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton176.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton176.LineSize = 1
         Me.XenonButton176.Location = New System.Drawing.Point(677, 3)
@@ -5225,7 +5225,7 @@ Partial Class Sounds_Editor
         Me.XenonButton178.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton178.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton178.ForeColor = System.Drawing.Color.White
-        Me.XenonButton178.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton178.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton178.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton178.LineSize = 1
         Me.XenonButton178.Location = New System.Drawing.Point(639, 3)
@@ -5242,7 +5242,7 @@ Partial Class Sounds_Editor
         Me.XenonButton179.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton179.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton179.ForeColor = System.Drawing.Color.White
-        Me.XenonButton179.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton179.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton179.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton179.LineSize = 1
         Me.XenonButton179.Location = New System.Drawing.Point(677, 3)
@@ -5335,7 +5335,7 @@ Partial Class Sounds_Editor
         Me.XenonButton181.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton181.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton181.ForeColor = System.Drawing.Color.White
-        Me.XenonButton181.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton181.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton181.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton181.LineSize = 1
         Me.XenonButton181.Location = New System.Drawing.Point(639, 3)
@@ -5352,7 +5352,7 @@ Partial Class Sounds_Editor
         Me.XenonButton182.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton182.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton182.ForeColor = System.Drawing.Color.White
-        Me.XenonButton182.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton182.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton182.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton182.LineSize = 1
         Me.XenonButton182.Location = New System.Drawing.Point(677, 3)
@@ -5445,7 +5445,7 @@ Partial Class Sounds_Editor
         Me.XenonButton184.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton184.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton184.ForeColor = System.Drawing.Color.White
-        Me.XenonButton184.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton184.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton184.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton184.LineSize = 1
         Me.XenonButton184.Location = New System.Drawing.Point(639, 3)
@@ -5462,7 +5462,7 @@ Partial Class Sounds_Editor
         Me.XenonButton185.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton185.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton185.ForeColor = System.Drawing.Color.White
-        Me.XenonButton185.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton185.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton185.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton185.LineSize = 1
         Me.XenonButton185.Location = New System.Drawing.Point(677, 3)
@@ -5555,7 +5555,7 @@ Partial Class Sounds_Editor
         Me.XenonButton187.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton187.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton187.ForeColor = System.Drawing.Color.White
-        Me.XenonButton187.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton187.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton187.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton187.LineSize = 1
         Me.XenonButton187.Location = New System.Drawing.Point(639, 3)
@@ -5572,7 +5572,7 @@ Partial Class Sounds_Editor
         Me.XenonButton188.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton188.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton188.ForeColor = System.Drawing.Color.White
-        Me.XenonButton188.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton188.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton188.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton188.LineSize = 1
         Me.XenonButton188.Location = New System.Drawing.Point(677, 3)
@@ -5665,7 +5665,7 @@ Partial Class Sounds_Editor
         Me.XenonButton190.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton190.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton190.ForeColor = System.Drawing.Color.White
-        Me.XenonButton190.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton190.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton190.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton190.LineSize = 1
         Me.XenonButton190.Location = New System.Drawing.Point(639, 3)
@@ -5682,7 +5682,7 @@ Partial Class Sounds_Editor
         Me.XenonButton191.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton191.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton191.ForeColor = System.Drawing.Color.White
-        Me.XenonButton191.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton191.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton191.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton191.LineSize = 1
         Me.XenonButton191.Location = New System.Drawing.Point(677, 3)
@@ -5775,7 +5775,7 @@ Partial Class Sounds_Editor
         Me.XenonButton193.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton193.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton193.ForeColor = System.Drawing.Color.White
-        Me.XenonButton193.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton193.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton193.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton193.LineSize = 1
         Me.XenonButton193.Location = New System.Drawing.Point(639, 3)
@@ -5792,7 +5792,7 @@ Partial Class Sounds_Editor
         Me.XenonButton194.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton194.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton194.ForeColor = System.Drawing.Color.White
-        Me.XenonButton194.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton194.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton194.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton194.LineSize = 1
         Me.XenonButton194.Location = New System.Drawing.Point(677, 3)
@@ -5903,7 +5903,7 @@ Partial Class Sounds_Editor
         Me.XenonButton202.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton202.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton202.ForeColor = System.Drawing.Color.White
-        Me.XenonButton202.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton202.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton202.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton202.LineSize = 1
         Me.XenonButton202.Location = New System.Drawing.Point(639, 3)
@@ -5920,7 +5920,7 @@ Partial Class Sounds_Editor
         Me.XenonButton203.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton203.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton203.ForeColor = System.Drawing.Color.White
-        Me.XenonButton203.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton203.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton203.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton203.LineSize = 1
         Me.XenonButton203.Location = New System.Drawing.Point(677, 3)
@@ -6013,7 +6013,7 @@ Partial Class Sounds_Editor
         Me.XenonButton172.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton172.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton172.ForeColor = System.Drawing.Color.White
-        Me.XenonButton172.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton172.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton172.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton172.LineSize = 1
         Me.XenonButton172.Location = New System.Drawing.Point(639, 3)
@@ -6030,7 +6030,7 @@ Partial Class Sounds_Editor
         Me.XenonButton173.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton173.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton173.ForeColor = System.Drawing.Color.White
-        Me.XenonButton173.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton173.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton173.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton173.LineSize = 1
         Me.XenonButton173.Location = New System.Drawing.Point(677, 3)
@@ -6123,7 +6123,7 @@ Partial Class Sounds_Editor
         Me.XenonButton79.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton79.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton79.ForeColor = System.Drawing.Color.White
-        Me.XenonButton79.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton79.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton79.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton79.LineSize = 1
         Me.XenonButton79.Location = New System.Drawing.Point(639, 3)
@@ -6140,7 +6140,7 @@ Partial Class Sounds_Editor
         Me.XenonButton80.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton80.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton80.ForeColor = System.Drawing.Color.White
-        Me.XenonButton80.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton80.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton80.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton80.LineSize = 1
         Me.XenonButton80.Location = New System.Drawing.Point(677, 3)
@@ -6233,7 +6233,7 @@ Partial Class Sounds_Editor
         Me.XenonButton61.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton61.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton61.ForeColor = System.Drawing.Color.White
-        Me.XenonButton61.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton61.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton61.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton61.LineSize = 1
         Me.XenonButton61.Location = New System.Drawing.Point(639, 3)
@@ -6250,7 +6250,7 @@ Partial Class Sounds_Editor
         Me.XenonButton62.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton62.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton62.ForeColor = System.Drawing.Color.White
-        Me.XenonButton62.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton62.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton62.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton62.LineSize = 1
         Me.XenonButton62.Location = New System.Drawing.Point(677, 3)
@@ -6343,7 +6343,7 @@ Partial Class Sounds_Editor
         Me.XenonButton64.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton64.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton64.ForeColor = System.Drawing.Color.White
-        Me.XenonButton64.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton64.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton64.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton64.LineSize = 1
         Me.XenonButton64.Location = New System.Drawing.Point(639, 3)
@@ -6360,7 +6360,7 @@ Partial Class Sounds_Editor
         Me.XenonButton65.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton65.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton65.ForeColor = System.Drawing.Color.White
-        Me.XenonButton65.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton65.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton65.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton65.LineSize = 1
         Me.XenonButton65.Location = New System.Drawing.Point(677, 3)
@@ -6453,7 +6453,7 @@ Partial Class Sounds_Editor
         Me.XenonButton67.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton67.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton67.ForeColor = System.Drawing.Color.White
-        Me.XenonButton67.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton67.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton67.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton67.LineSize = 1
         Me.XenonButton67.Location = New System.Drawing.Point(639, 3)
@@ -6470,7 +6470,7 @@ Partial Class Sounds_Editor
         Me.XenonButton68.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton68.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton68.ForeColor = System.Drawing.Color.White
-        Me.XenonButton68.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton68.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton68.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton68.LineSize = 1
         Me.XenonButton68.Location = New System.Drawing.Point(677, 3)
@@ -6563,7 +6563,7 @@ Partial Class Sounds_Editor
         Me.XenonButton70.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton70.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton70.ForeColor = System.Drawing.Color.White
-        Me.XenonButton70.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton70.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton70.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton70.LineSize = 1
         Me.XenonButton70.Location = New System.Drawing.Point(639, 3)
@@ -6580,7 +6580,7 @@ Partial Class Sounds_Editor
         Me.XenonButton71.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton71.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton71.ForeColor = System.Drawing.Color.White
-        Me.XenonButton71.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton71.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton71.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton71.LineSize = 1
         Me.XenonButton71.Location = New System.Drawing.Point(677, 3)
@@ -6673,7 +6673,7 @@ Partial Class Sounds_Editor
         Me.XenonButton73.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton73.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton73.ForeColor = System.Drawing.Color.White
-        Me.XenonButton73.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton73.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton73.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton73.LineSize = 1
         Me.XenonButton73.Location = New System.Drawing.Point(639, 3)
@@ -6690,7 +6690,7 @@ Partial Class Sounds_Editor
         Me.XenonButton74.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton74.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton74.ForeColor = System.Drawing.Color.White
-        Me.XenonButton74.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton74.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton74.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton74.LineSize = 1
         Me.XenonButton74.Location = New System.Drawing.Point(677, 3)
@@ -6783,7 +6783,7 @@ Partial Class Sounds_Editor
         Me.XenonButton76.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton76.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton76.ForeColor = System.Drawing.Color.White
-        Me.XenonButton76.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton76.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton76.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton76.LineSize = 1
         Me.XenonButton76.Location = New System.Drawing.Point(639, 3)
@@ -6800,7 +6800,7 @@ Partial Class Sounds_Editor
         Me.XenonButton77.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton77.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton77.ForeColor = System.Drawing.Color.White
-        Me.XenonButton77.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton77.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton77.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton77.LineSize = 1
         Me.XenonButton77.Location = New System.Drawing.Point(677, 3)
@@ -6912,7 +6912,7 @@ Partial Class Sounds_Editor
         Me.XenonButton103.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton103.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton103.ForeColor = System.Drawing.Color.White
-        Me.XenonButton103.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton103.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton103.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton103.LineSize = 1
         Me.XenonButton103.Location = New System.Drawing.Point(639, 3)
@@ -6929,7 +6929,7 @@ Partial Class Sounds_Editor
         Me.XenonButton104.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton104.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton104.ForeColor = System.Drawing.Color.White
-        Me.XenonButton104.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton104.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton104.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton104.LineSize = 1
         Me.XenonButton104.Location = New System.Drawing.Point(677, 3)
@@ -7022,7 +7022,7 @@ Partial Class Sounds_Editor
         Me.XenonButton106.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton106.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton106.ForeColor = System.Drawing.Color.White
-        Me.XenonButton106.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton106.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton106.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton106.LineSize = 1
         Me.XenonButton106.Location = New System.Drawing.Point(639, 3)
@@ -7039,7 +7039,7 @@ Partial Class Sounds_Editor
         Me.XenonButton107.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton107.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton107.ForeColor = System.Drawing.Color.White
-        Me.XenonButton107.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton107.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton107.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton107.LineSize = 1
         Me.XenonButton107.Location = New System.Drawing.Point(677, 3)
@@ -7132,7 +7132,7 @@ Partial Class Sounds_Editor
         Me.XenonButton109.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton109.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton109.ForeColor = System.Drawing.Color.White
-        Me.XenonButton109.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton109.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton109.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton109.LineSize = 1
         Me.XenonButton109.Location = New System.Drawing.Point(639, 3)
@@ -7149,7 +7149,7 @@ Partial Class Sounds_Editor
         Me.XenonButton110.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton110.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton110.ForeColor = System.Drawing.Color.White
-        Me.XenonButton110.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton110.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton110.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton110.LineSize = 1
         Me.XenonButton110.Location = New System.Drawing.Point(677, 3)
@@ -7242,7 +7242,7 @@ Partial Class Sounds_Editor
         Me.XenonButton82.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton82.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton82.ForeColor = System.Drawing.Color.White
-        Me.XenonButton82.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton82.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton82.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton82.LineSize = 1
         Me.XenonButton82.Location = New System.Drawing.Point(639, 3)
@@ -7259,7 +7259,7 @@ Partial Class Sounds_Editor
         Me.XenonButton83.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton83.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton83.ForeColor = System.Drawing.Color.White
-        Me.XenonButton83.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton83.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton83.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton83.LineSize = 1
         Me.XenonButton83.Location = New System.Drawing.Point(677, 3)
@@ -7352,7 +7352,7 @@ Partial Class Sounds_Editor
         Me.XenonButton85.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton85.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton85.ForeColor = System.Drawing.Color.White
-        Me.XenonButton85.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton85.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton85.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton85.LineSize = 1
         Me.XenonButton85.Location = New System.Drawing.Point(639, 3)
@@ -7369,7 +7369,7 @@ Partial Class Sounds_Editor
         Me.XenonButton86.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton86.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton86.ForeColor = System.Drawing.Color.White
-        Me.XenonButton86.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton86.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton86.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton86.LineSize = 1
         Me.XenonButton86.Location = New System.Drawing.Point(677, 3)
@@ -7462,7 +7462,7 @@ Partial Class Sounds_Editor
         Me.XenonButton88.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton88.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton88.ForeColor = System.Drawing.Color.White
-        Me.XenonButton88.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton88.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton88.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton88.LineSize = 1
         Me.XenonButton88.Location = New System.Drawing.Point(639, 3)
@@ -7479,7 +7479,7 @@ Partial Class Sounds_Editor
         Me.XenonButton89.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton89.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton89.ForeColor = System.Drawing.Color.White
-        Me.XenonButton89.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton89.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton89.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton89.LineSize = 1
         Me.XenonButton89.Location = New System.Drawing.Point(677, 3)
@@ -7572,7 +7572,7 @@ Partial Class Sounds_Editor
         Me.XenonButton91.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton91.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton91.ForeColor = System.Drawing.Color.White
-        Me.XenonButton91.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton91.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton91.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton91.LineSize = 1
         Me.XenonButton91.Location = New System.Drawing.Point(639, 3)
@@ -7589,7 +7589,7 @@ Partial Class Sounds_Editor
         Me.XenonButton92.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton92.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton92.ForeColor = System.Drawing.Color.White
-        Me.XenonButton92.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton92.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton92.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton92.LineSize = 1
         Me.XenonButton92.Location = New System.Drawing.Point(677, 3)
@@ -7682,7 +7682,7 @@ Partial Class Sounds_Editor
         Me.XenonButton94.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton94.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton94.ForeColor = System.Drawing.Color.White
-        Me.XenonButton94.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton94.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton94.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton94.LineSize = 1
         Me.XenonButton94.Location = New System.Drawing.Point(639, 3)
@@ -7699,7 +7699,7 @@ Partial Class Sounds_Editor
         Me.XenonButton95.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton95.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton95.ForeColor = System.Drawing.Color.White
-        Me.XenonButton95.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton95.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton95.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton95.LineSize = 1
         Me.XenonButton95.Location = New System.Drawing.Point(677, 3)
@@ -7792,7 +7792,7 @@ Partial Class Sounds_Editor
         Me.XenonButton97.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton97.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton97.ForeColor = System.Drawing.Color.White
-        Me.XenonButton97.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton97.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton97.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton97.LineSize = 1
         Me.XenonButton97.Location = New System.Drawing.Point(639, 3)
@@ -7809,7 +7809,7 @@ Partial Class Sounds_Editor
         Me.XenonButton98.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton98.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton98.ForeColor = System.Drawing.Color.White
-        Me.XenonButton98.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton98.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton98.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton98.LineSize = 1
         Me.XenonButton98.Location = New System.Drawing.Point(677, 3)
@@ -7902,7 +7902,7 @@ Partial Class Sounds_Editor
         Me.XenonButton100.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton100.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton100.ForeColor = System.Drawing.Color.White
-        Me.XenonButton100.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton100.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton100.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton100.LineSize = 1
         Me.XenonButton100.Location = New System.Drawing.Point(639, 3)
@@ -7919,7 +7919,7 @@ Partial Class Sounds_Editor
         Me.XenonButton101.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton101.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton101.ForeColor = System.Drawing.Color.White
-        Me.XenonButton101.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton101.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton101.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton101.LineSize = 1
         Me.XenonButton101.Location = New System.Drawing.Point(677, 3)
@@ -8031,7 +8031,7 @@ Partial Class Sounds_Editor
         Me.XenonButton112.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton112.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton112.ForeColor = System.Drawing.Color.White
-        Me.XenonButton112.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton112.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton112.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton112.LineSize = 1
         Me.XenonButton112.Location = New System.Drawing.Point(639, 3)
@@ -8048,7 +8048,7 @@ Partial Class Sounds_Editor
         Me.XenonButton113.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton113.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton113.ForeColor = System.Drawing.Color.White
-        Me.XenonButton113.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton113.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton113.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton113.LineSize = 1
         Me.XenonButton113.Location = New System.Drawing.Point(677, 3)
@@ -8141,7 +8141,7 @@ Partial Class Sounds_Editor
         Me.XenonButton115.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton115.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton115.ForeColor = System.Drawing.Color.White
-        Me.XenonButton115.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton115.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton115.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton115.LineSize = 1
         Me.XenonButton115.Location = New System.Drawing.Point(639, 3)
@@ -8158,7 +8158,7 @@ Partial Class Sounds_Editor
         Me.XenonButton116.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton116.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton116.ForeColor = System.Drawing.Color.White
-        Me.XenonButton116.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton116.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton116.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton116.LineSize = 1
         Me.XenonButton116.Location = New System.Drawing.Point(677, 3)
@@ -8251,7 +8251,7 @@ Partial Class Sounds_Editor
         Me.XenonButton118.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton118.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton118.ForeColor = System.Drawing.Color.White
-        Me.XenonButton118.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton118.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton118.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton118.LineSize = 1
         Me.XenonButton118.Location = New System.Drawing.Point(639, 3)
@@ -8268,7 +8268,7 @@ Partial Class Sounds_Editor
         Me.XenonButton119.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton119.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton119.ForeColor = System.Drawing.Color.White
-        Me.XenonButton119.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton119.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton119.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton119.LineSize = 1
         Me.XenonButton119.Location = New System.Drawing.Point(677, 3)
@@ -8361,7 +8361,7 @@ Partial Class Sounds_Editor
         Me.XenonButton121.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton121.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton121.ForeColor = System.Drawing.Color.White
-        Me.XenonButton121.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton121.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton121.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton121.LineSize = 1
         Me.XenonButton121.Location = New System.Drawing.Point(639, 3)
@@ -8378,7 +8378,7 @@ Partial Class Sounds_Editor
         Me.XenonButton122.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton122.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton122.ForeColor = System.Drawing.Color.White
-        Me.XenonButton122.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton122.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton122.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton122.LineSize = 1
         Me.XenonButton122.Location = New System.Drawing.Point(677, 3)
@@ -8471,7 +8471,7 @@ Partial Class Sounds_Editor
         Me.XenonButton124.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton124.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton124.ForeColor = System.Drawing.Color.White
-        Me.XenonButton124.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton124.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton124.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton124.LineSize = 1
         Me.XenonButton124.Location = New System.Drawing.Point(639, 3)
@@ -8488,7 +8488,7 @@ Partial Class Sounds_Editor
         Me.XenonButton125.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton125.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton125.ForeColor = System.Drawing.Color.White
-        Me.XenonButton125.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton125.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton125.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton125.LineSize = 1
         Me.XenonButton125.Location = New System.Drawing.Point(677, 3)
@@ -8581,7 +8581,7 @@ Partial Class Sounds_Editor
         Me.XenonButton127.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton127.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton127.ForeColor = System.Drawing.Color.White
-        Me.XenonButton127.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton127.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton127.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton127.LineSize = 1
         Me.XenonButton127.Location = New System.Drawing.Point(639, 3)
@@ -8598,7 +8598,7 @@ Partial Class Sounds_Editor
         Me.XenonButton128.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton128.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton128.ForeColor = System.Drawing.Color.White
-        Me.XenonButton128.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton128.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton128.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton128.LineSize = 1
         Me.XenonButton128.Location = New System.Drawing.Point(677, 3)
@@ -8691,7 +8691,7 @@ Partial Class Sounds_Editor
         Me.XenonButton130.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton130.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton130.ForeColor = System.Drawing.Color.White
-        Me.XenonButton130.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton130.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton130.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton130.LineSize = 1
         Me.XenonButton130.Location = New System.Drawing.Point(639, 3)
@@ -8708,7 +8708,7 @@ Partial Class Sounds_Editor
         Me.XenonButton131.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton131.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton131.ForeColor = System.Drawing.Color.White
-        Me.XenonButton131.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton131.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton131.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton131.LineSize = 1
         Me.XenonButton131.Location = New System.Drawing.Point(677, 3)
@@ -8801,7 +8801,7 @@ Partial Class Sounds_Editor
         Me.XenonButton133.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton133.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton133.ForeColor = System.Drawing.Color.White
-        Me.XenonButton133.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton133.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton133.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton133.LineSize = 1
         Me.XenonButton133.Location = New System.Drawing.Point(639, 3)
@@ -8818,7 +8818,7 @@ Partial Class Sounds_Editor
         Me.XenonButton134.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton134.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton134.ForeColor = System.Drawing.Color.White
-        Me.XenonButton134.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton134.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton134.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton134.LineSize = 1
         Me.XenonButton134.Location = New System.Drawing.Point(677, 3)
@@ -8911,7 +8911,7 @@ Partial Class Sounds_Editor
         Me.XenonButton136.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton136.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton136.ForeColor = System.Drawing.Color.White
-        Me.XenonButton136.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton136.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton136.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton136.LineSize = 1
         Me.XenonButton136.Location = New System.Drawing.Point(639, 3)
@@ -8928,7 +8928,7 @@ Partial Class Sounds_Editor
         Me.XenonButton137.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton137.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton137.ForeColor = System.Drawing.Color.White
-        Me.XenonButton137.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton137.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton137.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton137.LineSize = 1
         Me.XenonButton137.Location = New System.Drawing.Point(677, 3)
@@ -9021,7 +9021,7 @@ Partial Class Sounds_Editor
         Me.XenonButton139.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton139.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton139.ForeColor = System.Drawing.Color.White
-        Me.XenonButton139.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton139.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton139.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton139.LineSize = 1
         Me.XenonButton139.Location = New System.Drawing.Point(639, 3)
@@ -9038,7 +9038,7 @@ Partial Class Sounds_Editor
         Me.XenonButton140.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton140.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton140.ForeColor = System.Drawing.Color.White
-        Me.XenonButton140.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton140.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton140.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton140.LineSize = 1
         Me.XenonButton140.Location = New System.Drawing.Point(677, 3)
@@ -9146,7 +9146,7 @@ Partial Class Sounds_Editor
         Me.XenonButton214.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton214.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton214.ForeColor = System.Drawing.Color.White
-        Me.XenonButton214.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton214.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton214.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton214.LineSize = 1
         Me.XenonButton214.Location = New System.Drawing.Point(639, 3)
@@ -9163,7 +9163,7 @@ Partial Class Sounds_Editor
         Me.XenonButton215.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton215.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton215.ForeColor = System.Drawing.Color.White
-        Me.XenonButton215.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton215.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton215.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton215.LineSize = 1
         Me.XenonButton215.Location = New System.Drawing.Point(677, 3)
@@ -9256,7 +9256,7 @@ Partial Class Sounds_Editor
         Me.XenonButton217.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton217.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton217.ForeColor = System.Drawing.Color.White
-        Me.XenonButton217.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton217.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton217.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton217.LineSize = 1
         Me.XenonButton217.Location = New System.Drawing.Point(639, 3)
@@ -9273,7 +9273,7 @@ Partial Class Sounds_Editor
         Me.XenonButton218.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton218.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton218.ForeColor = System.Drawing.Color.White
-        Me.XenonButton218.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton218.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton218.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton218.LineSize = 1
         Me.XenonButton218.Location = New System.Drawing.Point(677, 3)
@@ -9366,7 +9366,7 @@ Partial Class Sounds_Editor
         Me.XenonButton220.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton220.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton220.ForeColor = System.Drawing.Color.White
-        Me.XenonButton220.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton220.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton220.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton220.LineSize = 1
         Me.XenonButton220.Location = New System.Drawing.Point(639, 3)
@@ -9383,7 +9383,7 @@ Partial Class Sounds_Editor
         Me.XenonButton221.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton221.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton221.ForeColor = System.Drawing.Color.White
-        Me.XenonButton221.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton221.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton221.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton221.LineSize = 1
         Me.XenonButton221.Location = New System.Drawing.Point(677, 3)
@@ -9476,7 +9476,7 @@ Partial Class Sounds_Editor
         Me.XenonButton223.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton223.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton223.ForeColor = System.Drawing.Color.White
-        Me.XenonButton223.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton223.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton223.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton223.LineSize = 1
         Me.XenonButton223.Location = New System.Drawing.Point(639, 3)
@@ -9493,7 +9493,7 @@ Partial Class Sounds_Editor
         Me.XenonButton224.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton224.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton224.ForeColor = System.Drawing.Color.White
-        Me.XenonButton224.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton224.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton224.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton224.LineSize = 1
         Me.XenonButton224.Location = New System.Drawing.Point(677, 3)
@@ -9586,7 +9586,7 @@ Partial Class Sounds_Editor
         Me.XenonButton226.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton226.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton226.ForeColor = System.Drawing.Color.White
-        Me.XenonButton226.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton226.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton226.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton226.LineSize = 1
         Me.XenonButton226.Location = New System.Drawing.Point(639, 3)
@@ -9603,7 +9603,7 @@ Partial Class Sounds_Editor
         Me.XenonButton227.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton227.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton227.ForeColor = System.Drawing.Color.White
-        Me.XenonButton227.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton227.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton227.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton227.LineSize = 1
         Me.XenonButton227.Location = New System.Drawing.Point(677, 3)
@@ -9696,7 +9696,7 @@ Partial Class Sounds_Editor
         Me.XenonButton229.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton229.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton229.ForeColor = System.Drawing.Color.White
-        Me.XenonButton229.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton229.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton229.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton229.LineSize = 1
         Me.XenonButton229.Location = New System.Drawing.Point(639, 3)
@@ -9713,7 +9713,7 @@ Partial Class Sounds_Editor
         Me.XenonButton230.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton230.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton230.ForeColor = System.Drawing.Color.White
-        Me.XenonButton230.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton230.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton230.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton230.LineSize = 1
         Me.XenonButton230.Location = New System.Drawing.Point(677, 3)
@@ -9838,7 +9838,7 @@ Partial Class Sounds_Editor
         Me.XenonButton247.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton247.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton247.ForeColor = System.Drawing.Color.White
-        Me.XenonButton247.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton247.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton247.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton247.LineSize = 1
         Me.XenonButton247.Location = New System.Drawing.Point(639, 3)
@@ -9855,7 +9855,7 @@ Partial Class Sounds_Editor
         Me.XenonButton248.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton248.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton248.ForeColor = System.Drawing.Color.White
-        Me.XenonButton248.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton248.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton248.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton248.LineSize = 1
         Me.XenonButton248.Location = New System.Drawing.Point(677, 3)
@@ -9948,7 +9948,7 @@ Partial Class Sounds_Editor
         Me.XenonButton250.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton250.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton250.ForeColor = System.Drawing.Color.White
-        Me.XenonButton250.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton250.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton250.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton250.LineSize = 1
         Me.XenonButton250.Location = New System.Drawing.Point(639, 3)
@@ -9965,7 +9965,7 @@ Partial Class Sounds_Editor
         Me.XenonButton251.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton251.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton251.ForeColor = System.Drawing.Color.White
-        Me.XenonButton251.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton251.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton251.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton251.LineSize = 1
         Me.XenonButton251.Location = New System.Drawing.Point(677, 3)
@@ -10058,7 +10058,7 @@ Partial Class Sounds_Editor
         Me.XenonButton253.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton253.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton253.ForeColor = System.Drawing.Color.White
-        Me.XenonButton253.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton253.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton253.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton253.LineSize = 1
         Me.XenonButton253.Location = New System.Drawing.Point(639, 3)
@@ -10075,7 +10075,7 @@ Partial Class Sounds_Editor
         Me.XenonButton254.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton254.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton254.ForeColor = System.Drawing.Color.White
-        Me.XenonButton254.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton254.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton254.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton254.LineSize = 1
         Me.XenonButton254.Location = New System.Drawing.Point(677, 3)
@@ -10168,7 +10168,7 @@ Partial Class Sounds_Editor
         Me.XenonButton256.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton256.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton256.ForeColor = System.Drawing.Color.White
-        Me.XenonButton256.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton256.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton256.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton256.LineSize = 1
         Me.XenonButton256.Location = New System.Drawing.Point(639, 3)
@@ -10185,7 +10185,7 @@ Partial Class Sounds_Editor
         Me.XenonButton257.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton257.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton257.ForeColor = System.Drawing.Color.White
-        Me.XenonButton257.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton257.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton257.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton257.LineSize = 1
         Me.XenonButton257.Location = New System.Drawing.Point(677, 3)
@@ -10288,7 +10288,7 @@ Partial Class Sounds_Editor
         Me.XenonButton208.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton208.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton208.ForeColor = System.Drawing.Color.White
-        Me.XenonButton208.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
+        Me.XenonButton208.Image = Global.WinPaletter.My.Resources.Sound_Stop
         Me.XenonButton208.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton208.LineSize = 1
         Me.XenonButton208.Location = New System.Drawing.Point(639, 3)
@@ -10305,7 +10305,7 @@ Partial Class Sounds_Editor
         Me.XenonButton209.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
         Me.XenonButton209.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton209.ForeColor = System.Drawing.Color.White
-        Me.XenonButton209.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
+        Me.XenonButton209.Image = Global.WinPaletter.My.Resources.Sound_Play
         Me.XenonButton209.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton209.LineSize = 1
         Me.XenonButton209.Location = New System.Drawing.Point(677, 3)
@@ -10481,7 +10481,7 @@ Partial Class Sounds_Editor
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(823, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

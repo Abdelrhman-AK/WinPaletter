@@ -69,9 +69,7 @@
   <PropertyGroup>
     <ApplicationIcon>ICON.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
@@ -81,23 +79,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
-      <HintPath>..\References\Animator.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Animator.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AnimCur">
-      <HintPath>..\References\AnimCur.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColorThief.Desktop.v46">
-      <HintPath>..\References\ColorThief.Desktop.v46.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Cyotek.Windows.Forms.ColorPicker">
-      <HintPath>..\References\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Devcorp.Controls.VisualStyles">
-      <HintPath>..\References\Devcorp.Controls.VisualStyles.dll</HintPath>
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
@@ -233,6 +231,7 @@
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings" />
     <None Include="packages.config" />
+    <None Include="Resources\Assemblies.zip" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />
     <None Include="Resources\luna.zip" />
     <None Include="Resources\RetroThemesDB.wpdb" />
@@ -301,6 +300,14 @@
     <Compile Include="Extras\Sounds_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="My Project\Application.Designer.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="Settings\XeSettings.vb" />
     <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
@@ -445,14 +452,6 @@
     <Compile Include="Metrics_Fonts\VS2Metrics.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Application.Designer.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Resources1.Designer.vb">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb" />
     <Compile Include="Settings\SettingsX.Designer.vb">
       <DependentUpon>SettingsX.vb</DependentUpon>
     </Compile>
@@ -746,17 +745,17 @@
     <None Include="Resources\Store_DesignedFor10.png" />
     <None Include="Resources\Store_DesignedFor11.png" />
     <None Include="Resources\Store_DesignedForVista.png" />
-    <None Include="Resources\Store_Pattern4.png" />
-    <None Include="Resources\Store_Pattern5.png" />
-    <None Include="Resources\Store_Pattern6.png" />
-    <None Include="Resources\Store_Pattern7.png" />
-    <None Include="Resources\Store_Pattern8.png" />
-    <None Include="Resources\Store_Pattern9.png" />
-    <None Include="Resources\Store_Pattern10.png" />
+    <None Include="Resources\Store_BackBtn.png" />
     <None Include="Resources\Store_Pattern1.png" />
     <None Include="Resources\Store_Pattern2.png" />
     <None Include="Resources\Store_Pattern3.png" />
-    <None Include="Resources\Store_BackBtn.png" />
+    <None Include="Resources\Store_Pattern4.png" />
+    <None Include="Resources\Store_Pattern5.png" />
+    <None Include="Resources\Store_Pattern6.png" />
+    <None Include="Resources\Store_Pattern8.png" />
+    <None Include="Resources\Store_Pattern10.png" />
+    <None Include="Resources\Store_Pattern7.png" />
+    <None Include="Resources\Store_Pattern9.png" />
     <Content Include="Resources\System.Buffers.dll" />
     <Content Include="Resources\System.Memory.dll" />
     <Content Include="Resources\System.Numerics.Vectors.dll" />
@@ -882,13 +881,13 @@
     <EmbeddedResource Include="Metrics_Fonts\VS2Metrics.resx">
       <DependentUpon>VS2Metrics.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
     <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

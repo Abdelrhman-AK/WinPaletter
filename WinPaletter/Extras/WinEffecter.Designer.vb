@@ -1935,7 +1935,7 @@ Partial Class WinEffecter
         'PictureBox33
         '
         Me.PictureBox33.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox33.Image = Global.WinPaletter.My.Resources.Resources.CF_Img_Normal
+        Me.PictureBox33.Image = My.Resources.CF_Img_Normal
         Me.PictureBox33.Location = New System.Drawing.Point(180, 162)
         Me.PictureBox33.Name = "PictureBox33"
         Me.PictureBox33.Size = New System.Drawing.Size(252, 168)
@@ -1946,7 +1946,7 @@ Partial Class WinEffecter
         'PictureBox32
         '
         Me.PictureBox32.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox32.Image = Global.WinPaletter.My.Resources.Resources.CF_Pie_Normal
+        Me.PictureBox32.Image = My.Resources.CF_Pie_Normal
         Me.PictureBox32.Location = New System.Drawing.Point(6, 162)
         Me.PictureBox32.Name = "PictureBox32"
         Me.PictureBox32.Size = New System.Drawing.Size(168, 168)
@@ -2287,7 +2287,7 @@ Partial Class WinEffecter
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
+        Me.checker_img.Image = CType(resources.GetObject("checker_img.Image"), System.Drawing.Image)
         Me.checker_img.Location = New System.Drawing.Point(680, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)

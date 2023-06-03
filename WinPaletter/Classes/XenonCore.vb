@@ -1,11 +1,11 @@
 ﻿Imports System.ComponentModel
+Imports System.Net
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Ookii.Dialogs.WinForms
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
-Imports System.Runtime.CompilerServices
-Imports System.Net
 
 Public Class XenonCore
 
@@ -759,7 +759,7 @@ Public Module FormDWMEffects
                     [Form].DrawMica(Margins, MicaStyle.Tabbed)
 
                 ElseIf FormStyle = FormStyle.Acrylic Then
-                    [Form].DrawAcrylic(Margins, Border)
+                    [Form].DrawAcrylic(Border)
 
                 Else
                     [Form].DrawMica(Margins, MicaStyle.Mica)
@@ -767,7 +767,7 @@ Public Module FormDWMEffects
                 End If
 
             ElseIf My.W10 AndAlso Transparency_W11_10 Then
-                [Form].DrawAcrylic(Margins, Border)
+                [Form].DrawAcrylic(Border)
 
             ElseIf (My.W7 Or My.WVista) AndAlso CompositionEnabled Then
                 [Form].DrawAero(Margins)
@@ -785,7 +785,7 @@ Public Module FormDWMEffects
     End Sub
 
     <Extension()>
-    Sub DrawAcrylic(Form As Form, Margins As Padding, Optional Border As Boolean = True)
+    Sub DrawAcrylic(Form As Form, Optional Border As Boolean = True)
         Dim accent = New User32.AccentPolicy With {.AccentState = NativeMethods.User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND}
         If Border Then accent.AccentFlags = &H20 Or &H40 Or &H80 Or &H100
         Dim accentStructSize = Marshal.SizeOf(accent)
@@ -815,13 +815,13 @@ Public Module FormDWMEffects
 
         Dim FS As New FormStyle
         If Style = MicaStyle.Mica Then FS = FormStyle.Mica
-            If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
+        If Style = MicaStyle.Tabbed And My.W11_22523 Then FS = FormStyle.Tabbed Else FS = FormStyle.Mica
 
-            If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
-            Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
+        If Margins = Nothing Then Margins = New Padding(-1, -1, -1, -1)
+        Dim DWM_Margins As New Dwmapi.MARGINS With {.leftWidth = Margins.Left, .rightWidth = Margins.Right, .topHeight = Margins.Top, .bottomHeight = Margins.Bottom}
 
-            DLLFunc.DarkTitlebar(Form.Handle, XenonCore.GetDarkMode)
-            Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
+        DLLFunc.DarkTitlebar(Form.Handle, XenonCore.GetDarkMode)
+        Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, CInt(FS), Marshal.SizeOf(GetType(Integer)))
         Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, DWM_Margins)
     End Sub
 

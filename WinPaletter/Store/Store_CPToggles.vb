@@ -29,6 +29,8 @@ Public Class Store_CPToggles
         Opacity = 1
 
         CheckedListBox1.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+
+        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

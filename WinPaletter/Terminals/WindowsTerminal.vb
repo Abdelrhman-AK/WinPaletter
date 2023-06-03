@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports WinPaletter.XenonCore
 Imports WinPaletter.PreviewHelpers
+Imports WinPaletter.XenonCore
 
 Public Class WindowsTerminal
     Private _Shown As Boolean = False

@@ -5322,6 +5322,13 @@ Public Class XenonWindow : Inherits Panel
         End Set
     End Property
 
+    <Browsable(True)>
+    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+    <EditorBrowsable(EditorBrowsableState.Always)>
+    <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+    <Bindable(True)>
+    Public Overrides Property Text As String
+
     Public Sub CopycatFrom(Window As XenonWindow)
         Shadow = Window.Shadow
         Radius = Window.Radius
@@ -5440,8 +5447,8 @@ Public Class XenonWindow : Inherits Panel
         G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
 
-        '### Adjust Limits
-        'If _Metrics_CaptionHeight < 17 Then _Metrics_CaptionHeight = 17
+        If Win7Alpha > 255 Then Win7Alpha = 255
+        If Win7Alpha < 0 Then Win7Alpha = 0
 
         Dim Rect As New Rectangle(FreeMargin, FreeMargin, Width - (FreeMargin * 2 + 1), Height - (FreeMargin * 2 + 1))
         Dim RectBK As New Rectangle(0, 0, Width, Height)
@@ -7846,7 +7853,6 @@ End Class
 Public Class XenonLabel : Inherits Label
     Private _textHdc As IntPtr = IntPtr.Zero
     Private _dibSectionRef As IntPtr
-    Private ActiveTitlebarRenderer As VisualStyles.VisualStyleRenderer
 
     Public Property DrawOnGlass As Boolean = False
 
@@ -7947,12 +7953,13 @@ Public Class XenonLabel : Inherits Label
         Options.dwFlags = Options.dwFlags Or NativeMethods.UxTheme.DttOptsFlags.DTT_GLOWSIZE
         Options.iGlowSize = 10
 
-        'Set full bounds with padding
-        Dim Rectangle As NativeMethods.UxTheme.Rect = New NativeMethods.UxTheme.Rect(Padding.Left, Padding.Top, width - Padding.Right, height - Padding.Bottom)
-
         'Draw
-        ActiveTitlebarRenderer = New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active)
-        Dim result As Integer = NativeMethods.UxTheme.DrawThemeTextEx(ActiveTitlebarRenderer.Handle, _textHdc, 0, 0, Text, -1, ReturnFormatFlags, Rectangle, Options)
+        Try
+            Dim Rectangle As New NativeMethods.UxTheme.Rect(Padding.Left, Padding.Top, width - Padding.Right, height - Padding.Bottom)  'Set full bounds with padding
+            Dim ActiveTitlebarRenderer As New VisualStyles.VisualStyleRenderer(VisualStyles.VisualStyleElement.Window.Caption.Active)
+            NativeMethods.UxTheme.DrawThemeTextEx(ActiveTitlebarRenderer.Handle, _textHdc, 0, 0, Text, -1, ReturnFormatFlags, Rectangle, Options)
+        Catch
+        End Try
 
         NativeMethods.GDI32.DeleteObject(hFont)
 

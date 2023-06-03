@@ -1,8 +1,6 @@
-﻿Imports System.CodeDom.Compiler
-Imports System.IO
+﻿Imports System.IO
 Imports System.Media
 Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
 
 Public Class Sounds_Editor
     Private snd As String
@@ -175,7 +173,7 @@ Public Class Sounds_Editor
         ApplyFromCP(CP.Sounds)
     End Sub
 
-    Sub ApplyFromCP(Sounds As CP.Structures.Sounds )
+    Sub ApplyFromCP(Sounds As CP.Structures.Sounds)
         With Sounds
             SoundsEnabled.Checked = .Enabled
             XenonTextBox1.Text = .Snd_Win_SystemStart

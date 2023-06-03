@@ -1,7 +1,7 @@
-﻿Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
+﻿Imports System.Drawing.Text
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports System.Drawing.Text
+Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
 

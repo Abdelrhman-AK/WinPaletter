@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.XenonCore
-Imports WinPaletter.PreviewHelpers
 
 Public Class ScreenSaver_Editor
 

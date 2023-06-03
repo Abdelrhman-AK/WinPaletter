@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports ImageProcessor
 Imports WinPaletter.XenonCore
 
 <DefaultEvent("Click")>
@@ -82,7 +83,13 @@ Public Class StoreItem : Inherits Panel
 
         End Select
 
-        If Not GetDarkMode() Then bmp = bmp.Invert
+        If Not GetDarkMode() Then
+            Using imgF As New ImageFactory
+                imgF.Load(bmp)
+                imgF.Contrast(50)
+                bmp = CType(imgF.Image, Bitmap).Invert
+            End Using
+        End If
         pattern = New TextureBrush(bmp)
 
         Refresh()
@@ -185,13 +192,16 @@ Public Class StoreItem : Inherits Panel
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
-        Dim bkCC As Color
+        Dim bkCC As Color = bkC
 
-        If GetDarkMode() Then
-            bkCC = Color.FromArgb(alpha, CP.Info.Color1.Dark)
-        Else
-            bkCC = Color.FromArgb(alpha, CP.Info.Color1.Light)
+        If CP IsNot Nothing Then
+            If GetDarkMode() Then
+                bkCC = Color.FromArgb(alpha, CP.Info.Color1.Dark)
+            Else
+                bkCC = Color.FromArgb(alpha, CP.Info.Color1.Light)
+            End If
         End If
+
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
@@ -205,11 +215,13 @@ Public Class StoreItem : Inherits Panel
         Dim Circle1 As New Rectangle(rect_inner.X + 10 + factor_max - factor1, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
         Dim Circle2 As New Rectangle(rect_inner.X + 10 + CircleR + CircleR * 0.4 - factor2, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
 
-        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color2)), Circle2)
-        G.DrawEllipse(New Pen(CP.Info.Color2.CB(0.3)), Circle2)
+        If CP IsNot Nothing Then
+            G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color2)), Circle2)
+            G.DrawEllipse(New Pen(CP.Info.Color2.CB(0.3)), Circle2)
 
-        G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color1)), Circle1)
-        G.DrawEllipse(New Pen(CP.Info.Color1.CB(0.3)), Circle1)
+            G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color1)), Circle1)
+            G.DrawEllipse(New Pen(CP.Info.Color1.CB(0.3)), Circle1)
+        End If
 
         If BackgroundImage IsNot Nothing Then
             Select Case State
