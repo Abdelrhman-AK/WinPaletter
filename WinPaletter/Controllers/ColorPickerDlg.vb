@@ -173,8 +173,10 @@ Public Class ColorPickerDlg
             Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
             Using CCP As New ColorDialog With {.AllowFullOpen = True, .AnyColor = True, .Color = c, .FullOpen = True, .SolidColorOnly = False}
                 If CCP.ShowDialog = DialogResult.OK Then
+                    Try : Ctrl(0).BackColor = CCP.Color : Catch : End Try
                     Return CCP.Color
                 Else
+                    Try : Ctrl(0).BackColor = c : Catch : End Try
                     Return c
                 End If
             End Using
