@@ -104,6 +104,8 @@ Public Class EditInfo
         Dim c As Color = ColorPickerDlg.Pick(clist, _conditions)
 
         StoreItem1.CP.Info.Color1 = c
+        color1.BackColor = c
+
         clist.Clear()
     End Sub
 
@@ -119,6 +121,8 @@ Public Class EditInfo
         Dim c As Color = ColorPickerDlg.Pick(clist, _conditions)
 
         StoreItem1.CP.Info.Color2 = c
+        color2.BackColor = c
+
         clist.Clear()
     End Sub
 
