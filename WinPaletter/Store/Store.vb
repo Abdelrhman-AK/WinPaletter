@@ -1062,6 +1062,8 @@ Public Class Store
 
         If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(log, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
+        If My.Settings.Log_ShowApplying Then CP.AddNode(log, My.Lang.Store_LogoffRecommended, "info")
+
         log_lbl.Visible = True
         ok_btn.Visible = True
         ExportDetails_btn.Visible = True

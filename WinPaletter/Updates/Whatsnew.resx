@@ -192,7 +192,7 @@
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAJuBJREFUeF7tnQd4VNX2t4EUqvSaToBASCM9AUIKIRB6J/Reg3QUUdCr3osV9Y+9
+        vQAADr0BR/uQrQAAJuBJREFUeF7tnQd4VNX2t4EUqvSaToBASCM9AUIKIRB6J/Reg3QUUdCr3osV9Y+9
         XCsoUu0UqQFURAE1Fqz0XvWqV713feu3ZzY5bNYkMzHF7zLned4nZJKcM9nvb62995mJVnAf7sN9uA/3
         4T7+/z0qljPuw324D/fhPtyH+3Af7sN9uI/SOqwr70oCHuWA+Rysz9F9lNBhSsfAe9rxsuNdTujr6+dj
         DYY7CCVwWOVr8Rj4ykwVpipTjanO1ChjcE2A6+N54PnoUOgw6CC4j2IckngMMgYcAmoytZg6TF079coI
@@ -390,7 +390,9 @@
 • Edit these info by pressing edit button in main window (Pencil icon),open all tabs and then edit the info.</value>
   </data>
   <data name="Label14.Text" xml:space="preserve">
-    <value>• Settings load\save improvements
+    <value>• Bug reporting (Exceptions errors handling) improvements
+
+• Settings load\save improvements
 
 • Save theme confirmation dialog redesigned, with new applying options (first theme and default Windows)
 
@@ -404,6 +406,8 @@
     <value>• Fix memory leak on palette extraction from image
 
 • Fix logoff process is not found on pressing logoff button
+
+• Fix error occuring during loading Windows Terminal preferences that inhibits the application from opening
 
 • Fix no wallpaper preview with wallpaper sideshow or windows spotlight is enabled
 

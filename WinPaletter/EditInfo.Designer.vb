@@ -58,10 +58,10 @@ Partial Class EditInfo
         Me.Label13 = New System.Windows.Forms.Label()
         Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -98,8 +98,8 @@ Partial Class EditInfo
         CType(Me.PictureBox42, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
-        CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -184,7 +184,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.DrawOnGlass = False
-        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox1.ForeColor = System.Drawing.Color.Black
         Me.XenonTextBox1.Location = New System.Drawing.Point(170, 6)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -206,7 +206,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.DrawOnGlass = False
-        Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox2.ForeColor = System.Drawing.Color.Black
         Me.XenonTextBox2.Location = New System.Drawing.Point(170, 36)
         Me.XenonTextBox2.MaxLength = 12
         Me.XenonTextBox2.Multiline = False
@@ -228,7 +228,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.DrawOnGlass = False
-        Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox3.ForeColor = System.Drawing.Color.Black
         Me.XenonTextBox3.Location = New System.Drawing.Point(170, 67)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = True
@@ -261,7 +261,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox4.DrawOnGlass = False
-        Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox4.ForeColor = System.Drawing.Color.Black
         Me.XenonTextBox4.Location = New System.Drawing.Point(170, 312)
         Me.XenonTextBox4.MaxLength = 32767
         Me.XenonTextBox4.Multiline = False
@@ -283,7 +283,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox5.DrawOnGlass = False
-        Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox5.ForeColor = System.Drawing.Color.Black
         Me.XenonTextBox5.Location = New System.Drawing.Point(170, 342)
         Me.XenonTextBox5.MaxLength = 32767
         Me.XenonTextBox5.Multiline = False
@@ -432,7 +432,7 @@ Partial Class EditInfo
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.XenonAlertBox2.CenterText = False
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -449,7 +449,7 @@ Partial Class EditInfo
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -681,6 +681,30 @@ Partial Class EditInfo
         Me.Label12.Text = "Background pattern:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'PictureBox16
+        '
+        Me.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.PictureBox16.Image = Global.WinPaletter.My.Resources.Resources.Store_DoneByWinPaletter
+        Me.PictureBox16.Location = New System.Drawing.Point(6, 325)
+        Me.PictureBox16.Name = "PictureBox16"
+        Me.PictureBox16.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox16.TabIndex = 39
+        Me.PictureBox16.TabStop = False
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(36, 325)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(639, 24)
+        Me.Label11.TabIndex = 40
+        Me.Label11.Text = "This icon means that the theme is designed by WinPaletter developer"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'PictureBox17
         '
         Me.PictureBox17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
@@ -702,30 +726,6 @@ Partial Class EditInfo
         Me.XenonSeparator3.Size = New System.Drawing.Size(669, 1)
         Me.XenonSeparator3.TabIndex = 41
         Me.XenonSeparator3.TabStop = False
-        '
-        'Label11
-        '
-        Me.Label11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(36, 325)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(639, 24)
-        Me.Label11.TabIndex = 40
-        Me.Label11.Text = "This icon means that the theme is designed by WinPaletter developer"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox16
-        '
-        Me.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.PictureBox16.Image = Global.WinPaletter.My.Resources.Resources.Store_DoneByWinPaletter
-        Me.PictureBox16.Location = New System.Drawing.Point(6, 325)
-        Me.PictureBox16.Name = "PictureBox16"
-        Me.PictureBox16.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox16.TabIndex = 39
-        Me.PictureBox16.TabStop = False
         '
         'Label10
         '
@@ -1046,7 +1046,6 @@ Partial Class EditInfo
         Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(420, 400)
         Me.Name = "EditInfo"
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Edit info"
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1060,8 +1059,8 @@ Partial Class EditInfo
         CType(Me.PictureBox42, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
-        CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()

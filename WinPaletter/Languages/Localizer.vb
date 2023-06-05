@@ -173,6 +173,7 @@ Public Class Localizer : Implements IDisposable
     Property InputThemeRepos As String = "Type a URL to a WinPaletter themes database"
     Property InputThemeRepos_Notice As String = "This database must follow the guidelines demonstrated in WinPaletter Store documentation"
     Property ItMustBeNumerical As String = "It must be a numerical value"
+    Property BugReport_Title As String = "There is a {0} error. Please try again or report this in GitHub issues"
     Property CurrentMode As String = "Current Mode"
     Property SaveMsg As String = "Do you want to save settings?"
     Property SettingsSaved As String = "Settings are saved"
@@ -438,6 +439,7 @@ Public Class Localizer : Implements IDisposable
     Property Store_WontWork_Protocol As String = "Unfortunately, WinPaletter Store won't work as TLS 1.2 protocol isn't enabled in {0}. Do you want to continue?"
     Property Store_ThemeDesignedFor0 As String = "This theme can be applied to all supported versions of Windows, but it was designed for:"
     Property Store_ThemeDesignedFor1 As String = "This theme can be applied to all supported versions of Windows:"
+    Property Store_LogoffRecommended As String = "It is recommended to logoff your Windows and logon to apply all effects of the theme"
 
     Property Store_Toggle_AppTheme As String = "WinPaletter application theme"
     Property Store_Toggle_LogonUI As String = "LogonUI screen"

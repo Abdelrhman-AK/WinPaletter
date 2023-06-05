@@ -320,10 +320,10 @@ Partial Class Store
         Me.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent
         Me.Titlebar_lbl.DrawOnGlass = True
         Me.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Titlebar_lbl.Location = New System.Drawing.Point(75, 0)
+        Me.Titlebar_lbl.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Titlebar_lbl.Location = New System.Drawing.Point(76, 1)
         Me.Titlebar_lbl.Name = "Titlebar_lbl"
-        Me.Titlebar_lbl.Size = New System.Drawing.Size(818, 64)
+        Me.Titlebar_lbl.Size = New System.Drawing.Size(817, 64)
         Me.Titlebar_lbl.TabIndex = 38
         Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
         Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -337,7 +337,7 @@ Partial Class Store
         Me.back_btn.Image = Nothing
         Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
         Me.back_btn.LineSize = 1
-        Me.back_btn.Location = New System.Drawing.Point(5, 0)
+        Me.back_btn.Location = New System.Drawing.Point(8, 0)
         Me.back_btn.Name = "back_btn"
         Me.back_btn.Size = New System.Drawing.Size(64, 64)
         Me.back_btn.TabIndex = 36
@@ -3119,7 +3119,6 @@ Partial Class Store
         Me.Name = "Store"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "WinPaletter Store (Beta)"
-        Me.TopMost = True
         Me.Titlebar_panel.ResumeLayout(False)
         Me.search_panel.ResumeLayout(False)
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()

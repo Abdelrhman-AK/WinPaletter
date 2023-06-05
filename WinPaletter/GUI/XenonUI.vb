@@ -5156,7 +5156,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Try
             Dim Wallpaper As Bitmap
             If Parent.BackgroundImage Is Nothing Then Wallpaper = My.Wallpaper Else Wallpaper = Parent.BackgroundImage
-            adaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat)
+            If Wallpaper IsNot Nothing Then adaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat)
 
         Catch : End Try
 
@@ -5172,18 +5172,20 @@ Public Class XenonWinElement : Inherits ContainerControl
             If Style = Styles.Taskbar11 Or Style = Styles.Start11 Or Style = Styles.ActionCenter11 Or Style = Styles.AltTab11 Then
 
                 If Transparency Then
-                    Dim b As Bitmap = New Bitmap(adaptedBack).Blur(BlurPower)
-                    If DarkMode Then
-                        If b IsNot Nothing Then
-                            Using ImgF As New ImageProcessor.ImageFactory
-                                ImgF.Load(b)
-                                ImgF.Saturation(60)
-                                adaptedBackBlurred = ImgF.Image.Clone
-                            End Using
-                        End If
+                    If adaptedBack IsNot Nothing Then
+                        Dim b As Bitmap = New Bitmap(adaptedBack).Blur(BlurPower)
+                        If DarkMode Then
+                            If b IsNot Nothing Then
+                                Using ImgF As New ImageProcessor.ImageFactory
+                                    ImgF.Load(b)
+                                    ImgF.Saturation(60)
+                                    adaptedBackBlurred = ImgF.Image.Clone
+                                End Using
+                            End If
 
-                    Else
-                        adaptedBackBlurred = b
+                        Else
+                            adaptedBackBlurred = b
+                        End If
                     End If
                 End If
 
@@ -6143,25 +6145,29 @@ Public Class XenonWindow : Inherits Panel
     Sub ProcessBack()
         Dim Wallpaper As Bitmap
         If Parent.BackgroundImage Is Nothing Then Wallpaper = My.Wallpaper Else Wallpaper = Parent.BackgroundImage
-        Try : AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat) : Catch : End Try
+        Try
+            If Wallpaper IsNot Nothing Then AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat)
+        Catch : End Try
         Try
             If Preview = Preview_Enum.W11 Then
-                Dim b As Bitmap = New Bitmap(AdaptedBack).Blur(15)
-                If DarkMode Then
-                    If b IsNot Nothing Then
-                        Using ImgF As New ImageProcessor.ImageFactory
-                            ImgF.Load(b)
-                            ImgF.Saturation(15)
-                            ImgF.Brightness(-10)
-                            AdaptedBackBlurred = ImgF.Image.Clone
-                        End Using
-                    End If
+                If AdaptedBack IsNot Nothing Then
+                    Dim b As Bitmap = New Bitmap(AdaptedBack).Blur(15)
+                    If DarkMode Then
+                        If b IsNot Nothing Then
+                            Using ImgF As New ImageProcessor.ImageFactory
+                                ImgF.Load(b)
+                                ImgF.Saturation(15)
+                                ImgF.Brightness(-10)
+                                AdaptedBackBlurred = ImgF.Image.Clone
+                            End Using
+                        End If
 
-                Else
-                    AdaptedBackBlurred = b
+                    Else
+                        AdaptedBackBlurred = b
+                    End If
                 End If
             Else
-                AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1)
+                If AdaptedBack IsNot Nothing Then AdaptedBackBlurred = New Bitmap(AdaptedBack).Blur(1)
             End If
         Catch
         End Try

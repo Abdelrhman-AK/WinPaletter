@@ -36,4 +36,8 @@ Public Class Whatsnew
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         Store_Intro.ShowDialog()
     End Sub
+
+    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+        Process.Start(My.Resources.Link_StoreGettingStarted)
+    End Sub
 End Class

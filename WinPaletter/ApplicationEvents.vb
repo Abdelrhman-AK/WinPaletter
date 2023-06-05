@@ -202,7 +202,6 @@ Namespace My
 #End Region
 
 #Region "   Variables"
-        Private WithEvents Domain As AppDomain = AppDomain.CurrentDomain
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
                                                                     If [Settings].Appearance_Auto Then ApplyDarkMode()
@@ -640,7 +639,7 @@ Namespace My
 
 #Region "   Application Startup and Shutdown Subs"
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            RemoveHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
+            RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
 
             If Not My.WXP Then
                 Try
@@ -660,7 +659,6 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            AddHandler Windows.Forms.Application.ThreadException, AddressOf MyThreadExceptionHandler
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
@@ -875,12 +873,12 @@ Namespace My
                 ver = ver.DeDuplicate
                 [Settings].WhatsNewRecord = ver.ToArray
                 [Settings].Save(XeSettings.Mode.Registry)
-
-                CreateUninstaller()
             Else
                 ShowWhatsNew = False
             End If
 #End Region
+
+            CreateUninstaller()
 
             If My.W11 Then PreviewStyle = WindowStyle.W11
             If My.W10 Then PreviewStyle = WindowStyle.W10
@@ -1145,7 +1143,7 @@ Namespace My
 #End Region
 
 #Region "   Domain (External Resources) and Exceptions Handling"
-        Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As Assembly Handles Domain.AssemblyResolve
+        Private Function DomainCheck(sender As Object, e As System.ResolveEventArgs) As Assembly
             Return GetAssemblyFromZIP(e.Name)
         End Function
 
@@ -1176,23 +1174,22 @@ Namespace My
 
         End Function
 
-
-        Sub MyThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)
+        Sub ThreadExceptionHandler(ByVal sender As Object, ByVal e As ThreadExceptionEventArgs)
             BugReport.ThrowError(e.Exception)
-            If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
 
-        Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
+        Private Sub SecondChanceExceptionHandler(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            e.ExitApplication = False
             BugReport.ThrowError(e.Exception)
-            e.ExitApplication = ExitAfterException
-            If ExitAfterException Then Process.GetCurrentProcess.Kill()
         End Sub
 
-        Private Sub Domain_UnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs) Handles Domain.UnhandledException
-            Throw DirectCast(e.ExceptionObject, Exception)
-            If ExitAfterException Then Process.GetCurrentProcess.Kill()
+        Private Sub Domain_UnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs)
+#If DEBUG Then
+            If Not Debugger.IsAttached Then BugReport.ThrowError(CType(e.ExceptionObject, Exception), True)
+#Else
+            If Not Debugger.IsAttached Then Throw CType(e.ExceptionObject, Exception)
+#End If
         End Sub
-
 #End Region
     End Class
 

@@ -19,7 +19,7 @@ Public Class BugReport
             lbl.ForeColor = Color.White
         Next
 
-        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Asterisk)
+        My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
     Sub AddData(str As String, Exception As Exception, [Treeview] As TreeView)
@@ -40,33 +40,36 @@ Public Class BugReport
     End Sub
 
     Sub AddException(str As String, Exception As Exception, [TreeView] As TreeView)
+        If Exception IsNot Nothing Then
+            Try
+                If Not String.IsNullOrWhiteSpace(Exception.Message) Then
 
-        Try
-            If Not String.IsNullOrWhiteSpace(Exception.Message) Then
+                    [TreeView].Nodes.Add(str & " message").Nodes.Add(Exception.Message)
 
-                [TreeView].Nodes.Add(str & " message").Nodes.Add(Exception.Message)
+                    [TreeView].Nodes.Add("Exception type").Nodes.Add(Exception.GetType().ToString())
 
-                Dim n As TreeNode = [TreeView].Nodes.Add(str & " stack trace")
+                    Dim n As TreeNode = [TreeView].Nodes.Add(str & " stack trace")
 
-                For Each x In Exception.StackTrace.CList
-                    n.Nodes.Add(x)
-                Next
+                    For Each x In Exception.StackTrace.CList
+                        n.Nodes.Add(x)
+                    Next
 
-                AddData(str, Exception, [TreeView])
+                    AddData(str, Exception, [TreeView])
 
-                [TreeView].Nodes.Add(str & " target sub\function").Nodes.Add(Exception.TargetSite.Name & " @ " & Exception.Source)
-                [TreeView].Nodes.Add(str & " assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName)
-                [TreeView].Nodes.Add(str & " assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location)
-                [TreeView].Nodes.Add(str & " HRESULT").Nodes.Add(Exception.HResult)
-                If Not String.IsNullOrWhiteSpace(Exception.HelpLink) Then [TreeView].Nodes.Add(str & " Microsoft help link").Nodes.Add(Exception.HelpLink)
+                    [TreeView].Nodes.Add(str & " target sub\function").Nodes.Add(Exception.TargetSite.Name & " @ " & Exception.Source)
+                    [TreeView].Nodes.Add(str & " assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName)
+                    [TreeView].Nodes.Add(str & " assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location)
+                    [TreeView].Nodes.Add(str & " HRESULT").Nodes.Add(Exception.HResult)
+                    If Not String.IsNullOrWhiteSpace(Exception.HelpLink) Then [TreeView].Nodes.Add(str & " Microsoft help link").Nodes.Add(Exception.HelpLink)
 
-            End If
+                End If
 
-        Catch
-        End Try
+            Catch
+            End Try
+        End If
     End Sub
 
-    Public Sub ThrowError(Exception As Exception)
+    Public Sub ThrowError(Exception As Exception, Optional NoRecovery As Boolean = False)
 
         Dim CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
         Dim sy As String = "." & Microsoft.Win32.Registry.GetValue(CV, "UBR", 0).ToString
@@ -75,17 +78,25 @@ Public Class BugReport
         Dim sx As String = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", "")
         sx = sx.Replace("S", "").Trim
 
+        Label7.Text = String.Format(My.Lang.BugReport_Title, Exception.GetType().ToString())
+
         Label2.Text = My.Computer.Info.OSFullName & " - " & sx & sy & " - " & If(Environment.Is64BitOperatingSystem, "64-bit", "32-bit")
 
         Label3.Text = My.Application.Info.Version.ToString
 
+        XenonAlertBox1.Visible = NoRecovery
+
         Dim IE As String = ""
 
         XenonTreeView1.Nodes.Clear()
-        AddException("Exception", Exception, XenonTreeView1)
-        Dim x As Exception = Exception.InnerException
-        AddException("Inner exception", x, XenonTreeView1)
-        'AddException("Base exception", Exception.GetBaseException, XenonTreeView1)
+        If Exception IsNot Nothing Then
+            AddException("Exception", Exception, XenonTreeView1)
+
+            If Exception.InnerException IsNot Nothing Then
+                Dim x As Exception = Exception.InnerException
+                AddException("Inner exception", x, XenonTreeView1)
+            End If
+        End If
 
         XenonTreeView1.ExpandAll()
 

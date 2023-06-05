@@ -13,134 +13,184 @@ Public Class WinTerminal : Implements ICloneable
     Public Property Theme As String = "system"
     Public Property UseAcrylicInTabRow As Boolean = False
 
+
+
     Public Sub New(str As String, Mode As Mode, Optional [Version] As Version = Version.Stable)
         Select Case Mode
             Case Mode.JSONFile
                 If IO.File.Exists(str) Then
                     Dim St As New StreamReader(str)
                     Dim JSON_String As String = St.ReadToEnd
-                    Dim JSonFile As JObject = JObject.Parse(JSON_String)
 
-                    If JSonFile("useAcrylicInTabRow") IsNot Nothing Then UseAcrylicInTabRow = JSonFile("useAcrylicInTabRow")
-                    If JSonFile("theme") IsNot Nothing Then Theme = JSonFile("theme")
+                    Try
+                        Dim JSonFile As JObject = JObject.Parse(JSON_String)
+
+                        If JSonFile("useAcrylicInTabRow") IsNot Nothing Then UseAcrylicInTabRow = JSonFile("useAcrylicInTabRow")
+                        If JSonFile("theme") IsNot Nothing Then Theme = JSonFile("theme")
 
 
 #Region "Getting Default Profile"
-                    DefaultProf = New ProfilesList
+                        DefaultProf = New ProfilesList
 
-                    If JSonFile("profiles")("defaults")("name") IsNot Nothing Then DefaultProf.Name = JSonFile("profiles")("defaults")("name")
-                    If JSonFile("profiles")("defaults")("backgroundImage") IsNot Nothing Then DefaultProf.BackgroundImage = JSonFile("profiles")("defaults")("backgroundImage")
-                    If JSonFile("profiles")("defaults")("cursorShape") IsNot Nothing Then DefaultProf.CursorShape = CursorShape_GetFromString(JSonFile("profiles")("defaults")("cursorShape"))
+                        If JSonFile("profiles") IsNot Nothing Then
+                            If JSonFile("profiles")("defaults") IsNot Nothing Then
 
-                    If JSonFile("profiles")("defaults")("font") IsNot Nothing Then
-                        If JSonFile("profiles")("defaults")("font")("weight") IsNot Nothing Then DefaultProf.Font.Weight = FontWeight_GetFromString(JSonFile("profiles")("defaults")("font")("weight"))
-                        If JSonFile("profiles")("defaults")("font")("face") IsNot Nothing Then DefaultProf.Font.Face = JSonFile("profiles")("defaults")("font")("face")
-                        If JSonFile("profiles")("defaults")("font")("size") IsNot Nothing Then DefaultProf.Font.Size = JSonFile("profiles")("defaults")("font")("size")
-                    End If
+                                If JSonFile("profiles")("defaults")("name") IsNot Nothing Then DefaultProf.Name = JSonFile("profiles")("defaults")("name")
+                                If JSonFile("profiles")("defaults")("backgroundImage") IsNot Nothing Then DefaultProf.BackgroundImage = JSonFile("profiles")("defaults")("backgroundImage")
+                                If JSonFile("profiles")("defaults")("cursorShape") IsNot Nothing Then DefaultProf.CursorShape = CursorShape_GetFromString(JSonFile("profiles")("defaults")("cursorShape"))
 
-                    If JSonFile("profiles")("defaults")("colorScheme") IsNot Nothing Then DefaultProf.ColorScheme = JSonFile("profiles")("defaults")("colorScheme")
-                    If JSonFile("profiles")("defaults")("tabTitle") IsNot Nothing Then DefaultProf.TabTitle = JSonFile("profiles")("defaults")("tabTitle")
-                    If JSonFile("profiles")("defaults")("icon") IsNot Nothing Then DefaultProf.Icon = JSonFile("profiles")("defaults")("icon")
+                                If JSonFile("profiles")("defaults")("font") IsNot Nothing Then
+                                    If JSonFile("profiles")("defaults")("font")("weight") IsNot Nothing Then DefaultProf.Font.Weight = FontWeight_GetFromString(JSonFile("profiles")("defaults")("font")("weight"))
+                                    If JSonFile("profiles")("defaults")("font")("face") IsNot Nothing Then DefaultProf.Font.Face = JSonFile("profiles")("defaults")("font")("face")
+                                    If JSonFile("profiles")("defaults")("font")("size") IsNot Nothing Then DefaultProf.Font.Size = JSonFile("profiles")("defaults")("font")("size")
+                                End If
 
-                    If JSonFile("profiles")("defaults")("tabColor") IsNot Nothing Then
-                        DefaultProf.TabColor = HEX2RGB(JSonFile("profiles")("defaults")("tabColor"))
-                    End If
+                                If JSonFile("profiles")("defaults")("colorScheme") IsNot Nothing Then DefaultProf.ColorScheme = JSonFile("profiles")("defaults")("colorScheme")
+                                If JSonFile("profiles")("defaults")("tabTitle") IsNot Nothing Then DefaultProf.TabTitle = JSonFile("profiles")("defaults")("tabTitle")
+                                If JSonFile("profiles")("defaults")("icon") IsNot Nothing Then DefaultProf.Icon = JSonFile("profiles")("defaults")("icon")
 
-                    If JSonFile("profiles")("defaults")("useAcrylic") IsNot Nothing Then DefaultProf.UseAcrylic = JSonFile("profiles")("defaults")("useAcrylic")
-                    If JSonFile("profiles")("defaults")("cursorHeight") IsNot Nothing Then DefaultProf.CursorHeight = JSonFile("profiles")("defaults")("cursorHeight")
-                    If JSonFile("profiles")("defaults")("opacity") IsNot Nothing Then DefaultProf.Opacity = JSonFile("profiles")("defaults")("opacity")
-                    If JSonFile("profiles")("defaults")("backgroundImageOpacity") IsNot Nothing Then DefaultProf.BackgroundImageOpacity = JSonFile("profiles")("defaults")("backgroundImageOpacity")
+                                If JSonFile("profiles")("defaults")("tabColor") IsNot Nothing Then
+                                    DefaultProf.TabColor = HEX2RGB(JSonFile("profiles")("defaults")("tabColor"))
+                                End If
+
+                                If JSonFile("profiles")("defaults")("useAcrylic") IsNot Nothing Then DefaultProf.UseAcrylic = JSonFile("profiles")("defaults")("useAcrylic")
+                                If JSonFile("profiles")("defaults")("cursorHeight") IsNot Nothing Then DefaultProf.CursorHeight = JSonFile("profiles")("defaults")("cursorHeight")
+                                If JSonFile("profiles")("defaults")("opacity") IsNot Nothing Then DefaultProf.Opacity = JSonFile("profiles")("defaults")("opacity")
+                                If JSonFile("profiles")("defaults")("backgroundImageOpacity") IsNot Nothing Then DefaultProf.BackgroundImageOpacity = JSonFile("profiles")("defaults")("backgroundImageOpacity")
+                            End If
+                        End If
 #End Region
 
 #Region "Getting Profiles"
-                    Profiles = New List(Of ProfilesList)
-                    Profiles.Clear()
+                        Profiles = New List(Of ProfilesList)
+                        Profiles.Clear()
 
-                    If JSonFile("profiles")("list") IsNot Nothing Then
-                        For Each item In JSonFile("profiles")("list")
-                            Dim P As New ProfilesList
-                            If item("name") IsNot Nothing Then P.Name = item("name")
-                            If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
-                            If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
+                        If JSonFile("profiles") IsNot Nothing Then
+                            If JSonFile("profiles")("list") IsNot Nothing Then
+                                For Each item In JSonFile("profiles")("list")
+                                    Dim P As New ProfilesList
+                                    If item("name") IsNot Nothing Then P.Name = item("name")
+                                    If item("backgroundImage") IsNot Nothing Then P.BackgroundImage = item("backgroundImage")
+                                    If item("cursorShape") IsNot Nothing Then P.CursorShape = CursorShape_GetFromString(item("cursorShape"))
 
-                            If item("font") IsNot Nothing Then
-                                If item("font")("weight") IsNot Nothing Then P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
-                                If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
-                                If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
+                                    If item("font") IsNot Nothing Then
+                                        If item("font")("weight") IsNot Nothing Then P.Font.Weight = FontWeight_GetFromString(item("font")("weight"))
+                                        If item("font")("face") IsNot Nothing Then P.Font.Face = item("font")("face")
+                                        If item("font")("size") IsNot Nothing Then P.Font.Size = item("font")("size")
+                                    End If
+                                    '
+                                    If item("commandline") IsNot Nothing Then P.Commandline = item("commandline")
+                                    If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme") Else P.ColorScheme = DefaultProf.ColorScheme
+                                    If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
+                                    If item("icon") IsNot Nothing Then P.Icon = item("icon")
+                                    If item("tabColor") IsNot Nothing Then P.TabColor = HEX2RGB(item("tabColor"))
+                                    If item("useAcrylic") IsNot Nothing Then P.UseAcrylic = item("useAcrylic")
+                                    If item("cursorHeight") IsNot Nothing Then P.CursorHeight = item("cursorHeight")
+                                    If item("opacity") IsNot Nothing Then P.Opacity = item("opacity")
+                                    If item("backgroundImageOpacity") IsNot Nothing Then P.BackgroundImageOpacity = item("backgroundImageOpacity")
+
+                                    Profiles.Add(P)
+                                Next
                             End If
-                            '
-                            If item("commandline") IsNot Nothing Then P.Commandline = item("commandline")
-                            If item("colorScheme") IsNot Nothing Then P.ColorScheme = item("colorScheme") Else P.ColorScheme = DefaultProf.ColorScheme
-                            If item("tabTitle") IsNot Nothing Then P.TabTitle = item("tabTitle")
-                            If item("icon") IsNot Nothing Then P.Icon = item("icon")
-                            If item("tabColor") IsNot Nothing Then P.TabColor = HEX2RGB(item("tabColor"))
-                            If item("useAcrylic") IsNot Nothing Then P.UseAcrylic = item("useAcrylic")
-                            If item("cursorHeight") IsNot Nothing Then P.CursorHeight = item("cursorHeight")
-                            If item("opacity") IsNot Nothing Then P.Opacity = item("opacity")
-                            If item("backgroundImageOpacity") IsNot Nothing Then P.BackgroundImageOpacity = item("backgroundImageOpacity")
-
-                            Profiles.Add(P)
-                        Next
-                    End If
+                        End If
 
 #End Region
 
 #Region "Getting All Colors Schemes"
-                    Colors = New List(Of TColor)
-                    Colors.Clear()
+                        Colors = New List(Of TColor)
+                        Colors.Clear()
 
-                    If JSonFile("schemes") IsNot Nothing Then
-                        For Each item In JSonFile("schemes")
-                            Dim TC As New TColor
+                        If JSonFile("schemes") IsNot Nothing Then
+                            For Each item In JSonFile("schemes")
+                                Dim TC As New TColor
 
-                            If item("background") IsNot Nothing Then TC.Background = HEX2RGB(item("background"))
-                            If item("black") IsNot Nothing Then TC.Black = HEX2RGB(item("black"))
-                            If item("blue") IsNot Nothing Then TC.Blue = HEX2RGB(item("blue"))
-                            If item("brightBlack") IsNot Nothing Then TC.BrightBlack = HEX2RGB(item("brightBlack"))
-                            If item("brightBlue") IsNot Nothing Then TC.BrightBlue = HEX2RGB(item("brightBlue"))
-                            If item("brightCyan") IsNot Nothing Then TC.BrightCyan = HEX2RGB(item("brightCyan"))
-                            If item("brightGreen") IsNot Nothing Then TC.BrightGreen = HEX2RGB(item("brightGreen"))
-                            If item("brightPurple") IsNot Nothing Then TC.BrightPurple = HEX2RGB(item("brightPurple"))
-                            If item("brightRed") IsNot Nothing Then TC.BrightRed = HEX2RGB(item("brightRed"))
-                            If item("brightWhite") IsNot Nothing Then TC.BrightWhite = HEX2RGB(item("brightWhite"))
-                            If item("brightYellow") IsNot Nothing Then TC.BrightYellow = HEX2RGB(item("brightYellow"))
-                            If item("cursorColor") IsNot Nothing Then TC.CursorColor = HEX2RGB(item("cursorColor"))
-                            If item("cyan") IsNot Nothing Then TC.Cyan = HEX2RGB(item("cyan"))
-                            If item("foreground") IsNot Nothing Then TC.Foreground = HEX2RGB(item("foreground"))
-                            If item("green") IsNot Nothing Then TC.Green = HEX2RGB(item("green"))
-                            If item("name") IsNot Nothing Then TC.Name = item("name")
-                            If item("purple") IsNot Nothing Then TC.Purple = HEX2RGB(item("purple"))
-                            If item("red") IsNot Nothing Then TC.Red = HEX2RGB(item("red"))
-                            If item("selectionBackground") IsNot Nothing Then TC.SelectionBackground = HEX2RGB(item("selectionBackground"))
-                            If item("white") IsNot Nothing Then TC.White = HEX2RGB(item("white"))
-                            If item("yellow") IsNot Nothing Then TC.Yellow = HEX2RGB(item("yellow"))
+                                If item("background") IsNot Nothing Then TC.Background = HEX2RGB(item("background"))
+                                If item("black") IsNot Nothing Then TC.Black = HEX2RGB(item("black"))
+                                If item("blue") IsNot Nothing Then TC.Blue = HEX2RGB(item("blue"))
+                                If item("brightBlack") IsNot Nothing Then TC.BrightBlack = HEX2RGB(item("brightBlack"))
+                                If item("brightBlue") IsNot Nothing Then TC.BrightBlue = HEX2RGB(item("brightBlue"))
+                                If item("brightCyan") IsNot Nothing Then TC.BrightCyan = HEX2RGB(item("brightCyan"))
+                                If item("brightGreen") IsNot Nothing Then TC.BrightGreen = HEX2RGB(item("brightGreen"))
+                                If item("brightPurple") IsNot Nothing Then TC.BrightPurple = HEX2RGB(item("brightPurple"))
+                                If item("brightRed") IsNot Nothing Then TC.BrightRed = HEX2RGB(item("brightRed"))
+                                If item("brightWhite") IsNot Nothing Then TC.BrightWhite = HEX2RGB(item("brightWhite"))
+                                If item("brightYellow") IsNot Nothing Then TC.BrightYellow = HEX2RGB(item("brightYellow"))
+                                If item("cursorColor") IsNot Nothing Then TC.CursorColor = HEX2RGB(item("cursorColor"))
+                                If item("cyan") IsNot Nothing Then TC.Cyan = HEX2RGB(item("cyan"))
+                                If item("foreground") IsNot Nothing Then TC.Foreground = HEX2RGB(item("foreground"))
+                                If item("green") IsNot Nothing Then TC.Green = HEX2RGB(item("green"))
+                                If item("name") IsNot Nothing Then TC.Name = item("name")
+                                If item("purple") IsNot Nothing Then TC.Purple = HEX2RGB(item("purple"))
+                                If item("red") IsNot Nothing Then TC.Red = HEX2RGB(item("red"))
+                                If item("selectionBackground") IsNot Nothing Then TC.SelectionBackground = HEX2RGB(item("selectionBackground"))
+                                If item("white") IsNot Nothing Then TC.White = HEX2RGB(item("white"))
+                                If item("yellow") IsNot Nothing Then TC.Yellow = HEX2RGB(item("yellow"))
 
-                            Colors.Add(TC)
-                        Next
-                    End If
+                                Colors.Add(TC)
+                            Next
+
+                        Else
+                            Colors.Add(New TColor With {
+                                   .Name = "Campbell",
+                                   .Background = "FF0C0C0C".FromHEXToColor(True),
+                                   .Black = "FF0C0C0C".FromHEXToColor(True),
+                                   .Blue = "FF0037DA".FromHEXToColor(True),
+                                   .BrightBlack = "FF767676".FromHEXToColor(True),
+                                   .BrightBlue = "FF3B78FF".FromHEXToColor(True),
+                                   .BrightCyan = "FF61D6D6".FromHEXToColor(True),
+                                   .BrightGreen = "FF16C60C".FromHEXToColor(True),
+                                   .BrightPurple = "FFB4009E".FromHEXToColor(True),
+                                   .BrightRed = "FFE74856".FromHEXToColor(True),
+                                   .BrightWhite = "FFF2F2F2".FromHEXToColor(True),
+                                   .BrightYellow = "FFF9F1A5".FromHEXToColor(True),
+                                   .CursorColor = "FFFFFFFF".FromHEXToColor(True),
+                                   .Cyan = "FF3A96DD".FromHEXToColor(True),
+                                   .Foreground = "FFCCCCCC".FromHEXToColor(True),
+                                   .Green = "FF13A10E".FromHEXToColor(True),
+                                   .Purple = "FF881798".FromHEXToColor(True),
+                                   .Red = "FFC50F1F".FromHEXToColor(True),
+                                   .SelectionBackground = "FFFFFFFF".FromHEXToColor(True),
+                                   .White = "FFCCCCCC".FromHEXToColor(True),
+                                   .Yellow = "FFC19C00".FromHEXToColor(True)
+                                   })
+                        End If
 
 #End Region
 
 #Region "Getting All Themes"
-                    Themes = New List(Of ThemesList)
-                    Themes.Clear()
+                        Themes = New List(Of ThemesList)
+                        Themes.Clear()
 
-                    If JSonFile("themes") IsNot Nothing Then
-                        For Each item In JSonFile("themes")
-                            Dim Th As New ThemesList
-                            If item("name") IsNot Nothing Then Th.Name = item("name")
-                            If item("tabRow")("background") IsNot Nothing Then Th.Titlebar_Active = HEX2RGB(item("tabRow")("background"))
-                            If item("tabRow")("unfocusedBackground") IsNot Nothing Then Th.Titlebar_Inactive = HEX2RGB(item("tabRow")("unfocusedBackground"))
-                            If item("tab")("background") IsNot Nothing Then Th.Tab_Active = HEX2RGB(item("tab")("background"))
-                            If item("tab")("unfocusedBackground") IsNot Nothing Then Th.Tab_Inactive = HEX2RGB(item("tab")("unfocusedBackground"))
-                            If item("window")("applicationTheme") IsNot Nothing Then Th.ApplicationTheme_light = item("window")("applicationTheme")
-                            Themes.Add(Th)
-                        Next
-                    End If
+                        If JSonFile("themes") IsNot Nothing Then
+                            For Each item In JSonFile("themes")
+                                Dim Th As New ThemesList
+                                If item("name") IsNot Nothing Then Th.Name = item("name")
+
+                                If item("tabRow") IsNot Nothing Then
+                                    If item("tabRow")("background") IsNot Nothing Then Th.Titlebar_Active = HEX2RGB(item("tabRow")("background"))
+                                    If item("tabRow")("unfocusedBackground") IsNot Nothing Then Th.Titlebar_Inactive = HEX2RGB(item("tabRow")("unfocusedBackground"))
+                                End If
+
+                                If item("tab") IsNot Nothing Then
+                                    If item("tab")("background") IsNot Nothing Then Th.Tab_Active = HEX2RGB(item("tab")("background"))
+                                    If item("tab")("unfocusedBackground") IsNot Nothing Then Th.Tab_Inactive = HEX2RGB(item("tab")("unfocusedBackground"))
+                                End If
+
+                                If item("window") IsNot Nothing Then
+                                    If item("window")("applicationTheme") IsNot Nothing Then Th.ApplicationTheme_light = item("window")("applicationTheme")
+                                End If
+
+                                Themes.Add(Th)
+                            Next
+                        End If
 
 #End Region
-                    St.Close()
 
+                    Catch ex As Exception
+                        BugReport.ThrowError(ex)
+                    End Try
+
+                    St.Close()
                 Else
                     Profiles = New List(Of ProfilesList)
                     Colors = New List(Of TColor)

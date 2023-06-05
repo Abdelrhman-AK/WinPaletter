@@ -23,6 +23,11 @@ Namespace My
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Public Sub New()
             MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
+
+            AddHandler AppDomain.CurrentDomain.AssemblyResolve, AddressOf DomainCheck
+            AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf Domain_UnhandledException
+            AddHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
+
             Me.IsSingleInstance = True
             Me.EnableVisualStyles = True
             Me.SaveMySettingsOnExit = True
