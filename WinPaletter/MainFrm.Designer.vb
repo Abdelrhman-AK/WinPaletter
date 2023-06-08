@@ -5709,7 +5709,7 @@ Partial Class MainFrm
         Me.XenonButton36.Name = "XenonButton36"
         Me.XenonButton36.Size = New System.Drawing.Size(40, 54)
         Me.XenonButton36.TabIndex = 56
-        Me.XenonButton36.Tag = "WinPaletter themes converter for old versions (Online link)"
+        Me.XenonButton36.Tag = "WinPaletter themes converter"
         Me.XenonButton36.UseVisualStyleBackColor = False
         '
         'BetaBadge

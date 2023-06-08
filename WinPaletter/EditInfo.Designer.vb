@@ -44,7 +44,6 @@ Partial Class EditInfo
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.XenonSeparator4 = New WinPaletter.XenonSeparator()
         Me.XenonAlertBox21 = New WinPaletter.XenonAlertBox()
@@ -184,7 +183,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.DrawOnGlass = False
-        Me.XenonTextBox1.ForeColor = System.Drawing.Color.Black
+        Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Location = New System.Drawing.Point(170, 6)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = False
@@ -206,7 +205,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.DrawOnGlass = False
-        Me.XenonTextBox2.ForeColor = System.Drawing.Color.Black
+        Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Location = New System.Drawing.Point(170, 36)
         Me.XenonTextBox2.MaxLength = 12
         Me.XenonTextBox2.Multiline = False
@@ -228,7 +227,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.DrawOnGlass = False
-        Me.XenonTextBox3.ForeColor = System.Drawing.Color.Black
+        Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Location = New System.Drawing.Point(170, 67)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = True
@@ -238,7 +237,7 @@ Partial Class EditInfo
         Me.XenonTextBox3.SelectedText = ""
         Me.XenonTextBox3.SelectionLength = 0
         Me.XenonTextBox3.SelectionStart = 0
-        Me.XenonTextBox3.Size = New System.Drawing.Size(506, 149)
+        Me.XenonTextBox3.Size = New System.Drawing.Size(506, 202)
         Me.XenonTextBox3.TabIndex = 16
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox3.UseSystemPasswordChar = False
@@ -261,7 +260,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox4.DrawOnGlass = False
-        Me.XenonTextBox4.ForeColor = System.Drawing.Color.Black
+        Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox4.Location = New System.Drawing.Point(170, 312)
         Me.XenonTextBox4.MaxLength = 32767
         Me.XenonTextBox4.Multiline = False
@@ -283,7 +282,7 @@ Partial Class EditInfo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox5.DrawOnGlass = False
-        Me.XenonTextBox5.ForeColor = System.Drawing.Color.Black
+        Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox5.Location = New System.Drawing.Point(170, 342)
         Me.XenonTextBox5.MaxLength = 32767
         Me.XenonTextBox5.Multiline = False
@@ -403,7 +402,6 @@ Partial Class EditInfo
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TabPage1.Controls.Add(Me.XenonAlertBox2)
-        Me.TabPage1.Controls.Add(Me.XenonAlertBox1)
         Me.TabPage1.Controls.Add(Me.PictureBox2)
         Me.TabPage1.Controls.Add(Me.Label2)
         Me.TabPage1.Controls.Add(Me.Label1)
@@ -432,35 +430,17 @@ Partial Class EditInfo
         Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox2.CenterText = False
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(170, 222)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(170, 275)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(506, 22)
         Me.XenonAlertBox2.TabIndex = 138
         Me.XenonAlertBox2.TabStop = False
         Me.XenonAlertBox2.Text = "You can include tags in descriptions to make search in store easier"
-        '
-        'XenonAlertBox1
-        '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(170, 250)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(506, 43)
-        Me.XenonAlertBox1.TabIndex = 137
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "You should type inside description the links (URLs) to files\fonts used and do no" &
-    "t exist natievly in Windows (You can ignore this tip)."
         '
         'TabPage3
         '
@@ -549,7 +529,7 @@ Partial Class EditInfo
         Me.XenonAlertBox3.Size = New System.Drawing.Size(670, 22)
         Me.XenonAlertBox3.TabIndex = 139
         Me.XenonAlertBox3.TabStop = False
-        Me.XenonAlertBox3.Text = "This is used especially in WinPaletter store, if a user didn't accept this, the t" &
+        Me.XenonAlertBox3.Text = "This is used especially in WinPaletter Store, if a user didn't accept this, the t" &
     "heme won't be applied"
         '
         'Label14
@@ -1124,7 +1104,6 @@ Partial Class EditInfo
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label10 As Label
     Friend WithEvents PictureBox15 As PictureBox
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
     Friend WithEvents XenonTrackbar1 As XenonTrackbar
     Friend WithEvents Label12 As Label
     Friend WithEvents PictureBox17 As PictureBox

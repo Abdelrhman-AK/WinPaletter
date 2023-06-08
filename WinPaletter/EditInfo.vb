@@ -128,38 +128,56 @@ Public Class EditInfo
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_Win11 = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win11 = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Private Sub XenonCheckBox2_CheckedChanged(sender As Object) Handles XenonCheckBox2.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_Win10 = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win10 = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_Win8 = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win8 = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Private Sub XenonCheckBox4_CheckedChanged(sender As Object) Handles XenonCheckBox4.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_Win7 = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win7 = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_WinVista = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_WinVista = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
-        StoreItem1.CP.Info.DesignedFor_WinXP = sender.Checked
-        StoreItem1.UpdateBadges()
+        Try
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_WinXP = sender.Checked
+            StoreItem1.UpdateBadges()
+        Catch
+        End Try
     End Sub
 
     Function CheckAllOS() As Boolean
