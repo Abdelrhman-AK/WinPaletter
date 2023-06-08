@@ -82,7 +82,7 @@ Public Class BugReport
 
         Label2.Text = My.Computer.Info.OSFullName & " - " & sx & sy & " - " & If(Environment.Is64BitOperatingSystem, "64-bit", "32-bit")
 
-        Label3.Text = My.Application.Info.Version.ToString
+        Label3.Text = My.AppVersion
 
         XenonAlertBox1.Visible = NoRecovery
 
@@ -100,9 +100,9 @@ Public Class BugReport
 
         XenonTreeView1.ExpandAll()
 
-        If Not IO.Directory.Exists(My.Application.appData & "\Reports") Then IO.Directory.CreateDirectory(My.Application.appData & "\Reports")
+        If Not IO.Directory.Exists(My.PATH_appData & "\Reports") Then IO.Directory.CreateDirectory(My.PATH_appData & "\Reports")
 
-        IO.File.WriteAllText(String.Format(My.Application.appData & "\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year), GetDetails)
+        IO.File.WriteAllText(String.Format(My.PATH_appData & "\Reports\{0}.{1}.{2} {3}-{4}-{5}.txt", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year), GetDetails)
 
         ShowDialog()
 
@@ -177,11 +177,11 @@ Public Class BugReport
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
 
-        If IO.Directory.Exists(My.Application.appData & "\Reports") Then
-            Process.Start(My.Application.appData & "\Reports")
+        If IO.Directory.Exists(My.PATH_appData & "\Reports") Then
+            Process.Start(My.PATH_appData & "\Reports")
             Try : BK.Close() : Catch : End Try
         Else
-            MsgBox(String.Format(My.Lang.Bug_NoReport, My.Application.appData & "\Reports"), MsgBoxStyle.Critical)
+            MsgBox(String.Format(My.Lang.Bug_NoReport, My.PATH_appData & "\Reports"), MsgBoxStyle.Critical)
         End If
 
     End Sub

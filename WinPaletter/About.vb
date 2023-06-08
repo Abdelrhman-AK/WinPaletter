@@ -24,7 +24,7 @@ Public Class About
     Private Sub About_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = MainFrm.Icon
         ApplyDarkMode(Me)
-        Label2.Text = My.Application.Info.Version.ToString
+        Label2.Text = My.AppVersion
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

@@ -89,7 +89,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].CommandPrompt
@@ -259,7 +259,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].CommandPrompt
@@ -430,7 +430,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].Windows8
@@ -632,7 +632,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].Windows8
@@ -833,7 +833,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].Windows8
@@ -1076,7 +1076,7 @@ Public Class CP_Defaults : Implements IDisposable
             .ThemeVersion = "1.0.0.0"
             .Author = "Microsoft"
             .AuthorSocialMediaLink = "www.microsoft.com"
-            .AppVersion = My.Application.Info.Version.ToString
+            .AppVersion = My.AppVersion
         End With
 
         With [CP].Win32

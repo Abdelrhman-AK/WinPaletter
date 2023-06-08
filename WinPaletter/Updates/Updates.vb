@@ -46,7 +46,7 @@ Public Class Updates
 
                     ver = ls(UpdateChannel).Split(" ")(1)
 
-                    If ver > My.Application.Info.Version.ToString Then
+                    If ver > My.AppVersion Then
                         url = ls(UpdateChannel).Split(" ")(4)
                         UpdateSize = ls(UpdateChannel).Split(" ")(2)
                         ReleaseDate = Date.FromBinary(ls(UpdateChannel).Split(" ")(3))
@@ -139,7 +139,7 @@ Public Class Updates
         url = Nothing
 
         XenonButton1.Text = My.Lang.CheckForUpdates
-        Label2.Text = My.Application.Info.Version.ToString
+        Label2.Text = My.AppVersion
 
         If ls.Count > 0 Then
             StableInt = 0 : BetaInt = 0 : UpdateChannel = 0

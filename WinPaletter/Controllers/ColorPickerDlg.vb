@@ -719,9 +719,9 @@ Public Class ColorPickerDlg
 
             ElseIf Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
                 Try
-                    IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+                    IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
 
-                    Dim vs As New VisualStyleFile(My.Application.appData & "\VisualStyles\Luna\win32uischeme.theme")
+                    Dim vs As New VisualStyleFile(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme")
 
                     For Each field In GetType(VisualStyleMetricColors).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
                         If field.FieldType.Name.ToLower = "color" Then

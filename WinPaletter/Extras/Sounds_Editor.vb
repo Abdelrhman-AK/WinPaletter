@@ -37,14 +37,14 @@ Public Class Sounds_Editor
             If Not My.WXP Then
 
                 Try
-                    Using FS As New IO.FileStream(My.Application.appData & "\WindowsStartup_Backup.wav", IO.FileMode.Open, IO.FileAccess.Read)
+                    Using FS As New IO.FileStream(My.PATH_appData & "\WindowsStartup_Backup.wav", IO.FileMode.Open, IO.FileAccess.Read)
                         SP = New SoundPlayer(FS)
                         SP.Load()
                         SP.Play()
                     End Using
                 Catch ex As Exception
                     AltPlayingMethod = True
-                    NativeMethods.DLLFunc.PlayAudio(My.Application.appData & "\WindowsStartup_Backup.wav")
+                    NativeMethods.DLLFunc.PlayAudio(My.PATH_appData & "\WindowsStartup_Backup.wav")
                 End Try
 
             End If

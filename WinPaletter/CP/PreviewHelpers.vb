@@ -895,20 +895,20 @@ Public Class PreviewHelpers
 
                 Select Case CP.WindowsXP.Theme
                     Case CP.Structures.WindowsXP.Themes.LunaBlue
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.VS = My.PATH_appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.PATH_appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Blue)
                         My.resVS = New VisualStylesRes(My.VS)
 
                     Case CP.Structures.WindowsXP.Themes.LunaOliveGreen
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.VS = My.PATH_appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.PATH_appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.OliveGreen)
                         My.resVS = New VisualStylesRes(My.VS)
 
                     Case CP.Structures.WindowsXP.Themes.LunaSilver
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.VS = My.PATH_appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.PATH_appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Silver)
                         My.resVS = New VisualStylesRes(My.VS)
 
@@ -917,16 +917,16 @@ Public Class PreviewHelpers
                             If IO.Path.GetExtension(CP.WindowsXP.ThemeFile) = ".theme" Then
                                 My.VS = CP.WindowsXP.ThemeFile
                             ElseIf IO.Path.GetExtension(CP.WindowsXP.ThemeFile) = ".msstyles" Then
-                                My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                                IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", CP.WindowsXP.ThemeFile, vbCrLf, CP.WindowsXP.ColorScheme))
+                                My.VS = My.PATH_appData & "\VisualStyles\Luna\luna.theme"
+                                IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", CP.WindowsXP.ThemeFile, vbCrLf, CP.WindowsXP.ColorScheme))
                             End If
                         End If
                         My.LunaRes = New Luna(Luna.ColorStyles.Empty)
                         My.resVS = New VisualStylesRes(My.VS)
 
                     Case CP.Structures.WindowsXP.Themes.Classic
-                        My.VS = My.Application.appData & "\VisualStyles\Luna\luna.theme"
-                        IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Application.appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                        My.VS = My.PATH_appData & "\VisualStyles\Luna\luna.theme"
+                        IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.PATH_appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
                         My.LunaRes = New Luna(Luna.ColorStyles.Empty)
                         My.resVS = New VisualStylesRes(My.VS)
 

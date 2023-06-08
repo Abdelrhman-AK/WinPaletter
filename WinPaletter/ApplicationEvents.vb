@@ -15,8 +15,9 @@ Imports WinPaletter.XenonCore
 
 Namespace My
     Module Env
-
+        Public ReadOnly PATH_appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
         Public ReadOnly PATH_Windows As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows")
+        Public ReadOnly PATH_explorer As String = PATH_Windows & "\explorer.exe"
         Public ReadOnly PATH_ProgramFiles As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         Public ReadOnly PATH_System32 As String = PATH_Windows & "\System32"
         Public ReadOnly PATH_imageres As String = PATH_System32 & "\imageres.dll"
@@ -28,11 +29,13 @@ Namespace My
         Public ReadOnly PATH_PS86_app As String = PATH_Windows & "\System32\WindowsPowerShell\v1.0"
         Public ReadOnly PATH_PS64_reg As String = "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe"
         Public ReadOnly PATH_PS64_app As String = PATH_Windows & "\SysWOW64\WindowsPowerShell\v1.0"
-        Public ReadOnly PATH_StoreCache As String = Application.appData & "\Store"
-        Public ReadOnly PATH_ThemeResPackCache As String = Application.appData & "\ThemeResPack_Cache"
+        Public ReadOnly PATH_StoreCache As String = PATH_appData & "\Store"
+        Public ReadOnly PATH_ThemeResPackCache As String = PATH_appData & "\ThemeResPack_Cache"
+        Public ReadOnly PATH_CursorsWP As String = PATH_appData & "\Cursors"
+        Public ReadOnly AppVersion As String = My.Application.Info.Version.ToString
 
         Public ReadOnly _ignore As StringComparison = StringComparison.OrdinalIgnoreCase
-        Public VS As String = Application.appData & "\VisualStyles\Luna\luna.theme"
+        Public VS As String = PATH_appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
@@ -72,14 +75,19 @@ Namespace My
         Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
 
         ''' <summary>
+        ''' Boolean Represents if OS is Windows 12 or not (For near future! :))
+        ''' </summary>
+        Public ReadOnly W12 As Boolean = Computer.Info.OSFullName.Contains("12")
+
+        ''' <summary>
         ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
         ''' </summary>
-        Public ReadOnly W10_1909 As Boolean = (W11 OrElse (W10 AndAlso Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
+        Public ReadOnly W10_1909 As Boolean = (W12 OrElse W11 OrElse (W10 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
 
         ''' <summary>
         ''' Boolean Represents if OS is Windows 11 Build 22523 and Higher or not
         ''' </summary>
-        Public ReadOnly W11_22523 As Boolean = (W11 AndAlso Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", 0).ToString() >= 22523)
+        Public ReadOnly W11_22523 As Boolean = (W12 OrElse (W11 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", 0).ToString() >= 22523))
 
         ''' <summary>
         ''' Class Represents AnimatorNS
@@ -219,6 +227,8 @@ Namespace My
                                                                             Metrics_Fonts.Classic_Preview1.BackgroundImage = Wall
                                                                             Metrics_Fonts.Classic_Preview3.BackgroundImage = Wall
                                                                             Metrics_Fonts.Classic_Preview4.BackgroundImage = Wall
+                                                                            AltTabEditor.pnl_preview1.BackgroundImage = Wall
+                                                                            AltTabEditor.Classic_Preview1.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview.Invalidate()
                                                                             DragPreviewer.pnl_preview.Invalidate()
                                                                             DragPreviewer.pnl_preview_classic.Invalidate()
@@ -229,20 +239,18 @@ Namespace My
                                                                             Metrics_Fonts.Classic_Preview1.Invalidate()
                                                                             Metrics_Fonts.Classic_Preview3.Invalidate()
                                                                             Metrics_Fonts.Classic_Preview4.Invalidate()
+                                                                            AltTabEditor.pnl_preview1.Invalidate()
+                                                                            AltTabEditor.Classic_Preview1.Invalidate()
                                                                         End Sub, MethodInvoker)
-
-        Public explorerPath As String = String.Format("{0}\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe")
-        Public appData As String = IO.Directory.GetParent(Windows.Forms.Application.LocalUserAppDataPath).FullName
-        Public curPath As String = appData & "\Cursors"
         Public ReadOnly processKiller As New Process With {.StartInfo = New ProcessStartInfo With {
-                            .FileName = Environment.GetEnvironmentVariable("WINDIR") & "\System32\taskkill.exe",
+                            .FileName = PATH_System32 & "\taskkill.exe",
                             .Verb = If(Not WXP, "runas", ""),
                             .Arguments = "/F /IM explorer.exe",
                             .WindowStyle = ProcessWindowStyle.Hidden,
                             .UseShellExecute = True}
                            }
         Public ReadOnly processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
-                            .FileName = explorerPath,
+                            .FileName = PATH_explorer,
                             .Arguments = "",
                             .Verb = If(Not W8 And Not WXP, "runas", ""),
                             .WindowStyle = ProcessWindowStyle.Normal,
@@ -359,8 +367,8 @@ Namespace My
             Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall\" & guidText
             Dim exe As String = Assembly.GetExecutingAssembly().Location
 
-            If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
-            IO.File.WriteAllBytes(appData & "\uninstall.ico", Resources.Icon_Uninstall.ToByteArray)
+            If Not IO.Directory.Exists(PATH_appData) Then IO.Directory.CreateDirectory(PATH_appData)
+            IO.File.WriteAllBytes(PATH_appData & "\uninstall.ico", Resources.Icon_Uninstall.ToByteArray)
 
             If Registry.CurrentUser.OpenSubKey(RegPath, True) Is Nothing Then Registry.CurrentUser.CreateSubKey(RegPath, True)
 
@@ -369,7 +377,7 @@ Namespace My
                 .SetValue("ApplicationVersion", Application.Info.Version.ToString, RegistryValueKind.String)
                 .SetValue("DisplayVersion", Application.Info.Version.ToString, RegistryValueKind.String)
                 .SetValue("Publisher", Application.Info.CompanyName, RegistryValueKind.String)
-                .SetValue("DisplayIcon", appData & "\uninstall.ico", RegistryValueKind.String)
+                .SetValue("DisplayIcon", PATH_appData & "\uninstall.ico", RegistryValueKind.String)
                 .SetValue("URLInfoAbout", Resources.Link_Repository, RegistryValueKind.String)
                 .SetValue("Contact", Resources.Link_Repository, RegistryValueKind.String)
                 .SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String)
@@ -390,14 +398,14 @@ Namespace My
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
 
             Try
-                If Not My.WXP AndAlso IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
-                    ReplaceResource(My.PATH_imageres, "WAV", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav"))
+                If Not My.WXP AndAlso IO.File.Exists(My.PATH_appData & "\WindowsStartup_Backup.wav") Then
+                    ReplaceResource(My.PATH_imageres, "WAV", If(My.WVista, 5051, 5080), IO.File.ReadAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav"))
                 End If
             Catch
             End Try
 
-            If IO.Directory.Exists(Application.appData) Then
-                IO.Directory.Delete(Application.appData, True)
+            If IO.Directory.Exists(PATH_appData) Then
+                IO.Directory.Delete(PATH_appData, True)
                 If Not My.WXP Then
                     CP.ResetCursorsToAero()
                     If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
@@ -424,7 +432,6 @@ Namespace My
                 Wallpaper = wall_New.Resize(Size)
             End Using
         End Sub
-
         Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As WindowStyle) As Bitmap
             Using picbox As New PictureBox With {.Size = MainFrm.pnl_preview.Size, .BackColor = CP.Win32.Background}
                 Dim Wall As Bitmap
@@ -573,7 +580,6 @@ Namespace My
                 Wallpaper_Changed()
             End If
         End Sub
-
         Sub Monitor()
             Dim currentUser = WindowsIdentity.GetCurrent()
             Dim KeyPath As String
@@ -639,8 +645,6 @@ Namespace My
 
 #Region "   Application Startup and Shutdown Subs"
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
-
             If Not My.WXP Then
                 Try
                     WallMon_Watcher1.Stop()
@@ -656,6 +660,10 @@ Namespace My
 
             Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
             Catch : End Try
+
+            RemoveHandler AppDomain.CurrentDomain.AssemblyResolve, AddressOf DomainCheck
+            RemoveHandler AppDomain.CurrentDomain.UnhandledException, AddressOf Domain_UnhandledException
+            RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
@@ -784,15 +792,15 @@ Namespace My
 
             Try
                 If [Settings].AutoAddExt Then
-                    If Not IO.Directory.Exists(appData) Then IO.Directory.CreateDirectory(appData)
+                    If Not IO.Directory.Exists(PATH_appData) Then IO.Directory.CreateDirectory(PATH_appData)
 
-                    IO.File.WriteAllBytes(appData & "\fileextension.ico", Resources.fileextension.ToByteArray)
-                    IO.File.WriteAllBytes(appData & "\settingsfile.ico", Resources.settingsfile.ToByteArray)
-                    IO.File.WriteAllBytes(appData & "\themerespack.ico", Resources.ThemesResIcon.ToByteArray)
+                    IO.File.WriteAllBytes(PATH_appData & "\fileextension.ico", Resources.fileextension.ToByteArray)
+                    IO.File.WriteAllBytes(PATH_appData & "\settingsfile.ico", Resources.settingsfile.ToByteArray)
+                    IO.File.WriteAllBytes(PATH_appData & "\themerespack.ico", Resources.ThemesResIcon.ToByteArray)
 
-                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
-                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", appData & "\settingsfile.ico", Assembly.GetExecutingAssembly().Location)
-                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", "WinPaletter Theme Resources Pack", appData & "\themerespack.ico", Assembly.GetExecutingAssembly().Location)
+                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", PATH_appData & "\fileextension.ico", Assembly.GetExecutingAssembly().Location)
+                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", PATH_appData & "\settingsfile.ico", Assembly.GetExecutingAssembly().Location)
+                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", "WinPaletter Theme Resources Pack", PATH_appData & "\themerespack.ico", Assembly.GetExecutingAssembly().Location)
 
                 End If
             Catch
@@ -827,31 +835,31 @@ Namespace My
             My.StartedWithClassicTheme = String.IsNullOrEmpty(vsFile.ToString)
 
             Try
-                If Not IO.Directory.Exists(appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(appData & "\VisualStyles\Luna")
-                IO.File.WriteAllBytes(appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
-                Using s As New IO.FileStream(appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
+                If Not IO.Directory.Exists(PATH_appData & "\VisualStyles\Luna") Then IO.Directory.CreateDirectory(PATH_appData & "\VisualStyles\Luna")
+                IO.File.WriteAllBytes(PATH_appData & "\VisualStyles\Luna\Luna.zip", Resources.luna)
+                Using s As New IO.FileStream(PATH_appData & "\VisualStyles\Luna\Luna.zip", IO.FileMode.Open, IO.FileAccess.Read)
                     Using z As New ZipArchive(s, ZipArchiveMode.Read)
                         For Each entry As ZipArchiveEntry In z.Entries
                             If entry.FullName.Contains("\") Then
-                                Dim dest As String = Path.Combine(appData & "\VisualStyles\Luna", entry.FullName)
+                                Dim dest As String = Path.Combine(PATH_appData & "\VisualStyles\Luna", entry.FullName)
                                 Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
                                 If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
                             End If
-                            entry.ExtractToFile(Path.Combine(appData & "\VisualStyles\Luna", entry.FullName), True)
+                            entry.ExtractToFile(Path.Combine(PATH_appData & "\VisualStyles\Luna", entry.FullName), True)
                         Next
                     End Using
                     s.Close()
                 End Using
-                IO.File.WriteAllText(appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
+                IO.File.WriteAllText(PATH_appData & "\VisualStyles\Luna\luna.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", PATH_appData & "\VisualStyles\Luna\luna.msstyles", vbCrLf))
             Catch ex As Exception
                 BugReport.ThrowError(ex)
             End Try
 
             'Backup Windows Startup sound
             Try
-                If Not My.WXP AndAlso Not IO.File.Exists(My.Application.appData & "\WindowsStartup_Backup.wav") Then
+                If Not My.WXP AndAlso Not IO.File.Exists(My.PATH_appData & "\WindowsStartup_Backup.wav") Then
                     Dim SoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
-                    IO.File.WriteAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav", SoundBytes)
+                    IO.File.WriteAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav", SoundBytes)
                 End If
             Catch ex As Exception
                 BugReport.ThrowError(ex)

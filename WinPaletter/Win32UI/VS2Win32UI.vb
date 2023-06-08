@@ -21,8 +21,8 @@ Public Class VS2Win32UI
                 theme = XenonTextBox1.Text
 
             ElseIf Path.GetExtension(XenonTextBox1.Text) = ".msstyles" Then
-                theme = My.Application.appData & "\VisualStyles\Luna\win32uischeme.theme"
-                File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+                theme = My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme"
+                File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
             End If
 
             If File.Exists(XenonTextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then

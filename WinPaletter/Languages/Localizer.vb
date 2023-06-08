@@ -475,7 +475,7 @@ Public Class Localizer : Implements IDisposable
         j_info.Add("TranslationVersion".ToLower, newL.TranslationVersion)
         j_info.Add("Lang".ToLower, newL.Lang)
         j_info.Add("LangCode".ToLower, newL.LangCode)
-        j_info.Add("AppVer".ToLower, My.Application.Info.Version.ToString)
+        j_info.Add("AppVer".ToLower, My.AppVersion)
         j_info.Add("RightToLeft".ToLower, newL.RightToLeft)
 
         Dim j_globalstrings As New JObject()

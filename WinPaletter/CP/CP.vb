@@ -86,7 +86,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ThemeVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0")
                 Author = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Environment.UserName)
                 AuthorSocialMediaLink = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", "")
-                AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString)
+                AppVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.AppVersion)
                 Description = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", "")
                 ExportResThemePack = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", False)
                 License = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", "")
@@ -110,7 +110,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.Application.Info.Version.ToString, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.AppVersion, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", ExportResThemePack, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String)
@@ -1336,7 +1336,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Public Sub Update_UPM_DEFAULT()
                 If My.Settings.UPM_HKU_DEFAULT Then
-                    Dim source As Byte() = GetReg("Control Panel\Desktop", "UserPreferencesMask", Nothing)
+                    Dim source As Byte() = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
                     If source IsNot Nothing Then EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
                 End If
             End Sub
@@ -1696,7 +1696,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Dim path As String
                 If Not My.WXP And Not My.WVista Then
-                    path = IO.Path.Combine(My.Application.appData, "TintedWallpaper.bmp")
+                    path = IO.Path.Combine(My.PATH_appData, "TintedWallpaper.bmp")
                 Else
                     path = IO.Path.Combine(My.PATH_Windows, "Web\Wallpaper\TintedWallpaper.bmp")
                 End If
@@ -2558,7 +2558,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
 
                             Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
-                            Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.Application.appData & "\WindowsStartup_Backup.wav")
+                            Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav")
 
                             If Not CurrentSoundBytes.Equals(OriginalSoundBytes) Then
                                 ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), OriginalSoundBytes)
@@ -3091,7 +3091,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
 #Region "Properties"
     Public Info As New Structures.Info With {
-            .AppVersion = My.Application.Info.Version.ToString,
+            .AppVersion = My.AppVersion,
             .ThemeName = My.Lang.CurrentMode,
             .Description = "",
             .ExportResThemePack = False,
@@ -4614,7 +4614,7 @@ Start:
                         If txt(x).Contains(":") Then
                             Dim arr As String() = txt(x).Split(":")
                             If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
-                                txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.Application.appData.Replace("\", "\\"))
+                                txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.PATH_appData.Replace("\", "\\"))
                             End If
                         End If
                     Next
@@ -5041,7 +5041,7 @@ Start:
         Dim JSON_Overall As New JObject()
         JSON_Overall.RemoveAll()
 
-        Info.AppVersion = My.Application.Info.Version.ToString
+        Info.AppVersion = My.AppVersion
 
         For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
             Dim type As Type = field.FieldType
@@ -6010,7 +6010,7 @@ Start:
 
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
-        Dim lockimg As String = My.Application.appData & "\LockScreen.png"
+        Dim lockimg As String = My.PATH_appData & "\LockScreen.png"
 
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows8.NoLockScreen.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String)
@@ -6266,8 +6266,8 @@ Start:
 
         If Not [Type] = CursorType.Busy And Not [Type] = CursorType.AppLoading Then
 
-            If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
-            Dim Path As String = String.Format(My.Application.curPath & "\{0}.cur", CurName)
+            If Not IO.Directory.Exists(My.PATH_CursorsWP) Then IO.Directory.CreateDirectory(My.PATH_CursorsWP)
+            Dim Path As String = String.Format(My.PATH_CursorsWP & "\{0}.cur", CurName)
 
             Dim fs As New IO.FileStream(Path, IO.FileMode.Create)
             Dim EO As New EOIcoCurWriter(fs, 7, EOIcoCurWriter.IcoCurType.Cursor)
@@ -6420,8 +6420,8 @@ Start:
                     seqNums(ixx) = CUInt(ixx)
                 Next
 
-                If Not IO.Directory.Exists(My.Application.curPath) Then IO.Directory.CreateDirectory(My.Application.curPath)
-                Dim fs As New IO.FileStream(String.Format(My.Application.curPath & "\{0}_{1}x.ani", CurName, i), IO.FileMode.Create)
+                If Not IO.Directory.Exists(My.PATH_CursorsWP) Then IO.Directory.CreateDirectory(My.PATH_CursorsWP)
+                Dim fs As New IO.FileStream(String.Format(My.PATH_CursorsWP & "\{0}_{1}x.ani", CurName, i), IO.FileMode.Create)
 
                 Dim AN As New EOANIWriter(fs, Count, Speed, frameRates, seqNums, Nothing, Nothing, HotPoint)
 
@@ -6437,7 +6437,7 @@ Start:
     End Sub
 
     Sub ApplyCursorsToReg(Optional scopeReg As String = "HKEY_CURRENT_USER")
-        Dim Path As String = My.Application.curPath
+        Dim Path As String = My.PATH_CursorsWP
 
         Dim RegValue As String
         RegValue = String.Format("{0}\{1}", Path, "Arrow.cur")
@@ -6552,71 +6552,71 @@ Start:
 
             Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             x = String.Format("{0}\{1}", path, "aero_arrow.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
             x = String.Format("{0}\{1}", path, "aero_link.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
             x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
             x = String.Format("{0}\{1}", path, "aero_unavail.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
             x = String.Format("{0}\{1}", path, "aero_pen.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String)
-            'User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_)
+            'If IO.File.Exists(X) then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_)
 
             x = String.Format("{0}\{1}", path, "aero_person.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Person", x, RegistryValueKind.String)
-            'User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            'If IO.File.Exists(X) then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             x = String.Format("{0}\{1}", path, "aero_pin.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Pin", x, RegistryValueKind.String)
-            'User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            'If IO.File.Exists(X) then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             x = String.Format("{0}\{1}", path, "aero_move.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
             x = String.Format("{0}\{1}", path, "aero_nesw.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
             x = String.Format("{0}\{1}", path, "aero_ns.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
             x = String.Format("{0}\{1}", path, "aero_nwse.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
             x = String.Format("{0}\{1}", path, "aero_ew.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
             x = String.Format("{0}\{1}", path, "aero_up.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
             x = String.Format("{0}\{1}", path, "aero_busy.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
-            User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
+            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
             SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
@@ -6634,11 +6634,15 @@ Start:
             Dim path As String = "%SystemRoot%\Cursors"
 
             If scopeReg.ToUpper = "HKEY_CURRENT_USER" Then
-                If Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", False) IsNot Nothing Then
-                    Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
-                    rx.DeleteValue("WinPaletter", False)
-                    rx.Close()
-                End If
+                Try
+                    If Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", False) IsNot Nothing Then
+                        Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
+                        rx.DeleteValue("WinPaletter", False)
+                        rx.Close()
+                    End If
+                Finally
+                    Registry.CurrentUser.Close()
+                End Try
             End If
 
             EditReg(scopeReg & "\Control Panel\Cursors", "", "Windows Default", RegistryValueKind.String)

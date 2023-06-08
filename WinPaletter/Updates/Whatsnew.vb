@@ -2,7 +2,7 @@
 
 Public Class Whatsnew
     Private Sub Tutorial_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Label2.Text = String.Format(My.Lang.WhatsNewInVersion, My.Application.Info.Version.ToString)
+        Label2.Text = String.Format(My.Lang.WhatsNewInVersion, My.AppVersion)
         ApplyDarkMode(Me)
         XenonTabControl1.SelectedIndex = 0
         XenonButton1.Text = My.Lang.Next

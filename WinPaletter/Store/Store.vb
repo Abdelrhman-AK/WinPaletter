@@ -949,11 +949,11 @@ Public Class Store
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
-                    If My.Application.Info.Version.ToString >= .CP.Info.AppVersion Then
+                    If My.AppVersion >= .CP.Info.AppVersion Then
                         XenonGroupBox4.Visible = False
                     Else
                         XenonGroupBox4.Visible = True
-                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_LowAppVersionAlert, .CP.Info.AppVersion, My.Application.Info.Version.ToString)
+                        VersionAlert_lbl.Text = String.Format(My.Lang.Store_LowAppVersionAlert, .CP.Info.AppVersion, My.AppVersion)
                     End If
 
                     Dim os_list As New List(Of String)

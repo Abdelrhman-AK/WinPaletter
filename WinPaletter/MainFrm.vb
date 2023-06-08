@@ -353,7 +353,7 @@ Public Class MainFrm
 
                 ver = Updates_ls(UpdateChannel).Split(" ")(1)
 
-                RaiseUpdate = (ver > My.Application.Info.Version.ToString)
+                RaiseUpdate = (ver > My.AppVersion)
             Catch
             End Try
         End If
@@ -1948,8 +1948,8 @@ Public Class MainFrm
             theme = WXP_VS_textbox.Text
 
         ElseIf IO.Path.GetExtension(WXP_VS_textbox.Text) = ".msstyles" Then
-            theme = My.Application.appData & "\VisualStyles\Luna\custom.theme"
-            IO.File.WriteAllText(My.Application.appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, vbCrLf))
+            theme = My.PATH_appData & "\VisualStyles\Luna\custom.theme"
+            IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\custom.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", WXP_VS_textbox.Text, vbCrLf))
 
         End If
 

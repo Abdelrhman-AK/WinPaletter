@@ -1325,7 +1325,7 @@ Public Class Converter_CP
 
 #Region "Properties"
     Public Info As New Structures.Info With {
-            .AppVersion = My.Application.Info.Version.ToString,
+            .AppVersion = My.AppVersion,
             .ThemeName = "Current Mode",
             .Description = "",
             .ThemeVersion = "1.0.0.0",
@@ -2488,7 +2488,7 @@ Public Class Converter_CP
         tx.Clear()
         tx.Add("<WinPaletter - Programmed by Abdelrhman-AK>")
         tx.Add("*Created from App Version= " & Info.AppVersion)
-        tx.Add("*Last Modified by App Version= " & My.Application.Info.Version.ToString & vbCrLf)
+        tx.Add("*Last Modified by App Version= " & My.AppVersion & vbCrLf)
 
         tx.Add(Info.ToString)
 
