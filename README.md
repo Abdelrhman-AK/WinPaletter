@@ -117,13 +117,13 @@
 
 - [Bitmaps to Cursors Conversion Mechanism by Evan Olds](https://github.com/evanolds/AnimCur)
 
+- [Animating colors change by Luke Berg]()
+
 - [JetBrainsMono Font for Nerd Color Info](https://github.com/JetBrains/JetBrainsMono)
 
 - [Handling JSON Files by Newtonsoft JSON; James Newton-King](https://github.com/JamesNK/Newtonsoft.Json)
 
 - [Modern Dialogs Design by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
-
-- [Changing Image HSL Filter by Miran Uhan (Used in Wallpaper Tone Changer)](https://www.codeproject.com/Articles/19077/Hue-Saturation-Lightness-Filter)
 
 - [Getting elements of visual styles file (*.msstyles) by Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
 
