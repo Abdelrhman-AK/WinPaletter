@@ -10,9 +10,9 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Sounds                                                 | :large_blue_circle: Coming Soon                                        |
-| Screen Savers                                          | :large_blue_circle: Coming Soon                                        |
-| WinPaletter Store for themes                           | :large_blue_circle: Coming Soon                                        |
+| Sounds                                                 | :white_check_mark: Done (Version 1.0.7.7)                              |
+| Screen Savers                                          | :white_check_mark: Done (Version 1.0.7.7)                              |
+| WinPaletter Store for themes                           | :white_check_mark: Done (Beta: 1.0.7.7)                                |
 | Sync. preview between ExplorerPatcher & Windows 11     | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Customize Windows Switcher (Alt+Tab) Types             | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Windows Effects & Animations                           | :white_check_mark: Done (Version 1.0.7.1)                              | 
@@ -45,6 +45,7 @@
 | **Windows Vista**                                      | WinPaletter `1.0.7.1` and **Higher** + .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md#getting-ready-windows-vista-to-run-winpaletter)|
 | **Windows XP**                                         | WinPaletter `1.0.7.1` and **Higher** + OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md)|
 
+> You might need to update .net framework in outdated Windows 10
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
