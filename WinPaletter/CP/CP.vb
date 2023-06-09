@@ -4071,8 +4071,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Catch
                 End Try
             Next
-
-            Return ls.Distinct.ToList
+            ls = ls.Distinct.ToList
+            ls.Sort(New RGBColorComparer())
+            Return ls
         Else
             Return Nothing
         End If
@@ -4134,7 +4135,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Try
         Next
 
-        Return ls.Distinct.ToList
+        ls = ls.Distinct.ToList
+        ls.Sort(New RGBColorComparer())
+        Return ls
     End Function
     Public Function ListColors(Optional DontMergeRepeatedColors As Boolean = False) As List(Of Color)
 

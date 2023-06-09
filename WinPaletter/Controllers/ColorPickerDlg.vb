@@ -623,8 +623,7 @@ Public Class ColorPickerDlg
         End If
     End Sub
 
-
-    ReadOnly ColorsList As New List(Of Color)
+    Private ColorsList As New List(Of Color)
     Dim img As Image
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
@@ -647,6 +646,9 @@ Public Class ColorPickerDlg
             ctrl.Dispose()
         Next
         ImgPaletteContainer.Controls.Clear()
+
+        ColorsList = ColorsList.Distinct.ToList
+        ColorsList.Sort(New RGBColorComparer())
 
         For Each C As Color In ColorsList
             Dim pnl As New XenonCP With {

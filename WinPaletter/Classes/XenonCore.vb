@@ -409,12 +409,14 @@ Public Class XenonCore
         ElseIf TypeOf ctrl Is NumericUpDown Then
             With DirectCast(ctrl, NumericUpDown)
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
         ElseIf TypeOf ctrl Is ComboBox Then
             With DirectCast(ctrl, ComboBox)
                 .FlatStyle = FlatStyle.Flat
                 .BackColor = ctrl.FindForm.BackColor.CB(0.04 * If(DarkMode, +1, -1))
+                .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
         End If
