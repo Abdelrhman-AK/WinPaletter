@@ -1935,7 +1935,7 @@ Partial Class WinEffecter
         'PictureBox33
         '
         Me.PictureBox33.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox33.Image = My.Resources.CF_Img_Normal
+        Me.PictureBox33.Image = Global.WinPaletter.My.Resources.Resources.CF_Img_Normal
         Me.PictureBox33.Location = New System.Drawing.Point(180, 162)
         Me.PictureBox33.Name = "PictureBox33"
         Me.PictureBox33.Size = New System.Drawing.Size(252, 168)
@@ -1946,7 +1946,7 @@ Partial Class WinEffecter
         'PictureBox32
         '
         Me.PictureBox32.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox32.Image = My.Resources.CF_Pie_Normal
+        Me.PictureBox32.Image = Global.WinPaletter.My.Resources.Resources.CF_Pie_Normal
         Me.PictureBox32.Location = New System.Drawing.Point(6, 162)
         Me.PictureBox32.Name = "PictureBox32"
         Me.PictureBox32.Size = New System.Drawing.Size(168, 168)
@@ -1999,7 +1999,7 @@ Partial Class WinEffecter
         Me.XenonCheckBox25.Name = "XenonCheckBox25"
         Me.XenonCheckBox25.Size = New System.Drawing.Size(549, 24)
         Me.XenonCheckBox25.TabIndex = 242
-        Me.XenonCheckBox25.Text = "Fullscreen Start menu (for Windows 10 and requires logoff and logon)"
+        Me.XenonCheckBox25.Text = "Full screen start menu (for Windows 10 and requires logoff and logon)"
         '
         'XenonAlertBox6
         '

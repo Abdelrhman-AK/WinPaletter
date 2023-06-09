@@ -192,7 +192,7 @@
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAJuBJREFUeF7tnQd4VNX2t4EUqvSaToBASCM9AUIKIRB6J/Reg3QUUdCr3osV9Y+9
+        vAAADrwBlbxySQAAJuBJREFUeF7tnQd4VNX2t4EUqvSaToBASCM9AUIKIRB6J/Reg3QUUdCr3osV9Y+9
         XCsoUu0UqQFURAE1Fqz0XvWqV713feu3ZzY5bNYkMzHF7zLned4nZJKcM9nvb62995mJVnAf7sN9uA/3
         4T7+/z0qljPuw324D/fhPtyH+3Af7sN9uI/SOqwr70oCHuWA+Rysz9F9lNBhSsfAe9rxsuNdTujr6+dj
         DYY7CCVwWOVr8Rj4ykwVpipTjanO1ChjcE2A6+N54PnoUOgw6CC4j2IckngMMgYcAmoytZg6TF079coI
@@ -396,7 +396,7 @@
 
 • Save theme confirmation dialog redesigned, with new applying options (first theme and default Windows)
 
-• Added an option to use the native classic Windows color picker instead of WinPaletter's one (Open Settings &gt; Miscellanous)
+• Added an option to use the native classic Windows color picker instead of WinPaletter's one (Open Settings &gt; Miscellaneous)
 
 • Improvements for previewer in both main form and drag-drop
 

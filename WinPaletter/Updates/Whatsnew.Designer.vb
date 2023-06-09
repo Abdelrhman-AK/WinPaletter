@@ -472,7 +472,7 @@ Partial Class Whatsnew
         Me.Label1.Size = New System.Drawing.Size(656, 317)
         Me.Label1.TabIndex = 34
         Me.Label1.Text = "• Colors Filter (Accessibility feature)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Hide scrollbar in modern Windows 10/" &
-    "11 apps" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Fullscreen start menu for Windows 10"
+    "11 apps" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "• Full screen start menu for Windows 10"
         '
         'Label3
         '
