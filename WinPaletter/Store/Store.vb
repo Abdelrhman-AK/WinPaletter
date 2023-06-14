@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Threading
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -871,6 +872,7 @@ Public Class Store
 #End Region
 
 #Region "Store item events"
+
     Public Sub StoreItem_Clicked(sender As Object, e As MouseEventArgs)
 
         Select Case e.Button
@@ -932,19 +934,25 @@ Public Class Store
 
                     Try
                         If IO.File.ReadAllLines(.FileName) Is IO.File.ReadAllText(.FileName).Decompress Then
-                            themeSize_lbl.Text = String.Format("{0}",
-                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
+                            themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
                         Else
-                            themeSize_lbl.Text = String.Format("{0} ({1} after data decompression)",
+                            themeSize_lbl.Text = String.Format(My.Lang.Store_AfterDecompression,
                                                                    My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString,
                                                                    File.ReadAllText(.FileName).Decompress.ToArray.Length.SizeString)
                         End If
                     Catch
-                        themeSize_lbl.Text = String.Format("{0}",
-                                                               My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString)
+                        themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
                     End Try
-                    Dim Pack_Size As Long = GetFileSizeFromURL(.URL_PackFile)
-                    respacksize_lbl.Text = If(Pack_Size > 0, Pack_Size.SizeString, My.Lang.Store_NoIncludedData)
+
+                    If Not String.IsNullOrWhiteSpace(.MD5_PackFile) AndAlso .MD5_PackFile <> "0" Then
+                        Task.Run(Sub()
+                                     respacksize_lbl.SetText(My.Lang.Store_Calculating)
+                                     Dim Pack_Size As Long = GetFileSizeFromURL(.URL_PackFile)
+                                     respacksize_lbl.SetText(If(Pack_Size > 0, Pack_Size.SizeString, My.Lang.Store_NoIncludedData))
+                                 End Sub)
+                    Else
+                        respacksize_lbl.Text = My.Lang.Store_NoIncludedData
+                    End If
 
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description

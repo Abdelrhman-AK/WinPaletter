@@ -186,14 +186,14 @@ Public Class StoreItem : Inherits Panel
         Dim G As Graphics = e.Graphics
 
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = TextRenderingHint.SystemDefault
+        G.TextRenderingHint = My.RenderingHint
         DoubleBuffered = True
         G.Clear(GetParentColor)
 
         Dim rect_outer As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim rect_inner As New Rectangle(1, 1, Width - 3, Height - 3)
 
-        Dim bkC As Color = If(State <> MouseState.None, Style.Colors.Back_Checked, Style.Colors.Back)
+        Dim bkC As Color = Color.FromArgb(255 - alpha, Style.Colors.Back)
         Dim bkCC As Color = bkC
 
         If CP IsNot Nothing Then
@@ -203,7 +203,6 @@ Public Class StoreItem : Inherits Panel
                 bkCC = Color.FromArgb(alpha, CP.Info.Color1.Light)
             End If
         End If
-
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)

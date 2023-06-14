@@ -93,7 +93,7 @@ Public Class AltTabEditor
 
         If ExplorerPatcher.IsAllowed Then
             Try
-                If My.Computer.Registry.CurrentUser.GetValue("Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) = 3 Then
+                If My.Computer.Registry.CurrentUser.GetValue("Software\Microsoft\Windows\CurrentVersion\Explorer\AltTabSettings", 0) = 3 Then
                     XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
                     XenonWinElement1.DarkMode = Not My.CP.Windows11.WinMode_Light
                 End If

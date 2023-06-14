@@ -440,6 +440,8 @@ Public Class Localizer : Implements IDisposable
     Property Store_ThemeDesignedFor0 As String = "This theme can be applied to all supported versions of Windows, but it was designed for:"
     Property Store_ThemeDesignedFor1 As String = "This theme can be applied to all supported versions of Windows:"
     Property Store_LogoffRecommended As String = "It is recommended to logoff your Windows and logon to apply all effects of the theme"
+    Property Store_AfterDecompression As String = "{0} ({1} after data decompression)"
+    Property Store_Calculating As String = "Calculating ..."
 
     Property Store_Toggle_AppTheme As String = "WinPaletter application theme"
     Property Store_Toggle_LogonUI As String = "LogonUI screen"
