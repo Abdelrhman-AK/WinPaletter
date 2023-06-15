@@ -76,8 +76,14 @@ Public Class Metrics_Fonts
             PictureBox35.Image = SystemIcons.Information.ToBitmap
             PictureBox36.Image = SystemIcons.Information.ToBitmap
         Else
-            PictureBox35.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
-            PictureBox36.Image = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON).ToBitmap
+            Dim ico As Icon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON)
+            If ico IsNot Nothing Then
+                PictureBox35.Image = ico.ToBitmap
+                PictureBox36.Image = ico.ToBitmap
+            Else
+                PictureBox35.Image = SystemIcons.Information.ToBitmap
+                PictureBox36.Image = SystemIcons.Information.ToBitmap
+            End If
         End If
 
         Dim Win7 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Aero Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Opaque Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Basic

@@ -186,7 +186,13 @@ Public Class StoreItem : Inherits Panel
         Dim G As Graphics = e.Graphics
 
         G.SmoothingMode = SmoothingMode.AntiAlias
-        G.TextRenderingHint = My.RenderingHint
+
+        If CP IsNot Nothing Then
+            G.TextRenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
+        Else
+            G.TextRenderingHint = My.RenderingHint
+        End If
+
         DoubleBuffered = True
         G.Clear(GetParentColor)
 
@@ -248,7 +254,7 @@ Public Class StoreItem : Inherits Panel
 
         If CP IsNot Nothing Then
             Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
-            G.DrawString(CP.Info.ThemeName, New Font("Segoe UI", 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
+            G.DrawString(CP.Info.ThemeName, New Font(CP.MetricsFonts.CaptionFont.Name, 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
 
             Dim BadgeRect As New Rectangle(Author_Rect.Right + 2, Author_Rect.Y, 16, 16)
 
@@ -260,7 +266,7 @@ Public Class StoreItem : Inherits Panel
 
             Dim author As String
             author = If(DoneByWinPaletter, My.Application.Info.ProductName, CP.Info.Author)
-            G.DrawString(My.Lang.By & " " & author, New Font("Segoe UI", 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
+            G.DrawString(My.Lang.By & " " & author, New Font(CP.MetricsFonts.CaptionFont.Name, 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
 
             For i = 0 To DesignedFor_Badges.Count - 1
                 G.DrawImage(DesignedFor_Badges(i), New Rectangle(BadgeRect.Right - 16 - 18 * i, Author_Rect.Bottom + 7, 16, 16))

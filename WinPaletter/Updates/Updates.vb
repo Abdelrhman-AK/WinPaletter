@@ -98,8 +98,14 @@ Public Class Updates
             ProgressBar1.Value = 0
 
             If XenonRadioButton1.Checked Then
+                XenonButton1.Enabled = False
+                Panel1.Enabled = False
                 ProgressBar1.Visible = True
                 OldName = Reflection.Assembly.GetExecutingAssembly().Location
+                Try
+                    If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+                    If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
+                Catch : End Try
                 My.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter.trash")
                 UC.DownloadFileAsync(New Uri(url), OldName)
             End If
@@ -108,6 +114,8 @@ Public Class Updates
                 SaveFileDialog1.FileName = String.Format("WinPaletter ({0})", ver)
 
                 If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+                    Panel1.Enabled = False
+                    XenonButton1.Enabled = False
                     ProgressBar1.Visible = True
                     UC.DownloadFileAsync(New Uri(url), SaveFileDialog1.FileName)
                 Else
@@ -137,6 +145,8 @@ Public Class Updates
         Label7.Text = ""
         Label9.Text = ""
         url = Nothing
+        XenonButton1.Enabled = True
+        Panel1.Enabled = True
 
         XenonButton1.Text = My.Lang.CheckForUpdates
         Label2.Text = My.AppVersion
@@ -160,7 +170,7 @@ Public Class Updates
             ver = ls(UpdateChannel).Split(" ")(1)
 
             Label7.Text = UpdateSize & " " & My.Lang.MBSizeUnit
-            Label9.Text = ReleaseDate.ToLongDateString
+            Label9.Text = ReleaseDate.ToLongDateString & " " & ReleaseDate.ToLongTimeString
 
             LinkLabel3.Visible = True
 
@@ -217,10 +227,12 @@ Public Class Updates
     End Sub
 
     Private Sub UC_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles UC.DownloadFileCompleted
+        XenonButton1.Enabled = True
+        Panel1.Enabled = True
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
         If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
-        If XenonRadioButton1.Checked And Not Distutbed Then
+        If XenonRadioButton1.Checked And Not Disturbed Then
             Process.Start(OldName)
             Process.GetCurrentProcess.Kill()
         End If
@@ -236,24 +248,33 @@ Public Class Updates
         ls.Clear()
     End Sub
 
-    Private Distutbed As Boolean = False
+    Private Disturbed As Boolean = False
 
     Sub DisturbActions()
         If UC.IsBusy Then
-            Distutbed = True
+            Disturbed = True
 
             UC.CancelAsync()
             UC.Dispose()
 
             If XenonRadioButton1.Checked Then
-                If IO.File.Exists(OldName) Then Kill(OldName)
+                Try
+                    If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
+                Catch
+                End Try
+                My.Computer.FileSystem.RenameFile(OldName, "oldWinpaletter_2.trash")
                 My.Computer.FileSystem.RenameFile("oldWinpaletter.trash", OldName.Split("\").Last)
+                Try
+                    If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
+                    If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+                Catch
+                End Try
             End If
 
-            If XenonRadioButton2.Checked Then
-                If IO.File.Exists(SaveFileDialog1.FileName) Then Kill(SaveFileDialog1.FileName)
-            End If
+        End If
 
+        If XenonRadioButton2.Checked Then
+            If IO.File.Exists(SaveFileDialog1.FileName) Then Kill(SaveFileDialog1.FileName)
         End If
     End Sub
 

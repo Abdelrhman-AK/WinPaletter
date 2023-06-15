@@ -780,6 +780,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/wiki.
+        '''</summary>
+        Public ReadOnly Property Link_Wiki() As String
+            Get
+                Return ResourceManager.GetString("Link_Wiki", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property LogonUI7() As System.Drawing.Bitmap

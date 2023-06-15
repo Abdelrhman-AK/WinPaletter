@@ -2525,6 +2525,10 @@ Public Class MainFrm
         ApplyColorsToElements(My.CP)
     End Sub
 
+    Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
+        Process.Start(My.Resources.Link_Wiki)
+    End Sub
+
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub

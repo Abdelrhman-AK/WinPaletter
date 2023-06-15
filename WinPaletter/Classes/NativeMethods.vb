@@ -1724,9 +1724,17 @@ Namespace NativeMethods
             Return ico
         End Function
         Public Shared Function GetSystemIcon(_Icon As Shell32.SHSTOCKICONID, _Type As Shell32.SHGSI) As Icon
-            Dim sii As New Shell32.SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(Shell32.SHSTOCKICONINFO))}
-            Shell32.SHGetStockIconInfo(_Icon, _Type, sii)
-            Return Icon.FromHandle(sii.hIcon)
+            Try
+                Dim sii As New Shell32.SHSTOCKICONINFO With {.cbSize = Marshal.SizeOf(GetType(Shell32.SHSTOCKICONINFO))}
+                Shell32.SHGetStockIconInfo(_Icon, _Type, sii)
+                If sii.hIcon <> Nothing AndAlso sii.hIcon <> IntPtr.Zero Then
+                    Return Icon.FromHandle(sii.hIcon)
+                Else
+                    Return Nothing
+                End If
+            Catch
+                Return Nothing
+            End Try
         End Function
 
 #End Region

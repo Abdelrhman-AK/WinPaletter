@@ -116,4 +116,7 @@ Public Class Store_Hover
         End If
     End Sub
 
+    Private Sub Store_Hover_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
+    End Sub
 End Class

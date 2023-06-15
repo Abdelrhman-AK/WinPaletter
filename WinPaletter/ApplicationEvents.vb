@@ -658,7 +658,9 @@ Namespace My
                 End Try
             End If
 
-            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+            Try
+                If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+                If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
             Catch : End Try
 
             RemoveHandler AppDomain.CurrentDomain.AssemblyResolve, AddressOf DomainCheck
@@ -668,7 +670,9 @@ Namespace My
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
-            Try : If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+            Try
+                If IO.File.Exists("oldWinpaletter.trash") Then Kill("oldWinpaletter.trash")
+                If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
             Catch : End Try
 
             Animator = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}

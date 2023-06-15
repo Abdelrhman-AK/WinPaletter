@@ -1802,8 +1802,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 SmCaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
                 SmCaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
 
-                ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
-                ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
+                Try
+                    ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+                Catch
+                    ShellIconSize = _DefMetricsFonts.ShellIconSize
+                End Try
+
+                Try
+                    ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
+                Catch
+                    ShellSmallIconSize = _DefMetricsFonts.ShellSmallIconSize
+                End Try
 
                 DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
                 CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
