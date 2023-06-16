@@ -1825,10 +1825,23 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 FontSubstitute_MSShellDlg2 = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
                 FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
+                If XenonCore.GetWindowsScreenScalingFactor > 100 Then
+                    CaptionFont = AdjustFont(CaptionFont)
+                    IconFont = AdjustFont(IconFont)
+                    MenuFont = AdjustFont(MenuFont)
+                    MessageFont = AdjustFont(MessageFont)
+                    SmCaptionFont = AdjustFont(SmCaptionFont)
+                    StatusFont = AdjustFont(StatusFont)
+                End If
+
                 Dim temp As Boolean
                 Fixer.SystemParametersInfo(SPI.Fonts.GETFONTSMOOTHING, Nothing, temp, SPIF.None)
                 Fonts_SingleBitPP = Not temp OrElse GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(My.WXP, 1, 2)) <> 2
             End Sub
+
+            Private Function AdjustFont([Font] As Font) As Font
+                Return New Font([Font].Name, [Font].Size - [Font].Size * (XenonCore.GetWindowsScreenScalingFactor - 100) \ 100, [Font].Style, GraphicsUnit.Pixel)
+            End Function
 
             Public Sub Apply()
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
@@ -1945,6 +1958,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String)
@@ -1956,6 +1971,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "", RegistryValueKind.String)
+                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "", RegistryValueKind.String)
                         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "", RegistryValueKind.String)

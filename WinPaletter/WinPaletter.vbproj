@@ -77,6 +77,10 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Animator">
       <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Animator.dll</HintPath>
