@@ -428,9 +428,7 @@
     <Compile Include="LogonUI\LogonUI8_Pics.Designer.vb">
       <DependentUpon>LogonUI8_Pics.vb</DependentUpon>
     </Compile>
-    <Compile Include="LogonUI\LogonUI8_Pics.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="LogonUI\LogonUI8_Pics.vb" />
     <Compile Include="LogonUI\LogonUIXP.Designer.vb">
       <DependentUpon>LogonUIXP.vb</DependentUpon>
     </Compile>
