@@ -2,6 +2,32 @@
 
 ---
 
+### 1.0.7.8
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 18 Jun 2023  |
+
+> **What's New?**
+The same as [1.0.7.7](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1077) with some bugs fixes:
+- Fonts size trouble with high DPI #157
+- Metrics and fonts form error #155
+- WinPaletter update error #154
+- Application startup crash #153
+- Windows switcher crash #149
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.6`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.6...v1.0.7.8) |
+| Previous Beta   | `1.0.7.7`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.7...v1.0.7.8) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.8) |
+
+---
+
 ### 1.0.7.7
 
 > **Info:**
