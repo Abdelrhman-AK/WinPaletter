@@ -234,7 +234,10 @@
     <None Include="bin\Release\WinPaletter.exe.config" />
     <None Include="bin\Release\WinPaletter.zip" />
     <None Include="My Project\app.manifest" />
-    <None Include="My Project\Settings.settings" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.vb</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Resources\Assemblies.zip" />
     <None Include="Resources\JetBrainsMono-Regular.ttf" />

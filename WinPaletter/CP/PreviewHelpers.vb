@@ -261,6 +261,10 @@ Public Class PreviewHelpers
 
         My.RenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
 
+        Taskbar.SuspendRefresh = True
+        Start.SuspendRefresh = True
+        ActionCenter.SuspendRefresh = True
+
         Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
@@ -783,12 +787,23 @@ Public Class PreviewHelpers
 
                 End Select
 #End Region
-            Case WindowStyle.WXP
-#Region "WinXP"
-                Start.Refresh()
-                Taskbar.Refresh()
-#End Region
         End Select
+
+        Taskbar.SuspendRefresh = False
+        Start.SuspendRefresh = False
+        ActionCenter.SuspendRefresh = False
+
+        Taskbar.ProcessBack()
+        Start.ProcessBack()
+        ActionCenter.ProcessBack()
+
+        Taskbar.NoiseBack()
+        Start.NoiseBack()
+        ActionCenter.NoiseBack()
+
+        Taskbar.Refresh()
+        Start.Refresh()
+        ActionCenter.Refresh()
 
         If Not IsFontInstalled("Segoe MDL2 Assets") Then
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
@@ -804,6 +819,12 @@ Public Class PreviewHelpers
                                          WXP_VS_ReplaceColors As Boolean, WXP_VS_ReplaceMetrics As Boolean, WXP_VS_ReplaceFonts As Boolean)
 
         My.RenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
+
+        Taskbar.SuspendRefresh = True
+        Start.SuspendRefresh = True
+        ActionCenter.SuspendRefresh = True
+        XenonWindow1.SuspendRefresh = True
+        XenonWindow2.SuspendRefresh = True
 
         Dim AC_Style As XenonWinElement.Styles = ActionCenter.Style
         Dim Start_Style As XenonWinElement.Styles = Start.Style
@@ -1173,12 +1194,36 @@ Public Class PreviewHelpers
         XenonWindow1.Top = (XenonWindow1.Parent.Height - Taskbar.Height - (XenonWindow1.Height + XenonWindow2.Height)) / 2
         XenonWindow2.Top = XenonWindow1.Bottom
         XenonWindow2.Left = XenonWindow1.Left
+
+        Taskbar.SuspendRefresh = False
+        Start.SuspendRefresh = False
+        ActionCenter.SuspendRefresh = False
+        XenonWindow1.SuspendRefresh = False
+        XenonWindow2.SuspendRefresh = False
+
+        Taskbar.NoiseBack()
+        Start.NoiseBack()
+        ActionCenter.NoiseBack()
+
+        Taskbar.ProcessBack()
+        Start.ProcessBack()
+        ActionCenter.ProcessBack()
+
+        Taskbar.Refresh()
+        Start.Refresh()
+        ActionCenter.Refresh()
+        XenonWindow1.Refresh()
+        XenonWindow2.Refresh()
+
     End Sub
     Public Shared Sub ApplyWindowStyles(ByVal [CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
         XenonWindow1.Active = True
         XenonWindow2.Active = False
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
+
+        XenonWindow1.SuspendRefresh = True
+        XenonWindow2.SuspendRefresh = True
 
         Select Case [Style]
             Case WindowStyle.W11
@@ -1374,6 +1419,9 @@ Public Class PreviewHelpers
 #End Region
 
         End Select
+
+        XenonWindow1.SuspendRefresh = False
+        XenonWindow2.SuspendRefresh = False
 
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()

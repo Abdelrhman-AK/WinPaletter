@@ -2,6 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Net.Mail
 Imports System.Runtime.CompilerServices
 Imports WinPaletter.XenonCore
 
@@ -3936,7 +3937,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Integer)
             _BackColorAlpha = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -3956,8 +3957,8 @@ Public Class XenonWinElement : Inherits ContainerControl
                 Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
             End If
 
-            NoiseBack()
-            Refresh()
+            If Not SuspendRefresh Then NoiseBack()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -3969,7 +3970,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Set(ByVal value As Integer)
             _BlurPower = value
             BlurBack()
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -3981,7 +3982,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Set(ByVal value As Boolean)
             _Transparency = value
             ProcessBack()
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -3992,7 +3993,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Boolean)
             _DarkMode = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4003,7 +4004,8 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _AppUnderline = value
-            Try : Refresh() : Catch : End Try
+            Try : If Not SuspendRefresh Then Refresh()
+            Catch : End Try
         End Set
     End Property
 
@@ -4014,7 +4016,8 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _AppBackground = value
-            Try : Refresh() : Catch : End Try
+            Try : If Not SuspendRefresh Then Refresh()
+            Catch : End Try
         End Set
     End Property
 
@@ -4025,7 +4028,8 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _ActionCenterButton_Normal = value
-            Try : Refresh() : Catch : End Try
+            Try : If Not SuspendRefresh Then Refresh()
+            Catch : End Try
         End Set
     End Property
 
@@ -4036,7 +4040,8 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _ActionCenterButton_Hover = value
-            Try : Refresh() : Catch : End Try
+            Try : If Not SuspendRefresh Then Refresh()
+            Catch : End Try
         End Set
     End Property
 
@@ -4047,7 +4052,8 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _ActionCenterButton_Pressed = value
-            Try : Refresh() : Catch : End Try
+            Try : If Not SuspendRefresh Then Refresh()
+            Catch : End Try
         End Set
     End Property
 
@@ -4058,7 +4064,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _StartColor = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4069,7 +4075,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _LinkColor = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4080,7 +4086,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Color)
             _BackColor2 = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4091,7 +4097,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Integer)
             _Win7ColorBal = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4102,7 +4108,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         End Get
         Set(ByVal value As Integer)
             _Win7GlowBal = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -4110,6 +4116,7 @@ Public Class XenonWinElement : Inherits ContainerControl
     Public Property UseWin11RoundedCorners_WithWin10_Level1 As Boolean = False
     Public Property UseWin11RoundedCorners_WithWin10_Level2 As Boolean = False
     Public Property Shadow As Boolean = True
+    Public Property SuspendRefresh As Boolean = False
 
     Public Sub CopycatFrom(element As XenonWinElement)
         Style = element.Style
@@ -4139,8 +4146,12 @@ Public Class XenonWinElement : Inherits ContainerControl
         Location = element.Location
         Text = element.Text
 
-        ProcessBack()
-        Try : Refresh() : Catch : End Try
+        Try
+            If Not SuspendRefresh Then
+                ProcessBack()
+                Refresh()
+            End If
+        Catch : End Try
     End Sub
 
 #End Region
@@ -4167,21 +4178,21 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             If Button1.Contains(PointToClient(MousePosition)) Then
                 If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
-                Refresh()
+                If Not SuspendRefresh Then Refresh()
             Else
                 If Not _State_Btn1 = MouseState.Normal Then
                     _State_Btn1 = MouseState.Normal
-                    Refresh()
+                    If Not SuspendRefresh Then Refresh()
                 End If
             End If
 
             If Button2.Contains(PointToClient(MousePosition)) Then
                 If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
-                Refresh()
+                If Not SuspendRefresh Then Refresh()
             Else
                 If Not _State_Btn2 = MouseState.Normal Then
                     _State_Btn2 = MouseState.Normal
-                    Refresh()
+                    If Not SuspendRefresh Then Refresh()
                 End If
             End If
 
@@ -4192,7 +4203,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         If Style = Styles.ActionCenter11 Then
             _State_Btn1 = MouseState.Normal
             _State_Btn2 = MouseState.Normal
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End If
     End Sub
 
@@ -5257,9 +5268,9 @@ Public Class XenonWindow : Inherits Panel
     Public Property Win7GlowBal As Integer = 100
     Public Property ToolWindow As Boolean = False
     Public Property WinVista As Boolean = False
+    Public Property SuspendRefresh As Boolean = False
 
     Public Event MetricsChanged()
-
     Private _DarkMode As Boolean = True
     Public Property DarkMode() As Boolean
         Get
@@ -5267,7 +5278,7 @@ Public Class XenonWindow : Inherits Panel
         End Get
         Set(ByVal value As Boolean)
             _DarkMode = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -5278,7 +5289,7 @@ Public Class XenonWindow : Inherits Panel
         End Get
         Set(ByVal value As Boolean)
             _AccentColor_Enabled = value
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -5292,7 +5303,7 @@ Public Class XenonWindow : Inherits Panel
             If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
                 Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
             End If
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
         End Set
     End Property
 
@@ -5304,7 +5315,7 @@ Public Class XenonWindow : Inherits Panel
         Set(value As Integer)
             _Metrics_CaptionHeight = value
             AdjustPadding()
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
             RaiseEvent MetricsChanged()
         End Set
     End Property
@@ -5317,7 +5328,7 @@ Public Class XenonWindow : Inherits Panel
         Set(value As Integer)
             _Metrics_BorderWidth = value
             AdjustPadding()
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
             RaiseEvent MetricsChanged()
         End Set
     End Property
@@ -5330,7 +5341,7 @@ Public Class XenonWindow : Inherits Panel
         Set(value As Integer)
             _Metrics_PaddedBorderWidth = value
             AdjustPadding()
-            Refresh()
+            If Not SuspendRefresh Then Refresh()
             RaiseEvent MetricsChanged()
         End Set
     End Property
@@ -6145,10 +6156,8 @@ Public Class XenonWindow : Inherits Panel
 
         If Not DesignMode Then
             Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-            'Try : AddHandler FindForm.Load, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler LocationChanged, AddressOf ProcessBack : Catch : End Try
-            'Try : AddHandler PaddingChanged, AddressOf ProcessBack : Catch : End Try
             Try : AddHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
         End If
 
