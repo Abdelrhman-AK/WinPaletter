@@ -1263,7 +1263,7 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.W8
 #Region "Win8.1"
-                If My.W8 And My.Settings.Win7LivePreview Then
+                If My.W8 And My.Settings.Miscellaneous.Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
 
@@ -1288,7 +1288,7 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.W7
 #Region "Win7"
-                If My.WVista And My.Settings.Win7LivePreview Then
+                If My.WVista And My.Settings.Miscellaneous.Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
 
@@ -1353,7 +1353,7 @@ Public Class PreviewHelpers
 #End Region
             Case WindowStyle.WVista
 #Region "WinVista"
-                If My.WVista And My.Settings.Win7LivePreview Then
+                If My.WVista And My.Settings.Miscellaneous.Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
 

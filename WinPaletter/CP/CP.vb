@@ -135,25 +135,25 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Sub Load(_DefAppTheme As AppTheme)
                 Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", _DefAppTheme.Enabled)
-                BackColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Back", _DefAppTheme.BackColor.ToArgb))
-                AccentColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Accent", _DefAppTheme.AccentColor.ToArgb))
-                DarkMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom_Dark", _DefAppTheme.DarkMode)
-                RoundCorners = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Rounded", _DefAppTheme.RoundCorners)
+                BackColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", _DefAppTheme.BackColor.ToArgb))
+                AccentColor = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", _DefAppTheme.AccentColor.ToArgb))
+                DarkMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", _DefAppTheme.DarkMode)
+                RoundCorners = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", _DefAppTheme.RoundCorners)
             End Sub
 
             Sub Apply(Optional SkipSettingWallpaper As Boolean = False)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Back", BackColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Accent", AccentColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom_Dark", DarkMode)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Rounded", RoundCorners)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", BackColor.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", AccentColor.ToArgb)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", DarkMode)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", RoundCorners)
 
-                With My.Settings
-                    .Appearance_Custom = Enabled
-                    .Appearance_Back = BackColor
-                    .Appearance_Accent = AccentColor
-                    .Appearance_Custom_Dark = DarkMode
-                    .Appearance_Rounded = RoundCorners
+                With My.Settings.Appearance
+                    .CustomColors = Enabled
+                    .BackColor = BackColor
+                    .AccentColor = AccentColor
+                    .CustomTheme = DarkMode
+                    .RoundedCorners = RoundCorners
                 End With
 
                 ApplyDarkMode()
@@ -1246,7 +1246,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
                 End If
 
-                If My.Settings.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
@@ -1281,7 +1281,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
                 End If
 
-                If My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(True).ToArgb)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(True).ToArgb)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(True).ToArgb)
@@ -1296,7 +1296,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(True).ToArgb)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(True).ToArgb)
 
-                ElseIf My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.RestoreDefaults Then
+                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
                     Dim _DefWin32 As Structures.Win32UI
                     If My.PreviewStyle = WindowStyle.W11 Then
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
@@ -1328,14 +1328,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(True).ToArgb)
                     EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(True).ToArgb)
 
-                ElseIf My.Settings.ClassicColors_HKLM_Prefs = XeSettings.OverwriteOptions.Erase Then
+                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase Then
                     DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard")
                 End If
 
             End Sub
 
             Public Sub Update_UPM_DEFAULT()
-                If My.Settings.UPM_HKU_DEFAULT Then
+                If My.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT Then
                     Dim source As Byte() = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
                     If source IsNot Nothing Then EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
                 End If
@@ -1872,7 +1872,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
                     SystemParametersInfo(SPI.Fonts.SETFONTSMOOTHING, Not Fonts_SingleBitPP, Nothing, SPIF.UpdateINIFile)
 
-                    If Not My.Settings.DelayMetrics Then
+                    If Not My.Settings.ThemeApplyingBehavior.DelayMetrics Then
                         Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
                         Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
                         SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
@@ -1930,7 +1930,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
-                    If My.Settings.Metrics_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+                    If My.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
@@ -2213,7 +2213,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", CInt(ColorFilter))
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", If(ColorFilter_Enabled, "colorfiltering", ""), RegistryValueKind.String)
 
-                    If My.Settings.UPM_HKU_DEFAULT Then
+                    If My.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT Then
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret)
                         EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay)
@@ -4512,18 +4512,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Dim TerDir As String
                         Dim TerPreDir As String
 
-                        If Not My.Settings.Terminal_Path_Deflection Then
+                        If Not My.Settings.WindowsTerminals.Path_Deflection Then
                             TerDir = My.PATH_TerminalJSON
                             TerPreDir = My.PATH_TerminalPreviewJSON
                         Else
-                            If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                                TerDir = My.Settings.Terminal_Stable_Path
+                            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                                TerDir = My.Settings.WindowsTerminals.Terminal_Stable_Path
                             Else
                                 TerDir = My.PATH_TerminalJSON
                             End If
 
-                            If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
-                                TerPreDir = My.Settings.Terminal_Preview_Path
+                            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Preview_Path) Then
+                                TerPreDir = My.Settings.WindowsTerminals.Terminal_Preview_Path
                             Else
                                 TerPreDir = My.PATH_TerminalPreviewJSON
                             End If
@@ -4667,7 +4667,7 @@ Start:
 
                     If _Converter.FetchFile(File) = Converter_CP.WP_Format.WPTH Then
                         If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
-                            _Converter.Convert(File, File, My.Settings.CompressThemeFile, False)
+                            _Converter.Convert(File, File, My.Settings.FileTypeManagement.CompressThemeFile, False)
                             GoTo Start
                         End If
                     Else
@@ -4917,18 +4917,18 @@ Start:
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.Settings.Terminal_Path_Deflection Then
+                    If Not My.Settings.WindowsTerminals.Path_Deflection Then
                         TerDir = My.PATH_TerminalJSON
                         TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
-                        If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Settings.Terminal_Stable_Path
+                        If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                            TerDir = My.Settings.WindowsTerminals.Terminal_Stable_Path
                         Else
                             TerDir = My.PATH_TerminalJSON
                         End If
 
-                        If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Settings.Terminal_Preview_Path
+                        If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Preview_Path) Then
+                            TerPreDir = My.Settings.WindowsTerminals.Terminal_Preview_Path
                         Else
                             TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
@@ -4956,7 +4956,7 @@ Start:
 
                         Else
 
-                            If Not My.Settings.Terminal_Path_Deflection Then
+                            If Not My.Settings.WindowsTerminals.Path_Deflection Then
                                 AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalStable_NotInstalled), "skip")
                             Else
                                 AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalStable_DeflectionNotFound), "skip")
@@ -4986,7 +4986,7 @@ Start:
                             End Try
 
                         Else
-                            If Not My.Settings.Terminal_Path_Deflection Then
+                            If Not My.Settings.WindowsTerminals.Path_Deflection Then
                                 AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalPreview_NotInstalled), "skip")
                             Else
                                 AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Skip_TerminalPreview_DeflectionNotFound), "skip")
@@ -5016,7 +5016,7 @@ Start:
                               End Sub, MethodInvoker), [TreeView], "", My.Lang.CP_Error_Cursors, My.Lang.CP_Time_Cursors, sw_all)
 
                 'Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
-                If My.Settings.Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.Overwrite Then
+                If My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
 
                     Execute(CType(Sub()
                                       EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String)
@@ -5025,7 +5025,7 @@ Start:
                                       EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_DesktopAllUsers, My.Lang.CP_Error_SetDesktop, My.Lang.CP_Time)
 
-                ElseIf My.Settings.Desktop_HKU_DEFAULT = XeSettings.OverwriteOptions.RestoreDefaults Then
+                ElseIf My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
 
                     Execute(CType(Sub()
                                       EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
@@ -5088,7 +5088,7 @@ Start:
 
         Next
 
-        If My.Settings.CompressThemeFile Then
+        If My.Settings.FileTypeManagement.CompressThemeFile Then
             Return JSON_Overall.ToString.Compress
         Else
             Return JSON_Overall.ToString
@@ -6114,9 +6114,9 @@ Start:
     Public Sub Apply_CommandPrompt()
         If CommandPrompt.Enabled Then
             Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt)
-            If My.Settings.CMD_OverrideUserPreferences Then Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
+            If My.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences Then Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
 
-            If My.Settings.CMD_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+            If My.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "", CommandPrompt)
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
             End If
@@ -6129,7 +6129,7 @@ Start:
             Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86)
 
 
-            If My.Settings.PS86_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+            If My.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86)
             End If
 
@@ -6141,7 +6141,7 @@ Start:
 
             Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64)
 
-            If My.Settings.PS64_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+            If My.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                 Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64)
             End If
         End If
@@ -6184,14 +6184,14 @@ Start:
                               ExportCursors(Me)
                           End Sub, MethodInvoker), [TreeView], My.Lang.CP_RenderingCursors, My.Lang.CP_RenderingCursors_Error, My.Lang.CP_Time)
 
-            If My.Settings.AutoApplyCursors Then
+            If My.Settings.ThemeApplyingBehavior.AutoApplyCursors Then
                 Execute(CType(Sub()
                                   SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile)
                                   SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile)
                                   SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile)
                                   ApplyCursorsToReg()
 
-                                  If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then
+                                  If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                                       EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails)
                                       ApplyCursorsToReg("HKEY_USERS\.DEFAULT")
                                   End If
@@ -6202,14 +6202,14 @@ Start:
             End If
         Else
 
-            If My.Settings.ResetCursorsToAero Then
+            If My.Settings.ThemeApplyingBehavior.ResetCursorsToAero Then
                 If Not My.WXP Then
                     ResetCursorsToAero()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToAero("HKEY_USERS\.DEFAULT")
 
                 Else
                     ResetCursorsToNone_XP()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
 
                 End If
             End If

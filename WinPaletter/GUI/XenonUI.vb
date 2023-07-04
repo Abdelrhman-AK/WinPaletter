@@ -155,8 +155,8 @@ Module XenonModule
     End Function
     Friend Function GetRoundedCorners() As Boolean
         Try
-            If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
-                Return My.Settings.Appearance_Rounded
+            If My.Settings.Appearance.ManagedByTheme AndAlso My.Settings.Appearance.CustomColors Then
+                Return My.Settings.Appearance.RoundedCorners
             Else
                 If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
                     Return False
@@ -1961,7 +1961,7 @@ Public Class XenonCP
 
 
         If Not DesignMode Then
-            If My.Settings.Nerd_Stats And Not ForceNoNerd Then
+            If My.Settings.NerdStats.Enabled And Not ForceNoNerd Then
                 G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
                 Dim IsDefault As Boolean = (BackColor = DefaultColor)
                 Dim FC0 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
@@ -1974,13 +1974,13 @@ Public Class XenonCP
                 RectX.Y += 1
 
                 Dim CF As ColorFormat = ColorFormat.HEX
-                If My.Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HEX Then CF = ColorFormat.HEX
-                If My.Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.RGB Then CF = ColorFormat.RGB
-                If My.Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.HSL Then CF = ColorFormat.HSL
-                If My.Settings.Nerd_Stats_Kind = XeSettings.Nerd_Stats_Type.Dec Then CF = ColorFormat.Dec
+                If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HEX Then CF = ColorFormat.HEX
+                If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.RGB Then CF = ColorFormat.RGB
+                If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HSL Then CF = ColorFormat.HSL
+                If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.Dec Then CF = ColorFormat.Dec
 
 
-                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.Settings.Nerd_Stats_HexHash, Not (BackColor.A = 255))
+                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (BackColor.A = 255))
                 Dim F As Font
 
                 If IsDefault Then

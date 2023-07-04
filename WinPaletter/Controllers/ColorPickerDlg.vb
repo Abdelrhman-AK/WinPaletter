@@ -40,7 +40,7 @@ Public Class ColorPickerDlg
         For Each c As Color In CP.ListColors
 
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
+                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                 .BackColor = c
             }
 
@@ -107,7 +107,7 @@ Public Class ColorPickerDlg
 
     Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing, Optional ShowAlpha As Boolean = False) As Color
 
-        If Not My.Settings.Classic_Color_Picker Then
+        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then
             fr = Ctrl(0).FindForm
             Dim PrevoiusMin As Size = fr.MinimumSize
 
@@ -538,7 +538,7 @@ Public Class ColorPickerDlg
 
         Next
 
-        If (My.WVista Or My.W7 Or My.W8) And My.Settings.Win7LivePreview Then
+        If (My.WVista Or My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(ColorEditorManager1.Color, My.CP.Windows7.ColorizationAfterglow)
             End If
@@ -652,7 +652,7 @@ Public Class ColorPickerDlg
 
         For Each C As Color In ColorsList
             Dim pnl As New XenonCP With {
-                    .Size = New Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
+                    .Size = New Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                     .BackColor = Color.FromArgb(255, C)
                 }
             ImgPaletteContainer.Controls.Add(pnl)
@@ -709,7 +709,7 @@ Public Class ColorPickerDlg
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
                         Dim pnl As New XenonCP With {
-                            .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
+                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                             .BackColor = Color.FromArgb(255, C)
                         }
                         ThemePaletteContainer.Controls.Add(pnl)
@@ -729,7 +729,7 @@ Public Class ColorPickerDlg
                         If field.FieldType.Name.ToLower = "color" Then
 
                             Dim pnl As New XenonCP With {
-                                .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
+                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                                 .BackColor = field.GetValue(vs.Metrics.Colors)
                                     }
                             ThemePaletteContainer.Controls.Add(pnl)
@@ -777,7 +777,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.Settings.Win7LivePreview Then
+        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(InitColor, My.CP.Windows7.ColorizationAfterglow)
             End If
@@ -804,7 +804,7 @@ Public Class ColorPickerDlg
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
                     Dim pnl As New XenonCP With {
-                        .Size = New Drawing.Size(If(My.Settings.Nerd_Stats, 90, 30), 25),
+                        .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                         .BackColor = Color.FromArgb(255, C)
                     }
                     ThemePaletteContainer.Controls.Add(pnl)

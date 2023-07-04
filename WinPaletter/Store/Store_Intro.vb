@@ -2,7 +2,7 @@
 
 Public Class Store_Intro
     Private Sub Store_Intro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        XenonCheckBox1.Checked = My.Settings.Store_ShowTips
+        XenonCheckBox1.Checked = My.Settings.Store.ShowTips
         ApplyDarkMode(Me)
         StoreItem1.CP = My.CP
         Icon = Store.Icon
@@ -37,8 +37,8 @@ Public Class Store_Intro
     End Sub
 
     Private Sub Store_Intro_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        My.Settings.Store_ShowTips = XenonCheckBox1.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Store.ShowTips = XenonCheckBox1.Checked
+        My.Settings.Store.Save()
     End Sub
 
     Private Sub StoreItem1_Click(sender As Object, e As MouseEventArgs) Handles StoreItem1.Click

@@ -265,7 +265,7 @@ Public Class SubMenu
 
         For Each c As Color In CP.ListColors
             Dim pnl As New XenonCP With {
-                .Size = New Size(If(My.Settings.Nerd_Stats, 85, 30), 20),
+                .Size = New Size(If(My.Settings.NerdStats.Enabled, 85, 30), 20),
                 .BackColor = c
             }
             PaletteContainer.Controls.Add(pnl)

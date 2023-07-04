@@ -559,7 +559,7 @@ Public Class Store
         RemoveAllStoreItems(store_container)
         FilesFetcher.RunWorkerAsync()
 
-        If My.Settings.Store_ShowTips Then Store_Intro.ShowDialog()
+        If My.Settings.Store.ShowTips Then Store_Intro.ShowDialog()
     End Sub
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -594,7 +594,7 @@ Public Class Store
         Dim items As New List(Of String) : items.Clear()
 
         'Check by Ping if repos DB URL is accessible or not
-        For Each DB As String In My.Settings.Store_Online_Repositories
+        For Each DB As String In My.Settings.Store.Online_Repositories
 
             If Not DB.StartsWith("https://", My._ignore) Then DB &= "https://"
 
@@ -753,22 +753,22 @@ Public Class Store
         Dim allProgress As Integer = 0
 
 
-        For Each folder In My.Settings.Store_Offline_Directories
+        For Each folder In My.Settings.Store.Offline_Directories
 
             If Directory.Exists(folder) Then
                 Status_lbl.SetText("Accessing themes from folder """ & folder & """")
-                allProgress += Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store_Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly)).Count
+                allProgress += Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly)).Count
             End If
 
         Next
 
         allProgress *= 2
 
-        For Each folder In My.Settings.Store_Offline_Directories
+        For Each folder In My.Settings.Store.Offline_Directories
 
             If Directory.Exists(folder) Then
 
-                For Each file As String In Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store_Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly))
+                For Each file As String In Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly))
 
                     Try
                         If Not CPList.ContainsKey(file) Then
@@ -831,7 +831,7 @@ Public Class Store
 
     Private Sub FilesFetcher_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FilesFetcher.DoWork
 
-        If My.Settings.Store_Online_or_Offline Then
+        If My.Settings.Store.Online_or_Offline Then
 
             If Not IsNetworkAvailable() Then
                 Status_lbl.SetText(My.Lang.Store_NoNetwork)
@@ -905,11 +905,11 @@ Public Class Store
                     End If
 
                     If .CP.AppTheme.Enabled Then
-                        My.Settings.Appearance_Custom = .CP.AppTheme.Enabled
-                        My.Settings.Appearance_Custom_Dark = .CP.AppTheme.DarkMode
-                        My.Settings.Appearance_Rounded = .CP.AppTheme.RoundCorners
-                        My.Settings.Appearance_Back = .CP.AppTheme.BackColor
-                        My.Settings.Appearance_Accent = .CP.AppTheme.AccentColor
+                        My.Settings.Appearance.CustomColors = .CP.AppTheme.Enabled
+                        My.Settings.Appearance.CustomTheme = .CP.AppTheme.DarkMode
+                        My.Settings.Appearance.RoundedCorners = .CP.AppTheme.RoundCorners
+                        My.Settings.Appearance.BackColor = .CP.AppTheme.BackColor
+                        My.Settings.Appearance.AccentColor = .CP.AppTheme.AccentColor
                         ApplyDarkMode(Me, True)
                     End If
 
@@ -1036,23 +1036,23 @@ Public Class Store
         ExportDetails_btn.Visible = False
         StopTimer_btn.Visible = False
 
-        If My.Settings.Log_ShowApplying Then
+        If My.Settings.ThemeLog.Enabled Then
             Tabs.SelectedIndex = Tabs.TabCount - 1
             Tabs.Refresh()
         End If
 
-        With My.Settings
-            .Appearance_Custom = selectedItem.CP.AppTheme.Enabled
-            .Appearance_Back = selectedItem.CP.AppTheme.BackColor
-            .Appearance_Accent = selectedItem.CP.AppTheme.AccentColor
-            .Appearance_Custom_Dark = selectedItem.CP.AppTheme.DarkMode
-            .Appearance_Rounded = selectedItem.CP.AppTheme.RoundCorners
+        With My.Settings.Appearance
+            .CustomColors = selectedItem.CP.AppTheme.Enabled
+            .BackColor = selectedItem.CP.AppTheme.BackColor
+            .AccentColor = selectedItem.CP.AppTheme.AccentColor
+            .CustomTheme = selectedItem.CP.AppTheme.DarkMode
+            .RoundedCorners = selectedItem.CP.AppTheme.RoundCorners
         End With
         ApplyDarkMode(Nothing, True)
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
             If selectedItem.DoneByWinPaletter Then CPx.Info.Author = My.Application.Info.CompanyName
-            CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, log, Nothing), True)
+            CPx.Save(CP.CP_Type.Registry, "", If(My.Settings.ThemeLog.Enabled, log, Nothing), True)
             My.CP_Original = CPx.Clone
         End Using
 
@@ -1060,17 +1060,17 @@ Public Class Store
 
         Cursor = Cursors.Default
 
-        If My.Settings.AutoRestartExplorer Then
-            XenonCore.RestartExplorer(If(My.Settings.Log_ShowApplying, log, Nothing))
+        If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
+            XenonCore.RestartExplorer(If(My.Settings.ThemeLog.Enabled, log, Nothing))
         Else
-            If My.Settings.Log_ShowApplying Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
+            If My.Settings.ThemeLog.Enabled Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.Settings.Log_ShowApplying Then CP.AddNode(log, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+        If My.Settings.ThemeLog.Enabled Then CP.AddNode(log, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
         If selectedItem.CP.MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(log, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
-        If My.Settings.Log_ShowApplying Then CP.AddNode(log, My.Lang.Store_LogoffRecommended, "info")
+        If My.Settings.ThemeLog.Enabled Then CP.AddNode(log, My.Lang.Store_LogoffRecommended, "info")
 
         log_lbl.Visible = True
         ok_btn.Visible = True
@@ -1081,8 +1081,8 @@ Public Class Store
             log_lbl.Text = My.Lang.CP_ErrorHappened
             ShowErrors_btn.Visible = True
         Else
-            If My.Settings.Log_Countdown_Enabled Then
-                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown)
+            If My.Settings.ThemeLog.CountDown Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds)
                 apply_elapsedSecs = 1
                 Log_Timer.Enabled = True
                 Log_Timer.Start()
@@ -1149,9 +1149,9 @@ Public Class Store
         Dim found_sum As Integer = 0
 
         For Each st_item In lst
-            If (My.Settings.Store_Search_ThemeNames AndAlso st_item.Value.CP.Info.ThemeName.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
-                Or (My.Settings.Store_Search_AuthorsNames AndAlso st_item.Value.CP.Info.Author.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
-                Or (My.Settings.Store_Search_Descriptions AndAlso st_item.Value.CP.Info.Description.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) Then
+            If (My.Settings.Store.Search_ThemeNames AndAlso st_item.Value.CP.Info.ThemeName.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
+                Or (My.Settings.Store.Search_AuthorsNames AndAlso st_item.Value.CP.Info.Author.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) _
+                Or (My.Settings.Store.Search_Descriptions AndAlso st_item.Value.CP.Info.Description.TrimStart.TrimEnd.Trim.Replace(" ", "").ToUpper.Contains(search_text)) Then
 
                 found_sum += 1
 
@@ -1308,9 +1308,9 @@ Public Class Store
 
 #Region "Timers"
     Private Sub Log_Timer_Tick(sender As Object, e As EventArgs) Handles Log_Timer.Tick
-        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown - apply_elapsedSecs)
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds - apply_elapsedSecs)
 
-        If apply_elapsedSecs + 1 <= My.Settings.Log_Countdown Then
+        If apply_elapsedSecs + 1 <= My.Settings.ThemeLog.CountDown_Seconds Then
             apply_elapsedSecs += 1
         Else
             log_lbl.Text = ""

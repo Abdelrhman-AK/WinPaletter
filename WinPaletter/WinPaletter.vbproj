@@ -622,7 +622,6 @@
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
-    <None Include="Resources\WinPaletter.Converter.dll" />
     <None Include="Resources\XML_Shutdown.xml" />
     <None Include="Resources\XML_Logon.xml" />
     <None Include="Resources\XML_Logoff.xml" />
@@ -635,7 +634,6 @@
     <Content Include="Resources\add_winxp.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
-    <Content Include="Resources\Animator.dll" />
     <Content Include="Resources\BasicTaskbar.png" />
     <None Include="Resources\WP_Admin.png" />
     <None Include="Resources\checker_enabled.png" />
@@ -672,14 +670,11 @@
     <Content Include="Resources\CMD_8x12_P.png" />
     <Content Include="Resources\CMD_8x8.png" />
     <Content Include="Resources\CMD_8x8_P.png" />
-    <Content Include="Resources\Cyotek.Windows.Forms.ColorPicker.dll" />
-    <Content Include="Resources\Devcorp.Controls.VisualStyles.dll" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
     <Content Include="Resources\icons8_command_line.ico" />
     <Content Include="Resources\icons8_PowerShell.ico" />
     <Content Include="Resources\Icon_Uninstall.ico" />
-    <None Include="Resources\ImageProcessor.dll" />
     <Content Include="Resources\LangNode_JSON.png" />
     <Content Include="Resources\LangNode_Main.png" />
     <Content Include="Resources\LangNode_Value.png" />
@@ -711,12 +706,10 @@
     <Content Include="Resources\Native8.png" />
     <Content Include="Resources\NativeVista.png" />
     <Content Include="Resources\NativeXP.png" />
-    <None Include="Resources\Newtonsoft.Json.dll" />
     <Content Include="Resources\notify_administrator.png" />
     <Content Include="Resources\notify_skip.png" />
     <Content Include="Resources\notify_success.png" />
     <Content Include="Resources\notify_time.png" />
-    <Content Include="Resources\Ookii.Dialogs.WinForms.dll" />
     <Content Include="Resources\PS_10x18.png" />
     <Content Include="Resources\PS_12x16.png" />
     <Content Include="Resources\PS_16x12.png" />
@@ -737,6 +730,7 @@
     <None Include="Resources\SampleApp_Small_Active.png" />
     <None Include="Resources\Sound_Stop.png" />
     <None Include="Resources\Sound_Play.png" />
+    <None Include="Resources\settingsfile.ico" />
     <Content Include="Resources\Start7.png" />
     <Content Include="Resources\Start7Basic.png" />
     <Content Include="Resources\Start7Glass.png" />
@@ -764,12 +758,6 @@
     <None Include="Resources\Store_Pattern10.png" />
     <None Include="Resources\Store_Pattern7.png" />
     <None Include="Resources\Store_Pattern9.png" />
-    <Content Include="Resources\System.Buffers.dll" />
-    <Content Include="Resources\System.Memory.dll" />
-    <Content Include="Resources\System.Numerics.Vectors.dll" />
-    <Content Include="Resources\System.Resources.Extensions.dll" />
-    <Content Include="Resources\System.Runtime.CompilerServices.Unsafe.dll" />
-    <None Include="Resources\System.ValueTuple.dll" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <None Include="Resources\ThemesResIcon.ico" />

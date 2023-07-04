@@ -23,7 +23,7 @@
             My.Computer.Registry.CurrentUser.Close()
         End Try
 
-        If Not My.Settings.EP_Enabled_Force Then
+        If Not My.Settings.ExplorerPatcher.Enabled_Force Then
 
             If IsInstalled And My.W11 Then
                 UseStart10 = Reg_IO.GetReg("Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", False)
@@ -44,18 +44,18 @@
             End If
 
         Else
-            UseStart10 = My.Settings.EP_UseStart10
-            UseTaskbar10 = My.Settings.EP_UseTaskbar10
-            TaskbarButton10 = My.Settings.EP_TaskbarButton10
-            StartStyle = My.Settings.EP_StartStyle
+            UseStart10 = My.Settings.ExplorerPatcher.UseStart10
+            UseTaskbar10 = My.Settings.ExplorerPatcher.UseTaskbar10
+            TaskbarButton10 = My.Settings.ExplorerPatcher.TaskbarButton10
+            StartStyle = My.Settings.ExplorerPatcher.StartStyle
         End If
 
 
     End Sub
 
     Public Shared Function IsAllowed() As Boolean
-        Dim condition0 As Boolean = My.W11 AndAlso My.Settings.EP_Enabled AndAlso IsInstalled
-        Dim condition1 As Boolean = My.Settings.EP_Enabled_Force
+        Dim condition0 As Boolean = My.W11 AndAlso My.Settings.ExplorerPatcher.Enabled AndAlso IsInstalled
+        Dim condition1 As Boolean = My.Settings.ExplorerPatcher.Enabled_Force
 
         Return condition0 OrElse condition1
     End Function

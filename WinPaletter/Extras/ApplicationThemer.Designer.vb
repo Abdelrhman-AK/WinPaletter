@@ -30,9 +30,9 @@ Partial Class ApplicationThemer
         Me.PictureBox45 = New System.Windows.Forms.PictureBox()
         Me.PictureBox44 = New System.Windows.Forms.PictureBox()
         Me.PictureBox43 = New System.Windows.Forms.PictureBox()
-        Me.appearance_backcolor = New WinPaletter.XenonCP()
-        Me.appearance_accent = New WinPaletter.XenonCP()
-        Me.appearance_rounded = New WinPaletter.XenonCheckBox()
+        Me.BackColorPick = New WinPaletter.XenonCP()
+        Me.AccentColor = New WinPaletter.XenonCP()
+        Me.RoundedCorners = New WinPaletter.XenonCheckBox()
         Me.appearance_dark = New WinPaletter.XenonCheckBox()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
@@ -121,39 +121,39 @@ Partial Class ApplicationThemer
         Me.PictureBox43.TabIndex = 218
         Me.PictureBox43.TabStop = False
         '
-        'appearance_backcolor
+        'BackColorPick
         '
-        Me.appearance_backcolor.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.appearance_backcolor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.appearance_backcolor.ForceNoNerd = False
-        Me.appearance_backcolor.Location = New System.Drawing.Point(178, 181)
-        Me.appearance_backcolor.Name = "appearance_backcolor"
-        Me.appearance_backcolor.Size = New System.Drawing.Size(112, 24)
-        Me.appearance_backcolor.TabIndex = 227
+        Me.BackColorPick.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.BackColorPick.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.BackColorPick.ForceNoNerd = False
+        Me.BackColorPick.Location = New System.Drawing.Point(178, 181)
+        Me.BackColorPick.Name = "BackColorPick"
+        Me.BackColorPick.Size = New System.Drawing.Size(112, 24)
+        Me.BackColorPick.TabIndex = 227
         '
-        'appearance_accent
+        'AccentColor
         '
-        Me.appearance_accent.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.appearance_accent.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.appearance_accent.ForceNoNerd = False
-        Me.appearance_accent.Location = New System.Drawing.Point(178, 151)
-        Me.appearance_accent.Name = "appearance_accent"
-        Me.appearance_accent.Size = New System.Drawing.Size(112, 24)
-        Me.appearance_accent.TabIndex = 224
+        Me.AccentColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AccentColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AccentColor.ForceNoNerd = False
+        Me.AccentColor.Location = New System.Drawing.Point(178, 151)
+        Me.AccentColor.Name = "AccentColor"
+        Me.AccentColor.Size = New System.Drawing.Size(112, 24)
+        Me.AccentColor.TabIndex = 224
         '
-        'appearance_rounded
+        'RoundedCorners
         '
-        Me.appearance_rounded.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.RoundedCorners.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.appearance_rounded.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.appearance_rounded.Checked = True
-        Me.appearance_rounded.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.appearance_rounded.ForeColor = System.Drawing.Color.White
-        Me.appearance_rounded.Location = New System.Drawing.Point(42, 121)
-        Me.appearance_rounded.Name = "appearance_rounded"
-        Me.appearance_rounded.Size = New System.Drawing.Size(555, 24)
-        Me.appearance_rounded.TabIndex = 221
-        Me.appearance_rounded.Text = "Rounded corners"
+        Me.RoundedCorners.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.RoundedCorners.Checked = True
+        Me.RoundedCorners.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RoundedCorners.ForeColor = System.Drawing.Color.White
+        Me.RoundedCorners.Location = New System.Drawing.Point(42, 121)
+        Me.RoundedCorners.Name = "RoundedCorners"
+        Me.RoundedCorners.Size = New System.Drawing.Size(555, 24)
+        Me.RoundedCorners.TabIndex = 221
+        Me.RoundedCorners.Text = "Rounded corners"
         '
         'appearance_dark
         '
@@ -393,13 +393,13 @@ Partial Class ApplicationThemer
         Me.Controls.Add(Me.XenonAlertBox2)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonButton10)
-        Me.Controls.Add(Me.appearance_backcolor)
+        Me.Controls.Add(Me.BackColorPick)
         Me.Controls.Add(Me.Label29)
         Me.Controls.Add(Me.PictureBox46)
-        Me.Controls.Add(Me.appearance_accent)
+        Me.Controls.Add(Me.AccentColor)
         Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.PictureBox45)
-        Me.Controls.Add(Me.appearance_rounded)
+        Me.Controls.Add(Me.RoundedCorners)
         Me.Controls.Add(Me.PictureBox44)
         Me.Controls.Add(Me.appearance_dark)
         Me.Controls.Add(Me.PictureBox43)
@@ -436,13 +436,13 @@ Partial Class ApplicationThemer
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents XenonButton8 As XenonButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents appearance_backcolor As XenonCP
+    Friend WithEvents BackColorPick As XenonCP
     Friend WithEvents Label29 As Label
     Friend WithEvents PictureBox46 As PictureBox
-    Friend WithEvents appearance_accent As XenonCP
+    Friend WithEvents AccentColor As XenonCP
     Friend WithEvents Label28 As Label
     Friend WithEvents PictureBox45 As PictureBox
-    Friend WithEvents appearance_rounded As XenonCheckBox
+    Friend WithEvents RoundedCorners As XenonCheckBox
     Friend WithEvents PictureBox44 As PictureBox
     Friend WithEvents appearance_dark As XenonCheckBox
     Friend WithEvents PictureBox43 As PictureBox

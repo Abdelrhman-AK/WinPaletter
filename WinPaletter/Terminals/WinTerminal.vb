@@ -296,22 +296,22 @@ Public Class WinTerminal : Implements ICloneable
 
                 Select Case [Version]
                     Case Version.Stable
-                        If Not My.Settings.Terminal_Path_Deflection Then
+                        If Not My.Settings.WindowsTerminals.Path_Deflection Then
                             SettingsFile = My.PATH_TerminalJSON
                         Else
-                            If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                                SettingsFile = My.Settings.Terminal_Stable_Path
+                            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                                SettingsFile = My.Settings.WindowsTerminals.Terminal_Stable_Path
                             Else
                                 SettingsFile = My.PATH_TerminalJSON
                             End If
                         End If
 
                     Case Version.Preview
-                        If Not My.Settings.Terminal_Path_Deflection Then
+                        If Not My.Settings.WindowsTerminals.Path_Deflection Then
                             SettingsFile = My.PATH_TerminalPreviewJSON
                         Else
-                            If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                                SettingsFile = My.Settings.Terminal_Stable_Path
+                            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                                SettingsFile = My.Settings.WindowsTerminals.Terminal_Stable_Path
                             Else
                                 SettingsFile = My.PATH_TerminalPreviewJSON
                             End If

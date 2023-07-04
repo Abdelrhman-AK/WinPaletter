@@ -5,17 +5,17 @@ Public Class Store_SearchFilter
         ApplyDarkMode(Me)
         Icon = Store.Icon
 
-        XenonCheckBox1.Checked = My.Settings.Store_Search_ThemeNames
-        XenonCheckBox2.Checked = My.Settings.Store_Search_AuthorsNames
-        XenonCheckBox3.Checked = My.Settings.Store_Search_Descriptions
+        XenonCheckBox1.Checked = My.Settings.Store.Search_ThemeNames
+        XenonCheckBox2.Checked = My.Settings.Store.Search_AuthorsNames
+        XenonCheckBox3.Checked = My.Settings.Store.Search_Descriptions
 
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        My.Settings.Store_Search_ThemeNames = XenonCheckBox1.Checked
-        My.Settings.Store_Search_AuthorsNames = XenonCheckBox2.Checked
-        My.Settings.Store_Search_Descriptions = XenonCheckBox3.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Store.Search_ThemeNames = XenonCheckBox1.Checked
+        My.Settings.Store.Search_AuthorsNames = XenonCheckBox2.Checked
+        My.Settings.Store.Search_Descriptions = XenonCheckBox3.Checked
+        My.Settings.Store.Save()
         Close()
     End Sub
 

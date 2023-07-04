@@ -10,15 +10,15 @@ Public Class LicenseForm
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         DialogResult = DialogResult.OK
-        My.Settings.LicenseAccepted = True
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.General.LicenseAccepted = True
+        My.Settings.General.Save()
         Me.Close()
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         DialogResult = DialogResult.Cancel
-        My.Settings.LicenseAccepted = False
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.General.LicenseAccepted = False
+        My.Settings.General.Save()
         Process.GetCurrentProcess.Kill()
     End Sub
 End Class

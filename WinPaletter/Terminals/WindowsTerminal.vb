@@ -10,9 +10,9 @@ Public Class WindowsTerminal
 
     Private Sub WindowsTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MainFrm.Visible = False
-        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
-        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
 
         ApplyDarkMode(Me)
         _Shown = False
@@ -930,8 +930,8 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
-        My.Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.WindowsTerminals.ListAllFonts = XenonCheckBox1.Checked
+        My.Settings.WindowsTerminals.Save()
     End Sub
 
     Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
@@ -944,18 +944,18 @@ Public Class WindowsTerminal
         Dim TerDir As String
         Dim TerPreDir As String
 
-        If Not My.Settings.Terminal_Path_Deflection Then
+        If Not My.Settings.WindowsTerminals.Path_Deflection Then
             TerDir = My.PATH_TerminalJSON
             TerPreDir = My.PATH_TerminalPreviewJSON
         Else
-            If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                TerDir = My.Settings.Terminal_Stable_Path
+            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                TerDir = My.Settings.WindowsTerminals.Terminal_Stable_Path
             Else
                 TerDir = My.PATH_TerminalJSON
             End If
 
-            If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
-                TerPreDir = My.Settings.Terminal_Preview_Path
+            If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Preview_Path) Then
+                TerPreDir = My.Settings.WindowsTerminals.Terminal_Preview_Path
             Else
                 TerPreDir = My.PATH_TerminalPreviewJSON
             End If
@@ -1058,18 +1058,18 @@ Public Class WindowsTerminal
                     Dim TerDir As String
                     Dim TerPreDir As String
 
-                    If Not My.Settings.Terminal_Path_Deflection Then
+                    If Not My.Settings.WindowsTerminals.Path_Deflection Then
                         TerDir = My.PATH_TerminalJSON
                         TerPreDir = My.PATH_TerminalPreviewJSON
                     Else
-                        If IO.File.Exists(My.Settings.Terminal_Stable_Path) Then
-                            TerDir = My.Settings.Terminal_Stable_Path
+                        If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Stable_Path) Then
+                            TerDir = My.Settings.WindowsTerminals.Terminal_Stable_Path
                         Else
                             TerDir = My.PATH_TerminalJSON
                         End If
 
-                        If IO.File.Exists(My.Settings.Terminal_Preview_Path) Then
-                            TerPreDir = My.Settings.Terminal_Preview_Path
+                        If IO.File.Exists(My.Settings.WindowsTerminals.Terminal_Preview_Path) Then
+                            TerPreDir = My.Settings.WindowsTerminals.Terminal_Preview_Path
                         Else
                             TerPreDir = My.PATH_TerminalPreviewJSON
                         End If
@@ -1539,7 +1539,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.WindowsTerminals.ListAllFonts
         FontDialog1.Font = XenonTerminal1.Font
         If FontDialog1.ShowDialog = DialogResult.OK Then
             TerFontName.Text = FontDialog1.Font.Name

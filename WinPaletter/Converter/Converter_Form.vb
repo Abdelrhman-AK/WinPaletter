@@ -6,7 +6,7 @@ Public Class Converter_Form
 
     Private Sub Converter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ApplyDarkMode(Me)
-        XenonCheckBox1.Checked = My.Settings.CompressThemeFile
+        XenonCheckBox1.Checked = My.Settings.FileTypeManagement.CompressThemeFile
         Label3.Font = My.Application.ConsoleFontMedium
 
         If IO.File.Exists(MainFrm.OpenFileDialog1.FileName) AndAlso Not IO.File.Exists(XenonTextBox1.Text) Then

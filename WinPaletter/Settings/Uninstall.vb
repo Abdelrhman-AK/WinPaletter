@@ -35,11 +35,11 @@ Public Class Uninstall
                 IO.Directory.Delete(My.PATH_appData, True)
                 If Not My.WXP Then
                     CP.ResetCursorsToAero()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
 
                 Else
                     CP.ResetCursorsToNone_XP()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
 
                 End If
             End If
@@ -52,13 +52,13 @@ Public Class Uninstall
             If OpenFileDialog1.ShowDialog = DialogResult.OK Then
                 Dim cpx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
                 cpx.Save(CP.CP_Type.Registry)
-                If My.Settings.AutoRestartExplorer Then RestartExplorer()
+                If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
                 cpx.Dispose()
             End If
         ElseIf XenonRadioImage3.Checked Then
             Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
                 _Def.Save(CP.CP_Type.Registry)
-                If My.Settings.AutoRestartExplorer Then RestartExplorer()
+                If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
             End Using
         End If
 

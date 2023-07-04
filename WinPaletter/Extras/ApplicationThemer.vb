@@ -23,13 +23,13 @@ Public Class ApplicationThemer
     Private Sub ApplicationThemer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         If Not CloseAndApply Then 'Restore previous settings
-            With My.Settings
-                .Appearance_Custom = BackupSettings.Appearance_Custom
-                .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
-                .Appearance_Rounded = BackupSettings.Appearance_Rounded
-                .Appearance_Back = BackupSettings.Appearance_Back
-                .Appearance_Accent = BackupSettings.Appearance_Accent
-                .Save(XeSettings.Mode.Registry)
+            With My.Settings.Appearance
+                .CustomColors = BackupSettings.Appearance.CustomColors
+                .CustomTheme = BackupSettings.Appearance.CustomTheme
+                .RoundedCorners = BackupSettings.Appearance.RoundedCorners
+                .BackColor = BackupSettings.Appearance.BackColor
+                .AccentColor = BackupSettings.Appearance.AccentColor
+                .Save()
             End With
 
             ApplyDarkMode()
@@ -41,9 +41,9 @@ Public Class ApplicationThemer
         With CP.AppTheme
             AppThemeEnabled.Checked = .Enabled
             appearance_dark.Checked = .DarkMode
-            appearance_rounded.Checked = .RoundCorners
-            appearance_backcolor.BackColor = .BackColor
-            appearance_accent.BackColor = .AccentColor
+            RoundedCorners.Checked = .RoundCorners
+            BackColorPick.BackColor = .BackColor
+            AccentColor.BackColor = .AccentColor
         End With
 
     End Sub
@@ -52,19 +52,19 @@ Public Class ApplicationThemer
         With CP.AppTheme
             .Enabled = AppThemeEnabled.Checked
             .DarkMode = appearance_dark.Checked
-            .RoundCorners = appearance_rounded.Checked
-            .BackColor = appearance_backcolor.BackColor
-            .AccentColor = appearance_accent.BackColor
+            .RoundCorners = RoundedCorners.Checked
+            .BackColor = BackColorPick.BackColor
+            .AccentColor = AccentColor.BackColor
         End With
     End Sub
 
     Sub AdjustPreview()
-        With My.Settings
-            .Appearance_Custom = True
-            .Appearance_Custom_Dark = appearance_dark.Checked
-            .Appearance_Rounded = appearance_rounded.Checked
-            .Appearance_Back = appearance_backcolor.BackColor
-            .Appearance_Accent = appearance_accent.BackColor
+        With My.Settings.Appearance
+            .CustomColors = True
+            .CustomTheme = appearance_dark.Checked
+            .RoundedCorners = RoundedCorners.Checked
+            .BackColor = BackColorPick.BackColor
+            .AccentColor = AccentColor.BackColor
         End With
 
         ApplyDarkMode(Me)
@@ -129,51 +129,51 @@ Public Class ApplicationThemer
         AdjustPreview()
     End Sub
 
-    Private Sub Appearance_accent_Click(sender As Object, e As EventArgs) Handles appearance_accent.Click
+    Private Sub AccentColor_Click(sender As Object, e As EventArgs) Handles AccentColor.Click
 
-        With My.Settings
-            .Appearance_Custom = BackupSettings.Appearance_Custom
-            .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
-            .Appearance_Rounded = BackupSettings.Appearance_Rounded
-            .Appearance_Back = BackupSettings.Appearance_Back
-            .Appearance_Accent = BackupSettings.Appearance_Accent
+        With My.Settings.Appearance
+            .CustomColors = BackupSettings.Appearance.CustomColors
+            .CustomTheme = BackupSettings.Appearance.CustomTheme
+            .RoundedCorners = BackupSettings.Appearance.RoundedCorners
+            .BackColor = BackupSettings.Appearance.BackColor
+            .AccentColor = BackupSettings.Appearance.AccentColor
         End With
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            appearance_accent.BackColor = SubMenu.ShowMenu(appearance_accent)
+            AccentColor.BackColor = SubMenu.ShowMenu(AccentColor)
             AdjustPreview()
             Exit Sub
         End If
-        Dim clist As New List(Of Control) From {appearance_accent}
+        Dim clist As New List(Of Control) From {AccentColor}
         ColorPickerDlg.Pick(clist)
         clist.Clear()
 
         AdjustPreview()
     End Sub
 
-    Private Sub Appearance_backcolor_Click(sender As Object, e As EventArgs) Handles appearance_backcolor.Click
-        With My.Settings
-            .Appearance_Custom = BackupSettings.Appearance_Custom
-            .Appearance_Custom_Dark = BackupSettings.Appearance_Custom_Dark
-            .Appearance_Rounded = BackupSettings.Appearance_Rounded
-            .Appearance_Back = BackupSettings.Appearance_Back
-            .Appearance_Accent = BackupSettings.Appearance_Accent
+    Private Sub BackColorPick_Click(sender As Object, e As EventArgs) Handles BackColorPick.Click
+        With My.Settings.Appearance
+            .CustomColors = BackupSettings.Appearance.CustomColors
+            .CustomTheme = BackupSettings.Appearance.CustomTheme
+            .RoundedCorners = BackupSettings.Appearance.RoundedCorners
+            .BackColor = BackupSettings.Appearance.BackColor
+            .AccentColor = BackupSettings.Appearance.AccentColor
         End With
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            appearance_backcolor.BackColor = SubMenu.ShowMenu(appearance_backcolor)
+            BackColorPick.BackColor = SubMenu.ShowMenu(BackColorPick)
             AdjustPreview()
             Exit Sub
         End If
 
-        Dim clist As New List(Of Control) From {appearance_backcolor, Me}
+        Dim clist As New List(Of Control) From {BackColorPick, Me}
         ColorPickerDlg.Pick(clist)
         clist.Clear()
 
         AdjustPreview()
     End Sub
 
-    Private Sub CheckedChanged(sender As Object) Handles appearance_dark.CheckedChanged, appearance_rounded.CheckedChanged
+    Private Sub CheckedChanged(sender As Object) Handles appearance_dark.CheckedChanged, RoundedCorners.CheckedChanged
         AdjustPreview()
     End Sub
 
@@ -182,63 +182,63 @@ Public Class ApplicationThemer
             Select Case appearance_list.SelectedItem.ToString.ToLower
                 Case "Default Dark".ToLower
                     appearance_dark.Checked = True
-                    appearance_rounded.Checked = (My.W11 Or My.W7)
-                    appearance_accent.BackColor = DefaultAccent
-                    appearance_backcolor.BackColor = DefaultBackColorDark
+                    RoundedCorners.Checked = (My.W11 Or My.W7)
+                    AccentColor.BackColor = DefaultAccent
+                    BackColorPick.BackColor = DefaultBackColorDark
 
                 Case "Default Light".ToLower
                     appearance_dark.Checked = False
-                    appearance_rounded.Checked = (My.W11 Or My.W7)
-                    appearance_accent.BackColor = DefaultAccent
-                    appearance_backcolor.BackColor = DefaultBackColorLight
+                    RoundedCorners.Checked = (My.W11 Or My.W7)
+                    AccentColor.BackColor = DefaultAccent
+                    BackColorPick.BackColor = DefaultBackColorLight
 
                 Case "AMOLED".ToLower
                     appearance_dark.Checked = True
-                    appearance_rounded.Checked = (My.W11 Or My.W7)
-                    appearance_accent.BackColor = DefaultAccent
-                    appearance_backcolor.BackColor = Color.Black
+                    RoundedCorners.Checked = (My.W11 Or My.W7)
+                    AccentColor.BackColor = DefaultAccent
+                    BackColorPick.BackColor = Color.Black
 
                 Case "Extreme White".ToLower
                     appearance_dark.Checked = False
-                    appearance_rounded.Checked = (My.W11 Or My.W7)
-                    appearance_accent.BackColor = DefaultAccent
-                    appearance_backcolor.BackColor = Color.White
+                    RoundedCorners.Checked = (My.W11 Or My.W7)
+                    AccentColor.BackColor = DefaultAccent
+                    BackColorPick.BackColor = Color.White
 
                 Case "GitHub Dark".ToLower
                     appearance_dark.Checked = True
-                    appearance_rounded.Checked = True
-                    appearance_accent.BackColor = Color.FromArgb(19, 35, 58)
-                    appearance_backcolor.BackColor = Color.FromArgb(13, 17, 23)
+                    RoundedCorners.Checked = True
+                    AccentColor.BackColor = Color.FromArgb(19, 35, 58)
+                    BackColorPick.BackColor = Color.FromArgb(13, 17, 23)
 
                 Case "GitHub Light".ToLower
                     appearance_dark.Checked = False
-                    appearance_rounded.Checked = True
-                    appearance_accent.BackColor = Color.FromArgb(31, 111, 235)
-                    appearance_backcolor.BackColor = Color.FromArgb(246, 248, 250)
+                    RoundedCorners.Checked = True
+                    AccentColor.BackColor = Color.FromArgb(31, 111, 235)
+                    BackColorPick.BackColor = Color.FromArgb(246, 248, 250)
 
                 Case "Reddit Dark".ToLower
                     appearance_dark.Checked = True
-                    appearance_rounded.Checked = True
-                    appearance_accent.BackColor = Color.FromArgb(255, 70, 0)
-                    appearance_backcolor.BackColor = Color.FromArgb(9, 9, 9)
+                    RoundedCorners.Checked = True
+                    AccentColor.BackColor = Color.FromArgb(255, 70, 0)
+                    BackColorPick.BackColor = Color.FromArgb(9, 9, 9)
 
                 Case "Reddit Light".ToLower
                     appearance_dark.Checked = False
-                    appearance_rounded.Checked = True
-                    appearance_accent.BackColor = Color.FromArgb(255, 70, 0)
-                    appearance_backcolor.BackColor = Color.FromArgb(242, 242, 242)
+                    RoundedCorners.Checked = True
+                    AccentColor.BackColor = Color.FromArgb(255, 70, 0)
+                    BackColorPick.BackColor = Color.FromArgb(242, 242, 242)
 
                 Case "Discord Dark".ToLower
                     appearance_dark.Checked = True
-                    appearance_rounded.Checked = False
-                    appearance_accent.BackColor = Color.FromArgb(65, 71, 78)
-                    appearance_backcolor.BackColor = Color.FromArgb(32, 34, 38)
+                    RoundedCorners.Checked = False
+                    AccentColor.BackColor = Color.FromArgb(65, 71, 78)
+                    BackColorPick.BackColor = Color.FromArgb(32, 34, 38)
 
                 Case "Discord Light".ToLower
                     appearance_dark.Checked = False
-                    appearance_rounded.Checked = False
-                    appearance_accent.BackColor = Color.FromArgb(138, 140, 143)
-                    appearance_backcolor.BackColor = Color.FromArgb(255, 255, 255)
+                    RoundedCorners.Checked = False
+                    AccentColor.BackColor = Color.FromArgb(138, 140, 143)
+                    BackColorPick.BackColor = Color.FromArgb(255, 255, 255)
 
             End Select
 

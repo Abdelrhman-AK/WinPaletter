@@ -222,8 +222,8 @@ Public Class XenonCore
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
 
-        If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
-            Return My.Settings.Appearance_Custom_Dark
+        If My.Settings.Appearance.ManagedByTheme AndAlso My.Settings.Appearance.CustomColors Then
+            Return My.Settings.Appearance.CustomTheme
 
         Else
             Dim i As Long
@@ -232,14 +232,14 @@ Public Class XenonCore
                 Return True
             Else
                 Try
-                    If My.Settings.Appearance_Auto Then
+                    If My.Settings.Appearance.AutoDarkMode Then
                         If My.W11 Or My.W10 Then
                             Try
                                 i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
                                 Return Not (i = 1)
                             Catch ex As Exception
                                 Try
-                                    Return My.Settings.Appearance_Dark
+                                    Return My.Settings.Appearance.DarkMode
                                 Catch
                                     Return My.W11 Or My.W10
                                 End Try
@@ -250,11 +250,11 @@ Public Class XenonCore
                             Return False
                         End If
                     Else
-                        Return My.Settings.Appearance_Dark
+                        Return My.Settings.Appearance.DarkMode
                     End If
                 Catch
                     Try
-                        Return My.Settings.Appearance_Dark
+                        Return My.Settings.Appearance.DarkMode
                     Catch
                         Return My.W11 Or My.W10
                     End Try
@@ -273,10 +273,10 @@ Public Class XenonCore
         Dim AccentColor As Color
         Dim CustomR As Boolean = False
 
-        If My.Settings.Appearance_ManagedByTheme AndAlso My.Settings.Appearance_Custom Then
-            BackColor = My.Settings.Appearance_Back
-            AccentColor = My.Settings.Appearance_Accent
-            DarkMode = My.Settings.Appearance_Custom_Dark
+        If My.Settings.Appearance.ManagedByTheme AndAlso My.Settings.Appearance.CustomColors Then
+            BackColor = My.Settings.Appearance.BackColor
+            AccentColor = My.Settings.Appearance.AccentColor
+            DarkMode = My.Settings.Appearance.CustomTheme
             CustomR = My.W11
         Else
             DarkMode = GetDarkMode() 'Must be before BackColor
@@ -300,7 +300,7 @@ Public Class XenonCore
                     EnumControls(OFORM, DarkMode)
 
                     If My.W11 Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
-                    If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+                    If CustomR And Not My.Settings.Appearance.RoundedCorners Then Dwmapi.DwmSetWindowAttribute(OFORM.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
 
                     If FormWasVisible Then OFORM.Visible = True
                     OFORM.ResumeLayout()
@@ -318,7 +318,7 @@ Public Class XenonCore
             EnumControls([Form], DarkMode)
 
             If My.W11 Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Default), Marshal.SizeOf(GetType(Integer)))
-            If CustomR And Not My.Settings.Appearance_Rounded Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
+            If CustomR And Not My.Settings.Appearance.RoundedCorners Then Dwmapi.DwmSetWindowAttribute([Form].Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, CInt(Dwmapi.FormCornersType.Rectangular), Marshal.SizeOf(GetType(Integer)))
 
             If [Form].Name = ExternalTerminal.Name Then
                 ExternalTerminal.Label102.ForeColor = If(DarkMode, Color.Gold, Color.Gold.Dark(0.1))

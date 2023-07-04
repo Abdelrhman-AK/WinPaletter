@@ -16,7 +16,7 @@ Public Class CMD
     Private Sub CMD_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         ApplyDarkMode(Me)
-        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
         RasterList.BringToFront()
 
         ApplyFromCP(My.CP, _Edition)
@@ -27,7 +27,7 @@ Public Class CMD
         CMD_AccentForegroundLbl.Font = My.Application.ConsoleFont
         CMD_AccentBackgroundLbl.Font = My.Application.ConsoleFont
         MainFrm.Visible = False
-        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
         Select Case _Edition
             Case Edition.CMD
@@ -51,8 +51,8 @@ Public Class CMD
     End Sub
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
         If _Shown Then
-            My.Settings.Terminal_OtherFonts = XenonCheckBox1.Checked
-            My.Settings.Save(XeSettings.Mode.Registry)
+            My.Settings.WindowsTerminals.ListAllFonts = XenonCheckBox1.Checked
+            My.Settings.WindowsTerminals.Save()
         End If
     End Sub
 
@@ -915,7 +915,7 @@ Public Class CMD
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.WindowsTerminals.ListAllFonts
         FontDialog1.Font = F_cmd
         If FontDialog1.ShowDialog = DialogResult.OK Then
             F_cmd = FontDialog1.Font

@@ -10,10 +10,10 @@ Public Class Lang_JSON_Manage
 
 
 
-        If My.Settings.Language And IO.File.Exists(My.Settings.Language_File) Then
-            TreeView1.FromJSON(My.Settings.Language_File, Path.GetFileName(My.Settings.Language_File))
-            OpenJSONDlg.FileName = My.Settings.Language_File
-            SaveJSONDlg.FileName = My.Settings.Language_File
+        If My.Settings.Language.Enabled And IO.File.Exists(My.Settings.Language.File) Then
+            TreeView1.FromJSON(My.Settings.Language.File, Path.GetFileName(My.Settings.Language.File))
+            OpenJSONDlg.FileName = My.Settings.Language.File
+            SaveJSONDlg.FileName = My.Settings.Language.File
         End If
     End Sub
 

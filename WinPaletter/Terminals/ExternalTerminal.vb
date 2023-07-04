@@ -12,12 +12,12 @@ Public Class ExternalTerminal
         FillTerminals(XenonComboBox1)
         RasterList.BringToFront()
 
-        XenonCheckBox1.Checked = My.Settings.Terminal_OtherFonts
+        XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
         MainFrm.Visible = False
 
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
-        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
     End Sub
 
     Private Sub ExternalTerminal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -951,7 +951,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        FontDialog1.FixedPitchOnly = Not My.Settings.Terminal_OtherFonts
+        FontDialog1.FixedPitchOnly = Not My.Settings.WindowsTerminals.ListAllFonts
         FontDialog1.Font = f_extterminal
         If FontDialog1.ShowDialog = DialogResult.OK Then
             f_extterminal = FontDialog1.Font

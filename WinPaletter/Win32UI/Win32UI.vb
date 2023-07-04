@@ -11,7 +11,7 @@ Public Class Win32UI
         XenonComboBox1.PopulateThemes
         XenonComboBox1.SelectedIndex = 0
         MainFrm.Visible = False
-        If Not My.Settings.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
+        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
         LoadCP(My.CP)
         SetMetics(My.CP)

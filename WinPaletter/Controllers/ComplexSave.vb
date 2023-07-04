@@ -19,9 +19,10 @@ Public Class ComplexSave
         If XenonRadioImage7.Checked Then i2 = 3
         If XenonRadioImage4.Checked Then i2 = 0
 
-        My.Settings.ComplexSaveResult = i1 & "." & i2
-        My.Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.General.ComplexSaveResult = i1 & "." & i2
+        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.Settings.General.Save()
+        My.Settings.ThemeApplyingBehavior.Save()
     End Sub
 
     Private Sub ComplexSave_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -35,7 +36,7 @@ Public Class ComplexSave
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
 
-        Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
+        Dim r As String() = My.Settings.General.ComplexSaveResult.Split(".")
         Dim r1 As String = r(0)
         Dim r2 As String = r(1)
 
@@ -84,14 +85,14 @@ Public Class ComplexSave
             XenonRadioImage6.Checked = True
         End If
 
-        XenonCheckBox2.Checked = My.Settings.ShowSaveConfirmation
+        XenonCheckBox2.Checked = My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation
 
         Me.DialogResult = DialogResult.None
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        My.Settings.ShowSaveConfirmation = XenonCheckBox2.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.Settings.ThemeApplyingBehavior.Save()
         Me.DialogResult = DialogResult.No
         Me.Close()
     End Sub
@@ -102,13 +103,13 @@ Public Class ComplexSave
     End Sub
 
     Public Function GetResponse(SaveFileDialog As System.Windows.Forms.SaveFileDialog, Apply_Theme_Sub As MethodInvoker, Apply_FirstTheme_Sub As MethodInvoker, Apply_DefaultWin_Sub As MethodInvoker) As Boolean
-        If My.CP <> My.CP_Original AndAlso My.Settings.ShowSaveConfirmation Then
+        If My.CP <> My.CP_Original AndAlso My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation Then
             XenonGroupBox2.Enabled = Apply_Theme_Sub IsNot Nothing Or Apply_FirstTheme_Sub IsNot Nothing Or Apply_DefaultWin_Sub IsNot Nothing
 
             Select Case ShowDialog()
                 Case DialogResult.Yes
 
-                    Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
+                    Dim r As String() = My.Settings.General.ComplexSaveResult.Split(".")
                     Dim r1 As String = r(0)
                     Dim r2 As String = r(1)
 

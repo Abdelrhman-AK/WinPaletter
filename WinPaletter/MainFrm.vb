@@ -59,12 +59,12 @@ Public Class MainFrm
         themename_lbl.Text = String.Format("{0} ({1})", [CP].Info.ThemeName, [CP].Info.ThemeVersion)
         author_lbl.Text = String.Format("{0} {1}", My.Lang.By, [CP].Info.Author)
 
-        With My.Settings
-            .Appearance_Custom = [CP].AppTheme.Enabled
-            .Appearance_Back = [CP].AppTheme.BackColor
-            .Appearance_Accent = [CP].AppTheme.AccentColor
-            .Appearance_Custom_Dark = [CP].AppTheme.DarkMode
-            .Appearance_Rounded = [CP].AppTheme.RoundCorners
+        With My.Settings.Appearance
+            .CustomColors = [CP].AppTheme.Enabled
+            .BackColor = [CP].AppTheme.BackColor
+            .AccentColor = [CP].AppTheme.AccentColor
+            .CustomTheme = [CP].AppTheme.DarkMode
+            .RoundedCorners = [CP].AppTheme.RoundCorners
         End With
         ApplyDarkMode(Me)
 
@@ -327,8 +327,8 @@ Public Class MainFrm
         If My.WXP OrElse My.WVista Then Exit Sub
 
         StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
-        If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Stable Then ChannelFixer = 0
-        If My.Settings.UpdateChannel = XeSettings.UpdateChannels.Beta Then ChannelFixer = 1
+        If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable Then ChannelFixer = 0
+        If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Beta Then ChannelFixer = 1
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -386,8 +386,8 @@ Public Class MainFrm
         NotifyUpdates.Icon = Icon
         TreeView1.ImageList = My.Notifications_IL
 
-        Me.Size = New Size(My.Settings.MainFormWidth, My.Settings.MainFormHeight)
-        Me.WindowState = My.Settings.MainFormStatus
+        Me.Size = New Size(My.Settings.General.MainFormWidth, My.Settings.General.MainFormHeight)
+        Me.WindowState = My.Settings.General.MainFormStatus
 
         Select_W11.Image = My.Resources.Native11
         Select_W10.Image = My.Resources.Native10
@@ -478,42 +478,41 @@ Public Class MainFrm
             AddHandler btn.Leave, AddressOf EraseHint
         Next
 
-        If My.Settings.AutoUpdatesChecking Then AutoUpdatesCheck()
+        If My.Settings.Updates.AutoCheck Then AutoUpdatesCheck()
 
         If My.Application.ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
 
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         If Me.WindowState = FormWindowState.Normal Then
-            My.Settings.MainFormWidth = Me.Size.Width
-            My.Settings.MainFormHeight = Me.Size.Height
+            My.Settings.General.MainFormWidth = Me.Size.Width
+            My.Settings.General.MainFormHeight = Me.Size.Height
         End If
-
         If Me.WindowState <> FormWindowState.Minimized Then
-            My.Settings.MainFormStatus = Me.WindowState
+            My.Settings.General.MainFormStatus = Me.WindowState
         End If
+        My.Settings.General.Save()
 
         Dim old As New XeSettings(XeSettings.Mode.Registry)
-        With My.Settings
-            .Appearance_Custom = old.Appearance_Custom
-            .Appearance_Back = old.Appearance_Back
-            .Appearance_Accent = old.Appearance_Accent
-            .Appearance_Custom_Dark = old.Appearance_Custom_Dark
-            .Appearance_Rounded = old.Appearance_Rounded
+        With My.Settings.Appearance
+            .CustomColors = old.Appearance.CustomColors
+            .BackColor = old.Appearance.BackColor
+            .AccentColor = old.Appearance.AccentColor
+            .CustomTheme = old.Appearance.CustomTheme
+            .RoundedCorners = old.Appearance.RoundedCorners
+            .Save()
         End With
-
-        My.Settings.Save(XeSettings.Mode.Registry)
     End Sub
 
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
         If My.CP <> My.CP_Original Then
 
-            If My.Settings.ShowSaveConfirmation AndAlso Not LoggingOff Then
+            If My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation AndAlso Not LoggingOff Then
 
                 Select Case ComplexSave.ShowDialog
                     Case DialogResult.Yes
 
-                        Dim r As String() = My.Settings.ComplexSaveResult.Split(".")
+                        Dim r As String() = My.Settings.General.ComplexSaveResult.Split(".")
                         Dim r1 As String = r(0)
                         Dim r2 As String = r(1)
 
@@ -553,7 +552,7 @@ Public Class MainFrm
 
                     Case DialogResult.No
                         e.Cancel = False
-                        If (My.W7 Or My.W8) And My.Settings.Win7LivePreview Then RefreshDWM(My.CP_Original)
+                        If (My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then RefreshDWM(My.CP_Original)
                         MyBase.OnFormClosing(e)
 
                     Case DialogResult.Cancel
@@ -2005,24 +2004,24 @@ Public Class MainFrm
         XenonButton22.Visible = False
         XenonButton25.Visible = False
 
-        If My.Settings.Log_ShowApplying Then
+        If My.Settings.ThemeLog.Enabled Then
             TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
             TablessControl1.Refresh()
         End If
 
-        [CP].Save(CP.CP_Type.Registry, "", If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
+        [CP].Save(CP.CP_Type.Registry, "", If(My.Settings.ThemeLog.Enabled, TreeView1, Nothing))
 
         My.CP_Original = New CP(CP_Type.Registry)
 
         Cursor = Cursors.Default
 
-        If My.Settings.AutoRestartExplorer Then
-            RestartExplorer(If(My.Settings.Log_ShowApplying, TreeView1, Nothing))
+        If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
+            RestartExplorer(If(My.Settings.ThemeLog.Enabled, TreeView1, Nothing))
         Else
-            If My.Settings.Log_ShowApplying Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
+            If My.Settings.ThemeLog.Enabled Then CP.AddNode(TreeView1, My.Lang.NoDefResExplorer, "warning")
         End If
 
-        If My.Settings.Log_ShowApplying Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
+        If My.Settings.ThemeLog.Enabled Then CP.AddNode(TreeView1, String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_AllDone), "info")
 
         If [CP].MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
@@ -2035,8 +2034,8 @@ Public Class MainFrm
             log_lbl.Text = My.Lang.CP_ErrorHappened
             XenonButton14.Visible = True
         Else
-            If My.Settings.Log_Countdown_Enabled Then
-                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown)
+            If My.Settings.ThemeLog.CountDown Then
+                log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds)
                 elapsedSecs = 1
                 Timer1.Enabled = True
                 Timer1.Start()
@@ -2048,9 +2047,9 @@ Public Class MainFrm
     Private elapsedSecs As Integer = 0
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.Log_Countdown - elapsedSecs)
+        log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds - elapsedSecs)
 
-        If elapsedSecs + 1 <= My.Settings.Log_Countdown Then
+        If elapsedSecs + 1 <= My.Settings.ThemeLog.CountDown_Seconds Then
             elapsedSecs += 1
         Else
             log_lbl.Text = ""
@@ -2094,14 +2093,14 @@ Public Class MainFrm
     End Sub
 
     Private Sub Apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
-        If My.Settings.AutoRestartExplorer Then
+        If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
             status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
     Private Sub Apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
-        If My.Settings.AutoRestartExplorer Then
+        If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
             status_lbl.Text = ""
             status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
         End If
@@ -2133,7 +2132,7 @@ Public Class MainFrm
             If _Converter.FetchFile(files(0)) = Converter_CP.WP_Format.JSON Then
                 e.Effect = DragDropEffects.Copy
 
-                If My.Settings.DragAndDropPreview Then
+                If My.Settings.FileTypeManagement.DragAndDropPreview Then
                     DragAccepted = True
                     My.CP_BeforeDrag = My.CP.Clone
                     DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
@@ -2164,13 +2163,13 @@ Public Class MainFrm
     Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
         Dropped = False
         If DragAccepted Then
-            If My.Settings.DragAndDropPreview Then DragPreviewer.Close()
+            If My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Close()
             My.CP = My.CP_BeforeDrag.Clone
         End If
     End Sub
 
     Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, tabs_preview.DragOver, TablessControl1.DragOver
-        If DragAccepted And My.Settings.DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
+        If DragAccepted And My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
         Dropped = Me.Bounds.Contains(New Point(e.X, e.Y))
     End Sub
 
@@ -2178,7 +2177,7 @@ Public Class MainFrm
         If Dropped And DragAccepted Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If wpth_or_wpsf Then
-                If My.Settings.DragAndDropPreview Then DragPreviewer.Close()
+                If My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Close()
 
                 My.CP = New CP(CP.CP_Type.File, files(0))
                 tabs_preview.Visible = False
@@ -2540,7 +2539,7 @@ Public Class MainFrm
             If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinVista), MsgBoxStyle.Critical + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
         End If
 
-        If My.Settings.Language AndAlso IO.File.Exists(My.Settings.Language_File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language_File, Store)
+        If My.Settings.Language.Enabled AndAlso IO.File.Exists(My.Settings.Language.File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language.File, Store)
         Store.Show()
     End Sub
 End Class

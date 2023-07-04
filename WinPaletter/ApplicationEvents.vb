@@ -212,7 +212,7 @@ Namespace My
 #Region "   Variables"
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
-                                                                    If [Settings].Appearance_Auto Then ApplyDarkMode()
+                                                                    If [Settings].Appearance.AutoDarkMode Then ApplyDarkMode()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
                                                                             Dim Wall As Bitmap = FetchSuitableWallpaper(CP, PreviewStyle)
@@ -408,11 +408,11 @@ Namespace My
                 IO.Directory.Delete(PATH_appData, True)
                 If Not My.WXP Then
                     CP.ResetCursorsToAero()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
 
                 Else
                     CP.ResetCursorsToNone_XP()
-                    If My.Settings.Cursors_HKU_DEFAULT_Prefs = XeSettings.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
 
                 End If
             End If
@@ -724,15 +724,15 @@ Namespace My
                 End If
             Next
 
-            If [Settings].Language Then
+            If [Settings].Language.Enabled Then
                 Try
-                    Lang.LoadLanguageFromJSON([Settings].Language_File)
+                    Lang.LoadLanguageFromJSON([Settings].Language.File)
                 Catch ex As Exception
                     MsgBox("There is an error occurred during loading language", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
                 End Try
             End If
 
-            If Not [Settings].LicenseAccepted Then
+            If Not [Settings].General.LicenseAccepted Then
                 If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
             End If
 
@@ -743,13 +743,13 @@ Namespace My
                 If Not arg.StartsWith("/apply:", _ignore) And Not arg.StartsWith("/edit:", _ignore) And Not arg.StartsWith("/convert:", _ignore) And Not arg.StartsWith("/convert-list:", _ignore) Then
 
                     If Path.GetExtension(arg).ToLower = ".wpth" Then
-                        If [Settings].OpeningPreviewInApp_or_AppliesIt Then
+                        If [Settings].FileTypeManagement.OpeningPreviewInApp_or_AppliesIt Then
                             ExternalLink = True
                             ExternalLink_File = arg
                         Else
                             Dim CPx As New CP(CP.CP_Type.File, arg)
                             CPx.Save(CP.CP_Type.Registry, arg)
-                            If [Settings].AutoRestartExplorer Then RestartExplorer()
+                            If [Settings].ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
                     End If
@@ -768,7 +768,7 @@ Namespace My
                         If IO.File.Exists(File) Then
                             Dim CPx As New CP(CP.CP_Type.File, File)
                             CPx.Save(CP.CP_Type.Registry)
-                            If [Settings].AutoRestartExplorer Then RestartExplorer()
+                            If [Settings].ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
                             Process.GetCurrentProcess.Kill()
                         End If
 
@@ -795,7 +795,7 @@ Namespace My
             End If
 
             Try
-                If [Settings].AutoAddExt Then
+                If [Settings].FileTypeManagement.AutoAddExt Then
                     If Not IO.Directory.Exists(PATH_appData) Then IO.Directory.CreateDirectory(PATH_appData)
 
                     IO.File.WriteAllBytes(PATH_appData & "\fileextension.ico", Resources.fileextension.ToByteArray)
@@ -870,7 +870,7 @@ Namespace My
             End Try
 
 #Region "WhatsNew"
-            If Not [Settings].WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
+            If Not [Settings].General.WhatsNewRecord.Contains(Application.Info.Version.ToString) Then
                 '### Pop up WhatsNew
                 ShowWhatsNew = True
 
@@ -878,13 +878,13 @@ Namespace My
                 ver.Clear()
                 ver.Add(Application.Info.Version.ToString)
 
-                For Each X As String In [Settings].WhatsNewRecord.ToArray()
+                For Each X As String In [Settings].General.WhatsNewRecord.ToArray()
                     ver.Add(X)
                 Next
 
                 ver = ver.DeDuplicate
-                [Settings].WhatsNewRecord = ver.ToArray
-                [Settings].Save(XeSettings.Mode.Registry)
+                [Settings].General.WhatsNewRecord = ver.ToArray
+                [Settings].General.Save()
             Else
                 ShowWhatsNew = False
             End If
@@ -941,10 +941,10 @@ Namespace My
 
                             If Path.GetExtension(arg).ToLower = ".wpth" Then
                                 If My.CP <> My.CP_Original Then
-                                    If [Settings].ShowSaveConfirmation Then
+                                    If [Settings].ThemeApplyingBehavior.ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
                                             Case DialogResult.Yes
-                                                Dim r As String() = [Settings].ComplexSaveResult.Split(".")
+                                                Dim r As String() = [Settings].General.ComplexSaveResult.Split(".")
                                                 Dim r1 As String = r(0)
                                                 Dim r2 As String = r(1)
                                                 Select Case r1
@@ -992,7 +992,7 @@ Namespace My
                                 MainFrm.ApplyCPValues(My.CP)
                                 MainFrm.ApplyColorsToElements(My.CP)
 
-                                If Not [Settings].OpeningPreviewInApp_or_AppliesIt Then
+                                If Not [Settings].FileTypeManagement.OpeningPreviewInApp_or_AppliesIt Then
                                     MainFrm.Apply_Theme()
                                 End If
                             End If
@@ -1010,7 +1010,7 @@ Namespace My
                                 If IO.File.Exists(File) Then
                                     Dim CPx As New CP(CP.CP_Type.File, File)
                                     CPx.Save(CP.CP_Type.Registry)
-                                    If [Settings].AutoRestartExplorer Then RestartExplorer()
+                                    If [Settings].ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
                                 End If
                             End If
 
@@ -1020,10 +1020,10 @@ Namespace My
 
                                 If My.CP <> My.CP_Original Then
 
-                                    If [Settings].ShowSaveConfirmation Then
+                                    If [Settings].ThemeApplyingBehavior.ShowSaveConfirmation Then
                                         Select Case ComplexSave.ShowDialog()
                                             Case DialogResult.Yes
-                                                Dim r As String() = [Settings].ComplexSaveResult.Split(".")
+                                                Dim r As String() = [Settings].General.ComplexSaveResult.Split(".")
                                                 Dim r1 As String = r(0)
                                                 Dim r2 As String = r(1)
                                                 Select Case r1
@@ -1085,7 +1085,7 @@ Namespace My
                 Dim arr As String() = arg.Remove(0, "/convert:".Count).Split("|")
                 Dim Source As String = arr(0)
                 Dim Destination As String = arr(1)
-                Dim Compress As String = If(My.Settings.CompressThemeFile, "1", "0")
+                Dim Compress As String = If(My.Settings.FileTypeManagement.CompressThemeFile, "1", "0")
                 Dim OldWPTH As String = "0"
                 If arr.Count = 3 Then Compress = arr(2)
                 If arr.Count = 4 Then OldWPTH = arr(3)
@@ -1115,7 +1115,7 @@ Namespace My
                     For Each File As String In IO.File.ReadAllLines(source)
 
                         Dim f As String
-                        Dim compress As String = If(My.Settings.CompressThemeFile, "1", "0")
+                        Dim compress As String = If(My.Settings.FileTypeManagement.CompressThemeFile, "1", "0")
                         Dim OldWPTH As String = "0"
 
                         If Not String.IsNullOrWhiteSpace(File) Then
