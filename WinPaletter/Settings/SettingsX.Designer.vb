@@ -1106,7 +1106,7 @@ Partial Class SettingsX
         '
         'PictureBox36
         '
-        Me.PictureBox36.Image = Global.WinPaletter.My.Resources.Native11
+        Me.PictureBox36.Image = Global.WinPaletter.My.Resources.Resources.Native11
         Me.PictureBox36.Location = New System.Drawing.Point(17, 114)
         Me.PictureBox36.Name = "PictureBox36"
         Me.PictureBox36.Size = New System.Drawing.Size(24, 24)
@@ -3499,7 +3499,7 @@ Partial Class SettingsX
         Me.Panel3.BackColor = System.Drawing.Color.Transparent
         Me.Panel3.Controls.Add(Me.EP_ORB_11)
         Me.Panel3.Controls.Add(Me.EP_ORB_10)
-        Me.Panel3.Location = New System.Drawing.Point(163, 103)
+        Me.Panel3.Location = New System.Drawing.Point(163, 102)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(72, 35)
         Me.Panel3.TabIndex = 50
@@ -3533,7 +3533,7 @@ Partial Class SettingsX
         Me.Panel2.BackColor = System.Drawing.Color.Transparent
         Me.Panel2.Controls.Add(Me.EP_Taskbar_11)
         Me.Panel2.Controls.Add(Me.EP_Taskbar_10)
-        Me.Panel2.Location = New System.Drawing.Point(163, 67)
+        Me.Panel2.Location = New System.Drawing.Point(163, 66)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(72, 35)
         Me.Panel2.TabIndex = 49
@@ -3567,7 +3567,7 @@ Partial Class SettingsX
         Me.Panel1.BackColor = System.Drawing.Color.Transparent
         Me.Panel1.Controls.Add(Me.EP_Start_11)
         Me.Panel1.Controls.Add(Me.EP_Start_10)
-        Me.Panel1.Location = New System.Drawing.Point(163, 31)
+        Me.Panel1.Location = New System.Drawing.Point(163, 30)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(72, 35)
         Me.Panel1.TabIndex = 48
@@ -3607,7 +3607,7 @@ Partial Class SettingsX
         Me.EP_Start_10_Type.FormattingEnabled = True
         Me.EP_Start_10_Type.ItemHeight = 20
         Me.EP_Start_10_Type.Items.AddRange(New Object() {"Not rounded", "Rounded corners with floating menu", "Rounded corners with docked menu"})
-        Me.EP_Start_10_Type.Location = New System.Drawing.Point(241, 35)
+        Me.EP_Start_10_Type.Location = New System.Drawing.Point(241, 34)
         Me.EP_Start_10_Type.Name = "EP_Start_10_Type"
         Me.EP_Start_10_Type.Size = New System.Drawing.Size(236, 26)
         Me.EP_Start_10_Type.TabIndex = 47
@@ -3615,7 +3615,7 @@ Partial Class SettingsX
         'Label34
         '
         Me.Label34.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.Location = New System.Drawing.Point(45, 103)
+        Me.Label34.Location = New System.Drawing.Point(45, 102)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(112, 35)
         Me.Label34.TabIndex = 44
@@ -3625,7 +3625,7 @@ Partial Class SettingsX
         'Label32
         '
         Me.Label32.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(45, 31)
+        Me.Label32.Location = New System.Drawing.Point(45, 30)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(112, 35)
         Me.Label32.TabIndex = 38
@@ -3637,7 +3637,7 @@ Partial Class SettingsX
         Me.Label31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label31.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label31.Location = New System.Drawing.Point(5, 5)
+        Me.Label31.Location = New System.Drawing.Point(5, 4)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(755, 23)
         Me.Label31.TabIndex = 21
@@ -3647,7 +3647,7 @@ Partial Class SettingsX
         'Label33
         '
         Me.Label33.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(45, 67)
+        Me.Label33.Location = New System.Drawing.Point(45, 66)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(112, 35)
         Me.Label33.TabIndex = 41

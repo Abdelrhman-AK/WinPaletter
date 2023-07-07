@@ -41,7 +41,7 @@ Partial Class LogonUI8_Pics
         Me.img4.Checked = False
         Me.img4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img4.ForeColor = System.Drawing.Color.White
-        Me.img4.Image = Nothing
+        Me.img4.Image = CType(resources.GetObject("img4.Image"), System.Drawing.Image)
         Me.img4.Location = New System.Drawing.Point(146, 187)
         Me.img4.Name = "img4"
         Me.img4.ShowText = False
@@ -53,7 +53,7 @@ Partial Class LogonUI8_Pics
         Me.img2.Checked = False
         Me.img2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img2.ForeColor = System.Drawing.Color.White
-        Me.img2.Image = Nothing
+        Me.img2.Image = CType(resources.GetObject("img2.Image"), System.Drawing.Image)
         Me.img2.Location = New System.Drawing.Point(280, 53)
         Me.img2.Name = "img2"
         Me.img2.ShowText = False
@@ -65,7 +65,7 @@ Partial Class LogonUI8_Pics
         Me.img3.Checked = False
         Me.img3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img3.ForeColor = System.Drawing.Color.White
-        Me.img3.Image = Nothing
+        Me.img3.Image = CType(resources.GetObject("img3.Image"), System.Drawing.Image)
         Me.img3.Location = New System.Drawing.Point(12, 187)
         Me.img3.Name = "img3"
         Me.img3.ShowText = False
@@ -77,7 +77,7 @@ Partial Class LogonUI8_Pics
         Me.img1.Checked = False
         Me.img1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img1.ForeColor = System.Drawing.Color.White
-        Me.img1.Image = Nothing
+        Me.img1.Image = CType(resources.GetObject("img1.Image"), System.Drawing.Image)
         Me.img1.Location = New System.Drawing.Point(146, 53)
         Me.img1.Name = "img1"
         Me.img1.ShowText = False
@@ -89,7 +89,7 @@ Partial Class LogonUI8_Pics
         Me.img0.Checked = True
         Me.img0.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img0.ForeColor = System.Drawing.Color.White
-        Me.img0.Image = Nothing
+        Me.img0.Image = CType(resources.GetObject("img0.Image"), System.Drawing.Image)
         Me.img0.Location = New System.Drawing.Point(12, 53)
         Me.img0.Name = "img0"
         Me.img0.ShowText = False
@@ -124,7 +124,7 @@ Partial Class LogonUI8_Pics
         Me.img5.Checked = False
         Me.img5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img5.ForeColor = System.Drawing.Color.White
-        Me.img5.Image = Nothing
+        Me.img5.Image = CType(resources.GetObject("img5.Image"), System.Drawing.Image)
         Me.img5.Location = New System.Drawing.Point(280, 187)
         Me.img5.Name = "img5"
         Me.img5.ShowText = False
@@ -135,6 +135,7 @@ Partial Class LogonUI8_Pics
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -151,6 +152,7 @@ Partial Class LogonUI8_Pics
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)

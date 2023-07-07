@@ -5,13 +5,6 @@ Public Class LogonUI8_Pics
         ApplyDarkMode(Me)
         Icon = LogonUI.Icon
 
-        img0.Image = My.WinRes.MetroLock_0
-        img1.Image = My.WinRes.MetroLock_1
-        img2.Image = My.WinRes.MetroLock_2
-        img3.Image = My.WinRes.MetroLock_3
-        img4.Image = My.WinRes.MetroLock_4
-        img5.Image = My.WinRes.MetroLock_5
-
         If LogonUI7.ID = 0 Then img0.Checked = True
         If LogonUI7.ID = 1 Then img1.Checked = True
         If LogonUI7.ID = 2 Then img2.Checked = True

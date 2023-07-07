@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class AltTabEditor
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,22 +20,18 @@ Partial Class AltTabEditor
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AltTabEditor))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
         Me.EP_Alert = New WinPaletter.XenonAlertBox()
         Me.opacity_btn = New WinPaletter.XenonButton()
         Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -52,6 +48,12 @@ Partial Class AltTabEditor
         Me.Classic_Preview1 = New System.Windows.Forms.Panel()
         Me.RetroPanelRaised1 = New WinPaletter.RetroPanelRaised()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.RetroPanel1 = New WinPaletter.RetroPanel()
+        Me.RetroLabel1 = New WinPaletter.XenonLabel()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.XenonButton10 = New WinPaletter.XenonButton()
@@ -64,15 +66,8 @@ Partial Class AltTabEditor
         Me.XenonButton12 = New WinPaletter.XenonButton()
         Me.AltTabEnabled = New WinPaletter.XenonToggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
-        Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox4.SuspendLayout()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RetroPanel1.SuspendLayout()
         Me.XenonGroupBox3.SuspendLayout()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.previewContainer.SuspendLayout()
@@ -83,6 +78,11 @@ Partial Class AltTabEditor
         Me.Classic_Preview1.SuspendLayout()
         Me.RetroPanelRaised1.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RetroPanel1.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,45 +93,40 @@ Partial Class AltTabEditor
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
-        'Panel1
+        'XenonAlertBox2
         '
-        Me.Panel1.Controls.Add(Me.Panel2)
-        Me.Panel1.Location = New System.Drawing.Point(105, 17)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(40, 40)
-        Me.Panel1.TabIndex = 4
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox2.CenterText = False
+        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox2.Image = Nothing
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(16, 289)
+        Me.XenonAlertBox2.Name = "XenonAlertBox2"
+        Me.XenonAlertBox2.Size = New System.Drawing.Size(322, 20)
+        Me.XenonAlertBox2.TabIndex = 216
+        Me.XenonAlertBox2.TabStop = False
+        Me.XenonAlertBox2.Text = "Sometimes, you should logoff and logon to apply effects"
         '
-        'Panel2
+        'XenonAlertBox1
         '
-        Me.Panel2.Controls.Add(Me.PictureBox1)
-        Me.Panel2.Location = New System.Drawing.Point(2, 2)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Padding = New System.Windows.Forms.Padding(3)
-        Me.Panel2.Size = New System.Drawing.Size(36, 36)
-        Me.Panel2.TabIndex = 5
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Image = Global.WinPaletter.My.Resources.SampleApp_Active
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox2.Image = Global.WinPaletter.My.Resources.SampleApp_Active
-        Me.PictureBox2.Location = New System.Drawing.Point(149, 20)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox2.TabIndex = 3
-        Me.PictureBox2.TabStop = False
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox1.CenterText = False
+        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox1.Image = Nothing
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(15, 413)
+        Me.XenonAlertBox1.Name = "XenonAlertBox1"
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(324, 20)
+        Me.XenonAlertBox1.TabIndex = 215
+        Me.XenonAlertBox1.TabStop = False
+        Me.XenonAlertBox1.Text = "Applying in Windows 7 may require a device restart"
         '
         'XenonGroupBox4
         '
@@ -171,6 +166,7 @@ Partial Class AltTabEditor
         '
         Me.opacity_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.opacity_btn.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.opacity_btn.DrawOnGlass = False
         Me.opacity_btn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.opacity_btn.ForeColor = System.Drawing.Color.White
         Me.opacity_btn.Image = Nothing
@@ -219,36 +215,6 @@ Partial Class AltTabEditor
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Opacity (for Windows 10)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'RetroPanel1
-        '
-        Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanel1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
-        Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanel1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
-        Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroPanel1.Controls.Add(Me.RetroLabel1)
-        Me.RetroPanel1.Flat = False
-        Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanel1.Location = New System.Drawing.Point(14, 72)
-        Me.RetroPanel1.Name = "RetroPanel1"
-        Me.RetroPanel1.Size = New System.Drawing.Size(302, 29)
-        Me.RetroPanel1.Style2 = True
-        Me.RetroPanel1.TabIndex = 0
-        '
-        'RetroLabel1
-        '
-        Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
-        Me.RetroLabel1.Name = "RetroLabel1"
-        Me.RetroLabel1.Size = New System.Drawing.Size(302, 29)
-        Me.RetroLabel1.TabIndex = 0
-        Me.RetroLabel1.Text = "Application"
-        Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonGroupBox3
         '
@@ -401,6 +367,7 @@ Partial Class AltTabEditor
         Me.XenonWinElement1.Size = New System.Drawing.Size(450, 150)
         Me.XenonWinElement1.StartColor = System.Drawing.Color.Empty
         Me.XenonWinElement1.Style = WinPaletter.XenonWinElement.Styles.AltTab11
+        Me.XenonWinElement1.SuspendRefresh = False
         Me.XenonWinElement1.TabIndex = 0
         Me.XenonWinElement1.Transparency = True
         Me.XenonWinElement1.UseWin11ORB_WithWin10 = False
@@ -454,13 +421,84 @@ Partial Class AltTabEditor
         'PictureBox3
         '
         Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox3.Image = Global.WinPaletter.My.Resources.SampleApp_Active
+        Me.PictureBox3.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
         Me.PictureBox3.Location = New System.Drawing.Point(190, 20)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(35, 35)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox3.TabIndex = 5
         Me.PictureBox3.TabStop = False
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Location = New System.Drawing.Point(105, 17)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(40, 40)
+        Me.Panel1.TabIndex = 4
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.PictureBox1)
+        Me.Panel2.Location = New System.Drawing.Point(2, 2)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Padding = New System.Windows.Forms.Padding(3)
+        Me.Panel2.Size = New System.Drawing.Size(36, 36)
+        Me.Panel2.TabIndex = 5
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox1.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox1.TabIndex = 2
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox2.Image = Global.WinPaletter.My.Resources.Resources.SampleApp_Active
+        Me.PictureBox2.Location = New System.Drawing.Point(149, 20)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(35, 35)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox2.TabIndex = 3
+        Me.PictureBox2.TabStop = False
+        '
+        'RetroPanel1
+        '
+        Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.RetroPanel1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
+        Me.RetroPanel1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
+        Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.RetroPanel1.Controls.Add(Me.RetroLabel1)
+        Me.RetroPanel1.Flat = False
+        Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
+        Me.RetroPanel1.Location = New System.Drawing.Point(14, 72)
+        Me.RetroPanel1.Name = "RetroPanel1"
+        Me.RetroPanel1.Size = New System.Drawing.Size(302, 29)
+        Me.RetroPanel1.Style2 = True
+        Me.RetroPanel1.TabIndex = 0
+        '
+        'RetroLabel1
+        '
+        Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RetroLabel1.DrawOnGlass = False
+        Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
+        Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
+        Me.RetroLabel1.Name = "RetroLabel1"
+        Me.RetroLabel1.Size = New System.Drawing.Size(302, 29)
+        Me.RetroLabel1.TabIndex = 0
+        Me.RetroLabel1.Text = "Application"
+        Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox41
         '
@@ -488,6 +526,7 @@ Partial Class AltTabEditor
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.DrawOnGlass = False
         Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton10.ForeColor = System.Drawing.Color.White
         Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
@@ -505,6 +544,7 @@ Partial Class AltTabEditor
         '
         Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton7.DrawOnGlass = False
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = Nothing
@@ -521,6 +561,7 @@ Partial Class AltTabEditor
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton8.DrawOnGlass = False
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
@@ -555,6 +596,7 @@ Partial Class AltTabEditor
         Me.XenonButton9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton9.DrawOnGlass = False
         Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton9.ForeColor = System.Drawing.Color.White
         Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
@@ -586,6 +628,7 @@ Partial Class AltTabEditor
         Me.XenonButton11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton11.DrawOnGlass = False
         Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton11.ForeColor = System.Drawing.Color.White
         Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
@@ -604,6 +647,7 @@ Partial Class AltTabEditor
         Me.XenonButton12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton12.DrawOnGlass = False
         Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton12.ForeColor = System.Drawing.Color.White
         Me.XenonButton12.Image = Nothing
@@ -631,48 +675,13 @@ Partial Class AltTabEditor
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(781, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
         Me.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.checker_img.TabIndex = 83
         Me.checker_img.TabStop = False
-        '
-        'XenonAlertBox1
-        '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(15, 413)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(324, 20)
-        Me.XenonAlertBox1.TabIndex = 215
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "Applying in Windows 7 may require a device restart"
-        '
-        'XenonAlertBox2
-        '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CenterText = False
-        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(16, 289)
-        Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(322, 20)
-        Me.XenonAlertBox2.TabIndex = 216
-        Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "Sometimes, you should logoff and logon to apply effects"
         '
         'AltTabEditor
         '
@@ -699,13 +708,8 @@ Partial Class AltTabEditor
         Me.Name = "AltTabEditor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Windows Switcher (Alt+Tab)"
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox4.ResumeLayout(False)
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RetroPanel1.ResumeLayout(False)
         Me.XenonGroupBox3.ResumeLayout(False)
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.previewContainer.ResumeLayout(False)
@@ -716,6 +720,11 @@ Partial Class AltTabEditor
         Me.Classic_Preview1.ResumeLayout(False)
         Me.RetroPanelRaised1.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RetroPanel1.ResumeLayout(False)
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox12.ResumeLayout(False)
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()

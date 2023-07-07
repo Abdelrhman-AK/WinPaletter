@@ -640,6 +640,7 @@ Partial Class Sounds_Editor
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonTabControl1.SuspendLayout
         Me.TabPage1.SuspendLayout
         Me.XenonGroupBox65.SuspendLayout
@@ -837,6 +838,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.DrawOnGlass = False
         Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton10.ForeColor = System.Drawing.Color.White
         Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
@@ -854,6 +856,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton7.DrawOnGlass = False
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = Nothing
@@ -870,6 +873,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton8.DrawOnGlass = False
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
@@ -915,6 +919,7 @@ Partial Class Sounds_Editor
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox1)
         Me.TabPage1.Controls.Add(Me.XenonGroupBox65)
@@ -941,7 +946,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 296)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 340)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox2.TabIndex = 9
@@ -990,9 +995,10 @@ Partial Class Sounds_Editor
         Me.XenonButton199.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton199.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton199.DrawOnGlass = False
         Me.XenonButton199.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton199.ForeColor = System.Drawing.Color.White
-        Me.XenonButton199.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton199.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton199.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton199.LineSize = 1
         Me.XenonButton199.Location = New System.Drawing.Point(639, 3)
@@ -1007,9 +1013,10 @@ Partial Class Sounds_Editor
         Me.XenonButton200.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton200.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton200.DrawOnGlass = False
         Me.XenonButton200.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton200.ForeColor = System.Drawing.Color.White
-        Me.XenonButton200.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton200.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton200.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton200.LineSize = 1
         Me.XenonButton200.Location = New System.Drawing.Point(677, 3)
@@ -1024,6 +1031,7 @@ Partial Class Sounds_Editor
         Me.XenonButton201.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton201.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton201.DrawOnGlass = False
         Me.XenonButton201.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton201.ForeColor = System.Drawing.Color.White
         Me.XenonButton201.Image = CType(resources.GetObject("XenonButton201.Image"), System.Drawing.Image)
@@ -1041,6 +1049,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox64.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox64.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox64.DrawOnGlass = False
         Me.XenonTextBox64.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox64.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox64.MaxLength = 32767
@@ -1100,9 +1109,10 @@ Partial Class Sounds_Editor
         Me.XenonButton25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton25.DrawOnGlass = False
         Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton25.ForeColor = System.Drawing.Color.White
-        Me.XenonButton25.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton25.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton25.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton25.LineSize = 1
         Me.XenonButton25.Location = New System.Drawing.Point(639, 3)
@@ -1117,9 +1127,10 @@ Partial Class Sounds_Editor
         Me.XenonButton26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton26.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton26.DrawOnGlass = False
         Me.XenonButton26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton26.ForeColor = System.Drawing.Color.White
-        Me.XenonButton26.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton26.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton26.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton26.LineSize = 1
         Me.XenonButton26.Location = New System.Drawing.Point(677, 3)
@@ -1134,6 +1145,7 @@ Partial Class Sounds_Editor
         Me.XenonButton27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton27.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton27.DrawOnGlass = False
         Me.XenonButton27.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton27.ForeColor = System.Drawing.Color.White
         Me.XenonButton27.Image = CType(resources.GetObject("XenonButton27.Image"), System.Drawing.Image)
@@ -1151,6 +1163,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox6.DrawOnGlass = False
         Me.XenonTextBox6.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox6.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox6.MaxLength = 32767
@@ -1224,6 +1237,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton24.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton24.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton24.DrawOnGlass = False
         Me.XenonButton24.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton24.ForeColor = System.Drawing.Color.White
         Me.XenonButton24.Image = Nothing
@@ -1242,6 +1256,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton23.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton23.DrawOnGlass = False
         Me.XenonButton23.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton23.ForeColor = System.Drawing.Color.White
         Me.XenonButton23.Image = Nothing
@@ -1260,6 +1275,7 @@ Partial Class Sounds_Editor
         '
         Me.XenonButton22.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton22.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton22.DrawOnGlass = False
         Me.XenonButton22.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton22.ForeColor = System.Drawing.Color.White
         Me.XenonButton22.Image = Nothing
@@ -1279,9 +1295,10 @@ Partial Class Sounds_Editor
         Me.XenonButton19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton19.DrawOnGlass = False
         Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton19.ForeColor = System.Drawing.Color.White
-        Me.XenonButton19.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton19.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton19.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton19.LineSize = 1
         Me.XenonButton19.Location = New System.Drawing.Point(639, 3)
@@ -1296,9 +1313,10 @@ Partial Class Sounds_Editor
         Me.XenonButton20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton20.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton20.DrawOnGlass = False
         Me.XenonButton20.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton20.ForeColor = System.Drawing.Color.White
-        Me.XenonButton20.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton20.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton20.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton20.LineSize = 1
         Me.XenonButton20.Location = New System.Drawing.Point(677, 3)
@@ -1313,6 +1331,7 @@ Partial Class Sounds_Editor
         Me.XenonButton21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton21.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton21.DrawOnGlass = False
         Me.XenonButton21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton21.ForeColor = System.Drawing.Color.White
         Me.XenonButton21.Image = CType(resources.GetObject("XenonButton21.Image"), System.Drawing.Image)
@@ -1330,6 +1349,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox2.DrawOnGlass = False
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox2.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox2.MaxLength = 32767
@@ -1389,9 +1409,10 @@ Partial Class Sounds_Editor
         Me.XenonButton15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton15.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton15.DrawOnGlass = False
         Me.XenonButton15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton15.ForeColor = System.Drawing.Color.White
-        Me.XenonButton15.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton15.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton15.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton15.LineSize = 1
         Me.XenonButton15.Location = New System.Drawing.Point(639, 3)
@@ -1406,9 +1427,10 @@ Partial Class Sounds_Editor
         Me.XenonButton5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton5.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton5.LineSize = 1
         Me.XenonButton5.Location = New System.Drawing.Point(677, 3)
@@ -1423,6 +1445,7 @@ Partial Class Sounds_Editor
         Me.XenonButton6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton6.DrawOnGlass = False
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
@@ -1440,6 +1463,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox5.DrawOnGlass = False
         Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox5.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox5.MaxLength = 32767
@@ -1499,9 +1523,10 @@ Partial Class Sounds_Editor
         Me.XenonButton16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton16.DrawOnGlass = False
         Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton16.ForeColor = System.Drawing.Color.White
-        Me.XenonButton16.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton16.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton16.LineSize = 1
         Me.XenonButton16.Location = New System.Drawing.Point(639, 3)
@@ -1516,9 +1541,10 @@ Partial Class Sounds_Editor
         Me.XenonButton13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton13.DrawOnGlass = False
         Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton13.ForeColor = System.Drawing.Color.White
-        Me.XenonButton13.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton13.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton13.LineSize = 1
         Me.XenonButton13.Location = New System.Drawing.Point(677, 3)
@@ -1533,6 +1559,7 @@ Partial Class Sounds_Editor
         Me.XenonButton14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton14.DrawOnGlass = False
         Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton14.ForeColor = System.Drawing.Color.White
         Me.XenonButton14.Image = CType(resources.GetObject("XenonButton14.Image"), System.Drawing.Image)
@@ -1550,6 +1577,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox4.DrawOnGlass = False
         Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox4.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox4.MaxLength = 32767
@@ -1609,9 +1637,10 @@ Partial Class Sounds_Editor
         Me.XenonButton17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton17.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton17.DrawOnGlass = False
         Me.XenonButton17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton17.ForeColor = System.Drawing.Color.White
-        Me.XenonButton17.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton17.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton17.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton17.LineSize = 1
         Me.XenonButton17.Location = New System.Drawing.Point(639, 3)
@@ -1626,9 +1655,10 @@ Partial Class Sounds_Editor
         Me.XenonButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton3.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton3.LineSize = 1
         Me.XenonButton3.Location = New System.Drawing.Point(677, 3)
@@ -1643,6 +1673,7 @@ Partial Class Sounds_Editor
         Me.XenonButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
@@ -1660,6 +1691,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox3.DrawOnGlass = False
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox3.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox3.MaxLength = 32767
@@ -1719,9 +1751,10 @@ Partial Class Sounds_Editor
         Me.XenonButton18.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton18.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton18.DrawOnGlass = False
         Me.XenonButton18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton18.ForeColor = System.Drawing.Color.White
-        Me.XenonButton18.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton18.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton18.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton18.LineSize = 1
         Me.XenonButton18.Location = New System.Drawing.Point(639, 3)
@@ -1736,9 +1769,10 @@ Partial Class Sounds_Editor
         Me.XenonButton2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton2.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton2.LineSize = 1
         Me.XenonButton2.Location = New System.Drawing.Point(677, 3)
@@ -1753,6 +1787,7 @@ Partial Class Sounds_Editor
         Me.XenonButton1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
@@ -1770,6 +1805,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox1.DrawOnGlass = False
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox1.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox1.MaxLength = 32767
@@ -1845,9 +1881,10 @@ Partial Class Sounds_Editor
         Me.XenonButton205.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton205.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton205.DrawOnGlass = False
         Me.XenonButton205.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton205.ForeColor = System.Drawing.Color.White
-        Me.XenonButton205.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton205.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton205.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton205.LineSize = 1
         Me.XenonButton205.Location = New System.Drawing.Point(639, 3)
@@ -1862,9 +1899,10 @@ Partial Class Sounds_Editor
         Me.XenonButton206.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton206.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton206.DrawOnGlass = False
         Me.XenonButton206.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton206.ForeColor = System.Drawing.Color.White
-        Me.XenonButton206.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton206.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton206.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton206.LineSize = 1
         Me.XenonButton206.Location = New System.Drawing.Point(677, 3)
@@ -1879,6 +1917,7 @@ Partial Class Sounds_Editor
         Me.XenonButton207.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton207.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton207.DrawOnGlass = False
         Me.XenonButton207.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton207.ForeColor = System.Drawing.Color.White
         Me.XenonButton207.Image = CType(resources.GetObject("XenonButton207.Image"), System.Drawing.Image)
@@ -1896,6 +1935,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox66.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox66.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox66.DrawOnGlass = False
         Me.XenonTextBox66.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox66.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox66.MaxLength = 32767
@@ -1955,9 +1995,10 @@ Partial Class Sounds_Editor
         Me.XenonButton211.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton211.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton211.DrawOnGlass = False
         Me.XenonButton211.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton211.ForeColor = System.Drawing.Color.White
-        Me.XenonButton211.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton211.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton211.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton211.LineSize = 1
         Me.XenonButton211.Location = New System.Drawing.Point(639, 3)
@@ -1972,9 +2013,10 @@ Partial Class Sounds_Editor
         Me.XenonButton212.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton212.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton212.DrawOnGlass = False
         Me.XenonButton212.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton212.ForeColor = System.Drawing.Color.White
-        Me.XenonButton212.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton212.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton212.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton212.LineSize = 1
         Me.XenonButton212.Location = New System.Drawing.Point(677, 3)
@@ -1989,6 +2031,7 @@ Partial Class Sounds_Editor
         Me.XenonButton213.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton213.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton213.DrawOnGlass = False
         Me.XenonButton213.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton213.ForeColor = System.Drawing.Color.White
         Me.XenonButton213.Image = CType(resources.GetObject("XenonButton213.Image"), System.Drawing.Image)
@@ -2006,6 +2049,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox68.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox68.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox68.DrawOnGlass = False
         Me.XenonTextBox68.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox68.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox68.MaxLength = 32767
@@ -2065,9 +2109,10 @@ Partial Class Sounds_Editor
         Me.XenonButton40.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton40.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton40.DrawOnGlass = False
         Me.XenonButton40.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton40.ForeColor = System.Drawing.Color.White
-        Me.XenonButton40.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton40.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton40.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton40.LineSize = 1
         Me.XenonButton40.Location = New System.Drawing.Point(639, 3)
@@ -2082,9 +2127,10 @@ Partial Class Sounds_Editor
         Me.XenonButton41.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton41.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton41.DrawOnGlass = False
         Me.XenonButton41.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton41.ForeColor = System.Drawing.Color.White
-        Me.XenonButton41.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton41.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton41.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton41.LineSize = 1
         Me.XenonButton41.Location = New System.Drawing.Point(677, 3)
@@ -2099,6 +2145,7 @@ Partial Class Sounds_Editor
         Me.XenonButton42.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton42.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton42.DrawOnGlass = False
         Me.XenonButton42.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton42.ForeColor = System.Drawing.Color.White
         Me.XenonButton42.Image = CType(resources.GetObject("XenonButton42.Image"), System.Drawing.Image)
@@ -2116,6 +2163,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox11.DrawOnGlass = False
         Me.XenonTextBox11.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox11.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox11.MaxLength = 32767
@@ -2175,9 +2223,10 @@ Partial Class Sounds_Editor
         Me.XenonButton37.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton37.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton37.DrawOnGlass = False
         Me.XenonButton37.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton37.ForeColor = System.Drawing.Color.White
-        Me.XenonButton37.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton37.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton37.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton37.LineSize = 1
         Me.XenonButton37.Location = New System.Drawing.Point(639, 3)
@@ -2192,9 +2241,10 @@ Partial Class Sounds_Editor
         Me.XenonButton38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton38.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton38.DrawOnGlass = False
         Me.XenonButton38.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton38.ForeColor = System.Drawing.Color.White
-        Me.XenonButton38.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton38.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton38.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton38.LineSize = 1
         Me.XenonButton38.Location = New System.Drawing.Point(677, 3)
@@ -2209,6 +2259,7 @@ Partial Class Sounds_Editor
         Me.XenonButton39.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton39.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton39.DrawOnGlass = False
         Me.XenonButton39.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton39.ForeColor = System.Drawing.Color.White
         Me.XenonButton39.Image = CType(resources.GetObject("XenonButton39.Image"), System.Drawing.Image)
@@ -2226,6 +2277,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox10.DrawOnGlass = False
         Me.XenonTextBox10.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox10.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox10.MaxLength = 32767
@@ -2285,9 +2337,10 @@ Partial Class Sounds_Editor
         Me.XenonButton34.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton34.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton34.DrawOnGlass = False
         Me.XenonButton34.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton34.ForeColor = System.Drawing.Color.White
-        Me.XenonButton34.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton34.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton34.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton34.LineSize = 1
         Me.XenonButton34.Location = New System.Drawing.Point(639, 3)
@@ -2302,9 +2355,10 @@ Partial Class Sounds_Editor
         Me.XenonButton35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton35.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton35.DrawOnGlass = False
         Me.XenonButton35.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton35.ForeColor = System.Drawing.Color.White
-        Me.XenonButton35.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton35.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton35.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton35.LineSize = 1
         Me.XenonButton35.Location = New System.Drawing.Point(677, 3)
@@ -2319,6 +2373,7 @@ Partial Class Sounds_Editor
         Me.XenonButton36.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton36.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton36.DrawOnGlass = False
         Me.XenonButton36.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton36.ForeColor = System.Drawing.Color.White
         Me.XenonButton36.Image = CType(resources.GetObject("XenonButton36.Image"), System.Drawing.Image)
@@ -2336,6 +2391,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox9.DrawOnGlass = False
         Me.XenonTextBox9.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox9.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox9.MaxLength = 32767
@@ -2395,9 +2451,10 @@ Partial Class Sounds_Editor
         Me.XenonButton31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton31.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton31.DrawOnGlass = False
         Me.XenonButton31.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton31.ForeColor = System.Drawing.Color.White
-        Me.XenonButton31.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton31.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton31.LineSize = 1
         Me.XenonButton31.Location = New System.Drawing.Point(639, 3)
@@ -2412,9 +2469,10 @@ Partial Class Sounds_Editor
         Me.XenonButton32.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton32.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton32.DrawOnGlass = False
         Me.XenonButton32.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton32.ForeColor = System.Drawing.Color.White
-        Me.XenonButton32.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton32.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton32.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton32.LineSize = 1
         Me.XenonButton32.Location = New System.Drawing.Point(677, 3)
@@ -2429,6 +2487,7 @@ Partial Class Sounds_Editor
         Me.XenonButton33.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton33.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton33.DrawOnGlass = False
         Me.XenonButton33.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton33.ForeColor = System.Drawing.Color.White
         Me.XenonButton33.Image = CType(resources.GetObject("XenonButton33.Image"), System.Drawing.Image)
@@ -2446,6 +2505,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox8.DrawOnGlass = False
         Me.XenonTextBox8.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox8.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox8.MaxLength = 32767
@@ -2505,9 +2565,10 @@ Partial Class Sounds_Editor
         Me.XenonButton28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton28.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton28.DrawOnGlass = False
         Me.XenonButton28.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton28.ForeColor = System.Drawing.Color.White
-        Me.XenonButton28.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton28.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton28.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton28.LineSize = 1
         Me.XenonButton28.Location = New System.Drawing.Point(639, 3)
@@ -2522,9 +2583,10 @@ Partial Class Sounds_Editor
         Me.XenonButton29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton29.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton29.DrawOnGlass = False
         Me.XenonButton29.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton29.ForeColor = System.Drawing.Color.White
-        Me.XenonButton29.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton29.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton29.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton29.LineSize = 1
         Me.XenonButton29.Location = New System.Drawing.Point(677, 3)
@@ -2539,6 +2601,7 @@ Partial Class Sounds_Editor
         Me.XenonButton30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton30.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton30.DrawOnGlass = False
         Me.XenonButton30.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton30.ForeColor = System.Drawing.Color.White
         Me.XenonButton30.Image = CType(resources.GetObject("XenonButton30.Image"), System.Drawing.Image)
@@ -2556,6 +2619,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox7.DrawOnGlass = False
         Me.XenonTextBox7.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox7.Location = New System.Drawing.Point(195, 3)
         Me.XenonTextBox7.MaxLength = 32767
@@ -2633,9 +2697,10 @@ Partial Class Sounds_Editor
         Me.XenonButton169.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton169.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton169.DrawOnGlass = False
         Me.XenonButton169.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton169.ForeColor = System.Drawing.Color.White
-        Me.XenonButton169.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton169.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton169.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton169.LineSize = 1
         Me.XenonButton169.Location = New System.Drawing.Point(639, 3)
@@ -2650,9 +2715,10 @@ Partial Class Sounds_Editor
         Me.XenonButton170.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton170.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton170.DrawOnGlass = False
         Me.XenonButton170.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton170.ForeColor = System.Drawing.Color.White
-        Me.XenonButton170.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton170.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton170.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton170.LineSize = 1
         Me.XenonButton170.Location = New System.Drawing.Point(677, 3)
@@ -2667,6 +2733,7 @@ Partial Class Sounds_Editor
         Me.XenonButton171.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton171.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton171.DrawOnGlass = False
         Me.XenonButton171.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton171.ForeColor = System.Drawing.Color.White
         Me.XenonButton171.Image = CType(resources.GetObject("XenonButton171.Image"), System.Drawing.Image)
@@ -2684,6 +2751,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox54.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox54.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox54.DrawOnGlass = False
         Me.XenonTextBox54.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox54.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox54.MaxLength = 32767
@@ -2755,9 +2823,10 @@ Partial Class Sounds_Editor
         Me.XenonButton166.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton166.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton166.DrawOnGlass = False
         Me.XenonButton166.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton166.ForeColor = System.Drawing.Color.White
-        Me.XenonButton166.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton166.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton166.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton166.LineSize = 1
         Me.XenonButton166.Location = New System.Drawing.Point(639, 3)
@@ -2772,9 +2841,10 @@ Partial Class Sounds_Editor
         Me.XenonButton167.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton167.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton167.DrawOnGlass = False
         Me.XenonButton167.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton167.ForeColor = System.Drawing.Color.White
-        Me.XenonButton167.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton167.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton167.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton167.LineSize = 1
         Me.XenonButton167.Location = New System.Drawing.Point(677, 3)
@@ -2789,6 +2859,7 @@ Partial Class Sounds_Editor
         Me.XenonButton168.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton168.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton168.DrawOnGlass = False
         Me.XenonButton168.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton168.ForeColor = System.Drawing.Color.White
         Me.XenonButton168.Image = CType(resources.GetObject("XenonButton168.Image"), System.Drawing.Image)
@@ -2806,6 +2877,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox53.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox53.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox53.DrawOnGlass = False
         Me.XenonTextBox53.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox53.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox53.MaxLength = 32767
@@ -2865,9 +2937,10 @@ Partial Class Sounds_Editor
         Me.XenonButton58.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton58.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton58.DrawOnGlass = False
         Me.XenonButton58.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton58.ForeColor = System.Drawing.Color.White
-        Me.XenonButton58.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton58.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton58.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton58.LineSize = 1
         Me.XenonButton58.Location = New System.Drawing.Point(639, 3)
@@ -2882,9 +2955,10 @@ Partial Class Sounds_Editor
         Me.XenonButton59.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton59.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton59.DrawOnGlass = False
         Me.XenonButton59.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton59.ForeColor = System.Drawing.Color.White
-        Me.XenonButton59.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton59.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton59.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton59.LineSize = 1
         Me.XenonButton59.Location = New System.Drawing.Point(677, 3)
@@ -2899,6 +2973,7 @@ Partial Class Sounds_Editor
         Me.XenonButton60.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton60.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton60.DrawOnGlass = False
         Me.XenonButton60.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton60.ForeColor = System.Drawing.Color.White
         Me.XenonButton60.Image = CType(resources.GetObject("XenonButton60.Image"), System.Drawing.Image)
@@ -2916,6 +2991,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox17.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox17.DrawOnGlass = False
         Me.XenonTextBox17.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox17.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox17.MaxLength = 32767
@@ -2975,9 +3051,10 @@ Partial Class Sounds_Editor
         Me.XenonButton43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton43.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton43.DrawOnGlass = False
         Me.XenonButton43.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton43.ForeColor = System.Drawing.Color.White
-        Me.XenonButton43.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton43.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton43.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton43.LineSize = 1
         Me.XenonButton43.Location = New System.Drawing.Point(639, 3)
@@ -2992,9 +3069,10 @@ Partial Class Sounds_Editor
         Me.XenonButton44.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton44.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton44.DrawOnGlass = False
         Me.XenonButton44.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton44.ForeColor = System.Drawing.Color.White
-        Me.XenonButton44.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton44.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton44.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton44.LineSize = 1
         Me.XenonButton44.Location = New System.Drawing.Point(677, 3)
@@ -3009,6 +3087,7 @@ Partial Class Sounds_Editor
         Me.XenonButton45.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton45.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton45.DrawOnGlass = False
         Me.XenonButton45.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton45.ForeColor = System.Drawing.Color.White
         Me.XenonButton45.Image = CType(resources.GetObject("XenonButton45.Image"), System.Drawing.Image)
@@ -3026,6 +3105,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox12.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox12.DrawOnGlass = False
         Me.XenonTextBox12.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox12.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox12.MaxLength = 32767
@@ -3085,9 +3165,10 @@ Partial Class Sounds_Editor
         Me.XenonButton46.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton46.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton46.DrawOnGlass = False
         Me.XenonButton46.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton46.ForeColor = System.Drawing.Color.White
-        Me.XenonButton46.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton46.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton46.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton46.LineSize = 1
         Me.XenonButton46.Location = New System.Drawing.Point(639, 3)
@@ -3102,9 +3183,10 @@ Partial Class Sounds_Editor
         Me.XenonButton47.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton47.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton47.DrawOnGlass = False
         Me.XenonButton47.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton47.ForeColor = System.Drawing.Color.White
-        Me.XenonButton47.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton47.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton47.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton47.LineSize = 1
         Me.XenonButton47.Location = New System.Drawing.Point(677, 3)
@@ -3119,6 +3201,7 @@ Partial Class Sounds_Editor
         Me.XenonButton48.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton48.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton48.DrawOnGlass = False
         Me.XenonButton48.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton48.ForeColor = System.Drawing.Color.White
         Me.XenonButton48.Image = CType(resources.GetObject("XenonButton48.Image"), System.Drawing.Image)
@@ -3136,6 +3219,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox13.DrawOnGlass = False
         Me.XenonTextBox13.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox13.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox13.MaxLength = 32767
@@ -3195,9 +3279,10 @@ Partial Class Sounds_Editor
         Me.XenonButton49.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton49.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton49.DrawOnGlass = False
         Me.XenonButton49.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton49.ForeColor = System.Drawing.Color.White
-        Me.XenonButton49.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton49.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton49.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton49.LineSize = 1
         Me.XenonButton49.Location = New System.Drawing.Point(639, 3)
@@ -3212,9 +3297,10 @@ Partial Class Sounds_Editor
         Me.XenonButton50.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton50.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton50.DrawOnGlass = False
         Me.XenonButton50.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton50.ForeColor = System.Drawing.Color.White
-        Me.XenonButton50.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton50.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton50.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton50.LineSize = 1
         Me.XenonButton50.Location = New System.Drawing.Point(677, 3)
@@ -3229,6 +3315,7 @@ Partial Class Sounds_Editor
         Me.XenonButton51.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton51.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton51.DrawOnGlass = False
         Me.XenonButton51.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton51.ForeColor = System.Drawing.Color.White
         Me.XenonButton51.Image = CType(resources.GetObject("XenonButton51.Image"), System.Drawing.Image)
@@ -3246,6 +3333,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox14.DrawOnGlass = False
         Me.XenonTextBox14.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox14.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox14.MaxLength = 32767
@@ -3305,9 +3393,10 @@ Partial Class Sounds_Editor
         Me.XenonButton52.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton52.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton52.DrawOnGlass = False
         Me.XenonButton52.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton52.ForeColor = System.Drawing.Color.White
-        Me.XenonButton52.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton52.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton52.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton52.LineSize = 1
         Me.XenonButton52.Location = New System.Drawing.Point(639, 3)
@@ -3322,9 +3411,10 @@ Partial Class Sounds_Editor
         Me.XenonButton53.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton53.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton53.DrawOnGlass = False
         Me.XenonButton53.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton53.ForeColor = System.Drawing.Color.White
-        Me.XenonButton53.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton53.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton53.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton53.LineSize = 1
         Me.XenonButton53.Location = New System.Drawing.Point(677, 3)
@@ -3339,6 +3429,7 @@ Partial Class Sounds_Editor
         Me.XenonButton54.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton54.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton54.DrawOnGlass = False
         Me.XenonButton54.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton54.ForeColor = System.Drawing.Color.White
         Me.XenonButton54.Image = CType(resources.GetObject("XenonButton54.Image"), System.Drawing.Image)
@@ -3356,6 +3447,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox15.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox15.DrawOnGlass = False
         Me.XenonTextBox15.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox15.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox15.MaxLength = 32767
@@ -3415,9 +3507,10 @@ Partial Class Sounds_Editor
         Me.XenonButton55.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton55.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton55.DrawOnGlass = False
         Me.XenonButton55.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton55.ForeColor = System.Drawing.Color.White
-        Me.XenonButton55.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton55.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton55.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton55.LineSize = 1
         Me.XenonButton55.Location = New System.Drawing.Point(639, 3)
@@ -3432,9 +3525,10 @@ Partial Class Sounds_Editor
         Me.XenonButton56.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton56.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton56.DrawOnGlass = False
         Me.XenonButton56.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton56.ForeColor = System.Drawing.Color.White
-        Me.XenonButton56.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton56.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton56.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton56.LineSize = 1
         Me.XenonButton56.Location = New System.Drawing.Point(677, 3)
@@ -3449,6 +3543,7 @@ Partial Class Sounds_Editor
         Me.XenonButton57.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton57.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton57.DrawOnGlass = False
         Me.XenonButton57.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton57.ForeColor = System.Drawing.Color.White
         Me.XenonButton57.Image = CType(resources.GetObject("XenonButton57.Image"), System.Drawing.Image)
@@ -3466,6 +3561,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox16.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox16.DrawOnGlass = False
         Me.XenonTextBox16.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox16.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox16.MaxLength = 32767
@@ -3541,9 +3637,10 @@ Partial Class Sounds_Editor
         Me.XenonButton163.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton163.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton163.DrawOnGlass = False
         Me.XenonButton163.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton163.ForeColor = System.Drawing.Color.White
-        Me.XenonButton163.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton163.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton163.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton163.LineSize = 1
         Me.XenonButton163.Location = New System.Drawing.Point(639, 3)
@@ -3558,9 +3655,10 @@ Partial Class Sounds_Editor
         Me.XenonButton164.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton164.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton164.DrawOnGlass = False
         Me.XenonButton164.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton164.ForeColor = System.Drawing.Color.White
-        Me.XenonButton164.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton164.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton164.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton164.LineSize = 1
         Me.XenonButton164.Location = New System.Drawing.Point(677, 3)
@@ -3575,6 +3673,7 @@ Partial Class Sounds_Editor
         Me.XenonButton165.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton165.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton165.DrawOnGlass = False
         Me.XenonButton165.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton165.ForeColor = System.Drawing.Color.White
         Me.XenonButton165.Image = CType(resources.GetObject("XenonButton165.Image"), System.Drawing.Image)
@@ -3592,6 +3691,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox52.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox52.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox52.DrawOnGlass = False
         Me.XenonTextBox52.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox52.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox52.MaxLength = 32767
@@ -3651,9 +3751,10 @@ Partial Class Sounds_Editor
         Me.XenonButton157.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton157.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton157.DrawOnGlass = False
         Me.XenonButton157.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton157.ForeColor = System.Drawing.Color.White
-        Me.XenonButton157.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton157.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton157.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton157.LineSize = 1
         Me.XenonButton157.Location = New System.Drawing.Point(639, 3)
@@ -3668,9 +3769,10 @@ Partial Class Sounds_Editor
         Me.XenonButton158.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton158.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton158.DrawOnGlass = False
         Me.XenonButton158.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton158.ForeColor = System.Drawing.Color.White
-        Me.XenonButton158.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton158.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton158.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton158.LineSize = 1
         Me.XenonButton158.Location = New System.Drawing.Point(677, 3)
@@ -3685,6 +3787,7 @@ Partial Class Sounds_Editor
         Me.XenonButton159.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton159.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton159.DrawOnGlass = False
         Me.XenonButton159.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton159.ForeColor = System.Drawing.Color.White
         Me.XenonButton159.Image = CType(resources.GetObject("XenonButton159.Image"), System.Drawing.Image)
@@ -3702,6 +3805,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox50.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox50.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox50.DrawOnGlass = False
         Me.XenonTextBox50.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox50.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox50.MaxLength = 32767
@@ -3761,9 +3865,10 @@ Partial Class Sounds_Editor
         Me.XenonButton154.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton154.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton154.DrawOnGlass = False
         Me.XenonButton154.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton154.ForeColor = System.Drawing.Color.White
-        Me.XenonButton154.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton154.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton154.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton154.LineSize = 1
         Me.XenonButton154.Location = New System.Drawing.Point(639, 3)
@@ -3778,9 +3883,10 @@ Partial Class Sounds_Editor
         Me.XenonButton155.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton155.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton155.DrawOnGlass = False
         Me.XenonButton155.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton155.ForeColor = System.Drawing.Color.White
-        Me.XenonButton155.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton155.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton155.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton155.LineSize = 1
         Me.XenonButton155.Location = New System.Drawing.Point(677, 3)
@@ -3795,6 +3901,7 @@ Partial Class Sounds_Editor
         Me.XenonButton156.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton156.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton156.DrawOnGlass = False
         Me.XenonButton156.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton156.ForeColor = System.Drawing.Color.White
         Me.XenonButton156.Image = CType(resources.GetObject("XenonButton156.Image"), System.Drawing.Image)
@@ -3812,6 +3919,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox49.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox49.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox49.DrawOnGlass = False
         Me.XenonTextBox49.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox49.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox49.MaxLength = 32767
@@ -3871,9 +3979,10 @@ Partial Class Sounds_Editor
         Me.XenonButton151.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton151.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton151.DrawOnGlass = False
         Me.XenonButton151.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton151.ForeColor = System.Drawing.Color.White
-        Me.XenonButton151.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton151.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton151.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton151.LineSize = 1
         Me.XenonButton151.Location = New System.Drawing.Point(639, 3)
@@ -3888,9 +3997,10 @@ Partial Class Sounds_Editor
         Me.XenonButton152.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton152.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton152.DrawOnGlass = False
         Me.XenonButton152.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton152.ForeColor = System.Drawing.Color.White
-        Me.XenonButton152.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton152.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton152.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton152.LineSize = 1
         Me.XenonButton152.Location = New System.Drawing.Point(677, 3)
@@ -3905,6 +4015,7 @@ Partial Class Sounds_Editor
         Me.XenonButton153.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton153.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton153.DrawOnGlass = False
         Me.XenonButton153.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton153.ForeColor = System.Drawing.Color.White
         Me.XenonButton153.Image = CType(resources.GetObject("XenonButton153.Image"), System.Drawing.Image)
@@ -3922,6 +4033,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox48.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox48.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox48.DrawOnGlass = False
         Me.XenonTextBox48.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox48.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox48.MaxLength = 32767
@@ -3981,9 +4093,10 @@ Partial Class Sounds_Editor
         Me.XenonButton148.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton148.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton148.DrawOnGlass = False
         Me.XenonButton148.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton148.ForeColor = System.Drawing.Color.White
-        Me.XenonButton148.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton148.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton148.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton148.LineSize = 1
         Me.XenonButton148.Location = New System.Drawing.Point(639, 3)
@@ -3998,9 +4111,10 @@ Partial Class Sounds_Editor
         Me.XenonButton149.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton149.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton149.DrawOnGlass = False
         Me.XenonButton149.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton149.ForeColor = System.Drawing.Color.White
-        Me.XenonButton149.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton149.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton149.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton149.LineSize = 1
         Me.XenonButton149.Location = New System.Drawing.Point(677, 3)
@@ -4015,6 +4129,7 @@ Partial Class Sounds_Editor
         Me.XenonButton150.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton150.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton150.DrawOnGlass = False
         Me.XenonButton150.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton150.ForeColor = System.Drawing.Color.White
         Me.XenonButton150.Image = CType(resources.GetObject("XenonButton150.Image"), System.Drawing.Image)
@@ -4032,6 +4147,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox47.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox47.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox47.DrawOnGlass = False
         Me.XenonTextBox47.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox47.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox47.MaxLength = 32767
@@ -4091,9 +4207,10 @@ Partial Class Sounds_Editor
         Me.XenonButton145.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton145.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton145.DrawOnGlass = False
         Me.XenonButton145.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton145.ForeColor = System.Drawing.Color.White
-        Me.XenonButton145.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton145.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton145.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton145.LineSize = 1
         Me.XenonButton145.Location = New System.Drawing.Point(639, 3)
@@ -4108,9 +4225,10 @@ Partial Class Sounds_Editor
         Me.XenonButton146.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton146.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton146.DrawOnGlass = False
         Me.XenonButton146.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton146.ForeColor = System.Drawing.Color.White
-        Me.XenonButton146.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton146.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton146.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton146.LineSize = 1
         Me.XenonButton146.Location = New System.Drawing.Point(677, 3)
@@ -4125,6 +4243,7 @@ Partial Class Sounds_Editor
         Me.XenonButton147.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton147.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton147.DrawOnGlass = False
         Me.XenonButton147.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton147.ForeColor = System.Drawing.Color.White
         Me.XenonButton147.Image = CType(resources.GetObject("XenonButton147.Image"), System.Drawing.Image)
@@ -4142,6 +4261,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox46.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox46.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox46.DrawOnGlass = False
         Me.XenonTextBox46.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox46.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox46.MaxLength = 32767
@@ -4201,9 +4321,10 @@ Partial Class Sounds_Editor
         Me.XenonButton142.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton142.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton142.DrawOnGlass = False
         Me.XenonButton142.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton142.ForeColor = System.Drawing.Color.White
-        Me.XenonButton142.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton142.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton142.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton142.LineSize = 1
         Me.XenonButton142.Location = New System.Drawing.Point(639, 3)
@@ -4218,9 +4339,10 @@ Partial Class Sounds_Editor
         Me.XenonButton143.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton143.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton143.DrawOnGlass = False
         Me.XenonButton143.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton143.ForeColor = System.Drawing.Color.White
-        Me.XenonButton143.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton143.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton143.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton143.LineSize = 1
         Me.XenonButton143.Location = New System.Drawing.Point(677, 3)
@@ -4235,6 +4357,7 @@ Partial Class Sounds_Editor
         Me.XenonButton144.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton144.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton144.DrawOnGlass = False
         Me.XenonButton144.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton144.ForeColor = System.Drawing.Color.White
         Me.XenonButton144.Image = CType(resources.GetObject("XenonButton144.Image"), System.Drawing.Image)
@@ -4252,6 +4375,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox45.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox45.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox45.DrawOnGlass = False
         Me.XenonTextBox45.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox45.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox45.MaxLength = 32767
@@ -4325,9 +4449,10 @@ Partial Class Sounds_Editor
         Me.XenonButton241.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton241.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton241.DrawOnGlass = False
         Me.XenonButton241.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton241.ForeColor = System.Drawing.Color.White
-        Me.XenonButton241.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton241.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton241.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton241.LineSize = 1
         Me.XenonButton241.Location = New System.Drawing.Point(639, 3)
@@ -4342,9 +4467,10 @@ Partial Class Sounds_Editor
         Me.XenonButton242.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton242.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton242.DrawOnGlass = False
         Me.XenonButton242.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton242.ForeColor = System.Drawing.Color.White
-        Me.XenonButton242.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton242.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton242.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton242.LineSize = 1
         Me.XenonButton242.Location = New System.Drawing.Point(677, 3)
@@ -4359,6 +4485,7 @@ Partial Class Sounds_Editor
         Me.XenonButton243.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton243.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton243.DrawOnGlass = False
         Me.XenonButton243.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton243.ForeColor = System.Drawing.Color.White
         Me.XenonButton243.Image = CType(resources.GetObject("XenonButton243.Image"), System.Drawing.Image)
@@ -4376,6 +4503,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox78.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox78.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox78.DrawOnGlass = False
         Me.XenonTextBox78.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox78.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox78.MaxLength = 32767
@@ -4435,9 +4563,10 @@ Partial Class Sounds_Editor
         Me.XenonButton244.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton244.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton244.DrawOnGlass = False
         Me.XenonButton244.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton244.ForeColor = System.Drawing.Color.White
-        Me.XenonButton244.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton244.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton244.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton244.LineSize = 1
         Me.XenonButton244.Location = New System.Drawing.Point(639, 3)
@@ -4452,9 +4581,10 @@ Partial Class Sounds_Editor
         Me.XenonButton245.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton245.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton245.DrawOnGlass = False
         Me.XenonButton245.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton245.ForeColor = System.Drawing.Color.White
-        Me.XenonButton245.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton245.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton245.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton245.LineSize = 1
         Me.XenonButton245.Location = New System.Drawing.Point(677, 3)
@@ -4469,6 +4599,7 @@ Partial Class Sounds_Editor
         Me.XenonButton246.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton246.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton246.DrawOnGlass = False
         Me.XenonButton246.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton246.ForeColor = System.Drawing.Color.White
         Me.XenonButton246.Image = CType(resources.GetObject("XenonButton246.Image"), System.Drawing.Image)
@@ -4486,6 +4617,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox79.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox79.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox79.DrawOnGlass = False
         Me.XenonTextBox79.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox79.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox79.MaxLength = 32767
@@ -4545,9 +4677,10 @@ Partial Class Sounds_Editor
         Me.XenonButton238.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton238.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton238.DrawOnGlass = False
         Me.XenonButton238.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton238.ForeColor = System.Drawing.Color.White
-        Me.XenonButton238.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton238.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton238.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton238.LineSize = 1
         Me.XenonButton238.Location = New System.Drawing.Point(639, 3)
@@ -4562,9 +4695,10 @@ Partial Class Sounds_Editor
         Me.XenonButton239.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton239.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton239.DrawOnGlass = False
         Me.XenonButton239.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton239.ForeColor = System.Drawing.Color.White
-        Me.XenonButton239.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton239.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton239.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton239.LineSize = 1
         Me.XenonButton239.Location = New System.Drawing.Point(677, 3)
@@ -4579,6 +4713,7 @@ Partial Class Sounds_Editor
         Me.XenonButton240.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton240.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton240.DrawOnGlass = False
         Me.XenonButton240.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton240.ForeColor = System.Drawing.Color.White
         Me.XenonButton240.Image = CType(resources.GetObject("XenonButton240.Image"), System.Drawing.Image)
@@ -4596,6 +4731,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox77.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox77.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox77.DrawOnGlass = False
         Me.XenonTextBox77.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox77.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox77.MaxLength = 32767
@@ -4655,9 +4791,10 @@ Partial Class Sounds_Editor
         Me.XenonButton235.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton235.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton235.DrawOnGlass = False
         Me.XenonButton235.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton235.ForeColor = System.Drawing.Color.White
-        Me.XenonButton235.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton235.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton235.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton235.LineSize = 1
         Me.XenonButton235.Location = New System.Drawing.Point(639, 3)
@@ -4672,9 +4809,10 @@ Partial Class Sounds_Editor
         Me.XenonButton236.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton236.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton236.DrawOnGlass = False
         Me.XenonButton236.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton236.ForeColor = System.Drawing.Color.White
-        Me.XenonButton236.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton236.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton236.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton236.LineSize = 1
         Me.XenonButton236.Location = New System.Drawing.Point(677, 3)
@@ -4689,6 +4827,7 @@ Partial Class Sounds_Editor
         Me.XenonButton237.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton237.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton237.DrawOnGlass = False
         Me.XenonButton237.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton237.ForeColor = System.Drawing.Color.White
         Me.XenonButton237.Image = CType(resources.GetObject("XenonButton237.Image"), System.Drawing.Image)
@@ -4706,6 +4845,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox76.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox76.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox76.DrawOnGlass = False
         Me.XenonTextBox76.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox76.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox76.MaxLength = 32767
@@ -4765,9 +4905,10 @@ Partial Class Sounds_Editor
         Me.XenonButton160.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton160.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton160.DrawOnGlass = False
         Me.XenonButton160.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton160.ForeColor = System.Drawing.Color.White
-        Me.XenonButton160.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton160.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton160.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton160.LineSize = 1
         Me.XenonButton160.Location = New System.Drawing.Point(639, 3)
@@ -4782,9 +4923,10 @@ Partial Class Sounds_Editor
         Me.XenonButton161.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton161.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton161.DrawOnGlass = False
         Me.XenonButton161.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton161.ForeColor = System.Drawing.Color.White
-        Me.XenonButton161.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton161.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton161.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton161.LineSize = 1
         Me.XenonButton161.Location = New System.Drawing.Point(677, 3)
@@ -4799,6 +4941,7 @@ Partial Class Sounds_Editor
         Me.XenonButton162.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton162.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton162.DrawOnGlass = False
         Me.XenonButton162.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton162.ForeColor = System.Drawing.Color.White
         Me.XenonButton162.Image = CType(resources.GetObject("XenonButton162.Image"), System.Drawing.Image)
@@ -4816,6 +4959,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox51.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox51.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox51.DrawOnGlass = False
         Me.XenonTextBox51.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox51.Location = New System.Drawing.Point(174, 3)
         Me.XenonTextBox51.MaxLength = 32767
@@ -4893,9 +5037,10 @@ Partial Class Sounds_Editor
         Me.XenonButton232.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton232.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton232.DrawOnGlass = False
         Me.XenonButton232.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton232.ForeColor = System.Drawing.Color.White
-        Me.XenonButton232.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton232.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton232.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton232.LineSize = 1
         Me.XenonButton232.Location = New System.Drawing.Point(639, 3)
@@ -4910,9 +5055,10 @@ Partial Class Sounds_Editor
         Me.XenonButton233.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton233.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton233.DrawOnGlass = False
         Me.XenonButton233.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton233.ForeColor = System.Drawing.Color.White
-        Me.XenonButton233.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton233.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton233.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton233.LineSize = 1
         Me.XenonButton233.Location = New System.Drawing.Point(677, 3)
@@ -4927,6 +5073,7 @@ Partial Class Sounds_Editor
         Me.XenonButton234.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton234.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton234.DrawOnGlass = False
         Me.XenonButton234.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton234.ForeColor = System.Drawing.Color.White
         Me.XenonButton234.Image = CType(resources.GetObject("XenonButton234.Image"), System.Drawing.Image)
@@ -4944,6 +5091,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox75.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox75.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox75.DrawOnGlass = False
         Me.XenonTextBox75.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox75.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox75.MaxLength = 32767
@@ -5003,9 +5151,10 @@ Partial Class Sounds_Editor
         Me.XenonButton196.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton196.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton196.DrawOnGlass = False
         Me.XenonButton196.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton196.ForeColor = System.Drawing.Color.White
-        Me.XenonButton196.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton196.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton196.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton196.LineSize = 1
         Me.XenonButton196.Location = New System.Drawing.Point(639, 3)
@@ -5020,9 +5169,10 @@ Partial Class Sounds_Editor
         Me.XenonButton197.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton197.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton197.DrawOnGlass = False
         Me.XenonButton197.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton197.ForeColor = System.Drawing.Color.White
-        Me.XenonButton197.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton197.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton197.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton197.LineSize = 1
         Me.XenonButton197.Location = New System.Drawing.Point(677, 3)
@@ -5037,6 +5187,7 @@ Partial Class Sounds_Editor
         Me.XenonButton198.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton198.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton198.DrawOnGlass = False
         Me.XenonButton198.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton198.ForeColor = System.Drawing.Color.White
         Me.XenonButton198.Image = CType(resources.GetObject("XenonButton198.Image"), System.Drawing.Image)
@@ -5054,6 +5205,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox63.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox63.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox63.DrawOnGlass = False
         Me.XenonTextBox63.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox63.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox63.MaxLength = 32767
@@ -5113,9 +5265,10 @@ Partial Class Sounds_Editor
         Me.XenonButton175.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton175.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton175.DrawOnGlass = False
         Me.XenonButton175.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton175.ForeColor = System.Drawing.Color.White
-        Me.XenonButton175.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton175.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton175.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton175.LineSize = 1
         Me.XenonButton175.Location = New System.Drawing.Point(639, 3)
@@ -5130,9 +5283,10 @@ Partial Class Sounds_Editor
         Me.XenonButton176.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton176.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton176.DrawOnGlass = False
         Me.XenonButton176.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton176.ForeColor = System.Drawing.Color.White
-        Me.XenonButton176.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton176.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton176.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton176.LineSize = 1
         Me.XenonButton176.Location = New System.Drawing.Point(677, 3)
@@ -5147,6 +5301,7 @@ Partial Class Sounds_Editor
         Me.XenonButton177.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton177.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton177.DrawOnGlass = False
         Me.XenonButton177.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton177.ForeColor = System.Drawing.Color.White
         Me.XenonButton177.Image = CType(resources.GetObject("XenonButton177.Image"), System.Drawing.Image)
@@ -5164,6 +5319,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox56.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox56.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox56.DrawOnGlass = False
         Me.XenonTextBox56.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox56.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox56.MaxLength = 32767
@@ -5223,9 +5379,10 @@ Partial Class Sounds_Editor
         Me.XenonButton178.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton178.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton178.DrawOnGlass = False
         Me.XenonButton178.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton178.ForeColor = System.Drawing.Color.White
-        Me.XenonButton178.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton178.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton178.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton178.LineSize = 1
         Me.XenonButton178.Location = New System.Drawing.Point(639, 3)
@@ -5240,9 +5397,10 @@ Partial Class Sounds_Editor
         Me.XenonButton179.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton179.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton179.DrawOnGlass = False
         Me.XenonButton179.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton179.ForeColor = System.Drawing.Color.White
-        Me.XenonButton179.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton179.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton179.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton179.LineSize = 1
         Me.XenonButton179.Location = New System.Drawing.Point(677, 3)
@@ -5257,6 +5415,7 @@ Partial Class Sounds_Editor
         Me.XenonButton180.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton180.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton180.DrawOnGlass = False
         Me.XenonButton180.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton180.ForeColor = System.Drawing.Color.White
         Me.XenonButton180.Image = CType(resources.GetObject("XenonButton180.Image"), System.Drawing.Image)
@@ -5274,6 +5433,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox57.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox57.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox57.DrawOnGlass = False
         Me.XenonTextBox57.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox57.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox57.MaxLength = 32767
@@ -5333,9 +5493,10 @@ Partial Class Sounds_Editor
         Me.XenonButton181.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton181.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton181.DrawOnGlass = False
         Me.XenonButton181.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton181.ForeColor = System.Drawing.Color.White
-        Me.XenonButton181.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton181.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton181.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton181.LineSize = 1
         Me.XenonButton181.Location = New System.Drawing.Point(639, 3)
@@ -5350,9 +5511,10 @@ Partial Class Sounds_Editor
         Me.XenonButton182.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton182.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton182.DrawOnGlass = False
         Me.XenonButton182.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton182.ForeColor = System.Drawing.Color.White
-        Me.XenonButton182.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton182.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton182.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton182.LineSize = 1
         Me.XenonButton182.Location = New System.Drawing.Point(677, 3)
@@ -5367,6 +5529,7 @@ Partial Class Sounds_Editor
         Me.XenonButton183.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton183.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton183.DrawOnGlass = False
         Me.XenonButton183.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton183.ForeColor = System.Drawing.Color.White
         Me.XenonButton183.Image = CType(resources.GetObject("XenonButton183.Image"), System.Drawing.Image)
@@ -5384,6 +5547,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox58.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox58.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox58.DrawOnGlass = False
         Me.XenonTextBox58.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox58.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox58.MaxLength = 32767
@@ -5443,9 +5607,10 @@ Partial Class Sounds_Editor
         Me.XenonButton184.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton184.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton184.DrawOnGlass = False
         Me.XenonButton184.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton184.ForeColor = System.Drawing.Color.White
-        Me.XenonButton184.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton184.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton184.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton184.LineSize = 1
         Me.XenonButton184.Location = New System.Drawing.Point(639, 3)
@@ -5460,9 +5625,10 @@ Partial Class Sounds_Editor
         Me.XenonButton185.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton185.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton185.DrawOnGlass = False
         Me.XenonButton185.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton185.ForeColor = System.Drawing.Color.White
-        Me.XenonButton185.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton185.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton185.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton185.LineSize = 1
         Me.XenonButton185.Location = New System.Drawing.Point(677, 3)
@@ -5477,6 +5643,7 @@ Partial Class Sounds_Editor
         Me.XenonButton186.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton186.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton186.DrawOnGlass = False
         Me.XenonButton186.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton186.ForeColor = System.Drawing.Color.White
         Me.XenonButton186.Image = CType(resources.GetObject("XenonButton186.Image"), System.Drawing.Image)
@@ -5494,6 +5661,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox59.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox59.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox59.DrawOnGlass = False
         Me.XenonTextBox59.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox59.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox59.MaxLength = 32767
@@ -5553,9 +5721,10 @@ Partial Class Sounds_Editor
         Me.XenonButton187.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton187.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton187.DrawOnGlass = False
         Me.XenonButton187.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton187.ForeColor = System.Drawing.Color.White
-        Me.XenonButton187.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton187.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton187.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton187.LineSize = 1
         Me.XenonButton187.Location = New System.Drawing.Point(639, 3)
@@ -5570,9 +5739,10 @@ Partial Class Sounds_Editor
         Me.XenonButton188.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton188.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton188.DrawOnGlass = False
         Me.XenonButton188.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton188.ForeColor = System.Drawing.Color.White
-        Me.XenonButton188.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton188.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton188.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton188.LineSize = 1
         Me.XenonButton188.Location = New System.Drawing.Point(677, 3)
@@ -5587,6 +5757,7 @@ Partial Class Sounds_Editor
         Me.XenonButton189.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton189.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton189.DrawOnGlass = False
         Me.XenonButton189.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton189.ForeColor = System.Drawing.Color.White
         Me.XenonButton189.Image = CType(resources.GetObject("XenonButton189.Image"), System.Drawing.Image)
@@ -5604,6 +5775,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox60.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox60.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox60.DrawOnGlass = False
         Me.XenonTextBox60.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox60.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox60.MaxLength = 32767
@@ -5663,9 +5835,10 @@ Partial Class Sounds_Editor
         Me.XenonButton190.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton190.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton190.DrawOnGlass = False
         Me.XenonButton190.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton190.ForeColor = System.Drawing.Color.White
-        Me.XenonButton190.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton190.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton190.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton190.LineSize = 1
         Me.XenonButton190.Location = New System.Drawing.Point(639, 3)
@@ -5680,9 +5853,10 @@ Partial Class Sounds_Editor
         Me.XenonButton191.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton191.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton191.DrawOnGlass = False
         Me.XenonButton191.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton191.ForeColor = System.Drawing.Color.White
-        Me.XenonButton191.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton191.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton191.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton191.LineSize = 1
         Me.XenonButton191.Location = New System.Drawing.Point(677, 3)
@@ -5697,6 +5871,7 @@ Partial Class Sounds_Editor
         Me.XenonButton192.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton192.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton192.DrawOnGlass = False
         Me.XenonButton192.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton192.ForeColor = System.Drawing.Color.White
         Me.XenonButton192.Image = CType(resources.GetObject("XenonButton192.Image"), System.Drawing.Image)
@@ -5714,6 +5889,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox61.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox61.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox61.DrawOnGlass = False
         Me.XenonTextBox61.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox61.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox61.MaxLength = 32767
@@ -5773,9 +5949,10 @@ Partial Class Sounds_Editor
         Me.XenonButton193.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton193.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton193.DrawOnGlass = False
         Me.XenonButton193.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton193.ForeColor = System.Drawing.Color.White
-        Me.XenonButton193.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton193.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton193.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton193.LineSize = 1
         Me.XenonButton193.Location = New System.Drawing.Point(639, 3)
@@ -5790,9 +5967,10 @@ Partial Class Sounds_Editor
         Me.XenonButton194.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton194.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton194.DrawOnGlass = False
         Me.XenonButton194.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton194.ForeColor = System.Drawing.Color.White
-        Me.XenonButton194.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton194.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton194.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton194.LineSize = 1
         Me.XenonButton194.Location = New System.Drawing.Point(677, 3)
@@ -5807,6 +5985,7 @@ Partial Class Sounds_Editor
         Me.XenonButton195.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton195.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton195.DrawOnGlass = False
         Me.XenonButton195.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton195.ForeColor = System.Drawing.Color.White
         Me.XenonButton195.Image = CType(resources.GetObject("XenonButton195.Image"), System.Drawing.Image)
@@ -5824,6 +6003,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox62.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox62.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox62.DrawOnGlass = False
         Me.XenonTextBox62.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox62.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox62.MaxLength = 32767
@@ -5901,9 +6081,10 @@ Partial Class Sounds_Editor
         Me.XenonButton202.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton202.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton202.DrawOnGlass = False
         Me.XenonButton202.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton202.ForeColor = System.Drawing.Color.White
-        Me.XenonButton202.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton202.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton202.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton202.LineSize = 1
         Me.XenonButton202.Location = New System.Drawing.Point(639, 3)
@@ -5918,9 +6099,10 @@ Partial Class Sounds_Editor
         Me.XenonButton203.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton203.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton203.DrawOnGlass = False
         Me.XenonButton203.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton203.ForeColor = System.Drawing.Color.White
-        Me.XenonButton203.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton203.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton203.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton203.LineSize = 1
         Me.XenonButton203.Location = New System.Drawing.Point(677, 3)
@@ -5935,6 +6117,7 @@ Partial Class Sounds_Editor
         Me.XenonButton204.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton204.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton204.DrawOnGlass = False
         Me.XenonButton204.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton204.ForeColor = System.Drawing.Color.White
         Me.XenonButton204.Image = CType(resources.GetObject("XenonButton204.Image"), System.Drawing.Image)
@@ -5952,6 +6135,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox65.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox65.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox65.DrawOnGlass = False
         Me.XenonTextBox65.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox65.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox65.MaxLength = 32767
@@ -6011,9 +6195,10 @@ Partial Class Sounds_Editor
         Me.XenonButton172.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton172.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton172.DrawOnGlass = False
         Me.XenonButton172.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton172.ForeColor = System.Drawing.Color.White
-        Me.XenonButton172.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton172.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton172.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton172.LineSize = 1
         Me.XenonButton172.Location = New System.Drawing.Point(639, 3)
@@ -6028,9 +6213,10 @@ Partial Class Sounds_Editor
         Me.XenonButton173.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton173.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton173.DrawOnGlass = False
         Me.XenonButton173.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton173.ForeColor = System.Drawing.Color.White
-        Me.XenonButton173.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton173.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton173.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton173.LineSize = 1
         Me.XenonButton173.Location = New System.Drawing.Point(677, 3)
@@ -6045,6 +6231,7 @@ Partial Class Sounds_Editor
         Me.XenonButton174.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton174.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton174.DrawOnGlass = False
         Me.XenonButton174.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton174.ForeColor = System.Drawing.Color.White
         Me.XenonButton174.Image = CType(resources.GetObject("XenonButton174.Image"), System.Drawing.Image)
@@ -6062,6 +6249,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox55.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox55.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox55.DrawOnGlass = False
         Me.XenonTextBox55.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox55.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox55.MaxLength = 32767
@@ -6121,9 +6309,10 @@ Partial Class Sounds_Editor
         Me.XenonButton79.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton79.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton79.DrawOnGlass = False
         Me.XenonButton79.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton79.ForeColor = System.Drawing.Color.White
-        Me.XenonButton79.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton79.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton79.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton79.LineSize = 1
         Me.XenonButton79.Location = New System.Drawing.Point(639, 3)
@@ -6138,9 +6327,10 @@ Partial Class Sounds_Editor
         Me.XenonButton80.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton80.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton80.DrawOnGlass = False
         Me.XenonButton80.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton80.ForeColor = System.Drawing.Color.White
-        Me.XenonButton80.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton80.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton80.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton80.LineSize = 1
         Me.XenonButton80.Location = New System.Drawing.Point(677, 3)
@@ -6155,6 +6345,7 @@ Partial Class Sounds_Editor
         Me.XenonButton81.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton81.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton81.DrawOnGlass = False
         Me.XenonButton81.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton81.ForeColor = System.Drawing.Color.White
         Me.XenonButton81.Image = CType(resources.GetObject("XenonButton81.Image"), System.Drawing.Image)
@@ -6172,6 +6363,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox24.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox24.DrawOnGlass = False
         Me.XenonTextBox24.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox24.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox24.MaxLength = 32767
@@ -6231,9 +6423,10 @@ Partial Class Sounds_Editor
         Me.XenonButton61.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton61.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton61.DrawOnGlass = False
         Me.XenonButton61.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton61.ForeColor = System.Drawing.Color.White
-        Me.XenonButton61.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton61.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton61.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton61.LineSize = 1
         Me.XenonButton61.Location = New System.Drawing.Point(639, 3)
@@ -6248,9 +6441,10 @@ Partial Class Sounds_Editor
         Me.XenonButton62.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton62.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton62.DrawOnGlass = False
         Me.XenonButton62.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton62.ForeColor = System.Drawing.Color.White
-        Me.XenonButton62.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton62.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton62.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton62.LineSize = 1
         Me.XenonButton62.Location = New System.Drawing.Point(677, 3)
@@ -6265,6 +6459,7 @@ Partial Class Sounds_Editor
         Me.XenonButton63.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton63.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton63.DrawOnGlass = False
         Me.XenonButton63.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton63.ForeColor = System.Drawing.Color.White
         Me.XenonButton63.Image = CType(resources.GetObject("XenonButton63.Image"), System.Drawing.Image)
@@ -6282,6 +6477,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox18.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox18.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox18.DrawOnGlass = False
         Me.XenonTextBox18.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox18.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox18.MaxLength = 32767
@@ -6341,9 +6537,10 @@ Partial Class Sounds_Editor
         Me.XenonButton64.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton64.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton64.DrawOnGlass = False
         Me.XenonButton64.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton64.ForeColor = System.Drawing.Color.White
-        Me.XenonButton64.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton64.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton64.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton64.LineSize = 1
         Me.XenonButton64.Location = New System.Drawing.Point(639, 3)
@@ -6358,9 +6555,10 @@ Partial Class Sounds_Editor
         Me.XenonButton65.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton65.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton65.DrawOnGlass = False
         Me.XenonButton65.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton65.ForeColor = System.Drawing.Color.White
-        Me.XenonButton65.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton65.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton65.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton65.LineSize = 1
         Me.XenonButton65.Location = New System.Drawing.Point(677, 3)
@@ -6375,6 +6573,7 @@ Partial Class Sounds_Editor
         Me.XenonButton66.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton66.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton66.DrawOnGlass = False
         Me.XenonButton66.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton66.ForeColor = System.Drawing.Color.White
         Me.XenonButton66.Image = CType(resources.GetObject("XenonButton66.Image"), System.Drawing.Image)
@@ -6392,6 +6591,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox19.DrawOnGlass = False
         Me.XenonTextBox19.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox19.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox19.MaxLength = 32767
@@ -6451,9 +6651,10 @@ Partial Class Sounds_Editor
         Me.XenonButton67.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton67.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton67.DrawOnGlass = False
         Me.XenonButton67.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton67.ForeColor = System.Drawing.Color.White
-        Me.XenonButton67.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton67.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton67.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton67.LineSize = 1
         Me.XenonButton67.Location = New System.Drawing.Point(639, 3)
@@ -6468,9 +6669,10 @@ Partial Class Sounds_Editor
         Me.XenonButton68.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton68.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton68.DrawOnGlass = False
         Me.XenonButton68.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton68.ForeColor = System.Drawing.Color.White
-        Me.XenonButton68.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton68.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton68.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton68.LineSize = 1
         Me.XenonButton68.Location = New System.Drawing.Point(677, 3)
@@ -6485,6 +6687,7 @@ Partial Class Sounds_Editor
         Me.XenonButton69.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton69.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton69.DrawOnGlass = False
         Me.XenonButton69.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton69.ForeColor = System.Drawing.Color.White
         Me.XenonButton69.Image = CType(resources.GetObject("XenonButton69.Image"), System.Drawing.Image)
@@ -6502,6 +6705,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox20.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox20.DrawOnGlass = False
         Me.XenonTextBox20.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox20.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox20.MaxLength = 32767
@@ -6561,9 +6765,10 @@ Partial Class Sounds_Editor
         Me.XenonButton70.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton70.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton70.DrawOnGlass = False
         Me.XenonButton70.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton70.ForeColor = System.Drawing.Color.White
-        Me.XenonButton70.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton70.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton70.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton70.LineSize = 1
         Me.XenonButton70.Location = New System.Drawing.Point(639, 3)
@@ -6578,9 +6783,10 @@ Partial Class Sounds_Editor
         Me.XenonButton71.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton71.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton71.DrawOnGlass = False
         Me.XenonButton71.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton71.ForeColor = System.Drawing.Color.White
-        Me.XenonButton71.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton71.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton71.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton71.LineSize = 1
         Me.XenonButton71.Location = New System.Drawing.Point(677, 3)
@@ -6595,6 +6801,7 @@ Partial Class Sounds_Editor
         Me.XenonButton72.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton72.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton72.DrawOnGlass = False
         Me.XenonButton72.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton72.ForeColor = System.Drawing.Color.White
         Me.XenonButton72.Image = CType(resources.GetObject("XenonButton72.Image"), System.Drawing.Image)
@@ -6612,6 +6819,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox21.DrawOnGlass = False
         Me.XenonTextBox21.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox21.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox21.MaxLength = 32767
@@ -6671,9 +6879,10 @@ Partial Class Sounds_Editor
         Me.XenonButton73.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton73.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton73.DrawOnGlass = False
         Me.XenonButton73.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton73.ForeColor = System.Drawing.Color.White
-        Me.XenonButton73.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton73.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton73.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton73.LineSize = 1
         Me.XenonButton73.Location = New System.Drawing.Point(639, 3)
@@ -6688,9 +6897,10 @@ Partial Class Sounds_Editor
         Me.XenonButton74.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton74.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton74.DrawOnGlass = False
         Me.XenonButton74.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton74.ForeColor = System.Drawing.Color.White
-        Me.XenonButton74.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton74.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton74.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton74.LineSize = 1
         Me.XenonButton74.Location = New System.Drawing.Point(677, 3)
@@ -6705,6 +6915,7 @@ Partial Class Sounds_Editor
         Me.XenonButton75.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton75.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton75.DrawOnGlass = False
         Me.XenonButton75.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton75.ForeColor = System.Drawing.Color.White
         Me.XenonButton75.Image = CType(resources.GetObject("XenonButton75.Image"), System.Drawing.Image)
@@ -6722,6 +6933,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox22.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox22.DrawOnGlass = False
         Me.XenonTextBox22.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox22.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox22.MaxLength = 32767
@@ -6781,9 +6993,10 @@ Partial Class Sounds_Editor
         Me.XenonButton76.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton76.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton76.DrawOnGlass = False
         Me.XenonButton76.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton76.ForeColor = System.Drawing.Color.White
-        Me.XenonButton76.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton76.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton76.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton76.LineSize = 1
         Me.XenonButton76.Location = New System.Drawing.Point(639, 3)
@@ -6798,9 +7011,10 @@ Partial Class Sounds_Editor
         Me.XenonButton77.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton77.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton77.DrawOnGlass = False
         Me.XenonButton77.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton77.ForeColor = System.Drawing.Color.White
-        Me.XenonButton77.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton77.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton77.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton77.LineSize = 1
         Me.XenonButton77.Location = New System.Drawing.Point(677, 3)
@@ -6815,6 +7029,7 @@ Partial Class Sounds_Editor
         Me.XenonButton78.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton78.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton78.DrawOnGlass = False
         Me.XenonButton78.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton78.ForeColor = System.Drawing.Color.White
         Me.XenonButton78.Image = CType(resources.GetObject("XenonButton78.Image"), System.Drawing.Image)
@@ -6832,6 +7047,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox23.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox23.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox23.DrawOnGlass = False
         Me.XenonTextBox23.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox23.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox23.MaxLength = 32767
@@ -6910,9 +7126,10 @@ Partial Class Sounds_Editor
         Me.XenonButton103.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton103.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton103.DrawOnGlass = False
         Me.XenonButton103.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton103.ForeColor = System.Drawing.Color.White
-        Me.XenonButton103.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton103.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton103.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton103.LineSize = 1
         Me.XenonButton103.Location = New System.Drawing.Point(639, 3)
@@ -6927,9 +7144,10 @@ Partial Class Sounds_Editor
         Me.XenonButton104.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton104.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton104.DrawOnGlass = False
         Me.XenonButton104.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton104.ForeColor = System.Drawing.Color.White
-        Me.XenonButton104.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton104.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton104.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton104.LineSize = 1
         Me.XenonButton104.Location = New System.Drawing.Point(677, 3)
@@ -6944,6 +7162,7 @@ Partial Class Sounds_Editor
         Me.XenonButton105.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton105.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton105.DrawOnGlass = False
         Me.XenonButton105.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton105.ForeColor = System.Drawing.Color.White
         Me.XenonButton105.Image = CType(resources.GetObject("XenonButton105.Image"), System.Drawing.Image)
@@ -6961,6 +7180,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox32.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox32.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox32.DrawOnGlass = False
         Me.XenonTextBox32.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox32.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox32.MaxLength = 32767
@@ -7020,9 +7240,10 @@ Partial Class Sounds_Editor
         Me.XenonButton106.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton106.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton106.DrawOnGlass = False
         Me.XenonButton106.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton106.ForeColor = System.Drawing.Color.White
-        Me.XenonButton106.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton106.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton106.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton106.LineSize = 1
         Me.XenonButton106.Location = New System.Drawing.Point(639, 3)
@@ -7037,9 +7258,10 @@ Partial Class Sounds_Editor
         Me.XenonButton107.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton107.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton107.DrawOnGlass = False
         Me.XenonButton107.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton107.ForeColor = System.Drawing.Color.White
-        Me.XenonButton107.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton107.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton107.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton107.LineSize = 1
         Me.XenonButton107.Location = New System.Drawing.Point(677, 3)
@@ -7054,6 +7276,7 @@ Partial Class Sounds_Editor
         Me.XenonButton108.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton108.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton108.DrawOnGlass = False
         Me.XenonButton108.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton108.ForeColor = System.Drawing.Color.White
         Me.XenonButton108.Image = CType(resources.GetObject("XenonButton108.Image"), System.Drawing.Image)
@@ -7071,6 +7294,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox33.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox33.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox33.DrawOnGlass = False
         Me.XenonTextBox33.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox33.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox33.MaxLength = 32767
@@ -7130,9 +7354,10 @@ Partial Class Sounds_Editor
         Me.XenonButton109.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton109.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton109.DrawOnGlass = False
         Me.XenonButton109.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton109.ForeColor = System.Drawing.Color.White
-        Me.XenonButton109.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton109.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton109.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton109.LineSize = 1
         Me.XenonButton109.Location = New System.Drawing.Point(639, 3)
@@ -7147,9 +7372,10 @@ Partial Class Sounds_Editor
         Me.XenonButton110.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton110.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton110.DrawOnGlass = False
         Me.XenonButton110.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton110.ForeColor = System.Drawing.Color.White
-        Me.XenonButton110.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton110.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton110.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton110.LineSize = 1
         Me.XenonButton110.Location = New System.Drawing.Point(677, 3)
@@ -7164,6 +7390,7 @@ Partial Class Sounds_Editor
         Me.XenonButton111.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton111.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton111.DrawOnGlass = False
         Me.XenonButton111.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton111.ForeColor = System.Drawing.Color.White
         Me.XenonButton111.Image = CType(resources.GetObject("XenonButton111.Image"), System.Drawing.Image)
@@ -7181,6 +7408,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox34.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox34.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox34.DrawOnGlass = False
         Me.XenonTextBox34.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox34.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox34.MaxLength = 32767
@@ -7240,9 +7468,10 @@ Partial Class Sounds_Editor
         Me.XenonButton82.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton82.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton82.DrawOnGlass = False
         Me.XenonButton82.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton82.ForeColor = System.Drawing.Color.White
-        Me.XenonButton82.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton82.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton82.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton82.LineSize = 1
         Me.XenonButton82.Location = New System.Drawing.Point(639, 3)
@@ -7257,9 +7486,10 @@ Partial Class Sounds_Editor
         Me.XenonButton83.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton83.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton83.DrawOnGlass = False
         Me.XenonButton83.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton83.ForeColor = System.Drawing.Color.White
-        Me.XenonButton83.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton83.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton83.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton83.LineSize = 1
         Me.XenonButton83.Location = New System.Drawing.Point(677, 3)
@@ -7274,6 +7504,7 @@ Partial Class Sounds_Editor
         Me.XenonButton84.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton84.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton84.DrawOnGlass = False
         Me.XenonButton84.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton84.ForeColor = System.Drawing.Color.White
         Me.XenonButton84.Image = CType(resources.GetObject("XenonButton84.Image"), System.Drawing.Image)
@@ -7291,6 +7522,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox25.DrawOnGlass = False
         Me.XenonTextBox25.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox25.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox25.MaxLength = 32767
@@ -7350,9 +7582,10 @@ Partial Class Sounds_Editor
         Me.XenonButton85.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton85.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton85.DrawOnGlass = False
         Me.XenonButton85.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton85.ForeColor = System.Drawing.Color.White
-        Me.XenonButton85.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton85.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton85.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton85.LineSize = 1
         Me.XenonButton85.Location = New System.Drawing.Point(639, 3)
@@ -7367,9 +7600,10 @@ Partial Class Sounds_Editor
         Me.XenonButton86.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton86.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton86.DrawOnGlass = False
         Me.XenonButton86.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton86.ForeColor = System.Drawing.Color.White
-        Me.XenonButton86.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton86.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton86.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton86.LineSize = 1
         Me.XenonButton86.Location = New System.Drawing.Point(677, 3)
@@ -7384,6 +7618,7 @@ Partial Class Sounds_Editor
         Me.XenonButton87.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton87.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton87.DrawOnGlass = False
         Me.XenonButton87.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton87.ForeColor = System.Drawing.Color.White
         Me.XenonButton87.Image = CType(resources.GetObject("XenonButton87.Image"), System.Drawing.Image)
@@ -7401,6 +7636,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox26.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox26.DrawOnGlass = False
         Me.XenonTextBox26.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox26.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox26.MaxLength = 32767
@@ -7460,9 +7696,10 @@ Partial Class Sounds_Editor
         Me.XenonButton88.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton88.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton88.DrawOnGlass = False
         Me.XenonButton88.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton88.ForeColor = System.Drawing.Color.White
-        Me.XenonButton88.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton88.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton88.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton88.LineSize = 1
         Me.XenonButton88.Location = New System.Drawing.Point(639, 3)
@@ -7477,9 +7714,10 @@ Partial Class Sounds_Editor
         Me.XenonButton89.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton89.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton89.DrawOnGlass = False
         Me.XenonButton89.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton89.ForeColor = System.Drawing.Color.White
-        Me.XenonButton89.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton89.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton89.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton89.LineSize = 1
         Me.XenonButton89.Location = New System.Drawing.Point(677, 3)
@@ -7494,6 +7732,7 @@ Partial Class Sounds_Editor
         Me.XenonButton90.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton90.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton90.DrawOnGlass = False
         Me.XenonButton90.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton90.ForeColor = System.Drawing.Color.White
         Me.XenonButton90.Image = CType(resources.GetObject("XenonButton90.Image"), System.Drawing.Image)
@@ -7511,6 +7750,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox27.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox27.DrawOnGlass = False
         Me.XenonTextBox27.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox27.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox27.MaxLength = 32767
@@ -7570,9 +7810,10 @@ Partial Class Sounds_Editor
         Me.XenonButton91.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton91.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton91.DrawOnGlass = False
         Me.XenonButton91.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton91.ForeColor = System.Drawing.Color.White
-        Me.XenonButton91.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton91.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton91.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton91.LineSize = 1
         Me.XenonButton91.Location = New System.Drawing.Point(639, 3)
@@ -7587,9 +7828,10 @@ Partial Class Sounds_Editor
         Me.XenonButton92.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton92.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton92.DrawOnGlass = False
         Me.XenonButton92.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton92.ForeColor = System.Drawing.Color.White
-        Me.XenonButton92.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton92.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton92.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton92.LineSize = 1
         Me.XenonButton92.Location = New System.Drawing.Point(677, 3)
@@ -7604,6 +7846,7 @@ Partial Class Sounds_Editor
         Me.XenonButton93.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton93.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton93.DrawOnGlass = False
         Me.XenonButton93.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton93.ForeColor = System.Drawing.Color.White
         Me.XenonButton93.Image = CType(resources.GetObject("XenonButton93.Image"), System.Drawing.Image)
@@ -7621,6 +7864,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox28.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox28.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox28.DrawOnGlass = False
         Me.XenonTextBox28.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox28.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox28.MaxLength = 32767
@@ -7680,9 +7924,10 @@ Partial Class Sounds_Editor
         Me.XenonButton94.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton94.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton94.DrawOnGlass = False
         Me.XenonButton94.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton94.ForeColor = System.Drawing.Color.White
-        Me.XenonButton94.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton94.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton94.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton94.LineSize = 1
         Me.XenonButton94.Location = New System.Drawing.Point(639, 3)
@@ -7697,9 +7942,10 @@ Partial Class Sounds_Editor
         Me.XenonButton95.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton95.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton95.DrawOnGlass = False
         Me.XenonButton95.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton95.ForeColor = System.Drawing.Color.White
-        Me.XenonButton95.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton95.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton95.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton95.LineSize = 1
         Me.XenonButton95.Location = New System.Drawing.Point(677, 3)
@@ -7714,6 +7960,7 @@ Partial Class Sounds_Editor
         Me.XenonButton96.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton96.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton96.DrawOnGlass = False
         Me.XenonButton96.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton96.ForeColor = System.Drawing.Color.White
         Me.XenonButton96.Image = CType(resources.GetObject("XenonButton96.Image"), System.Drawing.Image)
@@ -7731,6 +7978,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox29.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox29.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox29.DrawOnGlass = False
         Me.XenonTextBox29.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox29.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox29.MaxLength = 32767
@@ -7790,9 +8038,10 @@ Partial Class Sounds_Editor
         Me.XenonButton97.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton97.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton97.DrawOnGlass = False
         Me.XenonButton97.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton97.ForeColor = System.Drawing.Color.White
-        Me.XenonButton97.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton97.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton97.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton97.LineSize = 1
         Me.XenonButton97.Location = New System.Drawing.Point(639, 3)
@@ -7807,9 +8056,10 @@ Partial Class Sounds_Editor
         Me.XenonButton98.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton98.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton98.DrawOnGlass = False
         Me.XenonButton98.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton98.ForeColor = System.Drawing.Color.White
-        Me.XenonButton98.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton98.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton98.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton98.LineSize = 1
         Me.XenonButton98.Location = New System.Drawing.Point(677, 3)
@@ -7824,6 +8074,7 @@ Partial Class Sounds_Editor
         Me.XenonButton99.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton99.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton99.DrawOnGlass = False
         Me.XenonButton99.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton99.ForeColor = System.Drawing.Color.White
         Me.XenonButton99.Image = CType(resources.GetObject("XenonButton99.Image"), System.Drawing.Image)
@@ -7841,6 +8092,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox30.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox30.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox30.DrawOnGlass = False
         Me.XenonTextBox30.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox30.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox30.MaxLength = 32767
@@ -7900,9 +8152,10 @@ Partial Class Sounds_Editor
         Me.XenonButton100.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton100.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton100.DrawOnGlass = False
         Me.XenonButton100.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton100.ForeColor = System.Drawing.Color.White
-        Me.XenonButton100.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton100.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton100.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton100.LineSize = 1
         Me.XenonButton100.Location = New System.Drawing.Point(639, 3)
@@ -7917,9 +8170,10 @@ Partial Class Sounds_Editor
         Me.XenonButton101.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton101.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton101.DrawOnGlass = False
         Me.XenonButton101.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton101.ForeColor = System.Drawing.Color.White
-        Me.XenonButton101.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton101.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton101.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton101.LineSize = 1
         Me.XenonButton101.Location = New System.Drawing.Point(677, 3)
@@ -7934,6 +8188,7 @@ Partial Class Sounds_Editor
         Me.XenonButton102.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton102.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton102.DrawOnGlass = False
         Me.XenonButton102.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton102.ForeColor = System.Drawing.Color.White
         Me.XenonButton102.Image = CType(resources.GetObject("XenonButton102.Image"), System.Drawing.Image)
@@ -7951,6 +8206,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox31.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox31.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox31.DrawOnGlass = False
         Me.XenonTextBox31.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox31.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox31.MaxLength = 32767
@@ -8029,9 +8285,10 @@ Partial Class Sounds_Editor
         Me.XenonButton112.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton112.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton112.DrawOnGlass = False
         Me.XenonButton112.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton112.ForeColor = System.Drawing.Color.White
-        Me.XenonButton112.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton112.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton112.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton112.LineSize = 1
         Me.XenonButton112.Location = New System.Drawing.Point(639, 3)
@@ -8046,9 +8303,10 @@ Partial Class Sounds_Editor
         Me.XenonButton113.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton113.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton113.DrawOnGlass = False
         Me.XenonButton113.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton113.ForeColor = System.Drawing.Color.White
-        Me.XenonButton113.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton113.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton113.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton113.LineSize = 1
         Me.XenonButton113.Location = New System.Drawing.Point(677, 3)
@@ -8063,6 +8321,7 @@ Partial Class Sounds_Editor
         Me.XenonButton114.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton114.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton114.DrawOnGlass = False
         Me.XenonButton114.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton114.ForeColor = System.Drawing.Color.White
         Me.XenonButton114.Image = CType(resources.GetObject("XenonButton114.Image"), System.Drawing.Image)
@@ -8080,6 +8339,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox35.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox35.DrawOnGlass = False
         Me.XenonTextBox35.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox35.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox35.MaxLength = 32767
@@ -8139,9 +8399,10 @@ Partial Class Sounds_Editor
         Me.XenonButton115.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton115.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton115.DrawOnGlass = False
         Me.XenonButton115.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton115.ForeColor = System.Drawing.Color.White
-        Me.XenonButton115.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton115.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton115.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton115.LineSize = 1
         Me.XenonButton115.Location = New System.Drawing.Point(639, 3)
@@ -8156,9 +8417,10 @@ Partial Class Sounds_Editor
         Me.XenonButton116.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton116.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton116.DrawOnGlass = False
         Me.XenonButton116.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton116.ForeColor = System.Drawing.Color.White
-        Me.XenonButton116.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton116.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton116.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton116.LineSize = 1
         Me.XenonButton116.Location = New System.Drawing.Point(677, 3)
@@ -8173,6 +8435,7 @@ Partial Class Sounds_Editor
         Me.XenonButton117.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton117.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton117.DrawOnGlass = False
         Me.XenonButton117.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton117.ForeColor = System.Drawing.Color.White
         Me.XenonButton117.Image = CType(resources.GetObject("XenonButton117.Image"), System.Drawing.Image)
@@ -8190,6 +8453,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox36.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox36.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox36.DrawOnGlass = False
         Me.XenonTextBox36.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox36.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox36.MaxLength = 32767
@@ -8249,9 +8513,10 @@ Partial Class Sounds_Editor
         Me.XenonButton118.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton118.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton118.DrawOnGlass = False
         Me.XenonButton118.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton118.ForeColor = System.Drawing.Color.White
-        Me.XenonButton118.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton118.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton118.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton118.LineSize = 1
         Me.XenonButton118.Location = New System.Drawing.Point(639, 3)
@@ -8266,9 +8531,10 @@ Partial Class Sounds_Editor
         Me.XenonButton119.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton119.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton119.DrawOnGlass = False
         Me.XenonButton119.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton119.ForeColor = System.Drawing.Color.White
-        Me.XenonButton119.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton119.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton119.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton119.LineSize = 1
         Me.XenonButton119.Location = New System.Drawing.Point(677, 3)
@@ -8283,6 +8549,7 @@ Partial Class Sounds_Editor
         Me.XenonButton120.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton120.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton120.DrawOnGlass = False
         Me.XenonButton120.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton120.ForeColor = System.Drawing.Color.White
         Me.XenonButton120.Image = CType(resources.GetObject("XenonButton120.Image"), System.Drawing.Image)
@@ -8300,6 +8567,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox37.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox37.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox37.DrawOnGlass = False
         Me.XenonTextBox37.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox37.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox37.MaxLength = 32767
@@ -8359,9 +8627,10 @@ Partial Class Sounds_Editor
         Me.XenonButton121.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton121.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton121.DrawOnGlass = False
         Me.XenonButton121.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton121.ForeColor = System.Drawing.Color.White
-        Me.XenonButton121.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton121.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton121.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton121.LineSize = 1
         Me.XenonButton121.Location = New System.Drawing.Point(639, 3)
@@ -8376,9 +8645,10 @@ Partial Class Sounds_Editor
         Me.XenonButton122.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton122.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton122.DrawOnGlass = False
         Me.XenonButton122.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton122.ForeColor = System.Drawing.Color.White
-        Me.XenonButton122.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton122.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton122.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton122.LineSize = 1
         Me.XenonButton122.Location = New System.Drawing.Point(677, 3)
@@ -8393,6 +8663,7 @@ Partial Class Sounds_Editor
         Me.XenonButton123.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton123.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton123.DrawOnGlass = False
         Me.XenonButton123.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton123.ForeColor = System.Drawing.Color.White
         Me.XenonButton123.Image = CType(resources.GetObject("XenonButton123.Image"), System.Drawing.Image)
@@ -8410,6 +8681,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox38.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox38.DrawOnGlass = False
         Me.XenonTextBox38.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox38.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox38.MaxLength = 32767
@@ -8469,9 +8741,10 @@ Partial Class Sounds_Editor
         Me.XenonButton124.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton124.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton124.DrawOnGlass = False
         Me.XenonButton124.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton124.ForeColor = System.Drawing.Color.White
-        Me.XenonButton124.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton124.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton124.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton124.LineSize = 1
         Me.XenonButton124.Location = New System.Drawing.Point(639, 3)
@@ -8486,9 +8759,10 @@ Partial Class Sounds_Editor
         Me.XenonButton125.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton125.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton125.DrawOnGlass = False
         Me.XenonButton125.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton125.ForeColor = System.Drawing.Color.White
-        Me.XenonButton125.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton125.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton125.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton125.LineSize = 1
         Me.XenonButton125.Location = New System.Drawing.Point(677, 3)
@@ -8503,6 +8777,7 @@ Partial Class Sounds_Editor
         Me.XenonButton126.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton126.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton126.DrawOnGlass = False
         Me.XenonButton126.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton126.ForeColor = System.Drawing.Color.White
         Me.XenonButton126.Image = CType(resources.GetObject("XenonButton126.Image"), System.Drawing.Image)
@@ -8520,6 +8795,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox39.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox39.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox39.DrawOnGlass = False
         Me.XenonTextBox39.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox39.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox39.MaxLength = 32767
@@ -8579,9 +8855,10 @@ Partial Class Sounds_Editor
         Me.XenonButton127.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton127.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton127.DrawOnGlass = False
         Me.XenonButton127.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton127.ForeColor = System.Drawing.Color.White
-        Me.XenonButton127.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton127.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton127.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton127.LineSize = 1
         Me.XenonButton127.Location = New System.Drawing.Point(639, 3)
@@ -8596,9 +8873,10 @@ Partial Class Sounds_Editor
         Me.XenonButton128.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton128.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton128.DrawOnGlass = False
         Me.XenonButton128.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton128.ForeColor = System.Drawing.Color.White
-        Me.XenonButton128.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton128.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton128.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton128.LineSize = 1
         Me.XenonButton128.Location = New System.Drawing.Point(677, 3)
@@ -8613,6 +8891,7 @@ Partial Class Sounds_Editor
         Me.XenonButton129.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton129.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton129.DrawOnGlass = False
         Me.XenonButton129.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton129.ForeColor = System.Drawing.Color.White
         Me.XenonButton129.Image = CType(resources.GetObject("XenonButton129.Image"), System.Drawing.Image)
@@ -8630,6 +8909,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox40.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox40.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox40.DrawOnGlass = False
         Me.XenonTextBox40.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox40.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox40.MaxLength = 32767
@@ -8689,9 +8969,10 @@ Partial Class Sounds_Editor
         Me.XenonButton130.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton130.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton130.DrawOnGlass = False
         Me.XenonButton130.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton130.ForeColor = System.Drawing.Color.White
-        Me.XenonButton130.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton130.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton130.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton130.LineSize = 1
         Me.XenonButton130.Location = New System.Drawing.Point(639, 3)
@@ -8706,9 +8987,10 @@ Partial Class Sounds_Editor
         Me.XenonButton131.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton131.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton131.DrawOnGlass = False
         Me.XenonButton131.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton131.ForeColor = System.Drawing.Color.White
-        Me.XenonButton131.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton131.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton131.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton131.LineSize = 1
         Me.XenonButton131.Location = New System.Drawing.Point(677, 3)
@@ -8723,6 +9005,7 @@ Partial Class Sounds_Editor
         Me.XenonButton132.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton132.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton132.DrawOnGlass = False
         Me.XenonButton132.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton132.ForeColor = System.Drawing.Color.White
         Me.XenonButton132.Image = CType(resources.GetObject("XenonButton132.Image"), System.Drawing.Image)
@@ -8740,6 +9023,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox41.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox41.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox41.DrawOnGlass = False
         Me.XenonTextBox41.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox41.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox41.MaxLength = 32767
@@ -8799,9 +9083,10 @@ Partial Class Sounds_Editor
         Me.XenonButton133.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton133.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton133.DrawOnGlass = False
         Me.XenonButton133.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton133.ForeColor = System.Drawing.Color.White
-        Me.XenonButton133.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton133.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton133.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton133.LineSize = 1
         Me.XenonButton133.Location = New System.Drawing.Point(639, 3)
@@ -8816,9 +9101,10 @@ Partial Class Sounds_Editor
         Me.XenonButton134.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton134.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton134.DrawOnGlass = False
         Me.XenonButton134.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton134.ForeColor = System.Drawing.Color.White
-        Me.XenonButton134.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton134.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton134.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton134.LineSize = 1
         Me.XenonButton134.Location = New System.Drawing.Point(677, 3)
@@ -8833,6 +9119,7 @@ Partial Class Sounds_Editor
         Me.XenonButton135.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton135.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton135.DrawOnGlass = False
         Me.XenonButton135.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton135.ForeColor = System.Drawing.Color.White
         Me.XenonButton135.Image = CType(resources.GetObject("XenonButton135.Image"), System.Drawing.Image)
@@ -8850,6 +9137,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox42.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox42.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox42.DrawOnGlass = False
         Me.XenonTextBox42.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox42.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox42.MaxLength = 32767
@@ -8909,9 +9197,10 @@ Partial Class Sounds_Editor
         Me.XenonButton136.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton136.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton136.DrawOnGlass = False
         Me.XenonButton136.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton136.ForeColor = System.Drawing.Color.White
-        Me.XenonButton136.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton136.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton136.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton136.LineSize = 1
         Me.XenonButton136.Location = New System.Drawing.Point(639, 3)
@@ -8926,9 +9215,10 @@ Partial Class Sounds_Editor
         Me.XenonButton137.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton137.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton137.DrawOnGlass = False
         Me.XenonButton137.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton137.ForeColor = System.Drawing.Color.White
-        Me.XenonButton137.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton137.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton137.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton137.LineSize = 1
         Me.XenonButton137.Location = New System.Drawing.Point(677, 3)
@@ -8943,6 +9233,7 @@ Partial Class Sounds_Editor
         Me.XenonButton138.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton138.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton138.DrawOnGlass = False
         Me.XenonButton138.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton138.ForeColor = System.Drawing.Color.White
         Me.XenonButton138.Image = CType(resources.GetObject("XenonButton138.Image"), System.Drawing.Image)
@@ -8960,6 +9251,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox43.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox43.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox43.DrawOnGlass = False
         Me.XenonTextBox43.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox43.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox43.MaxLength = 32767
@@ -9019,9 +9311,10 @@ Partial Class Sounds_Editor
         Me.XenonButton139.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton139.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton139.DrawOnGlass = False
         Me.XenonButton139.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton139.ForeColor = System.Drawing.Color.White
-        Me.XenonButton139.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton139.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton139.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton139.LineSize = 1
         Me.XenonButton139.Location = New System.Drawing.Point(639, 3)
@@ -9036,9 +9329,10 @@ Partial Class Sounds_Editor
         Me.XenonButton140.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton140.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton140.DrawOnGlass = False
         Me.XenonButton140.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton140.ForeColor = System.Drawing.Color.White
-        Me.XenonButton140.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton140.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton140.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton140.LineSize = 1
         Me.XenonButton140.Location = New System.Drawing.Point(677, 3)
@@ -9053,6 +9347,7 @@ Partial Class Sounds_Editor
         Me.XenonButton141.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton141.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton141.DrawOnGlass = False
         Me.XenonButton141.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton141.ForeColor = System.Drawing.Color.White
         Me.XenonButton141.Image = CType(resources.GetObject("XenonButton141.Image"), System.Drawing.Image)
@@ -9070,6 +9365,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox44.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox44.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox44.DrawOnGlass = False
         Me.XenonTextBox44.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox44.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox44.MaxLength = 32767
@@ -9144,9 +9440,10 @@ Partial Class Sounds_Editor
         Me.XenonButton214.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton214.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton214.DrawOnGlass = False
         Me.XenonButton214.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton214.ForeColor = System.Drawing.Color.White
-        Me.XenonButton214.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton214.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton214.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton214.LineSize = 1
         Me.XenonButton214.Location = New System.Drawing.Point(639, 3)
@@ -9161,9 +9458,10 @@ Partial Class Sounds_Editor
         Me.XenonButton215.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton215.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton215.DrawOnGlass = False
         Me.XenonButton215.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton215.ForeColor = System.Drawing.Color.White
-        Me.XenonButton215.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton215.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton215.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton215.LineSize = 1
         Me.XenonButton215.Location = New System.Drawing.Point(677, 3)
@@ -9178,6 +9476,7 @@ Partial Class Sounds_Editor
         Me.XenonButton216.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton216.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton216.DrawOnGlass = False
         Me.XenonButton216.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton216.ForeColor = System.Drawing.Color.White
         Me.XenonButton216.Image = CType(resources.GetObject("XenonButton216.Image"), System.Drawing.Image)
@@ -9195,6 +9494,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox69.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox69.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox69.DrawOnGlass = False
         Me.XenonTextBox69.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox69.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox69.MaxLength = 32767
@@ -9254,9 +9554,10 @@ Partial Class Sounds_Editor
         Me.XenonButton217.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton217.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton217.DrawOnGlass = False
         Me.XenonButton217.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton217.ForeColor = System.Drawing.Color.White
-        Me.XenonButton217.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton217.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton217.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton217.LineSize = 1
         Me.XenonButton217.Location = New System.Drawing.Point(639, 3)
@@ -9271,9 +9572,10 @@ Partial Class Sounds_Editor
         Me.XenonButton218.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton218.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton218.DrawOnGlass = False
         Me.XenonButton218.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton218.ForeColor = System.Drawing.Color.White
-        Me.XenonButton218.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton218.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton218.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton218.LineSize = 1
         Me.XenonButton218.Location = New System.Drawing.Point(677, 3)
@@ -9288,6 +9590,7 @@ Partial Class Sounds_Editor
         Me.XenonButton219.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton219.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton219.DrawOnGlass = False
         Me.XenonButton219.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton219.ForeColor = System.Drawing.Color.White
         Me.XenonButton219.Image = CType(resources.GetObject("XenonButton219.Image"), System.Drawing.Image)
@@ -9305,6 +9608,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox70.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox70.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox70.DrawOnGlass = False
         Me.XenonTextBox70.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox70.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox70.MaxLength = 32767
@@ -9364,9 +9668,10 @@ Partial Class Sounds_Editor
         Me.XenonButton220.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton220.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton220.DrawOnGlass = False
         Me.XenonButton220.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton220.ForeColor = System.Drawing.Color.White
-        Me.XenonButton220.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton220.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton220.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton220.LineSize = 1
         Me.XenonButton220.Location = New System.Drawing.Point(639, 3)
@@ -9381,9 +9686,10 @@ Partial Class Sounds_Editor
         Me.XenonButton221.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton221.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton221.DrawOnGlass = False
         Me.XenonButton221.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton221.ForeColor = System.Drawing.Color.White
-        Me.XenonButton221.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton221.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton221.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton221.LineSize = 1
         Me.XenonButton221.Location = New System.Drawing.Point(677, 3)
@@ -9398,6 +9704,7 @@ Partial Class Sounds_Editor
         Me.XenonButton222.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton222.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton222.DrawOnGlass = False
         Me.XenonButton222.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton222.ForeColor = System.Drawing.Color.White
         Me.XenonButton222.Image = CType(resources.GetObject("XenonButton222.Image"), System.Drawing.Image)
@@ -9415,6 +9722,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox71.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox71.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox71.DrawOnGlass = False
         Me.XenonTextBox71.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox71.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox71.MaxLength = 32767
@@ -9474,9 +9782,10 @@ Partial Class Sounds_Editor
         Me.XenonButton223.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton223.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton223.DrawOnGlass = False
         Me.XenonButton223.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton223.ForeColor = System.Drawing.Color.White
-        Me.XenonButton223.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton223.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton223.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton223.LineSize = 1
         Me.XenonButton223.Location = New System.Drawing.Point(639, 3)
@@ -9491,9 +9800,10 @@ Partial Class Sounds_Editor
         Me.XenonButton224.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton224.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton224.DrawOnGlass = False
         Me.XenonButton224.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton224.ForeColor = System.Drawing.Color.White
-        Me.XenonButton224.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton224.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton224.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton224.LineSize = 1
         Me.XenonButton224.Location = New System.Drawing.Point(677, 3)
@@ -9508,6 +9818,7 @@ Partial Class Sounds_Editor
         Me.XenonButton225.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton225.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton225.DrawOnGlass = False
         Me.XenonButton225.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton225.ForeColor = System.Drawing.Color.White
         Me.XenonButton225.Image = CType(resources.GetObject("XenonButton225.Image"), System.Drawing.Image)
@@ -9525,6 +9836,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox72.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox72.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox72.DrawOnGlass = False
         Me.XenonTextBox72.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox72.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox72.MaxLength = 32767
@@ -9584,9 +9896,10 @@ Partial Class Sounds_Editor
         Me.XenonButton226.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton226.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton226.DrawOnGlass = False
         Me.XenonButton226.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton226.ForeColor = System.Drawing.Color.White
-        Me.XenonButton226.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton226.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton226.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton226.LineSize = 1
         Me.XenonButton226.Location = New System.Drawing.Point(639, 3)
@@ -9601,9 +9914,10 @@ Partial Class Sounds_Editor
         Me.XenonButton227.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton227.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton227.DrawOnGlass = False
         Me.XenonButton227.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton227.ForeColor = System.Drawing.Color.White
-        Me.XenonButton227.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton227.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton227.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton227.LineSize = 1
         Me.XenonButton227.Location = New System.Drawing.Point(677, 3)
@@ -9618,6 +9932,7 @@ Partial Class Sounds_Editor
         Me.XenonButton228.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton228.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton228.DrawOnGlass = False
         Me.XenonButton228.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton228.ForeColor = System.Drawing.Color.White
         Me.XenonButton228.Image = CType(resources.GetObject("XenonButton228.Image"), System.Drawing.Image)
@@ -9635,6 +9950,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox73.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox73.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox73.DrawOnGlass = False
         Me.XenonTextBox73.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox73.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox73.MaxLength = 32767
@@ -9694,9 +10010,10 @@ Partial Class Sounds_Editor
         Me.XenonButton229.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton229.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton229.DrawOnGlass = False
         Me.XenonButton229.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton229.ForeColor = System.Drawing.Color.White
-        Me.XenonButton229.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton229.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton229.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton229.LineSize = 1
         Me.XenonButton229.Location = New System.Drawing.Point(639, 3)
@@ -9711,9 +10028,10 @@ Partial Class Sounds_Editor
         Me.XenonButton230.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton230.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton230.DrawOnGlass = False
         Me.XenonButton230.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton230.ForeColor = System.Drawing.Color.White
-        Me.XenonButton230.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton230.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton230.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton230.LineSize = 1
         Me.XenonButton230.Location = New System.Drawing.Point(677, 3)
@@ -9728,6 +10046,7 @@ Partial Class Sounds_Editor
         Me.XenonButton231.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton231.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton231.DrawOnGlass = False
         Me.XenonButton231.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton231.ForeColor = System.Drawing.Color.White
         Me.XenonButton231.Image = CType(resources.GetObject("XenonButton231.Image"), System.Drawing.Image)
@@ -9745,6 +10064,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox74.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox74.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox74.DrawOnGlass = False
         Me.XenonTextBox74.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox74.Location = New System.Drawing.Point(203, 3)
         Me.XenonTextBox74.MaxLength = 32767
@@ -9836,9 +10156,10 @@ Partial Class Sounds_Editor
         Me.XenonButton247.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton247.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton247.DrawOnGlass = False
         Me.XenonButton247.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton247.ForeColor = System.Drawing.Color.White
-        Me.XenonButton247.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton247.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton247.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton247.LineSize = 1
         Me.XenonButton247.Location = New System.Drawing.Point(639, 3)
@@ -9853,9 +10174,10 @@ Partial Class Sounds_Editor
         Me.XenonButton248.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton248.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton248.DrawOnGlass = False
         Me.XenonButton248.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton248.ForeColor = System.Drawing.Color.White
-        Me.XenonButton248.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton248.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton248.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton248.LineSize = 1
         Me.XenonButton248.Location = New System.Drawing.Point(677, 3)
@@ -9870,6 +10192,7 @@ Partial Class Sounds_Editor
         Me.XenonButton249.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton249.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton249.DrawOnGlass = False
         Me.XenonButton249.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton249.ForeColor = System.Drawing.Color.White
         Me.XenonButton249.Image = CType(resources.GetObject("XenonButton249.Image"), System.Drawing.Image)
@@ -9887,6 +10210,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox80.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox80.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox80.DrawOnGlass = False
         Me.XenonTextBox80.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox80.Location = New System.Drawing.Point(190, 3)
         Me.XenonTextBox80.MaxLength = 32767
@@ -9946,9 +10270,10 @@ Partial Class Sounds_Editor
         Me.XenonButton250.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton250.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton250.DrawOnGlass = False
         Me.XenonButton250.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton250.ForeColor = System.Drawing.Color.White
-        Me.XenonButton250.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton250.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton250.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton250.LineSize = 1
         Me.XenonButton250.Location = New System.Drawing.Point(639, 3)
@@ -9963,9 +10288,10 @@ Partial Class Sounds_Editor
         Me.XenonButton251.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton251.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton251.DrawOnGlass = False
         Me.XenonButton251.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton251.ForeColor = System.Drawing.Color.White
-        Me.XenonButton251.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton251.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton251.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton251.LineSize = 1
         Me.XenonButton251.Location = New System.Drawing.Point(677, 3)
@@ -9980,6 +10306,7 @@ Partial Class Sounds_Editor
         Me.XenonButton252.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton252.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton252.DrawOnGlass = False
         Me.XenonButton252.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton252.ForeColor = System.Drawing.Color.White
         Me.XenonButton252.Image = CType(resources.GetObject("XenonButton252.Image"), System.Drawing.Image)
@@ -9997,6 +10324,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox81.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox81.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox81.DrawOnGlass = False
         Me.XenonTextBox81.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox81.Location = New System.Drawing.Point(190, 3)
         Me.XenonTextBox81.MaxLength = 32767
@@ -10056,9 +10384,10 @@ Partial Class Sounds_Editor
         Me.XenonButton253.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton253.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton253.DrawOnGlass = False
         Me.XenonButton253.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton253.ForeColor = System.Drawing.Color.White
-        Me.XenonButton253.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton253.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton253.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton253.LineSize = 1
         Me.XenonButton253.Location = New System.Drawing.Point(639, 3)
@@ -10073,9 +10402,10 @@ Partial Class Sounds_Editor
         Me.XenonButton254.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton254.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton254.DrawOnGlass = False
         Me.XenonButton254.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton254.ForeColor = System.Drawing.Color.White
-        Me.XenonButton254.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton254.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton254.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton254.LineSize = 1
         Me.XenonButton254.Location = New System.Drawing.Point(677, 3)
@@ -10090,6 +10420,7 @@ Partial Class Sounds_Editor
         Me.XenonButton255.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton255.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton255.DrawOnGlass = False
         Me.XenonButton255.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton255.ForeColor = System.Drawing.Color.White
         Me.XenonButton255.Image = CType(resources.GetObject("XenonButton255.Image"), System.Drawing.Image)
@@ -10107,6 +10438,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox82.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox82.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox82.DrawOnGlass = False
         Me.XenonTextBox82.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox82.Location = New System.Drawing.Point(190, 3)
         Me.XenonTextBox82.MaxLength = 32767
@@ -10166,9 +10498,10 @@ Partial Class Sounds_Editor
         Me.XenonButton256.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton256.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton256.DrawOnGlass = False
         Me.XenonButton256.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton256.ForeColor = System.Drawing.Color.White
-        Me.XenonButton256.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton256.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton256.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton256.LineSize = 1
         Me.XenonButton256.Location = New System.Drawing.Point(639, 3)
@@ -10183,9 +10516,10 @@ Partial Class Sounds_Editor
         Me.XenonButton257.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton257.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton257.DrawOnGlass = False
         Me.XenonButton257.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton257.ForeColor = System.Drawing.Color.White
-        Me.XenonButton257.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton257.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton257.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton257.LineSize = 1
         Me.XenonButton257.Location = New System.Drawing.Point(677, 3)
@@ -10200,6 +10534,7 @@ Partial Class Sounds_Editor
         Me.XenonButton258.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton258.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton258.DrawOnGlass = False
         Me.XenonButton258.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton258.ForeColor = System.Drawing.Color.White
         Me.XenonButton258.Image = CType(resources.GetObject("XenonButton258.Image"), System.Drawing.Image)
@@ -10217,6 +10552,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox83.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox83.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox83.DrawOnGlass = False
         Me.XenonTextBox83.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox83.Location = New System.Drawing.Point(190, 3)
         Me.XenonTextBox83.MaxLength = 32767
@@ -10286,9 +10622,10 @@ Partial Class Sounds_Editor
         Me.XenonButton208.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton208.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton208.DrawOnGlass = False
         Me.XenonButton208.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton208.ForeColor = System.Drawing.Color.White
-        Me.XenonButton208.Image = Global.WinPaletter.My.Resources.Sound_Stop
+        Me.XenonButton208.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.XenonButton208.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonButton208.LineSize = 1
         Me.XenonButton208.Location = New System.Drawing.Point(639, 3)
@@ -10303,9 +10640,10 @@ Partial Class Sounds_Editor
         Me.XenonButton209.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton209.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton209.DrawOnGlass = False
         Me.XenonButton209.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton209.ForeColor = System.Drawing.Color.White
-        Me.XenonButton209.Image = Global.WinPaletter.My.Resources.Sound_Play
+        Me.XenonButton209.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.XenonButton209.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
         Me.XenonButton209.LineSize = 1
         Me.XenonButton209.Location = New System.Drawing.Point(677, 3)
@@ -10320,6 +10658,7 @@ Partial Class Sounds_Editor
         Me.XenonButton210.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton210.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton210.DrawOnGlass = False
         Me.XenonButton210.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton210.ForeColor = System.Drawing.Color.White
         Me.XenonButton210.Image = CType(resources.GetObject("XenonButton210.Image"), System.Drawing.Image)
@@ -10337,6 +10676,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox67.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTextBox67.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox67.DrawOnGlass = False
         Me.XenonTextBox67.ForeColor = System.Drawing.Color.White
         Me.XenonTextBox67.Location = New System.Drawing.Point(140, 3)
         Me.XenonTextBox67.MaxLength = 32767
@@ -10395,6 +10735,7 @@ Partial Class Sounds_Editor
         'XenonButton259
         '
         Me.XenonButton259.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton259.DrawOnGlass = False
         Me.XenonButton259.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton259.ForeColor = System.Drawing.Color.White
         Me.XenonButton259.Image = CType(resources.GetObject("XenonButton259.Image"), System.Drawing.Image)
@@ -10411,6 +10752,7 @@ Partial Class Sounds_Editor
         'XenonButton9
         '
         Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton9.DrawOnGlass = False
         Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton9.ForeColor = System.Drawing.Color.White
         Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
@@ -10438,6 +10780,7 @@ Partial Class Sounds_Editor
         'XenonButton11
         '
         Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton11.DrawOnGlass = False
         Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton11.ForeColor = System.Drawing.Color.White
         Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
@@ -10454,6 +10797,7 @@ Partial Class Sounds_Editor
         'XenonButton12
         '
         Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton12.DrawOnGlass = False
         Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton12.ForeColor = System.Drawing.Color.White
         Me.XenonButton12.Image = Nothing
@@ -10481,7 +10825,7 @@ Partial Class Sounds_Editor
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(823, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -10496,6 +10840,23 @@ Partial Class Sounds_Editor
         'OpenThemeDialog
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
+        '
+        'XenonAlertBox4
+        '
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox4.CenterText = False
+        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox4.Image = Nothing
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 296)
+        Me.XenonAlertBox4.Name = "XenonAlertBox4"
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 40)
+        Me.XenonAlertBox4.TabIndex = 10
+        Me.XenonAlertBox4.TabStop = False
+        Me.XenonAlertBox4.Text = resources.GetString("XenonAlertBox4.Text")
         '
         'Sounds_Editor
         '
@@ -11319,4 +11680,5 @@ Partial Class Sounds_Editor
     Friend WithEvents XenonAlertBox3 As XenonAlertBox
     Friend WithEvents XenonButton259 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
+    Friend WithEvents XenonAlertBox4 As XenonAlertBox
 End Class

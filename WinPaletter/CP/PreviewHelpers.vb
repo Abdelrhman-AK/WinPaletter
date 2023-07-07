@@ -1515,48 +1515,48 @@ Public Class PreviewHelpers
     Public Shared Sub ApplyMetroStartToButton(ColorPalette As CP, W8_start As XenonButton)
         Select Case ColorPalette.Windows8.Start
             Case 1
-                W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
+                W8_start.Image = Start8Selector.img1.Image.Resize(48, 48)
             Case 2
-                W8_start.Image = My.WinRes.MetroStart_2.Resize(48, 48)
+                W8_start.Image = Start8Selector.img2.Image.Resize(48, 48)
             Case 3
-                W8_start.Image = My.WinRes.MetroStart_3.Resize(48, 48)
+                W8_start.Image = Start8Selector.img3.Image.Resize(48, 48)
             Case 4
-                W8_start.Image = My.WinRes.MetroStart_4.Resize(48, 48)
+                W8_start.Image = Start8Selector.img4.Image.Resize(48, 48)
             Case 5
-                W8_start.Image = My.WinRes.MetroStart_5.Resize(48, 48)
+                W8_start.Image = Start8Selector.img5.Image.Resize(48, 48)
             Case 6
-                W8_start.Image = My.WinRes.MetroStart_6.Resize(48, 48)
+                W8_start.Image = Start8Selector.img6.Image.Resize(48, 48)
             Case 7
-                W8_start.Image = My.WinRes.MetroStart_7.Resize(48, 48)
+                W8_start.Image = Start8Selector.img7.Image.Resize(48, 48)
             Case 8
-                W8_start.Image = My.WinRes.MetroStart_8.Resize(48, 48)
+                W8_start.Image = Start8Selector.img8.Image.Resize(48, 48)
             Case 9
-                W8_start.Image = My.WinRes.MetroStart_9.Resize(48, 48)
+                W8_start.Image = Start8Selector.img9.Image.Resize(48, 48)
             Case 10
-                W8_start.Image = My.WinRes.MetroStart_10.Resize(48, 48)
+                W8_start.Image = Start8Selector.img10.Image.Resize(48, 48)
             Case 11
-                W8_start.Image = My.WinRes.MetroStart_11.Resize(48, 48)
+                W8_start.Image = Start8Selector.img11.Image.Resize(48, 48)
             Case 12
-                W8_start.Image = My.WinRes.MetroStart_12.Resize(48, 48)
+                W8_start.Image = Start8Selector.img12.Image.Resize(48, 48)
             Case 13
-                W8_start.Image = My.WinRes.MetroStart_13.Resize(48, 48)
+                W8_start.Image = Start8Selector.img13.Image.Resize(48, 48)
             Case 14
-                W8_start.Image = My.WinRes.MetroStart_14.Resize(48, 48)
+                W8_start.Image = Start8Selector.img14.Image.Resize(48, 48)
             Case 15
-                W8_start.Image = My.WinRes.MetroStart_15.Resize(48, 48)
+                W8_start.Image = Start8Selector.img15.Image.Resize(48, 48)
             Case 16
-                W8_start.Image = My.WinRes.MetroStart_16.Resize(48, 48)
+                W8_start.Image = Start8Selector.img16.Image.Resize(48, 48)
             Case 17
-                W8_start.Image = My.WinRes.MetroStart_17.Resize(48, 48)
+                W8_start.Image = Start8Selector.img17.Image.Resize(48, 48)
             Case 18
-                W8_start.Image = My.WinRes.MetroStart_18.Resize(48, 48)
+                W8_start.Image = Start8Selector.img18.Image.Resize(48, 48)
             Case 19
                 W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
                 W8_start.Image = My.Wallpaper.Resize(48, 48)
 
             Case Else
-                W8_start.Image = My.WinRes.MetroStart_1.Resize(48, 48)
+                W8_start.Image = Start8Selector.img1.Image.Resize(48, 48)
         End Select
     End Sub
     Public Shared Sub ApplyBackLogonUI(ColorPalette As CP, W8_logonui As XenonButton)

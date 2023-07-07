@@ -21,7 +21,6 @@ Namespace My
         Public ReadOnly PATH_ProgramFiles As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         Public ReadOnly PATH_System32 As String = PATH_Windows & "\System32"
         Public ReadOnly PATH_imageres As String = PATH_System32 & "\imageres.dll"
-        Public ReadOnly PATH_Windows_UI_Immersive_dll As String = PATH_System32 & "\Windows.UI.Immersive.dll"
         Public ReadOnly PATH_UserProfile As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         Public ReadOnly PATH_TerminalJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
         Public ReadOnly PATH_TerminalPreviewJSON As String = PATH_UserProfile & "\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json"
@@ -118,11 +117,6 @@ Namespace My
         ''' List of exceptions thrown during theme loading
         ''' </summary>
         Public Loading_Exceptions As New List(Of Tuple(Of String, Exception))
-
-        ''' <summary>
-        ''' Class Represents Resources (PNGs, Icons, ...) from Windows extracted from System DLLs (Loaded at application startup)
-        ''' </summary>
-        Public WinRes As WinResources
 
         ''' <summary>
         ''' Get if Application is started as administrator or not
@@ -821,8 +815,6 @@ Namespace My
             Lang_IL.Images.Add("main", Resources.LangNode_Main)
             Lang_IL.Images.Add("value", Resources.LangNode_Value)
             Lang_IL.Images.Add("json", Resources.LangNode_JSON)
-
-            Try : WinRes = New WinResources : Catch : End Try
 
             Saving_Exceptions.Clear()
             Loading_Exceptions.Clear()

@@ -425,6 +425,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                             Try
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
+                            Catch
+                                'Do nothing
+                                My.Computer.Registry.CurrentUser.Close()
                             Finally
                                 My.Computer.Registry.CurrentUser.Close()
                             End Try
@@ -2224,6 +2227,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
                             EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
                         End If
+                    Catch
+                        'Do nothing
+                        My.Computer.Registry.CurrentUser.Close()
                     Finally
                         My.Computer.Registry.CurrentUser.Close()
                     End Try
@@ -2232,6 +2238,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         If My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
                             EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
                         End If
+                    Catch
+                        'Do nothing
+                        My.Computer.Registry.CurrentUser.Close()
                     Finally
                         My.Computer.Registry.CurrentUser.Close()
                     End Try
@@ -2285,6 +2294,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Else
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
                             End If
+                        Catch
+                            'Do nothing
+                            My.Computer.Registry.CurrentUser.Close()
                         Finally
                             My.Computer.Registry.CurrentUser.Close()
                         End Try
@@ -2297,6 +2309,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Else
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
                             End If
+                        Catch
+                            'Do nothing
+                            My.Computer.Registry.CurrentUser.Close()
                         Finally
                             My.Computer.Registry.CurrentUser.Close()
                         End Try

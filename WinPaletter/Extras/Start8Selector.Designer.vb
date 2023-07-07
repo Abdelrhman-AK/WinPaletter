@@ -57,7 +57,7 @@ Partial Class Start8Selector
         Me.img1.Checked = False
         Me.img1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img1.ForeColor = System.Drawing.Color.White
-        Me.img1.Image = Nothing
+        Me.img1.Image = CType(resources.GetObject("img1.Image"), System.Drawing.Image)
         Me.img1.Location = New System.Drawing.Point(3, 41)
         Me.img1.Name = "img1"
         Me.img1.ShowText = False
@@ -69,7 +69,7 @@ Partial Class Start8Selector
         Me.img2.Checked = False
         Me.img2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img2.ForeColor = System.Drawing.Color.White
-        Me.img2.Image = Nothing
+        Me.img2.Image = CType(resources.GetObject("img2.Image"), System.Drawing.Image)
         Me.img2.Location = New System.Drawing.Point(89, 41)
         Me.img2.Name = "img2"
         Me.img2.ShowText = False
@@ -81,7 +81,7 @@ Partial Class Start8Selector
         Me.img3.Checked = False
         Me.img3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img3.ForeColor = System.Drawing.Color.White
-        Me.img3.Image = Nothing
+        Me.img3.Image = CType(resources.GetObject("img3.Image"), System.Drawing.Image)
         Me.img3.Location = New System.Drawing.Point(175, 41)
         Me.img3.Name = "img3"
         Me.img3.ShowText = False
@@ -93,7 +93,7 @@ Partial Class Start8Selector
         Me.img7.Checked = False
         Me.img7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img7.ForeColor = System.Drawing.Color.White
-        Me.img7.Image = Nothing
+        Me.img7.Image = CType(resources.GetObject("img7.Image"), System.Drawing.Image)
         Me.img7.Location = New System.Drawing.Point(175, 127)
         Me.img7.Name = "img7"
         Me.img7.ShowText = False
@@ -105,7 +105,7 @@ Partial Class Start8Selector
         Me.img4.Checked = False
         Me.img4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img4.ForeColor = System.Drawing.Color.White
-        Me.img4.Image = Nothing
+        Me.img4.Image = CType(resources.GetObject("img4.Image"), System.Drawing.Image)
         Me.img4.Location = New System.Drawing.Point(261, 41)
         Me.img4.Name = "img4"
         Me.img4.ShowText = False
@@ -117,7 +117,7 @@ Partial Class Start8Selector
         Me.img5.Checked = False
         Me.img5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img5.ForeColor = System.Drawing.Color.White
-        Me.img5.Image = Nothing
+        Me.img5.Image = CType(resources.GetObject("img5.Image"), System.Drawing.Image)
         Me.img5.Location = New System.Drawing.Point(3, 127)
         Me.img5.Name = "img5"
         Me.img5.ShowText = False
@@ -129,7 +129,7 @@ Partial Class Start8Selector
         Me.img6.Checked = False
         Me.img6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img6.ForeColor = System.Drawing.Color.White
-        Me.img6.Image = Nothing
+        Me.img6.Image = CType(resources.GetObject("img6.Image"), System.Drawing.Image)
         Me.img6.Location = New System.Drawing.Point(89, 127)
         Me.img6.Name = "img6"
         Me.img6.ShowText = False
@@ -141,7 +141,7 @@ Partial Class Start8Selector
         Me.img8.Checked = False
         Me.img8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img8.ForeColor = System.Drawing.Color.White
-        Me.img8.Image = Nothing
+        Me.img8.Image = CType(resources.GetObject("img8.Image"), System.Drawing.Image)
         Me.img8.Location = New System.Drawing.Point(261, 127)
         Me.img8.Name = "img8"
         Me.img8.ShowText = False
@@ -153,7 +153,7 @@ Partial Class Start8Selector
         Me.img9.Checked = False
         Me.img9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img9.ForeColor = System.Drawing.Color.White
-        Me.img9.Image = Nothing
+        Me.img9.Image = CType(resources.GetObject("img9.Image"), System.Drawing.Image)
         Me.img9.Location = New System.Drawing.Point(3, 213)
         Me.img9.Name = "img9"
         Me.img9.ShowText = False
@@ -165,7 +165,7 @@ Partial Class Start8Selector
         Me.img15.Checked = False
         Me.img15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img15.ForeColor = System.Drawing.Color.White
-        Me.img15.Image = Nothing
+        Me.img15.Image = CType(resources.GetObject("img15.Image"), System.Drawing.Image)
         Me.img15.Location = New System.Drawing.Point(175, 299)
         Me.img15.Name = "img15"
         Me.img15.ShowText = False
@@ -177,7 +177,7 @@ Partial Class Start8Selector
         Me.img14.Checked = False
         Me.img14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img14.ForeColor = System.Drawing.Color.White
-        Me.img14.Image = Nothing
+        Me.img14.Image = CType(resources.GetObject("img14.Image"), System.Drawing.Image)
         Me.img14.Location = New System.Drawing.Point(89, 299)
         Me.img14.Name = "img14"
         Me.img14.ShowText = False
@@ -189,7 +189,7 @@ Partial Class Start8Selector
         Me.img12.Checked = False
         Me.img12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img12.ForeColor = System.Drawing.Color.White
-        Me.img12.Image = Nothing
+        Me.img12.Image = CType(resources.GetObject("img12.Image"), System.Drawing.Image)
         Me.img12.Location = New System.Drawing.Point(261, 213)
         Me.img12.Name = "img12"
         Me.img12.ShowText = False
@@ -201,7 +201,7 @@ Partial Class Start8Selector
         Me.img11.Checked = False
         Me.img11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img11.ForeColor = System.Drawing.Color.White
-        Me.img11.Image = Nothing
+        Me.img11.Image = CType(resources.GetObject("img11.Image"), System.Drawing.Image)
         Me.img11.Location = New System.Drawing.Point(175, 213)
         Me.img11.Name = "img11"
         Me.img11.ShowText = False
@@ -213,7 +213,7 @@ Partial Class Start8Selector
         Me.img10.Checked = False
         Me.img10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img10.ForeColor = System.Drawing.Color.White
-        Me.img10.Image = Nothing
+        Me.img10.Image = CType(resources.GetObject("img10.Image"), System.Drawing.Image)
         Me.img10.Location = New System.Drawing.Point(89, 213)
         Me.img10.Name = "img10"
         Me.img10.ShowText = False
@@ -225,7 +225,7 @@ Partial Class Start8Selector
         Me.img13.Checked = False
         Me.img13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img13.ForeColor = System.Drawing.Color.White
-        Me.img13.Image = Nothing
+        Me.img13.Image = CType(resources.GetObject("img13.Image"), System.Drawing.Image)
         Me.img13.Location = New System.Drawing.Point(3, 299)
         Me.img13.Name = "img13"
         Me.img13.ShowText = False
@@ -237,7 +237,7 @@ Partial Class Start8Selector
         Me.img18.Checked = False
         Me.img18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img18.ForeColor = System.Drawing.Color.White
-        Me.img18.Image = Nothing
+        Me.img18.Image = CType(resources.GetObject("img18.Image"), System.Drawing.Image)
         Me.img18.Location = New System.Drawing.Point(89, 385)
         Me.img18.Name = "img18"
         Me.img18.ShowText = False
@@ -249,7 +249,7 @@ Partial Class Start8Selector
         Me.img17.Checked = False
         Me.img17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img17.ForeColor = System.Drawing.Color.White
-        Me.img17.Image = Nothing
+        Me.img17.Image = CType(resources.GetObject("img17.Image"), System.Drawing.Image)
         Me.img17.Location = New System.Drawing.Point(3, 385)
         Me.img17.Name = "img17"
         Me.img17.ShowText = False
@@ -261,7 +261,7 @@ Partial Class Start8Selector
         Me.img16.Checked = False
         Me.img16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.img16.ForeColor = System.Drawing.Color.White
-        Me.img16.Image = Nothing
+        Me.img16.Image = CType(resources.GetObject("img16.Image"), System.Drawing.Image)
         Me.img16.Location = New System.Drawing.Point(261, 299)
         Me.img16.Name = "img16"
         Me.img16.ShowText = False
@@ -296,6 +296,7 @@ Partial Class Start8Selector
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -312,6 +313,7 @@ Partial Class Start8Selector
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
@@ -388,7 +390,6 @@ Partial Class Start8Selector
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

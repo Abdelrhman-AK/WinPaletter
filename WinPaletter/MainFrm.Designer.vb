@@ -397,6 +397,7 @@ Partial Class MainFrm
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.MainToolbar = New WinPaletter.XenonGroupBox()
+        Me.XenonButton39 = New WinPaletter.XenonButton()
         Me.XenonButton36 = New WinPaletter.XenonButton()
         Me.BetaBadge = New WinPaletter.XenonAlertBox()
         Me.XenonButton31 = New WinPaletter.XenonButton()
@@ -426,7 +427,6 @@ Partial Class MainFrm
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton39 = New WinPaletter.XenonButton()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -753,6 +753,7 @@ Partial Class MainFrm
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
         Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
+        Me.ActionCenter.SuspendRefresh = False
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
         Me.ActionCenter.UseWin11ORB_WithWin10 = False
@@ -782,6 +783,7 @@ Partial Class MainFrm
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
         Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
+        Me.start.SuspendRefresh = False
         Me.start.TabIndex = 1
         Me.start.Transparency = True
         Me.start.UseWin11ORB_WithWin10 = False
@@ -811,6 +813,7 @@ Partial Class MainFrm
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
         Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
+        Me.taskbar.SuspendRefresh = False
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
         Me.taskbar.UseWin11ORB_WithWin10 = False
@@ -840,6 +843,7 @@ Partial Class MainFrm
         Me.XenonWindow2.Radius = 5
         Me.XenonWindow2.Shadow = True
         Me.XenonWindow2.Size = New System.Drawing.Size(189, 85)
+        Me.XenonWindow2.SuspendRefresh = False
         Me.XenonWindow2.TabIndex = 3
         Me.XenonWindow2.Text = "Inactive app"
         Me.XenonWindow2.ToolWindow = False
@@ -872,6 +876,7 @@ Partial Class MainFrm
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
+        Me.XenonWindow1.SuspendRefresh = False
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "App preview"
         Me.XenonWindow1.ToolWindow = False
@@ -5697,6 +5702,23 @@ Partial Class MainFrm
         Me.MainToolbar.Size = New System.Drawing.Size(1070, 60)
         Me.MainToolbar.TabIndex = 1
         '
+        'XenonButton39
+        '
+        Me.XenonButton39.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton39.DrawOnGlass = False
+        Me.XenonButton39.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton39.ForeColor = System.Drawing.Color.White
+        Me.XenonButton39.Image = CType(resources.GetObject("XenonButton39.Image"), System.Drawing.Image)
+        Me.XenonButton39.LineColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(136, Byte), Integer))
+        Me.XenonButton39.LineSize = 1
+        Me.XenonButton39.Location = New System.Drawing.Point(543, 3)
+        Me.XenonButton39.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonButton39.Name = "XenonButton39"
+        Me.XenonButton39.Size = New System.Drawing.Size(40, 54)
+        Me.XenonButton39.TabIndex = 57
+        Me.XenonButton39.Tag = "Help (Wiki)"
+        Me.XenonButton39.UseVisualStyleBackColor = False
+        '
         'XenonButton36
         '
         Me.XenonButton36.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
@@ -6193,23 +6215,6 @@ Partial Class MainFrm
         Me.XenonButton4.TabIndex = 25
         Me.XenonButton4.Tag = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
-        '
-        'XenonButton39
-        '
-        Me.XenonButton39.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
-        Me.XenonButton39.DrawOnGlass = False
-        Me.XenonButton39.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton39.ForeColor = System.Drawing.Color.White
-        Me.XenonButton39.Image = CType(resources.GetObject("XenonButton39.Image"), System.Drawing.Image)
-        Me.XenonButton39.LineColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(136, Byte), Integer))
-        Me.XenonButton39.LineSize = 1
-        Me.XenonButton39.Location = New System.Drawing.Point(543, 3)
-        Me.XenonButton39.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonButton39.Name = "XenonButton39"
-        Me.XenonButton39.Size = New System.Drawing.Size(40, 54)
-        Me.XenonButton39.TabIndex = 57
-        Me.XenonButton39.Tag = "Help (Wiki)"
-        Me.XenonButton39.UseVisualStyleBackColor = False
         '
         'MainFrm
         '

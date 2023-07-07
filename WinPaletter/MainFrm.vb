@@ -2512,16 +2512,20 @@ Public Class MainFrm
 
     Private Sub XenonButton38_Click(sender As Object, e As EventArgs) Handles XenonButton38.Click
         'Copycat from Windows 11 colors
+        tabs_preview.Visible = False
         My.CP.Windows10 = My.CP.Windows11.Clone
         ApplyCPValues(My.CP)
         ApplyColorsToElements(My.CP)
+        tabs_preview.Visible = True
     End Sub
 
     Private Sub XenonButton37_Click(sender As Object, e As EventArgs) Handles XenonButton37.Click
         'Copycat from Windows 10 colors
+        tabs_preview.Visible = False
         My.CP.Windows11 = My.CP.Windows10.Clone
         ApplyCPValues(My.CP)
         ApplyColorsToElements(My.CP)
+        tabs_preview.Visible = True
     End Sub
 
     Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
