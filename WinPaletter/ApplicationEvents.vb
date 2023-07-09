@@ -212,8 +212,6 @@ Namespace My
                                                                             Dim Wall As Bitmap = FetchSuitableWallpaper(CP, PreviewStyle)
                                                                             MainFrm.pnl_preview.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview_classic.BackgroundImage = Wall
-                                                                            DragPreviewer.pnl_preview.BackgroundImage = Wall
-                                                                            DragPreviewer.pnl_preview_classic.BackgroundImage = Wall
                                                                             Metrics_Fonts.pnl_preview1.BackgroundImage = Wall
                                                                             Metrics_Fonts.pnl_preview2.BackgroundImage = Wall
                                                                             Metrics_Fonts.pnl_preview3.BackgroundImage = Wall
@@ -224,8 +222,6 @@ Namespace My
                                                                             AltTabEditor.pnl_preview1.BackgroundImage = Wall
                                                                             AltTabEditor.Classic_Preview1.BackgroundImage = Wall
                                                                             MainFrm.pnl_preview.Invalidate()
-                                                                            DragPreviewer.pnl_preview.Invalidate()
-                                                                            DragPreviewer.pnl_preview_classic.Invalidate()
                                                                             Metrics_Fonts.pnl_preview1.Invalidate()
                                                                             Metrics_Fonts.pnl_preview2.Invalidate()
                                                                             Metrics_Fonts.pnl_preview3.Invalidate()
@@ -722,7 +718,7 @@ Namespace My
                 Try
                     Lang.LoadLanguageFromJSON([Settings].Language.File)
                 Catch ex As Exception
-                    MsgBox("There is an error occurred during loading language", MsgBoxStyle.Critical, ex.Message, My.Lang.CollapseNote, My.Lang.ExpandNote, ex.StackTrace)
+                    BugReport.ThrowError(ex)
                 End Try
             End If
 

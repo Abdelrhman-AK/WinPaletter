@@ -14,6 +14,7 @@ Public Class WindowsTerminal
 
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
 
+        LoadLanguage
         ApplyDarkMode(Me)
         _Shown = False
 

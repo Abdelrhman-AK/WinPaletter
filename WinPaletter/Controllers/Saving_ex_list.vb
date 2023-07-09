@@ -4,6 +4,7 @@ Public Class Saving_ex_list
     Public ex_List As List(Of Tuple(Of String, Exception))
 
     Private Sub Saving_exceptions_list_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Icon = BugReport.Icon
 

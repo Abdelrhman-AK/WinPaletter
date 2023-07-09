@@ -26,6 +26,7 @@ Public Class ComplexSave
     End Sub
 
     Private Sub ComplexSave_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
 
         Dim c As Color = PictureBox1.Image.AverageColor

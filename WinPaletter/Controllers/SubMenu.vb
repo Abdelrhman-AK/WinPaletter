@@ -191,6 +191,7 @@ Public Class SubMenu
         XenonComboBox1.Visible = False
         XenonButton4.Text = ">"
 
+        LoadLanguage
         ApplyDarkMode(Me)
 
         XenonComboBox1.SelectedIndex = 0

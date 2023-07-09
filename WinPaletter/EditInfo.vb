@@ -3,6 +3,7 @@
 Public Class EditInfo
 
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Load_Info(My.CP)
         MainFrm.Visible = False

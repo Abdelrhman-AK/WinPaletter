@@ -3,6 +3,7 @@ Imports WinPaletter.XenonCore
 
 Public Class Lang_JSON_Manage
     Private Sub LangJSON_Manage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
 
         Label6.Font = My.Application.ConsoleFontMedium

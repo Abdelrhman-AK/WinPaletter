@@ -3,6 +3,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.XenonCore
 Public Class VS2Metrics
     Private Sub VS2Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Icon = Metrics_Fonts.Icon
     End Sub

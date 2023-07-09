@@ -132,6 +132,7 @@ Public Class Updates
     End Sub
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         UC = New WebClient
         LinkLabel3.Visible = False

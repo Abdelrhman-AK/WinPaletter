@@ -5,6 +5,7 @@ Public Class ScreenSaver_Editor
     Private Proc As Process
 
     Private Sub ScreenSaver_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         pnl_preview.DoubleBuffer

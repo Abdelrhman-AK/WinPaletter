@@ -61,6 +61,7 @@ Public Class TerminalsDashboard
 #End Region
 
     Private Sub TerminalsDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
 
         _shown = False

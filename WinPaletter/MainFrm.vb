@@ -16,6 +16,7 @@ Public Class MainFrm
     Dim Updates_ls As New List(Of String)
     Private LoggingOff As Boolean = False
     Private ReadOnly _Converter As New Converter
+    Private elapsedSecs As Integer = 0
 
 #Region "Preview Subs"
     Sub ApplyColorsToElements(ByVal [CP] As CP)
@@ -433,6 +434,7 @@ Public Class MainFrm
             Select_W11.Checked = True
         End If
 
+        LoadLanguage
         ApplyDarkMode(Me)
         DoubleBuffer
         UpdateLegends()
@@ -997,6 +999,14 @@ Public Class MainFrm
         MsgBox(My.Lang.TitlebarColorNotice, MsgBoxStyle.Information)
     End Sub
 
+    Private Sub XenonButton38_Click(sender As Object, e As EventArgs) Handles XenonButton38.Click
+        'Copycat from Windows 11 colors
+        tabs_preview.Visible = False
+        My.CP.Windows10 = My.CP.Windows11.Clone
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
+        tabs_preview.Visible = True
+    End Sub
 #End Region
 
 #Region "Windows 10"
@@ -1477,6 +1487,22 @@ Public Class MainFrm
 
     Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
         MsgBox(My.Lang.CP_AccentOnTaskbarTib, MsgBoxStyle.Information)
+    End Sub
+
+    Private Sub W10_TB_Blur_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TB_Blur.CheckedChanged
+        If _Shown Then
+            My.CP.Windows10.TB_Blur = sender.Checked
+            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
+    Private Sub XenonButton37_Click(sender As Object, e As EventArgs) Handles XenonButton37.Click
+        'Copycat from Windows 10 colors
+        tabs_preview.Visible = False
+        My.CP.Windows11 = My.CP.Windows10.Clone
+        ApplyCPValues(My.CP)
+        ApplyColorsToElements(My.CP)
+        tabs_preview.Visible = True
     End Sub
 
 #End Region
@@ -2044,8 +2070,6 @@ Public Class MainFrm
 
     End Sub
 
-    Private elapsedSecs As Integer = 0
-
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds - elapsedSecs)
 
@@ -2059,6 +2083,7 @@ Public Class MainFrm
         End If
 
     End Sub
+
     Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
@@ -2115,84 +2140,6 @@ Public Class MainFrm
         status_lbl.Text = ""
         status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
-
-#Region "Drag And Drop"
-    Dim wpth_or_wpsf As Boolean = True
-    Dim DragAccepted As Boolean
-    Dim Dropped As Boolean
-
-    Private Sub Me_DragEnter(ByVal sender As Object, ByVal e As DragEventArgs) Handles Me.DragEnter, previewContainer.DragEnter, tabs_preview.DragEnter, TablessControl1.DragEnter
-
-        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-        Dropped = False
-
-        If IO.Path.GetExtension(files(0)).ToLower = ".wpth" Then
-            wpth_or_wpsf = True
-
-            If _Converter.FetchFile(files(0)) = Converter_CP.WP_Format.JSON Then
-                e.Effect = DragDropEffects.Copy
-
-                If My.Settings.FileTypeManagement.DragAndDropPreview Then
-                    DragAccepted = True
-                    My.CP_BeforeDrag = My.CP.Clone
-                    DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
-                    DragPreviewer.File = files(0)
-                    DragPreviewer.Show()
-                End If
-            ElseIf _Converter.FetchFile(files(0)) = Converter_CP.WP_Format.WPTH Then
-                DragAccepted = True
-                e.Effect = DragDropEffects.Copy
-
-            Else
-                DragAccepted = False
-                e.Effect = DragDropEffects.None
-
-            End If
-
-        ElseIf IO.Path.GetExtension(files(0)).ToLower = ".wpsf" Then
-            wpth_or_wpsf = False
-            DragAccepted = True
-            e.Effect = DragDropEffects.Copy
-        Else
-            DragAccepted = False
-            e.Effect = DragDropEffects.None
-        End If
-
-    End Sub
-
-    Private Sub MainFrm_DragLeave(sender As Object, e As EventArgs) Handles Me.DragLeave
-        Dropped = False
-        If DragAccepted Then
-            If My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Close()
-            My.CP = My.CP_BeforeDrag.Clone
-        End If
-    End Sub
-
-    Private Sub MainFrm_DragOver(sender As Object, e As DragEventArgs) Handles Me.DragOver, previewContainer.DragOver, tabs_preview.DragOver, TablessControl1.DragOver
-        If DragAccepted And My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Location = New Point(e.X + 15, e.Y + 15)
-        Dropped = Me.Bounds.Contains(New Point(e.X, e.Y))
-    End Sub
-
-    Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop, previewContainer.DragDrop, tabs_preview.DragDrop, TablessControl1.DragDrop
-        If Dropped And DragAccepted Then
-            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-            If wpth_or_wpsf Then
-                If My.Settings.FileTypeManagement.DragAndDropPreview Then DragPreviewer.Close()
-
-                My.CP = New CP(CP.CP_Type.File, files(0))
-                tabs_preview.Visible = False
-                ApplyStylesToElements(My.CP, False)
-                ApplyCPValues(My.CP)
-                ApplyColorsToElements(My.CP)
-                tabs_preview.Visible = True
-            Else
-                SettingsX._External = True
-                SettingsX._File = files(0)
-                SettingsX.ShowDialog()
-            End If
-        End If
-    End Sub
-#End Region
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
@@ -2421,6 +2368,13 @@ Public Class MainFrm
         End If
     End Sub
 
+    Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
+        If _Shown And Select_WXP.Checked Then
+            My.PreviewStyle = WindowStyle.WXP
+            Select_Preview_Version()
+        End If
+    End Sub
+
     Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
         WinEffecter.ShowDialog()
     End Sub
@@ -2433,19 +2387,6 @@ Public Class MainFrm
             If My.PreviewStyle = WindowStyle.WVista Then MsgBox(String.Format(My.Lang.AltTab_Unsupported, My.Lang.OS_WinVista), MsgBoxStyle.Exclamation)
         End If
 
-    End Sub
-
-    Private Sub W10_TB_Blur_CheckedChanged(sender As Object, e As EventArgs) Handles W10_TB_Blur.CheckedChanged
-        If _Shown Then
-            My.CP.Windows10.TB_Blur = sender.Checked
-            If My.PreviewStyle = WindowStyle.W10 Then ApplyColorsToElements(My.CP)
-        End If
-    End Sub
-    Private Sub Select_WXP_CheckedChanged(sender As Object) Handles Select_WXP.CheckedChanged
-        If _Shown And Select_WXP.Checked Then
-            My.PreviewStyle = WindowStyle.WXP
-            Select_Preview_Version()
-        End If
     End Sub
 
     Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
@@ -2510,24 +2451,6 @@ Public Class MainFrm
         status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
     End Sub
 
-    Private Sub XenonButton38_Click(sender As Object, e As EventArgs) Handles XenonButton38.Click
-        'Copycat from Windows 11 colors
-        tabs_preview.Visible = False
-        My.CP.Windows10 = My.CP.Windows11.Clone
-        ApplyCPValues(My.CP)
-        ApplyColorsToElements(My.CP)
-        tabs_preview.Visible = True
-    End Sub
-
-    Private Sub XenonButton37_Click(sender As Object, e As EventArgs) Handles XenonButton37.Click
-        'Copycat from Windows 10 colors
-        tabs_preview.Visible = False
-        My.CP.Windows11 = My.CP.Windows10.Clone
-        ApplyCPValues(My.CP)
-        ApplyColorsToElements(My.CP)
-        tabs_preview.Visible = True
-    End Sub
-
     Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
         Process.Start(My.Resources.Link_Wiki)
     End Sub
@@ -2543,7 +2466,6 @@ Public Class MainFrm
             If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinVista), MsgBoxStyle.Critical + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
         End If
 
-        If My.Settings.Language.Enabled AndAlso IO.File.Exists(My.Settings.Language.File) Then My.Lang.LoadLanguageFromJSON(My.Settings.Language.File, Store)
         Store.Show()
     End Sub
 End Class

@@ -3,6 +3,7 @@ Imports WinPaletter.XenonCore
 
 Public Class LogonUI
     Private Sub LogonUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Load_FromCP(My.CP)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)

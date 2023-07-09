@@ -135,6 +135,7 @@ Public Class CursorsStudio
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         MainFrm.Visible = False
         If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)

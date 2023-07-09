@@ -328,12 +328,6 @@
     <Compile Include="Controllers\ComplexSave.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controllers\DragPreviewer.Designer.vb">
-      <DependentUpon>DragPreviewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\DragPreviewer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Controllers\Saving_ex_list.Designer.vb">
       <DependentUpon>Saving_ex_list.vb</DependentUpon>
     </Compile>
@@ -815,9 +809,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\DragPreviewer.resx">
-      <DependentUpon>DragPreviewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\Saving_ex_list.resx">
       <DependentUpon>Saving_ex_list.vb</DependentUpon>

@@ -11,6 +11,7 @@ Public Class Store_DownloadProgress
     Dim WithEvents ThemeDownloader As New WebClient
 
     Private Sub Store_DownloadProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Icon = Store.Icon
 

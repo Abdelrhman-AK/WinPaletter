@@ -523,6 +523,7 @@ Public Class Store
         FinishedLoadingInitialCPs = False
         _Shown = False
 
+        LoadLanguage
         ApplyDarkMode(Me, True)
 
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread

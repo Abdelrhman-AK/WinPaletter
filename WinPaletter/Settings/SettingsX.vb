@@ -222,6 +222,7 @@ Public Class SettingsX
             If XenonCheckBox8.Checked Then
                 My.Lang = New Localizer
                 My.Lang.LoadLanguageFromJSON(My.Settings.Language.File)
+                MainFrm.UpdateLegends()
             Else
                 MsgBox(My.Lang.LanguageRestart, MsgBoxStyle.Information)
             End If
@@ -424,6 +425,7 @@ Public Class SettingsX
         XenonComboBox2.Items.Clear()
         XenonComboBox2.Items.Add(My.Lang.Stable)
         XenonComboBox2.Items.Add(My.Lang.Beta)
+        LoadLanguage
         ApplyDarkMode(Me)
         LoadSettings()
 

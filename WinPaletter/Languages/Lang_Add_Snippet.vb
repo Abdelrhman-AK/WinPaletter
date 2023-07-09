@@ -1,7 +1,11 @@
 ﻿Imports System.Globalization
+Imports WinPaletter.XenonCore
 
 Public Class Lang_Add_Snippet
     Private Sub Lang_Add_Snippet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
+        ApplyDarkMode(Me)
+
         DialogResult = DialogResult.None
 
         Dim cultures As CultureInfo() = CultureInfo.GetCultures(CultureTypes.AllCultures)

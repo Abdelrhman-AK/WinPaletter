@@ -5,6 +5,7 @@ Imports WinPaletter.XenonCore
 Public Class Lang_JSON_Update
     Private Sub Lang_JSON_Update_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = Lang_JSON_Manage.Icon
+        LoadLanguage
         ApplyDarkMode(Me)
     End Sub
 

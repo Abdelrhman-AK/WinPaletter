@@ -1,6 +1,7 @@
 ﻿Imports WinPaletter.XenonCore
 Public Class LogonUI8Colors
     Private Sub LogonUI8Colors_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
 
         Icon = Start8Selector.Icon

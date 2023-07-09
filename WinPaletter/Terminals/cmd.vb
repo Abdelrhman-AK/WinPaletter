@@ -15,6 +15,7 @@ Public Class CMD
 #Region "   Subs not related to colors and shapes"
     Private Sub CMD_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
         RasterList.BringToFront()

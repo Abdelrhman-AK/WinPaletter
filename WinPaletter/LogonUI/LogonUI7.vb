@@ -9,6 +9,7 @@ Public Class LogonUI7
 
     Private Sub LogonUI7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ID = 0
+        LoadLanguage
         ApplyDarkMode(Me)
         _Shown = False
         LoadFromCP(My.CP)

@@ -45,6 +45,7 @@ Public Class Metrics_Fonts
         Label14.ForeColor = My.CP.Win32.ButtonText
         Refresh17BitPreference()
 
+        LoadLanguage
         ApplyDarkMode(Me)
         ApplyFromCP(My.CP)
 

@@ -2,6 +2,7 @@
 Public Class Lang_Dashboard
     Private Sub Lang_Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = Lang_JSON_Manage.Icon
+        LoadLanguage
         ApplyDarkMode(Me)
     End Sub
 

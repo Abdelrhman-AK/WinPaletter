@@ -46,6 +46,7 @@ Public Class NewExtTerminal
     End Sub
 
     Private Sub NewExtTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Icon = ExternalTerminal.Icon
     End Sub

@@ -7,6 +7,7 @@ Public Class ExternalTerminal
     Dim f_extterminal As New Font("Consolas", 18, FontStyle.Regular)
 
     Private Sub ExternalTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         _Shown = False
         FillTerminals(XenonComboBox1)

@@ -23,6 +23,7 @@ Public Class About
 
     Private Sub About_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = MainFrm.Icon
+        LoadLanguage
         ApplyDarkMode(Me)
         Label2.Text = My.AppVersion
     End Sub

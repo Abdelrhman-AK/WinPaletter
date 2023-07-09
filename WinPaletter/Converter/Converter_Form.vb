@@ -5,6 +5,7 @@ Public Class Converter_Form
     Private ReadOnly _Convert As New Converter
 
     Private Sub Converter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonCheckBox1.Checked = My.Settings.FileTypeManagement.CompressThemeFile
         Label3.Font = My.Application.ConsoleFontMedium

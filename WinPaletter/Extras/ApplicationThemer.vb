@@ -9,6 +9,7 @@ Public Class ApplicationThemer
     Private Sub ApplicationThemer_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         BackupSettings = New XeSettings(XeSettings.Mode.Registry)
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)

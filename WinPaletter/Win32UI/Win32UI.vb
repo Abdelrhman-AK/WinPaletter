@@ -7,6 +7,7 @@ Public Class Win32UI
     End Sub
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonComboBox1.PopulateThemes
         XenonComboBox1.SelectedIndex = 0

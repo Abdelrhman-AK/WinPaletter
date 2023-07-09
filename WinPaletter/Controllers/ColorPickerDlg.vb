@@ -12,6 +12,7 @@ Public Class ColorPickerDlg
     Private _shown As Boolean = False
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         _shown = False
         XenonComboBox1.PopulateThemes

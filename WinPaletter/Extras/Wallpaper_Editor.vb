@@ -14,6 +14,7 @@ Public Class Wallpaper_Editor
     Dim ImgLs2 As New List(Of String)
 
     Private Sub Wallpaper_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)

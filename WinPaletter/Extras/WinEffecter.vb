@@ -3,6 +3,7 @@ Imports WinPaletter.XenonCore
 
 Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)

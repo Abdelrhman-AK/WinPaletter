@@ -3,6 +3,7 @@ Imports WinPaletter.XenonCore
 
 Public Class BugReport
     Private Sub BugReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Dim c As Color = PictureBox1.Image.AverageColor.CB(If(GetDarkMode(), -0.35, 0.35))
         XenonAnimatedBox1.BackColor = c

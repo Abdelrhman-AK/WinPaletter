@@ -3,6 +3,7 @@ Public Class Store_CPToggles
     Public CP As CP
 
     Private Sub Store_CPToggles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Opacity = 0
         Icon = Store.Icon

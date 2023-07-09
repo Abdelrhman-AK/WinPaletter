@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.XenonCore
 
@@ -39,109 +40,12 @@ Public Class Localizer : Implements IDisposable
 
     End Sub
 
-    Public Function GetFormFromName(Name As String) As Form
-        If Name.ToLower = "About".ToLower Then Return About
-        If Name.ToLower = "ColorPickerDlg".ToLower Then Return ColorPickerDlg
-        If Name.ToLower = "ComplexSave".ToLower Then Return ComplexSave
-        If Name.ToLower = "dragPreviewer".ToLower Then Return dragPreviewer
-        If Name.ToLower = "EditInfo".ToLower Then Return EditInfo
-        If Name.ToLower = "LogonUI".ToLower Then Return LogonUI
-        If Name.ToLower = "MainFrm".ToLower Then Return MainFrm
-        If Name.ToLower = "WhatsNew".ToLower Then Return Whatsnew
-        If Name.ToLower = "Updates".ToLower Then Return Updates
-        If Name.ToLower = "Win32UI".ToLower Then Return Win32UI
-        If Name.ToLower = "SettingsX".ToLower Then Return SettingsX
-        If Name.ToLower = "CursorsStudio".ToLower Then Return CursorsStudio
-        If Name.ToLower = "LogonUI7".ToLower Then Return LogonUI7
-        If Name.ToLower = "LogonUI8Colors".ToLower Then Return LogonUI8Colors
-        If Name.ToLower = "LogonUI8_Pics".ToLower Then Return LogonUI8_Pics
-        If Name.ToLower = "Start8Selector".ToLower Then Return Start8Selector
-        If Name.ToLower = "CMD".ToLower Then Return CMD
-        If Name.ToLower = "ExternalTerminal".ToLower Then Return ExternalTerminal
-        If Name.ToLower = "NewExtTerminal".ToLower Then Return NewExtTerminal
-        If Name.ToLower = "TerminalInfo".ToLower Then Return TerminalInfo
-        If Name.ToLower = "TerminalsDashboard".ToLower Then Return TerminalsDashboard
-        If Name.ToLower = "WindowsTerminal".ToLower Then Return WindowsTerminal
-        If Name.ToLower = "WindowsTerminalDecide".ToLower Then Return WindowsTerminalDecide
-        If Name.ToLower = "WindowsTerminalCopycat".ToLower Then Return WindowsTerminalCopycat
-        If Name.ToLower = "LicenseForm".ToLower Then Return LicenseForm
-        If Name.ToLower = "BugReport".ToLower Then Return BugReport
-        If Name.ToLower = "Metrics_Fonts".ToLower Then Return Metrics_Fonts
-        If Name.ToLower = "Lang_Add_Snippet".ToLower Then Return Lang_Add_Snippet
-        If Name.ToLower = "Lang_Dashboard".ToLower Then Return Lang_Dashboard
-        If Name.ToLower = "Lang_JSON_Update".ToLower Then Return Lang_JSON_Update
-        If Name.ToLower = "Lang_JSON_Manage".ToLower Then Return Lang_JSON_Manage
-        If Name.ToLower = "WinEffecter".ToLower Then Return WinEffecter
-        If Name.ToLower = "LogonUIXP".ToLower Then Return LogonUIXP
-        If Name.ToLower = "VS2Win32UI".ToLower Then Return VS2Win32UI
-        If Name.ToLower = "VS2Metrics".ToLower Then Return VS2Metrics
-        If Name.ToLower = "Uninstall".ToLower Then Return Uninstall
-        If Name.ToLower = "AltTabEditor".ToLower Then Return AltTabEditor
-        If Name.ToLower = "Store".ToLower Then Return Store
-        If Name.ToLower = "Store_CPToggles".ToLower Then Return Store_CPToggles
-        If Name.ToLower = "Store_SearchFilter".ToLower Then Return Store_SearchFilter
-        If Name.ToLower = "Store_DownloadProgress".ToLower Then Return Store_DownloadProgress
-        If Name.ToLower = "Store_Intro".ToLower Then Return Store_Intro
-        If Name.ToLower = "Store_ThemeLicense".ToLower Then Return Store_ThemeLicense
-        If Name.ToLower = "ScreenSaver_Editor".ToLower Then Return ScreenSaver_Editor
-        If Name.ToLower = "Sounds_Editor".ToLower Then Return Sounds_Editor
-        If Name.ToLower = "Wallpaper_Editor".ToLower Then Return Wallpaper_Editor
-        If Name.ToLower = "ApplicationThemer".ToLower Then Return ApplicationThemer
-        If Name.ToLower = "Converter_Form".ToLower Then Return Converter_Form
 
-        Return Nothing
-    End Function
-
-    Public allForms As New List(Of String) From {
-                        "About",
-                        "ColorPickerDlg",
-                        "ComplexSave",
-                        "dragPreviewer",
-                        "EditInfo",
-                        "LogonUI",
-                        "MainFrm",
-                        "Whatsnew",
-                        "Updates",
-                        "Win32UI",
-                        "SettingsX",
-                        "CursorsStudio",
-                        "LogonUI7",
-                        "LogonUI8Colors",
-                        "LogonUI8_Pics",
-                        "Start8Selector",
-                        "CMD",
-                        "ExternalTerminal",
-                        "NewExtTerminal",
-                        "TerminalInfo",
-                        "TerminalsDashboard",
-                        "WindowsTerminal",
-                        "WindowsTerminalDecide",
-                        "WindowsTerminalCopycat",
-                        "LicenseForm",
-                        "BugReport",
-                        "Metrics_Fonts",
-                        "Lang_Add_Snippet",
-                        "Lang_Dashboard",
-                        "Lang_JSON_Update",
-                        "Lang_JSON_Manage",
-                        "WinEffecter",
-                        "LogonUIXP",
-                        "VS2Win32UI",
-                        "VS2Metrics",
-                        "Uninstall",
-                        "AltTabEditor",
-                        "Store",
-                        "Store_CPToggles",
-                        "Store_SearchFilter",
-                        "Store_DownloadProgress",
-                        "Store_Intro",
-                        "Store_ThemeLicense",
-                        "ScreenSaver_Editor",
-                        "Sounds_Editor",
-                        "Wallpaper_Editor",
-                        "ApplicationThemer",
-                        "Converter_Form"
-                        }
+    Public JSON As JObject
+    Dim J_Information As JObject
+    Dim J_GlobalStrings As JObject
+    Dim J_Forms As JObject
+    Dim Deserialized_FormsJSONTree As New List(Of Tuple(Of String, String, String, String))()
 
 #Region "Language Info"
     Property Name As String = Environment.UserName
@@ -464,6 +368,188 @@ Public Class Localizer : Implements IDisposable
     Property Convert_Detect_Old_OnLoading2 As String = "Pressing 'No' will load a default Windows preset"
 #End Region
 
+#Region "Language loader"
+    Public Sub LoadLanguageFromJSON(File As String, Optional [_Form] As Form = Nothing)
+        If IO.File.Exists(File) Then
+
+            Using St As New StreamReader(File)
+                JSON = JObject.Parse(St.ReadToEnd)
+                St.Close()
+            End Using
+
+            J_Information = New JObject
+            J_GlobalStrings = New JObject
+            J_Forms = New JObject
+
+            Dim Valid As Boolean = JSON.ContainsKey("Information") And JSON.ContainsKey("Global Strings") And JSON.ContainsKey("Forms Strings")
+
+            If Not Valid Then
+                '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+                Exit Sub
+            End If
+
+            J_Information = JSON("Information")
+            J_GlobalStrings = JSON("Global Strings")
+            J_Forms = JSON("Forms Strings")
+
+            LoadInnerStrings(J_Information, J_GlobalStrings)
+            DeserializeFormsJSONIntoTreeList(J_Forms)
+            LoadFromStrings([_Form])
+
+        End If
+    End Sub
+
+    Public Sub LoadInnerStrings(LangInfo As JObject, Strings As JObject)
+        Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
+
+        For Each [property] As PropertyInfo In properties1
+            If Not [property].Name.ToLower = "Name".ToLower _
+             AndAlso Not [property].Name.ToLower = "TranslationVersion".ToLower _
+             AndAlso Not [property].Name.ToLower = "Lang".ToLower _
+             AndAlso Not [property].Name.ToLower = "LangCode".ToLower _
+             AndAlso Not [property].Name.ToLower = "AppVer".ToLower _
+             AndAlso Not [property].Name.ToLower = "RightToLeft".ToLower Then
+
+                If Strings.ContainsKey([property].Name.ToLower) Then [property].SetValue(Me, Convert.ChangeType(Strings([property].Name.ToLower), [property].PropertyType))
+            Else
+                If LangInfo.ContainsKey([property].Name.ToLower) Then [property].SetValue(Me, Convert.ChangeType(LangInfo([property].Name.ToLower), [property].PropertyType))
+            End If
+        Next
+    End Sub
+
+    Public Sub DeserializeFormsJSONIntoTreeList(JSON_Forms As JObject)
+
+        'Tuple of four values; form name, control name, property, property value
+        'If there is no control and you want to change form property, make control name: String.Empty
+        Deserialized_FormsJSONTree.Clear()
+
+        Dim FormName, ControlName, Prop, Value As String
+        FormName = String.Empty
+        ControlName = String.Empty
+        Prop = String.Empty
+        Value = String.Empty
+
+        'Loop through all forms nodes in JSON
+        For Each F In JSON_Forms
+            Try
+
+                'Get one form node
+                'There is only one specific property "Text"
+                Dim J_Specific_Form As New JObject
+                J_Specific_Form = JSON_Forms(F.Key)
+                FormName = F.Key
+                ControlName = String.Empty
+                Prop = "Text"
+
+                If J_Specific_Form.ContainsKey("Text") Or J_Specific_Form.ContainsKey("text") Or J_Specific_Form.ContainsKey("TEXT") Then
+                    If J_Specific_Form.ContainsKey("Text") Then Value = J_Specific_Form("Text")
+                    If J_Specific_Form.ContainsKey("text") Then Value = J_Specific_Form("text")
+                    If J_Specific_Form.ContainsKey("TEXT") Then Value = J_Specific_Form("TEXT")
+                    Deserialized_FormsJSONTree.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                End If
+
+                'If this form has a control/controls then get them
+                If J_Specific_Form.ContainsKey("Controls") Or J_Specific_Form.ContainsKey("controls") Or J_Specific_Form.ContainsKey("CONTROLS") Then
+
+                    'JSON nodes of all child controls
+                    Dim J_Controls As New JObject
+                    If J_Specific_Form.ContainsKey("Controls") Then J_Controls = J_Specific_Form("Controls")
+                    If J_Specific_Form.ContainsKey("controls") Then J_Controls = J_Specific_Form("controls")
+                    If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
+
+                    'Loop through all child controls JSON nodes
+                    For Each ctrl In J_Controls
+                        Try
+                            'If there is a dot in JSON node value, then there is a specific mentioned property,
+                            'if not, then it is a "Text" property only.
+                            If ctrl.Key.Contains(".") Then
+                                ControlName = ctrl.Key.Split(".")(0)
+                                Prop = ctrl.Key.Split(".")(1)
+                                Value = ctrl.Value
+                                Deserialized_FormsJSONTree.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                            Else
+                                ControlName = ctrl.Key
+                                Prop = "Text"
+                                Value = ctrl.Value
+                                Deserialized_FormsJSONTree.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
+                            End If
+                        Catch
+                        End Try
+                    Next
+                End If
+
+            Catch
+            End Try
+        Next
+
+    End Sub
+
+    Public Sub LoadFromStrings(Optional [_Form] As Form = Nothing)
+        If [_Form] IsNot Nothing Then
+            Dim WasVisible As Boolean = [_Form].Visible
+
+            If WasVisible Then
+                [_Form].Visible = False
+            End If
+
+            Populate(Deserialized_FormsJSONTree, [_Form])
+
+            If WasVisible Then [_Form].Visible = True
+        End If
+    End Sub
+
+    Public Sub FormLoadEventHandler(sender As Object, e As EventArgs)
+        If sender IsNot Nothing Then CType(sender, Form).LoadLanguage
+    End Sub
+
+    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)
+        'Item1 = FormName
+        'Item2 = ControlName
+        'Item3 = Prop
+        'Item4 = Value
+
+        For Each member In PopCtrlList
+            Try
+                If [Form].Name.ToLower = member.Item1.ToLower Then
+
+                    If member.Item2 = String.Empty Then
+                        '# Form
+                        Try : If member.Item3.ToLower = "text" Then [Form].SetText(member.Item4)
+                        Catch : End Try
+
+                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, [Form])
+                        Catch : End Try
+                    Else
+                        '# Control
+
+                        If Not String.IsNullOrEmpty(member.Item2) Then
+
+                            For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
+
+                                Try : If member.Item3.ToLower = "text" Then ctrl.SetText(member.Item4.ToString)
+                                Catch : End Try
+
+                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)
+                                Catch : End Try
+
+                                'ctrl.RightToLeft = If(RightToLeft, 1, 0)
+                                'ctrl.Refresh()
+                            Next
+
+                        End If
+
+                    End If
+                End If
+
+            Catch ex As Exception
+                Throw ex
+            End Try
+        Next
+
+    End Sub
+#End Region
+
     Public Sub ExportJSON(File As String)
         Dim JSON_Overall As New JObject()
         Dim newL As New Localizer
@@ -538,197 +624,6 @@ Public Class Localizer : Implements IDisposable
         IO.File.WriteAllText(File, JSON_Overall.ToString())
     End Sub
 
-    Public Sub LoadLanguageFromJSON(File As String, Optional [_Form] As Form = Nothing)
-        If IO.File.Exists(File) Then
-
-            Dim St As New StreamReader(File)
-            Dim JSON_String As String = St.ReadToEnd
-            Dim JSonFile As JObject = JObject.Parse(JSON_String)
-            St.Close()
-
-            Dim J_Information As New JObject
-            Dim J_GlobalStrings As New JObject
-            Dim J_Forms As New JObject
-
-            Dim Valid As Boolean = JSonFile.ContainsKey("Information") And JSonFile.ContainsKey("Global Strings") And JSonFile.ContainsKey("Forms Strings")
-
-            If Not Valid Then
-                '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-                Exit Sub
-            End If
-
-            J_Information = JSonFile("Information")
-            J_GlobalStrings = JSonFile("Global Strings")
-            J_Forms = JSonFile("Forms Strings")
-
-            Dim type1 As Type = [GetType]() : Dim properties1 As PropertyInfo() = type1.GetProperties()
-
-            For Each [property] As PropertyInfo In properties1
-                If Not [property].Name.ToLower = "Name".ToLower _
-                 And Not [property].Name.ToLower = "TranslationVersion".ToLower _
-                 And Not [property].Name.ToLower = "Lang".ToLower _
-                 And Not [property].Name.ToLower = "LangCode".ToLower _
-                 And Not [property].Name.ToLower = "AppVer".ToLower _
-                 And Not [property].Name.ToLower = "RightToLeft".ToLower Then
-
-                    Dim FoundProp As Boolean = J_GlobalStrings.ContainsKey([property].Name.ToLower)
-                    If FoundProp Then [property].SetValue(Me, Convert.ChangeType(J_GlobalStrings([property].Name.ToLower), [property].PropertyType))
-                Else
-                    Dim FoundProp As Boolean = J_Information.ContainsKey([property].Name.ToLower)
-                    If FoundProp Then [property].SetValue(Me, Convert.ChangeType(J_Information([property].Name.ToLower), [property].PropertyType))
-                End If
-            Next
-
-            Dim PopCtrlList As New List(Of Tuple(Of String, String, String, String))()
-            PopCtrlList.Clear()
-
-            Dim FormName, ControlName, Prop, Value As String
-
-            FormName = String.Empty
-            ControlName = String.Empty
-            Prop = String.Empty
-            Value = String.Empty
-
-            For Each F In J_Forms
-                Try
-                    Dim J_Specific_Form As New JObject
-
-                    J_Specific_Form = J_Forms(F.Key)
-                    FormName = F.Key
-                    ControlName = String.Empty
-
-                    Prop = "Text"
-
-                    If J_Specific_Form.ContainsKey("Text") Or J_Specific_Form.ContainsKey("text") Or J_Specific_Form.ContainsKey("TEXT") Then
-
-                        If J_Specific_Form.ContainsKey("Text") Then Value = J_Specific_Form("Text")
-                        If J_Specific_Form.ContainsKey("text") Then Value = J_Specific_Form("text")
-                        If J_Specific_Form.ContainsKey("TEXT") Then Value = J_Specific_Form("TEXT")
-
-                        PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-
-                    End If
-
-                    If J_Specific_Form.ContainsKey("Controls") Or J_Specific_Form.ContainsKey("controls") Or J_Specific_Form.ContainsKey("CONTROLS") Then
-
-                        Dim J_Controls As New JObject
-
-                        If J_Specific_Form.ContainsKey("Controls") Then J_Controls = J_Specific_Form("Controls")
-                        If J_Specific_Form.ContainsKey("controls") Then J_Controls = J_Specific_Form("controls")
-                        If J_Specific_Form.ContainsKey("CONTROLS") Then J_Controls = J_Specific_Form("CONTROLS")
-
-                        For Each ctrl In J_Controls
-                            Try
-                                If ctrl.Key.Contains(".") Then
-                                    ControlName = ctrl.Key.Split(".")(0)
-                                    Prop = ctrl.Key.Split(".")(1)
-                                    Value = ctrl.Value
-                                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-                                Else
-                                    ControlName = ctrl.Key
-                                    Prop = "Text"
-                                    Value = ctrl.Value
-                                    PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-                                End If
-                            Catch
-                            End Try
-                        Next
-                    End If
-
-                Catch
-                End Try
-            Next
-
-            PopCtrlList.Add(New Tuple(Of String, String, String, String)(FormName, ControlName, Prop, Value))
-
-            Dim FList As New List(Of Form)
-            FList.Clear()
-
-            If [_Form] Is Nothing Then
-
-                For x As Integer = 0 To allForms.Count - 1
-                    With GetFormFromName(allForms(x))
-                        If .Visible Then
-                            FList.Add(GetFormFromName(allForms(x)))
-                            .Visible = False
-                        End If
-
-                        '.SuspendLayout()
-                        Populate(PopCtrlList, GetFormFromName(allForms(x)))
-                        .RightToLeftLayout = RightToLeft
-                        '.RightToLeft = If(RightToLeft, 1, 0)
-                        'RTL(My.Application.GetFormFromName(My.Application.allForms(x)))
-                        '.ResumeLayout()
-                        '.Refresh()
-                    End With
-
-                Next
-
-            Else
-                If [_Form].Visible Then
-                    [_Form].Visible = False
-                    FList.Add([_Form])
-                End If
-                Populate(PopCtrlList, [_Form])
-            End If
-
-            PopCtrlList.Clear()
-
-            For Each F In FList
-                F.Visible = True
-            Next
-
-            FList.Clear()
-        End If
-    End Sub
-
-    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)
-        'Item1 = FormName
-        'Item2 = ControlName
-        'Item3 = Prop
-        'Item4 = Value
-
-        For Each member In PopCtrlList
-            Try
-                If [Form].Name.ToLower = member.Item1.ToLower Then
-
-                    If member.Item2 = String.Empty Then
-                        '# Form
-                        Try : If member.Item3.ToLower = "text" Then [Form].SetText(member.Item4)
-                        Catch : End Try
-
-                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, [Form])
-                        Catch : End Try
-                    Else
-                        '# Control
-
-                        If Not String.IsNullOrEmpty(member.Item2) Then
-
-                            For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
-
-                                Try : If member.Item3.ToLower = "text" Then ctrl.SetText(member.Item4.ToString)
-                                Catch : End Try
-
-                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)
-                                Catch : End Try
-
-                                'ctrl.RightToLeft = If(RightToLeft, 1, 0)
-                                'ctrl.Refresh()
-                            Next
-
-                        End If
-
-                    End If
-                End If
-
-            Catch ex As Exception
-                Throw ex
-            End Try
-        Next
-
-    End Sub
-
     Sub RTL(Parent As Control)
 
         If RightToLeft Then
@@ -769,3 +664,12 @@ Public Class Localizer : Implements IDisposable
     End Function
 
 End Class
+
+Public Module FormLangHelper
+
+    <Extension()>
+    Public Sub LoadLanguage(Form As Form)
+        My.Lang.LoadFromStrings(Form)
+    End Sub
+
+End Module

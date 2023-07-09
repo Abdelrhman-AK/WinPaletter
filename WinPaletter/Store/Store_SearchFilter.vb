@@ -2,6 +2,7 @@
 Public Class Store_SearchFilter
 
     Private Sub Store_SearchFilter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadLanguage
         ApplyDarkMode(Me)
         Icon = Store.Icon
 
