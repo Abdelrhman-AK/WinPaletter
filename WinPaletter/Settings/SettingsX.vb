@@ -222,6 +222,9 @@ Public Class SettingsX
             If XenonCheckBox8.Checked Then
                 My.Lang = New Localizer
                 My.Lang.LoadLanguageFromJSON(My.Settings.Language.File)
+                For Each f As Form In My.Application.OpenForms
+                    f.LoadLanguage
+                Next
                 MainFrm.UpdateLegends()
             Else
                 MsgBox(My.Lang.LanguageRestart, MsgBoxStyle.Information)

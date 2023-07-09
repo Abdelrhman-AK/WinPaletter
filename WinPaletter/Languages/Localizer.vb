@@ -527,14 +527,21 @@ Public Class Localizer : Implements IDisposable
 
                             For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
 
-                                Try : If member.Item3.ToLower = "text" Then ctrl.SetText(member.Item4.ToString)
+                                Try : If member.Item3.ToLower = "text" Then
+                                        If member.Item1.ToLower <> Whatsnew.Name.ToLower Then
+                                            ctrl.SetText(member.Item4.ToString)
+                                        Else
+                                            If Not Whatsnew.XenonTabControl1.TabPages.Cast(Of TabPage)().SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                                And TypeOf ctrl IsNot TabPage Then
+                                                ctrl.SetText(member.Item4.ToString)
+                                            End If
+                                        End If
+                                    End If
                                 Catch : End Try
 
                                 Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)
                                 Catch : End Try
 
-                                'ctrl.RightToLeft = If(RightToLeft, 1, 0)
-                                'ctrl.Refresh()
                             Next
 
                         End If
@@ -599,7 +606,20 @@ Public Class Localizer : Implements IDisposable
                 For Each ctrl In GetAllControls(ins)
 
                     If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
-                        j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+
+                        If ins.Name.ToLower <> Whatsnew.Name.ToLower Then
+                            j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                        Else
+                            Try
+                                If Not ins.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                                And TypeOf ctrl IsNot TabPage Then
+                                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                                End If
+                            Catch
+                                j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                            End Try
+                        End If
+
                     End If
 
                     If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
@@ -624,40 +644,6 @@ Public Class Localizer : Implements IDisposable
         IO.File.WriteAllText(File, JSON_Overall.ToString())
     End Sub
 
-    Sub RTL(Parent As Control)
-
-        If RightToLeft Then
-
-            For Each XeTP As XenonTabControl In Parent.Controls.OfType(Of XenonTabControl)
-                XeTP.RightToLeft = If(RightToLeft, 1, 0)
-                XeTP.RightToLeftLayout = RightToLeft
-
-                For i = 0 To XeTP.TabPages.Count - 1
-                    XeTP.TabPages.Item(i).RightToLeft = If(RightToLeft, 1, 0)
-                    If XeTP.TabPages.Item(i).HasChildren Then RTL(XeTP.TabPages.Item(i))
-
-                    For Each Cx As Control In XeTP.TabPages.Item(i).Controls
-                        Cx.Left = XeTP.TabPages.Item(i).Width - Cx.Left - Cx.Width
-                        If Cx.HasChildren Then RTL(Cx)
-                    Next
-                Next
-            Next
-
-            For Each XeTP As Control In Parent.Controls
-                If TypeOf XeTP Is XenonGroupBox Or TypeOf XeTP Is Panel Or TypeOf XeTP Is ContainerControl Then
-                    XeTP.RightToLeft = If(RightToLeft, 1, 0)
-                    For Each Cx As Control In XeTP.Controls
-                        Cx.Left = XeTP.Width - Cx.Left - Cx.Width
-                        If Cx.HasChildren Then RTL(Cx)
-                    Next
-                End If
-            Next
-
-        End If
-
-
-    End Sub
-
     Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
         Dim cs = parent.Controls.OfType(Of Control)
         Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
@@ -669,7 +655,7 @@ Public Module FormLangHelper
 
     <Extension()>
     Public Sub LoadLanguage(Form As Form)
-        My.Lang.LoadFromStrings(Form)
+        If My.Settings.Language.Enabled AndAlso IO.File.Exists(My.Settings.Language.File) Then My.Lang.LoadFromStrings(Form)
     End Sub
 
 End Module

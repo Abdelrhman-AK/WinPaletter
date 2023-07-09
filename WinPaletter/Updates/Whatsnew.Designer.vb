@@ -63,6 +63,9 @@ Partial Class Whatsnew
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
+        Me.TabPage12 = New System.Windows.Forms.TabPage()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
@@ -81,6 +84,7 @@ Partial Class Whatsnew
         Me.TabPage4.SuspendLayout()
         Me.TabPage7.SuspendLayout()
         Me.TabPage8.SuspendLayout()
+        Me.TabPage12.SuspendLayout()
         Me.SuspendLayout()
         '
         'XenonAnimatedBox1
@@ -130,6 +134,7 @@ Partial Class Whatsnew
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTabControl1.Controls.Add(Me.TabPage3)
+        Me.XenonTabControl1.Controls.Add(Me.TabPage12)
         Me.XenonTabControl1.Controls.Add(Me.TabPage10)
         Me.XenonTabControl1.Controls.Add(Me.TabPage5)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
@@ -593,6 +598,41 @@ Partial Class Whatsnew
         Me.Label17.Text = "Bugs fixes"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'TabPage12
+        '
+        Me.TabPage12.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage12.Controls.Add(Me.Label24)
+        Me.TabPage12.Controls.Add(Me.Label25)
+        Me.TabPage12.Location = New System.Drawing.Point(154, 4)
+        Me.TabPage12.Name = "TabPage12"
+        Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage12.Size = New System.Drawing.Size(667, 368)
+        Me.TabPage12.TabIndex = 27
+        Me.TabPage12.Text = "Specific for 1.0.7.9"
+        '
+        'Label24
+        '
+        Me.Label24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(6, 48)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(656, 317)
+        Me.Label24.TabIndex = 44
+        Me.Label24.Text = resources.GetString("Label24.Text")
+        '
+        'Label25
+        '
+        Me.Label25.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.ForeColor = System.Drawing.Color.Crimson
+        Me.Label25.Location = New System.Drawing.Point(3, 3)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(661, 45)
+        Me.Label25.TabIndex = 43
+        Me.Label25.Text = "Specific for 1.0.7.9"
+        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'XenonButton3
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -682,6 +722,7 @@ Partial Class Whatsnew
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage8.ResumeLayout(False)
+        Me.TabPage12.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -728,4 +769,7 @@ Partial Class Whatsnew
     Friend WithEvents Label20 As Label
     Friend WithEvents Label23 As Label
     Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents TabPage12 As TabPage
+    Friend WithEvents Label24 As Label
+    Friend WithEvents Label25 As Label
 End Class

@@ -47,28 +47,28 @@ Public Class Lang_JSON_Update
             Dim J_New As JObject = JObject.Parse(_New_File.ReadToEnd)
             _New_File.Close()
 
-            '# Add the information from the New File
+            'Add information from the New File
             Dim J_Output As New JObject From {{"Information", J_New("Information")}}
 
-            '# Manage Global Strings
+            'Manage Global Strings
             Dim J_GlobalStrings As New JObject
             Dim x_old As JObject = J_Old("Global Strings")
             Dim x_new As JObject = J_New("Global Strings")
             For Each j In x_new.Properties
-                If x_old(j.Name) Is Nothing Then J_GlobalStrings.Add(j.Name, j.Value)       ' Add Missing Strings From New JSON
+                If x_old(j.Name) Is Nothing Then J_GlobalStrings.Add(j.Name, j.Value)       'Add Missing Strings From New JSON
             Next
 
             For Each j In x_old.Properties
                 If XenonCheckBox1.Checked Then
-                    If x_new.ContainsKey(j.Name) Then J_GlobalStrings.Add(j.Name, j.Value)  ' Add with exclusion of Old JSON
+                    If x_new.ContainsKey(j.Name) Then J_GlobalStrings.Add(j.Name, j.Value)  'Add with exclusion of Old JSON
                 Else
-                    J_GlobalStrings.Add(j.Name, j.Value)                                    ' Add Rest of items from Old JSON
+                    J_GlobalStrings.Add(j.Name, j.Value)                                    'Add Rest of items from Old JSON
                 End If
             Next
 
             J_Output.Add("Global Strings", J_GlobalStrings)
 
-            '# Manage Forms
+            'Manage Forms
             Dim J_Forms As New JObject
             x_old = J_Old("Forms Strings")
             x_new = J_New("Forms Strings")
@@ -76,7 +76,7 @@ Public Class Lang_JSON_Update
             For Each j In x_new.Properties
 
                 If x_old(j.Name) Is Nothing Then
-                    J_Forms.Add(j.Name, j.Value)                                         ' Add Missing Forms From New JSON
+                    J_Forms.Add(j.Name, j.Value)                                         'Add Missing Forms From New JSON
 
                 Else
                     Dim c_old As JObject = x_old(j.Name)("Controls")
@@ -84,11 +84,11 @@ Public Class Lang_JSON_Update
                     Dim c As New JObject
 
                     For Each jj In c_new.Properties
-                        If c_old(jj.Name) Is Nothing Then c.Add(jj.Name, jj.Value)       ' Add Missing Controls From New JSON
+                        If c_old(jj.Name) Is Nothing Then c.Add(jj.Name, jj.Value)       'Add Missing Controls From New JSON
                     Next
 
                     For Each jj In c_old.Properties
-                        c.Add(jj.Name, jj.Value)                                         ' Add Rest of controls from Old JSON
+                        c.Add(jj.Name, jj.Value)                                         'Add Rest of controls from Old JSON
                     Next
 
                     x_new(j.Name)("Controls") = c
@@ -98,8 +98,7 @@ Public Class Lang_JSON_Update
 
             Next
 
-            ' Add Modification to the newly created JSON
-
+            'Add Modification to the newly created JSON
             For Each j In x_new.Properties
                 If Not J_Forms.ContainsKey(j.Name) Then J_Forms.Add(j.Name, j.Value)
             Next
