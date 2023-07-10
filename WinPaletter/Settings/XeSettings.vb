@@ -75,20 +75,17 @@ Public Class XeSettings
 
         Structure FileTypeMgr
             Public AutoAddExt As Boolean
-            Public DragAndDropPreview As Boolean
             Public OpeningPreviewInApp_or_AppliesIt As Boolean
             Public CompressThemeFile As Boolean
 
             Sub Load()
                 AutoAddExt = GetReg(REG_FileTypeManagement, "AutoAddExt", True)
-                DragAndDropPreview = GetReg(REG_FileTypeManagement, "DragAndDropPreview", True)
                 OpeningPreviewInApp_or_AppliesIt = GetReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", True)
                 CompressThemeFile = GetReg(REG_FileTypeManagement, "CompressThemeFile", True)
             End Sub
 
             Sub Save()
                 EditReg(REG_FileTypeManagement, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord)
-                EditReg(REG_FileTypeManagement, "DragAndDropPreview", DragAndDropPreview, RegistryValueKind.DWord)
                 EditReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord)
                 EditReg(REG_FileTypeManagement, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord)
             End Sub
@@ -390,7 +387,6 @@ Public Class XeSettings
 
     Public FileTypeManagement As New Structures.FileTypeMgr With {
         .AutoAddExt = True,
-        .DragAndDropPreview = True,
         .OpeningPreviewInApp_or_AppliesIt = True,
         .CompressThemeFile = True
     }

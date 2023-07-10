@@ -189,6 +189,20 @@
         s8G+j39vWFjYvwD6pNp+6eQ0EwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Label24.Text" xml:space="preserve">
+    <value>The same as 1.0.7.7 and 1.0.7.8 with a new feature, improvements and some bugs fixes:
+
+• New feature: WinPaletter settings read/write mechanism is re-written to be more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious.
+• Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
+• Improvements in loading language file (less memory usage and quick application loading time)
+• Language items/texts of What's new labels will be neither loaded nor exported in/from it to avoid confusion between newly added labels' texts and old language translation
+• Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
+• Embedded assemblies are now compressed (to try to make WinPaletter with a small file size as much as possible)
+• Fix bug of dark/light mode loading in Language add snippet form
+• Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
+• Fix fonts size trouble with high DPI
+• Fix theme apply error on applying Windows Effects</value>
+  </data>
   <data name="PictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -416,20 +430,6 @@
 • Fix wrong preview of color on Windows 11/10 taskbar
 
 • Fix application crash on starting WinPaletter with classic theme enabled</value>
-  </data>
-  <data name="Label24.Text" xml:space="preserve">
-    <value>The same as 1.0.7.7 and 1.0.7.8 with a new feature, improvements and some bugs fixes:
-
-- New feature: WinPaletter settings read/write mechanism is re-written to be more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious.
-- Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
-- Improvements in loading language file (less memory usage and quick application loading time)
-- Language (Text) of Whats new items labels will be neither loaded in nor exported from only "Whats new" form labels to avoid confusion between newly added labels' texts and old language translation
-- Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
-- Embedded assemblies are now compressed (to try to make WinPaletter with a small file size as much as possible)
-- Fix bug of dark/ligh mode loading in Language add snippet form
-- Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
-- Fix fonts size trouble with high DPI
-- Fix theme apply error on applying Windows Effects</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

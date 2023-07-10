@@ -30,7 +30,6 @@ Public Class SettingsX
         With Sets
             XenonCheckBox1.Checked = .FileTypeManagement.AutoAddExt
 
-            XenonCheckBox3.Checked = .FileTypeManagement.DragAndDropPreview
             XenonRadioButton1.Checked = .FileTypeManagement.OpeningPreviewInApp_or_AppliesIt
             XenonRadioButton2.Checked = Not .FileTypeManagement.OpeningPreviewInApp_or_AppliesIt
 
@@ -246,7 +245,6 @@ Public Class SettingsX
     Sub Write(Sets As XeSettings, Mode As XeSettings.Mode, Optional File As String = "")
         With Sets
             .FileTypeManagement.AutoAddExt = XenonCheckBox1.Checked
-            .FileTypeManagement.DragAndDropPreview = XenonCheckBox3.Checked
             .FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = XenonRadioButton1.Checked
             .ThemeApplyingBehavior.AutoRestartExplorer = XenonCheckBox2.Checked
             .ThemeApplyingBehavior.AutoApplyCursors = XenonCheckBox7.Checked
@@ -323,7 +321,6 @@ Public Class SettingsX
 
         With My.Settings
             If .FileTypeManagement.AutoAddExt <> XenonCheckBox1.Checked Then Changed = True
-            If .FileTypeManagement.DragAndDropPreview <> XenonCheckBox3.Checked Then Changed = True
             If .FileTypeManagement.OpeningPreviewInApp_or_AppliesIt <> XenonRadioButton1.Checked Then Changed = True
             If .ThemeApplyingBehavior.AutoRestartExplorer <> XenonCheckBox2.Checked Then Changed = True
             If .ThemeApplyingBehavior.AutoApplyCursors <> XenonCheckBox7.Checked Then Changed = True
