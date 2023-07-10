@@ -10,8 +10,8 @@
 
 | Plan                                                   | Status                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Sounds                                                 | :white_check_mark: Done (Version 1.0.7.7)                              |
-| Screen Savers                                          | :white_check_mark: Done (Version 1.0.7.7)                              |
+| Sounds                                                 | :white_check_mark: Done (Beta 1.0.7.7)                                 |
+| Screen Savers                                          | :white_check_mark: Done (Beta 1.0.7.7)                                 |
 | WinPaletter Store for themes                           | :white_check_mark: Done (Beta: 1.0.7.7)                                |
 | Sync. preview between ExplorerPatcher & Windows 11     | :white_check_mark: Done (Version 1.0.7.3)                              | 
 | Customize Windows Switcher (Alt+Tab) Types             | :white_check_mark: Done (Version 1.0.7.3)                              | 
