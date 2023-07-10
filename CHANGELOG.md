@@ -2,6 +2,40 @@
 
 ---
 
+### 1.0.7.9
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 10 Jul 2023  |
+
+> **What's New?**
+
+Note: Opening this new release after using old releases will reset your WinPaletter settings as its mechanism has been changed to a new better one. Know what you have changed in WinPaletter settings before using this release.
+
+The same as [1.0.7.7](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1077) and [1.0.7.8](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md#1078) with a new feature, improvements and some bugs fixes:
+- **New feature:** WinPaletter settings read/write mechanism is re-written to be more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious.
+
+- Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
+- Improvements in loading language file (less memory usage and quick application loading time)
+- Language items/texts of What's new labels will be neither loaded nor exported in/from it to avoid confusion between newly added labels' texts and old language translation
+- Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
+- Embedded assemblies (references) are now compressed (to try to make WinPaletter with a small file size as much as possible)
+- Fix bug of dark/light mode loading in Language add snippet form
+- Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
+- Fix fonts size trouble with high DPI #157 #160
+- Fix theme apply error on applying Windows Effects #163
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.6`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.6...v1.0.7.9) |
+| Previous Beta   | `1.0.7.8`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.8...v1.0.7.9) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.7.9) |
+
+---
+
 ### 1.0.7.8
 
 > **Info:**
