@@ -960,7 +960,7 @@ Partial Class Store
         Me.ActionCenter.AppBackground = System.Drawing.Color.Empty
         Me.ActionCenter.AppUnderline = System.Drawing.Color.Empty
         Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ActionCenter.BackColor2 = System.Drawing.Color.Empty
+        Me.ActionCenter.Background2 = System.Drawing.Color.Empty
         Me.ActionCenter.BackColorAlpha = 50
         Me.ActionCenter.BlurPower = 8
         Me.ActionCenter.DarkMode = True
@@ -989,7 +989,7 @@ Partial Class Store
         Me.start.AppBackground = System.Drawing.Color.Empty
         Me.start.AppUnderline = System.Drawing.Color.Empty
         Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.start.BackColor2 = System.Drawing.Color.Empty
+        Me.start.Background2 = System.Drawing.Color.Empty
         Me.start.BackColorAlpha = 150
         Me.start.BlurPower = 7
         Me.start.DarkMode = True
@@ -1018,7 +1018,7 @@ Partial Class Store
         Me.taskbar.AppBackground = System.Drawing.Color.Empty
         Me.taskbar.AppUnderline = System.Drawing.Color.Empty
         Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.taskbar.BackColor2 = System.Drawing.Color.Empty
+        Me.taskbar.Background2 = System.Drawing.Color.Empty
         Me.taskbar.BackColorAlpha = 130
         Me.taskbar.BlurPower = 12
         Me.taskbar.DarkMode = True

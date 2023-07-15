@@ -250,7 +250,7 @@ Public Class ColorPickerDlg
                             If _Conditions.BackColor1 Then
                                 .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
                             ElseIf _Conditions.BackColor2 Then
-                                .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
+                                .Background2 = Color.FromArgb(.Background2.A, ColorEditorManager1.Color)
                             Else
                                 Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                             End If
@@ -268,7 +268,7 @@ Public Class ColorPickerDlg
                         If _Conditions.BackColor1 Then
                             .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
                         ElseIf _Conditions.BackColor2 Then
-                            .BackColor2 = Color.FromArgb(.BackColor2.A, ColorEditorManager1.Color)
+                            .Background2 = Color.FromArgb(.Background2.A, ColorEditorManager1.Color)
                         Else
                             Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         End If

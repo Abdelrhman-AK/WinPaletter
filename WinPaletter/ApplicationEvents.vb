@@ -39,72 +39,72 @@ Namespace My
         Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
         ''' <summary>
-        ''' Boolean Represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
+        ''' A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
         ''' </summary>
         Public StartedWithClassicTheme As Boolean = False
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows XP
+        ''' A boolean that represents if OS is Windows XP
         ''' </summary>
         Public ReadOnly WXP As Boolean = Computer.Info.OSFullName.ToLower.Contains("xp")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows Vista
+        ''' A boolean that represents if OS is Windows Vista
         ''' </summary>
         Public ReadOnly WVista As Boolean = Computer.Info.OSFullName.ToLower.Contains("vista")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 7 or not
+        ''' A boolean that represents if OS is Windows 7 or not
         ''' </summary>
         Public ReadOnly W7 As Boolean = Computer.Info.OSFullName.Contains("7")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 8/8.1 or not
+        ''' A boolean that represents if OS is Windows 8/8.1 or not
         ''' </summary>
         Public ReadOnly W8 As Boolean = Computer.Info.OSFullName.Contains("8")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 10 or not
+        ''' A boolean that represents if OS is Windows 10 or not
         ''' </summary>
         Public ReadOnly W10 As Boolean = Computer.Info.OSFullName.Contains("10")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 11 or not
+        ''' A boolean that represents if OS is Windows 11 or not
         ''' </summary>
         Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 12 or not (For near future! :))
+        ''' A boolean that represents if OS is Windows 12 or not (For near future! :))
         ''' </summary>
         Public ReadOnly W12 As Boolean = Computer.Info.OSFullName.Contains("12")
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 10 (19H2=1909) and Higher or not
+        ''' A boolean that represents if OS is Windows 10 (19H2=1909) and Higher or not
         ''' </summary>
         Public ReadOnly W10_1909 As Boolean = (W12 OrElse W11 OrElse (W10 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
 
         ''' <summary>
-        ''' Boolean Represents if OS is Windows 11 Build 22523 and Higher or not
+        ''' A boolean that represents if OS is Windows 11 Build 22523 and Higher or not
         ''' </summary>
         Public ReadOnly W11_22523 As Boolean = (W12 OrElse (W11 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", 0).ToString() >= 22523))
 
         ''' <summary>
-        ''' Class Represents AnimatorNS
+        ''' A class that represents AnimatorNS
         ''' </summary>
         Public WithEvents Animator As AnimatorNS.Animator
 
         ''' <summary>
-        ''' Class Represents WinPaletter's Settings
+        ''' A class that represents WinPaletter's Settings
         ''' </summary>
         Public [Settings] As New XeSettings(XeSettings.Mode.Registry)
 
         ''' <summary>
-        ''' Class Represents WinPaletter's Language Strings (Loaded at application startup)
+        ''' A class that represents WinPaletter's Language Strings (Loaded at application startup)
         ''' </summary>
         Public Lang As New Localizer
 
         ''' <summary>
-        ''' Current Applied Wallpaper
+        ''' Current applied wallpaper
         ''' </summary>
         Public Wallpaper, Wallpaper_Unscaled As Bitmap
 
@@ -134,7 +134,7 @@ Namespace My
         Public Lang_IL As New ImageList With {.ImageSize = New Size(16, 16), .ColorDepth = ColorDepth.Depth32Bit}
 
         ''' <summary>
-        ''' Class contains info about ExplorerPatcher settings
+        ''' A class that contains info about ExplorerPatcher settings
         ''' </summary>
         Public EP As New ExplorerPatcher
 
@@ -147,7 +147,7 @@ Namespace My
         ''' Gets if WinPaletter's current version is designed as Beta or not
         ''' <br>Don't forget to make it beta when you design a beta one</br>
         ''' </summary>
-        Public ReadOnly IsBeta As Boolean = True
+        Public ReadOnly IsBeta As Boolean = False
 
         ''' <summary>
         ''' CP is a short name for Color Palette (It was intentionally for Colors only in WinPaletter 1.0.0.0, not it include various parameters (not colors only)

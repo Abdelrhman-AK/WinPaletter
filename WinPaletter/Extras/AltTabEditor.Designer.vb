@@ -355,7 +355,7 @@ Partial Class AltTabEditor
         Me.XenonWinElement1.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.XenonWinElement1.AppBackground = System.Drawing.Color.Empty
         Me.XenonWinElement1.AppUnderline = System.Drawing.Color.Empty
-        Me.XenonWinElement1.BackColor2 = System.Drawing.Color.Empty
+        Me.XenonWinElement1.Background2 = System.Drawing.Color.Empty
         Me.XenonWinElement1.BackColorAlpha = 130
         Me.XenonWinElement1.BlurPower = 8
         Me.XenonWinElement1.DarkMode = True

@@ -313,20 +313,20 @@ Public Class PreviewHelpers
                                 AC_Color = Color.FromArgb(28, 28, 28)
 
                             Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-                                TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
+                                TB_Color = Color.FromArgb(Taskbar.Background.A, [CP].Windows11.Color_Index5)
                                 S_Color = Color.FromArgb(28, 28, 28)
                                 AC_Color = Color.FromArgb(28, 28, 28)
 
                             Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-                                TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
+                                TB_Color = Color.FromArgb(Taskbar.Background.A, [CP].Windows11.Color_Index5)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
-                                    S_Color = Color.FromArgb(Start.BackColor.A, [CP].Windows11.Color_Index4)
+                                    S_Color = Color.FromArgb(Start.Background.A, [CP].Windows11.Color_Index4)
                                 Else
-                                    S_Color = Color.FromArgb(Start.BackColor.A, [CP].Windows11.Color_Index5)
+                                    S_Color = Color.FromArgb(Start.Background.A, [CP].Windows11.Color_Index5)
                                 End If
 
-                                AC_Color = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index5)
+                                AC_Color = Color.FromArgb(ActionCenter.Background.A, [CP].Windows11.Color_Index5)
 
                         End Select
 
@@ -367,20 +367,20 @@ Public Class PreviewHelpers
                                 AC_Color = Color.FromArgb(255, 255, 255)
 
                             Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-                                TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
+                                TB_Color = Color.FromArgb(Taskbar.Background.A, [CP].Windows11.Color_Index5)
                                 S_Color = Color.FromArgb(255, 255, 255)
                                 AC_Color = Color.FromArgb(255, 255, 255)
 
                             Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-                                TB_Color = Color.FromArgb(Taskbar.BackColor.A, [CP].Windows11.Color_Index5)
+                                TB_Color = Color.FromArgb(Taskbar.Background.A, [CP].Windows11.Color_Index5)
 
                                 If ExplorerPatcher.IsAllowed And My.EP.UseStart10 Then
-                                    S_Color = Color.FromArgb(Start.BackColor.A, [CP].Windows11.Color_Index4)
+                                    S_Color = Color.FromArgb(Start.Background.A, [CP].Windows11.Color_Index4)
                                 Else
-                                    S_Color = Color.FromArgb(Start.BackColor.A, [CP].Windows11.Color_Index0)
+                                    S_Color = Color.FromArgb(Start.Background.A, [CP].Windows11.Color_Index0)
                                 End If
 
-                                AC_Color = Color.FromArgb(ActionCenter.BackColor.A, [CP].Windows11.Color_Index0)
+                                AC_Color = Color.FromArgb(ActionCenter.Background.A, [CP].Windows11.Color_Index0)
 
                         End Select
 
@@ -404,9 +404,9 @@ Public Class PreviewHelpers
                 Taskbar.BlurPower = TB_Blur
 
                 If AnimateColorChange Then
-                    Visual.FadeColor(Taskbar, "BackColor", Taskbar.BackColor, TB_Color, Steps, Delay)
-                    Visual.FadeColor(Start, "BackColor", Start.BackColor, S_Color, Steps, Delay)
-                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, AC_Color, Steps, Delay)
+                    Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TB_Color, Steps, Delay)
+                    Visual.FadeColor(Start, "Background", Start.Background, S_Color, Steps, Delay)
+                    Visual.FadeColor(ActionCenter, "Background", ActionCenter.Background, AC_Color, Steps, Delay)
                     Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, AC_Normal, Steps, Delay)
                     Visual.FadeColor(ActionCenter, "ActionCenterButton_Hover", ActionCenter.ActionCenterButton_Hover, AC_Hover, Steps, Delay)
                     Visual.FadeColor(ActionCenter, "ActionCenterButton_Pressed", ActionCenter.ActionCenterButton_Pressed, AC_Pressed, Steps, Delay)
@@ -415,9 +415,9 @@ Public Class PreviewHelpers
                     Visual.FadeColor(Link_preview, "ForeColor", Link_preview.ForeColor, Link_preview_Color, Steps, Delay)
                     Visual.FadeColor(settings_label, "ForeColor", settings_label.ForeColor, If([CP].Windows11.AppMode_Light, Color.Black, Color.White), Steps, Delay)
                 Else
-                    Taskbar.BackColor = TB_Color
-                    Start.BackColor = S_Color
-                    ActionCenter.BackColor = AC_Color
+                    Taskbar.Background = TB_Color
+                    Start.Background = S_Color
+                    ActionCenter.Background = AC_Color
                     ActionCenter.ActionCenterButton_Normal = AC_Normal
                     ActionCenter.ActionCenterButton_Hover = AC_Hover
                     ActionCenter.ActionCenterButton_Pressed = AC_Pressed
@@ -648,10 +648,10 @@ Public Class PreviewHelpers
                 Taskbar.BlurPower = TB_Blur
 
                 If AnimateColorChange Then
-                    Visual.FadeColor(Taskbar, "BackColor", Taskbar.BackColor, TB_Color, Steps, Delay)
+                    Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TB_Color, Steps, Delay)
                     Visual.FadeColor(Taskbar, "StartColor", Taskbar.StartColor, TB_StartBtnColor, Steps, Delay)
-                    Visual.FadeColor(Start, "BackColor", Start.BackColor, S_Color, Steps, Delay)
-                    Visual.FadeColor(ActionCenter, "BackColor", ActionCenter.BackColor, AC_Color, Steps, Delay)
+                    Visual.FadeColor(Start, "Background", Start.Background, S_Color, Steps, Delay)
+                    Visual.FadeColor(ActionCenter, "Background", ActionCenter.Background, AC_Color, Steps, Delay)
                     Visual.FadeColor(Taskbar, "AppBackground", Taskbar.AppBackground, TB_AppBack_Color, Steps, Delay)
                     Visual.FadeColor(ActionCenter, "LinkColor", ActionCenter.LinkColor, AC_LinkColor, Steps, Delay)
                     Visual.FadeColor(Taskbar, "AppUnderline", Taskbar.AppUnderline, TB_UL_Color, Steps, Delay)
@@ -659,10 +659,10 @@ Public Class PreviewHelpers
                     Visual.FadeColor(Link_preview, "ForeColor", Link_preview.ForeColor, Link_preview_Color, Steps, Delay)
                     Visual.FadeColor(ActionCenter, "ActionCenterButton_Normal", ActionCenter.ActionCenterButton_Normal, AC_Normal, Steps, Delay)
                 Else
-                    Taskbar.BackColor = TB_Color
+                    Taskbar.Background = TB_Color
                     Taskbar.StartColor = TB_StartBtnColor
-                    Start.BackColor = S_Color
-                    ActionCenter.BackColor = AC_Color
+                    Start.Background = S_Color
+                    ActionCenter.Background = AC_Color
                     Taskbar.AppBackground = TB_AppBack_Color
                     ActionCenter.LinkColor = AC_LinkColor
                     Taskbar.AppUnderline = TB_UL_Color
@@ -684,9 +684,9 @@ Public Class PreviewHelpers
                 End Select
 
                 If AnimateColorChange Then
-                    Visual.FadeColor(Taskbar, "BackColor", Taskbar.BackColor, [CP].Windows8.ColorizationColor, Steps, Delay)
+                    Visual.FadeColor(Taskbar, "Background", Taskbar.Background, [CP].Windows8.ColorizationColor, Steps, Delay)
                 Else
-                    Taskbar.BackColor = [CP].Windows8.ColorizationColor
+                    Taskbar.Background = [CP].Windows8.ColorizationColor
                 End If
 
                 Taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
@@ -702,37 +702,37 @@ Public Class PreviewHelpers
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
-                            .BackColor = [CP].Windows7.ColorizationColor
-                            .BackColor2 = [CP].Windows7.ColorizationAfterglow
+                            .Background = [CP].Windows7.ColorizationColor
+                            .Background2 = [CP].Windows7.ColorizationAfterglow
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With Taskbar
                             .BackColorAlpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
                             .Win7GlowBal = [CP].Windows7.ColorizationAfterglowBalance
-                            .BackColor = [CP].Windows7.ColorizationColor
-                            .BackColor2 = [CP].Windows7.ColorizationAfterglow
+                            .Background = [CP].Windows7.ColorizationColor
+                            .Background2 = [CP].Windows7.ColorizationAfterglow
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
                     Case CP.Structures.Windows7.Themes.AeroOpaque
                         With Taskbar
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
-                            .BackColor = [CP].Windows7.ColorizationColor
-                            .BackColor2 = [CP].Windows7.ColorizationColor
+                            .Background = [CP].Windows7.ColorizationColor
+                            .Background2 = [CP].Windows7.ColorizationColor
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
                         With Start
                             .BackColorAlpha = [CP].Windows7.ColorizationColorBalance
-                            .BackColor = [CP].Windows7.ColorizationColor
-                            .BackColor2 = [CP].Windows7.ColorizationColor
+                            .Background = [CP].Windows7.ColorizationColor
+                            .Background2 = [CP].Windows7.ColorizationColor
                             .NoisePower = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
 
                     Case CP.Structures.Windows7.Themes.Basic
-                        Taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        Taskbar.Background = Color.FromArgb(166, 190, 218)
                         Taskbar.BackColorAlpha = 100
-                        Start.BackColor = Color.FromArgb(166, 190, 218)
+                        Start.Background = Color.FromArgb(166, 190, 218)
                         Start.BackColorAlpha = 100
                         Start.NoisePower = 0
                         Taskbar.NoisePower = 0
@@ -749,16 +749,16 @@ Public Class PreviewHelpers
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
                             .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
                             '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                            .BackColor = [CP].WindowsVista.ColorizationColor
-                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .Background = [CP].WindowsVista.ColorizationColor
+                            .Background2 = [CP].WindowsVista.ColorizationColor
                             .NoisePower = 100
                         End With
                         With Taskbar
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 180
                             .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
                             '.Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                            .BackColor = [CP].WindowsVista.ColorizationColor
-                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .Background = [CP].WindowsVista.ColorizationColor
+                            .Background2 = [CP].WindowsVista.ColorizationColor
                             .NoisePower = 100
                         End With
 
@@ -766,21 +766,21 @@ Public Class PreviewHelpers
                     Case CP.Structures.Windows7.Themes.AeroOpaque
                         With Taskbar
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
-                            .BackColor = [CP].WindowsVista.ColorizationColor
-                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .Background = [CP].WindowsVista.ColorizationColor
+                            .Background2 = [CP].WindowsVista.ColorizationColor
                             .NoisePower = 100
                         End With
                         With Start
                             .BackColorAlpha = ([CP].WindowsVista.Alpha / 255) * 200
-                            .BackColor = [CP].WindowsVista.ColorizationColor
-                            .BackColor2 = [CP].WindowsVista.ColorizationColor
+                            .Background = [CP].WindowsVista.ColorizationColor
+                            .Background2 = [CP].WindowsVista.ColorizationColor
                             .NoisePower = 100
                         End With
 
                     Case CP.Structures.Windows7.Themes.Basic
-                        Taskbar.BackColor = Color.FromArgb(166, 190, 218)
+                        Taskbar.Background = Color.FromArgb(166, 190, 218)
                         Taskbar.BackColorAlpha = 100
-                        Start.BackColor = Color.FromArgb(166, 190, 218)
+                        Start.Background = Color.FromArgb(166, 190, 218)
                         Start.BackColorAlpha = 100
                         Start.NoisePower = 0
                         Taskbar.NoisePower = 0
@@ -792,14 +792,6 @@ Public Class PreviewHelpers
         Taskbar.SuspendRefresh = False
         Start.SuspendRefresh = False
         ActionCenter.SuspendRefresh = False
-
-        Taskbar.ProcessBack()
-        Start.ProcessBack()
-        ActionCenter.ProcessBack()
-
-        Taskbar.NoiseBack()
-        Start.NoiseBack()
-        ActionCenter.NoiseBack()
 
         Taskbar.Refresh()
         Start.Refresh()
@@ -953,29 +945,27 @@ Public Class PreviewHelpers
 
                 End Select
 
-                Try
-                    If WXP_VS_ReplaceColors And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
-                        If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                            Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
-                            CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
-                        End If
+                If WXP_VS_ReplaceColors And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
+                    If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                        Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
+                        CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
                     End If
+                End If
 
-                    If WXP_VS_ReplaceMetrics And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
-                        If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                            Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
-                            CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
-                        End If
+                If WXP_VS_ReplaceMetrics And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
+                    If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                        Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
+                        CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
                     End If
+                End If
 
-                    If WXP_VS_ReplaceFonts And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
-                        If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                            Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
-                            CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
-                        End If
+                If WXP_VS_ReplaceFonts And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
+                    If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
+                        Dim vs As New Devcorp.Controls.VisualStyles.VisualStyleFile(My.VS)
+                        CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
                     End If
-                Catch
-                End Try
+                End If
+
         End Select
         XenonWindow1.Preview = XenonWindow_Style
         Start.Style = Start_Style
@@ -1208,6 +1198,8 @@ Public Class PreviewHelpers
         Taskbar.ProcessBack()
         Start.ProcessBack()
         ActionCenter.ProcessBack()
+        XenonWindow1.ProcessBack()
+        XenonWindow2.ProcessBack()
 
         Taskbar.Refresh()
         Start.Refresh()

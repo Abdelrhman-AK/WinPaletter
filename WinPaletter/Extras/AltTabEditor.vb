@@ -53,12 +53,12 @@ Public Class AltTabEditor
                     Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
                         XenonWinElement1.BackColor = My.CP.Windows8.PersonalColors_Background
-                        XenonWinElement1.BackColor2 = My.CP.Windows8.PersonalColors_Background
+                        XenonWinElement1.Background2 = My.CP.Windows8.PersonalColors_Background
 
                     Case CP.Structures.Windows7.Themes.AeroLite
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8AeroLite
                         XenonWinElement1.BackColor = My.CP.Win32.Window
-                        XenonWinElement1.BackColor2 = My.CP.Win32.Hilight
+                        XenonWinElement1.Background2 = My.CP.Win32.Hilight
                         XenonWinElement1.LinkColor = My.CP.Win32.ButtonText
                         XenonWinElement1.ForeColor = My.CP.Win32.WindowText
 
@@ -78,7 +78,7 @@ Public Class AltTabEditor
                 End Select
 
                 XenonWinElement1.BackColor = My.CP.Windows7.ColorizationColor
-                XenonWinElement1.BackColor2 = My.CP.Windows7.ColorizationAfterglow
+                XenonWinElement1.Background2 = My.CP.Windows7.ColorizationAfterglow
                 XenonWinElement1.BackColorAlpha = My.CP.Windows7.ColorizationBlurBalance
                 XenonWinElement1.Win7ColorBal = My.CP.Windows7.ColorizationColorBalance
                 XenonWinElement1.Win7GlowBal = My.CP.Windows7.ColorizationAfterglowBalance

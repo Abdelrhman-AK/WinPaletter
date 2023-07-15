@@ -749,23 +749,28 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Case Themes.LunaBlue
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
+                            My.StartedWithClassicTheme = False
 
                         Case Themes.LunaOliveGreen
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
+                            My.StartedWithClassicTheme = False
 
                         Case Themes.LunaSilver
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
+                            My.StartedWithClassicTheme = False
 
                         Case Themes.Classic
                             UxTheme.EnableTheming(0)
+                            My.StartedWithClassicTheme = True
 
                         Case Themes.Custom
 
                             If IO.File.Exists(ThemeFile) AndAlso (IO.Path.GetExtension(ThemeFile) = ".theme" Or IO.Path.GetExtension(ThemeFile) = ".msstyles") Then
                                 UxTheme.EnableTheming(1)
                                 UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0)
+                                My.StartedWithClassicTheme = False
                             End If
 
                     End Select
@@ -1334,6 +1339,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase Then
                     DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard")
                 End If
+
 
             End Sub
 
@@ -6119,7 +6125,16 @@ Start:
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
             If LogonUI7.Grayscale Then bmp = bmp.Grayscale
-            If LogonUI7.Blur Then bmp = bmp.Blur(LogonUI7.Blur_Intensity)
+
+            If LogonUI7.Blur Then
+                Dim imgF As New ImageProcessor.ImageFactory
+                Using b As New Bitmap(bmp)
+                    imgF.Load(b)
+                    imgF.GaussianBlur(LogonUI7.Blur_Intensity)
+                    bmp = imgF.Image
+                End Using
+            End If
+
             If LogonUI7.Noise Then bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
             bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
         End If

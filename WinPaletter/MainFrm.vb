@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Net
 Imports System.Text
 Imports Devcorp.Controls.VisualStyles
@@ -34,15 +35,16 @@ Public Class MainFrm
             End If
         End If
 
+        My.Wallpaper = My.Application.FetchSuitableWallpaper([CP], My.PreviewStyle)
+        pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview_classic.BackgroundImage = My.Wallpaper
+
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
                            XenonWindow1, XenonWindow2, Panel3, lnk_preview,
                            ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
                            WXP_VS_ReplaceColors.Checked, WXP_VS_ReplaceMetrics.Checked, WXP_VS_ReplaceFonts.Checked)
 
         XenonButton23.Visible = (My.PreviewStyle = WindowStyle.W7)
-
-        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper([CP], My.PreviewStyle)
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         AdjustPreview_ModernOrClassic([CP], My.PreviewStyle, tabs_preview, WXP_Alert2)
 
@@ -263,8 +265,9 @@ Public Class MainFrm
     End Sub
     Public Sub Update_Wallpaper_Preview()
         Cursor = Cursors.AppStarting
-        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper(My.CP, My.PreviewStyle)
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
+        My.Wallpaper = My.Application.FetchSuitableWallpaper(My.CP, My.PreviewStyle)
+        pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview_classic.BackgroundImage = My.Wallpaper
         ApplyColorsToElements(My.CP)
         ApplyCPValues(My.CP)
         ApplyStylesToElements(My.CP, False)
@@ -2036,6 +2039,8 @@ Public Class MainFrm
         End If
 
         [CP].Save(CP.CP_Type.Registry, "", If(My.Settings.ThemeLog.Enabled, TreeView1, Nothing))
+
+        If My.PreviewStyle = WindowStyle.WXP Then Update_Wallpaper_Preview()
 
         My.CP_Original = New CP(CP_Type.Registry)
 

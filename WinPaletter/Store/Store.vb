@@ -37,15 +37,17 @@ Public Class Store
 #Region "Preview Subs"
 
     Sub Adjust_Preview(CP As CP)
+
+        My.Wallpaper = My.Application.FetchSuitableWallpaper([CP], My.PreviewStyle)
+        pnl_preview.BackgroundImage = My.Wallpaper
+        pnl_preview_classic.BackgroundImage = My.Wallpaper
+
         ApplyWinElementsColors([CP], My.PreviewStyle, False, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
         ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2)
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
                            XenonWindow1, XenonWindow2, Panel3, lnk_preview,
                            ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
                            MainFrm.WXP_VS_ReplaceColors.Checked, MainFrm.WXP_VS_ReplaceMetrics.Checked, MainFrm.WXP_VS_ReplaceFonts.Checked)
-
-        pnl_preview.BackgroundImage = My.Application.FetchSuitableWallpaper([CP], My.PreviewStyle)
-        pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         AdjustPreview_ModernOrClassic([CP], My.PreviewStyle, tabs_preview, WXP_Alert2)
     End Sub

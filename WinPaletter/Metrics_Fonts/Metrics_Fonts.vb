@@ -18,10 +18,14 @@ Public Class Metrics_Fonts
         Classic_Preview3.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
 
-        CopyCatPreview(XenonWindow1, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow2, MainFrm.XenonWindow2)
-        CopyCatPreview(XenonWindow4, MainFrm.XenonWindow1)
-        CopyCatPreview(XenonWindow6, MainFrm.XenonWindow1)
+        LoadLanguage
+        ApplyDarkMode(Me)
+        ApplyFromCP(My.CP)
+
+        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1, True)
+        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2, True)
+        XenonWindow4.CopycatFrom(MainFrm.XenonWindow1, True)
+        XenonWindow6.CopycatFrom(MainFrm.XenonWindow1, True)
 
         SetClassicWindowColors(My.CP, RetroWindow1)
         SetClassicWindowColors(My.CP, RetroWindow2, False)
@@ -45,10 +49,6 @@ Public Class Metrics_Fonts
         Label14.ForeColor = My.CP.Win32.ButtonText
         Refresh17BitPreference()
 
-        LoadLanguage
-        ApplyDarkMode(Me)
-        ApplyFromCP(My.CP)
-
         DoubleBuffer
 
         XenonFakeIcon1.Title = "Icon 1"
@@ -59,7 +59,7 @@ Public Class Metrics_Fonts
         Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
         Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
 
-        If condition0 Or condition2 Then
+        If condition0 Or condition1 Or condition2 Then
             tabs_preview_1.SelectedIndex = 1
             tabs_preview_2.SelectedIndex = 1
             tabs_preview_3.SelectedIndex = 1
@@ -133,27 +133,6 @@ Public Class Metrics_Fonts
         ToolStripMenuItem1.ForeColor = My.CP.Win32.MenuText
         ToolStripMenuItem4.ForeColor = My.CP.Win32.MenuText
 
-    End Sub
-
-    Sub CopyCatPreview([ToXenonWindow] As XenonWindow, [FromXenonWindow] As XenonWindow)
-        [ToXenonWindow].Active = [FromXenonWindow].Active
-        [ToXenonWindow].AccentColor_Active = [FromXenonWindow].AccentColor_Active
-        [ToXenonWindow].AccentColor2_Active = [FromXenonWindow].AccentColor2_Active
-        [ToXenonWindow].AccentColor_Inactive = [FromXenonWindow].AccentColor_Inactive
-        [ToXenonWindow].AccentColor2_Inactive = [FromXenonWindow].AccentColor2_Inactive
-        [ToXenonWindow].AccentColor_Enabled = [FromXenonWindow].AccentColor_Enabled
-        [ToXenonWindow].BackColor = [FromXenonWindow].BackColor
-        [ToXenonWindow].DarkMode = [FromXenonWindow].DarkMode
-        [ToXenonWindow].Font = [FromXenonWindow].Font
-        [ToXenonWindow].ForeColor = [FromXenonWindow].ForeColor
-        [ToXenonWindow].Preview = [FromXenonWindow].Preview
-        [ToXenonWindow].Win7Alpha = [FromXenonWindow].Win7Alpha
-        [ToXenonWindow].Win7ColorBal = [FromXenonWindow].Win7ColorBal
-        [ToXenonWindow].Win7GlowBal = [FromXenonWindow].Win7GlowBal
-        [ToXenonWindow].Win7Noise = [FromXenonWindow].Win7Noise
-        [ToXenonWindow].Padding = [FromXenonWindow].Padding
-        [ToXenonWindow].Shadow = [FromXenonWindow].Shadow
-        [ToXenonWindow].WinVista = [FromXenonWindow].WinVista
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -387,7 +366,6 @@ Public Class Metrics_Fonts
         SetModernWindowMetrics(My.CP, MainFrm.XenonWindow2)
         SetClassicWindowMetrics(My.CP, MainFrm.ClassicWindow1)
         SetClassicWindowMetrics(My.CP, MainFrm.ClassicWindow2)
-
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -424,7 +402,6 @@ Public Class Metrics_Fonts
         RetroWindow3.Metrics_CaptionWidth = sender.Value
         RetroWindow5.Metrics_CaptionWidth = sender.Value
     End Sub
-
 
     Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
         m_h.Text = sender.Value
@@ -529,7 +506,6 @@ Public Class Metrics_Fonts
         XenonFakeIcon1.BringToFront()
     End Sub
 
-
     Private Sub Label1_FontChanged(sender As Object, e As EventArgs) Handles Label1.FontChanged, Label2.FontChanged, Label3.FontChanged, Label4.FontChanged, Label5.FontChanged, Label6.FontChanged
         DirectCast(sender, Label).Text = DirectCast(sender, Label).Font.FontFamily.Name
     End Sub
@@ -559,15 +535,6 @@ Public Class Metrics_Fonts
         'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
 
         Return [Font].Height 'TitleTextH 'TitleTextH_Sum
-    End Function
-
-    Public Function GetTitleTextWidth([Font] As Font) As Integer
-        Dim TitleTextW As Integer ', TitleTextH_9, TitleTextH_Sum As Integer
-        TitleTextW = "ABCabc0123xYz.#".Measure([Font]).Width
-        'TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font([Font].Name, 9, [Font].Style)).Height
-        'TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9)
-
-        Return TitleTextW 'TitleTextH_Sum
     End Function
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click

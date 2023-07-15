@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
 Imports Devcorp.Controls.VisualStyles
 
 Public Class VisualStylesRes
