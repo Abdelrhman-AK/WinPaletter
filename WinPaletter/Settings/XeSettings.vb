@@ -333,6 +333,9 @@ Public Class XeSettings
             Public Enabled As Boolean
             Public Type As Formats
             Public ShowHexHash As Boolean
+            Public UseWindowsMonospacedFont As Boolean
+            Public MoreLabelTransparency As Boolean
+            Public DotDefaultChangedIndicator As Boolean
 
             Public Enum Formats
                 HEX
@@ -345,12 +348,20 @@ Public Class XeSettings
                 Enabled = GetReg(REG_NerdStats, "", True)
                 ShowHexHash = GetReg(REG_NerdStats, "ShowHexHash", True)
                 Type = GetReg(REG_NerdStats, "Type", Formats.HEX)
+                UseWindowsMonospacedFont = GetReg(REG_NerdStats, "UseWindowsMonospacedFont", False)
+                MoreLabelTransparency = GetReg(REG_NerdStats, "MoreLabelTransparency", False)
+                DotDefaultChangedIndicator = GetReg(REG_NerdStats, "DotDefaultChangedIndicator", True)
+
             End Sub
 
             Sub Save()
                 EditReg(REG_NerdStats, "", Enabled, RegistryValueKind.DWord)
                 EditReg(REG_NerdStats, "ShowHexHash", ShowHexHash, RegistryValueKind.DWord)
                 EditReg(REG_NerdStats, "Type", CInt(Type))
+                EditReg(REG_NerdStats, "UseWindowsMonospacedFont", UseWindowsMonospacedFont)
+                EditReg(REG_NerdStats, "MoreLabelTransparency", MoreLabelTransparency)
+                EditReg(REG_NerdStats, "DotDefaultChangedIndicator", DotDefaultChangedIndicator)
+
             End Sub
 
         End Structure
@@ -460,7 +471,10 @@ Public Class XeSettings
     Public NerdStats As New Structures.NerdStats With {
         .Enabled = True,
         .Type = Structures.NerdStats.Formats.HEX,
-        .ShowHexHash = True
+        .ShowHexHash = True,
+        .MoreLabelTransparency = False,
+        .UseWindowsMonospacedFont = False,
+        .DotDefaultChangedIndicator = True
     }
 
     Public Miscellaneous As New Structures.Miscellaneous With {

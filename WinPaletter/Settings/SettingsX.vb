@@ -52,8 +52,6 @@ Public Class SettingsX
             XenonCheckBox8.Checked = .Language.Enabled
             XenonTextBox3.Text = .Language.File
 
-            XenonCheckBox10.Checked = .NerdStats.Enabled
-            XenonCheckBox11.Checked = .NerdStats.ShowHexHash
             XenonCheckBox12.Checked = .WindowsTerminals.Bypass
             XenonCheckBox13.Checked = .WindowsTerminals.ListAllFonts
             XenonCheckBox14.Checked = .WindowsTerminals.Path_Deflection
@@ -71,6 +69,11 @@ Public Class SettingsX
                 Case XeSettings.Structures.NerdStats.Formats.Dec
                     XenonComboBox3.SelectedIndex = 3
             End Select
+            XenonCheckBox10.Checked = .NerdStats.Enabled
+            XenonCheckBox11.Checked = .NerdStats.ShowHexHash
+            XenonCheckBox3.Checked = .NerdStats.MoreLabelTransparency
+            XenonCheckBox31.Checked = .NerdStats.UseWindowsMonospacedFont
+            XenonCheckBox34.Checked = .NerdStats.DotDefaultChangedIndicator
 
             XenonCheckBox19.Checked = .ThemeLog.Enabled
             XenonCheckBox18.Checked = .ThemeLog.CountDown
@@ -150,6 +153,9 @@ Public Class SettingsX
             If .NerdStats.Enabled <> XenonCheckBox10.Checked Then ch_nerd = True
             If .NerdStats.Type <> XenonComboBox3.SelectedIndex Then ch_nerd = True
             If .NerdStats.ShowHexHash <> XenonCheckBox11.Checked Then ch_nerd = True
+            If .NerdStats.MoreLabelTransparency <> XenonCheckBox3.Checked Then ch_nerd = True
+            If .NerdStats.UseWindowsMonospacedFont <> XenonCheckBox31.Checked Then ch_nerd = True
+            If .NerdStats.DotDefaultChangedIndicator <> XenonCheckBox34.Checked Then ch_nerd = True
 
             If .WindowsTerminals.Path_Deflection <> XenonCheckBox14.Checked Then ch_terminal = True
             If .WindowsTerminals.Terminal_Stable_Path <> XenonTextBox1.Text Then ch_terminal = True
@@ -266,6 +272,10 @@ Public Class SettingsX
             .NerdStats.Enabled = XenonCheckBox10.Checked
             .NerdStats.Type = XenonComboBox3.SelectedIndex
             .NerdStats.ShowHexHash = XenonCheckBox11.Checked
+            .NerdStats.MoreLabelTransparency = XenonCheckBox3.Checked
+            .NerdStats.UseWindowsMonospacedFont = XenonCheckBox31.Checked
+            .NerdStats.DotDefaultChangedIndicator = XenonCheckBox34.Checked
+
             .WindowsTerminals.Bypass = XenonCheckBox12.Checked
             .WindowsTerminals.ListAllFonts = XenonCheckBox13.Checked
             .WindowsTerminals.Path_Deflection = XenonCheckBox14.Checked

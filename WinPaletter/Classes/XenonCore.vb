@@ -502,7 +502,8 @@ Public Class XenonCore
                    .RightToLeft = My.Lang.RightToLeft,
                    .ButtonStyle = TaskDialogButtonStyle.Standard,
                    .Content = ConvertToLink(SubMessage),
-                   .FooterIcon = FooterIcon}
+                   .FooterIcon = FooterIcon,
+                   .CenterParent = True}
 
                 If Not String.IsNullOrWhiteSpace(DialogTitle) Then TD.WindowTitle = DialogTitle Else TD.WindowTitle = My.Application.Info.Title
                 If Not String.IsNullOrWhiteSpace(Message) Then TD.MainInstruction = Message

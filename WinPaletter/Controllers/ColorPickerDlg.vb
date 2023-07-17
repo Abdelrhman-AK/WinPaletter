@@ -42,7 +42,8 @@ Public Class ColorPickerDlg
 
             Dim pnl As New XenonCP With {
                 .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                .BackColor = c
+                .BackColor = c,
+                .DefaultColor = .BackColor
             }
 
             PaletteContainer.Controls.Add(pnl)
@@ -654,7 +655,8 @@ Public Class ColorPickerDlg
         For Each C As Color In ColorsList
             Dim pnl As New XenonCP With {
                     .Size = New Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                    .BackColor = Color.FromArgb(255, C)
+                    .BackColor = Color.FromArgb(255, C),
+                    .DefaultColor = .BackColor
                 }
             ImgPaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_click
@@ -711,7 +713,8 @@ Public Class ColorPickerDlg
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
                         Dim pnl As New XenonCP With {
                             .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                            .BackColor = Color.FromArgb(255, C)
+                            .BackColor = Color.FromArgb(255, C),
+                            .DefaultColor = .BackColor
                         }
                         ThemePaletteContainer.Controls.Add(pnl)
                         AddHandler pnl.Click, AddressOf Pnl_click
@@ -731,8 +734,9 @@ Public Class ColorPickerDlg
 
                             Dim pnl As New XenonCP With {
                                 .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                                .BackColor = field.GetValue(vs.Metrics.Colors)
-                                    }
+                                .BackColor = field.GetValue(vs.Metrics.Colors),
+                                .DefaultColor = .BackColor
+                                }
                             ThemePaletteContainer.Controls.Add(pnl)
                             AddHandler pnl.Click, AddressOf Pnl_click
 
@@ -806,8 +810,9 @@ Public Class ColorPickerDlg
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
                     Dim pnl As New XenonCP With {
                         .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                        .BackColor = Color.FromArgb(255, C)
-                    }
+                        .BackColor = Color.FromArgb(255, C),
+                        .DefaultColor = .BackColor
+                        }
                     ThemePaletteContainer.Controls.Add(pnl)
                     AddHandler pnl.Click, AddressOf Pnl_click
                 Next

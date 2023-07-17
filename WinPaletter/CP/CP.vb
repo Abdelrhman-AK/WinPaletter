@@ -1850,10 +1850,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             Private Function AdjustFont([Font] As Font) As Font
                 'Fix bug
-                Dim font_size As Single = [Font].Size - [Font].Size * (XenonCore.GetWindowsScreenScalingFactor - 100) \ 100
-                If font_size < 0 Then font_size = 9
-                If font_size > Single.MaxValue Then font_size = Single.MaxValue
-
+                Dim font_size As Single = [Font].Size * (100 / XenonCore.GetWindowsScreenScalingFactor)
                 Return New Font([Font].Name, font_size, [Font].Style, GraphicsUnit.Pixel)
             End Function
 

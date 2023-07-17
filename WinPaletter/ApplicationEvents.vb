@@ -36,7 +36,6 @@ Namespace My
         Public ReadOnly _ignore As StringComparison = StringComparison.OrdinalIgnoreCase
         Public VS As String = PATH_appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
-        Public LunaRes As New Luna(Luna.ColorStyles.Blue)
 
         ''' <summary>
         ''' A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -668,9 +667,9 @@ Namespace My
             Animator = New AnimatorNS.Animator With {.Interval = 1, .TimeStep = 0.07, .DefaultAnimation = AnimatorNS.Animation.Transparent, .AnimationType = AnimatorNS.AnimationType.Transparent}
 
             Try
-                AddMemoryFont(Resources.JetBrainsMono_Regular)
-                ConsoleFont = GetFont(0, 7.5)
-                ConsoleFontDef = GetFont(0, 7.5, FontStyle.Underline)
+                AddMemoryFont(Resources.JetBrainsMono_Medium)
+                ConsoleFont = GetFont(0, 7.75)
+                ConsoleFontDef = GetFont(0, 7.75, FontStyle.Underline)
                 ConsoleFontLarge = GetFont(0, 10)
                 ConsoleFontMedium = GetFont(0, 9)
             Catch

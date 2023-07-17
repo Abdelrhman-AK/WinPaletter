@@ -240,7 +240,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Resources\Assemblies.zip" />
-    <None Include="Resources\JetBrainsMono-Regular.ttf" />
+    <None Include="Resources\JetBrainsMono-Medium.ttf" />
     <None Include="Resources\luna.zip" />
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
@@ -674,10 +674,6 @@
     <Content Include="Resources\LICENSE.txt" />
     <Content Include="Resources\LogonUI7.png" />
     <Content Include="Resources\LogonUI8.png" />
-    <Content Include="Resources\Luna_StartBtn.png" />
-    <Content Include="Resources\Luna_Start_Blue.png" />
-    <Content Include="Resources\Luna_Start_OliveGreen.png" />
-    <Content Include="Resources\Luna_Start_Silver.png" />
     <None Include="Resources\Mini_AC.png" />
     <Content Include="Resources\Mini_ACHover_Links.png" />
     <None Include="Resources\Mini_Badge.png" />

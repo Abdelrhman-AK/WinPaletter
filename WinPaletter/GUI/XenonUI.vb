@@ -52,7 +52,7 @@ Module XenonModule
         End Using
     End Sub
 
-    Public Function StringAligner(ByVal goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
+    Public Function StringAligner(goTextAlign As ContentAlignment, Optional RTL As Boolean = False) As StringFormat
         Dim oStringFormat As New StringFormat()
         Select Case goTextAlign
             Case ContentAlignment.TopLeft
@@ -90,7 +90,7 @@ Module XenonModule
     End Function
 
     <Extension()>
-    Public Sub DrawGlow(G As Graphics, R As Rectangle, ByVal GlowColor As Color, Optional ByVal GlowSize As Integer = 5, Optional ByVal GlowFade As Integer = 7)
+    Public Sub DrawGlow(G As Graphics, R As Rectangle, GlowColor As Color, Optional GlowSize As Integer = 5, Optional GlowFade As Integer = 7)
         Try
             If GlowSize <= 0 Then GlowSize = 1
             If GlowFade <= 0 Then GlowFade = 1
@@ -116,7 +116,7 @@ Module XenonModule
     End Sub
 
     <Extension()>
-    Friend Function GetParentColor(ByVal ctrl As Control, Optional ByVal Accept_Transparent As Boolean = False) As Color
+    Friend Function GetParentColor(ctrl As Control, Optional Accept_Transparent As Boolean = False) As Color
 
         If Accept_Transparent Then
             Return ctrl.Parent.BackColor
@@ -208,7 +208,7 @@ Module XenonModule
 #Region "Rounded Rectangle System"
 
     <Extension()>
-    Public Sub FillRoundedRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub FillRoundedRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 5
 
@@ -227,7 +227,7 @@ Module XenonModule
     End Sub
 
     <Extension()>
-    Public Sub DrawRoundImage(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub DrawRoundImage([Graphics] As Graphics, [Image] As Image, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 5
 
@@ -248,7 +248,7 @@ Module XenonModule
     End Sub
 
     <Extension()>
-    Public Function Round(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    Public Function Round(r As Rectangle, radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -273,7 +273,7 @@ Module XenonModule
     End Function
 
     <Extension()>
-    Public Sub DrawRoundedRect(ByVal [Graphics] As Graphics, ByVal [Pen] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius_willbe_x2] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub DrawRoundedRect([Graphics] As Graphics, [Pen] As Pen, [Rectangle] As Rectangle, Optional [Radius_willbe_x2] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
         Try
             If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
             [Radius_willbe_x2] *= 2
@@ -296,7 +296,7 @@ Module XenonModule
     End Sub
 
     <Extension()>
-    Public Sub DrawRoundedRect_LikeW11(ByVal [Graphics] As Graphics, ByVal [PenX] As Pen, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub DrawRoundedRect_LikeW11([Graphics] As Graphics, [PenX] As Pen, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
         Try
             Dim Dark As Boolean = GetDarkMode()
 
@@ -468,7 +468,7 @@ Public Class XenonTabControl : Inherits TabControl
     End Sub
 
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.4))
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
 
@@ -608,7 +608,7 @@ Public Class XenonToggle
         Get
             Return _checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If Not _checked.Equals(value) Then
                 _checked = value
                 Me.OnCheckedChanged()
@@ -663,7 +663,7 @@ Public Class XenonToggle
 
         Invalidate()
     End Sub
-    Public Event CheckedChanged(ByVal sender As Object, ByVal e As EventArgs)
+    Public Event CheckedChanged(sender As Object, e As EventArgs)
 
     Dim CheckedC As Rectangle
 
@@ -676,7 +676,7 @@ Public Class XenonToggle
         MyBase.OnMouseClick(e)
     End Sub
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Me.OnPaintBackground(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -871,7 +871,7 @@ Public Class XenonRadioButton
         Get
             Return _Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Try
                 _Checked = value
 
@@ -1156,7 +1156,7 @@ Public Class XenonRadioImage
         Get
             Return _Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Try
                 _Checked = value
 
@@ -1354,7 +1354,7 @@ Public Class XenonCheckBox
         Get
             Return _Checked
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Try
                 _Checked = value
                 RaiseEvent CheckedChanged(Me)
@@ -1650,7 +1650,7 @@ Public Class XenonGroupBox : Inherits Panel
     <Bindable(True)>
     Public Overrides Property Text As String = ""
 
-    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
@@ -1742,7 +1742,7 @@ Public Class XenonAnimatedBox : Inherits Panel
 
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.7))
 
-    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         DoubleBuffered = True
@@ -1929,13 +1929,14 @@ Public Class XenonCP
     End Sub
 #End Region
 
-    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
         Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
         Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+        Dim R As Integer = 5
 
         G.Clear(GetParentColor)
 
@@ -1951,17 +1952,22 @@ Public Class XenonCP
 
         End Select
 
-
-        LineColor = Color.FromArgb(255, LineColor.R, LineColor.G, LineColor.B)
-
-        Dim R As Integer = 5
+        LineColor = Color.FromArgb(255, LineColor)
 
         Using br As New SolidBrush(BackColor) : G.FillRoundedRect(br, RectInner, R) : End Using
         Using br As New SolidBrush(Color.FromArgb(alpha, BackColor)) : G.FillRoundedRect(br, Rect, R) : End Using
 
+        If My.Settings.NerdStats.DotDefaultChangedIndicator Then
+            Using br As New SolidBrush(DefaultColor)
+                Dim L As Integer = Math.Max(6, RectInner.Height - 10)
+                Dim Y As Integer = RectInner.Y + (RectInner.Height - L) / 2
+                Dim DefDotRect As New Rectangle(Y, Y, L, L)
+                G.FillEllipse(br, DefDotRect)
+            End Using
+        End If
+
         Using P As New Pen(Color.FromArgb(alpha, LineColor)) : G.DrawRoundedRect_LikeW11(P, Rect, R) : End Using
         Using P As New Pen(Color.FromArgb(255 - alpha, LineColor)) : G.DrawRoundedRect_LikeW11(P, RectInner, R) : End Using
-
 
         If Not DesignMode Then
             If My.Settings.NerdStats.Enabled And Not ForceNoNerd Then
@@ -1970,7 +1976,7 @@ Public Class XenonCP
                 Dim FC0 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
                 Dim FC1 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
 
-                FC0 = Color.FromArgb(100, FC0)
+                FC0 = Color.FromArgb(If(My.Settings.NerdStats.MoreLabelTransparency, 75, 125), FC0)
                 FC1 = Color.FromArgb(alpha, FC1)
 
                 Dim RectX As Rectangle = Rect
@@ -1982,14 +1988,13 @@ Public Class XenonCP
                 If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HSL Then CF = ColorFormat.HSL
                 If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.Dec Then CF = ColorFormat.Dec
 
-
-                Dim S As String = If(IsDefault, "D ", "") & BackColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (BackColor.A = 255))
+                Dim S As String = BackColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (BackColor.A = 255))
                 Dim F As Font
 
-                If IsDefault Then
-                    F = My.Application.ConsoleFontDef
-                Else
+                If Not My.Settings.NerdStats.UseWindowsMonospacedFont Then
                     F = My.Application.ConsoleFont
+                Else
+                    F = New Font(FontFamily.GenericMonospace.Name, 8.5, FontStyle.Regular)
                 End If
 
                 Using br As New SolidBrush(FC0) : G.DrawString(S, F, br, RectX, StringAligner(ContentAlignment.MiddleCenter)) : End Using
@@ -2027,7 +2032,7 @@ Public Class XenonButton : Inherits Button
     Private LineColorValue As Color = Color.FromArgb(0, 81, 210)
     Public Event LineColorChanged As PropertyChangedEventHandler
 
-    Private Sub LineColorNotifyPropertyChanged(ByVal info As String)
+    Private Sub LineColorNotifyPropertyChanged(info As String)
         RaiseEvent LineColorChanged(Me, New PropertyChangedEventArgs(info))
     End Sub
 
@@ -2036,7 +2041,7 @@ Public Class XenonButton : Inherits Button
             Return LineColorValue
         End Get
 
-        Set(ByVal LineColor As Color)
+        Set(LineColor As Color)
             If Not (LineColor = LineColorValue) Then
                 LineColorValue = LineColor
                 LineColorNotifyPropertyChanged("ControlColorChanged")
@@ -2052,7 +2057,7 @@ Public Class XenonButton : Inherits Button
         Get
             Return _Image
         End Get
-        Set(ByVal value As Image)
+        Set(value As Image)
             _Image = value
 
             Try
@@ -2079,7 +2084,7 @@ Public Class XenonButton : Inherits Button
     ReadOnly Delay As Integer = 1
 
 #Region "OnMouse"
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseEnter(e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
         Dim C_Before As Color = BackColor
@@ -2102,7 +2107,7 @@ Public Class XenonButton : Inherits Button
         Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
 
@@ -2120,7 +2125,7 @@ Public Class XenonButton : Inherits Button
         Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
 
         Dim C_Before As Color = BackColor
         Dim C_After As Color
@@ -2145,7 +2150,7 @@ Public Class XenonButton : Inherits Button
         MyBase.OnMouseDown(e)
     End Sub
 
-    Protected Overrides Sub OnMouseUp(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
         MyBase.OnMouseUp(e)
 
         Dim C_Before As Color = BackColor
@@ -2172,7 +2177,7 @@ Public Class XenonButton : Inherits Button
 #End Region
 
 #Region "OnKey"
-    Protected Overrides Sub OnKeyDown(ByVal e As KeyEventArgs)
+    Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
         MyBase.OnKeyDown(e)
         Dim C_Before As Color = BackColor
         Dim C_After As Color
@@ -2188,7 +2193,7 @@ Public Class XenonButton : Inherits Button
         State = MouseState.Down : Invalidate()
     End Sub
 
-    Protected Overrides Sub OnKeyUp(ByVal e As KeyEventArgs)
+    Protected Overrides Sub OnKeyUp(e As KeyEventArgs)
         MyBase.OnKeyUp(e)
         State = MouseState.None
 
@@ -2199,7 +2204,7 @@ Public Class XenonButton : Inherits Button
     End Sub
 #End Region
 
-    Protected Overrides Sub OnLeave(ByVal e As EventArgs)
+    Protected Overrides Sub OnLeave(e As EventArgs)
         MyBase.OnLeave(e)
         State = MouseState.None
 
@@ -2283,7 +2288,7 @@ Public Class XenonButton : Inherits Button
 
     Public Property DrawOnGlass As Boolean = False
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = TextRenderingHint.SystemDefault
@@ -2669,7 +2674,7 @@ Public Class XenonNumericUpDown
 #End Region
 
 #Region "Events"
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseEnter(e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
         _Shown = True
@@ -2678,7 +2683,7 @@ Public Class XenonNumericUpDown
         Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
         _Shown = True
@@ -2934,7 +2939,7 @@ End Class
         Get
             Return _TextAlign
         End Get
-        Set(ByVal value As HorizontalAlignment)
+        Set(value As HorizontalAlignment)
             _TextAlign = value
             If TB IsNot Nothing Then
                 TB.TextAlign = value
@@ -2949,7 +2954,7 @@ End Class
         Get
             Return _MaxLength
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _MaxLength = value
             If TB IsNot Nothing Then
                 TB.MaxLength = value
@@ -2964,7 +2969,7 @@ End Class
         Get
             Return _ReadOnly
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _ReadOnly = value
             If TB IsNot Nothing Then
                 TB.ReadOnly = value
@@ -2979,7 +2984,7 @@ End Class
         Get
             Return _UseSystemPasswordChar
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _UseSystemPasswordChar = value
             If TB IsNot Nothing Then
                 TB.UseSystemPasswordChar = value
@@ -2994,7 +2999,7 @@ End Class
         Get
             Return _Multiline
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Multiline = value
             If TB IsNot Nothing Then
                 TB.Multiline = value
@@ -3019,7 +3024,7 @@ End Class
         Get
             Return MyBase.Text
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             MyBase.Text = value
             If TB IsNot Nothing Then
                 TB.Text = value
@@ -3032,7 +3037,7 @@ End Class
         Get
             Return MyBase.Font
         End Get
-        Set(ByVal value As Font)
+        Set(value As Font)
             MyBase.Font = value
             If TB IsNot Nothing Then
                 TB.Font = value
@@ -3053,11 +3058,11 @@ End Class
         End If
     End Sub
 
-    Private Sub OnBaseTextChanged(ByVal s As Object, ByVal e As EventArgs)
+    Private Sub OnBaseTextChanged(s As Object, e As EventArgs)
         Text = TB.Text
     End Sub
 
-    Private Sub OnBaseKeyDown(ByVal s As Object, ByVal e As KeyEventArgs)
+    Private Sub OnBaseKeyDown(s As Object, e As KeyEventArgs)
         If e.Control AndAlso e.KeyCode = Keys.A Then
             TB.SelectAll()
             e.SuppressKeyPress = True
@@ -3068,13 +3073,13 @@ End Class
         End If
     End Sub
 
-    Public Event KeyboardPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+    Public Event KeyboardPress(s As Object, e As KeyPressEventArgs)
 
-    Public Overloads Sub OnKeyPress(ByVal s As Object, ByVal e As KeyPressEventArgs)
+    Public Overloads Sub OnKeyPress(s As Object, e As KeyPressEventArgs)
         RaiseEvent KeyboardPress(s, e)
     End Sub
 
-    Protected Overrides Sub OnResize(ByVal e As EventArgs)
+    Protected Overrides Sub OnResize(e As EventArgs)
         TB.Location = New Point(4, 4)
         TB.Width = Width - 14
 
@@ -3160,7 +3165,7 @@ End Class
         TB.Focus() : Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseEnter(e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
         _Shown = True
@@ -3169,7 +3174,7 @@ End Class
         Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
         _Shown = True
@@ -3412,7 +3417,7 @@ Public Class XenonComboBox : Inherits ComboBox
     ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
 
 #Region "Subs"
-    Sub ReplaceItem(ByVal sender As System.Object, ByVal e As DrawItemEventArgs) Handles Me.DrawItem
+    Sub ReplaceItem(sender As System.Object, e As DrawItemEventArgs) Handles Me.DrawItem
         BackColor = Style.Colors.Back
         e.DrawBackground()
 
@@ -3451,7 +3456,7 @@ Public Class XenonComboBox : Inherits ComboBox
         End If
     End Sub
 
-    Protected Sub DrawTriangle(ByVal Clr As Color, ByVal FirstPoint As Point, ByVal SecondPoint As Point, ByVal ThirdPoint As Point, ByVal G As Graphics)
+    Protected Sub DrawTriangle(Clr As Color, FirstPoint As Point, SecondPoint As Point, ThirdPoint As Point, G As Graphics)
         Dim points As New List(Of Point) From {FirstPoint, SecondPoint, ThirdPoint}
         Using br As New SolidBrush(Clr) : G.FillPolygon(br, points.ToArray()) : End Using
     End Sub
@@ -3464,7 +3469,7 @@ Public Class XenonComboBox : Inherits ComboBox
         Down
     End Enum
 
-    Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseEnter(e As EventArgs)
         MyBase.OnMouseEnter(e)
         State = MouseState.Over
         _Shown = True
@@ -3473,7 +3478,7 @@ Public Class XenonComboBox : Inherits ComboBox
         Invalidate()
     End Sub
 
-    Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
+    Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
         State = MouseState.None
         _Shown = True
@@ -3620,7 +3625,7 @@ Public Class XenonComboBox : Inherits ComboBox
     End Sub
 #End Region
 
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
@@ -3734,7 +3739,7 @@ Public Class XenonAlertBox
         Get
             Return _alertStyle
         End Get
-        Set(ByVal value As Style)
+        Set(value As Style)
             _alertStyle = value
             Invalidate()
         End Set
@@ -3754,7 +3759,7 @@ Public Class XenonAlertBox
     Public Overrides Property Text As String
 #End Region
 
-    Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
         MyBase.OnPaint(e)
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
@@ -3957,7 +3962,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _BackColorAlpha
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _BackColorAlpha = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -3968,7 +3973,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _NoisePower
         End Get
-        Set(ByVal value As Single)
+        Set(value As Single)
             Me._NoisePower = value
 
             If Style = Styles.Taskbar7Aero Then
@@ -3989,7 +3994,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _BlurPower
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _BlurPower = value
             GetBack()
             If Not SuspendRefresh Then Refresh()
@@ -4001,7 +4006,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _Transparency
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Transparency = value
             'ProcessBack()
             If Not SuspendRefresh Then Refresh()
@@ -4013,7 +4018,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _DarkMode
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _DarkMode = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -4024,7 +4029,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _AppUnderline
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _AppUnderline = value
             Try : If Not SuspendRefresh Then Refresh()
             Catch : End Try
@@ -4036,7 +4041,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _AppBackground
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _AppBackground = value
             Try : If Not SuspendRefresh Then Refresh()
             Catch : End Try
@@ -4048,7 +4053,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _ActionCenterButton_Normal
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _ActionCenterButton_Normal = value
             Try : If Not SuspendRefresh Then Refresh()
             Catch : End Try
@@ -4060,7 +4065,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _ActionCenterButton_Hover
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _ActionCenterButton_Hover = value
             Try : If Not SuspendRefresh Then Refresh()
             Catch : End Try
@@ -4072,7 +4077,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _ActionCenterButton_Pressed
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _ActionCenterButton_Pressed = value
             Try : If Not SuspendRefresh Then Refresh()
             Catch : End Try
@@ -4084,7 +4089,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _StartColor
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _StartColor = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -4095,7 +4100,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _LinkColor
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _LinkColor = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -4106,9 +4111,11 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _Background
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _Background = value
-            If Not SuspendRefresh Then Refresh()
+            If Not SuspendRefresh Then
+                Try : Refresh() : Catch : End Try
+            End If
         End Set
     End Property
 
@@ -4117,7 +4124,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _Background2
         End Get
-        Set(ByVal value As Color)
+        Set(value As Color)
             _Background2 = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -4128,7 +4135,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _Win7ColorBal
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Win7ColorBal = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -4139,7 +4146,7 @@ Public Class XenonWinElement : Inherits ContainerControl
         Get
             Return _Win7GlowBal
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Win7GlowBal = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -5164,7 +5171,7 @@ Public Class XenonWinElement : Inherits ContainerControl
 
             Case Styles.StartXP
 #Region "Start XP"
-                G.DrawImage(My.LunaRes.Start, Rect)
+               'Empty
 #End Region
 
             Case Styles.TaskbarXP
@@ -5174,7 +5181,6 @@ Public Class XenonWinElement : Inherits ContainerControl
                     G.SmoothingMode = SmoothingMode.HighSpeed
 
                     My.resVS.Draw(G, Rect, VisualStylesRes.Element.Taskbar, True, False)
-                    G.DrawImage(My.LunaRes.StartBtn, New Rectangle(0, 0, My.LunaRes.StartBtn.Width, Rect.Height - 1))
 
                     G.SmoothingMode = sm
                 Catch
@@ -5306,7 +5312,7 @@ Public Class XenonWindow : Inherits Panel
         Get
             Return _DarkMode
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _DarkMode = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -5317,7 +5323,7 @@ Public Class XenonWindow : Inherits Panel
         Get
             Return _AccentColor_Enabled
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _AccentColor_Enabled = value
             If Not SuspendRefresh Then Refresh()
         End Set
@@ -5328,7 +5334,7 @@ Public Class XenonWindow : Inherits Panel
         Get
             Return _Win7Noise
         End Get
-        Set(ByVal value As Single)
+        Set(value As Single)
             _Win7Noise = value
             If Preview = Preview_Enum.W7Aero Or Preview = Preview_Enum.W7Opaque Or Preview = Preview_Enum.W7Basic Then
                 Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
@@ -5417,7 +5423,7 @@ Public Class XenonWindow : Inherits Panel
         ProcessBack()
         Refresh()
     End Sub
-    Public Sub SetMetrics(ByVal [XenonWindow] As XenonWindow)
+    Public Sub SetMetrics([XenonWindow] As XenonWindow)
         [XenonWindow].Metrics_BorderWidth = Metrics_BorderWidth
         [XenonWindow].Metrics_CaptionHeight = Metrics_CaptionHeight
         [XenonWindow].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
@@ -5458,7 +5464,7 @@ Public Class XenonWindow : Inherits Panel
         W7Basic
         WXP
     End Enum
-    Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
+    Public Sub FillSemiRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1)
         Try
             If [Radius] = -1 Then [Radius] = 6
 
@@ -5472,7 +5478,7 @@ Public Class XenonWindow : Inherits Panel
         Catch
         End Try
     End Sub
-    Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    Public Function RoundedSemiRectangle(r As Rectangle, radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -6294,7 +6300,7 @@ End Class
 Public Class XenonTrackbar
     Inherits Control
 
-    Event Scroll(ByVal sender As Object)
+    Event Scroll(sender As Object)
 
 #Region "Properties"
     Private _Minimum As Integer
@@ -6302,7 +6308,7 @@ Public Class XenonTrackbar
         Get
             Return _Minimum
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 0 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -6320,7 +6326,7 @@ Public Class XenonTrackbar
         Get
             Return _Maximum
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 0 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -6339,7 +6345,7 @@ Public Class XenonTrackbar
 
             Return _Value
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value = _Value Then Return
 
             If value > _Maximum Then
@@ -6362,7 +6368,7 @@ Public Class XenonTrackbar
         Get
             Return _SmallChange
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -6376,7 +6382,7 @@ Public Class XenonTrackbar
         Get
             Return _LargeChange
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -6512,7 +6518,7 @@ Public Class XenonTrackbar
         Refresh()
     End Sub
 
-    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Left Then
             State = MouseState.Down
             Tmr.Enabled = True
@@ -6536,7 +6542,7 @@ Public Class XenonTrackbar
         End If
     End Sub
 
-    Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
             State = MouseState.Over
         Else
@@ -7007,7 +7013,7 @@ Public Class XenonTerminal
 
     Private _Opacity As Single = 1
     Public Event OpacityChanged As PropertyChangedEventHandler
-    Private Sub NotifyOpacityChanged(ByVal info As Single)
+    Private Sub NotifyOpacityChanged(info As Single)
         Invalidate()
         RaiseEvent OpacityChanged(Me, New PropertyChangedEventArgs(info))
     End Sub
@@ -7016,7 +7022,7 @@ Public Class XenonTerminal
             Return _Opacity
         End Get
 
-        Set(ByVal value As Single)
+        Set(value As Single)
             If Not (value = _Opacity) Then
                 Me._Opacity = value
                 NotifyOpacityChanged(_Opacity)
@@ -7026,7 +7032,7 @@ Public Class XenonTerminal
 
     Private _OpacityBackImage As Single = 100
     Public Event OpacityBackImageChanged As PropertyChangedEventHandler
-    Private Sub NotifyOpacityBackImageChanged(ByVal info As Single)
+    Private Sub NotifyOpacityBackImageChanged(info As Single)
         Invalidate()
         RaiseEvent OpacityBackImageChanged(Me, New PropertyChangedEventArgs(info))
     End Sub
@@ -7035,7 +7041,7 @@ Public Class XenonTerminal
             Return _OpacityBackImage
         End Get
 
-        Set(ByVal value As Single)
+        Set(value As Single)
             If Not (value = _OpacityBackImage) Then
                 Me._OpacityBackImage = value
                 NotifyOpacityBackImageChanged(_OpacityBackImage)
@@ -7045,7 +7051,7 @@ Public Class XenonTerminal
 
     Private _BackImage As Image
     Public Event BackImageChanged As PropertyChangedEventHandler
-    Private Sub NotifyBackImageChanged(ByVal info As Object)
+    Private Sub NotifyBackImageChanged(info As Object)
         Invalidate()
         UpdateOpacityBackImageChanged()
         RaiseEvent BackImageChanged(Me, New PropertyChangedEventArgs(info))
@@ -7055,7 +7061,7 @@ Public Class XenonTerminal
             Return _BackImage
         End Get
 
-        Set(ByVal value As Image)
+        Set(value As Image)
             If Not (value Is _BackImage) Then
                 Me._BackImage = value
                 NotifyBackImageChanged(_BackImage)
@@ -7092,7 +7098,7 @@ Public Class XenonTerminal
         vintage
     End Enum
 
-    Public Function RR(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    Public Function RR(r As Rectangle, radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -7118,7 +7124,7 @@ Public Class XenonTerminal
             Return Nothing
         End Try
     End Function
-    Public Function RRNoLine(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    Public Function RRNoLine(r As Rectangle, radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -7144,7 +7150,7 @@ Public Class XenonTerminal
             Return Nothing
         End Try
     End Function
-    Public Sub FillSemiRect(ByVal [Graphics] As Graphics, ByVal [Brush] As Brush, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1)
+    Public Sub FillSemiRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1)
         Try
             If [Radius] = -1 Then [Radius] = 6
 
@@ -7157,7 +7163,7 @@ Public Class XenonTerminal
         Catch
         End Try
     End Sub
-    Public Function RoundedSemiRectangle(ByVal r As Rectangle, ByVal radius As Integer) As GraphicsPath
+    Public Function RoundedSemiRectangle(r As Rectangle, radius As Integer) As GraphicsPath
         Try
             Dim path As New GraphicsPath()
             Dim d As Integer = radius * 2
@@ -7178,7 +7184,7 @@ Public Class XenonTerminal
             Return Nothing
         End Try
     End Function
-    Public Sub FillSemiImg(ByVal [Graphics] As Graphics, ByVal [Image] As Image, ByVal [Rectangle] As Rectangle, Optional ByVal [Radius] As Integer = -1, Optional ByVal ForcedRoundCorner As Boolean = False)
+    Public Sub FillSemiImg([Graphics] As Graphics, [Image] As Image, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
         Try
             If [Radius] = -1 Then [Radius] = 6
 
@@ -7483,7 +7489,7 @@ End Class
 Public Class XenonColorBar
     Inherits Control
 
-    Event Scroll(ByVal sender As Object)
+    Event Scroll(sender As Object)
 
 #Region "Properties"
     Private _Minimum As Integer
@@ -7491,7 +7497,7 @@ Public Class XenonColorBar
         Get
             Return _Minimum
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Minimum = value
             If value > _Value Then _Value = value
             If value > _Maximum Then _Maximum = value
@@ -7505,7 +7511,7 @@ Public Class XenonColorBar
         Get
             Return _Maximum
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             _Maximum = value
             If value < _Value Then _Value = value
             If value < _Minimum Then _Minimum = value
@@ -7519,7 +7525,7 @@ Public Class XenonColorBar
 
             Return _Value
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value = _Value Then Return
 
             If value > _Maximum Then
@@ -7542,7 +7548,7 @@ Public Class XenonColorBar
         Get
             Return _SmallChange
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -7556,7 +7562,7 @@ Public Class XenonColorBar
         Get
             Return _LargeChange
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 Then
                 Throw New Exception("Property value is not valid.")
             End If
@@ -7786,7 +7792,7 @@ Public Class XenonColorBar
         Refresh()
     End Sub
 
-    Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Left Then
             State = MouseState.Down
             Tmr.Enabled = True
@@ -7810,7 +7816,7 @@ Public Class XenonColorBar
         End If
     End Sub
 
-    Protected Overrides Sub OnMouseMove(ByVal e As MouseEventArgs)
+    Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
             State = MouseState.Over
         Else
@@ -7907,7 +7913,7 @@ Public Class StripRenderer
     Public Sub New()
     End Sub
 
-    Protected Overrides Sub OnRenderToolStripBorder(ByVal e As ToolStripRenderEventArgs)
+    Protected Overrides Sub OnRenderToolStripBorder(e As ToolStripRenderEventArgs)
     End Sub
 End Class
 Public Class XenonLabel : Inherits Label
