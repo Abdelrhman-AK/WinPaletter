@@ -2,7 +2,6 @@
 Imports System.Net
 Imports System.Security.Cryptography
 Imports System.Text
-Imports System.Threading
 Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
@@ -550,6 +549,7 @@ Public Class Store
         pnl_preview.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
+        Status_lbl.Font = My.Application.ConsoleFontMedium
         themeSize_lbl.Font = My.Application.ConsoleFontMedium
         respacksize_lbl.Font = My.Application.ConsoleFontMedium
         theme_ver_lbl.Font = My.Application.ConsoleFontMedium

@@ -739,9 +739,10 @@ Partial Class MainFrm
         Me.ActionCenter.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.ActionCenter.AppBackground = System.Drawing.Color.Empty
         Me.ActionCenter.AppUnderline = System.Drawing.Color.Empty
-        Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ActionCenter.Background2 = System.Drawing.Color.Empty
+        Me.ActionCenter.BackColor = System.Drawing.Color.Transparent
         Me.ActionCenter.BackColorAlpha = 50
+        Me.ActionCenter.Background = System.Drawing.Color.Empty
+        Me.ActionCenter.Background2 = System.Drawing.Color.Empty
         Me.ActionCenter.BlurPower = 8
         Me.ActionCenter.DarkMode = True
         Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
@@ -769,9 +770,10 @@ Partial Class MainFrm
         Me.start.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.start.AppBackground = System.Drawing.Color.Empty
         Me.start.AppUnderline = System.Drawing.Color.Empty
-        Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.start.Background2 = System.Drawing.Color.Empty
+        Me.start.BackColor = System.Drawing.Color.Transparent
         Me.start.BackColorAlpha = 150
+        Me.start.Background = System.Drawing.Color.Empty
+        Me.start.Background2 = System.Drawing.Color.Empty
         Me.start.BlurPower = 7
         Me.start.DarkMode = True
         Me.start.LinkColor = System.Drawing.Color.Empty
@@ -799,9 +801,10 @@ Partial Class MainFrm
         Me.taskbar.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.taskbar.AppBackground = System.Drawing.Color.Empty
         Me.taskbar.AppUnderline = System.Drawing.Color.Empty
-        Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.taskbar.Background2 = System.Drawing.Color.Empty
+        Me.taskbar.BackColor = System.Drawing.Color.Transparent
         Me.taskbar.BackColorAlpha = 130
+        Me.taskbar.Background = System.Drawing.Color.Empty
+        Me.taskbar.Background2 = System.Drawing.Color.Empty
         Me.taskbar.BlurPower = 12
         Me.taskbar.DarkMode = True
         Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -1356,7 +1359,7 @@ Partial Class MainFrm
         Me.XenonButton30.Name = "XenonButton30"
         Me.XenonButton30.Size = New System.Drawing.Size(90, 22)
         Me.XenonButton30.TabIndex = 28
-        Me.XenonButton30.Text = "Important tip"
+        Me.XenonButton30.Text = "Important tips"
         Me.XenonButton30.UseVisualStyleBackColor = False
         '
         'XenonGroupBox14

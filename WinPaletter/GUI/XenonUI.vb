@@ -1849,7 +1849,6 @@ Public Class XenonCP
 #End Region
 
 #Region "Events"
-
     Enum MouseState
         None
         Over
@@ -1910,7 +1909,7 @@ Public Class XenonCP
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
             End If
 
             If Not State = MouseState.Over Then
@@ -1923,7 +1922,7 @@ Public Class XenonCP
                 End If
 
                 Threading.Thread.Sleep(1)
-                Invalidate()
+                Refresh()
             End If
         End If
     End Sub
@@ -2004,7 +2003,6 @@ Public Class XenonCP
         End If
 
     End Sub
-
 
 
 End Class

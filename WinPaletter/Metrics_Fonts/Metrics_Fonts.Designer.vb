@@ -264,6 +264,7 @@ Partial Class Metrics_Fonts
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.XenonAlertBox14 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -556,6 +557,7 @@ Partial Class Metrics_Fonts
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.XenonAlertBox14)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox3)
         Me.TabPage1.Controls.Add(Me.XenonGroupBox4)
         Me.TabPage1.Controls.Add(Me.XenonGroupBox2)
@@ -630,7 +632,7 @@ Partial Class Metrics_Fonts
         Me.Label39.Name = "Label39"
         Me.Label39.Size = New System.Drawing.Size(132, 24)
         Me.Label39.TabIndex = 87
-        Me.Label39.Text = "Tool window titlebar:"
+        Me.Label39.Text = "Tool window title bar:"
         Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton5
@@ -667,7 +669,7 @@ Partial Class Metrics_Fonts
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(132, 24)
         Me.Label38.TabIndex = 86
-        Me.Label38.Text = "Titlebar:"
+        Me.Label38.Text = "Title bar:"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox3
@@ -824,7 +826,7 @@ Partial Class Metrics_Fonts
         Me.Label44.Name = "Label44"
         Me.Label44.Size = New System.Drawing.Size(344, 31)
         Me.Label44.TabIndex = 84
-        Me.Label44.Text = "Tool window titlebars:"
+        Me.Label44.Text = "Tool window title bars:"
         Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar14
@@ -944,6 +946,7 @@ Partial Class Metrics_Fonts
         Me.XenonWindow2.Radius = 3
         Me.XenonWindow2.Shadow = False
         Me.XenonWindow2.Size = New System.Drawing.Size(119, 202)
+        Me.XenonWindow2.SuspendRefresh = False
         Me.XenonWindow2.TabIndex = 7
         Me.XenonWindow2.Text = "Tool"
         Me.XenonWindow2.ToolWindow = True
@@ -975,6 +978,7 @@ Partial Class Metrics_Fonts
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(219, 202)
+        Me.XenonWindow1.SuspendRefresh = False
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "Application"
         Me.XenonWindow1.ToolWindow = False
@@ -1272,7 +1276,7 @@ Partial Class Metrics_Fonts
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(348, 31)
         Me.Label43.TabIndex = 84
-        Me.Label43.Text = "Titlebars:"
+        Me.Label43.Text = "Title bars:"
         Me.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonTrackbar1
@@ -1967,7 +1971,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox12.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox12.Image = Nothing
-        Me.XenonAlertBox12.Location = New System.Drawing.Point(7, 8)
+        Me.XenonAlertBox12.Location = New System.Drawing.Point(6, 7)
         Me.XenonAlertBox12.Name = "XenonAlertBox12"
         Me.XenonAlertBox12.Size = New System.Drawing.Size(24, 21)
         Me.XenonAlertBox12.TabIndex = 9
@@ -1998,6 +2002,7 @@ Partial Class Metrics_Fonts
         Me.XenonWindow4.Radius = 5
         Me.XenonWindow4.Shadow = True
         Me.XenonWindow4.Size = New System.Drawing.Size(441, 175)
+        Me.XenonWindow4.SuspendRefresh = False
         Me.XenonWindow4.TabIndex = 2
         Me.XenonWindow4.Text = "Application"
         Me.XenonWindow4.ToolWindow = False
@@ -2497,7 +2502,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox13.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox13.Image = Nothing
-        Me.XenonAlertBox13.Location = New System.Drawing.Point(7, 5)
+        Me.XenonAlertBox13.Location = New System.Drawing.Point(6, 7)
         Me.XenonAlertBox13.Name = "XenonAlertBox13"
         Me.XenonAlertBox13.Size = New System.Drawing.Size(24, 21)
         Me.XenonAlertBox13.TabIndex = 9
@@ -2528,6 +2533,7 @@ Partial Class Metrics_Fonts
         Me.XenonWindow6.Radius = 5
         Me.XenonWindow6.Shadow = True
         Me.XenonWindow6.Size = New System.Drawing.Size(405, 233)
+        Me.XenonWindow6.SuspendRefresh = False
         Me.XenonWindow6.TabIndex = 2
         Me.XenonWindow6.Text = "Application"
         Me.XenonWindow6.ToolWindow = False
@@ -3352,7 +3358,7 @@ Partial Class Metrics_Fonts
         Me.XenonAlertBox8.TabIndex = 218
         Me.XenonAlertBox8.TabStop = False
         Me.XenonAlertBox8.Text = "You must be cautious in Windows 11 as changing ""Segoe UI"" font may cause instabil" &
-    "ity in Start Menu and Search (Due to bug in Windows itself)"
+    "ity in start menu and search (due to bug in Windows itself)"
         '
         'XenonTextBox3
         '
@@ -3681,6 +3687,24 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.TabIndex = 82
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
+        '
+        'XenonAlertBox14
+        '
+        Me.XenonAlertBox14.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox14.CenterText = False
+        Me.XenonAlertBox14.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox14.Image = CType(resources.GetObject("XenonAlertBox14.Image"), System.Drawing.Image)
+        Me.XenonAlertBox14.Location = New System.Drawing.Point(415, 388)
+        Me.XenonAlertBox14.Name = "XenonAlertBox14"
+        Me.XenonAlertBox14.Size = New System.Drawing.Size(536, 45)
+        Me.XenonAlertBox14.TabIndex = 203
+        Me.XenonAlertBox14.TabStop = False
+        Me.XenonAlertBox14.Text = "Updated versions of Windows 11 won't change title bar font due to bug in Windows " &
+    "itself (you can change its size only)"
         '
         'Metrics_Fonts
         '
@@ -4052,4 +4076,5 @@ Partial Class Metrics_Fonts
     Friend WithEvents PictureBox31 As PictureBox
     Friend WithEvents PictureBox44 As PictureBox
     Friend WithEvents Label26 As Label
+    Friend WithEvents XenonAlertBox14 As XenonAlertBox
 End Class

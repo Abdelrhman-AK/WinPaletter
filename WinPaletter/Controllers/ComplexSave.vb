@@ -42,25 +42,25 @@ Public Class ComplexSave
         Dim r2 As String = r(1)
 
         If My.W11 Then
-            XenonRadioImage7.Image = My.Resources.Native11
+            XenonRadioImage7.Image = My.Resources.Native11.Resize(20, 20)
 
         ElseIf My.W10 Then
-            XenonRadioImage7.Image = My.Resources.Native10
+            XenonRadioImage7.Image = My.Resources.Native10.Resize(20, 20)
 
         ElseIf My.W8 Then
-            XenonRadioImage7.Image = My.Resources.Native8
+            XenonRadioImage7.Image = My.Resources.Native8.Resize(20, 20)
 
         ElseIf My.W7 Then
-            XenonRadioImage7.Image = My.Resources.Native7
+            XenonRadioImage7.Image = My.Resources.Native7.Resize(20, 20)
 
         ElseIf My.WVista Then
-            XenonRadioImage7.Image = My.Resources.NativeVista
+            XenonRadioImage7.Image = My.Resources.NativeVista.Resize(20, 20)
 
         ElseIf My.WXP Then
-            XenonRadioImage7.Image = My.Resources.NativeXP
+            XenonRadioImage7.Image = My.Resources.NativeXP.Resize(20, 20)
 
         Else
-            XenonRadioImage7.Image = My.Resources.Native11
+            XenonRadioImage7.Image = My.Resources.Native11.Resize(20, 20)
         End If
 
 

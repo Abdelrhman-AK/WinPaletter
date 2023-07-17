@@ -253,9 +253,8 @@ Namespace My
         Public ColorEvent As MenuEvent = MenuEvent.None
 
         Public ConsoleFont As New Font("Lucida Console", 7.5)
-        Public ConsoleFontDef As New Font("Lucida Console", 7.5, FontStyle.Bold)
-        Public ConsoleFontLarge As New Font("Lucida Console", 10)
         Public ConsoleFontMedium As New Font("Lucida Console", 9)
+        Public ConsoleFontLarge As New Font("Lucida Console", 10)
 
         Public ExitAfterException As Boolean = False
         Public ShowWhatsNew As Boolean = False
@@ -669,14 +668,12 @@ Namespace My
             Try
                 AddMemoryFont(Resources.JetBrainsMono_Medium)
                 ConsoleFont = GetFont(0, 7.75)
-                ConsoleFontDef = GetFont(0, 7.75, FontStyle.Underline)
-                ConsoleFontLarge = GetFont(0, 10)
                 ConsoleFontMedium = GetFont(0, 9)
+                ConsoleFontLarge = GetFont(0, 10)
             Catch
                 ConsoleFont = New Font("Lucida Console", 7.5)
-                ConsoleFontDef = New Font("Lucida Console", 7.5, FontStyle.Bold)
-                ConsoleFontLarge = New Font("Lucida Console", 10)
                 ConsoleFontMedium = New Font("Lucida Console", 9)
+                ConsoleFontLarge = New Font("Lucida Console", 10)
             End Try
 
             If Environment.GetCommandLineArgs.Count > 1 Then
