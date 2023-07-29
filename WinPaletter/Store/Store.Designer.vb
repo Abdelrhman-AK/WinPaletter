@@ -325,7 +325,7 @@ Partial Class Store
         Me.Titlebar_lbl.Name = "Titlebar_lbl"
         Me.Titlebar_lbl.Size = New System.Drawing.Size(817, 64)
         Me.Titlebar_lbl.TabIndex = 38
-        Me.Titlebar_lbl.Text = "WinPaletter Store (Beta)"
+        Me.Titlebar_lbl.Text = "WinPaletter Store"
         Me.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'back_btn
@@ -959,9 +959,10 @@ Partial Class Store
         Me.ActionCenter.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.ActionCenter.AppBackground = System.Drawing.Color.Empty
         Me.ActionCenter.AppUnderline = System.Drawing.Color.Empty
-        Me.ActionCenter.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.ActionCenter.Background2 = System.Drawing.Color.Empty
+        Me.ActionCenter.BackColor = System.Drawing.Color.Transparent
         Me.ActionCenter.BackColorAlpha = 50
+        Me.ActionCenter.Background = System.Drawing.Color.Empty
+        Me.ActionCenter.Background2 = System.Drawing.Color.Empty
         Me.ActionCenter.BlurPower = 8
         Me.ActionCenter.DarkMode = True
         Me.ActionCenter.LinkColor = System.Drawing.Color.Empty
@@ -973,6 +974,7 @@ Partial Class Store
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
         Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
+        Me.ActionCenter.SuspendRefresh = False
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
         Me.ActionCenter.UseWin11ORB_WithWin10 = False
@@ -988,9 +990,10 @@ Partial Class Store
         Me.start.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.start.AppBackground = System.Drawing.Color.Empty
         Me.start.AppUnderline = System.Drawing.Color.Empty
-        Me.start.BackColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer), CType(CType(36, Byte), Integer))
-        Me.start.Background2 = System.Drawing.Color.Empty
+        Me.start.BackColor = System.Drawing.Color.Transparent
         Me.start.BackColorAlpha = 150
+        Me.start.Background = System.Drawing.Color.Empty
+        Me.start.Background2 = System.Drawing.Color.Empty
         Me.start.BlurPower = 7
         Me.start.DarkMode = True
         Me.start.LinkColor = System.Drawing.Color.Empty
@@ -1002,6 +1005,7 @@ Partial Class Store
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
         Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
+        Me.start.SuspendRefresh = False
         Me.start.TabIndex = 1
         Me.start.Transparency = True
         Me.start.UseWin11ORB_WithWin10 = False
@@ -1017,9 +1021,10 @@ Partial Class Store
         Me.taskbar.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.taskbar.AppBackground = System.Drawing.Color.Empty
         Me.taskbar.AppUnderline = System.Drawing.Color.Empty
-        Me.taskbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.taskbar.Background2 = System.Drawing.Color.Empty
+        Me.taskbar.BackColor = System.Drawing.Color.Transparent
         Me.taskbar.BackColorAlpha = 130
+        Me.taskbar.Background = System.Drawing.Color.Empty
+        Me.taskbar.Background2 = System.Drawing.Color.Empty
         Me.taskbar.BlurPower = 12
         Me.taskbar.DarkMode = True
         Me.taskbar.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -1031,6 +1036,7 @@ Partial Class Store
         Me.taskbar.Size = New System.Drawing.Size(528, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
         Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
+        Me.taskbar.SuspendRefresh = False
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
         Me.taskbar.UseWin11ORB_WithWin10 = False
@@ -1060,6 +1066,7 @@ Partial Class Store
         Me.XenonWindow2.Radius = 5
         Me.XenonWindow2.Shadow = True
         Me.XenonWindow2.Size = New System.Drawing.Size(189, 85)
+        Me.XenonWindow2.SuspendRefresh = False
         Me.XenonWindow2.TabIndex = 3
         Me.XenonWindow2.Text = "Inactive app"
         Me.XenonWindow2.ToolWindow = False
@@ -1092,6 +1099,7 @@ Partial Class Store
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
+        Me.XenonWindow1.SuspendRefresh = False
         Me.XenonWindow1.TabIndex = 2
         Me.XenonWindow1.Text = "App preview"
         Me.XenonWindow1.ToolWindow = False
@@ -3118,7 +3126,7 @@ Partial Class Store
         Me.MinimumSize = New System.Drawing.Size(1270, 760)
         Me.Name = "Store"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "WinPaletter Store (Beta)"
+        Me.Text = "WinPaletter Store"
         Me.Titlebar_panel.ResumeLayout(False)
         Me.search_panel.ResumeLayout(False)
         CType(Me.Titlebar_img, System.ComponentModel.ISupportInitialize).EndInit()

@@ -15,7 +15,7 @@ Public Class AltTabEditor
             Case WindowStyle.W10
                 XenonRadioImage1.Image = My.Resources.Native10
 
-            Case WindowStyle.W8
+            Case WindowStyle.W81
                 XenonRadioImage1.Image = My.Resources.Native8
 
             Case WindowStyle.W7
@@ -48,12 +48,12 @@ Public Class AltTabEditor
                 XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
                 XenonWinElement1.DarkMode = Not My.CP.Windows10.WinMode_Light
 
-            Case WindowStyle.W8
-                Select Case My.CP.Windows8.Theme
+            Case WindowStyle.W81
+                Select Case My.CP.Windows81.Theme
                     Case CP.Structures.Windows7.Themes.Aero
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
-                        XenonWinElement1.BackColor = My.CP.Windows8.PersonalColors_Background
-                        XenonWinElement1.Background2 = My.CP.Windows8.PersonalColors_Background
+                        XenonWinElement1.BackColor = My.CP.Windows81.PersonalColors_Background
+                        XenonWinElement1.Background2 = My.CP.Windows81.PersonalColors_Background
 
                     Case CP.Structures.Windows7.Themes.AeroLite
                         XenonWinElement1.Style = XenonWinElement.Styles.AltTab8AeroLite

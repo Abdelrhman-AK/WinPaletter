@@ -62,7 +62,7 @@ Public Class EditInfo
 
         XenonCheckBox1.Checked = [CP].Info.DesignedFor_Win11
         XenonCheckBox2.Checked = [CP].Info.DesignedFor_Win10
-        XenonCheckBox3.Checked = [CP].Info.DesignedFor_Win8
+        XenonCheckBox3.Checked = [CP].Info.DesignedFor_Win81
         XenonCheckBox4.Checked = [CP].Info.DesignedFor_Win7
         XenonCheckBox5.Checked = [CP].Info.DesignedFor_WinVista
         XenonCheckBox6.Checked = [CP].Info.DesignedFor_WinXP
@@ -83,7 +83,7 @@ Public Class EditInfo
 
         [CP].Info.DesignedFor_Win11 = XenonCheckBox1.Checked
         [CP].Info.DesignedFor_Win10 = XenonCheckBox2.Checked
-        [CP].Info.DesignedFor_Win8 = XenonCheckBox3.Checked
+        [CP].Info.DesignedFor_Win81 = XenonCheckBox3.Checked
         [CP].Info.DesignedFor_Win7 = XenonCheckBox4.Checked
         [CP].Info.DesignedFor_WinVista = XenonCheckBox5.Checked
         [CP].Info.DesignedFor_WinXP = XenonCheckBox6.Checked
@@ -148,7 +148,7 @@ Public Class EditInfo
     Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
-            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win8 = sender.Checked
+            If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win81 = sender.Checked
             StoreItem1.UpdateBadges()
         Catch
         End Try

@@ -16,7 +16,7 @@ Public Class LogonUI7
         ApplyPreview()
         Icon = LogonUI.Icon
 
-        If My.PreviewStyle = WindowStyle.W8 Then
+        If My.PreviewStyle = WindowStyle.W81 Then
             XenonButton3.Visible = True
             PictureBox11.Image = My.Resources.LogonUI8
             PictureBox4.Image = My.Resources.Native8
@@ -35,10 +35,10 @@ Public Class LogonUI7
 
     Sub LoadFromCP(CP As CP)
 
-        If My.PreviewStyle = WindowStyle.W8 Then
-            XenonToggle1.Checked = Not CP.Windows8.NoLockScreen
+        If My.PreviewStyle = WindowStyle.W81 Then
+            XenonToggle1.Checked = Not CP.Windows81.NoLockScreen
 
-            Select Case CP.Windows8.LockScreenType
+            Select Case CP.Windows81.LockScreenType
                 Case CP.Structures.LogonUI7.Modes.Default_
                     XenonRadioButton1.Checked = True
 
@@ -52,7 +52,7 @@ Public Class LogonUI7
                     XenonRadioButton3.Checked = True
             End Select
 
-            ID = CP.Windows8.LockScreenSystemID
+            ID = CP.Windows81.LockScreenSystemID
 
             XenonTextBox1.Text = CP.LogonUI7.ImagePath
             color_pick.BackColor = CP.LogonUI7.Color
@@ -115,15 +115,15 @@ Public Class LogonUI7
 
     Sub LoadToCP(CP As CP)
 
-        If My.PreviewStyle = WindowStyle.W8 Then
-            CP.Windows8.NoLockScreen = Not XenonToggle1.Checked
+        If My.PreviewStyle = WindowStyle.W81 Then
+            CP.Windows81.NoLockScreen = Not XenonToggle1.Checked
 
-            If XenonRadioButton1.Checked Then CP.Windows8.LockScreenType = CP.Structures.LogonUI7.Modes.Default_
-            If XenonRadioButton2.Checked Then CP.Windows8.LockScreenType = CP.Structures.LogonUI7.Modes.Wallpaper
-            If XenonRadioButton3.Checked Then CP.Windows8.LockScreenType = CP.Structures.LogonUI7.Modes.SolidColor
-            If XenonRadioButton4.Checked Then CP.Windows8.LockScreenType = CP.Structures.LogonUI7.Modes.CustomImage
+            If XenonRadioButton1.Checked Then CP.Windows81.LockScreenType = CP.Structures.LogonUI7.Modes.Default_
+            If XenonRadioButton2.Checked Then CP.Windows81.LockScreenType = CP.Structures.LogonUI7.Modes.Wallpaper
+            If XenonRadioButton3.Checked Then CP.Windows81.LockScreenType = CP.Structures.LogonUI7.Modes.SolidColor
+            If XenonRadioButton4.Checked Then CP.Windows81.LockScreenType = CP.Structures.LogonUI7.Modes.CustomImage
 
-            CP.Windows8.LockScreenSystemID = ID
+            CP.Windows81.LockScreenSystemID = ID
 
             CP.LogonUI7.ImagePath = XenonTextBox1.Text
             CP.LogonUI7.Color = color_pick.BackColor
@@ -169,7 +169,7 @@ Public Class LogonUI7
             If My.W7 Or My.WVista Then
                 bmpX = Resources_Functions.GetImageFromDLL(My.PATH_imageres, 5038)
 
-            ElseIf My.W8 Then
+            ElseIf My.W8 Or My.W81 Then
                 Dim SysLock As String
                 If Not ID = 1 And Not ID = 3 Then
                     SysLock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", ID)
@@ -361,8 +361,8 @@ Public Class LogonUI7
                 CPx = New CP_Defaults().Default_Windows11
             Case WindowStyle.W10
                 CPx = New CP_Defaults().Default_Windows10
-            Case WindowStyle.W8
-                CPx = New CP_Defaults().Default_Windows8
+            Case WindowStyle.W81
+                CPx = New CP_Defaults().Default_Windows81
             Case WindowStyle.W7
                 CPx = New CP_Defaults().Default_Windows7
             Case WindowStyle.WVista

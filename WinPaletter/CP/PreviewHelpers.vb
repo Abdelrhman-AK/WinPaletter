@@ -9,7 +9,7 @@ Public Class PreviewHelpers
     Enum WindowStyle
         W11
         W10
-        W8
+        W81
         W7
         WVista
         WXP
@@ -672,9 +672,9 @@ Public Class PreviewHelpers
                 End If
 
 #End Region
-            Case WindowStyle.W8
+            Case WindowStyle.W81
 #Region "Win8.1"
-                Select Case [CP].Windows8.Theme
+                Select Case [CP].Windows81.Theme
                     Case CP.Structures.Windows7.Themes.Aero
                         Taskbar.Transparency = True
                         Taskbar.BackColorAlpha = 100
@@ -684,12 +684,12 @@ Public Class PreviewHelpers
                 End Select
 
                 If AnimateColorChange Then
-                    Visual.FadeColor(Taskbar, "Background", Taskbar.Background, [CP].Windows8.ColorizationColor, Steps, Delay)
+                    Visual.FadeColor(Taskbar, "Background", Taskbar.Background, [CP].Windows81.ColorizationColor, Steps, Delay)
                 Else
-                    Taskbar.Background = [CP].Windows8.ColorizationColor
+                    Taskbar.Background = [CP].Windows81.ColorizationColor
                 End If
 
-                Taskbar.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
+                Taskbar.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
 #End Region
             Case WindowStyle.W7
 #Region "Win7"
@@ -825,7 +825,7 @@ Public Class PreviewHelpers
 
         Settings_Container.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
         Link_preview.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
-        Start.Visible = (Not [Style] = WindowStyle.W8) And Not ([Style] = WindowStyle.W10 And [CP].WindowsEffects.FullScreenStartMenu)
+        Start.Visible = (Not [Style] = WindowStyle.W81) And Not ([Style] = WindowStyle.W10 And [CP].WindowsEffects.FullScreenStartMenu)
         ActionCenter.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
 
         Select Case [Style]
@@ -859,9 +859,9 @@ Public Class PreviewHelpers
                 Taskbar_Style = XenonWinElement.Styles.Taskbar10
                 Start_Style = XenonWinElement.Styles.Start10
 
-            Case WindowStyle.W8
-                XenonWindow_Style = If(CP.Windows8.Theme = Structures.Windows7.Themes.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
-                Taskbar_Style = If(CP.Windows8.Theme = Structures.Windows7.Themes.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
+            Case WindowStyle.W81
+                XenonWindow_Style = If(CP.Windows81.Theme = Structures.Windows7.Themes.AeroLite, XenonWindow.Preview_Enum.W8Lite, XenonWindow.Preview_Enum.W8)
+                Taskbar_Style = If(CP.Windows81.Theme = Structures.Windows7.Themes.Aero, XenonWinElement.Styles.Taskbar8Aero, XenonWinElement.Styles.Taskbar8Lite)
 
             Case WindowStyle.W7
                 Select Case CP.Windows7.Theme
@@ -1089,7 +1089,7 @@ Public Class PreviewHelpers
                 Start.UseWin11RoundedCorners_WithWin10_Level1 = False
                 Start.UseWin11RoundedCorners_WithWin10_Level2 = False
 
-            Case WindowStyle.W8
+            Case WindowStyle.W81
                 Settings_Container.Visible = False
                 Link_preview.Visible = False
                 Start.Visible = False
@@ -1203,7 +1203,7 @@ Public Class PreviewHelpers
         XenonWindow2.Refresh()
 
     End Sub
-    Public Shared Sub ApplyWindowStyles(ByVal [CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
+    Public Shared Sub ApplyWindowStyles([CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)
         XenonWindow1.Active = True
         XenonWindow2.Active = False
 
@@ -1248,16 +1248,16 @@ Public Class PreviewHelpers
                 XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
                 XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
 #End Region
-            Case WindowStyle.W8
+            Case WindowStyle.W81
 #Region "Win8.1"
-                If My.W8 And My.Settings.Miscellaneous.Win7LivePreview Then
+                If (My.W8 Or My.W81) And My.Settings.Miscellaneous.Win7LivePreview Then
                     RefreshDWM([CP])
                 End If
 
                 If StartButton IsNot Nothing Then ApplyMetroStartToButton([CP], StartButton)
                 If LogonUIButton IsNot Nothing Then ApplyBackLogonUI([CP], LogonUIButton)
 
-                Select Case [CP].Windows8.Theme
+                Select Case [CP].Windows81.Theme
                     Case CP.Structures.Windows7.Themes.Aero
                         XenonWindow1.Preview = XenonWindow.Preview_Enum.W8
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8
@@ -1266,11 +1266,11 @@ Public Class PreviewHelpers
                         XenonWindow2.Preview = XenonWindow.Preview_Enum.W8Lite
                 End Select
 
-                XenonWindow1.AccentColor_Active = [CP].Windows8.ColorizationColor
-                XenonWindow1.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
+                XenonWindow1.AccentColor_Active = [CP].Windows81.ColorizationColor
+                XenonWindow1.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
 
-                XenonWindow2.AccentColor_Active = [CP].Windows8.ColorizationColor
-                XenonWindow2.Win7ColorBal = [CP].Windows8.ColorizationColorBalance
+                XenonWindow2.AccentColor_Active = [CP].Windows81.ColorizationColor
+                XenonWindow2.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
 
 #End Region
             Case WindowStyle.W7
@@ -1413,50 +1413,58 @@ Public Class PreviewHelpers
         XenonWindow1.Invalidate()
         XenonWindow2.Invalidate()
     End Sub
-    Public Shared Sub AdjustPreview_ModernOrClassic(ByVal [CP] As CP, [Style] As WindowStyle, tabs_preview As TablessControl, WXP_Alert As XenonAlertBox)
-        Dim condition0 As Boolean = [Style] = WindowStyle.W7 AndAlso CP.Windows7.Theme = Structures.Windows7.Themes.Classic
-        Dim condition1 As Boolean = [Style] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = Structures.Windows7.Themes.Classic
-        Dim condition2 As Boolean = [Style] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
-        WXP_Alert.Visible = [Style] = WindowStyle.WXP AndAlso My.StartedWithClassicTheme
-        tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
+    Public Shared Sub AdjustPreview_ModernOrClassic([CP] As CP, [Style] As WindowStyle, tabs_preview As TablessControl, WXP_Alert As XenonAlertBox)
+        If [CP] IsNot Nothing Then
+            Dim condition0 As Boolean = [Style] = WindowStyle.W7 AndAlso CP.Windows7.Theme = Structures.Windows7.Themes.Classic
+            Dim condition1 As Boolean = [Style] = WindowStyle.WVista AndAlso CP.WindowsVista.Theme = Structures.Windows7.Themes.Classic
+            Dim condition2 As Boolean = [Style] = WindowStyle.WXP AndAlso CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic
+            WXP_Alert.Visible = [Style] = WindowStyle.WXP AndAlso My.StartedWithClassicTheme
+            tabs_preview.SelectedIndex = If(condition0 Or condition1 Or condition2, 1, 0)
+        End If
     End Sub
 
     Public Shared Sub SetClassicWindowMetrics([CP] As CP, [Window] As RetroWindow)
-        [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
-        [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
-        [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-        [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
-        [Window].Font = CP.MetricsFonts.CaptionFont
-        [Window].Refresh()
+        If [CP] IsNot Nothing Then
+            [Window].Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
+            [Window].Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
+            [Window].Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+            [Window].Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
+            [Window].Font = CP.MetricsFonts.CaptionFont
+            [Window].Refresh()
+        End If
     End Sub
-    Public Shared Sub SetModernWindowMetrics(ByVal [CP] As CP, XenonWindow As XenonWindow)
-        XenonWindow.Font = [CP].MetricsFonts.CaptionFont
-        XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
-        XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
-        XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
-        XenonWindow.Invalidate()
+    Public Shared Sub SetModernWindowMetrics([CP] As CP, XenonWindow As XenonWindow)
+        If [CP] IsNot Nothing Then
+            XenonWindow.Font = [CP].MetricsFonts.CaptionFont
+            XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
+            XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
+            XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
+            XenonWindow.Invalidate()
+        End If
     End Sub
     Public Shared Sub SetClassicWindowColors([CP] As CP, [Window] As RetroWindow, Optional Active As Boolean = True)
-        [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
-        [Window].BackColor = [CP].Win32.ButtonFace
-        [Window].ButtonHilight = [CP].Win32.ButtonHilight
-        [Window].ButtonLight = [CP].Win32.ButtonLight
-        [Window].ButtonShadow = [CP].Win32.ButtonShadow
-        [Window].ButtonText = [CP].Win32.ButtonText
+        If [CP] IsNot Nothing Then
+            [Window].ButtonDkShadow = [CP].Win32.ButtonDkShadow
+            [Window].BackColor = [CP].Win32.ButtonFace
+            [Window].ButtonHilight = [CP].Win32.ButtonHilight
+            [Window].ButtonLight = [CP].Win32.ButtonLight
+            [Window].ButtonShadow = [CP].Win32.ButtonShadow
+            [Window].ButtonText = [CP].Win32.ButtonText
 
-        If Active Then
-            [Window].ColorBorder = [CP].Win32.ActiveBorder
-            [Window].ForeColor = [CP].Win32.TitleText
-            [Window].Color1 = [CP].Win32.ActiveTitle
-            [Window].Color2 = [CP].Win32.GradientActiveTitle
-        Else
-            [Window].ColorBorder = [CP].Win32.InactiveBorder
-            [Window].ForeColor = [CP].Win32.InactiveTitleText
-            [Window].Color1 = [CP].Win32.InactiveTitle
-            [Window].Color2 = [CP].Win32.GradientInactiveTitle
+            If Active Then
+                [Window].ColorBorder = [CP].Win32.ActiveBorder
+                [Window].ForeColor = [CP].Win32.TitleText
+                [Window].Color1 = [CP].Win32.ActiveTitle
+                [Window].Color2 = [CP].Win32.GradientActiveTitle
+            Else
+                [Window].ColorBorder = [CP].Win32.InactiveBorder
+                [Window].ForeColor = [CP].Win32.InactiveTitleText
+                [Window].Color1 = [CP].Win32.InactiveTitle
+                [Window].Color2 = [CP].Win32.GradientInactiveTitle
+            End If
+
+            [Window].ColorGradient = [CP].Win32.EnableGradient
         End If
-
-        [Window].ColorGradient = [CP].Win32.EnableGradient
     End Sub
     Public Shared Sub SetClassicRaisedPanelColors([CP] As CP, [Panel] As RetroPanelRaised)
         [Panel].BackColor = [CP].Win32.ButtonFace
@@ -1486,7 +1494,7 @@ Public Class PreviewHelpers
         [Button].FocusRectHeight = [CP].WindowsEffects.FocusRectHeight
     End Sub
 
-    Public Shared Sub ReValidateLivePreview(ByVal Parent As Control)
+    Public Shared Sub ReValidateLivePreview(Parent As Control)
         Parent.Refresh()
 
         For Each ctrl As Control In Parent.Controls
@@ -1499,56 +1507,56 @@ Public Class PreviewHelpers
         Next
     End Sub
 
-    Public Shared Sub ApplyMetroStartToButton(ColorPalette As CP, W8_start As XenonButton)
-        Select Case ColorPalette.Windows8.Start
+    Public Shared Sub ApplyMetroStartToButton(ColorPalette As CP, W81_start As XenonButton)
+        Select Case ColorPalette.Windows81.Start
             Case 1
-                W8_start.Image = Start8Selector.img1.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img1.Image.Resize(48, 48)
             Case 2
-                W8_start.Image = Start8Selector.img2.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img2.Image.Resize(48, 48)
             Case 3
-                W8_start.Image = Start8Selector.img3.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img3.Image.Resize(48, 48)
             Case 4
-                W8_start.Image = Start8Selector.img4.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img4.Image.Resize(48, 48)
             Case 5
-                W8_start.Image = Start8Selector.img5.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img5.Image.Resize(48, 48)
             Case 6
-                W8_start.Image = Start8Selector.img6.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img6.Image.Resize(48, 48)
             Case 7
-                W8_start.Image = Start8Selector.img7.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img7.Image.Resize(48, 48)
             Case 8
-                W8_start.Image = Start8Selector.img8.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img8.Image.Resize(48, 48)
             Case 9
-                W8_start.Image = Start8Selector.img9.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img9.Image.Resize(48, 48)
             Case 10
-                W8_start.Image = Start8Selector.img10.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img10.Image.Resize(48, 48)
             Case 11
-                W8_start.Image = Start8Selector.img11.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img11.Image.Resize(48, 48)
             Case 12
-                W8_start.Image = Start8Selector.img12.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img12.Image.Resize(48, 48)
             Case 13
-                W8_start.Image = Start8Selector.img13.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img13.Image.Resize(48, 48)
             Case 14
-                W8_start.Image = Start8Selector.img14.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img14.Image.Resize(48, 48)
             Case 15
-                W8_start.Image = Start8Selector.img15.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img15.Image.Resize(48, 48)
             Case 16
-                W8_start.Image = Start8Selector.img16.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img16.Image.Resize(48, 48)
             Case 17
-                W8_start.Image = Start8Selector.img17.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img17.Image.Resize(48, 48)
             Case 18
-                W8_start.Image = Start8Selector.img18.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img18.Image.Resize(48, 48)
             Case 19
-                W8_start.Image = ColorPalette.Windows8.PersonalColors_Background.ToBitmap(New Size(48, 48))
+                W81_start.Image = ColorPalette.Windows81.PersonalColors_Background.ToBitmap(New Size(48, 48))
             Case 20
-                W8_start.Image = My.Wallpaper.Resize(48, 48)
+                W81_start.Image = My.Wallpaper.Resize(48, 48)
 
             Case Else
-                W8_start.Image = Start8Selector.img1.Image.Resize(48, 48)
+                W81_start.Image = Start8Selector.img1.Image.Resize(48, 48)
         End Select
     End Sub
     Public Shared Sub ApplyBackLogonUI(ColorPalette As CP, W8_logonui As XenonButton)
 
-        Select Case ColorPalette.Windows8.LogonUI
+        Select Case ColorPalette.Windows81.LogonUI
             Case 0
                 W8_logonui.Image = Color.FromArgb(34, 34, 34).ToBitmap(New Size(48, 48))
 

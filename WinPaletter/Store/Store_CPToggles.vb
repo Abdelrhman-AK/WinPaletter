@@ -11,7 +11,7 @@ Public Class Store_CPToggles
         CheckedListBox1.Items.Clear()
 
         If CP.AppTheme.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_AppTheme, True)
-        If CP.LogonUI7.Enabled And (My.W7 Or My.W8) Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_LogonUI, True)
+        If CP.LogonUI7.Enabled And (My.W7 Or My.W8 Or My.W81) Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_LogonUI, True)
         If CP.LogonUIXP.Enabled And My.WXP Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_LogonUI, True)
         If CP.Cursor_Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_Cursors, True)
         If CP.Wallpaper.Enabled Then CheckedListBox1.Items.Add(My.Lang.Store_Toggle_Wallpaper, True)
@@ -39,7 +39,7 @@ Public Class Store_CPToggles
             If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_AppTheme Then CP.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i)
 
             If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_LogonUI Then
-                If My.W7 Or My.W8 Then
+                If My.W7 Or My.W8 Or My.W81 Then
                     CP.LogonUI7.Enabled = CheckedListBox1.GetItemChecked(i)
                 ElseIf My.WXP Then
                     CP.LogonUIXP.Enabled = CheckedListBox1.GetItemChecked(i)

@@ -193,6 +193,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property BackgroundOpacity() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("BackgroundOpacity", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property BasicTaskbar() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("BasicTaskbar", resourceCulture)
@@ -1044,6 +1054,16 @@ Namespace My.Resources
         Public ReadOnly Property notify_administrator() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("notify_administrator", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property notify_applying() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("notify_applying", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

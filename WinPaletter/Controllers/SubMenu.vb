@@ -249,8 +249,6 @@ Public Class SubMenu
         InvertedColor.BackColor = MainColor.BackColor.Invert.CB((XenonTrackbar3.Value - 100) / 100)
         InvertedColor.DefaultColor = MainColor.BackColor.Invert
 
-        'BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
-
         Collapse_Expand()
     End Sub
 
@@ -267,7 +265,8 @@ Public Class SubMenu
         For Each c As Color In CP.ListColors
             Dim pnl As New XenonCP With {
                 .Size = New Size(If(My.Settings.NerdStats.Enabled, 85, 30), 20),
-                .BackColor = c
+                .BackColor = c,
+                .DefaultColor = c
             }
             PaletteContainer.Controls.Add(pnl)
             AddHandler pnl.Click, AddressOf Pnl_Click
@@ -326,7 +325,7 @@ Public Class SubMenu
                 Case 2
                     GetColorsFromPalette(New CP_Defaults().Default_Windows10)
                 Case 3
-                    GetColorsFromPalette(New CP_Defaults().Default_Windows8)
+                    GetColorsFromPalette(New CP_Defaults().Default_Windows81)
                 Case 4
                     GetColorsFromPalette(New CP_Defaults().Default_Windows7)
                 Case 5

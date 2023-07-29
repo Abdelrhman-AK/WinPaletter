@@ -162,7 +162,7 @@ Module XenonModule
                 Else
                     If My.W11 Then
                         Return True
-                    ElseIf My.W10 Or My.W8 Then
+                    ElseIf My.W10 Or My.W8 Or My.W81 Then
                         Return False
                     ElseIf My.W7 OrElse My.WXP OrElse My.WVista Then
                         Return Not My.StartedWithClassicTheme
@@ -1953,8 +1953,13 @@ Public Class XenonCP
 
         LineColor = Color.FromArgb(255, LineColor)
 
+        If BackColor.A < 255 Then
+            Using br As New TextureBrush(My.Resources.BackgroundOpacity) : G.FillRoundedRect(br, RectInner, R) : End Using
+            Using br As New TextureBrush(My.Resources.BackgroundOpacity.Fade(alpha / 255)) : G.FillRoundedRect(br, Rect, R) : End Using
+        End If
+
         Using br As New SolidBrush(BackColor) : G.FillRoundedRect(br, RectInner, R) : End Using
-        Using br As New SolidBrush(Color.FromArgb(alpha, BackColor)) : G.FillRoundedRect(br, Rect, R) : End Using
+        Using br As New SolidBrush(Color.FromArgb((alpha / 255) * BackColor.A, BackColor)) : G.FillRoundedRect(br, Rect, R) : End Using
 
         If My.Settings.NerdStats.DotDefaultChangedIndicator Then
             Using br As New SolidBrush(DefaultColor)
@@ -5593,31 +5598,43 @@ Public Class XenonWindow : Inherits Panel
 
             If AccentColor_Enabled Then
                 If Active Then
+                    Using br As New SolidBrush(AccentColor_Active) : G.FillRectangle(br, TitlebarRect) : End Using
+                Else
+                    Using br As New SolidBrush(AccentColor_Inactive) : G.FillRectangle(br, TitlebarRect) : End Using
+                End If
+            Else
+                If Active Then
+                    If DarkMode Then
+                        G.FillRectangle(Brushes.Black, TitlebarRect)
+                    Else
+                        G.FillRectangle(Brushes.White, TitlebarRect)
+                    End If
+                Else
+                    If DarkMode Then
+                        Using br As New SolidBrush(Color.FromArgb(43, 43, 43)) : G.FillRectangle(br, TitlebarRect) : End Using
+                    Else
+                        G.FillRectangle(Brushes.White, TitlebarRect)
+                    End If
+                End If
+            End If
+
+            If AccentColor_Enabled Then
+                If Active Then
                     Using P As New Pen(Color.FromArgb(200, AccentColor_Active)) : G.DrawRectangle(P, Rect) : End Using
                 Else
                     Using P As New Pen(Color.FromArgb(200, AccentColor_Inactive)) : G.DrawRectangle(P, Rect) : End Using
                 End If
             Else
                 If DarkMode Then
-                    Using P As New Pen(Color.FromArgb(200, 100, 100, 100)) : G.DrawRectangle(P, Rect) : End Using
+                    Using P As New Pen(Color.FromArgb(125, 100, 100, 100)) : G.DrawRectangle(P, Rect) : End Using
                 Else
-                    Using P As New Pen(Color.FromArgb(200, 220, 220, 220)) : G.DrawRectangle(P, Rect) : End Using
+                    Using P As New Pen(Color.FromArgb(125, 220, 220, 220)) : G.DrawRectangle(P, Rect) : End Using
                 End If
-            End If
-
-            If AccentColor_Enabled Then
-                If Active Then
-                    Using br As New SolidBrush(AccentColor_Active) : G.FillRectangle(br, TitlebarRect) : End Using
-                Else
-                    Using br As New SolidBrush(AccentColor_Inactive) : G.FillRectangle(br, TitlebarRect) : End Using
-                End If
-            Else
-                G.FillRectangle(Brushes.White, TitlebarRect)
             End If
 #End Region
 
         ElseIf Preview = Preview_Enum.W8 Or Preview = Preview_Enum.W8Lite Then
-#Region "Windows 8.1"
+#Region "Windows 8/8.1"
             Dim InnerWindow_1 As New Rectangle
             Dim InnerWindow_2 As New Rectangle
             Dim Sum As Integer = Metrics_BorderWidth + Metrics_PaddedBorderWidth
@@ -6124,8 +6141,13 @@ Public Class XenonWindow : Inherits Panel
                     ForeColorX = If(DarkMode, Color.White, Color.Black)
                     closeImg = If(DarkMode, My.Resources.Win10x_Close_Dark, My.Resources.Win10x_Close_Light)
                 Else
-                    ForeColorX = Color.Black
-                    closeImg = My.Resources.Win10x_Close_Light
+                    If DarkMode Then
+                        ForeColorX = Color.White
+                        closeImg = My.Resources.Win10x_Close_Dark
+                    Else
+                        ForeColorX = Color.Black
+                        closeImg = My.Resources.Win10x_Close_Light
+                    End If
                 End If
             Else
                 ForeColorX = Color.FromArgb(115, 115, 115)

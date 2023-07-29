@@ -627,6 +627,7 @@
     <Content Include="Resources\add_winxp.png" />
     <Content Include="Resources\AeroGlass.png" />
     <Content Include="Resources\AeroPeek.png" />
+    <None Include="Resources\BackgroundOpacity.png" />
     <Content Include="Resources\BasicTaskbar.png" />
     <None Include="Resources\WP_Admin.png" />
     <None Include="Resources\checker_enabled.png" />
@@ -696,6 +697,7 @@
     <Content Include="Resources\NativeVista.png" />
     <Content Include="Resources\NativeXP.png" />
     <Content Include="Resources\notify_administrator.png" />
+    <None Include="Resources\notify_applying.png" />
     <Content Include="Resources\notify_skip.png" />
     <Content Include="Resources\notify_success.png" />
     <Content Include="Resources\notify_time.png" />

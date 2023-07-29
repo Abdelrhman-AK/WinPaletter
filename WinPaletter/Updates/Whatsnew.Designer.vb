@@ -170,7 +170,7 @@ Partial Class Whatsnew
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(667, 368)
         Me.TabPage3.TabIndex = 16
-        Me.TabPage3.Text = "WinPaletter Store (Beta)"
+        Me.TabPage3.Text = "WinPaletter Store"
         '
         'XenonButton5
         '
@@ -239,7 +239,7 @@ Partial Class Whatsnew
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(661, 45)
         Me.Label7.TabIndex = 29
-        Me.Label7.Text = "WinPaletter Store (Beta) for themes"
+        Me.Label7.Text = "WinPaletter Store for themes"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage12

@@ -44,6 +44,7 @@ Public Class WinEffecter
             XenonCheckBox18.Checked = .PaintDesktopVersion
             XenonCheckBox21.Checked = .ShakeToMinimize
             XenonCheckBox22.Checked = .Win11BootDots
+            XenonCheckBox26.Checked = .ClassicVolMixer
 
             XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default)
             XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon)
@@ -119,6 +120,7 @@ Public Class WinEffecter
             .PaintDesktopVersion = XenonCheckBox18.Checked
             .ShakeToMinimize = XenonCheckBox21.Checked
             .Win11BootDots = XenonCheckBox22.Checked
+            .ClassicVolMixer = XenonCheckBox26.Checked
 
             If XenonRadioButton1.Checked Then
                 .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default

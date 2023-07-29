@@ -198,7 +198,7 @@ Partial Class About
         Me.LinkLabel3.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel3.TabIndex = 13
         Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "Image to palette mechanism by ColorThief; KSemenenko"
+        Me.LinkLabel3.Text = "Image to palette conversion mechanism by ColorThief; KSemenenko"
         Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label3
@@ -218,6 +218,7 @@ Partial Class About
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
@@ -235,6 +236,7 @@ Partial Class About
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = Nothing
@@ -378,7 +380,7 @@ Partial Class About
         Me.LinkLabel8.Size = New System.Drawing.Size(471, 24)
         Me.LinkLabel8.TabIndex = 29
         Me.LinkLabel8.TabStop = True
-        Me.LinkLabel8.Text = "JetBrainsMono font for nerd color info"
+        Me.LinkLabel8.Text = "JetBrainsMono font as a monospaced font specific for WinPaletter"
         Me.LinkLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox9
@@ -526,7 +528,8 @@ Partial Class About
         Me.XenonLinkLabel3.Size = New System.Drawing.Size(471, 24)
         Me.XenonLinkLabel3.TabIndex = 39
         Me.XenonLinkLabel3.TabStop = True
-        Me.XenonLinkLabel3.Text = "Getting elements of visual styles file (*.msstyles) by Advanced UxTheme wrapper"
+        Me.XenonLinkLabel3.Text = "Getting bitmap elements of visual styles (*.msstyles) by Advanced UxTheme wrapper" &
+    ""
         Me.XenonLinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox13
@@ -571,6 +574,7 @@ Partial Class About
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)

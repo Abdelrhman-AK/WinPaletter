@@ -29,8 +29,8 @@ Public Class CP_Defaults : Implements IDisposable
         ElseIf [PreviewStyle] = WindowStyle.W10 Then
             Using X As New CP_Defaults() : _Def = X.Default_Windows10 : End Using
 
-        ElseIf [PreviewStyle] = WindowStyle.W8 Then
-            Using X As New CP_Defaults() : _Def = X.Default_Windows8 : End Using
+        ElseIf [PreviewStyle] = WindowStyle.W81 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows81 : End Using
 
         ElseIf [PreviewStyle] = WindowStyle.W7 Then
             Using X As New CP_Defaults() : _Def = X.Default_Windows7 : End Using
@@ -58,8 +58,8 @@ Public Class CP_Defaults : Implements IDisposable
         ElseIf My.W10 Then
             Using X As New CP_Defaults() : _Def = X.Default_Windows10 : End Using
 
-        ElseIf My.W8 Then
-            Using X As New CP_Defaults() : _Def = X.Default_Windows8 : End Using
+        ElseIf My.W81 Then
+            Using X As New CP_Defaults() : _Def = X.Default_Windows81 : End Using
 
         ElseIf My.W7 Then
             Using X As New CP_Defaults() : _Def = X.Default_Windows7 : End Using
@@ -421,7 +421,7 @@ Public Class CP_Defaults : Implements IDisposable
         Return [CP]
     End Function
 
-    Public Function Default_Windows8() As CP
+    Public Function Default_Windows81() As CP
         Dim [CP] As New CP(CP.CP_Type.Empty)
 
         With [CP].Info
@@ -433,7 +433,7 @@ Public Class CP_Defaults : Implements IDisposable
             .AppVersion = My.AppVersion
         End With
 
-        With [CP].Windows8
+        With [CP].Windows81
             .ColorizationColor = Color.FromArgb(246, 195, 74)
             .ColorizationColorBalance = 78
             .PersonalColors_Background = Color.FromArgb(30, 0, 84)
@@ -635,7 +635,7 @@ Public Class CP_Defaults : Implements IDisposable
             .AppVersion = My.AppVersion
         End With
 
-        With [CP].Windows8
+        With [CP].Windows81
             .ColorizationColor = Color.FromArgb(246, 195, 74)
             .ColorizationColorBalance = 78
             .PersonalColors_Background = Color.FromArgb(30, 0, 84)
@@ -836,7 +836,7 @@ Public Class CP_Defaults : Implements IDisposable
             .AppVersion = My.AppVersion
         End With
 
-        With [CP].Windows8
+        With [CP].Windows81
             .ColorizationColor = Color.FromArgb(246, 195, 74)
             .ColorizationColorBalance = 78
             .PersonalColors_Background = Color.FromArgb(30, 0, 84)

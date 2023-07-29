@@ -7,7 +7,7 @@ Public Class Start8Selector
         ApplyDarkMode(Me)
         LoadImagesFromDLL()
 
-        Select Case My.CP.Windows8.Start
+        Select Case My.CP.Windows81.Start
             Case 1
                 img1.Checked = True
             Case 2
@@ -54,31 +54,31 @@ Public Class Start8Selector
     End Sub
 
     Sub LoadImagesFromDLL()
-        img19.Image = My.CP.Windows8.PersonalColors_Background.ToBitmap(New Size(64, 64))
+        img19.Image = My.CP.Windows81.PersonalColors_Background.ToBitmap(New Size(64, 64))
         img20.Image = My.Wallpaper.Resize(64, 64)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        If img1.Checked Then My.CP.Windows8.Start = 1
-        If img2.Checked Then My.CP.Windows8.Start = 2
-        If img3.Checked Then My.CP.Windows8.Start = 3
-        If img4.Checked Then My.CP.Windows8.Start = 4
-        If img5.Checked Then My.CP.Windows8.Start = 5
-        If img6.Checked Then My.CP.Windows8.Start = 6
-        If img7.Checked Then My.CP.Windows8.Start = 7
-        If img8.Checked Then My.CP.Windows8.Start = 8
-        If img9.Checked Then My.CP.Windows8.Start = 9
-        If img10.Checked Then My.CP.Windows8.Start = 10
-        If img11.Checked Then My.CP.Windows8.Start = 11
-        If img12.Checked Then My.CP.Windows8.Start = 12
-        If img13.Checked Then My.CP.Windows8.Start = 13
-        If img14.Checked Then My.CP.Windows8.Start = 14
-        If img15.Checked Then My.CP.Windows8.Start = 15
-        If img16.Checked Then My.CP.Windows8.Start = 16
-        If img17.Checked Then My.CP.Windows8.Start = 17
-        If img18.Checked Then My.CP.Windows8.Start = 18
-        If img19.Checked Then My.CP.Windows8.Start = 19
-        If img20.Checked Then My.CP.Windows8.Start = 20
+        If img1.Checked Then My.CP.Windows81.Start = 1
+        If img2.Checked Then My.CP.Windows81.Start = 2
+        If img3.Checked Then My.CP.Windows81.Start = 3
+        If img4.Checked Then My.CP.Windows81.Start = 4
+        If img5.Checked Then My.CP.Windows81.Start = 5
+        If img6.Checked Then My.CP.Windows81.Start = 6
+        If img7.Checked Then My.CP.Windows81.Start = 7
+        If img8.Checked Then My.CP.Windows81.Start = 8
+        If img9.Checked Then My.CP.Windows81.Start = 9
+        If img10.Checked Then My.CP.Windows81.Start = 10
+        If img11.Checked Then My.CP.Windows81.Start = 11
+        If img12.Checked Then My.CP.Windows81.Start = 12
+        If img13.Checked Then My.CP.Windows81.Start = 13
+        If img14.Checked Then My.CP.Windows81.Start = 14
+        If img15.Checked Then My.CP.Windows81.Start = 15
+        If img16.Checked Then My.CP.Windows81.Start = 16
+        If img17.Checked Then My.CP.Windows81.Start = 17
+        If img18.Checked Then My.CP.Windows81.Start = 18
+        If img19.Checked Then My.CP.Windows81.Start = 19
+        If img20.Checked Then My.CP.Windows81.Start = 20
         Me.Close()
     End Sub
 

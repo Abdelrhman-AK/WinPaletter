@@ -38,6 +38,7 @@ Partial Class Metrics_Fonts
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox14 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
@@ -264,7 +265,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton10 = New WinPaletter.XenonButton()
         Me.XenonButton7 = New WinPaletter.XenonButton()
         Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox14 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -570,6 +570,24 @@ Partial Class Metrics_Fonts
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Titlebar"
         '
+        'XenonAlertBox14
+        '
+        Me.XenonAlertBox14.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox14.CenterText = False
+        Me.XenonAlertBox14.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox14.Image = CType(resources.GetObject("XenonAlertBox14.Image"), System.Drawing.Image)
+        Me.XenonAlertBox14.Location = New System.Drawing.Point(415, 388)
+        Me.XenonAlertBox14.Name = "XenonAlertBox14"
+        Me.XenonAlertBox14.Size = New System.Drawing.Size(536, 45)
+        Me.XenonAlertBox14.TabIndex = 203
+        Me.XenonAlertBox14.TabStop = False
+        Me.XenonAlertBox14.Text = "Updated versions of Windows 11 won't change title bar font due to bug in Windows " &
+    "itself (you can change its size only)"
+        '
         'XenonAlertBox3
         '
         Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
@@ -798,7 +816,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar13.LargeChange = 10
         Me.XenonTrackbar13.Location = New System.Drawing.Point(188, 77)
-        Me.XenonTrackbar13.Maximum = 100
+        Me.XenonTrackbar13.Maximum = 50
         Me.XenonTrackbar13.Minimum = 0
         Me.XenonTrackbar13.Name = "XenonTrackbar13"
         Me.XenonTrackbar13.Size = New System.Drawing.Size(162, 19)
@@ -835,7 +853,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar14.LargeChange = 10
         Me.XenonTrackbar14.Location = New System.Drawing.Point(188, 47)
-        Me.XenonTrackbar14.Maximum = 100
+        Me.XenonTrackbar14.Maximum = 50
         Me.XenonTrackbar14.Minimum = 0
         Me.XenonTrackbar14.Name = "XenonTrackbar14"
         Me.XenonTrackbar14.Size = New System.Drawing.Size(162, 19)
@@ -1248,7 +1266,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar12.LargeChange = 10
         Me.XenonTrackbar12.Location = New System.Drawing.Point(191, 137)
-        Me.XenonTrackbar12.Maximum = 100
+        Me.XenonTrackbar12.Maximum = 50
         Me.XenonTrackbar12.Minimum = 0
         Me.XenonTrackbar12.Name = "XenonTrackbar12"
         Me.XenonTrackbar12.Size = New System.Drawing.Size(163, 19)
@@ -1285,7 +1303,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar1.LargeChange = 10
         Me.XenonTrackbar1.Location = New System.Drawing.Point(191, 107)
-        Me.XenonTrackbar1.Maximum = 100
+        Me.XenonTrackbar1.Maximum = 50
         Me.XenonTrackbar1.Minimum = 0
         Me.XenonTrackbar1.Name = "XenonTrackbar1"
         Me.XenonTrackbar1.Size = New System.Drawing.Size(163, 19)
@@ -1308,7 +1326,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar3.LargeChange = 10
         Me.XenonTrackbar3.Location = New System.Drawing.Point(191, 77)
-        Me.XenonTrackbar3.Maximum = 100
+        Me.XenonTrackbar3.Maximum = 50
         Me.XenonTrackbar3.Minimum = 18
         Me.XenonTrackbar3.Name = "XenonTrackbar3"
         Me.XenonTrackbar3.Size = New System.Drawing.Size(163, 19)
@@ -1331,7 +1349,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar2.LargeChange = 10
         Me.XenonTrackbar2.Location = New System.Drawing.Point(191, 47)
-        Me.XenonTrackbar2.Maximum = 100
+        Me.XenonTrackbar2.Maximum = 50
         Me.XenonTrackbar2.Minimum = 17
         Me.XenonTrackbar2.Name = "XenonTrackbar2"
         Me.XenonTrackbar2.Size = New System.Drawing.Size(163, 19)
@@ -2294,7 +2312,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar9.LargeChange = 10
         Me.XenonTrackbar9.Location = New System.Drawing.Point(118, 47)
-        Me.XenonTrackbar9.Maximum = 100
+        Me.XenonTrackbar9.Maximum = 50
         Me.XenonTrackbar9.Minimum = 16
         Me.XenonTrackbar9.Name = "XenonTrackbar9"
         Me.XenonTrackbar9.Size = New System.Drawing.Size(239, 19)
@@ -2308,7 +2326,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar8.LargeChange = 10
         Me.XenonTrackbar8.Location = New System.Drawing.Point(118, 77)
-        Me.XenonTrackbar8.Maximum = 100
+        Me.XenonTrackbar8.Maximum = 50
         Me.XenonTrackbar8.Minimum = 16
         Me.XenonTrackbar8.Name = "XenonTrackbar8"
         Me.XenonTrackbar8.Size = New System.Drawing.Size(239, 19)
@@ -3037,7 +3055,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar10.LargeChange = 10
         Me.XenonTrackbar10.Location = New System.Drawing.Point(118, 77)
-        Me.XenonTrackbar10.Maximum = 100
+        Me.XenonTrackbar10.Maximum = 50
         Me.XenonTrackbar10.Minimum = 0
         Me.XenonTrackbar10.Name = "XenonTrackbar10"
         Me.XenonTrackbar10.Size = New System.Drawing.Size(237, 19)
@@ -3070,7 +3088,7 @@ Partial Class Metrics_Fonts
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTrackbar11.LargeChange = 10
         Me.XenonTrackbar11.Location = New System.Drawing.Point(118, 47)
-        Me.XenonTrackbar11.Maximum = 100
+        Me.XenonTrackbar11.Maximum = 50
         Me.XenonTrackbar11.Minimum = 0
         Me.XenonTrackbar11.Name = "XenonTrackbar11"
         Me.XenonTrackbar11.Size = New System.Drawing.Size(237, 19)
@@ -3687,24 +3705,6 @@ Partial Class Metrics_Fonts
         Me.XenonButton8.TabIndex = 82
         Me.XenonButton8.Text = "Load into current theme"
         Me.XenonButton8.UseVisualStyleBackColor = False
-        '
-        'XenonAlertBox14
-        '
-        Me.XenonAlertBox14.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
-        Me.XenonAlertBox14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox14.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox14.CenterText = False
-        Me.XenonAlertBox14.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox14.Image = CType(resources.GetObject("XenonAlertBox14.Image"), System.Drawing.Image)
-        Me.XenonAlertBox14.Location = New System.Drawing.Point(415, 388)
-        Me.XenonAlertBox14.Name = "XenonAlertBox14"
-        Me.XenonAlertBox14.Size = New System.Drawing.Size(536, 45)
-        Me.XenonAlertBox14.TabIndex = 203
-        Me.XenonAlertBox14.TabStop = False
-        Me.XenonAlertBox14.Text = "Updated versions of Windows 11 won't change title bar font due to bug in Windows " &
-    "itself (you can change its size only)"
         '
         'Metrics_Fonts
         '

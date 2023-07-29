@@ -47,7 +47,7 @@ Public Class ComplexSave
         ElseIf My.W10 Then
             XenonRadioImage7.Image = My.Resources.Native10.Resize(20, 20)
 
-        ElseIf My.W8 Then
+        ElseIf My.W8 Or My.W81 Then
             XenonRadioImage7.Image = My.Resources.Native8.Resize(20, 20)
 
         ElseIf My.W7 Then

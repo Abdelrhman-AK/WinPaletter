@@ -27,8 +27,8 @@ Public Class Wallpaper_Editor
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win11)
             Case WindowStyle.W10
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win10)
-            Case WindowStyle.W8
-                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win8)
+            Case WindowStyle.W81
+                XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win81)
             Case WindowStyle.W7
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_Win7)
             Case WindowStyle.WVista
@@ -166,8 +166,8 @@ Public Class Wallpaper_Editor
                 My.CP.WallpaperTone_W11 = WT
             Case WindowStyle.W10
                 My.CP.WallpaperTone_W10 = WT
-            Case WindowStyle.W8
-                My.CP.WallpaperTone_W8 = WT
+            Case WindowStyle.W81
+                My.CP.WallpaperTone_W81 = WT
             Case WindowStyle.W7
                 My.CP.WallpaperTone_W7 = WT
             Case WindowStyle.WVista

@@ -380,7 +380,7 @@ Public Class ColorPickerDlg
                 End If
 
                 If TypeOf ctrl Is XenonCP Then
-                    Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                    Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, ColorEditorManager1.Color, steps, delay)
                 End If
                 ctrl.Refresh()
 
@@ -540,7 +540,7 @@ Public Class ColorPickerDlg
 
         Next
 
-        If (My.WVista Or My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then
+        If (My.WVista Or My.W7 Or My.W8 Or My.W81) And My.Settings.Miscellaneous.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(ColorEditorManager1.Color, My.CP.Windows7.ColorizationAfterglow)
             End If
@@ -562,8 +562,8 @@ Public Class ColorPickerDlg
                     .clrColor = Color1.ToArgb,
                     .clrAfterGlow = Color2.ToArgb}
 
-                If My.PreviewStyle = WindowStyle.W8 Then
-                    temp.nIntensity = My.CP.Windows8.ColorizationColorBalance
+                If My.PreviewStyle = WindowStyle.W81 Then
+                    temp.nIntensity = My.CP.Windows81.ColorizationColorBalance
 
                 ElseIf My.PreviewStyle = WindowStyle.W7 Then
                     temp.nIntensity = My.CP.Windows7.ColorizationColorBalance
@@ -769,7 +769,7 @@ Public Class ColorPickerDlg
             Case 2
                 GetColorsFromPalette(New CP_Defaults().Default_Windows10)
             Case 3
-                GetColorsFromPalette(New CP_Defaults().Default_Windows8)
+                GetColorsFromPalette(New CP_Defaults().Default_Windows81)
             Case 4
                 GetColorsFromPalette(New CP_Defaults().Default_WindowsVista)
             Case 5
@@ -782,7 +782,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub ColorPickerDlg_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then
+        If DialogResult <> DialogResult.OK And (My.WVista Or My.W7 Or My.W8 Or My.W81) And My.Settings.Miscellaneous.Win7LivePreview Then
             If _Conditions.Win7LivePreview_Colorization Then
                 UpdateWin7Preview(InitColor, My.CP.Windows7.ColorizationAfterglow)
             End If

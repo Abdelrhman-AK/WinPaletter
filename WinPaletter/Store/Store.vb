@@ -972,7 +972,7 @@ Public Class Store
 
                     If .CP.Info.DesignedFor_Win11 Then os_list.Add(My.Lang.OS_Win11)
                     If .CP.Info.DesignedFor_Win10 Then os_list.Add(My.Lang.OS_Win10)
-                    If .CP.Info.DesignedFor_Win8 Then os_list.Add(My.Lang.OS_Win8)
+                    If .CP.Info.DesignedFor_Win81 Then os_list.Add(My.Lang.OS_Win81)
                     If .CP.Info.DesignedFor_Win7 Then os_list.Add(My.Lang.OS_Win7)
                     If .CP.Info.DesignedFor_WinVista Then os_list.Add(My.Lang.OS_WinVista)
                     If .CP.Info.DesignedFor_WinXP Then os_list.Add(My.Lang.OS_WinXP)
@@ -1244,7 +1244,7 @@ Public Class Store
             If My.W11 Then
                 DrawMica(Pd)
 
-            ElseIf My.W10 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
+            ElseIf My.W10 OrElse My.W81 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
                 DrawAero(Pd)
                 If My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
 

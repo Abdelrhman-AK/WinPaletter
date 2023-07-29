@@ -65,7 +65,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Pattern As Integer
             Public DesignedFor_Win11 As Boolean
             Public DesignedFor_Win10 As Boolean
-            Public DesignedFor_Win8 As Boolean
+            Public DesignedFor_Win81 As Boolean
             Public DesignedFor_Win7 As Boolean
             Public DesignedFor_WinVista As Boolean
             Public DesignedFor_WinXP As Boolean
@@ -99,7 +99,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Pattern = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1)
                 DesignedFor_Win11 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", True)
                 DesignedFor_Win10 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", True)
-                DesignedFor_Win8 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", True)
+                DesignedFor_Win81 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", True)
                 DesignedFor_Win7 = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", True)
                 DesignedFor_WinVista = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", True)
                 DesignedFor_WinXP = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", True)
@@ -120,7 +120,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", Pattern, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11.ToInteger, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", DesignedFor_Win8.ToInteger, RegistryValueKind.DWord)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", DesignedFor_Win81.ToInteger, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7.ToInteger, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista.ToInteger, RegistryValueKind.DWord)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP.ToInteger, RegistryValueKind.DWord)
@@ -334,7 +334,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Return MemberwiseClone()
             End Function
         End Structure
-        Structure Windows8 : Implements ICloneable
+        Structure Windows8x : Implements ICloneable
             Public Start As Integer
             Public ColorizationColor As Color
             Public ColorizationColorBalance As Integer
@@ -348,19 +348,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public LockScreenType As Structures.LogonUI7.Modes
             Public LockScreenSystemID As Integer
 
-            Shared Operator =(First As Windows8, Second As Windows8) As Boolean
+            Shared Operator =(First As Windows8x, Second As Windows8x) As Boolean
                 Return First.Equals(Second)
             End Operator
 
-            Shared Operator <>(First As Windows8, Second As Windows8) As Boolean
+            Shared Operator <>(First As Windows8x, Second As Windows8x) As Boolean
                 Return Not First.Equals(Second)
             End Operator
             Public Function Clone() Implements ICloneable.Clone
                 Return MemberwiseClone()
             End Function
 
-            Public Sub Load(_DefWin As Windows8)
-                If My.W8 Then
+            Public Sub Load(_DefWin As Windows8x)
+                If My.W8 Or My.W81 Then
                     Dim y As Object
 
                     Dim stringThemeName As New System.Text.StringBuilder(260)
@@ -481,7 +481,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Enum
 
             Public Sub Load(_DefWin As Windows7)
-                If My.W7 Or My.W8 Then
+                If My.W7 Or My.W8 Or My.W81 Then
                     Dim y As Object
 
                     y = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", _DefWin.ColorizationColor.ToArgb)
@@ -1310,8 +1310,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
                     ElseIf My.PreviewStyle = WindowStyle.W10 Then
                         _DefWin32 = New CP_Defaults().Default_Windows10.Win32
-                    ElseIf My.PreviewStyle = WindowStyle.W8 Then
-                        _DefWin32 = New CP_Defaults().Default_Windows8.Win32
+                    ElseIf My.PreviewStyle = WindowStyle.W81 Then
+                        _DefWin32 = New CP_Defaults().Default_Windows81.Win32
                     ElseIf My.PreviewStyle = WindowStyle.W7 Then
                         _DefWin32 = New CP_Defaults().Default_Windows7.Win32
                     ElseIf My.PreviewStyle = WindowStyle.WVista Then
@@ -1422,7 +1422,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Enum
 
             Public Sub Load(_DefLogonUI As LogonUI7)
-                If My.W7 Or My.W8 Then
+                If My.W7 Or My.W8 Or My.W81 Then
 
                     ImagePath = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", "")
                     Color = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Color", Color.Black.ToArgb))
@@ -2046,6 +2046,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public ColorFilter_Enabled As Boolean
             Public ColorFilter As ColorFilters
 
+            Public ClassicVolMixer As Boolean
+
             Enum ExplorerBar
                 [Default]
                 Ribbon
@@ -2114,6 +2116,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ShowSecondsInSystemClock = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", _DefEffects.ShowSecondsInSystemClock)
                 BalloonNotifications = GetReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", _DefEffects.BalloonNotifications)
                 PaintDesktopVersion = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", _DefEffects.PaintDesktopVersion)
+                ClassicVolMixer = Not GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", Not _DefEffects.ClassicVolMixer)
 
                 Dim temp As Boolean = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", Not _DefEffects.ShakeToMinimize)
                 ShakeToMinimize = Not temp
@@ -2212,6 +2215,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
                     EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", Not ClassicVolMixer)
 
                     EditReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars)
 
@@ -2252,7 +2256,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
 
-                    If My.W8 OrElse My.W10 Then
+                    If My.W8 Or My.W81 OrElse My.W10 Then
                         Select Case Win11ExplorerBar
                             Case ExplorerBar.Bar
                                 If IO.File.Exists(My.PATH_System32 & "\UIRibbon.dll") Then
@@ -2617,7 +2621,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     End If
 
-                    If My.W8 Or My.W10 Or My.W11 Then
+                    If My.W8 Or My.W81 Or My.W10 Or My.W11 Then
                         If IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
                         Else
@@ -3152,7 +3156,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Color2 = Color.FromArgb(122, 9, 9),
             .DesignedFor_Win11 = True,
             .DesignedFor_Win10 = True,
-            .DesignedFor_Win8 = True,
+            .DesignedFor_Win81 = True,
             .DesignedFor_Win7 = True,
             .DesignedFor_WinVista = True,
             .DesignedFor_WinXP = True,
@@ -3175,7 +3179,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Color_Index6 = Color.FromArgb(0, 26, 104),
             .Color_Index7 = Color.FromArgb(247, 99, 12),
             .Titlebar_Active = Color.FromArgb(0, 120, 212),
-            .Titlebar_Inactive = Color.FromArgb(0, 0, 0),
+            .Titlebar_Inactive = Color.FromArgb(32, 32, 32),
             .StartMenu_Accent = Color.FromArgb(0, 103, 192),
             .WinMode_Light = True,
             .AppMode_Light = True,
@@ -3195,7 +3199,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .Color_Index6 = Color.FromArgb(0, 38, 66),
             .Color_Index7 = Color.FromArgb(247, 99, 12),
             .Titlebar_Active = Color.FromArgb(0, 120, 215),
-            .Titlebar_Inactive = Color.FromArgb(0, 0, 0),
+            .Titlebar_Inactive = Color.FromArgb(43, 43, 43),
             .StartMenu_Accent = Color.FromArgb(0, 90, 158),
             .WinMode_Light = False,
             .AppMode_Light = True,
@@ -3205,7 +3209,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             .IncreaseTBTransparency = False,
             .TB_Blur = True}
 
-    Public Windows8 As New Structures.Windows8 With {
+    Public Windows81 As New Structures.Windows8x With {
                     .ColorizationColor = Color.FromArgb(246, 195, 74),
                     .ColorizationColorBalance = 78,
                     .Start = 0,
@@ -3318,7 +3322,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 100, .L = 100}
 
-    Public WallpaperTone_W8 As New Structures.WallpaperTone With {
+    Public WallpaperTone_W81 As New Structures.WallpaperTone With {
         .Enabled = False,
         .Image = My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg",
         .H = 0, .S = 100, .L = 100}
@@ -3401,7 +3405,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .DisableNavBar = False,
         .AutoHideScrollBars = True,
         .ColorFilter_Enabled = False,
-        .ColorFilter = Structures.WinEffects.ColorFilters.Grayscale}
+        .ColorFilter = Structures.WinEffects.ColorFilters.Grayscale,
+        .ClassicVolMixer = False,
+        .FullScreenStartMenu = False}
 
     Public ScreenSaver As New ScreenSaver With {
         .Enabled = False,
@@ -4206,9 +4212,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End If
         Next
 
-        For Each field In GetType(Structures.Windows8).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+        For Each field In GetType(Structures.Windows8x).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
             If field.FieldType.Name.ToLower = "color" Then
-                CL.Add(field.GetValue(Windows8))
+                CL.Add(field.GetValue(Windows81))
             End If
         Next
 
@@ -4252,7 +4258,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             If field.FieldType.Name.ToLower = "color" Then
                 CL.Add(field.GetValue(WallpaperTone_W11))
                 CL.Add(field.GetValue(WallpaperTone_W10))
-                CL.Add(field.GetValue(WallpaperTone_W8))
+                CL.Add(field.GetValue(WallpaperTone_W81))
                 CL.Add(field.GetValue(WallpaperTone_W7))
                 CL.Add(field.GetValue(WallpaperTone_WVista))
                 CL.Add(field.GetValue(WallpaperTone_WXP))
@@ -4444,7 +4450,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         If Not Skip Or ExecuteEvenIfSkip Then
             If Not ExecuteEvenIfSkip Then
-                If Not String.IsNullOrWhiteSpace(StartStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, StartStr), "info")
+                If Not String.IsNullOrWhiteSpace(StartStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, StartStr), "apply")
             Else
                 If Not String.IsNullOrWhiteSpace(ErrorStr) Then AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, SkipStr), "skip")
             End If
@@ -4484,7 +4490,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Info.Load()
                     Windows11.Load(New CP_Defaults().Default_Windows11.Windows11, New CP_Defaults().Default_Windows11Accents_Bytes)
                     Windows10.Load(New CP_Defaults().Default_Windows10.Windows10, New CP_Defaults().Default_Windows10Accents_Bytes)
-                    Windows8.Load(_Def.Windows8)
+                    Windows81.Load(_Def.Windows81)
                     Windows7.Load(_Def.Windows7)
                     WindowsVista.Load(_Def.WindowsVista)
                     WindowsXP.Load(_Def.WindowsXP)
@@ -4501,7 +4507,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     WallpaperTone_W11.Load("Win11")
                     WallpaperTone_W10.Load("Win10")
-                    WallpaperTone_W8.Load("Win8.1")
+                    WallpaperTone_W81.Load("Win8.1")
                     WallpaperTone_W7.Load("Win7")
                     WallpaperTone_WVista.Load("WinVista")
                     WallpaperTone_WXP.Load("WinXP")
@@ -4723,6 +4729,8 @@ Start:
                         OS = My.Lang.OS_Win10
                     ElseIf My.W8 Then
                         OS = My.Lang.OS_Win8
+                    ElseIf My.W81 Then
+                        OS = My.Lang.OS_Win81
                     ElseIf My.W7 Then
                         OS = My.Lang.OS_Win7
                     ElseIf My.WVista Then
@@ -4733,13 +4741,13 @@ Start:
                         OS = My.Lang.OS_WinUndefined
                     End If
 
-                    AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, String.Format(My.Lang.CP_ApplyFrom, OS)), "info")
+                    AddNode([TreeView], String.Format("{0}", String.Format(My.Lang.CP_ApplyFrom, OS)), "info")
 
                     AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Applying_Started), "info")
 
                     If Not My.isElevated Then
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Admin_Msg0), "admin")
-                        AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, My.Lang.CP_Admin_Msg1), "admin")
+                        AddNode([TreeView], String.Format("{0}}", My.Lang.CP_Admin_Msg0), "admin")
+                        AddNode([TreeView], String.Format("{0}", My.Lang.CP_Admin_Msg1), "admin")
                     End If
 
                 End If
@@ -4750,7 +4758,7 @@ Start:
                                 Using def As CP = CP_Defaults.GetDefault
                                     def.LogonUI10x.NoLockScreen = False
                                     def.LogonUI7.Enabled = False
-                                    def.Windows8.NoLockScreen = False
+                                    def.Windows81.NoLockScreen = False
                                     def.LogonUIXP.Enabled = True
 
                                     If Not My.WXP Then ResetCursorsToAero() Else ResetCursorsToNone_XP()
@@ -4784,10 +4792,10 @@ Start:
                         End Sub, [TreeView], My.Lang.CP_Applying_AppTheme, My.Lang.CP_Error_AppTheme, My.Lang.CP_Time, sw_all, Not AppTheme.Enabled, My.Lang.CP_Skip_AppTheme, True)
 
                 'Wallpaper
-                'Make Wallpaper before the following LogonUI items, to make if a logonUI that depends on current wallpaper gets the correct file
+                'Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
                 Execute(CType(Sub()
                                   Wallpaper.Apply()
-                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper, True)
+                              End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper)
 
                 If My.W11 Then
                     Execute(CType(Sub()
@@ -4809,11 +4817,11 @@ Start:
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI10, My.Lang.CP_LogonUI10_Error, My.Lang.CP_Time, sw_all)
                 End If
 
-                If My.W8 Then
+                If My.W8 Or My.W81 Then
                     Execute(CType(Sub()
-                                      Windows8.Apply()
+                                      Windows81.Apply()
                                       RefreshDWM(Me)
-                                  End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win8, My.Lang.CP_W8_Error, My.Lang.CP_Time, sw_all)
+                                  End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win81, My.Lang.CP_W81_Error, My.Lang.CP_Time, sw_all)
 
                     Execute(CType(Sub()
                                       Apply_LogonUI_8([TreeView])
@@ -4872,7 +4880,7 @@ Start:
                 Execute(CType(Sub()
                                   Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
                                   Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W8, "Win8.1")
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1")
                                   Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7")
                                   Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista")
                                   Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP")
@@ -4880,7 +4888,7 @@ Start:
                                   If Wallpaper.Enabled Then
                                       If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply()
                                       If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply()
-                                      If My.W8 And WallpaperTone_W8.Enabled Then WallpaperTone_W8.Apply()
+                                      If My.W81 And WallpaperTone_W81.Enabled Then WallpaperTone_W81.Apply()
                                       If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply()
                                       If My.WVista And WallpaperTone_WVista.Enabled Then WallpaperTone_WVista.Apply()
                                       If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
@@ -5126,7 +5134,7 @@ Start:
         If IO.File.Exists(Package) Then IO.File.Delete(Package)
         Using archive As ZipArchive = ZipFile.Open(Package, ZipArchiveMode.Create)
             If (CP.LogonUI7.Enabled AndAlso CP.LogonUI7.Mode = Structures.LogonUI7.Modes.CustomImage) OrElse
-                (Not CP.Windows8.NoLockScreen AndAlso CP.Windows8.LockScreenType = Structures.LogonUI7.Modes.CustomImage) Then
+                (Not CP.Windows81.NoLockScreen AndAlso CP.Windows81.LockScreenType = Structures.LogonUI7.Modes.CustomImage) Then
                 x = CP.LogonUI7.ImagePath
                 If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
                     ZipEntry = cache & "LogonUI" & IO.Path.GetExtension(x)
@@ -5217,11 +5225,11 @@ Start:
                 End If
             End If
 
-            If CP.WallpaperTone_W8.Enabled Then
-                x = CP.WallpaperTone_W8.Image
+            If CP.WallpaperTone_W81.Enabled Then
+                x = CP.WallpaperTone_W81.Image
                 If Not String.IsNullOrWhiteSpace(x) AndAlso Not x.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
-                    ZipEntry = cache & "wt_w8" & IO.Path.GetExtension(x)
-                    If IO.File.Exists(x) Then CP.WallpaperTone_W8.Image = ZipEntry
+                    ZipEntry = cache & "wt_w81" & IO.Path.GetExtension(x)
+                    If IO.File.Exists(x) Then CP.WallpaperTone_W81.Image = ZipEntry
                     filesList.Add(ZipEntry, x)
                 End If
             End If
@@ -6012,7 +6020,7 @@ Start:
 
                 Case Structures.LogonUI7.Modes.CustomImage
                     If IO.File.Exists([LogonElement].ImagePath) Then
-                        bmpList.Add(Bitmap_Mgr.Load([LogonElement].ImagePath))
+                        bmpList.Add(Bitmap_Mgr.Load([LogonElement].ImagePath).Resize(My.Computer.Screen.Bounds.Size))
                     Else
                         bmpList.Add(Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size))
                     End If
@@ -6022,10 +6030,12 @@ Start:
 
                 Case Structures.LogonUI7.Modes.Wallpaper
                     Using b As New Bitmap(My.Application.GetWallpaper)
-                        bmpList.Add(b.Clone)
+                        bmpList.Add(b.Resize(My.Computer.Screen.Bounds.Size).Clone)
                     End Using
 
             End Select
+
+            If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_RenderingCustomLogonUI_MayNotRespond), "info")
 
             For x = 0 To bmpList.Count - 1
                 If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Lang.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
@@ -6034,7 +6044,6 @@ Start:
 
                 If [LogonElement].Blur Then
                     Dim imgF As New ImageProcessor.ImageFactory
-
                     Using b As New Bitmap(bmpList(x))
                         imgF.Load(b)
                         imgF.GaussianBlur([LogonElement].Blur_Intensity)
@@ -6064,11 +6073,11 @@ Start:
 
         Dim lockimg As String = My.PATH_appData & "\LockScreen.png"
 
-        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows8.NoLockScreen.ToInteger)
+        EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows81.NoLockScreen.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String)
 
-        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", CInt(Windows8.LockScreenType))
-        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", Windows8.LockScreenSystemID)
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Mode", CInt(Windows81.LockScreenType))
+        EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", Windows81.LockScreenSystemID)
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "ImagePath", LogonUI7.ImagePath, RegistryValueKind.String)
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Color", LogonUI7.Color.ToArgb)
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Blur", LogonUI7.Blur.ToInteger)
@@ -6078,31 +6087,25 @@ Start:
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Mode", CInt(LogonUI7.Noise_Mode))
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Noise_Intensity", LogonUI7.Noise_Intensity)
 
-        If Not Windows8.NoLockScreen Then
+        If Not Windows81.NoLockScreen Then
+            Dim bmp As Bitmap
 
-            Try : Kill(lockimg) : Catch : End Try
-            Dim bmp As Bitmap = Nothing
-
-            Select Case Windows8.LockScreenType
-
+            Select Case Windows81.LockScreenType
                 Case Structures.LogonUI7.Modes.Default_
                     Dim syslock As String
-                    If Not My.CP.Windows8.LockScreenSystemID = 1 And Not My.CP.Windows8.LockScreenSystemID = 3 Then
-                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", My.CP.Windows8.LockScreenSystemID)
+                    If Not My.CP.Windows81.LockScreenSystemID = 1 And Not My.CP.Windows81.LockScreenSystemID = 3 Then
+                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", My.CP.Windows81.LockScreenSystemID)
                     Else
-                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows8.LockScreenSystemID)
+                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows81.LockScreenSystemID)
                     End If
 
                     If IO.File.Exists(syslock) Then
-                        Using ms As New IO.MemoryStream(IO.File.ReadAllBytes(syslock))
-                            bmp = Bitmap.FromStream(ms, True, False)
-                        End Using
+                        bmp = Bitmap_Mgr.Load(syslock)
                     Else
                         bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
                     End If
 
                 Case Structures.LogonUI7.Modes.CustomImage
-
                     If IO.File.Exists(LogonUI7.ImagePath) Then
                         bmp = Bitmap_Mgr.Load(LogonUI7.ImagePath)
                     Else
@@ -6117,7 +6120,12 @@ Start:
                         bmp = b.Clone
                     End Using
 
+                Case Else
+                    bmp = Color.Black.ToBitmap(My.Computer.Screen.Bounds.Size)
+
             End Select
+
+            If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_RenderingCustomLogonUI_MayNotRespond), "info")
 
             If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
@@ -6130,10 +6138,15 @@ Start:
                     imgF.GaussianBlur(LogonUI7.Blur_Intensity)
                     bmp = imgF.Image
                 End Using
+
             End If
 
             If LogonUI7.Noise Then bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
-            bmp.Save(lockimg, Drawing.Imaging.ImageFormat.Png)
+
+            Try : If IO.File.Exists(lockimg) Then Kill(lockimg)
+            Catch : End Try
+
+            bmp.Save(lockimg)
         End If
 
     End Sub
@@ -6772,7 +6785,7 @@ Start:
         If Info <> DirectCast(obj, CP).Info Then _Equals = False
         If Windows11 <> DirectCast(obj, CP).Windows11 Then _Equals = False
         If LogonUI10x <> DirectCast(obj, CP).LogonUI10x Then _Equals = False
-        If Windows8 <> DirectCast(obj, CP).Windows8 Then _Equals = False
+        If Windows81 <> DirectCast(obj, CP).Windows81 Then _Equals = False
         If Windows7 <> DirectCast(obj, CP).Windows7 Then _Equals = False
         If WindowsVista <> DirectCast(obj, CP).WindowsVista Then _Equals = False
         If WindowsXP <> DirectCast(obj, CP).WindowsXP Then _Equals = False
@@ -6784,7 +6797,7 @@ Start:
         If AltTab <> DirectCast(obj, CP).AltTab Then _Equals = False
         If WallpaperTone_W11 <> DirectCast(obj, CP).WallpaperTone_W11 Then _Equals = False
         If WallpaperTone_W10 <> DirectCast(obj, CP).WallpaperTone_W10 Then _Equals = False
-        If WallpaperTone_W8 <> DirectCast(obj, CP).WallpaperTone_W8 Then _Equals = False
+        If WallpaperTone_W81 <> DirectCast(obj, CP).WallpaperTone_W81 Then _Equals = False
         If WallpaperTone_W7 <> DirectCast(obj, CP).WallpaperTone_W7 Then _Equals = False
         If WallpaperTone_WVista <> DirectCast(obj, CP).WallpaperTone_WVista Then _Equals = False
         If WallpaperTone_WXP <> DirectCast(obj, CP).WallpaperTone_WXP Then _Equals = False

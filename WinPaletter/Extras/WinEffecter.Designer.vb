@@ -158,6 +158,8 @@ Partial Class WinEffecter
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.PictureBox35 = New System.Windows.Forms.PictureBox()
+        Me.XenonCheckBox26 = New WinPaletter.XenonCheckBox()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
         Me.XenonCheckBox25 = New WinPaletter.XenonCheckBox()
         Me.XenonAlertBox6 = New WinPaletter.XenonAlertBox()
@@ -230,6 +232,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1957,6 +1960,8 @@ Partial Class WinEffecter
         'TabPage9
         '
         Me.TabPage9.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage9.Controls.Add(Me.PictureBox35)
+        Me.TabPage9.Controls.Add(Me.XenonCheckBox26)
         Me.TabPage9.Controls.Add(Me.PictureBox34)
         Me.TabPage9.Controls.Add(Me.XenonCheckBox25)
         Me.TabPage9.Controls.Add(Me.XenonAlertBox6)
@@ -1975,6 +1980,31 @@ Partial Class WinEffecter
         Me.TabPage9.Size = New System.Drawing.Size(591, 384)
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "Miscellaneous"
+        '
+        'PictureBox35
+        '
+        Me.PictureBox35.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox35.Image = CType(resources.GetObject("PictureBox35.Image"), System.Drawing.Image)
+        Me.PictureBox35.Location = New System.Drawing.Point(6, 231)
+        Me.PictureBox35.Name = "PictureBox35"
+        Me.PictureBox35.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox35.TabIndex = 245
+        Me.PictureBox35.TabStop = False
+        '
+        'XenonCheckBox26
+        '
+        Me.XenonCheckBox26.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonCheckBox26.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.XenonCheckBox26.Checked = False
+        Me.XenonCheckBox26.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox26.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox26.Location = New System.Drawing.Point(36, 231)
+        Me.XenonCheckBox26.Name = "XenonCheckBox26"
+        Me.XenonCheckBox26.Size = New System.Drawing.Size(549, 24)
+        Me.XenonCheckBox26.TabIndex = 244
+        Me.XenonCheckBox26.Text = "Enable Windows 7 taskbar volume mixer for Windows 10 only"
         '
         'PictureBox34
         '
@@ -2366,6 +2396,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
+        CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox34, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2533,4 +2564,6 @@ Partial Class WinEffecter
     Friend WithEvents XenonAlertBox5 As XenonAlertBox
     Friend WithEvents PictureBox34 As PictureBox
     Friend WithEvents XenonCheckBox25 As XenonCheckBox
+    Friend WithEvents PictureBox35 As PictureBox
+    Friend WithEvents XenonCheckBox26 As XenonCheckBox
 End Class

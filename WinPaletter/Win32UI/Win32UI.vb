@@ -68,8 +68,8 @@ Public Class Win32UI
             DefCP = New CP_Defaults().Default_Windows11
         ElseIf My.W10 Then
             DefCP = New CP_Defaults().Default_Windows10
-        ElseIf My.W8 Then
-            DefCP = New CP_Defaults().Default_Windows8
+        ElseIf My.W81 Then
+            DefCP = New CP_Defaults().Default_Windows81
         ElseIf My.W7 Then
             DefCP = New CP_Defaults().Default_Windows7
         ElseIf My.WVista Then

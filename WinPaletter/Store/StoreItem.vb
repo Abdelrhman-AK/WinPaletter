@@ -41,7 +41,7 @@ Public Class StoreItem : Inherits Panel
         If _CP IsNot Nothing Then
             If _CP.Info.DesignedFor_Win11 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11)
             If _CP.Info.DesignedFor_Win10 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10)
-            If _CP.Info.DesignedFor_Win8 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
+            If _CP.Info.DesignedFor_Win81 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8)
             If _CP.Info.DesignedFor_Win7 Then DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7)
             If _CP.Info.DesignedFor_WinVista Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista)
             If _CP.Info.DesignedFor_WinXP Then DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP)

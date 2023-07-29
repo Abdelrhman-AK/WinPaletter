@@ -211,7 +211,7 @@ Partial Class Store_Intro
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(355, 40)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Welcome to WinPaletter Store (Beta)"
+        Me.Label1.Text = "Welcome to WinPaletter Store"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TabPage2

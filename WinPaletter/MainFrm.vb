@@ -22,7 +22,7 @@ Public Class MainFrm
 #Region "Preview Subs"
     Sub ApplyColorsToElements(ByVal [CP] As CP)
         ApplyWinElementsColors([CP], My.PreviewStyle, True, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
-        ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2, W8_start, W8_logonui)
+        ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2, W81_start, W81_logonui)
     End Sub
     Sub ApplyStylesToElements(ByVal [CP] As CP, Optional AnimateThePreview As Boolean = True)
         Dim ItWasVisible As Boolean = tabs_preview.Visible
@@ -126,20 +126,20 @@ Public Class MainFrm
         W10_Color_Index3.BackColor = [CP].Windows10.Color_Index3
         W10_Color_Index7.BackColor = [CP].Windows10.Color_Index7
 
-        Select Case [CP].Windows8.Theme
+        Select Case [CP].Windows81.Theme
             Case CP.Structures.Windows7.Themes.Aero
-                W8_theme_aero.Checked = True
+                W81_theme_aero.Checked = True
 
             Case CP.Structures.Windows7.Themes.AeroLite
-                W8_theme_aerolite.Checked = True
+                W81_theme_aerolite.Checked = True
         End Select
-        W8_ColorizationColor_pick.BackColor = [CP].Windows8.ColorizationColor
-        W8_ColorizationBalance_bar.Value = [CP].Windows8.ColorizationColorBalance
-        W8_ColorizationBalance_val.Text = [CP].Windows8.ColorizationColorBalance
-        W8_start_pick.BackColor = [CP].Windows8.StartColor
-        W8_accent_pick.BackColor = [CP].Windows8.AccentColor
-        W8_personalcls_background_pick.BackColor = [CP].Windows8.PersonalColors_Background
-        W8_personalcolor_accent_pick.BackColor = [CP].Windows8.PersonalColors_Accent
+        W81_ColorizationColor_pick.BackColor = [CP].Windows81.ColorizationColor
+        W81_ColorizationBalance_bar.Value = [CP].Windows81.ColorizationColorBalance
+        W81_ColorizationBalance_val.Text = [CP].Windows81.ColorizationColorBalance
+        W81_start_pick.BackColor = [CP].Windows81.StartColor
+        W81_accent_pick.BackColor = [CP].Windows81.AccentColor
+        W81_personalcls_background_pick.BackColor = [CP].Windows81.PersonalColors_Background
+        W81_personalcolor_accent_pick.BackColor = [CP].Windows81.PersonalColors_Accent
 
         W7_ColorizationColor_pick.BackColor = [CP].Windows7.ColorizationColor
         W7_ColorizationAfterglow_pick.BackColor = [CP].Windows7.ColorizationAfterglow
@@ -204,8 +204,8 @@ Public Class MainFrm
         WXP_VS_textbox.Text = [CP].WindowsXP.ThemeFile
         If WXP_VS_ColorsList.Items.Contains([CP].WindowsXP.ColorScheme) Then WXP_VS_ColorsList.SelectedItem = [CP].WindowsXP.ColorScheme
 
-        ApplyMetroStartToButton([CP], W8_start)
-        ApplyBackLogonUI([CP], W8_logonui)
+        ApplyMetroStartToButton([CP], W81_start)
+        ApplyBackLogonUI([CP], W81_logonui)
     End Sub
     Sub ApplyDefaultCPValues()
         Dim DefCP As CP
@@ -214,8 +214,8 @@ Public Class MainFrm
             DefCP = New CP_Defaults().Default_Windows11
         ElseIf My.W10 Then
             DefCP = New CP_Defaults().Default_Windows10
-        ElseIf My.W8 Then
-            DefCP = New CP_Defaults().Default_Windows8
+        ElseIf My.W81 Then
+            DefCP = New CP_Defaults().Default_Windows81
         ElseIf My.W7 Then
             DefCP = New CP_Defaults().Default_Windows7
         ElseIf My.WVista Then
@@ -250,11 +250,11 @@ Public Class MainFrm
         W10_Color_Index3.DefaultColor = DefCP.Windows10.Color_Index3
         W10_Color_Index7.DefaultColor = DefCP.Windows10.Color_Index7
 
-        W8_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
-        W8_start_pick.DefaultColor = DefCP.Windows8.StartColor
-        W8_accent_pick.DefaultColor = DefCP.Windows8.AccentColor
-        W8_personalcls_background_pick.DefaultColor = DefCP.Windows8.PersonalColors_Background
-        W8_personalcolor_accent_pick.DefaultColor = DefCP.Windows8.PersonalColors_Accent
+        W81_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
+        W81_start_pick.DefaultColor = DefCP.Windows81.StartColor
+        W81_accent_pick.DefaultColor = DefCP.Windows81.AccentColor
+        W81_personalcls_background_pick.DefaultColor = DefCP.Windows81.PersonalColors_Background
+        W81_personalcolor_accent_pick.DefaultColor = DefCP.Windows81.PersonalColors_Accent
 
         W7_ColorizationColor_pick.DefaultColor = DefCP.Windows7.ColorizationColor
         W7_ColorizationAfterglow_pick.DefaultColor = DefCP.Windows7.ColorizationAfterglow
@@ -280,7 +280,7 @@ Public Class MainFrm
             TablessControl1.SelectedIndex = 0
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
             TablessControl1.SelectedIndex = 1
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W81 Then
             TablessControl1.SelectedIndex = 2
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
             TablessControl1.SelectedIndex = 3
@@ -395,7 +395,7 @@ Public Class MainFrm
 
         Select_W11.Image = My.Resources.Native11
         Select_W10.Image = My.Resources.Native10
-        Select_W8.Image = My.Resources.Native8
+        Select_W81.Image = My.Resources.Native8
         Select_W7.Image = My.Resources.Native7
         Select_WVista.Image = My.Resources.NativeVista
         Select_WXP.Image = My.Resources.NativeXP
@@ -411,10 +411,10 @@ Public Class MainFrm
             XenonButton20.Image = My.Resources.add_win10
             Select_W10.Checked = True
 
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W81 Then
             TablessControl1.SelectedIndex = 2
             XenonButton20.Image = My.Resources.add_win8
-            Select_W8.Checked = True
+            Select_W81.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
             TablessControl1.SelectedIndex = 3
@@ -557,7 +557,7 @@ Public Class MainFrm
 
                     Case DialogResult.No
                         e.Cancel = False
-                        If (My.W7 Or My.W8) And My.Settings.Miscellaneous.Win7LivePreview Then RefreshDWM(My.CP_Original)
+                        If (My.W7 Or My.W8 Or My.W81) And My.Settings.Miscellaneous.Win7LivePreview Then RefreshDWM(My.CP_Original)
                         MyBase.OnFormClosing(e)
 
                     Case DialogResult.Cancel
@@ -1511,12 +1511,12 @@ Public Class MainFrm
 #End Region
 
 #Region "Windows 8.1"
-    Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W8_ColorizationColor_pick.Click
+    Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W81_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                My.CP.Windows8.ColorizationColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+                My.CP.Windows81.ColorizationColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1533,9 +1533,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 
-        My.CP.Windows8.ColorizationColor = Color.FromArgb(255, C)
+        My.CP.Windows81.ColorizationColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1543,20 +1543,20 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W8_ColorizationBalance_bar_Scroll(sender As Object) Handles W8_ColorizationBalance_bar.Scroll
+    Private Sub W8_ColorizationBalance_bar_Scroll(sender As Object) Handles W81_ColorizationBalance_bar.Scroll
         If _Shown Then
-            W8_ColorizationBalance_val.Text = sender.Value.ToString()
-            My.CP.Windows8.ColorizationColorBalance = W8_ColorizationBalance_bar.Value
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+            W81_ColorizationBalance_val.Text = sender.Value.ToString()
+            My.CP.Windows81.ColorizationColorBalance = W81_ColorizationBalance_bar.Value
+            If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
-    Private Sub W8_start_pick_Click(sender As Object, e As EventArgs) Handles W8_start_pick.Click
+    Private Sub W8_start_pick_Click(sender As Object, e As EventArgs) Handles W81_start_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                My.CP.Windows8.StartColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+                My.CP.Windows81.StartColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1565,9 +1565,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        My.CP.Windows8.StartColor = Color.FromArgb(255, C)
+        My.CP.Windows81.StartColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1575,12 +1575,12 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W8_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_accent_pick.Click
+    Private Sub W8_accent_pick_Click(sender As Object, e As EventArgs) Handles W81_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                My.CP.Windows8.AccentColor = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+                My.CP.Windows81.AccentColor = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1589,9 +1589,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        My.CP.Windows8.AccentColor = Color.FromArgb(255, C)
+        My.CP.Windows81.AccentColor = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1599,12 +1599,12 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W8_personalcls_background_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcls_background_pick.Click
+    Private Sub W8_personalcls_background_pick_Click(sender As Object, e As EventArgs) Handles W81_personalcls_background_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                My.CP.Windows8.PersonalColors_Background = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+                My.CP.Windows81.PersonalColors_Background = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1613,9 +1613,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        My.CP.Windows8.PersonalColors_Background = Color.FromArgb(255, C)
+        My.CP.Windows81.PersonalColors_Background = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1623,12 +1623,12 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W8_personalcolor_accent_pick_Click(sender As Object, e As EventArgs) Handles W8_personalcolor_accent_pick.Click
+    Private Sub W8_personalcolor_accent_pick_Click(sender As Object, e As EventArgs) Handles W81_personalcolor_accent_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                My.CP.Windows8.PersonalColors_Accent = sender.BackColor
-                If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+                My.CP.Windows81.PersonalColors_Accent = sender.BackColor
+                If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
             End If
             Exit Sub
         End If
@@ -1637,9 +1637,9 @@ Public Class MainFrm
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
 
-        My.CP.Windows8.PersonalColors_Accent = Color.FromArgb(255, C)
+        My.CP.Windows81.PersonalColors_Accent = Color.FromArgb(255, C)
 
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
 
         sender.backcolor = C
         sender.invalidate
@@ -1647,33 +1647,33 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W8_ColorizationBalance_val_Click(sender As Object, e As EventArgs) Handles W8_ColorizationBalance_val.Click
+    Private Sub W8_ColorizationBalance_val_Click(sender As Object, e As EventArgs) Handles W81_ColorizationBalance_val.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), W8_ColorizationBalance_bar.Maximum), W8_ColorizationBalance_bar.Minimum) : W8_ColorizationBalance_bar.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), W81_ColorizationBalance_bar.Maximum), W81_ColorizationBalance_bar.Minimum) : W81_ColorizationBalance_bar.Value = Val(sender.Text)
     End Sub
 
-    Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W8_theme_aero.CheckedChanged
-        If W8_theme_aero.Checked Then
-            My.CP.Windows8.Theme = CP.Structures.Windows7.Themes.Aero
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+    Private Sub W8_theme_aero_CheckedChanged(sender As Object) Handles W81_theme_aero.CheckedChanged
+        If W81_theme_aero.Checked Then
+            My.CP.Windows81.Theme = CP.Structures.Windows7.Themes.Aero
+            If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
-    Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W8_theme_aerolite.CheckedChanged
-        If W8_theme_aerolite.Checked Then
-            My.CP.Windows8.Theme = CP.Structures.Windows7.Themes.AeroLite
-            If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+    Private Sub W8_theme_aerolite_CheckedChanged(sender As Object) Handles W81_theme_aerolite.CheckedChanged
+        If W81_theme_aerolite.Checked Then
+            My.CP.Windows81.Theme = CP.Structures.Windows7.Themes.AeroLite
+            If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
         End If
     End Sub
 
-    Private Sub W8_start_Click(sender As Object, e As EventArgs) Handles W8_start.Click
+    Private Sub W8_start_Click(sender As Object, e As EventArgs) Handles W81_start.Click
         Start8Selector.ShowDialog()
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
     End Sub
 
-    Private Sub W8_logonui_Click(sender As Object, e As EventArgs) Handles W8_logonui.Click
+    Private Sub W8_logonui_Click(sender As Object, e As EventArgs) Handles W81_logonui.Click
         LogonUI8Colors.ShowDialog()
-        If My.PreviewStyle = WindowStyle.W8 Then ApplyColorsToElements(My.CP)
+        If My.PreviewStyle = WindowStyle.W81 Then ApplyColorsToElements(My.CP)
     End Sub
 #End Region
 
@@ -2217,7 +2217,7 @@ Public Class MainFrm
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
         If My.PreviewStyle = WindowStyle.W11 Or My.PreviewStyle = WindowStyle.W10 Then
             LogonUI.ShowDialog()
-        ElseIf My.PreviewStyle = WindowStyle.W8 Or My.PreviewStyle = WindowStyle.W7 Then
+        ElseIf My.PreviewStyle = WindowStyle.W81 Or My.PreviewStyle = WindowStyle.W7 Then
             LogonUI7.ShowDialog()
         ElseIf My.PreviewStyle = WindowStyle.WXP Then
             LogonUIXP.ShowDialog()
@@ -2320,7 +2320,7 @@ Public Class MainFrm
             XenonButton20.Image = My.Resources.add_win11
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
             XenonButton20.Image = My.Resources.add_win10
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
+        ElseIf My.PreviewStyle = WindowStyle.W81 Then
             XenonButton20.Image = My.Resources.add_win8
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
             XenonButton20.Image = My.Resources.add_win7
@@ -2352,9 +2352,9 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub Select_W8_CheckedChanged(sender As Object) Handles Select_W8.CheckedChanged
-        If _Shown And Select_W8.Checked Then
-            My.PreviewStyle = WindowStyle.W8
+    Private Sub Select_W8_CheckedChanged(sender As Object) Handles Select_W81.CheckedChanged
+        If _Shown And Select_W81.Checked Then
+            My.PreviewStyle = WindowStyle.W81
             Select_Preview_Version()
         End If
     End Sub
@@ -2413,8 +2413,8 @@ Public Class MainFrm
             Wallpaper_Editor.WT = My.CP.WallpaperTone_W11
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
             Wallpaper_Editor.WT = My.CP.WallpaperTone_W10
-        ElseIf My.PreviewStyle = WindowStyle.W8 Then
-            Wallpaper_Editor.WT = My.CP.WallpaperTone_W8
+        ElseIf My.PreviewStyle = WindowStyle.W81 Then
+            Wallpaper_Editor.WT = My.CP.WallpaperTone_W81
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
             Wallpaper_Editor.WT = My.CP.WallpaperTone_W7
         ElseIf My.PreviewStyle = WindowStyle.WVista Then

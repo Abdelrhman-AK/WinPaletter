@@ -2773,6 +2773,13 @@
   <data name="Assemblies" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Assemblies.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="BackgroundOpacity" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAAZQTFRFv7+/
+        ////mcP/dAAAAAlwSFlzAAAOwAAADsABataJCQAAABRJREFUGNNjAAFBIKCUQQ0zGBgYADKfBEHwEQCB
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="BasicTaskbar" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABrYAAAAoCAMAAACM9zpGAAAABGdBTUEAALGPC/xhBQAAAJNQTFRFQ01Y
@@ -18765,6 +18772,21 @@
         GuQbbNS1td3QTkUMLoKcGsTv+Iu1w3fw/03YBYJ+7OkaDWNn8rJjlKBXMLWPfJfah5v5toODeEUTQavF
         rk1YNEid+qrc9vQcX364IGa2U9fGlYqMm4r1MbUOhcyXX9j5sv8LvIKIkDy4FZB+mVufb1pant0XvF6R
         fz56Nn3WRrll6Cx/PM4Iwl9VyARP52tpTQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="notify_applying" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAIzSURBVDhPvdRNTxNBGAfw9eVCrNA1xpQQEBU0pMvaclRBezDRz+An8GC8+AE4KAWsJEShajBi
+        UaKIWqVFbIocvOvVslv6Qrsv1u6SyGWD+nfWbl3WTrBw8J/MZV9+eWbmmWH+b/qxm3+ncScXSgFvrBTo
+        immc+cx6W3+6P6yx/qQe8iXKKv+2DC7+Fd43JXRFv+DES1XtnFWH219l3NbnW8e/qPf1JHXVl9BAwdD5
+        XEHHMxlHpyWZjDPWb/T0JLVeghl1YGh/XMThSNFomyyetn53xreku8k0lW1gaH1YQMuDVYm9l26yGDv+
+        xbUgDbv8voDz0Rw6nko0DM3382gOZ29YTCXnlrCXYKWayl4oiKd1bPz4ifGPKo5FsjWY524Oh8ayCjOD
+        PRb3e+146jRnZMRFDdV8ktdxdlpEywSpysZw8HYGB0YEr8WRNpnXLlLXjEwzJtigmXXjO64u5OAJZ21s
+        dIWA4gWLq4DUDXhSxBwFvDJPsDuZPxg7kkbjZpB7rfI1mLkBUwXMLdtgQtTBTwiOykysKSTCNbhpygyw
+        i2CrNa3xiICpMr6Rqq4lyLqNiVSscUjIm4alVXJ8VgnS+uxSdAWnIkLNmlWx/UMCXAOCs23MmGeTYAqt
+        zxy7+Re2L7gssYOUxjZzZErqJZixDcxoGPhMP3rVtE7m+wim/htLyQ3XU1tfDtW0jedYTzgfIphKwVRS
+        2bC7v87ryxFymbKjIue+JQbM4bop7uyC3XkY5hc2jJly1KAfHQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="notify_error" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

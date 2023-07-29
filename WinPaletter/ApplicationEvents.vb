@@ -45,32 +45,37 @@ Namespace My
         ''' <summary>
         ''' A boolean that represents if OS is Windows XP
         ''' </summary>
-        Public ReadOnly WXP As Boolean = Computer.Info.OSFullName.ToLower.Contains("xp")
+        Public ReadOnly WXP As Boolean = Environment.OSVersion.Version.Major = 5
 
         ''' <summary>
         ''' A boolean that represents if OS is Windows Vista
         ''' </summary>
-        Public ReadOnly WVista As Boolean = Computer.Info.OSFullName.ToLower.Contains("vista")
+        Public ReadOnly WVista As Boolean = Environment.OSVersion.Version.Major = 6 AndAlso Environment.OSVersion.Version.Minor = 0
 
         ''' <summary>
         ''' A boolean that represents if OS is Windows 7 or not
         ''' </summary>
-        Public ReadOnly W7 As Boolean = Computer.Info.OSFullName.Contains("7")
+        Public ReadOnly W7 As Boolean = Environment.OSVersion.Version.Major = 6 AndAlso Environment.OSVersion.Version.Minor = 1
 
         ''' <summary>
-        ''' A boolean that represents if OS is Windows 8/8.1 or not
+        ''' A boolean that represents if OS is Windows 8 or not
         ''' </summary>
-        Public ReadOnly W8 As Boolean = Computer.Info.OSFullName.Contains("8")
+        Public ReadOnly W8 As Boolean = Environment.OSVersion.Version.Major = 6 AndAlso Environment.OSVersion.Version.Minor = 2
+
+        ''' <summary>
+        ''' A boolean that represents if OS is Windows 8.1 or not
+        ''' </summary>
+        Public ReadOnly W81 As Boolean = Environment.OSVersion.Version.Major = 6 AndAlso Environment.OSVersion.Version.Minor = 3
 
         ''' <summary>
         ''' A boolean that represents if OS is Windows 10 or not
         ''' </summary>
-        Public ReadOnly W10 As Boolean = Computer.Info.OSFullName.Contains("10")
+        Public ReadOnly W10 As Boolean = Environment.OSVersion.Version.Major = 10 AndAlso Environment.OSVersion.Version.Minor = 0 AndAlso Environment.OSVersion.Version.Build < 22000
 
         ''' <summary>
         ''' A boolean that represents if OS is Windows 11 or not
         ''' </summary>
-        Public ReadOnly W11 As Boolean = Computer.Info.OSFullName.Contains("11")
+        Public ReadOnly W11 As Boolean = Environment.OSVersion.Version.Major = 10 AndAlso Environment.OSVersion.Version.Minor = 0 AndAlso Environment.OSVersion.Version.Build >= 22000
 
         ''' <summary>
         ''' A boolean that represents if OS is Windows 12 or not (For near future! :))
@@ -78,12 +83,12 @@ Namespace My
         Public ReadOnly W12 As Boolean = Computer.Info.OSFullName.Contains("12")
 
         ''' <summary>
-        ''' A boolean that represents if OS is Windows 10 (19H2=1909) and Higher or not
+        ''' A boolean that represents if OS is Windows 10 (19H2=1909) or higher or not at all
         ''' </summary>
         Public ReadOnly W10_1909 As Boolean = (W12 OrElse W11 OrElse (W10 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString() >= 1909))
 
         ''' <summary>
-        ''' A boolean that represents if OS is Windows 11 Build 22523 and Higher or not
+        ''' A boolean that represents if OS is Windows 11 Build 22523 or higher or not at all
         ''' </summary>
         Public ReadOnly W11_22523 As Boolean = (W12 OrElse (W11 AndAlso GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", 0).ToString() >= 22523))
 
@@ -144,7 +149,7 @@ Namespace My
 
         ''' <summary>
         ''' Gets if WinPaletter's current version is designed as Beta or not
-        ''' <br>Don't forget to make it beta when you design a beta one</br>
+        ''' <br>Don't forget to make it <b>True</b> when you design a beta one</br>
         ''' </summary>
         Public ReadOnly IsBeta As Boolean = False
 
@@ -172,14 +177,14 @@ Namespace My
             End Get
         End Property
 
-        <Obsolete("This method is not supported!", True)>
+        <Obsolete("This method Is Not supported!", True)>
         Private Function ISynchronizeInvoke_BeginInvoke(method As [Delegate], args() As Object) As IAsyncResult Implements ISynchronizeInvoke.BeginInvoke
-            Throw New NotSupportedException("The method or operation is not implemented.")
+            Throw New NotSupportedException("The method Or operation Is Not implemented.")
         End Function
 
-        <Obsolete("This method is not supported!", True)>
+        <Obsolete("This method Is Not supported!", True)>
         Private Function ISynchronizeInvoke_EndInvoke(result As IAsyncResult) As Object Implements ISynchronizeInvoke.EndInvoke
-            Throw New NotSupportedException("The method or operation is not implemented.")
+            Throw New NotSupportedException("The method Or operation Is Not implemented.")
         End Function
 
         Private Function Invoke(method As [Delegate], args() As Object) As Object Implements ISynchronizeInvoke.Invoke
@@ -241,7 +246,7 @@ Namespace My
         Public ReadOnly processExplorer As New Process With {.StartInfo = New ProcessStartInfo With {
                             .FileName = PATH_explorer,
                             .Arguments = "",
-                            .Verb = If(Not W8 And Not WXP, "runas", ""),
+                            .Verb = If(Not W81 And Not W8 And Not WXP, "runas", ""),
                             .WindowStyle = ProcessWindowStyle.Normal,
                             .UseShellExecute = True}
                            }
@@ -270,7 +275,7 @@ Namespace My
         End Enum
 #End Region
 
-#Region "   File Association and Uninstall"
+#Region "   File Association And Uninstall"
 
         ''' <summary>
         ''' Associate WinPaletter Files Types in Registry
@@ -296,7 +301,7 @@ Namespace My
                 mainKey.CreateSubKey(className & "\Shell\Open\Command", True).SetValue("", exeProgram & " ""%1""")
 
                 If className.ToLower = "WinPaletter.ThemeFile".ToLower Then
-                    mainKey.CreateSubKey(className & "\Shell\Edit in WinPaletter\Command", True).SetValue("", exeProgram & "  /edit:""%1""")
+                    mainKey.CreateSubKey(className & "\Shell\Edit In WinPaletter\Command", True).SetValue("", exeProgram & "  /edit:""%1""")
                     mainKey.CreateSubKey(className & "\Shell\Apply by WinPaletter\Command", True).SetValue("", exeProgram & "  /apply:""%1""")
                 End If
 
@@ -430,7 +435,7 @@ Namespace My
                 Else
                     Dim condition0 As Boolean = PreviewConfig = WindowStyle.W11 And CP.WallpaperTone_W11.Enabled
                     Dim condition1 As Boolean = PreviewConfig = WindowStyle.W10 And CP.WallpaperTone_W10.Enabled
-                    Dim condition2 As Boolean = PreviewConfig = WindowStyle.W8 And CP.WallpaperTone_W8.Enabled
+                    Dim condition2 As Boolean = PreviewConfig = WindowStyle.W81 And CP.WallpaperTone_W81.Enabled
                     Dim condition3 As Boolean = PreviewConfig = WindowStyle.W7 And CP.WallpaperTone_W7.Enabled
                     Dim condition4 As Boolean = PreviewConfig = WindowStyle.WVista And CP.WallpaperTone_WVista.Enabled
                     Dim condition5 As Boolean = PreviewConfig = WindowStyle.WXP And CP.WallpaperTone_WXP.Enabled
@@ -444,8 +449,8 @@ Namespace My
                             Case WindowStyle.W10
                                 Wall = GetTintedWallpaper(CP.WallpaperTone_W10)
 
-                            Case WindowStyle.W8
-                                Wall = GetTintedWallpaper(CP.WallpaperTone_W8)
+                            Case WindowStyle.W81
+                                Wall = GetTintedWallpaper(CP.WallpaperTone_W81)
 
                             Case WindowStyle.W7
                                 Wall = GetTintedWallpaper(CP.WallpaperTone_W7)
@@ -638,7 +643,7 @@ Namespace My
                     WallMon_Watcher1.Stop()
                     WallMon_Watcher2.Stop()
 
-                    If Not W7 And Not W8 And Not My.WVista Then
+                    If Not W7 And Not W81 And Not My.WVista Then
                         WallMon_Watcher3.Stop()
                         WallMon_Watcher4.Stop()
                     End If
@@ -797,6 +802,7 @@ Namespace My
             End Try
 
             Notifications_IL.Images.Add("info", Resources.notify_info)
+            Notifications_IL.Images.Add("apply", Resources.notify_applying)
             Notifications_IL.Images.Add("error", Resources.notify_error)
             Notifications_IL.Images.Add("warning", Resources.notify_warning)
             Notifications_IL.Images.Add("time", Resources.notify_time)
@@ -878,7 +884,8 @@ Namespace My
 
             If My.W11 Then PreviewStyle = WindowStyle.W11
             If My.W10 Then PreviewStyle = WindowStyle.W10
-            If My.W8 Then PreviewStyle = WindowStyle.W8
+            If My.W81 Then PreviewStyle = WindowStyle.W81
+            If My.W8 Then PreviewStyle = WindowStyle.W81
             If My.W7 Then PreviewStyle = WindowStyle.W7
             If My.WVista Then PreviewStyle = WindowStyle.WVista
             If My.WXP Then PreviewStyle = WindowStyle.WXP

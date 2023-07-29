@@ -46,8 +46,8 @@ Public Class LogonUI
                 CPx = New CP_Defaults().Default_Windows11
             Case WindowStyle.W10
                 CPx = New CP_Defaults().Default_Windows10
-            Case WindowStyle.W8
-                CPx = New CP_Defaults().Default_Windows8
+            Case WindowStyle.W81
+                CPx = New CP_Defaults().Default_Windows81
             Case WindowStyle.W7
                 CPx = New CP_Defaults().Default_Windows7
             Case WindowStyle.WVista
