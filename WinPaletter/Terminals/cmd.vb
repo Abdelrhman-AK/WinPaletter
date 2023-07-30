@@ -28,7 +28,6 @@ Public Class CMD
         CMD_AccentForegroundLbl.Font = My.Application.ConsoleFont
         CMD_AccentBackgroundLbl.Font = My.Application.ConsoleFont
         MainFrm.Visible = False
-        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
 
         Select Case _Edition
             Case Edition.CMD

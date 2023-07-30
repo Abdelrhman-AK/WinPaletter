@@ -66,27 +66,9 @@ Public Class TerminalsDashboard
 
         _shown = False
 
-        Dim p As Point = MousePosition - New Point(0, Height)
-
-        If p.Y + Height > My.Computer.Screen.WorkingArea.Bottom Then
-            p.Y = My.Computer.Screen.WorkingArea.Bottom - Height - 5
-        End If
-
-        If p.Y < My.Computer.Screen.WorkingArea.Top Then
-            p.Y = 0
-        End If
-
-        If p.X + Width > My.Computer.Screen.WorkingArea.Right Then
-            p.X = My.Computer.Screen.WorkingArea.Right - Width - 5
-        End If
-
-        If p.X < My.Computer.Screen.WorkingArea.Left Then
-            p.X = 0
-        End If
+        Location = MainFrm.XenonButton24.PointToScreen(Point.Empty) - New Point(0, Height)
 
         If My.W10 Then PictureBox1.Image = My.Resources.Native10 Else PictureBox1.Image = My.Resources.Native11
-
-        Location = p
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 

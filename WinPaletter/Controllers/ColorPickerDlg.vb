@@ -9,22 +9,78 @@ Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
-    Private _shown As Boolean = False
+    Dim InitColor As Color
+    Dim img As Image
+    ReadOnly ChildControls_List As New List(Of Control)
+    Dim ColorControls_List As New List(Of Control)
+    ReadOnly Forms_List As New List(Of Form)
+    Private Colors_List As New List(Of Color)
+    Private _Conditions As New Conditions
+    ReadOnly _Speed As Integer = 20
+
+#Region "Form Shadow"
+
+    Private aeroEnabled As Boolean
+
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            CheckAeroEnabled()
+            Dim cp As CreateParams = MyBase.CreateParams
+            If Not aeroEnabled Then
+                cp.ClassStyle = cp.ClassStyle Or Dwmapi.CS_DROPSHADOW
+                cp.ExStyle = cp.ExStyle Or 33554432
+                Return cp
+            Else
+                Return cp
+            End If
+        End Get
+    End Property
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        Select Case m.Msg
+            Case Dwmapi.WM_NCPAINT
+                Dim val = 2
+                If aeroEnabled Then
+                    Dwmapi.DwmSetWindowAttribute(Handle, If(GetRoundedCorners(), 2, 1), val, 4)
+                    Dim bla As New Dwmapi.MARGINS()
+                    With bla
+                        .bottomHeight = 1
+                        .leftWidth = 1
+                        .rightWidth = 1
+                        .topHeight = 1
+                    End With
+                    Dwmapi.DwmExtendFrameIntoClientArea(Handle, bla)
+                End If
+                Exit Select
+        End Select
+
+        Const WM_NCACTIVATE As UInt32 = &H86
+
+        MyBase.WndProc(m)
+    End Sub
+
+    Private Sub CheckAeroEnabled()
+        If Environment.OSVersion.Version.Major >= 6 Then
+            Dim Com As Boolean
+            Dwmapi.DwmIsCompositionEnabled(Com)
+            aeroEnabled = Com
+        Else
+            aeroEnabled = False
+        End If
+    End Sub
+#End Region
+
+    Private Sub SubMenu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_HIDE Or User32.AnimateWindowFlags.AW_BLEND)
+    End Sub
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyDarkMode(Me)
-        _shown = False
         XenonComboBox1.PopulateThemes
 
-        If fr.WindowState = FormWindowState.Normal Then
-            Me.Left = fr.Right - 14
-            Me.Top = fr.Top
-            Me.Height = fr.Height
-        End If
-
-        'XenonComboBox1.SelectedIndex = 0
-        'XenonComboBox2.SelectedIndex = 0
+        User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
+        Invalidate()
     End Sub
 
     Sub GetColorsFromPalette(CP As CP)
@@ -58,119 +114,71 @@ Public Class ColorPickerDlg
         ColorGrid1.Visible = False
     End Sub
 
-    ReadOnly Ls As New List(Of Control)
-    ReadOnly Fls As New List(Of Form)
-
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
-        Fls.Clear()
-        Ls.Clear()
+        Forms_List.Clear()
+        ChildControls_List.Clear()
 
         For Each ctrl As Control In Me.Controls
             If TypeOf ctrl IsNot ScreenColorPicker And ctrl.Visible Then
                 ctrl.Visible = False
-                Ls.Add(ctrl)
+                ChildControls_List.Add(ctrl)
             End If
         Next
 
         For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
-            If Application.OpenForms(ix).Visible And Application.OpenForms(ix) IsNot Me Then Fls.Add(Application.OpenForms(ix))
+            If Application.OpenForms(ix).Visible And Application.OpenForms(ix) IsNot Me Then Forms_List.Add(Application.OpenForms(ix))
         Next
-        For ix = 0 To Fls.Count - 1
-            Fls(ix).Visible = False
+        For ix = 0 To Forms_List.Count - 1
+            Forms_List(ix).Visible = False
         Next
 
-        Me.FormBorderStyle = FormBorderStyle.None
-        Me.TransparencyKey = BackColor
+        AllowTransparency = True
+        TransparencyKey = BackColor
     End Sub
 
     Private Sub ScreenColorPicker1_MouseUp(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseUp
 
-        For Each ctrl As Control In Ls
+        For Each ctrl As Control In ChildControls_List
             ctrl.Visible = True
         Next
-        For ix = 0 To Fls.Count - 1
-            Fls(ix).Visible = True
+        For ix = 0 To Forms_List.Count - 1
+            Forms_List(ix).Visible = True
         Next
-        Fls.Clear()
-        Ls.Clear()
-        Me.FormBorderStyle = FormBorderStyle.SizableToolWindow
-        Me.TransparencyKey = Nothing
+        Forms_List.Clear()
+        ChildControls_List.Clear()
+
+        AllowTransparency = False
+        TransparencyKey = Nothing
     End Sub
 
-    Private _Conditions As New Conditions
-
-
-    Dim InitColor As Color
-
-    Dim PreviousWidth, DestinatedWidth As Integer
-
-    Dim fr As Form
-
-
-    Function Pick(ByVal Ctrl As List(Of Control), Optional ByVal [Conditions] As Conditions = Nothing, Optional ShowAlpha As Boolean = False) As Color
-
+    Function Pick(Ctrl As List(Of Control), Optional [Conditions] As Conditions = Nothing, Optional EnableAlpha As Boolean = False) As Color
         If Not My.Settings.Miscellaneous.Classic_Color_Picker Then
-            fr = Ctrl(0).FindForm
-            Dim PrevoiusMin As Size = fr.MinimumSize
+            Dim c As Color = Ctrl(0).BackColor
+            ColorEditorManager1.Color = Ctrl(0).BackColor
+            InitColor = Ctrl(0).BackColor
 
-            If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-
-                MainFrm.previewContainer.Visible = False
-                MainFrm.SuspendLayout()
-
-                For Each ct As Control In fr.Controls
-                    If ct IsNot MainFrm.previewContainer Then ct.Visible = False
-                Next
-
-                PreviousWidth = MainFrm.Width
-                DestinatedWidth = MainFrm.previewContainer.Width + MainFrm.MainToolbar.Left * 3.25
-                MainFrm.MinimumSize = Size.Empty
-                MainFrm.Width = DestinatedWidth
-
-                MainFrm.ResumeLayout()
-                MainFrm.previewContainer.Visible = True
-            End If
-
-            Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
-            ColorEditorManager1.Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
-            InitColor = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
-
-            CList = Ctrl
+            ColorControls_List = Ctrl
 
             If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
 
-            ColorEditorManager1.ColorEditor.ShowAlphaChannel = ShowAlpha
-
             AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
+            Location = Ctrl(0).PointToScreen(Point.Empty) + New Point(-Width + Ctrl(0).Width, Ctrl(0).Height)
+            If Location.Y + Height > My.Computer.Screen.Bounds.Height Then Location = New Point(Location.X, My.Computer.Screen.Bounds.Height - Height)
+            If Location.Y < 0 Then Location = New Point(Location.X, 0)
+            If Location.X + Width > My.Computer.Screen.Bounds.Width Then Location = New Point(My.Computer.Screen.Bounds.Width - Width, Location.Y)
+            If Location.X < 0 Then Location = New Point(0, Location.Y)
 
-            If Me.ShowDialog() = DialogResult.OK Then
-                c = ColorEditorManager1.Color
-            Else
-                'ColorEditorManager1.Color = InitColor
-                'CHANGECOLORPREVIEW()
-                'c = InitColor
-            End If
+            If ShowDialog() = DialogResult.OK Then c = ColorEditorManager1.Color
 
             RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
 
-            If fr Is MainFrm And fr.WindowState = FormWindowState.Normal Then
-                MainFrm.previewContainer.Visible = False
-
-                MainFrm.Width = PreviousWidth
-
-                For Each ct As Control In fr.Controls
-                    If ct IsNot MainFrm.previewContainer Then ct.Visible = True
-                Next
-
-                MainFrm.previewContainer.Visible = True
+            If EnableAlpha Then
+                Return c
+            Else
+                Return Color.FromArgb(255, c)
             End If
 
-            MainFrm.MinimumSize = PrevoiusMin
-
-            fr = Nothing
-
-            Return c
         Else
             Dim c As Color = Color.FromArgb(Ctrl(0).BackColor.A, Ctrl(0).BackColor)
             Using CCP As New ColorDialog With {.AllowFullOpen = True, .AnyColor = True, .Color = c, .FullOpen = True, .SolidColorOnly = False}
@@ -187,17 +195,14 @@ Public Class ColorPickerDlg
 
     End Function
 
-    Dim CList As New List(Of Control)
-
     Public Sub CHANGECOLORPREVIEW()
         Dim steps As Integer = 30
         Dim delay As Integer = 1
 
-        For Each ctrl As Control In CList
+        For Each ctrl As Control In ColorControls_List
 
             If TypeOf ctrl Is XenonWindow Then
                 With DirectCast(ctrl, XenonWindow)
-
                     If Not _Conditions.Win7 Then
                         If _Conditions.Window_ActiveTitlebar Then
                             .AccentColor_Active = ColorEditorManager1.Color
@@ -225,7 +230,6 @@ Public Class ColorPickerDlg
                 End With
 
             ElseIf TypeOf ctrl Is XenonWinElement Then
-
                 With DirectCast(ctrl, XenonWinElement)
 
                     If .Style = XenonWinElement.Styles.Taskbar11 Or .Style = XenonWinElement.Styles.Taskbar10 Then
@@ -279,7 +283,6 @@ Public Class ColorPickerDlg
                 End With
 
             ElseIf TypeOf ctrl Is StoreItem Then
-
                 With DirectCast(ctrl, StoreItem)
                     If _Conditions.BackColor1 Then
                         .CP.Info.Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -363,7 +366,6 @@ Public Class ColorPickerDlg
                 End With
 
             ElseIf TypeOf ctrl Is Panel Then
-
                 If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
                     DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                 Else
@@ -380,7 +382,7 @@ Public Class ColorPickerDlg
                 End If
 
                 If TypeOf ctrl Is XenonCP Then
-                    Visual.FadeColor(ctrl, "backcolor", ctrl.BackColor, ColorEditorManager1.Color, steps, delay)
+                    Visual.FadeColor(ctrl, "BackColor", ctrl.BackColor, ColorEditorManager1.Color, steps, delay)
                 End If
                 ctrl.Refresh()
 
@@ -498,7 +500,6 @@ Public Class ColorPickerDlg
                 End With
 
             ElseIf TypeOf ctrl Is CursorControl Then
-
                 With DirectCast(ctrl, CursorControl)
                     If _Conditions.CursorBack1 Then
                         .Prop_PrimaryColor1 = ColorEditorManager1.Color
@@ -616,7 +617,7 @@ Public Class ColorPickerDlg
             My.Animator.HideSync(XenonButton6, True)
             My.Animator.HideSync(ImgPaletteContainer, True)
             ProgressBar1.Visible = True
-            ColorsList.Clear()
+            Colors_List.Clear()
 
             Try
                 BackgroundWorker1.CancelAsync()
@@ -625,15 +626,12 @@ Public Class ColorPickerDlg
         End If
     End Sub
 
-    Private ColorsList As New List(Of Color)
-    Dim img As Image
-
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
             Dim ColorThiefX As New ColorThiefDotNet.ColorThief
             Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(img, XenonTrackbar1.Value, XenonTrackbar2.Value, XenonCheckBox1.Checked)
             For Each C As ColorThiefDotNet.QuantizedColor In Colors
-                ColorsList.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
+                Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
             GC.Collect()
             GC.SuppressFinalize(Colors)
@@ -649,10 +647,10 @@ Public Class ColorPickerDlg
         Next
         ImgPaletteContainer.Controls.Clear()
 
-        ColorsList = ColorsList.Distinct.ToList
-        ColorsList.Sort(New RGBColorComparer())
+        Colors_List = Colors_List.Distinct.ToList
+        Colors_List.Sort(New RGBColorComparer())
 
-        For Each C As Color In ColorsList
+        For Each C As Color In Colors_List
             Dim pnl As New XenonCP With {
                     .Size = New Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
                     .BackColor = Color.FromArgb(255, C),
@@ -663,12 +661,12 @@ Public Class ColorPickerDlg
         Next
 
         ProgressBar1.Visible = False
-        ColorsList.Clear()
+        Colors_List.Clear()
         My.Animator.ShowSync(ImgPaletteContainer, True)
         My.Animator.ShowSync(XenonButton6, True)
     End Sub
 
-    Private Sub Pnl_click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub Pnl_click(sender As Object, e As EventArgs)
         With CType(sender, XenonCP)
             ColorEditorManager1.Color = .BackColor
             ColorEditor1.Color = .BackColor
@@ -696,62 +694,9 @@ Public Class ColorPickerDlg
         End If
     End Sub
 
-
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
             XenonTextBox1.Text = OpenThemeDialog.FileName
-        End If
-    End Sub
-
-    Private Sub XenonButton5_Click_2(sender As Object, e As EventArgs) Handles XenonButton5.Click
-        If IO.File.Exists(XenonTextBox1.Text) Then
-
-            If Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
-                ThemePaletteContainer.Controls.Clear()
-
-                Try
-                    For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                        Dim pnl As New XenonCP With {
-                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                            .BackColor = Color.FromArgb(255, C),
-                            .DefaultColor = .BackColor
-                        }
-                        ThemePaletteContainer.Controls.Add(pnl)
-                        AddHandler pnl.Click, AddressOf Pnl_click
-                    Next
-                Catch
-                    MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
-                End Try
-
-            ElseIf Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
-                Try
-                    IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
-
-                    Dim vs As New VisualStyleFile(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme")
-
-                    For Each field In GetType(VisualStyleMetricColors).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
-                        If field.FieldType.Name.ToLower = "color" Then
-
-                            Dim pnl As New XenonCP With {
-                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
-                                .BackColor = field.GetValue(vs.Metrics.Colors),
-                                .DefaultColor = .BackColor
-                                }
-                            ThemePaletteContainer.Controls.Add(pnl)
-                            AddHandler pnl.Click, AddressOf Pnl_click
-
-                        End If
-                    Next
-
-                Catch
-                    MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
-                End Try
-            Else
-                MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
-            End If
-
-        Else
-            MsgBox(My.Lang.ThemeNotExist, MsgBoxStyle.Critical)
         End If
     End Sub
 
@@ -840,9 +785,54 @@ Public Class ColorPickerDlg
         val2.Text = sender.Value
     End Sub
 
-    Private Sub ColorPickerDlg_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        _shown = True
+    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+        If IO.File.Exists(XenonTextBox1.Text) Then
+            If Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
+                ThemePaletteContainer.Controls.Clear()
+
+                Try
+                    For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
+                        Dim pnl As New XenonCP With {
+                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                            .BackColor = Color.FromArgb(255, C),
+                            .DefaultColor = .BackColor
+                        }
+                        ThemePaletteContainer.Controls.Add(pnl)
+                        AddHandler pnl.Click, AddressOf Pnl_click
+                    Next
+                Catch
+                    MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
+                End Try
+
+            ElseIf Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
+                Try
+                    IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+
+                    Dim vs As New VisualStyleFile(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme")
+
+                    For Each field In GetType(VisualStyleMetricColors).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
+                        If field.FieldType.Name.ToLower = "color" Then
+
+                            Dim pnl As New XenonCP With {
+                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                                .BackColor = field.GetValue(vs.Metrics.Colors),
+                                .DefaultColor = .BackColor
+                                }
+                            ThemePaletteContainer.Controls.Add(pnl)
+                            AddHandler pnl.Click, AddressOf Pnl_click
+
+                        End If
+                    Next
+
+                Catch
+                    MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
+                End Try
+            Else
+                MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
+            End If
+        End If
     End Sub
+
 End Class
 
 Public Class Conditions

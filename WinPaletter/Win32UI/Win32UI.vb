@@ -12,7 +12,6 @@ Public Class Win32UI
         XenonComboBox1.PopulateThemes
         XenonComboBox1.SelectedIndex = 0
         MainFrm.Visible = False
-        If Not My.Settings.Miscellaneous.Classic_Color_Picker Then Location = New Point(10, (My.Computer.Screen.Bounds.Height - Height) / 2 - 20)
         ApplyDefaultCPValues()
         LoadCP(My.CP)
         SetMetics(My.CP)
@@ -583,7 +582,7 @@ Public Class Win32UI
                 RetroLabel13.ForeColor = C
 
             Case "Scrollbar_pick"
-                'CList.Add(RetroPanel2)
+                'ColorControls_List.Add(RetroPanel2)
                 'Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList) ', _Conditions)
                 'RetroPanel2.BackColor = C

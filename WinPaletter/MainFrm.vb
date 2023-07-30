@@ -1182,7 +1182,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         If My.CP.Windows10.Transparency Then
-            'CList.Add(start) ''Hamburger
+            'ColorControls_List.Add(start) ''Hamburger
         Else
             CList.Add(taskbar)
         End If
@@ -1389,7 +1389,7 @@ Public Class MainFrm
         Dim CList As New List(Of Control) From {sender}
 
         If My.PreviewStyle = WindowStyle.W10 Then
-            'CList.Add(taskbar) 'Start Icon Hover
+            'ColorControls_List.Add(taskbar) 'Start Icon Hover
         End If
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
