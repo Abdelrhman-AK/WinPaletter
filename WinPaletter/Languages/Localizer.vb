@@ -112,6 +112,7 @@ Public Class Localizer : Implements IDisposable
     Property LogoffQuestion As String = "Are you sure you want to log off?"
     Property LogoffAlert1 As String = "This will close all open files and applications"
     Property LogoffAlert2 As String = "Logoff equals 'Sign out' in Windows 8.1, 10 & 11"
+    Property LogoffNotFound As String = "Couldn't find logoff process in ""{0}"" directory. You should logoff your Windows profile manually."
     Property WallpaperTone_Notice As String = "This is for {0}. To change another OS preferences, switch the preview in main form"
     Property KillingExplorer As String = "Killing Explorer (To be restarted)"
     Property ExplorerRestarted As String = "Explorer Restarted. It took about {0} seconds to kill explorer"

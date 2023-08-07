@@ -2441,7 +2441,11 @@ Public Class MainFrm
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
             LoggingOff = True
             Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
-            Shell(My.PATH_System32 & "\logoff.exe", AppWinStyle.Hide)
+            If IO.File.Exists(My.PATH_System32 & "\logoff.exe") Then
+                Shell(My.PATH_System32 & "\logoff.exe", AppWinStyle.Hide)
+            Else
+                MsgBox(String.Format(My.Lang.LogoffNotFound, My.PATH_System32), MsgBoxStyle.Exclamation)
+            End If
         End If
 
     End Sub
