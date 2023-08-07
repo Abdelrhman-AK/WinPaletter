@@ -1846,6 +1846,8 @@ Public Class XenonCP
     <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
+
+    Public ColorPickerOpened As Boolean = False
 #End Region
 
 #Region "Events"
@@ -2003,6 +2005,11 @@ Public Class XenonCP
 
                 Using br As New SolidBrush(FC0) : G.DrawString(S, F, br, RectX, StringAligner(ContentAlignment.MiddleCenter)) : End Using
                 Using br As New SolidBrush(FC1) : G.DrawString(S, F, br, RectX, StringAligner(ContentAlignment.MiddleCenter)) : End Using
+
+                If ColorPickerOpened Then
+                    Using br As New SolidBrush(FC0) : G.DrawString("▼", F, br, New Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), StringAligner(ContentAlignment.MiddleRight)) : End Using
+                    Using br As New SolidBrush(FC1) : G.DrawString("▼", F, br, New Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), StringAligner(ContentAlignment.MiddleRight)) : End Using
+                End If
 
             End If
         End If

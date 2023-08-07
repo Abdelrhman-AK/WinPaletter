@@ -16,7 +16,7 @@ Public Class ColorPickerDlg
     ReadOnly Forms_List As New List(Of Form)
     Private Colors_List As New List(Of Color)
     Private _Conditions As New Conditions
-    ReadOnly _Speed As Integer = 20
+    ReadOnly _Speed As Integer = 50
 
 #Region "Form Shadow"
 
@@ -51,10 +51,7 @@ Public Class ColorPickerDlg
                     End With
                     Dwmapi.DwmExtendFrameIntoClientArea(Handle, bla)
                 End If
-                Exit Select
         End Select
-
-        Const WM_NCACTIVATE As UInt32 = &H86
 
         MyBase.WndProc(m)
     End Sub
@@ -70,7 +67,21 @@ Public Class ColorPickerDlg
     End Sub
 #End Region
 
-    Private Sub SubMenu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+    Dim newPoint As New Point()
+    Dim xPoint As New Point()
+
+    Private Sub ColorPicker_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+        xPoint = MousePosition - Location
+    End Sub
+
+    Private Sub ColorPicker_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
+        If e.Button = MouseButtons.Left Then
+            newPoint = MousePosition - xPoint
+            Location = newPoint
+        End If
+    End Sub
+
+    Private Sub ColorPicker_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_HIDE Or User32.AnimateWindowFlags.AW_BLEND)
     End Sub
 
@@ -97,7 +108,7 @@ Public Class ColorPickerDlg
         For Each c As Color In CP.ListColors
 
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                 .BackColor = c,
                 .DefaultColor = .BackColor
             }
@@ -159,11 +170,16 @@ Public Class ColorPickerDlg
 
             ColorControls_List = Ctrl
 
+            If TypeOf Ctrl(0) Is XenonCP Then
+                CType(Ctrl(0), XenonCP).ColorPickerOpened = True
+                CType(Ctrl(0), XenonCP).Refresh()
+            End If
+
             If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
 
-            AddHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
+            AddHandler ColorEditorManager1.ColorChanged, AddressOf Change_Color_Preview
 
-            Location = Ctrl(0).PointToScreen(Point.Empty) + New Point(-Width + Ctrl(0).Width, Ctrl(0).Height)
+            Location = Ctrl(0).PointToScreen(Point.Empty) + New Point(-Width + Ctrl(0).Width + 5, Ctrl(0).Height - 1)
             If Location.Y + Height > My.Computer.Screen.Bounds.Height Then Location = New Point(Location.X, My.Computer.Screen.Bounds.Height - Height)
             If Location.Y < 0 Then Location = New Point(Location.X, 0)
             If Location.X + Width > My.Computer.Screen.Bounds.Width Then Location = New Point(My.Computer.Screen.Bounds.Width - Width, Location.Y)
@@ -171,7 +187,12 @@ Public Class ColorPickerDlg
 
             If ShowDialog() = DialogResult.OK Then c = ColorEditorManager1.Color
 
-            RemoveHandler ColorEditorManager1.ColorChanged, AddressOf CHANGECOLORPREVIEW
+            If TypeOf Ctrl(0) Is XenonCP Then
+                CType(Ctrl(0), XenonCP).ColorPickerOpened = False
+                CType(Ctrl(0), XenonCP).Refresh()
+            End If
+
+            RemoveHandler ColorEditorManager1.ColorChanged, AddressOf Change_Color_Preview
 
             If EnableAlpha Then
                 Return c
@@ -195,7 +216,7 @@ Public Class ColorPickerDlg
 
     End Function
 
-    Public Sub CHANGECOLORPREVIEW()
+    Public Sub Change_Color_Preview()
         Dim steps As Integer = 30
         Dim delay As Integer = 1
 
@@ -233,7 +254,6 @@ Public Class ColorPickerDlg
                 With DirectCast(ctrl, XenonWinElement)
 
                     If .Style = XenonWinElement.Styles.Taskbar11 Or .Style = XenonWinElement.Styles.Taskbar10 Then
-
                         If _Conditions.AppUnderlineOnly Then
                             Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
                             .Refresh()
@@ -263,12 +283,13 @@ Public Class ColorPickerDlg
                         End If
 
                     ElseIf .Style = XenonWinElement.Styles.ActionCenter11 And _Conditions.ActionCenterBtn Then
-                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                         .Refresh()
 
                     ElseIf .Style = XenonWinElement.Styles.ActionCenter10 And _Conditions.ActionCenterLink Then
                         Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Refresh()
+
                     Else
                         If _Conditions.BackColor1 Then
                             .BackColor = Color.FromArgb(.BackColor.A, ColorEditorManager1.Color)
@@ -652,7 +673,7 @@ Public Class ColorPickerDlg
 
         For Each C As Color In Colors_List
             Dim pnl As New XenonCP With {
-                    .Size = New Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                    .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                     .BackColor = Color.FromArgb(255, C),
                     .DefaultColor = .BackColor
                 }
@@ -674,7 +695,7 @@ Public Class ColorPickerDlg
             ColorWheel1.Color = .BackColor
         End With
 
-        CHANGECOLORPREVIEW()
+        Change_Color_Preview()
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
@@ -754,7 +775,7 @@ Public Class ColorPickerDlg
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
                     Dim pnl As New XenonCP With {
-                        .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                        .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                         .BackColor = Color.FromArgb(255, C),
                         .DefaultColor = .BackColor
                         }
@@ -793,7 +814,7 @@ Public Class ColorPickerDlg
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
                         Dim pnl As New XenonCP With {
-                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                             .BackColor = Color.FromArgb(255, C),
                             .DefaultColor = .BackColor
                         }
@@ -814,7 +835,7 @@ Public Class ColorPickerDlg
                         If field.FieldType.Name.ToLower = "color" Then
 
                             Dim pnl As New XenonCP With {
-                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 90, 30), 25),
+                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                                 .BackColor = field.GetValue(vs.Metrics.Colors),
                                 .DefaultColor = .BackColor
                                 }
