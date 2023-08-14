@@ -93,14 +93,6 @@ Namespace NativeMethods
         Public Shared Function SystemParametersInfo(uAction As Integer, uParam As Integer, ByRef lpvParam As ANIMATIONINFO, fuWinIni As SPIF) As Integer
         End Function
 
-        <DllImport("user32.dll")>
-        Public Shared Function GetWindowDC(ByVal hWnd As IntPtr) As IntPtr
-        End Function
-
-        <DllImport("user32.dll")>
-        Public Shared Function ReleaseDC(ByVal hWnd As IntPtr, ByVal hDC As IntPtr) As Integer
-        End Function
-
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As Integer, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As Integer, lpvParam As UInteger, fuWinIni As Integer) As Integer
         Public Declare Function SystemParametersInfo Lib "user32" Alias "SystemParametersInfoA" (uAction As Integer, uParam As UInteger, lpvParam As Integer, fuWinIni As Integer) As Integer

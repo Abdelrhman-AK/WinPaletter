@@ -276,7 +276,7 @@
   <data name="PictureBox20.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAbNJREFUSEvtkklqAkEYheNFHFAUFQdwOoHitFFQFGd0oycRRcEBb6ALccZehohH
+        vgAADr4B6kKxwAAAAbNJREFUSEvtkklqAkEYheNFHFAUFQdwOoHitFFQFGd0oycRRcEBb6ALccZehohH
         iN4gx8jixb/othutGKE7kEUefDTdUN+r+rte/vN34nK53hwOBwibzcawWCwwm80wmUwwGo0wGAxYLBZY
         LpdYrVZYr9fYbDbYbrfY7XaM/X5PvIpaOU6nk8ntdjuTW63WhwWlUgnD4RDdbheNRoPJy+UyJpMJKxG1
         cp4p0Ov11wKSz2YzTKdTjMdjVkDy+XwOQRDuC4LB4DkQCDD8fv/Z5/OdvV7vifB4PKfLCE9ut/u93W4f
@@ -425,7 +425,7 @@
   <data name="PictureBox27.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAbNJREFUSEvtkklqAkEYheNFHFAUFQdwOoHitFFQFGd0oycRRcEBb6ALccZehohH
+        vgAADr4B6kKxwAAAAbNJREFUSEvtkklqAkEYheNFHFAUFQdwOoHitFFQFGd0oycRRcEBb6ALccZehohH
         iN4gx8jixb/othutGKE7kEUefDTdUN+r+rte/vN34nK53hwOBwibzcawWCwwm80wmUwwGo0wGAxYLBZY
         LpdYrVZYr9fYbDbYbrfY7XaM/X5PvIpaOU6nk8ntdjuTW63WhwWlUgnD4RDdbheNRoPJy+UyJpMJKxG1
         cp4p0Ov11wKSz2YzTKdTjMdjVkDy+XwOQRDuC4LB4DkQCDD8fv/Z5/OdvV7vifB4PKfLCE9ut/u93W4f
@@ -499,7 +499,7 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="W8_theme_aerolite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="W81_theme_aerolite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtBAMAAADINP+pAAAABGdBTUEAALGPC/xhBQAAABtQTFRFLzAz
         7NSYXDo3w1pQMjIyh0dB18ikwb6v////cyrwwwAAAAlwSFlzAAAOvAAADrwBlbxySQAAAEdJREFUOMtj
@@ -531,7 +531,7 @@
         jQUE/AVJbsohsOVAAgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="W8_theme_aero.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="W81_theme_aero.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtBAMAAADINP+pAAAABGdBTUEAALGPC/xhBQAAABJQTFRFuJlQ
         8Mhpx1BQMjIyzKpZ////6asKsQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAD9JREFUOMtjwAUYBZGBkBIY

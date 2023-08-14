@@ -1,8 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Net
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Devcorp.Controls.VisualStyles
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers

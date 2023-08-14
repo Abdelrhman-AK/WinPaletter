@@ -1811,17 +1811,19 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 SmCaptionHeight = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", _DefMetricsFonts.SmCaptionHeight * -15) / -15
                 SmCaptionWidth = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", _DefMetricsFonts.SmCaptionWidth * -15) / -15
 
-                Try
-                    ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
-                Catch
-                    ShellIconSize = _DefMetricsFonts.ShellIconSize
-                End Try
+                If My.WXP Then
+                    Try
+                        ShellIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", _DefMetricsFonts.ShellIconSize)
+                    Catch
+                        ShellIconSize = _DefMetricsFonts.ShellIconSize
+                    End Try
 
-                Try
-                    ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
-                Catch
-                    ShellSmallIconSize = _DefMetricsFonts.ShellSmallIconSize
-                End Try
+                    Try
+                        ShellSmallIconSize = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", _DefMetricsFonts.ShellSmallIconSize)
+                    Catch
+                        ShellSmallIconSize = _DefMetricsFonts.ShellSmallIconSize
+                    End Try
+                End If
 
                 DesktopIconSize = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", _DefMetricsFonts.DesktopIconSize)
                 CaptionFont = DirectCast(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", _DefMetricsFonts.CaptionFont.ToByte), Byte()).ToFont
@@ -1932,8 +1934,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                     End If
 
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                    If My.WXP Then
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                    End If
+
                     EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
                     If My.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
@@ -2597,7 +2602,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If Enabled Then
 
-                    If Not My.WXP Then
+                    If Not My.WXP AndAlso My.Settings.ThemeApplyingBehavior.ApplyImageresStartupSound Then
 
                         If IO.File.Exists(Snd_Imageres_SystemStart) AndAlso IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
 

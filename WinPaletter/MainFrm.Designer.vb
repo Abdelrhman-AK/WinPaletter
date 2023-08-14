@@ -1157,7 +1157,7 @@ Partial Class MainFrm
         Me.Select_W81.ForeColor = System.Drawing.Color.White
         Me.Select_W81.Image = Nothing
         Me.Select_W81.Location = New System.Drawing.Point(271, 359)
-        Me.Select_W81.Name = "Select_W8"
+        Me.Select_W81.Name = "Select_W81"
         Me.Select_W81.ShowText = False
         Me.Select_W81.Size = New System.Drawing.Size(40, 40)
         Me.Select_W81.TabIndex = 25
@@ -3658,7 +3658,7 @@ Partial Class MainFrm
         Me.PaletteContainer_W81.Controls.Add(Me.XenonGroupBox32)
         Me.PaletteContainer_W81.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PaletteContainer_W81.Location = New System.Drawing.Point(3, 3)
-        Me.PaletteContainer_W81.Name = "PaletteContainer_W8"
+        Me.PaletteContainer_W81.Name = "PaletteContainer_W81"
         Me.PaletteContainer_W81.Size = New System.Drawing.Size(523, 511)
         Me.PaletteContainer_W81.TabIndex = 31
         '
@@ -3728,7 +3728,7 @@ Partial Class MainFrm
         Me.W81_start.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.W81_start.LineSize = 1
         Me.W81_start.Location = New System.Drawing.Point(261, 39)
-        Me.W81_start.Name = "W8_start"
+        Me.W81_start.Name = "W81_start"
         Me.W81_start.Size = New System.Drawing.Size(64, 64)
         Me.W81_start.TabIndex = 36
         Me.W81_start.UseVisualStyleBackColor = False
@@ -3762,9 +3762,9 @@ Partial Class MainFrm
         Me.W81_theme_aerolite.Checked = False
         Me.W81_theme_aerolite.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.W81_theme_aerolite.ForeColor = System.Drawing.Color.White
-        Me.W81_theme_aerolite.Image = CType(resources.GetObject("W8_theme_aerolite.Image"), System.Drawing.Image)
+        Me.W81_theme_aerolite.Image = CType(resources.GetObject("W81_theme_aerolite.Image"), System.Drawing.Image)
         Me.W81_theme_aerolite.Location = New System.Drawing.Point(183, 39)
-        Me.W81_theme_aerolite.Name = "W8_theme_aerolite"
+        Me.W81_theme_aerolite.Name = "W81_theme_aerolite"
         Me.W81_theme_aerolite.ShowText = False
         Me.W81_theme_aerolite.Size = New System.Drawing.Size(64, 64)
         Me.W81_theme_aerolite.TabIndex = 30
@@ -3798,9 +3798,9 @@ Partial Class MainFrm
         Me.W81_theme_aero.Checked = False
         Me.W81_theme_aero.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.W81_theme_aero.ForeColor = System.Drawing.Color.White
-        Me.W81_theme_aero.Image = CType(resources.GetObject("W8_theme_aero.Image"), System.Drawing.Image)
+        Me.W81_theme_aero.Image = CType(resources.GetObject("W81_theme_aero.Image"), System.Drawing.Image)
         Me.W81_theme_aero.Location = New System.Drawing.Point(113, 39)
-        Me.W81_theme_aero.Name = "W8_theme_aero"
+        Me.W81_theme_aero.Name = "W81_theme_aero"
         Me.W81_theme_aero.ShowText = False
         Me.W81_theme_aero.Size = New System.Drawing.Size(64, 64)
         Me.W81_theme_aero.TabIndex = 29
@@ -3815,7 +3815,7 @@ Partial Class MainFrm
         Me.W81_logonui.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.W81_logonui.LineSize = 1
         Me.W81_logonui.Location = New System.Drawing.Point(331, 39)
-        Me.W81_logonui.Name = "W8_logonui"
+        Me.W81_logonui.Name = "W81_logonui"
         Me.W81_logonui.Size = New System.Drawing.Size(64, 64)
         Me.W81_logonui.TabIndex = 37
         Me.W81_logonui.UseVisualStyleBackColor = False
@@ -3871,7 +3871,7 @@ Partial Class MainFrm
         Me.W81_personalcolor_accent_pick.ForceNoNerd = False
         Me.W81_personalcolor_accent_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_personalcolor_accent_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.W81_personalcolor_accent_pick.Name = "W8_personalcolor_accent_pick"
+        Me.W81_personalcolor_accent_pick.Name = "W81_personalcolor_accent_pick"
         Me.W81_personalcolor_accent_pick.Size = New System.Drawing.Size(110, 21)
         Me.W81_personalcolor_accent_pick.TabIndex = 2
         '
@@ -3922,7 +3922,7 @@ Partial Class MainFrm
         Me.W81_personalcls_background_pick.ForceNoNerd = False
         Me.W81_personalcls_background_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_personalcls_background_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.W81_personalcls_background_pick.Name = "W8_personalcls_background_pick"
+        Me.W81_personalcls_background_pick.Name = "W81_personalcls_background_pick"
         Me.W81_personalcls_background_pick.Size = New System.Drawing.Size(110, 21)
         Me.W81_personalcls_background_pick.TabIndex = 2
         '
@@ -3973,7 +3973,7 @@ Partial Class MainFrm
         Me.W81_start_pick.ForceNoNerd = False
         Me.W81_start_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_start_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.W81_start_pick.Name = "W8_start_pick"
+        Me.W81_start_pick.Name = "W81_start_pick"
         Me.W81_start_pick.Size = New System.Drawing.Size(110, 21)
         Me.W81_start_pick.TabIndex = 2
         '
@@ -4018,7 +4018,7 @@ Partial Class MainFrm
         Me.W81_ColorizationBalance_val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.W81_ColorizationBalance_val.LineSize = 1
         Me.W81_ColorizationBalance_val.Location = New System.Drawing.Point(477, 29)
-        Me.W81_ColorizationBalance_val.Name = "W8_ColorizationBalance_val"
+        Me.W81_ColorizationBalance_val.Name = "W81_ColorizationBalance_val"
         Me.W81_ColorizationBalance_val.Size = New System.Drawing.Size(34, 24)
         Me.W81_ColorizationBalance_val.TabIndex = 130
         Me.W81_ColorizationBalance_val.UseVisualStyleBackColor = False
@@ -4031,7 +4031,7 @@ Partial Class MainFrm
         Me.W81_ColorizationBalance_bar.Location = New System.Drawing.Point(4, 32)
         Me.W81_ColorizationBalance_bar.Maximum = 100
         Me.W81_ColorizationBalance_bar.Minimum = 0
-        Me.W81_ColorizationBalance_bar.Name = "W8_ColorizationBalance_bar"
+        Me.W81_ColorizationBalance_bar.Name = "W81_ColorizationBalance_bar"
         Me.W81_ColorizationBalance_bar.Size = New System.Drawing.Size(467, 19)
         Me.W81_ColorizationBalance_bar.SmallChange = 1
         Me.W81_ColorizationBalance_bar.TabIndex = 6
@@ -4056,7 +4056,7 @@ Partial Class MainFrm
         Me.W81_ColorizationColor_pick.ForceNoNerd = False
         Me.W81_ColorizationColor_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_ColorizationColor_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.W81_ColorizationColor_pick.Name = "W8_ColorizationColor_pick"
+        Me.W81_ColorizationColor_pick.Name = "W81_ColorizationColor_pick"
         Me.W81_ColorizationColor_pick.Size = New System.Drawing.Size(110, 21)
         Me.W81_ColorizationColor_pick.TabIndex = 2
         '
@@ -4107,7 +4107,7 @@ Partial Class MainFrm
         Me.W81_accent_pick.ForceNoNerd = False
         Me.W81_accent_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_accent_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.W81_accent_pick.Name = "W8_accent_pick"
+        Me.W81_accent_pick.Name = "W81_accent_pick"
         Me.W81_accent_pick.Size = New System.Drawing.Size(110, 21)
         Me.W81_accent_pick.TabIndex = 2
         '
@@ -6473,7 +6473,6 @@ Partial Class MainFrm
     Friend WithEvents lnk_preview As XenonLabel
     Friend WithEvents Label8 As XenonLabel
     Friend WithEvents setting_icon_preview As XenonLabel
-    Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents XenonButton7 As XenonButton
     Friend WithEvents XenonButton9 As XenonButton
@@ -6788,4 +6787,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton37 As XenonButton
     Friend WithEvents XenonButton38 As XenonButton
     Friend WithEvents XenonButton39 As XenonButton
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

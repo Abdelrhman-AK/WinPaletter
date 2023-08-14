@@ -30,6 +30,8 @@ Partial Class Sounds_Editor
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
         Me.XenonGroupBox65 = New WinPaletter.XenonGroupBox()
@@ -640,7 +642,6 @@ Partial Class Sounds_Editor
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonTabControl1.SuspendLayout
         Me.TabPage1.SuspendLayout
         Me.XenonGroupBox65.SuspendLayout
@@ -845,7 +846,7 @@ Partial Class Sounds_Editor
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(620, 473)
+        Me.XenonButton10.Location = New System.Drawing.Point(620, 514)
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 213
@@ -862,7 +863,7 @@ Partial Class Sounds_Editor
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(534, 473)
+        Me.XenonButton7.Location = New System.Drawing.Point(534, 514)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 212
@@ -880,7 +881,7 @@ Partial Class Sounds_Editor
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(741, 473)
+        Me.XenonButton8.Location = New System.Drawing.Point(741, 514)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 211
@@ -912,13 +913,14 @@ Partial Class Sounds_Editor
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(909, 410)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(909, 455)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 203
         '
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.XenonAlertBox5)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox1)
@@ -932,9 +934,45 @@ Partial Class Sounds_Editor
         Me.TabPage1.Controls.Add(Me.XenonGroupBox1)
         Me.TabPage1.Location = New System.Drawing.Point(144, 4)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage1.Size = New System.Drawing.Size(761, 447)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main events"
+        '
+        'XenonAlertBox5
+        '
+        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
+        Me.XenonAlertBox5.CenterText = False
+        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox5.Image = Nothing
+        Me.XenonAlertBox5.Location = New System.Drawing.Point(4, 252)
+        Me.XenonAlertBox5.Name = "XenonAlertBox5"
+        Me.XenonAlertBox5.Size = New System.Drawing.Size(754, 40)
+        Me.XenonAlertBox5.TabIndex = 11
+        Me.XenonAlertBox5.TabStop = False
+        Me.XenonAlertBox5.Text = "Changing startup sound is blocked in Settings by defaults. You can unblock it in " &
+    "Settings > Theme applying behaviour > Patch imageres.dll to change Windows start" &
+    "up sound (use it on your own risk)"
+        '
+        'XenonAlertBox4
+        '
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.XenonAlertBox4.CenterText = False
+        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonAlertBox4.Image = Nothing
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 340)
+        Me.XenonAlertBox4.Name = "XenonAlertBox4"
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 60)
+        Me.XenonAlertBox4.TabIndex = 10
+        Me.XenonAlertBox4.TabStop = False
+        Me.XenonAlertBox4.Text = resources.GetString("XenonAlertBox4.Text")
         '
         'XenonAlertBox2
         '
@@ -946,7 +984,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 340)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 404)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox2.TabIndex = 9
@@ -965,7 +1003,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 252)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 296)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox1.TabIndex = 8
@@ -1856,7 +1894,7 @@ Partial Class Sounds_Editor
         Me.TabPage2.Controls.Add(Me.XenonGroupBox7)
         Me.TabPage2.Location = New System.Drawing.Point(144, 4)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage2.Size = New System.Drawing.Size(761, 447)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Dialogs"
         '
@@ -2672,7 +2710,7 @@ Partial Class Sounds_Editor
         Me.TabPage3.Controls.Add(Me.XenonGroupBox17)
         Me.TabPage3.Location = New System.Drawing.Point(144, 4)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage3.Size = New System.Drawing.Size(761, 447)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Window & menus"
         '
@@ -3612,7 +3650,7 @@ Partial Class Sounds_Editor
         Me.TabPage7.Controls.Add(Me.XenonGroupBox46)
         Me.TabPage7.Location = New System.Drawing.Point(144, 4)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage7.Size = New System.Drawing.Size(761, 447)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Devices"
         '
@@ -4424,7 +4462,7 @@ Partial Class Sounds_Editor
         Me.TabPage11.Controls.Add(Me.XenonGroupBox52)
         Me.TabPage11.Location = New System.Drawing.Point(144, 4)
         Me.TabPage11.Name = "TabPage11"
-        Me.TabPage11.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage11.Size = New System.Drawing.Size(761, 447)
         Me.TabPage11.TabIndex = 10
         Me.TabPage11.Text = "Fax"
         '
@@ -5012,7 +5050,7 @@ Partial Class Sounds_Editor
         Me.TabPage8.Controls.Add(Me.XenonGroupBox63)
         Me.TabPage8.Location = New System.Drawing.Point(144, 4)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage8.Size = New System.Drawing.Size(761, 447)
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "Explorer events"
         '
@@ -6056,7 +6094,7 @@ Partial Class Sounds_Editor
         Me.TabPage4.Controls.Add(Me.XenonGroupBox24)
         Me.TabPage4.Location = New System.Drawing.Point(144, 4)
         Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage4.Size = New System.Drawing.Size(761, 447)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Notifications"
         '
@@ -7101,7 +7139,7 @@ Partial Class Sounds_Editor
         Me.TabPage5.Controls.Add(Me.XenonGroupBox32)
         Me.TabPage5.Location = New System.Drawing.Point(144, 4)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage5.Size = New System.Drawing.Size(761, 447)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Alarms"
         '
@@ -8260,7 +8298,7 @@ Partial Class Sounds_Editor
         Me.TabPage6.Controls.Add(Me.XenonGroupBox45)
         Me.TabPage6.Location = New System.Drawing.Point(144, 4)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage6.Size = New System.Drawing.Size(761, 447)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Ringtones"
         '
@@ -9415,7 +9453,7 @@ Partial Class Sounds_Editor
         Me.TabPage10.Controls.Add(Me.XenonGroupBox75)
         Me.TabPage10.Location = New System.Drawing.Point(144, 4)
         Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage10.Size = New System.Drawing.Size(761, 447)
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "Speech recognition"
         '
@@ -10113,7 +10151,7 @@ Partial Class Sounds_Editor
         Me.TabPage12.Controls.Add(Me.XenonGroupBox84)
         Me.TabPage12.Location = New System.Drawing.Point(144, 4)
         Me.TabPage12.Name = "TabPage12"
-        Me.TabPage12.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage12.Size = New System.Drawing.Size(761, 447)
         Me.TabPage12.TabIndex = 11
         Me.TabPage12.Text = "NetMeeting"
         '
@@ -10597,7 +10635,7 @@ Partial Class Sounds_Editor
         Me.TabPage9.Controls.Add(Me.XenonGroupBox68)
         Me.TabPage9.Location = New System.Drawing.Point(144, 4)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(761, 402)
+        Me.TabPage9.Size = New System.Drawing.Size(761, 447)
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "Others"
         '
@@ -10841,29 +10879,12 @@ Partial Class Sounds_Editor
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
         '
-        'XenonAlertBox4
-        '
-        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
-        Me.XenonAlertBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox4.CenterText = False
-        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox4.Image = Nothing
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 296)
-        Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 40)
-        Me.XenonAlertBox4.TabIndex = 10
-        Me.XenonAlertBox4.TabStop = False
-        Me.XenonAlertBox4.Text = resources.GetString("XenonAlertBox4.Text")
-        '
         'Sounds_Editor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(933, 519)
+        Me.ClientSize = New System.Drawing.Size(933, 560)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton8)
@@ -11681,4 +11702,5 @@ Partial Class Sounds_Editor
     Friend WithEvents XenonButton259 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
     Friend WithEvents XenonAlertBox4 As XenonAlertBox
+    Friend WithEvents XenonAlertBox5 As XenonAlertBox
 End Class
