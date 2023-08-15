@@ -196,4 +196,8 @@ Public Class EditInfo
     Private Sub XenonTextBox4_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox4.TextChanged
         StoreItem1.CP.Info.Author = sender.Text
     End Sub
+
+    Private Sub XenonTextBox2_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox2.TextChanged
+        StoreItem1.CP.Info.ThemeVersion = sender.Text
+    End Sub
 End Class

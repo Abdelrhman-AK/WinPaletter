@@ -550,9 +550,8 @@ Public Class Store
         pnl_preview_classic.BackgroundImage = pnl_preview.BackgroundImage
 
         Status_lbl.Font = My.Application.ConsoleFontMedium
-        themeSize_lbl.Font = My.Application.ConsoleFontMedium
-        respacksize_lbl.Font = My.Application.ConsoleFontMedium
-        theme_ver_lbl.Font = My.Application.ConsoleFontMedium
+        themeSize_lbl.Font = My.Application.ConsoleFontLarge
+        respacksize_lbl.Font = My.Application.ConsoleFontLarge
         desc_txt.Font = My.Application.ConsoleFontLarge
     End Sub
 
@@ -881,20 +880,25 @@ Public Class Store
         Select Case e.Button
             Case MouseButtons.Right
                 With DirectCast(sender, StoreItem)
-                    Adjust_Preview(.CP)
                     Store_Hover.Close()
 
+                    selectedItem = DirectCast(sender, StoreItem)
+
+                    Store_Hover.Show()
+
+                    Adjust_Preview(.CP)
                     tabs_preview.SelectedIndex = 0
                     Store_Hover.img0 = tabs_preview.ToBitmap
                     tabs_preview.SelectedIndex = 1
                     Store_Hover.img1 = tabs_preview.ToBitmap
-                    Store_Hover.ShowDialog()
+                    Store_Hover.BackgroundImage = Store_Hover.img0
 
                 End With
 
             Case Else
                 selectedItem = DirectCast(sender, StoreItem)
                 Cursor = Cursors.AppStarting
+                StoreItem1.CP = selectedItem.CP
 
                 With selectedItem
                     My.Animator.HideSync(Tabs)
@@ -916,6 +920,13 @@ Public Class Store
                         ApplyDarkMode(Me, True)
                     End If
 
+                    If .CP.AppTheme.Enabled Then
+                        Label14.ForeColor = If(.CP.AppTheme.DarkMode, Color.White.CB(-0.25), Color.Black.CB(0.25))
+                    Else
+                        Label14.ForeColor = If(GetDarkMode(), Color.White.CB(-0.25), Color.Black.CB(0.25))
+                    End If
+                    Label6.ForeColor = Label14.ForeColor
+
                     Adjust_Preview(.CP)
                     ApplyRetroPreview(.CP)
                     SetClassicMetrics(.CP)
@@ -931,39 +942,25 @@ Public Class Store
                         End If
                     Next
 
-                    theme_name_lbl.Text = .CP.Info.ThemeName
-                    theme_ver_lbl.Text = .CP.Info.ThemeVersion
-                    author_lbl.Text = .CP.Info.Author
-
-                    Try
-                        If IO.File.ReadAllLines(.FileName) Is IO.File.ReadAllText(.FileName).Decompress Then
-                            themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
-                        Else
-                            themeSize_lbl.Text = String.Format(My.Lang.Store_AfterDecompression,
-                                                                   My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString,
-                                                                   File.ReadAllText(.FileName).Decompress.ToArray.Length.SizeString)
-                        End If
-                    Catch
-                        themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
-                    End Try
+                    themeSize_lbl.Text = My.Computer.FileSystem.GetFileInfo(.FileName).Length.SizeString
 
                     If Not String.IsNullOrWhiteSpace(.MD5_PackFile) AndAlso .MD5_PackFile <> "0" Then
                         Task.Run(Sub()
                                      respacksize_lbl.SetText(My.Lang.Store_Calculating)
                                      Dim Pack_Size As Long = GetFileSizeFromURL(.URL_PackFile)
-                                     respacksize_lbl.SetText(If(Pack_Size > 0, Pack_Size.SizeString, My.Lang.Store_NoIncludedData))
+                                     respacksize_lbl.SetText(If(Pack_Size > 0, Pack_Size.SizeString, 0.SizeString))
                                  End Sub)
                     Else
-                        respacksize_lbl.Text = My.Lang.Store_NoIncludedData
+                        respacksize_lbl.Text = 0.SizeString
                     End If
 
                     Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
                     If My.AppVersion >= .CP.Info.AppVersion Then
-                        XenonGroupBox4.Visible = False
+                        XenonGroupBox2.Visible = False
                     Else
-                        XenonGroupBox4.Visible = True
+                        XenonGroupBox2.Visible = True
                         VersionAlert_lbl.Text = String.Format(My.Lang.Store_LowAppVersionAlert, .CP.Info.AppVersion, My.AppVersion)
                     End If
 
@@ -995,12 +992,21 @@ Public Class Store
                         Label26.Text = My.Lang.Store_ThemeDesignedFor1
                     End If
 
+                    desc_txt.BackColor = desc_txt.GetParentColor
+
+                    If .CP.AppTheme.Enabled Then
+                        desc_txt.ForeColor = If(.CP.AppTheme.DarkMode, Color.White, Color.Black)
+                    Else
+                        desc_txt.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+                    End If
+
                     Tabs.SelectedIndex = 1
 
                     My.Animator.ShowSync(Tabs)
 
                     '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
                 End With
+
 
                 Cursor = Cursors.Default
 
@@ -1371,27 +1377,6 @@ Public Class Store
         '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
     End Sub
 
-#Region "   Preview switchers"
-    Private Sub Switch_M_C_btn_Click(sender As Object, e As EventArgs) Handles Switch_M_C_btn.Click
-        If tabs_preview.SelectedIndex = 0 Then tabs_preview.SelectedIndex = 1 Else tabs_preview.SelectedIndex = 0
-    End Sub
-    Private Sub ShowClassic_btn_Click(sender As Object, e As EventArgs) Handles ShowClassic_btn.Click
-        tabs_preview.SelectedIndex = 2
-    End Sub
-    Private Sub ShowCMD_btn_Click(sender As Object, e As EventArgs) Handles ShowCMD_btn.Click
-        tabs_preview.SelectedIndex = 3
-    End Sub
-    Private Sub ShowPS86_btn_Click(sender As Object, e As EventArgs) Handles ShowPS86_btn.Click
-        tabs_preview.SelectedIndex = 4
-    End Sub
-    Private Sub ShowPS64_btn_Click(sender As Object, e As EventArgs) Handles ShowPS64_btn.Click
-        tabs_preview.SelectedIndex = 5
-    End Sub
-    Private Sub ShowCursors_btn_Click(sender As Object, e As EventArgs) Handles ShowCursors_btn.Click
-        tabs_preview.SelectedIndex = 6
-    End Sub
-#End Region
-
 
 #Region "   Applying row"
     Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click
@@ -1558,7 +1543,6 @@ Public Class Store
             Location = newPoint
         End If
     End Sub
-
 
 #End Region
 

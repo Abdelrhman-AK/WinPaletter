@@ -77,12 +77,8 @@ Public Class Store_Hover
         ApplyDarkMode(Me)
         DoubleBuffer
 
-        Dim p As Point = MousePosition
-        If MousePosition.X + Width > Screen.PrimaryScreen.WorkingArea.Right - 10 Then p.X = Screen.PrimaryScreen.WorkingArea.Right - Width - 10
-        If MousePosition.Y + Height > Screen.PrimaryScreen.WorkingArea.Bottom - 10 Then p.Y = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10
+        Dim p As Point = Store.selectedItem.PointToScreen(Point.Empty)
         Location = p
-
-        BackgroundImage = img0
 
         _shown = False
     End Sub
@@ -110,10 +106,10 @@ Public Class Store_Hover
     Sub SwitchPreview()
         If index = 0 Then
             index = 1
-            BackgroundImage = img1
+            If img1 IsNot Nothing Then BackgroundImage = img1
         Else
             index = 0
-            BackgroundImage = img0
+            If img0 IsNot Nothing Then BackgroundImage = img0
         End If
     End Sub
 

@@ -40,7 +40,7 @@ Partial Class Store_CPToggles
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(45, 56)
         Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(522, 234)
+        Me.CheckedListBox1.Size = New System.Drawing.Size(510, 234)
         Me.CheckedListBox1.TabIndex = 0
         '
         'XenonButton1
@@ -53,7 +53,7 @@ Partial Class Store_CPToggles
         Me.XenonButton1.Image = Nothing
         Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(380, 315)
+        Me.XenonButton1.Location = New System.Drawing.Point(368, 303)
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton1.TabIndex = 1
@@ -70,7 +70,7 @@ Partial Class Store_CPToggles
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(187, 315)
+        Me.XenonButton7.Location = New System.Drawing.Point(175, 303)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(187, 34)
         Me.XenonButton7.TabIndex = 205
@@ -85,7 +85,7 @@ Partial Class Store_CPToggles
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(42, 12)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(525, 35)
+        Me.Label17.Size = New System.Drawing.Size(513, 35)
         Me.Label17.TabIndex = 207
         Me.Label17.Text = "To prevent accidental actions, these features will be modified (in addition to ma" &
     "in Windows colors):"
@@ -110,7 +110,7 @@ Partial Class Store_CPToggles
         Me.XenonButton3.Image = Nothing
         Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(101, 315)
+        Me.XenonButton3.Location = New System.Drawing.Point(89, 303)
         Me.XenonButton3.Name = "XenonButton3"
         Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton3.TabIndex = 208
@@ -122,7 +122,7 @@ Partial Class Store_CPToggles
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(575, 357)
+        Me.ClientSize = New System.Drawing.Size(567, 349)
         Me.ControlBox = False
         Me.Controls.Add(Me.XenonButton3)
         Me.Controls.Add(Me.Label17)

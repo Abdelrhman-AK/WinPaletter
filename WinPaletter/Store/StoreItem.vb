@@ -252,6 +252,8 @@ Public Class StoreItem : Inherits Panel
         Dim ThemeName_Rect As New Rectangle(rect_inner.X, rect_inner.Y, rect_inner.Width - 10, 25)
         Dim Author_Rect As New Rectangle(ThemeName_Rect.X, ThemeName_Rect.Bottom, ThemeName_Rect.Width - 20, 15)
 
+        Dim Version_Rect As New Rectangle(ThemeName_Rect.X, rect_inner.Y + rect_inner.Height - 20, ThemeName_Rect.Width, 15)
+
         If CP IsNot Nothing Then
             Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
             G.DrawString(CP.Info.ThemeName, New Font(CP.MetricsFonts.CaptionFont.Name, 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
@@ -264,6 +266,8 @@ Public Class StoreItem : Inherits Panel
                 G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect)
             End If
 
+            G.DrawString(CP.Info.ThemeVersion, My.Application.ConsoleFont, New SolidBrush(FC), Version_Rect, StringAligner(ContentAlignment.MiddleRight))
+
             Dim author As String
             author = If(DoneByWinPaletter, My.Application.Info.ProductName, CP.Info.Author)
             G.DrawString(My.Lang.By & " " & author, New Font(CP.MetricsFonts.CaptionFont.Name, 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
@@ -271,7 +275,6 @@ Public Class StoreItem : Inherits Panel
             For i = 0 To DesignedFor_Badges.Count - 1
                 G.DrawImage(DesignedFor_Badges(i), New Rectangle(BadgeRect.Right - 16 - 18 * i, Author_Rect.Bottom + 7, 16, 16))
             Next
-
         End If
 
 
