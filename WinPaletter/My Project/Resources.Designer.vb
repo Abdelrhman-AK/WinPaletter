@@ -1650,6 +1650,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property Store_ThemeVersion() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Store_ThemeVersion", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property Taskbar_ActiveApp7() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Taskbar_ActiveApp7", resourceCulture)

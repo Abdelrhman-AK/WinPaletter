@@ -337,7 +337,7 @@ Public Class Localizer : Implements IDisposable
     Property Store_DownloadTheme As String = "Downloading theme '{0}' from '{1}'"
     Property Store_DownloadingPackForTheme As String = "Downloading resources pack for theme '{0}' version {1}"
     Property Store_LoadingTheme As String = "Loading theme '{0}'"
-    Property Store_LowAppVersionAlert As String = "This theme is designed by WinPaletter {0} which is higher than current version ({1}). please update WinPaletter to enjoy all new themes aspects and avoid errors."
+    Property Store_LowAppVersionAlert As String = "This theme is designed by WinPaletter {0} which is higher than {1}. please update WinPaletter to enjoy all new themes aspects and avoid errors."
     Property Store_CleaningFromMemory As String = "Cleaning store items from memory"
     Property Store_NoIncludedData As String = "There is no included data"
     Property Store_WontWork_Protocol As String = "Unfortunately, WinPaletter Store won't work as TLS 1.2 protocol isn't enabled in {0}. Do you want to continue?"
@@ -345,6 +345,7 @@ Public Class Localizer : Implements IDisposable
     Property Store_ThemeDesignedFor1 As String = "This theme can be applied to all supported versions of Windows:"
     Property Store_LogoffRecommended As String = "It is recommended to logoff your Windows and logon to apply all effects of the theme"
     Property Store_Calculating As String = "Calculating ..."
+    Property Store_AuthorURLRedirect As String = "This will redirect you to author's social media URL. Do you want to continue?"
 
     Property Store_Toggle_AppTheme As String = "WinPaletter application theme"
     Property Store_Toggle_LogonUI As String = "LogonUI screen"

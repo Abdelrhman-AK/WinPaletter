@@ -185,7 +185,7 @@ Public Class StoreItem : Inherits Panel
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim G As Graphics = e.Graphics
 
-        G.SmoothingMode = SmoothingMode.AntiAlias
+        G.SmoothingMode = SmoothingMode.HighQuality
 
         If CP IsNot Nothing Then
             G.TextRenderingHint = If(CP.MetricsFonts.Fonts_SingleBitPP, TextRenderingHint.SingleBitPerPixelGridFit, TextRenderingHint.ClearTypeGridFit)
@@ -212,6 +212,7 @@ Public Class StoreItem : Inherits Panel
 
         G.FillRoundedRect(New SolidBrush(bkC), rect_inner)
         G.FillRoundedRect(New SolidBrush(bkCC), rect_outer)
+
         If pattern IsNot Nothing Then G.FillRoundedRect(pattern, rect_inner)
 
         Dim factor_max As Single = 20
@@ -223,11 +224,11 @@ Public Class StoreItem : Inherits Panel
         Dim Circle2 As New Rectangle(rect_inner.X + 10 + CircleR + CircleR * 0.4 - factor2, rect_inner.Y + (rect_inner.Height - CircleR) / 2, CircleR, CircleR)
 
         If CP IsNot Nothing Then
-            G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color2)), Circle2)
-            G.DrawEllipse(New Pen(CP.Info.Color2.CB(0.3)), Circle2)
+            G.FillEllipse(New SolidBrush(Color.FromArgb(125, CP.Info.Color2)), Circle2)
+            G.DrawEllipse(New Pen(CP.Info.Color2.CB(0.3), 1.75), Circle2)
 
-            G.FillEllipse(New SolidBrush(Color.FromArgb(150, CP.Info.Color1)), Circle1)
-            G.DrawEllipse(New Pen(CP.Info.Color1.CB(0.3)), Circle1)
+            G.FillEllipse(New SolidBrush(Color.FromArgb(125, CP.Info.Color1)), Circle1)
+            G.DrawEllipse(New Pen(CP.Info.Color1.CB(0.3), 1.75), Circle1)
         End If
 
         If BackgroundImage IsNot Nothing Then
@@ -251,14 +252,15 @@ Public Class StoreItem : Inherits Panel
 
         Dim ThemeName_Rect As New Rectangle(rect_inner.X, rect_inner.Y, rect_inner.Width - 10, 25)
         Dim Author_Rect As New Rectangle(ThemeName_Rect.X, ThemeName_Rect.Bottom, ThemeName_Rect.Width - 20, 15)
-
-        Dim Version_Rect As New Rectangle(ThemeName_Rect.X, rect_inner.Y + rect_inner.Height - 20, ThemeName_Rect.Width, 15)
+        Dim OS_Rect As New Rectangle(0, Author_Rect.Bottom + 7, 16, 16)
+        Dim Version_Rect As New Rectangle(ThemeName_Rect.X, OS_Rect.Bottom + 6, ThemeName_Rect.Width - 20, 15)
 
         If CP IsNot Nothing Then
-            Dim FC As Color = Color.FromArgb(Math.Max(125, alpha), If(bkC.IsDark, Color.White, Color.Black))
+            Dim FC As Color = Color.FromArgb(Math.Max(100, alpha), If(bkC.IsDark, Color.White, Color.Black))
             G.DrawString(CP.Info.ThemeName, New Font(CP.MetricsFonts.CaptionFont.Name, 11, FontStyle.Bold), New SolidBrush(FC), ThemeName_Rect, StringAligner(ContentAlignment.MiddleRight))
 
             Dim BadgeRect As New Rectangle(Author_Rect.Right + 2, Author_Rect.Y, 16, 16)
+            Dim VerRect As New Rectangle(Version_Rect.Right + 2, Version_Rect.Y - 2, 18, 18)
 
             If DoneByWinPaletter Then
                 G.DrawImage(My.Resources.Store_DoneByWinPaletter, BadgeRect)
@@ -266,15 +268,16 @@ Public Class StoreItem : Inherits Panel
                 G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect)
             End If
 
-            G.DrawString(CP.Info.ThemeVersion, My.Application.ConsoleFont, New SolidBrush(FC), Version_Rect, StringAligner(ContentAlignment.MiddleRight))
-
-            Dim author As String
-            author = If(DoneByWinPaletter, My.Application.Info.ProductName, CP.Info.Author)
+            Dim author As String = If(DoneByWinPaletter, My.Application.Info.ProductName, CP.Info.Author)
             G.DrawString(My.Lang.By & " " & author, New Font(CP.MetricsFonts.CaptionFont.Name, 9, FontStyle.Regular), New SolidBrush(FC), Author_Rect, StringAligner(ContentAlignment.MiddleRight))
 
+            G.DrawImage(My.Resources.Store_ThemeVersion, VerRect)
+            G.DrawString(CP.Info.ThemeVersion, My.Application.ConsoleFont, New SolidBrush(FC), Version_Rect, StringAligner(ContentAlignment.MiddleRight))
+
             For i = 0 To DesignedFor_Badges.Count - 1
-                G.DrawImage(DesignedFor_Badges(i), New Rectangle(BadgeRect.Right - 16 - 18 * i, Author_Rect.Bottom + 7, 16, 16))
+                G.DrawImage(DesignedFor_Badges(i), New Rectangle(BadgeRect.Right - 16 - 18 * i, OS_Rect.Y, OS_Rect.Width, OS_Rect.Height))
             Next
+
         End If
 
 

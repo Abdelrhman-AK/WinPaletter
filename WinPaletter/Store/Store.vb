@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Net
+﻿Imports System.Net
 Imports System.Security.Cryptography
 Imports System.Text
 Imports Devcorp.Controls.VisualStyles
@@ -553,6 +552,7 @@ Public Class Store
         themeSize_lbl.Font = My.Application.ConsoleFontLarge
         respacksize_lbl.Font = My.Application.ConsoleFontLarge
         desc_txt.Font = My.Application.ConsoleFontLarge
+        Theme_MD5_lbl.Font = My.Application.ConsoleFont
     End Sub
 
     Private Sub Store_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -618,9 +618,9 @@ Public Class Store
             If DB.ToUpper.Contains("GITHUB.COM") Then
                 Dim x As String() = DB.Replace("https://", "").Replace("http://", "").Split("/")
                 reposName = x(1) & "_" & x(2)
-                reposName = String.Join("_", reposName.Split(Path.GetInvalidFileNameChars()))
+                reposName = String.Join("_", reposName.Split(IO.Path.GetInvalidFileNameChars()))
             Else
-                reposName = String.Join("_", DB.Replace("https://", "").Replace("http://", "").Split(Path.GetInvalidFileNameChars()))
+                reposName = String.Join("_", DB.Replace("https://", "").Replace("http://", "").Split(IO.Path.GetInvalidFileNameChars()))
             End If
 
             'Get text of the DB from URL
@@ -671,15 +671,15 @@ Public Class Store
                 Dim FolderName As String = temp.Split("/").Last
                 Dim Dir As String = My.PATH_StoreCache
                 If Not String.IsNullOrWhiteSpace(FolderName) Then Dir &= "\" & reposName & "\" & FolderName
-                If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
+                If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
 
                 Status_lbl.SetText("")
 
                 'Download the theme (*.wpth)
-                If File.Exists(Dir & "\" & FileName) Then
+                If IO.File.Exists(Dir & "\" & FileName) Then
                     'If it exists, check MD5, if it is changed, redownload the theme
                     If CalculateMD5(Dir & "\" & FileName) <> MD5_ThemeFile Then
-                        File.Delete(Dir & "\" & FileName)
+                        IO.File.Delete(Dir & "\" & FileName)
                         Status_lbl.SetText(String.Format(My.Lang.Store_UpdateTheme, FileName, URL_ThemeFile))
                         Try : WebCL.DownloadFile(URL_ThemeFile, Dir & "\" & FileName) : Catch : End Try
                     End If
@@ -692,7 +692,7 @@ Public Class Store
                 If allProgress > 0 Then FilesFetcher.ReportProgress((i / allProgress) * 100)
 
                 'Convert themes CPs into StoreItems, and exclude the old formats of WPTH
-                If File.Exists(Dir & "\" & FileName) AndAlso _Converter.FetchFile(Dir & "\" & FileName) = Converter_CP.WP_Format.JSON Then
+                If IO.File.Exists(Dir & "\" & FileName) AndAlso _Converter.FetchFile(Dir & "\" & FileName) = Converter_CP.WP_Format.JSON Then
                     Try
                         Status_lbl.SetText(String.Format(My.Lang.Store_LoadingTheme, FileName))
 
@@ -757,9 +757,9 @@ Public Class Store
 
         For Each folder In My.Settings.Store.Offline_Directories
 
-            If Directory.Exists(folder) Then
+            If IO.Directory.Exists(folder) Then
                 Status_lbl.SetText("Accessing themes from folder """ & folder & """")
-                allProgress += Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly)).Count
+                allProgress += IO.Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly)).Count
             End If
 
         Next
@@ -768,9 +768,9 @@ Public Class Store
 
         For Each folder In My.Settings.Store.Offline_Directories
 
-            If Directory.Exists(folder) Then
+            If IO.Directory.Exists(folder) Then
 
-                For Each file As String In Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly))
+                For Each file As String In IO.Directory.GetFiles(folder, "*.wpth", If(My.Settings.Store.Offline_SubFolders, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly))
 
                     Try
                         If Not CPList.ContainsKey(file) Then
@@ -801,7 +801,7 @@ Public Class Store
                         .MD5_ThemeFile = CalculateMD5(StoreItem.Key),
                         .DoneByWinPaletter = False,
                         .Size = New Size(w, h),
-                        .URL_ThemeFile = New FileInfo(StoreItem.Key).FullName}
+                        .URL_ThemeFile = New IO.FileInfo(StoreItem.Key).FullName}
 
             If ctrl.DoneByWinPaletter Then ctrl.CP.Info.Author = My.Application.Info.ProductName
 
@@ -899,6 +899,8 @@ Public Class Store
                 selectedItem = DirectCast(sender, StoreItem)
                 Cursor = Cursors.AppStarting
                 StoreItem1.CP = selectedItem.CP
+                StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter
+                Theme_MD5_lbl.Text = "MD5: " & selectedItem.MD5_ThemeFile
 
                 With selectedItem
                     My.Animator.HideSync(Tabs)
@@ -954,13 +956,12 @@ Public Class Store
                         respacksize_lbl.Text = 0.SizeString
                     End If
 
-                    Author_link.Text = If(Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink), .CP.Info.AuthorSocialMediaLink, My.Lang.Store_NoIncludedData)
                     desc_txt.Text = .CP.Info.Description
 
                     If My.AppVersion >= .CP.Info.AppVersion Then
-                        XenonGroupBox2.Visible = False
+                        VersionAlert_lbl.Visible = False
                     Else
-                        XenonGroupBox2.Visible = True
+                        VersionAlert_lbl.Visible = True
                         VersionAlert_lbl.Text = String.Format(My.Lang.Store_LowAppVersionAlert, .CP.Info.AppVersion, My.AppVersion)
                     End If
 
@@ -999,6 +1000,12 @@ Public Class Store
                     Else
                         desc_txt.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
                     End If
+
+                    XenonCMD1.Visible = .CP.CommandPrompt.Enabled
+                    XenonCMD2.Visible = .CP.PowerShellx86.Enabled
+                    XenonCMD3.Visible = .CP.PowerShellx64.Enabled
+                    Panel1.Visible = .CP.Cursor_Enabled
+                    author_url_button.Visible = Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink)
 
                     Tabs.SelectedIndex = 1
 
@@ -1393,15 +1400,15 @@ Public Class Store
             temp = temp.Replace("/" & FileName, "")
             Dim FolderName As String = temp.Split("/").Last
             Dim Dir As String
-            If File.Exists(selectedItem.FileName) Then
-                Dir = New FileInfo(selectedItem.FileName).Directory.FullName
+            If IO.File.Exists(selectedItem.FileName) Then
+                Dir = New IO.FileInfo(selectedItem.FileName).Directory.FullName
             Else
                 Dir = selectedItem.FileName.Replace("\" & selectedItem.FileName.Split("\").Last, "")
             End If
-            If Not Directory.Exists(Dir) Then Directory.CreateDirectory(Dir)
+            If Not IO.Directory.Exists(Dir) Then IO.Directory.CreateDirectory(Dir)
 
             If selectedItem.MD5_PackFile <> "0" Then
-                If (File.Exists(Dir & "\" & FileName) AndAlso CalculateMD5(Dir & "\" & FileName) <> selectedItem.MD5_PackFile) OrElse Not File.Exists(Dir & "\" & FileName) Then
+                If (IO.File.Exists(Dir & "\" & FileName) AndAlso CalculateMD5(Dir & "\" & FileName) <> selectedItem.MD5_PackFile) OrElse Not IO.File.Exists(Dir & "\" & FileName) Then
                     Try
                         Store_DownloadProgress.URL = selectedItem.URL_PackFile
                         Store_DownloadProgress.File = Dir & "\" & FileName
@@ -1542,6 +1549,48 @@ Public Class Store
             newPoint = MousePosition - oldPoint
             Location = newPoint
         End If
+    End Sub
+
+    Private Sub Author_url_button_Click(sender As Object, e As EventArgs) Handles author_url_button.Click
+
+        If MsgBox(My.Lang.Store_AuthorURLRedirect, MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo, selectedItem.CP.Info.AuthorSocialMediaLink) = MsgBoxResult.Yes Then
+            Try
+                If Not String.IsNullOrWhiteSpace(selectedItem.CP.Info.AuthorSocialMediaLink) Then Process.Start(selectedItem.CP.Info.AuthorSocialMediaLink)
+            Catch
+            End Try
+        End If
+
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+
+        If Not String.IsNullOrWhiteSpace(selectedItem.CP.Info.License) Then
+            Store_ThemeLicense.XenonTextBox1.Text = selectedItem.CP.Info.License
+            If Not Store_ThemeLicense.ShowDialog = DialogResult.OK Then Exit Sub
+        End If
+
+        Using FD As New Ookii.Dialogs.WinForms.VistaFolderBrowserDialog
+            If FD.ShowDialog = DialogResult.OK Then
+                Dim filename As String = FD.SelectedPath & "\" & New IO.FileInfo(selectedItem.FileName).Name
+
+                If Not IO.Directory.Exists(FD.SelectedPath) Then IO.Directory.CreateDirectory(FD.SelectedPath)
+                If IO.File.Exists(filename) Then IO.File.Delete(filename)
+
+                IO.File.Copy(selectedItem.FileName, filename)
+
+                If selectedItem.MD5_PackFile <> "0" Then
+                    Dim themepackfilename As String = FD.SelectedPath & "\" & New IO.FileInfo(selectedItem.FileName).Name
+                    themepackfilename = themepackfilename.Replace(themepackfilename.Split(".").Last, "wptp")
+
+                    Store_DownloadProgress.URL = selectedItem.URL_PackFile
+                    Store_DownloadProgress.File = themepackfilename
+                    Store_DownloadProgress.ThemeName = selectedItem.CP.Info.ThemeName
+                    Store_DownloadProgress.ThemeVersion = selectedItem.CP.Info.ThemeVersion
+                    Store_DownloadProgress.ShowDialog()
+                End If
+            End If
+        End Using
+
     End Sub
 
 #End Region

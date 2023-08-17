@@ -749,6 +749,7 @@
     <None Include="Resources\Store_Pattern10.png" />
     <None Include="Resources\Store_Pattern7.png" />
     <None Include="Resources\Store_Pattern9.png" />
+    <None Include="Resources\Store_ThemeVersion.png" />
     <Content Include="Resources\Taskbar_ActiveApp7.png" />
     <Content Include="Resources\Taskbar_InactiveApp7.png" />
     <None Include="Resources\ThemesResIcon.ico" />

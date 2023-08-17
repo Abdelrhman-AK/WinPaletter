@@ -466,7 +466,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.Size = New System.Drawing.Size(857, 32)
         Me.XenonAlertBox1.TabIndex = 71
         Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "These are applicable only for some Elements (dialogs background, forecolors, ...)" &
+        Me.XenonAlertBox1.Text = "These are applicable only for some elements (dialogs background, forecolors, ...)" &
     " and classic/unthemed apps (such as VB6, CPU-Z, ...)"
         '
         'XenonGroupBox2
