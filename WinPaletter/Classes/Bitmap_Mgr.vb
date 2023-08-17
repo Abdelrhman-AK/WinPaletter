@@ -3,26 +3,18 @@
     Public Shared Function Load(file As String) As Bitmap
         If IO.File.Exists(file) Then
             Try
-                Using fs As New IO.FileStream(file, IO.FileMode.Open, IO.FileAccess.Read)
-                    Dim L As Integer = CInt(fs.Length)
-                    Dim B As Byte() = New Byte(L - 1) {}
-                    fs.Read(B, 0, L)
-                    fs.Close()
-                    Using ms As New IO.MemoryStream(B)
-                        Using bmp As New Bitmap(ms)
-                            Return bmp.Clone
-                        End Using
+                Using bmpStream As IO.Stream = IO.File.Open(file, IO.FileMode.Open, IO.FileAccess.Read)
+                    Using image As Image = Image.FromStream(bmpStream)
+                        Return New Bitmap(image)
                     End Using
                 End Using
             Catch
                 Try
-                    Using fs As New IO.FileStream(file, IO.FileMode.Open, IO.FileAccess.Read)
-                        Using bmp As New Bitmap(fs)
-                            Return bmp.Clone
-                        End Using
+                    Using image As Image = Image.FromFile(file)
+                        Return New Bitmap(image)
                     End Using
                 Catch
-                    Return New Bitmap(file).Clone
+                    Return Nothing
                 End Try
             End Try
         Else

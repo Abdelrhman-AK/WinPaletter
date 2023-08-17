@@ -4829,6 +4829,7 @@ Start:
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win81, My.Lang.CP_W81_Error, My.Lang.CP_Time, sw_all)
 
                     Execute(CType(Sub()
+
                                       Apply_LogonUI_8([TreeView])
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI8, My.Lang.CP_LogonUI8_Error, My.Lang.CP_Time, sw_all)
                 End If
@@ -6098,10 +6099,13 @@ Start:
             Select Case Windows81.LockScreenType
                 Case Structures.LogonUI7.Modes.Default_
                     Dim syslock As String
-                    If Not My.CP.Windows81.LockScreenSystemID = 1 And Not My.CP.Windows81.LockScreenSystemID = 3 Then
-                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", My.CP.Windows81.LockScreenSystemID)
-                    Else
+
+                    If IO.File.Exists(String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows81.LockScreenSystemID)) Then
                         syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows81.LockScreenSystemID)
+
+                    ElseIf IO.File.Exists(String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", My.CP.Windows81.LockScreenSystemID)) Then
+                        syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.jpg", My.CP.Windows81.LockScreenSystemID)
+
                     End If
 
                     If IO.File.Exists(syslock) Then
@@ -6148,10 +6152,10 @@ Start:
 
             If LogonUI7.Noise Then bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
 
-            Try : If IO.File.Exists(lockimg) Then Kill(lockimg)
-            Catch : End Try
+            If IO.File.Exists(lockimg) Then Kill(lockimg)
 
             bmp.Save(lockimg)
+
         End If
 
     End Sub

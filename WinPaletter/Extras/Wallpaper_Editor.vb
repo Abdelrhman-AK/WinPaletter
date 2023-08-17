@@ -343,7 +343,7 @@ Public Class Wallpaper_Editor
                         ScaleH = 1080 / pnl_preview.Size.Height
                     End If
 
-                    Return bmp.Resize(bmp.Width / ScaleW, bmp.Height / ScaleH)
+                    Return bmp.GetThumbnailImage(bmp.Width / ScaleW, bmp.Height / ScaleH, Nothing, IntPtr.Zero)
                 End Using
             Catch
                 Return Nothing
@@ -473,7 +473,7 @@ Public Class Wallpaper_Editor
 
         If source_pic.Checked Then
             If IO.File.Exists(XenonTextBox1.Text) Then
-                img = GetWall(XenonTextBox1.Text)
+                img = GetWall(XenonTextBox1.Text).GetThumbnailImage(My.Computer.Screen.Bounds.Width, My.Computer.Screen.Bounds.Height, Nothing, IntPtr.Zero)
                 img_filled = FillScale(img.Clone, pnl_preview.Size)
                 img_tile = DirectCast(img.Clone, Bitmap).Tile(pnl_preview.Size)
             Else

@@ -422,7 +422,7 @@ Namespace My
         Private Sub FetchStockWallpaper(Size As Size)
             Using wall_New As New Bitmap(CType(GetWallpaper().Clone, Bitmap))
                 Wallpaper_Unscaled = wall_New.Clone
-                Wallpaper = wall_New.Resize(Size)
+                Wallpaper = wall_New.GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, Nothing, IntPtr.Zero)
             End Using
         End Sub
         Public Function FetchSuitableWallpaper(CP As CP, PreviewConfig As WindowStyle) As Bitmap
@@ -554,7 +554,7 @@ Namespace My
             Dim WallpaperType As Integer = GetReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0)
 
             If IO.File.Exists(WallpaperPath) AndAlso (WallpaperType <> 1) Then
-                Return Bitmap_Mgr.Load(WallpaperPath)
+                Return New Bitmap(Bitmap_Mgr.Load(WallpaperPath).GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, Nothing, IntPtr.Zero))
             Else
                 Return GetReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", "0 0 0").ToString.FromWin32RegToColor.ToBitmap(Computer.Screen.Bounds.Size)
             End If
