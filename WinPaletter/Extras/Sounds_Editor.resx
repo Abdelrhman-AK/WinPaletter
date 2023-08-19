@@ -148,7 +148,7 @@
 </value>
   </data>
   <data name="XenonAlertBox4.Text" xml:space="preserve">
-    <value>Changing startup sound in "imageres.dll" will change this file integrity and might cause a bug that make Windows Explorer icons blank with labels only. When you run a "sfc /scannow" in command prompt, it will find an error in this file and will repair it. When it is repaired, default Windows startup sound will be restored.</value>
+    <value>Changing startup sound in "imageres.dll" will change this file integrity and might cause a bug that make Windows Explorer icons blank with labels only. When you run a "sfc /scannow" in command prompt, it will find an error in this file and will repair it. When it is repaired, default Windows startup sound will be restored and this bug will be fixed after a Windows restart.</value>
   </data>
   <data name="XenonButton201.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -202,29 +202,6 @@
         bfWWiMfjkjnl9sDeWAWGHVFicVby3BFtuQWqbBMO+kMpOeiS3ybuSPrjx5grC6ThNduE41CFOUzu0tPz
         P9PP76fFl+z0QMzzTP8cqXCXbYYDk5PU0Tg/WqTu+6DZgoKSLIJ0RwWZImntGxWbQofLLI8Gmi1YZA3F
         Fz/svPCMaxv5m1n9p3H9HwHgDCX2vutmZIo6AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="XenonButton21.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
-        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
-        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
-        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
-        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
-  <data name="PictureBox5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAa5JREFUSEvt
-        kt0rQ3EYx/ePYDbmdV4iL2E0mfeScuXerVIiL8ki0VhrIi1KyZULd6tFSLmlleZiS7uYSdMOZzN3X7+j
-        Z+Wch6KdS5/6XP2e3+f3dDqGf/6EdW/wrGpvEDl6SjmO1TcAPaQcp3KnD3pIOU7FVg/0kHKc8s1uaC3z
-        OOD0e2DbHkG5l59/J+U4ZZ4uEVRb4rLjJSXj+VXC+okPVreDzWilHKfU3QmtlrUOvMgy0m+ZT6+jtxje
-        HUPpup3NZqUcR9lWa/FKu+oBRTmdxv7VEapdvWxekXIcy2oHtBYttbEHst7FIuj2jrI7lOMUr9jExmrN
-        zlY8xB8Qi8UQjUYRDocRCoUQDAbhvwzA7hphdyjHUbbValpoQVJKQpIkJBIJxONxRO4jmD5cgmXRxuYV
-        KccxO1vExmoL55shi78oLb57KpVC4OYcbWtDMC/y2ayU45gWmsXGao0zjci8Z/CYfML4wRxM4sHv5r5K
-        OU7hfJPYWK1xthHO4w00Lfezs5+kHMc40yA2zl3KcQqm6qGHlOPkT9ZBDynHyZuoucybqEWOXlDun99g
-        MHwAV7u1emJEWCkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -301,6 +278,29 @@
         dUqcu6ZbAU2RZxLevauwoUxtO7DjUyAuLMHP1C6dGOHrPLDPJ+jk5OPVx2xJpfqjQk7K1DGp1lAy5yEE
         gzgppKGRvJpTHLgS7YTEFA955CLuU+KKE6ocxTycuaqdLloatcRrWvt3dM2Bs3HdFnel6vw/OMqQp2Ki
         0jQYKzd+jJUZ/IhnEc8i7udu6D+w16s9G6Wlf/eT+Y9Eo/kN6Yh5eNCCTOkAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="XenonButton21.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
+        GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
+        4T85GKqdgeF0F8N/XPhcH9v/t3td/n887IOB/19Ld2X4fy3G6MY8uf+48MeDbv//X4nGgWP6GP5f8J34
+        /4Lff7Lweb8yoDudy/6dcfpPDv5/xjme4f9Js6h/J0z/k4P/HzP1YPh/RMv231Ht/+Tg/0e1DRj+H9RT
+        xCZJDP5/SFOS4f+qUOa3m+Qvvtui+JgU/Hqj/IX//xkYoSlhwAADAwAxztcX2tpnugAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="PictureBox5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAa5JREFUSEvt
+        kt0rQ3EYx/ePYDbmdV4iL2E0mfeScuXerVIiL8ki0VhrIi1KyZULd6tFSLmlleZiS7uYSdMOZzN3X7+j
+        Z+Wch6KdS5/6XP2e3+f3dDqGf/6EdW/wrGpvEDl6SjmO1TcAPaQcp3KnD3pIOU7FVg/0kHKc8s1uaC3z
+        OOD0e2DbHkG5l59/J+U4ZZ4uEVRb4rLjJSXj+VXC+okPVreDzWilHKfU3QmtlrUOvMgy0m+ZT6+jtxje
+        HUPpup3NZqUcR9lWa/FKu+oBRTmdxv7VEapdvWxekXIcy2oHtBYttbEHst7FIuj2jrI7lOMUr9jExmrN
+        zlY8xB8Qi8UQjUYRDocRCoUQDAbhvwzA7hphdyjHUbbValpoQVJKQpIkJBIJxONxRO4jmD5cgmXRxuYV
+        KccxO1vExmoL55shi78oLb57KpVC4OYcbWtDMC/y2ayU45gWmsXGao0zjci8Z/CYfML4wRxM4sHv5r5K
+        OU7hfJPYWK1xthHO4w00Lfezs5+kHMc40yA2zl3KcQqm6qGHlOPkT9ZBDynHyZuoucybqEWOXlDun99g
+        MHwAV7u1emJEWCkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -948,7 +948,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox5.Image = Nothing
-        Me.XenonAlertBox5.Location = New System.Drawing.Point(4, 252)
+        Me.XenonAlertBox5.Location = New System.Drawing.Point(4, 250)
         Me.XenonAlertBox5.Name = "XenonAlertBox5"
         Me.XenonAlertBox5.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox5.TabIndex = 11
@@ -967,7 +967,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox4.Image = Nothing
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 340)
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 338)
         Me.XenonAlertBox4.Name = "XenonAlertBox4"
         Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 60)
         Me.XenonAlertBox4.TabIndex = 10
@@ -984,7 +984,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 404)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 402)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox2.TabIndex = 9
@@ -1003,7 +1003,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 296)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 294)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
         Me.XenonAlertBox1.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox1.TabIndex = 8
@@ -1023,7 +1023,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox65.Controls.Add(Me.XenonTextBox64)
         Me.XenonGroupBox65.Controls.Add(Me.Label65)
         Me.XenonGroupBox65.Controls.Add(Me.PictureBox64)
-        Me.XenonGroupBox65.Location = New System.Drawing.Point(4, 173)
+        Me.XenonGroupBox65.Location = New System.Drawing.Point(4, 214)
         Me.XenonGroupBox65.Name = "XenonGroupBox65"
         Me.XenonGroupBox65.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox65.TabIndex = 7
@@ -1089,7 +1089,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox64.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox64.DrawOnGlass = False
         Me.XenonTextBox64.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox64.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox64.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox64.MaxLength = 32767
         Me.XenonTextBox64.Multiline = False
         Me.XenonTextBox64.Name = "XenonTextBox64"
@@ -1098,7 +1098,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox64.SelectedText = ""
         Me.XenonTextBox64.SelectionLength = 0
         Me.XenonTextBox64.SelectionStart = 0
-        Me.XenonTextBox64.Size = New System.Drawing.Size(495, 24)
+        Me.XenonTextBox64.Size = New System.Drawing.Size(460, 24)
         Me.XenonTextBox64.TabIndex = 1
         Me.XenonTextBox64.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox64.UseSystemPasswordChar = False
@@ -1137,7 +1137,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox6.Controls.Add(Me.XenonTextBox6)
         Me.XenonGroupBox6.Controls.Add(Me.Label6)
         Me.XenonGroupBox6.Controls.Add(Me.PictureBox6)
-        Me.XenonGroupBox6.Location = New System.Drawing.Point(4, 139)
+        Me.XenonGroupBox6.Location = New System.Drawing.Point(4, 180)
         Me.XenonGroupBox6.Name = "XenonGroupBox6"
         Me.XenonGroupBox6.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox6.TabIndex = 6
@@ -1203,7 +1203,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox6.DrawOnGlass = False
         Me.XenonTextBox6.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox6.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox6.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox6.MaxLength = 32767
         Me.XenonTextBox6.Multiline = False
         Me.XenonTextBox6.Name = "XenonTextBox6"
@@ -1212,7 +1212,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox6.SelectedText = ""
         Me.XenonTextBox6.SelectionLength = 0
         Me.XenonTextBox6.SelectionStart = 0
-        Me.XenonTextBox6.Size = New System.Drawing.Size(495, 24)
+        Me.XenonTextBox6.Size = New System.Drawing.Size(460, 24)
         Me.XenonTextBox6.TabIndex = 1
         Me.XenonTextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox6.UseSystemPasswordChar = False
@@ -1245,7 +1245,7 @@ Partial Class Sounds_Editor
         Me.XenonSeparator1.AlternativeLook = False
         Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(4, 209)
+        Me.XenonSeparator1.Location = New System.Drawing.Point(4, 72)
         Me.XenonSeparator1.Name = "XenonSeparator1"
         Me.XenonSeparator1.Size = New System.Drawing.Size(754, 1)
         Me.XenonSeparator1.TabIndex = 5
@@ -1389,7 +1389,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.DrawOnGlass = False
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox2.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox2.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = False
         Me.XenonTextBox2.Name = "XenonTextBox2"
@@ -1398,7 +1398,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox2.SelectedText = ""
         Me.XenonTextBox2.SelectionLength = 0
         Me.XenonTextBox2.SelectionStart = 0
-        Me.XenonTextBox2.Size = New System.Drawing.Size(262, 24)
+        Me.XenonTextBox2.Size = New System.Drawing.Size(227, 24)
         Me.XenonTextBox2.TabIndex = 1
         Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox2.UseSystemPasswordChar = False
@@ -1410,9 +1410,9 @@ Partial Class Sounds_Editor
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(33, 4)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(101, 22)
+        Me.Label5.Size = New System.Drawing.Size(136, 22)
         Me.Label5.TabIndex = 112
-        Me.Label5.Text = "Startup:"
+        Me.Label5.Text = "Startup (imageres.dll):"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox5
@@ -1437,7 +1437,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox3.Controls.Add(Me.XenonTextBox5)
         Me.XenonGroupBox3.Controls.Add(Me.Label3)
         Me.XenonGroupBox3.Controls.Add(Me.PictureBox3)
-        Me.XenonGroupBox3.Location = New System.Drawing.Point(4, 105)
+        Me.XenonGroupBox3.Location = New System.Drawing.Point(4, 146)
         Me.XenonGroupBox3.Name = "XenonGroupBox3"
         Me.XenonGroupBox3.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox3.TabIndex = 3
@@ -1503,7 +1503,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox5.DrawOnGlass = False
         Me.XenonTextBox5.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox5.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox5.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox5.MaxLength = 32767
         Me.XenonTextBox5.Multiline = False
         Me.XenonTextBox5.Name = "XenonTextBox5"
@@ -1512,7 +1512,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox5.SelectedText = ""
         Me.XenonTextBox5.SelectionLength = 0
         Me.XenonTextBox5.SelectionStart = 0
-        Me.XenonTextBox5.Size = New System.Drawing.Size(495, 24)
+        Me.XenonTextBox5.Size = New System.Drawing.Size(460, 24)
         Me.XenonTextBox5.TabIndex = 1
         Me.XenonTextBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox5.UseSystemPasswordChar = False
@@ -1551,7 +1551,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox4.Controls.Add(Me.XenonTextBox4)
         Me.XenonGroupBox4.Controls.Add(Me.Label4)
         Me.XenonGroupBox4.Controls.Add(Me.PictureBox4)
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(4, 71)
+        Me.XenonGroupBox4.Location = New System.Drawing.Point(4, 112)
         Me.XenonGroupBox4.Name = "XenonGroupBox4"
         Me.XenonGroupBox4.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox4.TabIndex = 2
@@ -1617,7 +1617,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox4.DrawOnGlass = False
         Me.XenonTextBox4.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox4.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox4.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox4.MaxLength = 32767
         Me.XenonTextBox4.Multiline = False
         Me.XenonTextBox4.Name = "XenonTextBox4"
@@ -1626,7 +1626,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox4.SelectedText = ""
         Me.XenonTextBox4.SelectionLength = 0
         Me.XenonTextBox4.SelectionStart = 0
-        Me.XenonTextBox4.Size = New System.Drawing.Size(495, 24)
+        Me.XenonTextBox4.Size = New System.Drawing.Size(460, 24)
         Me.XenonTextBox4.TabIndex = 1
         Me.XenonTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox4.UseSystemPasswordChar = False
@@ -1665,7 +1665,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox2.Controls.Add(Me.XenonTextBox3)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(4, 37)
+        Me.XenonGroupBox2.Location = New System.Drawing.Point(4, 78)
         Me.XenonGroupBox2.Name = "XenonGroupBox2"
         Me.XenonGroupBox2.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox2.TabIndex = 1
@@ -1731,7 +1731,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox3.DrawOnGlass = False
         Me.XenonTextBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox3.Location = New System.Drawing.Point(140, 3)
+        Me.XenonTextBox3.Location = New System.Drawing.Point(175, 3)
         Me.XenonTextBox3.MaxLength = 32767
         Me.XenonTextBox3.Multiline = False
         Me.XenonTextBox3.Name = "XenonTextBox3"
@@ -1740,7 +1740,7 @@ Partial Class Sounds_Editor
         Me.XenonTextBox3.SelectedText = ""
         Me.XenonTextBox3.SelectionLength = 0
         Me.XenonTextBox3.SelectionStart = 0
-        Me.XenonTextBox3.Size = New System.Drawing.Size(495, 24)
+        Me.XenonTextBox3.Size = New System.Drawing.Size(460, 24)
         Me.XenonTextBox3.TabIndex = 1
         Me.XenonTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox3.UseSystemPasswordChar = False
@@ -1779,7 +1779,7 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox1.Controls.Add(Me.XenonTextBox1)
         Me.XenonGroupBox1.Controls.Add(Me.Label1)
         Me.XenonGroupBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(4, 216)
+        Me.XenonGroupBox1.Location = New System.Drawing.Point(4, 37)
         Me.XenonGroupBox1.Name = "XenonGroupBox1"
         Me.XenonGroupBox1.Size = New System.Drawing.Size(754, 30)
         Me.XenonGroupBox1.TabIndex = 0
@@ -1868,7 +1868,7 @@ Partial Class Sounds_Editor
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(136, 22)
         Me.Label1.TabIndex = 112
-        Me.Label1.Text = "Startup (Windows XP):"
+        Me.Label1.Text = "Startup (registry):"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox1

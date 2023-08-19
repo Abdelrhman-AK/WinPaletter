@@ -923,11 +923,12 @@ Public Class Store
                     End If
 
                     If .CP.AppTheme.Enabled Then
-                        Label14.ForeColor = If(.CP.AppTheme.DarkMode, Color.White.CB(-0.25), Color.Black.CB(0.25))
+                        Label14.ForeColor = If(.CP.AppTheme.DarkMode, Color.White.CB(-0.3), Color.Black.CB(0.3))
                     Else
-                        Label14.ForeColor = If(GetDarkMode(), Color.White.CB(-0.25), Color.Black.CB(0.25))
+                        Label14.ForeColor = If(GetDarkMode(), Color.White.CB(-0.3), Color.Black.CB(0.3))
                     End If
                     Label6.ForeColor = Label14.ForeColor
+                    Theme_MD5_lbl.ForeColor = Label14.ForeColor
 
                     Adjust_Preview(.CP)
                     ApplyRetroPreview(.CP)
@@ -1022,11 +1023,11 @@ Public Class Store
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
         hoveredItem = DirectCast(sender, StoreItem)
-        '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, hoveredItem.CP.Info.Color1, 10, 15)
+
     End Sub
 
     Public Sub StoreItem_MouseLeave(sender As Object, e As EventArgs)
-        '' '' ''If Tabs.SelectedIndex = 0 Or Tabs.SelectedIndex = 2 Then Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
+
     End Sub
 
     Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)

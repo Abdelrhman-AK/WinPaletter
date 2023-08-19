@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
 Imports System.Reflection
 Imports Cyotek.Windows.Forms
 Imports Devcorp.Controls.VisualStyles
@@ -16,7 +15,7 @@ Public Class ColorPickerDlg
     ReadOnly Forms_List As New List(Of Form)
     Private Colors_List As New List(Of Color)
     Private _Conditions As New Conditions
-    ReadOnly _Speed As Integer = 50
+    ReadOnly _Speed As Integer = 40
 
 #Region "Form Shadow"
 
@@ -70,11 +69,11 @@ Public Class ColorPickerDlg
     Dim newPoint As New Point()
     Dim xPoint As New Point()
 
-    Private Sub ColorPicker_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+    Private Sub ColorPicker_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
         xPoint = MousePosition - Location
     End Sub
 
-    Private Sub ColorPicker_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
+    Private Sub ColorPicker_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove
         If e.Button = MouseButtons.Left Then
             newPoint = MousePosition - xPoint
             Location = newPoint
@@ -108,7 +107,7 @@ Public Class ColorPickerDlg
         For Each c As Color In CP.ListColors
 
             Dim pnl As New XenonCP With {
-                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
+                .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                 .BackColor = c,
                 .DefaultColor = .BackColor
             }
@@ -118,11 +117,6 @@ Public Class ColorPickerDlg
         Next
 
         PaletteContainer.ResumeLayout()
-    End Sub
-
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs)
-        ColorWheel1.Visible = False
-        ColorGrid1.Visible = False
     End Sub
 
     Private Sub ScreenColorPicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles ScreenColorPicker1.MouseDown
@@ -775,7 +769,7 @@ Public Class ColorPickerDlg
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
                     Dim pnl As New XenonCP With {
-                        .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
+                        .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                         .BackColor = Color.FromArgb(255, C),
                         .DefaultColor = .BackColor
                         }
@@ -808,13 +802,13 @@ Public Class ColorPickerDlg
 
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
         If IO.File.Exists(XenonTextBox1.Text) Then
-            If Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
+            If IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
                 ThemePaletteContainer.Controls.Clear()
 
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
                         Dim pnl As New XenonCP With {
-                            .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
+                            .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                             .BackColor = Color.FromArgb(255, C),
                             .DefaultColor = .BackColor
                         }
@@ -825,7 +819,7 @@ Public Class ColorPickerDlg
                     MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
                 End Try
 
-            ElseIf Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
+            ElseIf IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
                 Try
                     IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
 
@@ -835,7 +829,7 @@ Public Class ColorPickerDlg
                         If field.FieldType.Name.ToLower = "color" Then
 
                             Dim pnl As New XenonCP With {
-                                .Size = New Drawing.Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
+                                .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
                                 .BackColor = field.GetValue(vs.Metrics.Colors),
                                 .DefaultColor = .BackColor
                                 }
@@ -858,9 +852,7 @@ End Class
 
 Public Class Conditions
 
-    Public Sub New()
-
-    End Sub
+    Public Sub New() : End Sub
 
     Public Property Terminal_Back As Boolean = False
     Public Property Terminal_Fore As Boolean = False
@@ -871,6 +863,7 @@ Public Class Conditions
     Public Property Terminal_TabInactive As Boolean = False
     Public Property Terminal_TitlebarActive As Boolean = False
     Public Property Terminal_TitlebarInactive As Boolean = False
+
     Public Property CMD_ColorTable00 As Boolean = False
     Public Property CMD_ColorTable01 As Boolean = False
     Public Property CMD_ColorTable02 As Boolean = False
