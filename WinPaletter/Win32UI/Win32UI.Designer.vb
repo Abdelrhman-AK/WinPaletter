@@ -1431,6 +1431,7 @@ Partial Class Win32UI
         Me.TabPage3.Controls.Add(Me.XenonGroupBox45)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox43)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox35)
+        Me.TabPage3.Controls.Add(Me.XenonGroupBox25)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox27)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox37)
         Me.TabPage3.Controls.Add(Me.XenonGroupBox41)
@@ -1553,7 +1554,7 @@ Partial Class Win32UI
         Me.XenonGroupBox35.Controls.Add(Me.PictureBox18)
         Me.XenonGroupBox35.Controls.Add(Me.Label18)
         Me.XenonGroupBox35.Controls.Add(Me.menuhilight_pick)
-        Me.XenonGroupBox35.Location = New System.Drawing.Point(3, 135)
+        Me.XenonGroupBox35.Location = New System.Drawing.Point(3, 168)
         Me.XenonGroupBox35.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox35.Name = "XenonGroupBox35"
         Me.XenonGroupBox35.Size = New System.Drawing.Size(343, 30)
@@ -1605,7 +1606,7 @@ Partial Class Win32UI
         Me.XenonGroupBox27.Controls.Add(Me.PictureBox14)
         Me.XenonGroupBox27.Controls.Add(Me.Label14)
         Me.XenonGroupBox27.Controls.Add(Me.hilighttext_pick)
-        Me.XenonGroupBox27.Location = New System.Drawing.Point(3, 168)
+        Me.XenonGroupBox27.Location = New System.Drawing.Point(3, 201)
         Me.XenonGroupBox27.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox27.Name = "XenonGroupBox27"
         Me.XenonGroupBox27.Size = New System.Drawing.Size(343, 30)
@@ -1657,7 +1658,7 @@ Partial Class Win32UI
         Me.XenonGroupBox37.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox37.Controls.Add(Me.Label19)
         Me.XenonGroupBox37.Controls.Add(Me.hilight_pick)
-        Me.XenonGroupBox37.Location = New System.Drawing.Point(3, 102)
+        Me.XenonGroupBox37.Location = New System.Drawing.Point(3, 135)
         Me.XenonGroupBox37.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox37.Name = "XenonGroupBox37"
         Me.XenonGroupBox37.Size = New System.Drawing.Size(343, 30)
@@ -1759,7 +1760,6 @@ Partial Class Win32UI
         Me.TabPage4.Controls.Add(Me.XenonGroupBox51)
         Me.TabPage4.Controls.Add(Me.XenonGroupBox47)
         Me.TabPage4.Controls.Add(Me.XenonGroupBox17)
-        Me.TabPage4.Controls.Add(Me.XenonGroupBox25)
         Me.TabPage4.Controls.Add(Me.pnl11)
         Me.TabPage4.Controls.Add(Me.pnl12)
         Me.TabPage4.Controls.Add(Me.XenonGroupBox29)
@@ -1935,7 +1935,7 @@ Partial Class Win32UI
         Me.XenonGroupBox25.Controls.Add(Me.PictureBox13)
         Me.XenonGroupBox25.Controls.Add(Me.Label13)
         Me.XenonGroupBox25.Controls.Add(Me.hottracking_pick)
-        Me.XenonGroupBox25.Location = New System.Drawing.Point(3, 233)
+        Me.XenonGroupBox25.Location = New System.Drawing.Point(3, 102)
         Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonGroupBox25.Name = "XenonGroupBox25"
         Me.XenonGroupBox25.Size = New System.Drawing.Size(343, 30)
@@ -1964,7 +1964,7 @@ Partial Class Win32UI
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(207, 16)
         Me.Label13.TabIndex = 3
-        Me.Label13.Text = "Hyperlinks and selection rectangles"
+        Me.Label13.Text = "Selection rectangles and hyperlinks"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'hottracking_pick
