@@ -66,7 +66,7 @@ Public Class TerminalsDashboard
 
         _shown = False
 
-        Location = MainFrm.XenonButton24.PointToScreen(Point.Empty)
+        Location = MainFrm.XenonButton24.PointToScreen(Point.Empty) - New Point(0, Height)
 
         If My.W10 Then PictureBox1.Image = My.Resources.Native10 Else PictureBox1.Image = My.Resources.Native11
 
