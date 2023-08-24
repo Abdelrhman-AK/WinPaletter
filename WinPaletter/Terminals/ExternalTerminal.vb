@@ -16,6 +16,11 @@ Public Class ExternalTerminal
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
         MainFrm.Visible = False
 
+        ExtTerminal_PopupForegroundLbl.Font = My.Application.ConsoleFont
+        ExtTerminal_PopupBackgroundLbl.Font = My.Application.ConsoleFont
+        ExtTerminal_AccentForegroundLbl.Font = My.Application.ConsoleFont
+        ExtTerminal_AccentBackgroundLbl.Font = My.Application.ConsoleFont
+
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
     End Sub

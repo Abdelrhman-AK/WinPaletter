@@ -295,6 +295,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
@@ -312,6 +313,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton8.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton8.DrawOnGlass = False
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
@@ -329,6 +331,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = Nothing
@@ -346,6 +349,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = Nothing
@@ -363,6 +367,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton7.DrawOnGlass = False
         Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton7.ForeColor = System.Drawing.Color.White
         Me.XenonButton7.Image = Nothing
@@ -380,6 +385,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton6.DrawOnGlass = False
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = Nothing
@@ -439,6 +445,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.DrawOnGlass = False
         Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton10.ForeColor = System.Drawing.Color.White
         Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
@@ -456,6 +463,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -582,9 +590,9 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_AccentBackgroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_AccentBackgroundLbl.BackColor = System.Drawing.Color.Gray
         Me.ExtTerminal_AccentBackgroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_AccentBackgroundLbl.Location = New System.Drawing.Point(248, 83)
+        Me.ExtTerminal_AccentBackgroundLbl.Location = New System.Drawing.Point(242, 84)
         Me.ExtTerminal_AccentBackgroundLbl.Name = "ExtTerminal_AccentBackgroundLbl"
-        Me.ExtTerminal_AccentBackgroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.ExtTerminal_AccentBackgroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.ExtTerminal_AccentBackgroundLbl.TabIndex = 88
         Me.ExtTerminal_AccentBackgroundLbl.Text = "0"
         Me.ExtTerminal_AccentBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -594,9 +602,9 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_PopupForegroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_PopupForegroundLbl.BackColor = System.Drawing.Color.Gray
         Me.ExtTerminal_PopupForegroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_PopupForegroundLbl.Location = New System.Drawing.Point(248, 148)
+        Me.ExtTerminal_PopupForegroundLbl.Location = New System.Drawing.Point(242, 149)
         Me.ExtTerminal_PopupForegroundLbl.Name = "ExtTerminal_PopupForegroundLbl"
-        Me.ExtTerminal_PopupForegroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.ExtTerminal_PopupForegroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.ExtTerminal_PopupForegroundLbl.TabIndex = 87
         Me.ExtTerminal_PopupForegroundLbl.Text = "0"
         Me.ExtTerminal_PopupForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -619,9 +627,9 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_AccentForegroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_AccentForegroundLbl.BackColor = System.Drawing.Color.Gray
         Me.ExtTerminal_AccentForegroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_AccentForegroundLbl.Location = New System.Drawing.Point(248, 36)
+        Me.ExtTerminal_AccentForegroundLbl.Location = New System.Drawing.Point(242, 37)
         Me.ExtTerminal_AccentForegroundLbl.Name = "ExtTerminal_AccentForegroundLbl"
-        Me.ExtTerminal_AccentForegroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.ExtTerminal_AccentForegroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.ExtTerminal_AccentForegroundLbl.TabIndex = 87
         Me.ExtTerminal_AccentForegroundLbl.Text = "0"
         Me.ExtTerminal_AccentForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -631,9 +639,9 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_PopupBackgroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_PopupBackgroundLbl.BackColor = System.Drawing.Color.Gray
         Me.ExtTerminal_PopupBackgroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExtTerminal_PopupBackgroundLbl.Location = New System.Drawing.Point(248, 195)
+        Me.ExtTerminal_PopupBackgroundLbl.Location = New System.Drawing.Point(242, 196)
         Me.ExtTerminal_PopupBackgroundLbl.Name = "ExtTerminal_PopupBackgroundLbl"
-        Me.ExtTerminal_PopupBackgroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.ExtTerminal_PopupBackgroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.ExtTerminal_PopupBackgroundLbl.TabIndex = 88
         Me.ExtTerminal_PopupBackgroundLbl.Text = "0"
         Me.ExtTerminal_PopupBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1218,6 +1226,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = Nothing
@@ -1234,6 +1243,7 @@ Partial Class ExternalTerminal
         '
         Me.ExtTerminal_FontSizeVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_FontSizeVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ExtTerminal_FontSizeVal.DrawOnGlass = False
         Me.ExtTerminal_FontSizeVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_FontSizeVal.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_FontSizeVal.Image = Nothing
@@ -1355,6 +1365,7 @@ Partial Class ExternalTerminal
         '
         Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton25.DrawOnGlass = False
         Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonButton25.ForeColor = System.Drawing.Color.White
         Me.XenonButton25.Image = Nothing
@@ -1468,6 +1479,7 @@ Partial Class ExternalTerminal
         '
         Me.ExtTerminal_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ExtTerminal_PreviewCUR_Val.DrawOnGlass = False
         Me.ExtTerminal_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_PreviewCUR_Val.Image = Nothing
@@ -1657,6 +1669,7 @@ Partial Class ExternalTerminal
         '
         Me.ExtTerminal_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ExtTerminal_OpacityVal.DrawOnGlass = False
         Me.ExtTerminal_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ExtTerminal_OpacityVal.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_OpacityVal.Image = Nothing

@@ -220,6 +220,7 @@ Partial Class CMD
         Me.XenonButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
@@ -251,6 +252,7 @@ Partial Class CMD
         Me.XenonButton8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton8.DrawOnGlass = False
         Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton8.ForeColor = System.Drawing.Color.White
         Me.XenonButton8.Image = CType(resources.GetObject("XenonButton8.Image"), System.Drawing.Image)
@@ -269,6 +271,7 @@ Partial Class CMD
         Me.XenonButton6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton6.DrawOnGlass = False
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = Nothing
@@ -296,7 +299,7 @@ Partial Class CMD
         'checker_img
         '
         Me.checker_img.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.checker_img.Image = Global.WinPaletter.My.Resources.checker_disabled
+        Me.checker_img.Image = Global.WinPaletter.My.Resources.Resources.checker_disabled
         Me.checker_img.Location = New System.Drawing.Point(804, 4)
         Me.checker_img.Name = "checker_img"
         Me.checker_img.Size = New System.Drawing.Size(35, 31)
@@ -355,9 +358,9 @@ Partial Class CMD
         Me.CMD_AccentBackgroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentBackgroundLbl.BackColor = System.Drawing.Color.Gray
         Me.CMD_AccentBackgroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_AccentBackgroundLbl.Location = New System.Drawing.Point(248, 83)
+        Me.CMD_AccentBackgroundLbl.Location = New System.Drawing.Point(243, 83)
         Me.CMD_AccentBackgroundLbl.Name = "CMD_AccentBackgroundLbl"
-        Me.CMD_AccentBackgroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.CMD_AccentBackgroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.CMD_AccentBackgroundLbl.TabIndex = 88
         Me.CMD_AccentBackgroundLbl.Text = "0"
         Me.CMD_AccentBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -367,9 +370,9 @@ Partial Class CMD
         Me.CMD_PopupForegroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupForegroundLbl.BackColor = System.Drawing.Color.Gray
         Me.CMD_PopupForegroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_PopupForegroundLbl.Location = New System.Drawing.Point(248, 148)
+        Me.CMD_PopupForegroundLbl.Location = New System.Drawing.Point(243, 148)
         Me.CMD_PopupForegroundLbl.Name = "CMD_PopupForegroundLbl"
-        Me.CMD_PopupForegroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.CMD_PopupForegroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.CMD_PopupForegroundLbl.TabIndex = 87
         Me.CMD_PopupForegroundLbl.Text = "0"
         Me.CMD_PopupForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -392,9 +395,9 @@ Partial Class CMD
         Me.CMD_AccentForegroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_AccentForegroundLbl.BackColor = System.Drawing.Color.Gray
         Me.CMD_AccentForegroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_AccentForegroundLbl.Location = New System.Drawing.Point(248, 36)
+        Me.CMD_AccentForegroundLbl.Location = New System.Drawing.Point(243, 36)
         Me.CMD_AccentForegroundLbl.Name = "CMD_AccentForegroundLbl"
-        Me.CMD_AccentForegroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.CMD_AccentForegroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.CMD_AccentForegroundLbl.TabIndex = 87
         Me.CMD_AccentForegroundLbl.Text = "0"
         Me.CMD_AccentForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -404,9 +407,9 @@ Partial Class CMD
         Me.CMD_PopupBackgroundLbl.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PopupBackgroundLbl.BackColor = System.Drawing.Color.Gray
         Me.CMD_PopupBackgroundLbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CMD_PopupBackgroundLbl.Location = New System.Drawing.Point(248, 195)
+        Me.CMD_PopupBackgroundLbl.Location = New System.Drawing.Point(243, 195)
         Me.CMD_PopupBackgroundLbl.Name = "CMD_PopupBackgroundLbl"
-        Me.CMD_PopupBackgroundLbl.Size = New System.Drawing.Size(45, 20)
+        Me.CMD_PopupBackgroundLbl.Size = New System.Drawing.Size(50, 20)
         Me.CMD_PopupBackgroundLbl.TabIndex = 88
         Me.CMD_PopupBackgroundLbl.Text = "0"
         Me.CMD_PopupBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -557,6 +560,7 @@ Partial Class CMD
         '
         Me.CMD_OpacityVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_OpacityVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_OpacityVal.DrawOnGlass = False
         Me.CMD_OpacityVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_OpacityVal.ForeColor = System.Drawing.Color.White
         Me.CMD_OpacityVal.Image = Nothing
@@ -708,6 +712,7 @@ Partial Class CMD
         '
         Me.CMD_PreviewCUR_Val.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_PreviewCUR_Val.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_PreviewCUR_Val.DrawOnGlass = False
         Me.CMD_PreviewCUR_Val.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
         Me.CMD_PreviewCUR_Val.Image = Nothing
@@ -861,6 +866,7 @@ Partial Class CMD
         '
         Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton10.DrawOnGlass = False
         Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton10.ForeColor = System.Drawing.Color.White
         Me.XenonButton10.Image = CType(resources.GetObject("XenonButton10.Image"), System.Drawing.Image)
@@ -916,6 +922,7 @@ Partial Class CMD
         '
         Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = Nothing
@@ -932,6 +939,7 @@ Partial Class CMD
         '
         Me.CMD_FontSizeVal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_FontSizeVal.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CMD_FontSizeVal.DrawOnGlass = False
         Me.CMD_FontSizeVal.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CMD_FontSizeVal.ForeColor = System.Drawing.Color.White
         Me.CMD_FontSizeVal.Image = Nothing
@@ -1053,6 +1061,7 @@ Partial Class CMD
         '
         Me.XenonButton25.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton25.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton25.DrawOnGlass = False
         Me.XenonButton25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.XenonButton25.ForeColor = System.Drawing.Color.White
         Me.XenonButton25.Image = Nothing
@@ -1109,6 +1118,7 @@ Partial Class CMD
         '
         Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = Nothing
@@ -1560,6 +1570,7 @@ Partial Class CMD
         '
         Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = Nothing
@@ -1632,6 +1643,7 @@ Partial Class CMD
         '
         Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
