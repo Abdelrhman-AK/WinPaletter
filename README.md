@@ -111,8 +111,7 @@ Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License: MIT
-[See Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
 ---
 
