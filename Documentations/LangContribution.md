@@ -94,7 +94,7 @@ Open app > Settings > Languages > Deactivate Custom Language and erase the textb
      
      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Lang/2.png?raw=true)
 
-4. [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LangContribution1.0.6.9 md#upload-your-language-file-to-github-so-others-can-use-it)
+4. [Upload Your Language File to GitHub (Will be explained below)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LangContribution1.0.6.9.md#upload-your-language-file-to-github-so-others-can-use-it)
 
 5. Important notes:
    
