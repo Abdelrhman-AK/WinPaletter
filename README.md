@@ -6,9 +6,9 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) Changelog:
-[Click Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) [Wiki (Help)](https://github.com/Abdelrhman-AK/WinPaletter/wiki)
 
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) [Changelog](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 [- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
