@@ -43,8 +43,8 @@
 | **Windows 11, 10**                                     |  `Any version`                   |  You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                             |                                                     |
 | **Windows 8.1, 7**                                     | `1.0.5.0`                        | [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`|
 | **Windows 8**                                          | `Not supported` :x:              | Not supported as .NET framework 4.7 or 4.8 can't be installed at all | 
-| **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md#getting-ready-windows-vista-to-run-winpaletter)|
-| **Windows XP**                                         | `1.0.7.1`                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LegacyOS/LegacyOS.md)|
+| **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista)|
+| **Windows XP**                                         | `1.0.7.1`                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)|
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
@@ -140,4 +140,4 @@ Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
-[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/AntivirusIssue.md)
+[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
