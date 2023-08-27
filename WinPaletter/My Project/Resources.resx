@@ -2776,7 +2776,7 @@
   <data name="BackgroundOpacity" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAAZQTFRFv7+/
-        ////mcP/dAAAAAlwSFlzAAAOvwAADr8BOAVTJAAAABRJREFUGNNjAAFBIKCUQQ0zGBgYADKfBEHwEQCB
+        ////mcP/dAAAAAlwSFlzAAAOvgAADr4B6kKxwAAAABRJREFUGNNjAAFBIKCUQQ0zGBgYADKfBEHwEQCB
         AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -18297,23 +18297,20 @@
   <data name="Link_Repository" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/</value>
   </data>
-  <data name="Link_StoreGettingStarted" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/GettingStarted.md</value>
-  </data>
   <data name="Link_StoreMainDB" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true</value>
   </data>
   <data name="Link_StoreOnlineSourceCreation" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md</value>
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/Create-an-online-WinPaletter-Store-source-(server%5CGitHub-repository)-for-hosting-WinPaletter-themes</value>
   </data>
   <data name="Link_StoreReposDB" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter-Store/blob/main/store.wpdb?raw=true</value>
   </data>
   <data name="Link_StoreSourcesExtension" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/SourceExtension.md</value>
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Sources-extension</value>
   </data>
   <data name="Link_StoreUpload" xml:space="preserve">
-    <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/Upload_Help.md</value>
+    <value>https://github.com/Abdelrhman-AK/WinPaletter/wiki/Upload-themes-to-WinPaletter-Store-repository</value>
   </data>
   <data name="Link_Updates" xml:space="preserve">
     <value>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/UpdatesConfig/Updates?raw=true</value>
@@ -24485,7 +24482,7 @@
   <data name="Store_ThemeVersion" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAUtJREFUOE+t1M0uQ1EUBeCqxEQr3oCUJjohSqSEGQ+gD+AOdCB+4i2Y4SVMFfE/
+        wAAADsABataJCQAAAUtJREFUOE+t1M0uQ1EUBeCqxEQr3oCUJjohSqSEGQ+gD+AOdCB+4i2Y4SVMFfE/
         QyJe476JteRsWXffLVFpky+5Z5911uD+tJLn+VCFQ5NlWRVmYQPW03U1yppwiEN1OIYn+HQe4RDq0dnS
         AMHFdMgXefew4M8XFggsw3s68BfMtrVDyybhJQUH8QwTUSHviwa5vnAzOocjN9svFGLAp/kgAdqBKfiQ
         Ga8540+zd/D99K2wKZsaGoNTmZ2kGR+IZqmhhWtu02xDS9Zz0JW16mhhx22aKxgF3rezdN2HKLuihTNu

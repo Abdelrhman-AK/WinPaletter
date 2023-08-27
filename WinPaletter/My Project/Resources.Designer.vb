@@ -727,15 +727,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/GettingStarted.md.
-        '''</summary>
-        Public ReadOnly Property Link_StoreGettingStarted() As String
-            Get
-                Return ResourceManager.GetString("Link_StoreGettingStarted", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Store/store.wpdb?raw=true.
         '''</summary>
         Public ReadOnly Property Link_StoreMainDB() As String
@@ -745,7 +736,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/OnlineStoreSource.md.
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/wiki/Create-an-online-WinPaletter-Store-source-(server%5CGitHub-repository)-for-hosting-WinPaletter-themes.
         '''</summary>
         Public ReadOnly Property Link_StoreOnlineSourceCreation() As String
             Get
@@ -763,7 +754,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/SourceExtension.md.
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Sources-extension.
         '''</summary>
         Public ReadOnly Property Link_StoreSourcesExtension() As String
             Get
@@ -772,7 +763,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Store/Upload_Help.md.
+        '''  Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/wiki/Upload-themes-to-WinPaletter-Store-repository.
         '''</summary>
         Public ReadOnly Property Link_StoreUpload() As String
             Get

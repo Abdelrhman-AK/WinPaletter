@@ -28,10 +28,8 @@ Partial Class Whatsnew
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.Label24 = New System.Windows.Forms.Label()
@@ -69,6 +67,7 @@ Partial Class Whatsnew
         Me.XenonButton3 = New WinPaletter.XenonButton()
         Me.XenonButton2 = New WinPaletter.XenonButton()
         Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -163,7 +162,6 @@ Partial Class Whatsnew
         Me.TabPage3.Controls.Add(Me.XenonButton5)
         Me.TabPage3.Controls.Add(Me.XenonButton4)
         Me.TabPage3.Controls.Add(Me.PictureBox2)
-        Me.TabPage3.Controls.Add(Me.Label5)
         Me.TabPage3.Controls.Add(Me.Label7)
         Me.TabPage3.Location = New System.Drawing.Point(154, 4)
         Me.TabPage3.Name = "TabPage3"
@@ -171,23 +169,6 @@ Partial Class Whatsnew
         Me.TabPage3.Size = New System.Drawing.Size(667, 368)
         Me.TabPage3.TabIndex = 16
         Me.TabPage3.Text = "WinPaletter Store"
-        '
-        'XenonButton5
-        '
-        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton5.DrawOnGlass = False
-        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Nothing
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(201, 234)
-        Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(264, 34)
-        Me.XenonButton5.TabIndex = 33
-        Me.XenonButton5.Text = "Getting started (Online documentation)"
-        Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonButton4
         '
@@ -199,9 +180,9 @@ Partial Class Whatsnew
         Me.XenonButton4.Image = Nothing
         Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(201, 194)
+        Me.XenonButton4.Location = New System.Drawing.Point(163, 194)
         Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(264, 34)
+        Me.XenonButton4.Size = New System.Drawing.Size(340, 34)
         Me.XenonButton4.TabIndex = 32
         Me.XenonButton4.Text = "Open WinPaletter Store intro"
         Me.XenonButton4.UseVisualStyleBackColor = False
@@ -216,19 +197,6 @@ Partial Class Whatsnew
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox2.TabIndex = 31
         Me.PictureBox2.TabStop = False
-        '
-        'Label5
-        '
-        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(6, 300)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(656, 65)
-        Me.Label5.TabIndex = 30
-        Me.Label5.Text = "• WinPaletter Store will have initially small amount of themes and it will grow m" &
-    "ore and more with progression of time."
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label7
         '
@@ -685,6 +653,23 @@ Partial Class Whatsnew
         Me.XenonButton1.Text = "Next"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
+        'XenonButton5
+        '
+        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
+        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton5.ForeColor = System.Drawing.Color.White
+        Me.XenonButton5.Image = Nothing
+        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.XenonButton5.LineSize = 1
+        Me.XenonButton5.Location = New System.Drawing.Point(163, 234)
+        Me.XenonButton5.Name = "XenonButton5"
+        Me.XenonButton5.Size = New System.Drawing.Size(340, 34)
+        Me.XenonButton5.TabIndex = 33
+        Me.XenonButton5.Text = "Visit WinPaletter wiki and go to Store section for help"
+        Me.XenonButton5.UseVisualStyleBackColor = False
+        '
         'Whatsnew
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -737,7 +722,6 @@ Partial Class Whatsnew
     Friend WithEvents Label21 As Label
     Friend WithEvents Label22 As Label
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents Label5 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents Label10 As Label
@@ -768,8 +752,8 @@ Partial Class Whatsnew
     Friend WithEvents TabPage11 As TabPage
     Friend WithEvents Label20 As Label
     Friend WithEvents Label23 As Label
-    Friend WithEvents XenonButton5 As XenonButton
     Friend WithEvents TabPage12 As TabPage
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
+    Friend WithEvents XenonButton5 As XenonButton
 End Class
