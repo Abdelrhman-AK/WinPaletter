@@ -121,21 +121,10 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="XenonButton9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAS1JREFUOE9j
-        oClwe/Gf2/vhf0FsmOH/f0aoMsIg4Pl/z4Bn/38B8X9s2KD31kaHhv0sUOX4AVBDAboByFin6doPzZpL
-        K4kyEKgBr2H6zTf+aVdf/k+UgUANeA0zbr/1X7fqyn+Qgdr1V5YyNPxngmrFBEANeA3zvvbzv8epL//d
-        gdj15OdfHhe/J0O1YgKgBryGYcEFUK2YACQJUuT/9N9/y4N3/5vvu42BQeIgeaIN83v897/uhrP/dddj
-        wUBxkDwJhv35Lz1x43/J/g0Y2OXSW5hBxBkGws6X3vx3Ov8aA7tf/0iaYSCXyc3YjhOD5Ik37Mmf/yoL
-        D/xXnr8PA7td/UCaywKe/v/veP7Vf8dzLzGw78PfJBpGPMZjGIFSAw3/Cnz23wOqdVADBgYAC+w3MzK+
-        nKQAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="XenonButton5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMISURBVDhPrZRd
+        vQAADr0BR/uQrQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMISURBVDhPrZRd
         SFNhHMZPgQhdSDd12UXRTWIXBSJu07mdbWc6t/mFDbsRvxDT1DX8QBOcg6FOnWjaxxA2DT9CLwoRlWjT
         aKsVQl2YkCu/g0D6APuYPr3vK5tTvPSFH+e855znef//5w+HO7Hl9/vPeL3emEgmJydjXC7XIex2e0x5
         efkh8vLyYoqLi6OYkc/nqyBm5hDz8/PmsbExc39/f0sk3d3dLWVlZeaioqIwhYWFzSUlJaKmpqbTnMfj

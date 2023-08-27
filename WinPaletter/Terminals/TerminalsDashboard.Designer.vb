@@ -28,9 +28,6 @@ Partial Class TerminalsDashboard
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
-        Me.XenonSeparator4 = New WinPaletter.XenonSeparator()
         Me.XenonButton5 = New WinPaletter.XenonButton()
         Me.XenonButton6 = New WinPaletter.XenonButton()
         Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
@@ -76,45 +73,10 @@ Partial Class TerminalsDashboard
         Me.ToolTip1.SetToolTip(Me.PictureBox1, "It is effective for Windows 10 and Windows 11 (If you have installed Windows Term" &
         "inal from the Store)")
         '
-        'Label3
-        '
-        Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(171, 100)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(151, 19)
-        Me.Label3.TabIndex = 99
-        Me.Label3.Text = "Important"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'XenonButton9
-        '
-        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton9.ForeColor = System.Drawing.Color.White
-        Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
-        Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(171, 128)
-        Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(151, 28)
-        Me.XenonButton9.TabIndex = 101
-        Me.XenonButton9.Text = "Read documentation"
-        Me.XenonButton9.UseVisualStyleBackColor = False
-        '
-        'XenonSeparator4
-        '
-        Me.XenonSeparator4.AlternativeLook = False
-        Me.XenonSeparator4.Location = New System.Drawing.Point(172, 123)
-        Me.XenonSeparator4.Name = "XenonSeparator4"
-        Me.XenonSeparator4.Size = New System.Drawing.Size(149, 1)
-        Me.XenonSeparator4.TabIndex = 100
-        Me.XenonSeparator4.TabStop = False
-        '
         'XenonButton5
         '
         Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton5.DrawOnGlass = False
         Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton5.ForeColor = System.Drawing.Color.White
         Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
@@ -131,6 +93,7 @@ Partial Class TerminalsDashboard
         'XenonButton6
         '
         Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton6.DrawOnGlass = False
         Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton6.ForeColor = System.Drawing.Color.White
         Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
@@ -157,6 +120,7 @@ Partial Class TerminalsDashboard
         'XenonButton3
         '
         Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton3.DrawOnGlass = False
         Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton3.ForeColor = System.Drawing.Color.White
         Me.XenonButton3.Image = CType(resources.GetObject("XenonButton3.Image"), System.Drawing.Image)
@@ -173,6 +137,7 @@ Partial Class TerminalsDashboard
         'XenonButton4
         '
         Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton4.DrawOnGlass = False
         Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton4.ForeColor = System.Drawing.Color.White
         Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
@@ -189,6 +154,7 @@ Partial Class TerminalsDashboard
         'XenonButton2
         '
         Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton2.DrawOnGlass = False
         Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton2.ForeColor = System.Drawing.Color.White
         Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
@@ -205,6 +171,7 @@ Partial Class TerminalsDashboard
         'XenonButton1
         '
         Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonButton1.DrawOnGlass = False
         Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton1.ForeColor = System.Drawing.Color.White
         Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
@@ -244,9 +211,6 @@ Partial Class TerminalsDashboard
         Me.ClientSize = New System.Drawing.Size(331, 163)
         Me.ControlBox = False
         Me.Controls.Add(Me.XenonSeparatorVertical1)
-        Me.Controls.Add(Me.XenonButton9)
-        Me.Controls.Add(Me.XenonSeparator4)
-        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.XenonButton5)
         Me.Controls.Add(Me.XenonButton6)
@@ -285,8 +249,5 @@ Partial Class TerminalsDashboard
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents XenonButton9 As XenonButton
-    Friend WithEvents XenonSeparator4 As XenonSeparator
-    Friend WithEvents Label3 As Label
     Friend WithEvents XenonSeparatorVertical1 As XenonSeparatorVertical
 End Class
