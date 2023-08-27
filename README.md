@@ -35,12 +35,12 @@
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 [- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
 
-[- Contribute in Language Files Creation\Modification](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/LangContribution.md)
+[- Contribute in Language Files Creation\Modification](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Language-creation)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Requirements.png?raw=true) Requirements:
 | Operation System                                       | WinPaletter version starting from ... and higher             | Frameworks                                      |                                                               
 | ------------------------------------------------------ | ---------------------------------|-------------------------------------------------------|
-| **Windows 11, 10**                                     |  `Any version`                   |  You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                             |                                                     |
+| **Windows 11, 10**                                     |  `Any version`                   |  You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                 |                                                     |
 | **Windows 8.1, 7**                                     | `1.0.5.0`                        | [.NET Framework 4.7, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) & reboot after this first setup `Necessary`|
 | **Windows 8**                                          | `Not supported` :x:              | Not supported as .NET framework 4.7 or 4.8 can't be installed at all | 
 | **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista)|
@@ -79,7 +79,6 @@
 
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
 - You can modify background and foreground colors and popup colors, with fonts and other tweaks.
-- You should [read the documentation](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Documentations/Terminal.md) before you start editing terminals.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png?raw=true)
 
