@@ -6,15 +6,6 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Idea.png?raw=true) Roadmap
-
-| Plan                                                   | Status                                                                 |
-| ------------------------------------------------------ | ---------------------------------------------------------------------- |
-| Windows Accessibility                                  | :yellow_square: Postponed, May not be done                             |
-
-* :yellow_square: symbol means that I might or might not work on it. It is not guaranteed that this feature will be done. 
-
-
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) Changelog:
 [Click Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
 
