@@ -431,7 +431,7 @@ Partial Class SettingsX
         Me.ImageList1.Images.SetKeyName(1, "Language")
         Me.ImageList1.Images.SetKeyName(2, "Appearance")
         Me.ImageList1.Images.SetKeyName(3, "ThemeFileManagement")
-        Me.ImageList1.Images.SetKeyName(4, "ThemeApplyingBehaviour")
+        Me.ImageList1.Images.SetKeyName(4, "ThemeApplyingBehavior")
         Me.ImageList1.Images.SetKeyName(5, "Store")
         Me.ImageList1.Images.SetKeyName(6, "Log")
         Me.ImageList1.Images.SetKeyName(7, "Terminals")

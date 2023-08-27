@@ -954,8 +954,8 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox5.TabIndex = 11
         Me.XenonAlertBox5.TabStop = False
         Me.XenonAlertBox5.Text = "Changing startup sound is blocked in Settings by defaults. You can unblock it in " &
-    "Settings > Theme applying behaviour > Patch imageres.dll to change Windows start" &
-    "up sound (use it on your own risk)"
+    "Settings > Theme applying behavior > Patch imageres.dll to change Windows startu" &
+    "p sound (use it on your own risk)"
         '
         'XenonAlertBox4
         '
