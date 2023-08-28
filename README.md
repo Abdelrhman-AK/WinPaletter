@@ -6,9 +6,9 @@
 
 [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) Changelog:
-[Click Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) [Wiki (Help)](https://github.com/Abdelrhman-AK/WinPaletter/wiki)
 
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) [Changelog](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 [- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
@@ -39,24 +39,17 @@
 
  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Metrics.png?raw=true)
 
-- `Known Issue (You may not face it)`: In Windows 11 22H2, Titlebar Font may not be changed from Segoe UI even if the font is changed correctly in registry and even if you restart your Windows.
-- Fonts Substitutes: You can substitute some system fonts "MS Shell Dlg" and "Segoe UI" to give your Windows a different look. (Please read its instructions in Metrics & Fonts > Fonts Substitutes)
-
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WallpaperTone.png?raw=true) Wallpaper Tone:
 
  ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/WT.png?raw=true)
- 
-- For sure you saw some stock Windows wallpapers with different colors, you can now create your own wallpapers with the color you want.
-- This is dependent on modification of image's HSL (Hue\Saturation\Lightness) and this isn't professional as much as advanced images editors (Paint.NET\GIMP\Photoshop\...)
 
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Terminal.png?raw=true) Windows Terminals:
 
 - Including Command Prompt, PowerShell (Windows 7, 8.1, 10, 11) and Windows Terminal (Windows 10,11)
-- You can modify background and foreground colors and popup colors, with fonts and other tweaks.
 
 ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Terminals.png?raw=true)
 
@@ -111,8 +104,7 @@ Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https
 
 ---
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) License: MIT
-[See Here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
 ---
 
