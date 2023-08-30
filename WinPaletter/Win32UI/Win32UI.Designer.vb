@@ -125,6 +125,10 @@ Partial Class Win32UI
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.menuhilight_pick = New WinPaletter.XenonCP()
+        Me.XenonGroupBox25 = New WinPaletter.XenonGroupBox()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.hottracking_pick = New WinPaletter.XenonCP()
         Me.XenonGroupBox27 = New WinPaletter.XenonGroupBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -150,10 +154,6 @@ Partial Class Win32UI
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.InfoText_pick = New WinPaletter.XenonCP()
-        Me.XenonGroupBox25 = New WinPaletter.XenonGroupBox()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.hottracking_pick = New WinPaletter.XenonCP()
         Me.pnl11 = New WinPaletter.XenonGroupBox()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.lbl11 = New System.Windows.Forms.Label()
@@ -252,6 +252,8 @@ Partial Class Win32UI
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox35.SuspendLayout()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XenonGroupBox25.SuspendLayout()
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox27.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox37.SuspendLayout()
@@ -265,8 +267,6 @@ Partial Class Win32UI
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox17.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox25.SuspendLayout()
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl11.SuspendLayout()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl12.SuspendLayout()
@@ -1598,6 +1598,58 @@ Partial Class Win32UI
         Me.menuhilight_pick.Size = New System.Drawing.Size(89, 22)
         Me.menuhilight_pick.TabIndex = 2
         '
+        'XenonGroupBox25
+        '
+        Me.XenonGroupBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox25.Controls.Add(Me.PictureBox13)
+        Me.XenonGroupBox25.Controls.Add(Me.Label13)
+        Me.XenonGroupBox25.Controls.Add(Me.hottracking_pick)
+        Me.XenonGroupBox25.Location = New System.Drawing.Point(3, 102)
+        Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonGroupBox25.Name = "XenonGroupBox25"
+        Me.XenonGroupBox25.Size = New System.Drawing.Size(343, 30)
+        Me.XenonGroupBox25.TabIndex = 48
+        '
+        'PictureBox13
+        '
+        Me.PictureBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
+        Me.PictureBox13.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox13.Name = "PictureBox13"
+        Me.PictureBox13.Size = New System.Drawing.Size(30, 24)
+        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox13.TabIndex = 4
+        Me.PictureBox13.TabStop = False
+        '
+        'Label13
+        '
+        Me.Label13.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label13.BackColor = System.Drawing.Color.Transparent
+        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(36, 6)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(207, 16)
+        Me.Label13.TabIndex = 3
+        Me.Label13.Text = "Selection rectangles and hyperlinks"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'hottracking_pick
+        '
+        Me.hottracking_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.hottracking_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.hottracking_pick.DefaultColor = System.Drawing.Color.Black
+        Me.hottracking_pick.ForceNoNerd = False
+        Me.hottracking_pick.Location = New System.Drawing.Point(251, 4)
+        Me.hottracking_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.hottracking_pick.Name = "hottracking_pick"
+        Me.hottracking_pick.Size = New System.Drawing.Size(89, 22)
+        Me.hottracking_pick.TabIndex = 2
+        '
         'XenonGroupBox27
         '
         Me.XenonGroupBox27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1926,58 +1978,6 @@ Partial Class Win32UI
         Me.InfoText_pick.Name = "InfoText_pick"
         Me.InfoText_pick.Size = New System.Drawing.Size(89, 22)
         Me.InfoText_pick.TabIndex = 2
-        '
-        'XenonGroupBox25
-        '
-        Me.XenonGroupBox25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox25.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox25.Controls.Add(Me.PictureBox13)
-        Me.XenonGroupBox25.Controls.Add(Me.Label13)
-        Me.XenonGroupBox25.Controls.Add(Me.hottracking_pick)
-        Me.XenonGroupBox25.Location = New System.Drawing.Point(3, 102)
-        Me.XenonGroupBox25.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox25.Name = "XenonGroupBox25"
-        Me.XenonGroupBox25.Size = New System.Drawing.Size(343, 30)
-        Me.XenonGroupBox25.TabIndex = 48
-        '
-        'PictureBox13
-        '
-        Me.PictureBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox13.Image = CType(resources.GetObject("PictureBox13.Image"), System.Drawing.Image)
-        Me.PictureBox13.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox13.Name = "PictureBox13"
-        Me.PictureBox13.Size = New System.Drawing.Size(30, 24)
-        Me.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox13.TabIndex = 4
-        Me.PictureBox13.TabStop = False
-        '
-        'Label13
-        '
-        Me.Label13.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label13.BackColor = System.Drawing.Color.Transparent
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(36, 6)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(207, 16)
-        Me.Label13.TabIndex = 3
-        Me.Label13.Text = "Selection rectangles and hyperlinks"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'hottracking_pick
-        '
-        Me.hottracking_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.hottracking_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.hottracking_pick.DefaultColor = System.Drawing.Color.Black
-        Me.hottracking_pick.ForceNoNerd = False
-        Me.hottracking_pick.Location = New System.Drawing.Point(251, 4)
-        Me.hottracking_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.hottracking_pick.Name = "hottracking_pick"
-        Me.hottracking_pick.Size = New System.Drawing.Size(89, 22)
-        Me.hottracking_pick.TabIndex = 2
         '
         'pnl11
         '
@@ -2988,6 +2988,7 @@ Partial Class Win32UI
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False
@@ -3030,6 +3031,8 @@ Partial Class Win32UI
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox35.ResumeLayout(False)
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XenonGroupBox25.ResumeLayout(False)
+        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox27.ResumeLayout(False)
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox37.ResumeLayout(False)
@@ -3043,8 +3046,6 @@ Partial Class Win32UI
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox17.ResumeLayout(False)
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox25.ResumeLayout(False)
-        CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl11.ResumeLayout(False)
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl12.ResumeLayout(False)

@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.NativeMethods
+﻿Imports System.ComponentModel
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class CMD
@@ -928,5 +929,9 @@ Public Class CMD
             FontName.Font = New Font(FontDialog1.Font.Name, 9, F_cmd.Style)
         End If
 
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)")
     End Sub
 End Class

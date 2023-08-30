@@ -226,13 +226,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Release\WinPaletter.exe.config" />
-    <None Include="bin\Release\WinPaletter.zip" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -606,9 +602,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Release\WinPaletter.exe" />
-    <Content Include="bin\Release\WinPaletter.pdb" />
-    <Content Include="bin\Release\WinPaletter.xml" />
     <Content Include="ICON.ico" />
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />

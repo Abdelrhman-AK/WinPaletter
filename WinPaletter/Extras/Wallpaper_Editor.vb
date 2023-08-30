@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports Microsoft.Win32
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
@@ -691,5 +692,9 @@ Public Class Wallpaper_Editor
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
         sender.Text = Math.Max(Math.Min(Val(response), LBar.Maximum), LBar.Minimum) : LBar.Value = Val(sender.Text)
         ApplyHSLPreview()
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Wallpaper")
     End Sub
 End Class

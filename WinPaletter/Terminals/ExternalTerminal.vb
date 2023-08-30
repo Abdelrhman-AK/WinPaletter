@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Win32
+﻿Imports System.ComponentModel
+Imports Microsoft.Win32
 Imports WinPaletter.Reg_IO
 Imports WinPaletter.XenonCore
 
@@ -968,5 +969,9 @@ Public Class ExternalTerminal
             With Font.FromLogFont(fx) : f_extterminal = New Font(.Name, f_extterminal.Size, .Style) : End With
             FontName.Font = New Font(FontDialog1.Font.Name, 9, f_extterminal.Style)
         End If
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)")
     End Sub
 End Class

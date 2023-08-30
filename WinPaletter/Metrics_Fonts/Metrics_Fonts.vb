@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Text
+﻿Imports System.ComponentModel
+Imports System.Drawing.Text
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
@@ -737,5 +738,9 @@ Public Class Metrics_Fonts
         RetroWindow2.Refresh()
         RetroWindow3.Refresh()
         RetroWindow5.Refresh()
+    End Sub
+
+    Private Sub Metrics_Fonts_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-Metrics-and-Fonts")
     End Sub
 End Class

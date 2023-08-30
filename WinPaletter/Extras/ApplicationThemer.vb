@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class ApplicationThemer
 
@@ -257,4 +258,7 @@ Public Class ApplicationThemer
         Next
     End Sub
 
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-WinPaletter-application-theme")
+    End Sub
 End Class

@@ -1,4 +1,5 @@
-﻿Imports ImageProcessor
+﻿Imports System.ComponentModel
+Imports ImageProcessor
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
@@ -378,5 +379,9 @@ Public Class LogonUI7
 
     Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-LogonUI-screen#windows-81-and-windows-7")
     End Sub
 End Class

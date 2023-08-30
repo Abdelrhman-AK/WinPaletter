@@ -1,3 +1,4 @@
+Imports System.ComponentModel
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
@@ -1190,5 +1191,9 @@ Public Class Win32UI
         btnlight_pick.BackColor = btnface_pick.BackColor
         btnshadow_pick.BackColor = btnface_pick.BackColor
         ApplyRetroPreview()
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-classic-colors")
     End Sub
 End Class

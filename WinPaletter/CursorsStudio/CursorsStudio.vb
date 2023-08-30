@@ -923,4 +923,8 @@ Public Class CursorsStudio
         _SelectedControl.Prop_Shadow_Enabled = XenonCheckBox11.Checked
         _SelectedControl.Invalidate()
     End Sub
+
+    Private Sub CursorsStudio_HelpButtonClicked(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-cursors")
+    End Sub
 End Class

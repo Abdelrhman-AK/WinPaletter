@@ -355,8 +355,10 @@ Partial Class AltTabEditor
         Me.XenonWinElement1.ActionCenterButton_Pressed = System.Drawing.Color.Empty
         Me.XenonWinElement1.AppBackground = System.Drawing.Color.Empty
         Me.XenonWinElement1.AppUnderline = System.Drawing.Color.Empty
-        Me.XenonWinElement1.Background2 = System.Drawing.Color.Empty
+        Me.XenonWinElement1.BackColor = System.Drawing.Color.Transparent
         Me.XenonWinElement1.BackColorAlpha = 130
+        Me.XenonWinElement1.Background = System.Drawing.Color.Empty
+        Me.XenonWinElement1.Background2 = System.Drawing.Color.Empty
         Me.XenonWinElement1.BlurPower = 8
         Me.XenonWinElement1.DarkMode = True
         Me.XenonWinElement1.LinkColor = System.Drawing.Color.Empty
@@ -701,6 +703,7 @@ Partial Class AltTabEditor
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MaximizeBox = False

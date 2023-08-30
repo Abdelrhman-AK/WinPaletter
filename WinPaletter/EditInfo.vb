@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class EditInfo
 
@@ -199,5 +200,9 @@ Public Class EditInfo
 
     Private Sub XenonTextBox2_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox2.TextChanged
         StoreItem1.CP.Info.ThemeVersion = sender.Text
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-theme-info")
     End Sub
 End Class

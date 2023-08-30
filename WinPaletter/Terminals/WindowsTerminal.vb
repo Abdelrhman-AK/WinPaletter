@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
@@ -48,7 +49,7 @@ Public Class WindowsTerminal
         XenonTerminal1.PreviewVersion = (_Mode = WinTerminal.Version.Preview)
         XenonTerminal2.PreviewVersion = (_Mode = WinTerminal.Version.Preview)
 
-        If _Terminal.theme.ToLower = "dark" Then
+        If _Terminal.Theme.ToLower = "dark" Then
             TerThemes.SelectedIndex = 0
             TerTitlebarActive.BackColor = Nothing
             TerTitlebarInactive.BackColor = Nothing
@@ -58,7 +59,7 @@ Public Class WindowsTerminal
             XenonTerminal1.Light = False
             XenonTerminal2.Light = False
 
-        ElseIf _Terminal.theme.ToLower = "light" Then
+        ElseIf _Terminal.Theme.ToLower = "light" Then
             TerThemes.SelectedIndex = 1
             TerTitlebarActive.BackColor = Nothing
             TerTitlebarInactive.BackColor = Nothing
@@ -68,7 +69,7 @@ Public Class WindowsTerminal
             XenonTerminal1.Light = True
             XenonTerminal2.Light = True
 
-        ElseIf _Terminal.theme.ToLower = "system" Then
+        ElseIf _Terminal.Theme.ToLower = "system" Then
             TerThemes.SelectedIndex = 2
             TerTitlebarActive.BackColor = Nothing
             TerTitlebarInactive.BackColor = Nothing
@@ -93,9 +94,9 @@ Public Class WindowsTerminal
             End Select
 
 
-        ElseIf TerThemes.Items.Contains(_Terminal.theme) Then
+        ElseIf TerThemes.Items.Contains(_Terminal.Theme) Then
 
-            TerThemes.SelectedItem = _Terminal.theme
+            TerThemes.SelectedItem = _Terminal.Theme
 
             TerThemesContainer.Enabled = True
 
@@ -861,7 +862,7 @@ Public Class WindowsTerminal
 
     Private Sub TerEditThemeName_Click(sender As Object, e As EventArgs) Handles TerEditThemeName.Click
         If TerThemes.SelectedIndex > 2 Then
-            Dim s As String = InputBox("Type theme name here:", "Theme Name", TerThemes.SelectedItem.ToString)
+            Dim s As String = InputBox(My.Lang.Terminal_TypeSchemeName, TerThemes.SelectedItem.ToString)
             If s <> TerThemes.SelectedItem.ToString And Not String.IsNullOrEmpty(s) And Not TerThemes.Items.Contains(s) Then
                 Dim i As Integer = TerThemes.SelectedIndex
                 TerThemes.Items.RemoveAt(i)
@@ -873,7 +874,7 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Dim s As String = InputBox("Type scheme name here:", "Scheme Name", TerSchemes.SelectedItem.ToString)
+        Dim s As String = InputBox(My.Lang.Terminal_TypeSchemeName, TerSchemes.SelectedItem.ToString)
         If s <> TerSchemes.SelectedItem.ToString And Not String.IsNullOrEmpty(s) And Not TerSchemes.Items.Contains(s) Then
             Dim i As Integer = TerSchemes.SelectedIndex
             TerSchemes.Items.RemoveAt(i)
@@ -1551,5 +1552,9 @@ Public Class WindowsTerminal
             TerFontSizeBar.Value = FontDialog1.Font.Size
         End If
 
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-Terminals-(Windows-10-and-later)")
     End Sub
 End Class

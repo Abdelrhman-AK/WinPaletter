@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.PreviewHelpers
+﻿Imports System.ComponentModel
+Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
 Public Class AltTabEditor
@@ -192,5 +193,9 @@ Public Class AltTabEditor
 
     Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
         If XenonRadioImage1.Checked Then tabs_preview_1.SelectedIndex = 0
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-switcher-(Alt-Tab-appearance)")
     End Sub
 End Class

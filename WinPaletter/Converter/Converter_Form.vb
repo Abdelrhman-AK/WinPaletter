@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class Converter_Form
 
@@ -52,5 +53,9 @@ Public Class Converter_Form
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             XenonTextBox1.Text = OpenFileDialog1.FileName
         End If
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Convert-WinPaletter-themes-between-old-and-new-formats")
     End Sub
 End Class

@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class ScreenSaver_Editor
 
@@ -141,4 +142,7 @@ Public Class ScreenSaver_Editor
         End Using
     End Sub
 
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Screen-Saver")
+    End Sub
 End Class

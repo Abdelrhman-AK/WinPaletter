@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class LogonUIXP
     Private Sub LogonUIXP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -88,5 +89,9 @@ Public Class LogonUIXP
 
     Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-LogonUI-screen#windows-xp")
     End Sub
 End Class

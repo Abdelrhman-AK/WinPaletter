@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.XenonCore
+﻿Imports System.ComponentModel
+Imports WinPaletter.XenonCore
 
 Public Class Store_Intro
     Private Sub Store_Intro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -66,4 +67,7 @@ Public Class Store_Intro
         Process.Start(My.Resources.Link_StoreSourcesExtension)
     End Sub
 
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/WinPaletter-Store-basics")
+    End Sub
 End Class

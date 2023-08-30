@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.PreviewHelpers
+﻿Imports System.ComponentModel
+Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
 Public Class LogonUI
@@ -64,5 +65,9 @@ Public Class LogonUI
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         Save(My.CP)
         Me.Close()
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-LogonUI-screen#windows-11--10")
     End Sub
 End Class

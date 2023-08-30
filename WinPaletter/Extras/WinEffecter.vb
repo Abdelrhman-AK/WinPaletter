@@ -1,4 +1,5 @@
-﻿Imports WinPaletter.PreviewHelpers
+﻿Imports System.ComponentModel
+Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
 
 Public Class WinEffecter
@@ -494,5 +495,9 @@ Public Class WinEffecter
             P2.BackColor = Color.FromArgb(227, 179, 219)
             P3.BackColor = Color.FromArgb(237, 210, 233)
         End If
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Windows-Effects")
     End Sub
 End Class

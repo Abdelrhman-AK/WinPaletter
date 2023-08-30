@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.XenonCore
 
@@ -115,5 +116,9 @@ Public Class Lang_JSON_Update
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
         Close()
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation#3-update-your-language-file-when-a-new-winpaletter-is-released")
     End Sub
 End Class

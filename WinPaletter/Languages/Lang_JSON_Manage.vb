@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports WinPaletter.XenonCore
 
 Public Class Lang_JSON_Manage
@@ -176,5 +177,9 @@ Public Class Lang_JSON_Manage
         TreeView1.Visible = False
         TreeView1.CollapseAll()
         TreeView1.Visible = True
+    End Sub
+
+    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation")
     End Sub
 End Class

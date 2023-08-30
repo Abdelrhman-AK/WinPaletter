@@ -260,6 +260,7 @@ Public Class Localizer : Implements IDisposable
     Property Open_Testing_PowerShellx64 As String = "Open PowerShell x64 for testing"
     Property TerminalStable As String = "Windows Terminal Stable"
     Property TerminalPreview As String = "Windows Terminal Preview"
+    Property Terminal_TypeSchemeName As String = "Type theme name here:"
     Property [Default] As String = "Default"
     Property Untitled As String = "Untitled"
     Property WhatsNewInVersion As String = "What's new in {0}!"

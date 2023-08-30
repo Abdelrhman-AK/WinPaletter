@@ -521,7 +521,7 @@ Public Class Sounds_Editor
 
     End Sub
 
-    Private Sub OpenThemeDialog_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles OpenThemeDialog.FileOk
-
+    Private Sub Sounds_Editor_HelpButtonClicked(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.HelpButtonClicked
+        Process.Start(My.Resources.Link_Wiki & "/Edit-Sounds")
     End Sub
 End Class
