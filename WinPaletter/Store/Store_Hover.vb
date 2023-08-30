@@ -77,7 +77,16 @@ Public Class Store_Hover
         ApplyDarkMode(Me)
         DoubleBuffer
 
-        Dim p As Point = Store.selectedItem.PointToScreen(Point.Empty) - New Point((Width - Store.selectedItem.Width) / 2, (Height - Store.selectedItem.Height) / 2)
+        Dim p As Point
+
+        If Store.selectedItem IsNot Nothing Then
+            p = Store.selectedItem.PointToScreen(Point.Empty) - New Point((Width - Store.selectedItem.Width) / 2, (Height - Store.selectedItem.Height) / 2)
+
+        Else
+            p = MousePosition
+
+        End If
+
         If p.X + Width > My.Computer.Screen.Bounds.Width Then p = New Point(My.Computer.Screen.Bounds.Width - Width, p.Y)
         If p.Y + Height > My.Computer.Screen.Bounds.Height Then p = New Point(p.X, My.Computer.Screen.Bounds.Height - Height)
         Location = p
