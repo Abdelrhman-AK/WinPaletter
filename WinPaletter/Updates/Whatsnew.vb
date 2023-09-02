@@ -41,4 +41,8 @@ Public Class Whatsnew
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
         Process.Start(My.Resources.Link_Wiki)
     End Sub
+
+    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+        Process.Start(My.Resources.Link_Wiki)
+    End Sub
 End Class

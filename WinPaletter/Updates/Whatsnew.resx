@@ -361,20 +361,6 @@
         VKhQ4f8BnwWJAeqNTD4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Label24.Text" xml:space="preserve">
-    <value>The same as 1.0.7.7 and 1.0.7.8 with a new feature, improvements and some bugs fixes:
-
-• New feature: WinPaletter settings read/write mechanism is re-written to be more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious.
-• Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
-• Improvements in loading language file (less memory usage and quick application loading time)
-• Language items/texts of What's new labels will be neither loaded nor exported in/from it to avoid confusion between newly added labels' texts and old language translation
-• Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
-• Embedded assemblies are now compressed (to try to make WinPaletter with a small file size as much as possible)
-• Fix bug of dark/light mode loading in Language add snippet form
-• Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
-• Fix fonts size trouble with high DPI
-• Fix theme apply error on applying Windows Effects</value>
-  </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>• You might not know it, it was an animated full-screen window to save\preserve CRT monitors in the past.
 
@@ -404,32 +390,63 @@
 • Edit these info by pressing edit button in main window (Pencil icon),open all tabs and then edit the info.</value>
   </data>
   <data name="Label14.Text" xml:space="preserve">
-    <value>• Bug reporting (Exceptions errors handling) improvements
+    <value>• And this is to make it more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>• Color item info:
+  - It was formely named nerd color info
+  - There will be a dot inside color info rectangle to indicate that the choosen color is not as the default color
+  - Color picker control is now condensed, the previous one was extremely big compared to its contents
+  - New settings section:
+    - Make color label more transparent
+    - Use default Windows monospaced font instead of JetBrains Mono
+    - Use classic color picker instead of WinPaletter's default one on pressing on a color palette item
 
-• Settings load\save improvements
-
+• Extensive reduction in memory (RAM) ussage:
+  1. Removed fonts lists in consoles\terminals, being replaced by native Windows Fonts picker (to reduce large memory allocation while loading list of fonts)
+  2. Improvements in loading language file (less memory usage and quick application loading time)
+  3. Fix memory leak on palette extraction from image
+  4. Improvements in loading wallpaper thumbnail, with fixing its bug #166
+- Updated JetbrainMono font to v2.304</value>
+  </data>
+  <data name="Label27.Text" xml:space="preserve">
+    <value>• Updated JetbrainMono font to v2.304
+  
+• Patching imageres.dll is blocked by defaults in settings
+  
 • Save theme confirmation dialog redesigned, with new applying options (first theme and default Windows)
-
-• Added an option to use the native classic Windows color picker instead of WinPaletter's one (Open Settings &gt; Miscellaneous)
-
-• Improvements for previewer in both main form and drag-drop
-
-• Removed fonts lists in consoles\terminals, being replaced by native Windows Fonts picker (to reduce large memory allocation while loading list of fonts)</value>
+  
+• Bug reporting (Exceptions errors handling) improvements
+  
+• Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
+  
+• Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
+  
+• Language items/texts of What's new labels will be neither loaded nor exported in/from it to avoid confusion between newly added labels' texts and old language translation
+  
+• Embedded assemblies (references) are now compressed (to try to make WinPaletter with a small file size as much as possible)</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
-    <value>• Fix memory leak on palette extraction from image
-
-• Fix logoff process is not found on pressing logoff button
-
-• Fix error occuring during loading Windows Terminal preferences that inhibits the application from opening
-
+    <value>• OS detection method changed to avoid bug #164
+• Application startup crash #153
 • Fix no wallpaper preview with wallpaper sideshow or windows spotlight is enabled
-
-• Fix wallpaper preview is not synchronized in Windows XP
-
+• WinPaletter update error #154
 • Fix wrong preview of color on Windows 11/10 taskbar
-
-• Fix application crash on starting WinPaletter with classic theme enabled</value>
+• Fix wallpaper preview is not synchronized in Windows XP
+• Fix application crash on starting WinPaletter with classic theme enabled
+• Windows Terminal:
+  - Fixed edit button sets wrong text on pressing cancel
+  - Fix error occuring during loading Windows Terminal preferences that inhibits the application from opening #147
+• Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
+• Fix Windows 7 and 8.1 logonUI/lock screen applying error
+• Fix applying fonts size trouble with high DPI #157 #160
+• Metrics and fonts form error #155
+• Fix error on pressing 'Logoff' button on main form #141 #167
+• Fix theme apply error on applying Windows Effects #163
+• Windows switcher crash #149
+• Fix bug of dark/light mode loading in 'Language add snippet' form
+• UI #134
+• Spelling correction #140</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
