@@ -2,6 +2,156 @@
 
 ---
 
+### 1.0.8.0
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 02 Sep 2023  |
+
+> **Note**
+> Please run `SFC /scannow` in Command Prompt as administrator if you used a previous beta version to fix imageres.dll corruption made by modifying Windows startup sound and restart then Windows. Don't use previous beta versions.
+
+> **Note**
+> Opening this new release after using old stable releases will reset your WinPaletter settings as its mechanism has been changed to a new better one. Know what you have changed in WinPaletter settings before using this release.
+
+# These are all new features, changes and improvements made since latest stable version: 1.0.7.6
+
+> **What's New?**
+
+# New Features:
+
+### 1. WinPaletter Store:
+
+- You can now apply themes from the Store either online or offline from local folder
+- You can also upload your themes
+- [Read this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-basics) to know more about WinPaletter Store
+- WinPaletter Store is redesigned from latest beta versions
+
+### 2. Help (Wiki)
+
+- This will help you use WinPaletter, making it simpler than before
+- [Visit it](https://github.com/Abdelrhman-AK/WinPaletter/wiki)
+- Help buttons are added to most forms to redirect you to related wiki page
+
+### 3. Sounds #138:
+
+- Now you can modify most Windows sounds events entries, including Windows Vista to 11 startup
+
+### 4. Screen Saver #138:
+
+- You might not know it, it was an animated full-screen window to save\preserve CRT monitors in the past
+- You can select a file that you can get online or from an old Windows, its extension is `.scr`
+- You can find some screen savers in %windir%\System32
+
+### 5. Wallpaper #137:
+
+- Now you can select an image or a color to be set as your wallpaper, and you can also change its style
+- Wallpaper tone feature has been moved here to Wallpaper
+
+### 6. WinPaletter application theme:
+
+- Now you can change the colors/style of WinPaletter itself, to make it consistent with a theme you design
+- You can prevent or block its actions by going to Settings `>` Appearance and uncheck (Make WinPaletter appearance is managed by the loaded theme ......)
+
+### 7. Theme file (*.wpth) reading/writing mechanism is rewritten:
+
+- Now, theme file contents will be written as JSON that is better in coding, this new theme file format is valid for WinPaletter 1.0.7.7 and higher not lower
+- You can convert themes made by old versions of WinPaletter to make them compatible with new WinPaletter versions
+- New format can be compressed to save space especially for WinPaletter Store, to make loading themes from servers quick
+- New format can have an external theme resources pack file that contains images. sounds, screen savers,... that is loaded each time you load its theme. And this is useful for sharing themes especially through WinPaletter Store
+- External theme resources pack can be made by pressing edit button in main window (Pencil icon) and go to 'Theme resources pack' and check its choice
+
+### 8. Theme file info:
+
+- New options are added in WinPaletter theme info, including info for Store that is useful for uploading themes, options related to external themes resources pack and theme credits\licenses
+- Edit these info by pressing edit button in main window (Pencil icon), open all tabs and then edit the info
+
+### 9. Windows Effects new features:
+
+- Colors Filter (Accessibility feature) #136
+- Hide scrollbar in modern Windows 10/11 apps #135
+- Full Screen start menu for Windows 10
+- Enable Windows 7 taskbar volume mixer for Windows 10 only
+
+### 10. Metrics and Fonts new features:
+
+- You can change Shell Icon and Shell Small Icon for Windows XP #133
+- In Miscellaneous, you can make the fonts "Single bit per pixel" to give your fonts the look of old versions of Windows
+
+### 11. WinPaletter settings read/write mechanism is re-written
+
+And this is to make it more organized (each section is in a separate key (folder)) and export/import mechanisms changed to be with JSON format. Open `HKEY_CURRENT_USER\Software\WinPaletter\Settings` after opening WinPaletter to know the changed mechanism if you are curious
+
+# Improvements:
+
+1. Color item info:
+   
+   - It was formely named nerd color info
+   - There will be a dot inside color info rectangle to indicate that the choosen color is not as the default color
+   - Color picker control is now condensed, the previous one was extremely big compared to its contents
+   - New settings section:
+     - Make color label more transparent
+     - Use default Windows monospaced font instead of JetBrains Mono
+     - Use classic color picker instead of WinPaletter's default one on pressing on a color palette item
+
+2. Extensive reduction in memory (RAM) ussage:
+   
+   1. Removed fonts lists in consoles\terminals, being replaced by native Windows Fonts picker (to reduce large memory allocation while loading list of fonts)
+   2. Improvements in loading language file (less memory usage and quick application loading time)
+   3. Fix memory leak on palette extraction from image
+   4. Improvements in loading wallpaper thumbnail, with fixing its bug #166
+
+3. Updated JetbrainMono font to v2.304
+
+4. Patching imageres.dll is blocked by defaults in settings, [read this for more info](https://github.com/Abdelrhman-AK/WinPaletter/wiki/unlock-patching-imageres.dll-to-change-Windows-startup-sound)
+
+5. Save theme confirmation dialog redesigned, with new applying options (first theme and default Windows)
+
+6. Bug reporting (Exceptions errors handling) improvements
+
+7. Now WinPaletter will always start elevated (start as administrator) to make applying themes quicker as much as possible, and to avoid patching `imageres.dll` error (on changing Windows startup sound)
+
+8. Drag and drop preview is removed (as this feature is not supported in any Windows application started as administrator)
+
+9. Language items/texts of What's new labels will be neither loaded nor exported in/from it to avoid confusion between newly added labels' texts and old language translation
+
+10. Embedded assemblies (references) are now compressed (to try to make WinPaletter with a small file size as much as possible)
+
+# Bugs fixes:
+
+1. OS detection method changed to avoid bug #164
+2. Application startup crash #153
+3. Fix no wallpaper preview with wallpaper sideshow or windows spotlight is enabled
+4. WinPaletter update error #154
+5. Fix wrong preview of color on Windows 11/10 taskbar
+6. Fix wallpaper preview is not synchronized in Windows XP
+7. Fix application crash on starting WinPaletter with classic theme enabled
+8. Windows Terminal: 
+   - Fixed edit button sets wrong text on pressing cancel
+   - Fix error occuring during loading Windows Terminal preferences that inhibits the application from opening #147
+9. Fix bug of Windows 8.1 Start screen black rectangles if designing theme from another version of Windows (not 8.1)
+10. Fix Windows 7 and 8.1 logonUI/lock screen applying error
+11. Fix applying fonts size trouble with high DPI #157 #160
+12. Metrics and fonts form error #155
+13. Fix error on pressing 'Logoff' button on main form #141 #167
+14. Fix theme apply error on applying Windows Effects #163
+15. Windows switcher crash #149
+16. Fix bug of dark/light mode loading in 'Language add snippet' form
+17. UI #134
+18. Spelling correction #140
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.7.6`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.6...v1.0.8.0) |
+| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.9...v1.0.8.0) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.0) |
+
+---
+
 ### 1.0.7.9
 
 > **Info:**
