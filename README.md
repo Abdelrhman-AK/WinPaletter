@@ -10,6 +10,8 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) [Changelog](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
 
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 [- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
 
@@ -100,11 +102,6 @@
 
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
 Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
-
-
----
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
 ---
 
