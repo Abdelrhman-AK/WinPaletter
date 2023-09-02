@@ -11,7 +11,7 @@
 | `Stable` | 02 Sep 2023  |
 
 > **Warning**
-> Please run `SFC /scannow` in Command Prompt as administrator if you used a previous beta version to fix imageres.dll corruption made by modifying Windows startup sound and restart then Windows. Don't use previous beta versions.
+> Please run `SFC /scannow` in Command Prompt as administrator if you used a previous beta version to fix imageres.dll corruption made by modifying Windows startup sound and then restart Windows. Don't use previous beta versions.
 
 > **Warning**
 > Opening this new release after using old stable releases will reset your WinPaletter settings as its mechanism has been changed to a new better one. Know what you have changed in WinPaletter settings before using this release.
