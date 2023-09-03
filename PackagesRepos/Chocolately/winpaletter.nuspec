@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata>
+    <id>WinPaletter</id>
+    <title>WinPaletter</title>
+    <version>1.0.8.0</version>
+    <authors>Abdelrhman-AK</authors>
+    <description>WinPaletter is a portable application that helps you customize Windows aspects in an advanced way</description>
+    <projectUrl>https://github.com/Abdelrhman-AK/WinPaletter</projectUrl>
+    <licenseUrl>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+  </metadata>
+</package>
