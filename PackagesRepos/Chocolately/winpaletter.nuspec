@@ -1,13 +1,22 @@
 <?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata>
-    <id>WinPaletter</id>
+    <id>winpaletter</id>
     <title>WinPaletter</title>
+    <id>chocolatey</id>
     <version>1.0.8.0</version>
     <authors>Abdelrhman-AK</authors>
+    <owners>Abdelrhman-AK</owners>
+    <iconUrl>https://chocolatey.org/assets/images/nupkg/chocolateyicon.png</iconUrl>
+    <tags>winpaletter mods windows customize cursors logonui colors classic cmd console terminal metrics fonts wallpaper sounds screensavers</tags>
     <description>WinPaletter is a portable application that helps you customize Windows aspects in an advanced way</description>
+    <summary>Customize your Windows aspects</summary>
     <projectUrl>https://github.com/Abdelrhman-AK/WinPaletter</projectUrl>
+    <projectSourceUrl>https://github.com/Abdelrhman-AK/WinPaletter</projectSourceUrl>
+    <packageSourceUrl>https://github.com/Abdelrhman-AK/WinPaletter/tree/master</packageSourceUrl>
+    <bugTrackerUrl>https://github.com/Abdelrhman-AK/WinPaletter/issues</bugTrackerUrl>
     <licenseUrl>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md</licenseUrl>
+    <releaseNotes>https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md</releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
   </metadata>
 </package>
