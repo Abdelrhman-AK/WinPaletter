@@ -899,8 +899,8 @@ Namespace NativeMethods
         Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal lpType As String, ByVal iResID As Integer, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
         End Function
 
-        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="EndUpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
-        Public Shared Function EndUpdateResource(ByVal hUpdate As IntPtr, ByVal bDiscard As Boolean) As Boolean
+        <DllImport("KERNEL32.DLL", SetLastError:=True)>
+        Public Shared Function EndUpdateResource(ByVal hUpdate As IntPtr, ByVal fDiscard As Boolean) As Boolean
         End Function
 
         <DllImport("kernel32.dll", SetLastError:=True)>

@@ -3,11 +3,10 @@
   <metadata>
     <id>winpaletter</id>
     <title>WinPaletter</title>
-    <id>chocolatey</id>
     <version>1.0.8.0</version>
     <authors>Abdelrhman-AK</authors>
     <owners>Abdelrhman-AK</owners>
-    <iconUrl>https://chocolatey.org/assets/images/nupkg/chocolateyicon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/Abdelrhman-AK/WinPaletter/master/icon.png</iconUrl>
     <tags>winpaletter mods windows customize cursors logonui colors classic cmd console terminal metrics fonts wallpaper sounds screensavers</tags>
     <description>WinPaletter is a portable application that helps you customize Windows aspects in an advanced way</description>
     <summary>Customize your Windows aspects</summary>

@@ -2776,7 +2776,7 @@
   <data name="BackgroundOpacity" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAAAZQTFRFv7+/
-        ////mcP/dAAAAAlwSFlzAAAOvgAADr4B6kKxwAAAABRJREFUGNNjAAFBIKCUQQ0zGBgYADKfBEHwEQCB
+        ////mcP/dAAAAAlwSFlzAAAOvQAADr0BR/uQrQAAABRJREFUGNNjAAFBIKCUQQ0zGBgYADKfBEHwEQCB
         AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -24482,7 +24482,7 @@
   <data name="Store_ThemeVersion" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAUtJREFUOE+t1M0uQ1EUBeCqxEQr3oCUJjohSqSEGQ+gD+AOdCB+4i2Y4SVMFfE/
+        vwAADr8BOAVTJAAAAUtJREFUOE+t1M0uQ1EUBeCqxEQr3oCUJjohSqSEGQ+gD+AOdCB+4i2Y4SVMFfE/
         QyJe476JteRsWXffLVFpky+5Z5911uD+tJLn+VCFQ5NlWRVmYQPW03U1yppwiEN1OIYn+HQe4RDq0dnS
         AMHFdMgXefew4M8XFggsw3s68BfMtrVDyybhJQUH8QwTUSHviwa5vnAzOocjN9svFGLAp/kgAdqBKfiQ
         Ga8540+zd/D99K2wKZsaGoNTmZ2kGR+IZqmhhWtu02xDS9Zz0JW16mhhx22aKxgF3rezdN2HKLuihTNu
@@ -28796,12 +28796,12 @@
 </value>
   </data>
   <data name="XML_Logoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Logoff.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+    <value>..\Resources\XML_Logoff.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="XML_Logon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Logon.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+    <value>..\Resources\XML_Logon.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="XML_Shutdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\XML_Shutdown.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-16</value>
+    <value>..\Resources\XML_Shutdown.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

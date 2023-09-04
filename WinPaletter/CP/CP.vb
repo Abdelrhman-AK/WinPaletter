@@ -2583,34 +2583,33 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String)
 
-                Dim destination_StartupSnd As String
-
-                If My.W10 Then
-                    destination_StartupSnd = "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System"
-                Else
-                    destination_StartupSnd = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"
-                End If
+                Dim destination_StartupSnd As String() = {"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"}
 
                 If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
-                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
 
                 ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
-                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
 
                 ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
-                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
 
                 ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
-                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", (Not My.W11).ToInteger)
+                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
+                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
 
                 Else
-                    EditReg_CMD(destination_StartupSnd, "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
 
                 End If
 
                 If Enabled Then
 
-                    If Not My.WXP AndAlso My.Settings.ThemeApplyingBehavior.ApplyImageresStartupSound Then
+                    If Not My.WXP Then
 
                         If IO.File.Exists(Snd_Imageres_SystemStart) AndAlso IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
 
@@ -2634,7 +2633,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     End If
 
-                    If My.W8 Or My.W81 Or My.W10 Or My.W11 Then
+                    If My.W8 Or My.W81 Or My.W10 Or My.W11 Or My.W12 Then
                         If IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
                         Else

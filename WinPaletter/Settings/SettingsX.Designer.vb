@@ -103,8 +103,6 @@ Partial Class SettingsX
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.XenonTabControl2 = New WinPaletter.XenonTabControl()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
-        Me.XenonCheckBox35 = New WinPaletter.XenonCheckBox()
-        Me.PictureBox66 = New System.Windows.Forms.PictureBox()
         Me.XenonAlertBox19 = New WinPaletter.XenonAlertBox()
         Me.Label50 = New System.Windows.Forms.Label()
         Me.PictureBox62 = New System.Windows.Forms.PictureBox()
@@ -341,7 +339,6 @@ Partial Class SettingsX
         Me.TabPage5.SuspendLayout()
         Me.XenonTabControl2.SuspendLayout()
         Me.TabPage11.SuspendLayout()
-        CType(Me.PictureBox66, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox62, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel11.SuspendLayout()
         CType(Me.PictureBox61, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1434,8 +1431,6 @@ Partial Class SettingsX
         'TabPage11
         '
         Me.TabPage11.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage11.Controls.Add(Me.XenonCheckBox35)
-        Me.TabPage11.Controls.Add(Me.PictureBox66)
         Me.TabPage11.Controls.Add(Me.XenonAlertBox19)
         Me.TabPage11.Controls.Add(Me.Label50)
         Me.TabPage11.Controls.Add(Me.PictureBox62)
@@ -1455,30 +1450,6 @@ Partial Class SettingsX
         Me.TabPage11.Size = New System.Drawing.Size(815, 382)
         Me.TabPage11.TabIndex = 0
         Me.TabPage11.Text = "General"
-        '
-        'XenonCheckBox35
-        '
-        Me.XenonCheckBox35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox35.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox35.Checked = False
-        Me.XenonCheckBox35.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox35.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox35.Location = New System.Drawing.Point(43, 346)
-        Me.XenonCheckBox35.Name = "XenonCheckBox35"
-        Me.XenonCheckBox35.Size = New System.Drawing.Size(767, 24)
-        Me.XenonCheckBox35.TabIndex = 51
-        Me.XenonCheckBox35.Text = "Patch imageres.dll to change Windows startup sound (use it on your own risk)"
-        '
-        'PictureBox66
-        '
-        Me.PictureBox66.Image = CType(resources.GetObject("PictureBox66.Image"), System.Drawing.Image)
-        Me.PictureBox66.Location = New System.Drawing.Point(13, 346)
-        Me.PictureBox66.Name = "PictureBox66"
-        Me.PictureBox66.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox66.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox66.TabIndex = 50
-        Me.PictureBox66.TabStop = False
         '
         'XenonAlertBox19
         '
@@ -4253,7 +4224,6 @@ Partial Class SettingsX
         Me.TabPage5.ResumeLayout(False)
         Me.XenonTabControl2.ResumeLayout(False)
         Me.TabPage11.ResumeLayout(False)
-        CType(Me.PictureBox66, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox62, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel11.ResumeLayout(False)
         CType(Me.PictureBox61, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4613,6 +4583,4 @@ Partial Class SettingsX
     Friend WithEvents PictureBox45 As PictureBox
     Friend WithEvents PictureBox42 As PictureBox
     Friend WithEvents PictureBox27 As PictureBox
-    Friend WithEvents XenonCheckBox35 As XenonCheckBox
-    Friend WithEvents PictureBox66 As PictureBox
 End Class

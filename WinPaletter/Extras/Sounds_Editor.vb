@@ -70,6 +70,8 @@ Public Class Sounds_Editor
                 End Try
 
             Else
+                If AltPlayingMethod Then NativeMethods.DLLFunc.StopAudio()
+
                 If SP IsNot Nothing Then
                     SP.Stop()
                     SP.Dispose()
@@ -104,6 +106,8 @@ Public Class Sounds_Editor
             End Try
 
         Else
+            If AltPlayingMethod Then NativeMethods.DLLFunc.StopAudio()
+
             If SP IsNot Nothing Then
                 SP.Stop()
                 SP.Dispose()
@@ -128,15 +132,20 @@ Public Class Sounds_Editor
             End If
         End With
 
-
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             snd = OpenFileDialog2.FileName
+
             DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0).Text = snd
-            Using FS As New IO.FileStream(snd, IO.FileMode.Open, IO.FileAccess.Read)
-                SP = New SoundPlayer(FS)
-                SP.Load()
-                SP.Play()
-            End Using
+            Try
+                Using FS As New IO.FileStream(snd, IO.FileMode.Open, IO.FileAccess.Read)
+                    SP = New SoundPlayer(FS)
+                    SP.Load()
+                    SP.Play()
+                End Using
+            Catch ex As Exception
+                AltPlayingMethod = True
+                NativeMethods.DLLFunc.PlayAudio(snd)
+            End Try
         End If
     End Sub
 #End Region

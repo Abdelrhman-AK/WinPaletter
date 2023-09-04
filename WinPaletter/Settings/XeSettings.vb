@@ -108,7 +108,6 @@ Public Class XeSettings
             Public PS64_HKU_DEFAULT_Prefs As OverwriteOptions
             Public Desktop_HKU_DEFAULT As OverwriteOptions
             Public CMD_OverrideUserPreferences As Boolean
-            Public ApplyImageresStartupSound As Boolean
 
             Public Enum OverwriteOptions
                 DontChange
@@ -133,7 +132,6 @@ Public Class XeSettings
                 AutoApplyCursors = GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", True)
                 ResetCursorsToAero = GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", My.WXP)
                 DelayMetrics = GetReg(REG_ThemeApplyingBehavior, "DelayMetrics", False)
-                ApplyImageresStartupSound = GetReg(REG_ThemeApplyingBehavior, "ApplyImageresStartupSound", False)
 
             End Sub
 
@@ -153,7 +151,6 @@ Public Class XeSettings
                 EditReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord)
                 EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord)
                 EditReg(REG_ThemeApplyingBehavior, "DelayMetrics", DelayMetrics, RegistryValueKind.DWord)
-                EditReg(REG_ThemeApplyingBehavior, "ApplyImageresStartupSound", ApplyImageresStartupSound, RegistryValueKind.DWord)
             End Sub
 
         End Structure

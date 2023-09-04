@@ -248,6 +248,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_RestoreCursorsTip As String = "If you want to restore default cursors, go to Control Panel > Mouse > Pointers"
     Property CP_UpdateDLL_AsAdmin_Error0 As String = "You must be running WinPaletter as Administrator to update resources of ""{0}"""
     Property CP_UpdateDLL_AsAdmin_Error1 As String = "This process is required for changing Windows startup sound"
+    Property CP_UpdateDLL_Error As String = "Couldn't update {0} resources. Please report this in Github issues with error {1}."
     Property CP_Wallpaper_NonBMP0 As String = "Due to odd reason, Windows XP, Vista & 7 can't set an image that is not a bitmap format directly as a wallpaper."
     Property CP_Wallpaper_NonBMP1 As String = "Do you want to convert the current image to have internal bitmap format? (It will still have the same file extension)"
     Property Lang_HasLeftToRight As String = "It has left to right layout"

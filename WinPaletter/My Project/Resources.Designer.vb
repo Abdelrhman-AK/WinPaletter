@@ -1992,14 +1992,14 @@ Namespace My.Resources
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
-        '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
+        '''    &lt;Author&gt;WinPaletter, MuscularPuky&lt;/Author&gt;
         '''    &lt;Description&gt;Play Windows Logoff sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Logoff&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[Ev [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp; [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logoff() As String
             Get

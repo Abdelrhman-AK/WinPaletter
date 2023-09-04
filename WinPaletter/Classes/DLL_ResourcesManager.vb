@@ -14,120 +14,113 @@ Public Module DLL_ResourcesManager
 #Region "Subs"
 
     Public Function GetResource(SourceFile As String, ResourceType As String, ID As Integer) As Byte()
-        Wow64DisableWow64FsRedirection(IntPtr.Zero)
         Dim hModule = LoadLibraryEx(SourceFile, IntPtr.Zero, 2UI)
         Dim _intPtr = FindResource(hModule, ID, ResourceType)
+
         If _intPtr = IntPtr.Zero Then
             FreeLibrary(hModule)
             Return Nothing
         End If
+
         Dim num = SizeofResource(hModule, _intPtr)
+        If num = 0 Then Return Nothing
+
         Dim intPtr2 = LoadResource(hModule, _intPtr)
-        If num = 0 Then
-            Return Nothing
-        End If
-        If intPtr2 = IntPtr.Zero Then
-            Return Nothing
-        End If
+        If intPtr2 = IntPtr.Zero Then Return Nothing
+
         Dim array = New Byte(num - 1) {}
         Marshal.Copy(intPtr2, array, 0, num)
         FreeLibrary(hModule)
-        Wow64RevertWow64FsRedirection(IntPtr.Zero)
         Return array
     End Function
 
     Public Function ReplaceResource(SourceFile As String, ResourceType As String, ID As Integer, NewRes As Byte(), Optional LangID As UShort = 1033) As Boolean
         If My.isElevated Then
+
             Wow64DisableWow64FsRedirection(IntPtr.Zero)
-            Prepare()
 
             Dim tempFileName As String = Path.GetTempFileName()
-            Dim flag As Boolean
+            Dim success_0 As Boolean = False
+            Dim success_EndUpdateResource As Boolean = False
 
-            If Not BackupRights(SourceFile, tempFileName) Then
-                Return False
+            PreparePrivileges()                                             'To get authorized access to change PE file access/permissions
+
+            If CreateBackup(SourceFile) Then                                'Makes a copy of EP file as a backup file
+
+                If BackupPermissions(SourceFile, tempFileName) Then         'Source file rights have been backed up successfully
+
+                    Dim hModule = LoadLibraryEx(SourceFile, IntPtr.Zero, 2UI)
+                    Dim _intPtr = FindResource(hModule, ID, ResourceType)
+                    FreeLibrary(hModule)
+
+                    If _intPtr <> IntPtr.Zero Then                          'Target resource has been found
+
+                        PreparePrivileges()                                 'To get authorized access to change resources for PE file
+                        Dim intPtr_res = BeginUpdateResource(SourceFile, False)
+
+                        If intPtr_res <> IntPtr.Zero Then                   'Updating resource is initiated successfully
+
+                            success_0 = UpdateResource(intPtr_res, ResourceType, ID, LangID, NewRes, CUInt(NewRes.Length))
+
+                            If success_0 Then
+                                success_EndUpdateResource = EndUpdateResource(intPtr_res, False)
+                            End If
+
+                        End If
+
+                    End If
+
+                    RestorePermissions(SourceFile, tempFileName)
+
+                End If
             End If
-            If PrepareFileCopy(SourceFile) Then
-                Dim hModule = LoadLibraryEx(SourceFile, System.IntPtr.Zero, 2UI)
-                Dim _intPtr = FindResource(hModule, ID, ResourceType)
-                FreeLibrary(hModule)
-                If _intPtr = IntPtr.Zero Then
-                    Return False
-                End If
-                Dim intPtr2 = BeginUpdateResource(SourceFile, bDeleteExistingResources:=False)
-                If intPtr2 = IntPtr.Zero Then
-                    Return False
-                End If
 
-                flag = UpdateResource(intPtr2, ResourceType, ID, LangID, NewRes, CUInt(NewRes.Length))
+            If Not success_0 Or Not success_EndUpdateResource Then MsgBox(String.Format(My.Lang.CP_UpdateDLL_Error, SourceFile, Marshal.GetLastWin32Error), MsgBoxStyle.Critical)
 
-                Prepare()
-                If Not EndUpdateResource(intPtr2, Not flag) Then
-                    Throw New Exception("EndUpdateResource Failed:" & Marshal.GetLastWin32Error())
-                End If
-                For Each path In Directory.GetFiles(IO.Path.GetDirectoryName(SourceFile), IO.Path.GetFileNameWithoutExtension(SourceFile) & "*.dll_bak")
-                    Try
-                        File.Delete(path)
-                    Catch
-                    End Try
-                Next
-            Else
-                flag = False
-            End If
-
-            RestoreRights(SourceFile, tempFileName)
             Wow64RevertWow64FsRedirection(IntPtr.Zero)
-            Return flag
+
+            Return success_0
         Else
             MsgBox(String.Format(My.Lang.CP_UpdateDLL_AsAdmin_Error0, SourceFile), MsgBoxStyle.Exclamation, My.Lang.CP_UpdateDLL_AsAdmin_Error1)
             Return False
         End If
     End Function
 
-    Private Function PrepareFileCopy(SourceFile) As Boolean
-        For Each path In Directory.GetFiles(IO.Path.GetDirectoryName(SourceFile), IO.Path.GetFileNameWithoutExtension(SourceFile) & "*.dll_bak")
+    Private Function CreateBackup(SourceFile) As Boolean
+        For Each backupFile In Directory.GetFiles(IO.Path.GetDirectoryName(SourceFile), IO.Path.GetFileNameWithoutExtension(SourceFile) & "*.dll_bak")
             Try
-                File.Delete(path)
+                File.Delete(backupFile)
             Catch
             End Try
-            Prepare()
+            PreparePrivileges()
         Next
         Dim result = True
         Try
-            Prepare()
-            Dim text = Path.GetDirectoryName(SourceFile) & "\" & Path.GetFileNameWithoutExtension(SourceFile) & Date.Now.ToBinary & ".dll_bak"
+            PreparePrivileges()
+            Dim backupFile = Path.GetDirectoryName(SourceFile) & "\" & Path.GetFileNameWithoutExtension(SourceFile) & Date.Now.ToBinary & ".dll_bak"
 
             If Not My.isElevated Then
                 Reg_IO.Takeown_File(SourceFile)
                 Reg_IO.ICACLS(SourceFile)
             End If
 
-            File.Move(SourceFile, text)
-            File.Copy(text, SourceFile)
+            File.Move(SourceFile, backupFile)
+            File.Copy(backupFile, SourceFile)
             Return result
         Catch
             Return False
         End Try
     End Function
 
-    Public Function BackupRights(SourceFile As String, BackupFile As String) As Boolean
+    Public Function BackupPermissions(SourceFile As String, BackupFile As String) As Boolean
         Try
-            Dim accessControl = File.GetAccessControl(SourceFile)
-            If accessControl Is Nothing Then
-                Return False
-            End If
+            Dim accessControl As FileSecurity = File.GetAccessControl(SourceFile)
+            If accessControl Is Nothing Then Return False
 
-            Using fileStream = File.Create(BackupFile, 1, FileOptions.None, accessControl)
-                fileStream.Close()
-            End Using
+            Using fileStream As FileStream = File.Create(BackupFile, 1, FileOptions.None, accessControl) : fileStream.Close() : End Using
 
-            If My.isElevated Then
-                accessControl.SetOwner(AdminAccount) : File.SetAccessControl(SourceFile, accessControl)
-                accessControl.AddAccessRule(AccessRule) : File.SetAccessControl(SourceFile, accessControl)
-            Else
-                Reg_IO.Takeown_File(SourceFile, True)
-                Reg_IO.ICACLS(SourceFile, True)
-            End If
+            accessControl.SetOwner(AdminAccount) : File.SetAccessControl(SourceFile, accessControl)
+            accessControl.AddAccessRule(AccessRule) : File.SetAccessControl(SourceFile, accessControl)
 
             Return True
         Catch ex As Exception
@@ -136,38 +129,25 @@ Public Module DLL_ResourcesManager
         End Try
     End Function
 
-    Public Function RestoreRights(SourceFile As String, BackupFile As String) As Boolean
-        Wow64DisableWow64FsRedirection(IntPtr.Zero)
-        Dim fileInfo As New FileInfo(BackupFile)
-        Dim accessControl As FileSecurity = fileInfo.GetAccessControl()
-        If accessControl Is Nothing Then
-            Wow64RevertWow64FsRedirection(IntPtr.Zero)
+    Public Function RestorePermissions(SourceFile As String, BackupFile As String) As Boolean
+        Try
+            Dim BackupAccessControl As FileSecurity = File.GetAccessControl(SourceFile)
+            If BackupAccessControl Is Nothing Then Return False
+
+            File.SetAccessControl(SourceFile, BackupAccessControl)
+            IO.File.Delete(BackupFile)
+            Return True
+        Catch ex As Exception
+            BugReport.ThrowError(ex)
             Return False
-        End If
-        accessControl.SetAccessRuleProtection(isProtected:=True, preserveInheritance:=True)
-        Dim owner = accessControl.GetOwner(GetType(NTAccount))
-        Dim fileInfo2 As New FileInfo(SourceFile)
-        fileInfo2.SetAccessControl(accessControl)
-        accessControl.SetOwner(owner)
-        fileInfo2.SetAccessControl(accessControl)
-        File.Delete(BackupFile)
-        Wow64RevertWow64FsRedirection(IntPtr.Zero)
-        Return True
+        End Try
     End Function
 
-    Public Sub Prepare()
-        If Not EnablePrivilege("SeTakeOwnershipPrivilege", disable:=False) Then
-            Throw New Exception("Failed to get SeTakeOwnershipPrivilege")
-        End If
-        If Not EnablePrivilege("SeSecurityPrivilege", disable:=False) Then
-            Throw New Exception("Failed to get SeSecurityPrivilege")
-        End If
-        If Not EnablePrivilege("SeRestorePrivilege", disable:=False) Then
-            Throw New Exception("Failed to get SeRestorePrivilege")
-        End If
-        If Not EnablePrivilege("SeBackupPrivilege", disable:=False) Then
-            Throw New Exception("Failed to get SeBackupPrivilege")
-        End If
+    Sub PreparePrivileges()
+        If Not EnablePrivilege("SeTakeOwnershipPrivilege", False) Then Throw New Exception("Failed to get SeTakeOwnershipPrivilege")
+        If Not EnablePrivilege("SeSecurityPrivilege", False) Then Throw New Exception("Failed to get SeSecurityPrivilege")
+        If Not EnablePrivilege("SeRestorePrivilege", False) Then Throw New Exception("Failed to get SeRestorePrivilege")
+        If Not EnablePrivilege("SeBackupPrivilege", False) Then Throw New Exception("Failed to get SeBackupPrivilege")
     End Sub
 #End Region
 

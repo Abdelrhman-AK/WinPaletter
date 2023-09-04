@@ -1,8 +1,8 @@
 ﻿$ErrorActionPreference = 'Stop' # stop on all errors
 #$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$appdir = Join-Path -Path ${env:ProgramFiles} -ChildPath '\Abdelrhman-AK\WinPaletter'
 $desktopdir = [Environment]::GetFolderPath("Desktop")
 $startdir = [Environment]::GetFolderPath('CommonStartMenu') + "\Programs\WinPaletter"
+$appdir = Join-Path -Path ${env:ProgramFiles} -ChildPath '\Abdelrhman-AK\WinPaletter'
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
@@ -17,15 +17,5 @@ $packageArgs = @{
 #Install-ChocolateyPackage @packageArgs # https://docs.chocolatey.org/en-us/create/functions/install-chocolateypackage
 Install-ChocolateyZipPackage @packageArgs # https://docs.chocolatey.org/en-us/create/functions/install-chocolateyzippackage
 
-$WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut($desktopdir + "\WinPaletter.lnk")
-$Shortcut.TargetPath = $appdir + "\WinPaletter.exe"
-$Shortcut.Arguments = ""
-$Shortcut.Save()
-
-New-Item -ItemType Directory -Force -Path $startdir
-$WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut([Environment]::GetFolderPath('CommonStartMenu') + "\Programs\WinPaletter\WinPaletter.lnk")
-$Shortcut.TargetPath = $appdir + "\WinPaletter.exe"
-$Shortcut.Arguments = ""
-$Shortcut.Save()
+Install-ChocolateyShortcut -ShortcutFilePath ($desktopdir + "\WinPaletter.lnk") -TargetPath ($appdir + "\WinPaletter.exe")
+Install-ChocolateyShortcut -ShortcutFilePath ($startdir + "\WinPaletter.lnk") -TargetPath ($appdir + "\WinPaletter.exe")
