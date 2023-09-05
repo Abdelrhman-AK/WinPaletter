@@ -40,6 +40,10 @@ You can get WinPaletter from one of these sources:
 | **Windows 8**                                          | `Not supported` :x:              | Not supported as .NET framework 4.7 or 4.8 can't be installed at all | 
 | **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista)|
 | **Windows XP**                                         | `1.0.7.1`                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)|
+
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
+[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
+
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
@@ -117,8 +121,3 @@ You can get WinPaletter from one of these sources:
 
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
 Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
-
----
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
-[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
