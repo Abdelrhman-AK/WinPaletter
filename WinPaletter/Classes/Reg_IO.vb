@@ -71,13 +71,18 @@ Public Class Reg_IO
 
         'Skips setting to registry if the values are the same
         Try
-            If R.OpenSubKey(KeyName).GetValue(ValueName, Nothing).Equals(Value) Then
+            If R.OpenSubKey(KeyName).GetValue(ValueName, Nothing) = (Value) Then
+
                 If R IsNot Nothing Then
                     R.Flush()
                     R.Close()
                 End If
 
                 Exit Sub
+
+            Else
+                'MsgBox("change value" & vbCrLf & KeyName & vbCrLf & ValueName & vbCrLf & "From: " & R.OpenSubKey(KeyName).GetValue(ValueName, Nothing) & " to: " & Value)
+
             End If
         Catch
         End Try

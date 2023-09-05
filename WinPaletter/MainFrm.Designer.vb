@@ -5581,6 +5581,7 @@ Partial Class MainFrm
         Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView1.ForeColor = System.Drawing.Color.White
         Me.TreeView1.FullRowSelect = True
+        Me.TreeView1.Indent = 19
         Me.TreeView1.ItemHeight = 28
         Me.TreeView1.Location = New System.Drawing.Point(6, 54)
         Me.TreeView1.Name = "TreeView1"

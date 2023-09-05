@@ -5047,6 +5047,9 @@ Start:
                 'Sounds
                 Execute(CType(Sub()
                                   Sounds.Apply()
+                                  If Not My.WXP AndAlso Sounds.Enabled Then
+                                      AddNode([TreeView], My.Lang.CP_Sound_MalwareTip, "warning")
+                                  End If
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Sounds, My.Lang.CP_Error_Sounds, My.Lang.CP_Time, sw_all, Not Sounds.Enabled, My.Lang.CP_Skip_Sounds)
 
                 'Cursors

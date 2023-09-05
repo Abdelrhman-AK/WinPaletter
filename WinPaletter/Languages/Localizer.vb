@@ -251,6 +251,7 @@ Public Class Localizer : Implements IDisposable
     Property CP_UpdateDLL_Error As String = "Couldn't update {0} resources. Please report this in Github issues with error {1}."
     Property CP_Wallpaper_NonBMP0 As String = "Due to odd reason, Windows XP, Vista & 7 can't set an image that is not a bitmap format directly as a wallpaper."
     Property CP_Wallpaper_NonBMP1 As String = "Do you want to convert the current image to have internal bitmap format? (It will still have the same file extension)"
+    Property CP_Sound_MalwareTip As String = "Startup sound: Windows Security may detect a malware on patching imageres.dll"
     Property Lang_HasLeftToRight As String = "It has left to right layout"
     Property Lang_HasRightToLeft As String = "It has right to left layout"
     Property CommandPrompt As String = "Command Prompt"

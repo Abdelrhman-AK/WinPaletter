@@ -148,7 +148,7 @@
 </value>
   </data>
   <data name="XenonAlertBox4.Text" xml:space="preserve">
-    <value>Changing startup sound in "imageres.dll" will change this file integrity and might cause a bug that make Windows Explorer icons blank with labels only. When you run a "sfc /scannow" in command prompt, it will find an error in this file and will repair it. When it is repaired, default Windows startup sound will be restored and this bug will be fixed after a Windows restart.</value>
+    <value>Changing startup sound in "imageres.dll" will change this file integrity. When you run a "sfc /scannow" in command prompt, it will find an error in this file and will repair it. When it is repaired, default Windows startup sound will be restored.</value>
   </data>
   <data name="XenonButton201.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

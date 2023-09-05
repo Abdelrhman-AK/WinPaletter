@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Sounds_Editor
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Sounds_Editor
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Sounds_Editor))
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
@@ -30,7 +30,6 @@ Partial Class Sounds_Editor
         Me.XenonButton8 = New WinPaletter.XenonButton()
         Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonAlertBox5 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
         Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
@@ -642,6 +641,7 @@ Partial Class Sounds_Editor
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.Malware_alertbox = New WinPaletter.XenonAlertBox()
         Me.XenonTabControl1.SuspendLayout
         Me.TabPage1.SuspendLayout
         Me.XenonGroupBox65.SuspendLayout
@@ -846,7 +846,7 @@ Partial Class Sounds_Editor
         Me.XenonButton10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(620, 514)
+        Me.XenonButton10.Location = New System.Drawing.Point(620, 465)
         Me.XenonButton10.Name = "XenonButton10"
         Me.XenonButton10.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton10.TabIndex = 213
@@ -863,7 +863,7 @@ Partial Class Sounds_Editor
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(534, 514)
+        Me.XenonButton7.Location = New System.Drawing.Point(534, 465)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 212
@@ -881,7 +881,7 @@ Partial Class Sounds_Editor
         Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(741, 514)
+        Me.XenonButton8.Location = New System.Drawing.Point(741, 465)
         Me.XenonButton8.Name = "XenonButton8"
         Me.XenonButton8.Size = New System.Drawing.Size(180, 34)
         Me.XenonButton8.TabIndex = 211
@@ -891,7 +891,8 @@ Partial Class Sounds_Editor
         'XenonTabControl1
         '
         Me.XenonTabControl1.Alignment = System.Windows.Forms.TabAlignment.Left
-        Me.XenonTabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.XenonTabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonTabControl1.Controls.Add(Me.TabPage1)
         Me.XenonTabControl1.Controls.Add(Me.TabPage2)
@@ -913,14 +914,14 @@ Partial Class Sounds_Editor
         Me.XenonTabControl1.Multiline = True
         Me.XenonTabControl1.Name = "XenonTabControl1"
         Me.XenonTabControl1.SelectedIndex = 0
-        Me.XenonTabControl1.Size = New System.Drawing.Size(909, 455)
+        Me.XenonTabControl1.Size = New System.Drawing.Size(909, 403)
         Me.XenonTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.XenonTabControl1.TabIndex = 203
         '
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer))
-        Me.TabPage1.Controls.Add(Me.XenonAlertBox5)
+        Me.TabPage1.Controls.Add(Me.Malware_alertbox)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox4)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox2)
         Me.TabPage1.Controls.Add(Me.XenonAlertBox1)
@@ -934,28 +935,9 @@ Partial Class Sounds_Editor
         Me.TabPage1.Controls.Add(Me.XenonGroupBox1)
         Me.TabPage1.Location = New System.Drawing.Point(144, 4)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage1.Size = New System.Drawing.Size(761, 395)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main events"
-        '
-        'XenonAlertBox5
-        '
-        Me.XenonAlertBox5.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
-        Me.XenonAlertBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.XenonAlertBox5.CenterText = False
-        Me.XenonAlertBox5.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox5.Image = Nothing
-        Me.XenonAlertBox5.Location = New System.Drawing.Point(4, 250)
-        Me.XenonAlertBox5.Name = "XenonAlertBox5"
-        Me.XenonAlertBox5.Size = New System.Drawing.Size(754, 40)
-        Me.XenonAlertBox5.TabIndex = 11
-        Me.XenonAlertBox5.TabStop = False
-        Me.XenonAlertBox5.Text = "Changing startup sound is blocked in Settings by defaults. You can unblock it in " &
-    "Settings > Theme applying behavior > Patch imageres.dll to change Windows startu" &
-    "p sound (use it on your own risk)"
         '
         'XenonAlertBox4
         '
@@ -967,9 +949,9 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox4.Image = Nothing
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 338)
+        Me.XenonAlertBox4.Location = New System.Drawing.Point(4, 306)
         Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 60)
+        Me.XenonAlertBox4.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox4.TabIndex = 10
         Me.XenonAlertBox4.TabStop = False
         Me.XenonAlertBox4.Text = resources.GetString("XenonAlertBox4.Text")
@@ -984,7 +966,7 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 402)
+        Me.XenonAlertBox2.Location = New System.Drawing.Point(4, 350)
         Me.XenonAlertBox2.Name = "XenonAlertBox2"
         Me.XenonAlertBox2.Size = New System.Drawing.Size(754, 40)
         Me.XenonAlertBox2.TabIndex = 9
@@ -1003,14 +985,13 @@ Partial Class Sounds_Editor
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 294)
+        Me.XenonAlertBox1.Location = New System.Drawing.Point(4, 278)
         Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(754, 40)
+        Me.XenonAlertBox1.Size = New System.Drawing.Size(754, 24)
         Me.XenonAlertBox1.TabIndex = 8
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "Startup sound in Windows Vista and later is changed by patching ""imageres.dll"" in" &
-    " system32 directory and requires running as Administrator too, so there are two " &
-    "entries for startup sounds."
+    " system32 directory"
         '
         'XenonGroupBox65
         '
@@ -1894,7 +1875,7 @@ Partial Class Sounds_Editor
         Me.TabPage2.Controls.Add(Me.XenonGroupBox7)
         Me.TabPage2.Location = New System.Drawing.Point(144, 4)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage2.Size = New System.Drawing.Size(761, 367)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Dialogs"
         '
@@ -2710,7 +2691,7 @@ Partial Class Sounds_Editor
         Me.TabPage3.Controls.Add(Me.XenonGroupBox17)
         Me.TabPage3.Location = New System.Drawing.Point(144, 4)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage3.Size = New System.Drawing.Size(761, 367)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Window & menus"
         '
@@ -3650,7 +3631,7 @@ Partial Class Sounds_Editor
         Me.TabPage7.Controls.Add(Me.XenonGroupBox46)
         Me.TabPage7.Location = New System.Drawing.Point(144, 4)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage7.Size = New System.Drawing.Size(761, 367)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Devices"
         '
@@ -4462,7 +4443,7 @@ Partial Class Sounds_Editor
         Me.TabPage11.Controls.Add(Me.XenonGroupBox52)
         Me.TabPage11.Location = New System.Drawing.Point(144, 4)
         Me.TabPage11.Name = "TabPage11"
-        Me.TabPage11.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage11.Size = New System.Drawing.Size(761, 367)
         Me.TabPage11.TabIndex = 10
         Me.TabPage11.Text = "Fax"
         '
@@ -5050,7 +5031,7 @@ Partial Class Sounds_Editor
         Me.TabPage8.Controls.Add(Me.XenonGroupBox63)
         Me.TabPage8.Location = New System.Drawing.Point(144, 4)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage8.Size = New System.Drawing.Size(761, 367)
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "Explorer events"
         '
@@ -6094,7 +6075,7 @@ Partial Class Sounds_Editor
         Me.TabPage4.Controls.Add(Me.XenonGroupBox24)
         Me.TabPage4.Location = New System.Drawing.Point(144, 4)
         Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage4.Size = New System.Drawing.Size(761, 367)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Notifications"
         '
@@ -7139,7 +7120,7 @@ Partial Class Sounds_Editor
         Me.TabPage5.Controls.Add(Me.XenonGroupBox32)
         Me.TabPage5.Location = New System.Drawing.Point(144, 4)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage5.Size = New System.Drawing.Size(761, 367)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Alarms"
         '
@@ -8298,7 +8279,7 @@ Partial Class Sounds_Editor
         Me.TabPage6.Controls.Add(Me.XenonGroupBox45)
         Me.TabPage6.Location = New System.Drawing.Point(144, 4)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage6.Size = New System.Drawing.Size(761, 367)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Ringtones"
         '
@@ -9453,7 +9434,7 @@ Partial Class Sounds_Editor
         Me.TabPage10.Controls.Add(Me.XenonGroupBox75)
         Me.TabPage10.Location = New System.Drawing.Point(144, 4)
         Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage10.Size = New System.Drawing.Size(761, 367)
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "Speech recognition"
         '
@@ -10151,7 +10132,7 @@ Partial Class Sounds_Editor
         Me.TabPage12.Controls.Add(Me.XenonGroupBox84)
         Me.TabPage12.Location = New System.Drawing.Point(144, 4)
         Me.TabPage12.Name = "TabPage12"
-        Me.TabPage12.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage12.Size = New System.Drawing.Size(761, 367)
         Me.TabPage12.TabIndex = 11
         Me.TabPage12.Text = "NetMeeting"
         '
@@ -10635,7 +10616,7 @@ Partial Class Sounds_Editor
         Me.TabPage9.Controls.Add(Me.XenonGroupBox68)
         Me.TabPage9.Location = New System.Drawing.Point(144, 4)
         Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Size = New System.Drawing.Size(761, 447)
+        Me.TabPage9.Size = New System.Drawing.Size(761, 367)
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "Others"
         '
@@ -10879,12 +10860,30 @@ Partial Class Sounds_Editor
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
         '
+        'Malware_alertbox
+        '
+        Me.Malware_alertbox.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.Malware_alertbox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Malware_alertbox.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.Malware_alertbox.CenterText = False
+        Me.Malware_alertbox.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Malware_alertbox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Malware_alertbox.Image = Nothing
+        Me.Malware_alertbox.Location = New System.Drawing.Point(4, 250)
+        Me.Malware_alertbox.Name = "Malware_alertbox"
+        Me.Malware_alertbox.Size = New System.Drawing.Size(754, 24)
+        Me.Malware_alertbox.TabIndex = 11
+        Me.Malware_alertbox.TabStop = False
+        Me.Malware_alertbox.Text = "Patching imageres.dll to change startup sound is considered as a malware action f" &
+    "or Windows Security (Defender)"
+        '
         'Sounds_Editor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(933, 560)
+        Me.ClientSize = New System.Drawing.Size(933, 511)
         Me.Controls.Add(Me.XenonButton10)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton8)
@@ -10892,6 +10891,7 @@ Partial Class Sounds_Editor
         Me.Controls.Add(Me.XenonGroupBox12)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -11703,5 +11703,5 @@ Partial Class Sounds_Editor
     Friend WithEvents XenonButton259 As XenonButton
     Friend WithEvents OpenThemeDialog As OpenFileDialog
     Friend WithEvents XenonAlertBox4 As XenonAlertBox
-    Friend WithEvents XenonAlertBox5 As XenonAlertBox
+    Friend WithEvents Malware_alertbox As XenonAlertBox
 End Class
