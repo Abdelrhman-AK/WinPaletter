@@ -22,7 +22,7 @@ You can get WinPaletter from one of these sources:
    - Type in Command Prompt `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
    - you must use `-l` or `--location` parameter as the downloaded file is ZIP, not a setup file (WinPaletter is a portable application)
    - For example: `winget install Abdelrhman-AK.WinPaletter -l "D:\MyApps\WinPaletter"`
-   - To uninstall it, type in Command Prompt `winget uninstall Abdelrhman-AK.WinPaletter"`
+   - To uninstall it, type in Command Prompt `winget uninstall Abdelrhman-AK.WinPaletter`
      
 3. Chocolatey
    - Coming soon (pending verification)
