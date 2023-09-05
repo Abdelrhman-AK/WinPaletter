@@ -12,20 +12,15 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Download.png?raw=true) Get WinPaletter
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Download.png?raw=true) [Get WinPaletter](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter)
 
-You can get WinPaletter from one of these sources:
+   1. [GitHub releases](https://github.com/Abdelrhman-AK/WinPaletter/releases)
+      
+or 2. Microsoft WinGet: `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
 
-1. [GitHub releases](https://github.com/Abdelrhman-AK/WinPaletter/releases) (The first one to be updated)
-  
-2. Microsoft WinGet
-   - Type in Command Prompt `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
-   - you must use `-l` or `--location` parameter as the downloaded file is ZIP, not a setup file (WinPaletter is a portable application)
-   - For example: `winget install Abdelrhman-AK.WinPaletter -l "D:\MyApps\WinPaletter"`
-   - To uninstall it, type in Command Prompt `winget uninstall Abdelrhman-AK.WinPaletter"`
-     
-3. Chocolatey
-   - Coming soon (pending verification)
+or 3. Chocolatey: Coming soon (pending verification)
+
+   - [Click here for more advanced instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages support:
 [- Uploaded languages](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
@@ -40,6 +35,10 @@ You can get WinPaletter from one of these sources:
 | **Windows 8**                                          | `Not supported` :x:              | Not supported as .NET framework 4.7 or 4.8 can't be installed at all | 
 | **Windows Vista**                                      | `1.0.7.1`                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista)|
 | **Windows XP**                                         | `1.0.7.1`                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)|
+
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
+[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
+
 ---
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/WinPaletter.png?raw=true) WinPaletter: Advanced Windows Appearance Editor
@@ -117,8 +116,3 @@ You can get WinPaletter from one of these sources:
 
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
 Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
-
----
-
-# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Antivirus.png?raw=true) Do you have an antivirus or browser issue?
-[Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue)
