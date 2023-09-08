@@ -111,6 +111,10 @@ Public Class SettingsX
             XenonRadioButton22.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
             XenonRadioButton23.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
             XenonRadioButton21.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            XenonCheckBox35_SFC.Checked = .ThemeApplyingBehavior.SFC_on_restoring_StartupSound
+            XenonCheckBox36.Checked = .ThemeApplyingBehavior.Ignore_PE_Modify_Alert
+            XenonRadioButton25.Checked = .ThemeApplyingBehavior.PE_ModifyByDefault
+            XenonRadioButton24.Checked = Not .ThemeApplyingBehavior.PE_ModifyByDefault
 
             Label38.Text = CalcStoreCache().SizeString
             Label43.Text = CalcThemesResCache().SizeString
@@ -309,6 +313,9 @@ Public Class SettingsX
             If XenonRadioButton22.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
             If XenonRadioButton23.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
             If XenonRadioButton21.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            .ThemeApplyingBehavior.SFC_on_restoring_StartupSound = XenonCheckBox35_SFC.Checked
+            .ThemeApplyingBehavior.Ignore_PE_Modify_Alert = XenonCheckBox36.Checked
+            .ThemeApplyingBehavior.PE_ModifyByDefault = XenonRadioButton25.Checked
 
             .Store.Online_or_Offline = XenonRadioImage1.Checked
             .Store.Online_Repositories = ListBox1.Items.OfType(Of String)().Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray()
@@ -392,6 +399,9 @@ Public Class SettingsX
             If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not XenonRadioButton22.Checked Then Changed = True
             If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults And Not XenonRadioButton23.Checked Then Changed = True
             If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not XenonRadioButton21.Checked Then Changed = True
+            If .ThemeApplyingBehavior.SFC_on_restoring_StartupSound <> XenonCheckBox35_SFC.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Ignore_PE_Modify_Alert <> XenonCheckBox36.Checked Then Changed = True
+            If .ThemeApplyingBehavior.PE_ModifyByDefault <> XenonRadioButton25.Checked Then Changed = True
 
             If .Store.Online_or_Offline And Not XenonRadioImage1.Checked Then Changed = True
             If Not .Store.Online_or_Offline And Not XenonRadioImage2.Checked Then Changed = True

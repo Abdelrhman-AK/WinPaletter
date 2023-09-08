@@ -147,6 +147,8 @@ Public Class XenonCore
         Shutdown
         Logoff
         Logon
+        Unlock
+        ChargerConnected
     End Enum
     Enum Actions
         Add
@@ -183,6 +185,17 @@ Public Class XenonCore
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_Logon, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Logon /XML """ & tmp & """"
+
+                Case TaskType.Unlock
+                    Dim XML_Scheme As String = String.Format(My.Resources.XML_Unlock, File)
+                    IO.File.WriteAllText(tmp, XML_Scheme)
+                    process.StartInfo.Arguments = "/Create /TN WinPaletter\Unlock /XML """ & tmp & """"
+
+                Case TaskType.ChargerConnected
+                    Dim XML_Scheme As String = String.Format(My.Resources.XML_ChargerConnected, File)
+                    IO.File.WriteAllText(tmp, XML_Scheme)
+                    process.StartInfo.Arguments = "/Create /TN WinPaletter\ChargerConnected /XML """ & tmp & """"
+
             End Select
 
             process.Start()
@@ -209,6 +222,12 @@ Public Class XenonCore
 
             Case TaskType.Logon
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\Logon /F"
+
+            Case TaskType.Unlock
+                process.StartInfo.Arguments = "/Delete /TN WinPaletter\Unlock /F"
+
+            Case TaskType.ChargerConnected
+                process.StartInfo.Arguments = "/Delete /TN WinPaletter\ChargerConnected /F"
 
         End Select
 

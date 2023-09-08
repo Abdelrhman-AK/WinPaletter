@@ -3814,8 +3814,8 @@ Public Class XenonAlertBox
 
             Case Style.Warning
                 If DM Then
-                    borderColor = Color.FromArgb(100, 71, 71)
-                    innerColor = Color.FromArgb(87, 71, 71)
+                    borderColor = Color.FromArgb(202, 41, 56)
+                    innerColor = Color.FromArgb(125, 20, 30)
                     textColor = Color.FromArgb(254, 142, 122)
                 Else
                     borderColor = Color.FromArgb(200, 171, 171)
@@ -3864,7 +3864,7 @@ Public Class XenonAlertBox
 
                     If DM Then
                         borderColor = cc.Light(0.01)
-                        innerColor = cc.Dark(0.001)
+                        innerColor = cc.Dark(0.05)
                         textColor = cc.LightLight
                     Else
                         borderColor = cc.Light(1)

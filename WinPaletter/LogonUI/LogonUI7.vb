@@ -168,7 +168,7 @@ Public Class LogonUI7
 
         If XenonRadioButton1.Checked Then
             If My.W7 Or My.WVista Then
-                bmpX = Resources_Functions.GetImageFromDLL(My.PATH_imageres, 5038)
+                bmpX = PE_Functions.GetPNGFromDLL(My.PATH_imageres, 5038)
 
             ElseIf My.W8 Or My.W81 Then
                 Dim SysLock As String

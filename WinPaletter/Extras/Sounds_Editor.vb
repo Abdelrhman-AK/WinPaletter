@@ -16,7 +16,7 @@ Public Class Sounds_Editor
         If XenonTextBox2.Text.ToUpper.Trim = "CURRENT" Then
             If Not My.WXP Then
 
-                Dim SoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                Dim SoundBytes As Byte() = PE.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                 Try
                     Using ms As New MemoryStream(SoundBytes)
                         SP = New SoundPlayer(ms)
@@ -155,6 +155,7 @@ Public Class Sounds_Editor
         ApplyDarkMode(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
+        XenonCheckBox35_SFC.Checked = My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound
 
         For Each page As TabPage In XenonTabControl1.TabPages
             For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
@@ -269,6 +270,13 @@ Public Class Sounds_Editor
             XenonTextBox73.Text = .Snd_SpeechRec_HubOffSound
             XenonTextBox72.Text = .Snd_SpeechRec_HubOnSound
             XenonTextBox71.Text = .Snd_SpeechRec_HubSleepSound
+
+            XenonCheckBox1.Checked = .Snd_Win_SystemExit_TaskMgmt
+            XenonCheckBox2.Checked = .Snd_Win_WindowsLogoff_TaskMgmt
+            XenonCheckBox3.Checked = .Snd_Win_WindowsLogon_TaskMgmt
+            XenonCheckBox4.Checked = .Snd_Win_WindowsUnlock_TaskMgmt
+
+            XenonTextBox84.Text = .Snd_ChargerConnected
         End With
 
     End Sub
@@ -359,6 +367,12 @@ Public Class Sounds_Editor
             .Snd_SpeechRec_HubOffSound = XenonTextBox73.Text
             .Snd_SpeechRec_HubOnSound = XenonTextBox72.Text
             .Snd_SpeechRec_HubSleepSound = XenonTextBox71.Text
+
+            .Snd_Win_SystemExit_TaskMgmt = XenonCheckBox1.Checked
+            .Snd_Win_WindowsLogoff_TaskMgmt = XenonCheckBox2.Checked
+            .Snd_Win_WindowsLogon_TaskMgmt = XenonCheckBox3.Checked
+            .Snd_Win_WindowsUnlock_TaskMgmt = XenonCheckBox4.Checked
+            .Snd_ChargerConnected = XenonTextBox84.Text
         End With
     End Sub
 
@@ -387,12 +401,19 @@ Public Class Sounds_Editor
     End Sub
 
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = XenonCheckBox35_SFC.Checked
+        My.Settings.Save(XeSettings.Mode.Registry)
+
         ApplyToCP(My.CP)
         Close()
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
         Cursor = Cursors.WaitCursor
+
+        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = XenonCheckBox35_SFC.Checked
+        My.Settings.Save(XeSettings.Mode.Registry)
+
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
         ApplyToCP(My.CP)

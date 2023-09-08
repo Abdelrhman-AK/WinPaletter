@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Win32
+Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Uninstall

@@ -245,6 +245,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = My.PATH_Windows & "\media\Speech Sleep.wav"
             .Snd_SpeechRec_MisrecoSound = My.PATH_Windows & "\media\Speech Misrecognition.wav"
             .Snd_SpeechRec_PanelSound = My.PATH_Windows & "\media\Speech Disambiguation.wav"
+
+            .Snd_Win_SystemExit_TaskMgmt = True
+            .Snd_Win_WindowsLogoff_TaskMgmt = True
+            .Snd_Win_WindowsLogon_TaskMgmt = True
+            .Snd_Win_WindowsUnlock_TaskMgmt = True
         End With
 
         Return [CP]
@@ -416,6 +421,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = My.PATH_Windows & "\media\Speech Sleep.wav"
             .Snd_SpeechRec_MisrecoSound = My.PATH_Windows & "\media\Speech Misrecognition.wav"
             .Snd_SpeechRec_PanelSound = My.PATH_Windows & "\media\Speech Disambiguation.wav"
+
+            .Snd_Win_SystemExit_TaskMgmt = True
+            .Snd_Win_WindowsLogoff_TaskMgmt = True
+            .Snd_Win_WindowsLogon_TaskMgmt = True
+            .Snd_Win_WindowsUnlock_TaskMgmt = True
         End With
 
         Return [CP]
@@ -618,6 +628,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = My.PATH_Windows & "\media\Speech Sleep.wav"
             .Snd_SpeechRec_MisrecoSound = My.PATH_Windows & "\media\Speech Misrecognition.wav"
             .Snd_SpeechRec_PanelSound = My.PATH_Windows & "\media\Speech Disambiguation.wav"
+
+            .Snd_Win_SystemExit_TaskMgmt = True
+            .Snd_Win_WindowsLogoff_TaskMgmt = True
+            .Snd_Win_WindowsLogon_TaskMgmt = True
+            .Snd_Win_WindowsUnlock_TaskMgmt = True
         End With
 
         Return [CP]
@@ -819,6 +834,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = My.PATH_Windows & "\media\Speech Sleep.wav"
             .Snd_SpeechRec_MisrecoSound = My.PATH_Windows & "\media\Speech Misrecognition.wav"
             .Snd_SpeechRec_PanelSound = My.PATH_Windows & "\media\Speech Disambiguation.wav"
+
+            .Snd_Win_SystemExit_TaskMgmt = False
+            .Snd_Win_WindowsLogoff_TaskMgmt = False
+            .Snd_Win_WindowsLogon_TaskMgmt = False
+            .Snd_Win_WindowsUnlock_TaskMgmt = False
         End With
 
         Return [CP]
@@ -1062,6 +1082,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = My.PATH_Windows & "\media\Speech Sleep.wav"
             .Snd_SpeechRec_MisrecoSound = My.PATH_Windows & "\media\Speech Misrecognition.wav"
             .Snd_SpeechRec_PanelSound = My.PATH_Windows & "\media\Speech Disambiguation.wav"
+
+            .Snd_Win_SystemExit_TaskMgmt = False
+            .Snd_Win_WindowsLogoff_TaskMgmt = False
+            .Snd_Win_WindowsLogon_TaskMgmt = False
+            .Snd_Win_WindowsUnlock_TaskMgmt = False
         End With
 
         Return [CP]
@@ -1738,6 +1763,11 @@ Public Class CP_Defaults : Implements IDisposable
             .Snd_SpeechRec_HubSleepSound = ""
             .Snd_SpeechRec_MisrecoSound = ""
             .Snd_SpeechRec_PanelSound = ""
+
+            .Snd_Win_SystemExit_TaskMgmt = False
+            .Snd_Win_WindowsLogoff_TaskMgmt = False
+            .Snd_Win_WindowsLogon_TaskMgmt = False
+            .Snd_Win_WindowsUnlock_TaskMgmt = False
         End With
 
         With [CP].Wallpaper

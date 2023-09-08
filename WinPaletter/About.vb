@@ -72,4 +72,8 @@ Public Class About
     Private Sub XenonLinkLabel2_LinkClicked_1(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
         Process.Start("https://github.com/evanolds/AnimCur")
     End Sub
+
+    Private Sub XenonLinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel5.LinkClicked
+        Process.Start("https://github.com/Tyrrrz/Ressy")
+    End Sub
 End Class

@@ -848,62 +848,6 @@ Namespace NativeMethods
 
     Public Class Kernel32
         <DllImport("kernel32.dll", SetLastError:=True)>
-        Public Shared Function LoadLibraryEx(ByVal lpFileName As String, ByVal hFile As IntPtr, ByVal dwFlags As UInteger) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll", SetLastError:=True)>
-        Public Shared Function FreeLibrary(ByVal hModule As IntPtr) As Boolean
-        End Function
-
-        <DllImport("User32.dll")>
-        Public Shared Function LoadImage(ByVal hInstance As IntPtr, ByVal uID As Integer, ByVal type As UInteger, ByVal width As Integer, ByVal height As Integer, ByVal load As Integer) As IntPtr
-        End Function
-
-        <DllImport("User32.dll")>
-        Public Shared Function LoadBitmap(ByVal hInstance As IntPtr, ByVal uID As Integer) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll")>
-        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpName As String, ByVal lpType As String) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll")>
-        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal iResID As Integer, ByVal lpType As String) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll")>
-        Public Shared Function FindResource(ByVal hModule As IntPtr, ByVal lpName As String, ByVal iType As Integer) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll", SetLastError:=True)>
-        Public Shared Function LoadResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As IntPtr
-        End Function
-
-        <DllImport("kernel32.dll", SetLastError:=True)>
-        Public Shared Function SizeofResource(ByVal hModule As IntPtr, ByVal hResInfo As IntPtr) As UInteger
-        End Function
-
-        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="BeginUpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
-        Public Shared Function BeginUpdateResource(ByVal pFileName As String, ByVal bDeleteExistingResources As Boolean) As IntPtr
-        End Function
-
-        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
-        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal pType As UInteger, ByVal pName As String, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
-        End Function
-
-        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
-        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal pType As UInteger, ByVal iResID As Integer, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
-        End Function
-
-        <DllImport("KERNEL32.DLL", CallingConvention:=CallingConvention.StdCall, CharSet:=CharSet.Unicode, EntryPoint:="UpdateResourceW", ExactSpelling:=True, SetLastError:=True)>
-        Public Shared Function UpdateResource(ByVal hUpdate As IntPtr, ByVal lpType As String, ByVal iResID As Integer, ByVal wLanguage As UShort, ByVal pData As Byte(), ByVal cbData As UInteger) As Boolean
-        End Function
-
-        <DllImport("KERNEL32.DLL", SetLastError:=True)>
-        Public Shared Function EndUpdateResource(ByVal hUpdate As IntPtr, ByVal fDiscard As Boolean) As Boolean
-        End Function
-
-        <DllImport("kernel32.dll", SetLastError:=True)>
         Public Shared Function Wow64DisableWow64FsRedirection(ByRef ptr As IntPtr) As Boolean
         End Function
 
@@ -914,9 +858,25 @@ Namespace NativeMethods
         <DllImport("kernel32")>
         Public Shared Function WritePrivateProfileString(ByVal section As String, ByVal key As String, ByVal val As String, ByVal filePath As String) As Long
         End Function
+
         <DllImport("kernel32")>
         Public Shared Function GetPrivateProfileString(ByVal section As String, ByVal key As String, ByVal def As String, ByVal retVal As StringBuilder, ByVal size As Integer, ByVal filePath As String) As Integer
         End Function
+
+        <DllImport("kernel32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
+        Public Shared Function MoveFileEx(ByVal lpExistingFileName As String, ByVal lpNewFileName As String, ByVal dwFlags As MoveFileFlags) As Boolean
+        End Function
+
+        <Flags>
+        Public Enum MoveFileFlags
+            None = 0
+            ReplaceExisting = 1
+            CopyAllowed = 2
+            DelayUntilReboot = 4
+            WriteThrough = 8
+            CreateHardlink = 16
+            FailIfNotTrackable = 32
+        End Enum
 
     End Class
 

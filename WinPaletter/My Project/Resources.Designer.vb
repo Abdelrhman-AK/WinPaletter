@@ -1990,16 +1990,35 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
-        '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter, MuscularPuky&lt;/Author&gt;
+        '''    &lt;Description&gt;Play charger connection sound forcibly on any version of Windows&lt;/Description&gt;
+        '''    &lt;URI&gt;\WinPaletter\ChargerConnected&lt;/URI&gt;
+        '''  &lt;/RegistrationInfo&gt;
+        '''  &lt;Triggers&gt;
+        '''    &lt;EventTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&amp;gt;&amp;lt;Select Path [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property XML_ChargerConnected() As String
+            Get
+                Return ResourceManager.GetString("XML_ChargerConnected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+        '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''  &lt;RegistrationInfo&gt;
+        '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
         '''    &lt;Description&gt;Play Windows Logoff sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Logoff&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp; [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[Ev [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logoff() As String
             Get
@@ -2045,6 +2064,25 @@ Namespace My.Resources
         Public ReadOnly Property XML_Shutdown() As String
             Get
                 Return ResourceManager.GetString("XML_Shutdown", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+        '''&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+        '''  &lt;RegistrationInfo&gt;
+        '''    &lt;Author&gt;WinPaletter, MuscularPukyy&lt;/Author&gt;
+        '''    &lt;Description&gt;Play Windows account unlock sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
+        '''    &lt;URI&gt;\WinPaletter\Unlock&lt;/URI&gt;
+        '''  &lt;/RegistrationInfo&gt;
+        '''  &lt;Triggers&gt;
+        '''    &lt;EventTrigger&gt;
+        '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;S [rest of string was truncated]&quot;;.
+        '''</summary>
+        Public ReadOnly Property XML_Unlock() As String
+            Get
+                Return ResourceManager.GetString("XML_Unlock", resourceCulture)
             End Get
         End Property
     End Module

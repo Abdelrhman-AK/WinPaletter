@@ -2483,9 +2483,21 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Snd_SpeechRec_MisrecoSound As String
             Public Snd_SpeechRec_PanelSound As String
 
+            Public Snd_Win_SystemExit_TaskMgmt As Boolean
+            Public Snd_Win_WindowsLogoff_TaskMgmt As Boolean
+            Public Snd_Win_WindowsLogon_TaskMgmt As Boolean
+            Public Snd_Win_WindowsUnlock_TaskMgmt As Boolean
+            Public Snd_ChargerConnected As String
+
             Public Sub Load(_DefSounds As Sounds)
                 Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", _DefSounds.Enabled)
                 Snd_Imageres_SystemStart = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", _DefSounds.Snd_Imageres_SystemStart)
+                Snd_ChargerConnected = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", _DefSounds.Snd_ChargerConnected)
+
+                Snd_Win_SystemExit_TaskMgmt = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", _DefSounds.Snd_Win_SystemExit_TaskMgmt)
+                Snd_Win_WindowsLogoff_TaskMgmt = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", _DefSounds.Snd_Win_WindowsLogoff_TaskMgmt)
+                Snd_Win_WindowsLogon_TaskMgmt = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", _DefSounds.Snd_Win_WindowsLogon_TaskMgmt)
+                Snd_Win_WindowsUnlock_TaskMgmt = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", _DefSounds.Snd_Win_WindowsUnlock_TaskMgmt)
 
                 Dim Scope_Win As String = "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current"
                 Snd_Win_Default = GetReg(String.Format(Scope_Win, ".Default"), "", _DefSounds.Snd_Win_Default)
@@ -2582,38 +2594,43 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Sub Apply()
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String)
 
-                Dim destination_StartupSnd As String() = {"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"}
-
-                If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
-                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
-                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
-
-                ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
-                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
-                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
-
-                ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
-                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
-                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
-
-                ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
-                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
-                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
-
-                Else
-                    EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
-                    EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
-
-                End If
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", Snd_Win_SystemExit_TaskMgmt)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", Snd_Win_WindowsLogoff_TaskMgmt)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", Snd_Win_WindowsLogon_TaskMgmt)
+                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", Snd_Win_WindowsUnlock_TaskMgmt)
 
                 If Enabled Then
+                    Dim destination_StartupSnd As String() = {"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"}
+
+                    If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
+                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
+
+                    ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
+                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
+
+                    ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
+                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
+
+                    ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
+                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
+                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
+
+                    Else
+                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
+
+                    End If
 
                     If Not My.WXP Then
 
                         If IO.File.Exists(Snd_Imageres_SystemStart) AndAlso IO.Path.GetExtension(Snd_Imageres_SystemStart).ToUpper = ".WAV" Then
 
-                            Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                            Dim CurrentSoundBytes As Byte() = PE.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                             Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStart)
 
                             If Not CurrentSoundBytes.Equals(TargetSoundBytes) Then
@@ -2622,34 +2639,42 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
 
-                            Dim CurrentSoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                            Dim CurrentSoundBytes As Byte() = PE.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                             Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav")
 
                             If Not CurrentSoundBytes.Equals(OriginalSoundBytes) Then
                                 ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), OriginalSoundBytes)
                             End If
 
+                            If My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound Then SFC(My.PATH_imageres)
+
                         End If
 
                     End If
 
                     If My.W8 Or My.W81 Or My.W10 Or My.W11 Or My.W12 Then
-                        If IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
+                        If Snd_Win_SystemExit_TaskMgmt AndAlso IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
                         Else
                             TaskMgmt(TaskType.Shutdown, Actions.Delete)
                         End If
 
-                        If IO.File.Exists(Snd_Win_WindowsLogoff) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
+                        If Snd_Win_WindowsLogoff_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsLogoff) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff)
                         Else
                             TaskMgmt(TaskType.Logoff, Actions.Delete)
                         End If
 
-                        If IO.File.Exists(Snd_Win_WindowsLogon) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
+                        If Snd_Win_WindowsLogon_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsLogon) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
                             TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon)
                         Else
                             TaskMgmt(TaskType.Logon, Actions.Delete)
+                        End If
+
+                        If Snd_Win_WindowsUnlock_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsUnlock) AndAlso IO.Path.GetExtension(Snd_Win_WindowsUnlock).ToUpper = ".WAV" Then
+                            TaskMgmt(TaskType.Unlock, Actions.Add, Snd_Win_WindowsUnlock)
+                        Else
+                            TaskMgmt(TaskType.Unlock, Actions.Delete)
                         End If
                     End If
 
@@ -2752,7 +2777,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         EditReg(String.Format(Scope, "PanelSound"), "", Snd_SpeechRec_PanelSound, RegistryValueKind.String)
                     Next
 
+                    If IO.File.Exists(Snd_ChargerConnected) AndAlso IO.Path.GetExtension(Snd_ChargerConnected).ToUpper = ".WAV" Then
+                        TaskMgmt(TaskType.ChargerConnected, Actions.Add, Snd_ChargerConnected)
+                    Else
+                        TaskMgmt(TaskType.ChargerConnected, Actions.Delete)
+                    End If
+
                 End If
+
             End Sub
 
             Shared Operator =(First As Sounds, Second As Sounds) As Boolean
@@ -3429,7 +3461,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
     Public Sounds As New Sounds With {
         .Enabled = True,
-        .Snd_Imageres_SystemStart = If(My.W11, "Default", "")}
+        .Snd_Imageres_SystemStart = If(My.W11, "Default", ""),
+        .Snd_Win_SystemExit_TaskMgmt = Not My.WXP And Not My.WVista And Not My.W7,
+        .Snd_Win_WindowsLogoff_TaskMgmt = Not My.WXP And Not My.WVista And Not My.W7,
+        .Snd_Win_WindowsLogon_TaskMgmt = Not My.WXP And Not My.WVista And Not My.W7,
+        .Snd_Win_WindowsUnlock_TaskMgmt = Not My.WXP And Not My.WVista And Not My.W7}
 
     Public AltTab As New Structures.AltTab With {.Enabled = True, .Style = AltTab.Styles.Default, .Win10Opacity = 95}
 
@@ -5047,9 +5083,6 @@ Start:
                 'Sounds
                 Execute(CType(Sub()
                                   Sounds.Apply()
-                                  If Not My.WXP AndAlso Sounds.Enabled Then
-                                      AddNode([TreeView], My.Lang.CP_Sound_MalwareTip, "warning")
-                                  End If
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Sounds, My.Lang.CP_Error_Sounds, My.Lang.CP_Time, sw_all, Not Sounds.Enabled, My.Lang.CP_Skip_Sounds)
 
                 'Cursors
@@ -6031,7 +6064,7 @@ Start:
             Select Case [LogonElement].Mode
                 Case Structures.LogonUI7.Modes.Default_
                     For i As Integer = 5031 To 5043 Step +1
-                        bmpList.Add(Resources_Functions.GetImageFromDLL(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
+                        bmpList.Add(PE_Functions.GetPNGFromDLL(My.PATH_imageres, i, "IMAGE", My.Computer.Screen.Bounds.Size.Width, My.Computer.Screen.Bounds.Size.Height))
                     Next
 
                 Case Structures.LogonUI7.Modes.CustomImage

@@ -122,6 +122,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="Ressy, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ressy.1.0.3\lib\net461\Ressy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -247,6 +251,12 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Error_Dialogs\PE_Warning.Designer.vb">
+      <DependentUpon>PE_Warning.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Error_Dialogs\PE_Warning.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Classes\Bitmap_Mgr.vb" />
     <Compile Include="Classes\INI.vb" />
     <Compile Include="Converter\Converter_CP.vb" />
@@ -272,13 +282,13 @@
     <Compile Include="bk.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BugReport.Designer.vb">
+    <Compile Include="Error_Dialogs\BugReport.Designer.vb">
       <DependentUpon>BugReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="BugReport.vb">
+    <Compile Include="Error_Dialogs\BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\DLL_ResourcesManager.vb" />
+    <Compile Include="Classes\PE.vb" />
     <Compile Include="Classes\ExplorerPatcher.vb" />
     <Compile Include="Classes\MemoryFonts.vb" />
     <Compile Include="Classes\NativeMethods.vb" />
@@ -608,6 +618,8 @@
     <Content Include="My Project\Application.myapp" />
     <Content Include="Resources\AC_10_Dark.png" />
     <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\XML_Unlock.xml" />
+    <None Include="Resources\XML_ChargerConnected.xml" />
     <None Include="Resources\XML_Shutdown.xml" />
     <None Include="Resources\XML_Logon.xml" />
     <None Include="Resources\XML_Logoff.xml" />
@@ -782,6 +794,9 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Error_Dialogs\PE_Warning.resx">
+      <DependentUpon>PE_Warning.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Converter\Converter_Form.resx">
       <DependentUpon>Converter_Form.vb</DependentUpon>
     </EmbeddedResource>
@@ -793,7 +808,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>bk1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="BugReport.resx">
+    <EmbeddedResource Include="Error_Dialogs\BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">

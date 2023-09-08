@@ -108,6 +108,9 @@ Public Class XeSettings
             Public PS64_HKU_DEFAULT_Prefs As OverwriteOptions
             Public Desktop_HKU_DEFAULT As OverwriteOptions
             Public CMD_OverrideUserPreferences As Boolean
+            Public SFC_on_restoring_StartupSound As Boolean
+            Public Ignore_PE_Modify_Alert As Boolean
+            Public PE_ModifyByDefault As Boolean
 
             Public Enum OverwriteOptions
                 DontChange
@@ -132,7 +135,9 @@ Public Class XeSettings
                 AutoApplyCursors = GetReg(REG_ThemeApplyingBehavior, "AutoApplyCursors", True)
                 ResetCursorsToAero = GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", My.WXP)
                 DelayMetrics = GetReg(REG_ThemeApplyingBehavior, "DelayMetrics", False)
-
+                SFC_on_restoring_StartupSound = GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", False)
+                Ignore_PE_Modify_Alert = GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", False)
+                PE_ModifyByDefault = GetReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", True)
             End Sub
 
             Sub Save()
@@ -151,6 +156,9 @@ Public Class XeSettings
                 EditReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord)
                 EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord)
                 EditReg(REG_ThemeApplyingBehavior, "DelayMetrics", DelayMetrics, RegistryValueKind.DWord)
+                EditReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord)
+                EditReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord)
+                EditReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord)
             End Sub
 
         End Structure
@@ -418,7 +426,10 @@ Public Class XeSettings
             .PS86_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             .PS64_HKU_DEFAULT_Prefs = Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange,
             .Desktop_HKU_DEFAULT = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite,
-            .CMD_OverrideUserPreferences = True
+            .CMD_OverrideUserPreferences = True,
+            .SFC_on_restoring_StartupSound = False,
+            .Ignore_PE_Modify_Alert = False,
+            .PE_ModifyByDefault = True
             }
 
     Public Appearance As New Structures.Appearance With {

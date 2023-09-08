@@ -1,5 +1,6 @@
 ﻿Imports System.Security.AccessControl
 Imports Microsoft.Win32
+Imports WinPaletter.NativeMethods
 
 ''' <summary>
 ''' Class contains custom Registry and IO functions
@@ -72,17 +73,12 @@ Public Class Reg_IO
         'Skips setting to registry if the values are the same
         Try
             If R.OpenSubKey(KeyName).GetValue(ValueName, Nothing) = (Value) Then
-
                 If R IsNot Nothing Then
                     R.Flush()
                     R.Close()
                 End If
 
                 Exit Sub
-
-            Else
-                'MsgBox("change value" & vbCrLf & KeyName & vbCrLf & ValueName & vbCrLf & "From: " & R.OpenSubKey(KeyName).GetValue(ValueName, Nothing) & " to: " & Value)
-
             End If
         Catch
         End Try
@@ -166,7 +162,7 @@ Public Class Reg_IO
 
         If _Value.Contains("%") Then _Value = _Value.Replace("%", "^%")
 
-        Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+        Using process As New Process With {.StartInfo = New ProcessStartInfo With {
            .FileName = "reg",
            .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
            .Arguments = String.Format(regTemplate, RegistryKeyPath, ValueName, _Value),
@@ -175,8 +171,9 @@ Public Class Reg_IO
            .UseShellExecute = True
         }}
 
-        process.Start()
-        process.WaitForExit()
+            process.Start()
+            process.WaitForExit()
+        End Using
     End Sub
     Shared Function GetReg(KeyName As String, ValueName As String, DefaultValue As Object, Optional RaiseExceptions As Boolean = False, Optional IfNothingReturnDefaultValue As Boolean = True) As Object
         Dim Result As Object = Nothing
@@ -243,7 +240,7 @@ Public Class Reg_IO
         '/f = Disable prompt
         regTemplate = "delete ""{0}\{1}"" /f"
 
-        Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+        Using process As New Process With {.StartInfo = New ProcessStartInfo With {
            .FileName = "reg",
            .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
            .Arguments = String.Format(regTemplate, RegistryKeyPath, ValueName),
@@ -252,22 +249,57 @@ Public Class Reg_IO
            .UseShellExecute = True
         }}
 
-        process.Start()
-        process.WaitForExit()
+            process.Start()
+            process.WaitForExit()
+        End Using
     End Sub
+
+    Shared Sub SFC(Optional File As String = "", Optional IfNotExist_DoScannow As Boolean = False)
+        If My.WXP Then Exit Sub
+
+        Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
+
+        Using process As New Process With {.StartInfo = New ProcessStartInfo With {
+           .FileName = My.PATH_System32 & "\sfc.exe",
+           .Verb = "runas",
+           .WindowStyle = ProcessWindowStyle.Hidden,
+           .CreateNoWindow = True,
+           .UseShellExecute = True
+        }}
+
+            If IO.File.Exists(File) Then
+                process.StartInfo.Arguments = "/SCANFILE=""" & File & """"
+            Else
+                If IfNotExist_DoScannow Then
+                    process.StartInfo.Arguments = "/Scannow"
+                Else
+                    Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+                    Exit Sub
+                End If
+            End If
+
+            process.Start()
+            process.WaitForExit()
+        End Using
+
+        Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero)
+    End Sub
+
     Shared Sub Takeown_File(File As String, Optional AsAdministrator As Boolean = False)
         If IO.File.Exists(File) Then
-            Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+            Using process As New Process With {.StartInfo = New ProcessStartInfo With {
                     .FileName = My.PATH_System32 & "\takeown.exe",
-                    .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
-                    .Arguments = String.Format("/f ""{0}"" /r /d Y{1}", File, If(AsAdministrator, " /a", "")),
+                    .Verb = If(My.WXP, "", "runas"),
+                    .Arguments = String.Format("/f ""{0}""", File, If(AsAdministrator, " /a", "")),
                     .WindowStyle = ProcessWindowStyle.Hidden,
                     .CreateNoWindow = True,
                     .UseShellExecute = True
                  }}
 
-            process.Start()
-            process.WaitForExit()
+
+                process.Start()
+                process.WaitForExit()
+            End Using
 
             Try
                 Dim fSecurity As FileSecurity = IO.File.GetAccessControl(File)
@@ -281,17 +313,18 @@ Public Class Reg_IO
 
     Shared Sub ICACLS(File As String, Optional AsAdministrator As Boolean = False)
         If IO.File.Exists(File) Then
-            Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+            Using process As New Process With {.StartInfo = New ProcessStartInfo With {
                     .FileName = My.PATH_System32 & "\ICACLS.exe",
-                    .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
+                    .Verb = If(My.WXP, "", "runas"),
                     .Arguments = String.Format("""{0}"" /grant {1}:F", File, If(AsAdministrator, "administrators", "%username%")),
                     .WindowStyle = ProcessWindowStyle.Hidden,
                     .CreateNoWindow = True,
                     .UseShellExecute = True
                  }}
 
-            process.Start()
-            process.WaitForExit()
+                process.Start()
+                process.WaitForExit()
+            End Using
 
             Try
                 Dim fSecurity As FileSecurity = IO.File.GetAccessControl(File)
@@ -303,7 +336,7 @@ Public Class Reg_IO
     End Sub
     Shared Sub Move_File(source As String, destination As String)
         If IO.File.Exists(source) Then
-            Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
+            Using process As New Process With {.StartInfo = New ProcessStartInfo With {
                     .FileName = "cmd",
                     .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
                     .Arguments = String.Format("/c move ""{0}"" ""{1}""", source, destination),
@@ -312,8 +345,9 @@ Public Class Reg_IO
                     .UseShellExecute = True
                  }}
 
-            process.Start()
-            process.WaitForExit()
+                process.Start()
+                process.WaitForExit()
+            End Using
 
         End If
     End Sub

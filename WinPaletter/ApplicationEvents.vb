@@ -852,7 +852,7 @@ Namespace My
             'Backup Windows Startup sound
             Try
                 If Not My.WXP AndAlso Not IO.File.Exists(My.PATH_appData & "\WindowsStartup_Backup.wav") Then
-                    Dim SoundBytes As Byte() = DLL_ResourcesManager.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
+                    Dim SoundBytes As Byte() = PE.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
                     IO.File.WriteAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav", SoundBytes)
                 End If
             Catch ex As Exception
