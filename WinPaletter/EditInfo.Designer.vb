@@ -477,7 +477,7 @@ Partial Class EditInfo
         Me.XenonAlertBox21.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.XenonAlertBox21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.XenonAlertBox21.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.XenonAlertBox21.CenterText = False
         Me.XenonAlertBox21.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -934,9 +934,10 @@ Partial Class EditInfo
         '
         'color2
         '
+        Me.color2.AllowDrop = True
         Me.color2.BackColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.color2.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.color2.ForceNoNerd = False
+        Me.color2.DontShowInfo = False
         Me.color2.Location = New System.Drawing.Point(167, 36)
         Me.color2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color2.Name = "color2"
@@ -945,9 +946,10 @@ Partial Class EditInfo
         '
         'color1
         '
+        Me.color1.AllowDrop = True
         Me.color1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.color1.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.color1.ForceNoNerd = False
+        Me.color1.DontShowInfo = False
         Me.color1.Location = New System.Drawing.Point(167, 6)
         Me.color1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color1.Name = "color1"

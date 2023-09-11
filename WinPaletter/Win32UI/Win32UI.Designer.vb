@@ -456,7 +456,7 @@ Partial Class Win32UI
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(96, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(67, Byte), Integer), CType(CType(91, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -742,11 +742,12 @@ Partial Class Win32UI
         '
         'btnface_pick
         '
+        Me.btnface_pick.AllowDrop = True
         Me.btnface_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnface_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnface_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btnface_pick.ForceNoNerd = False
+        Me.btnface_pick.DontShowInfo = False
         Me.btnface_pick.Location = New System.Drawing.Point(3, 24)
         Me.btnface_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnface_pick.Name = "btnface_pick"
@@ -805,9 +806,10 @@ Partial Class Win32UI
         '
         'btnlight_pick
         '
+        Me.btnlight_pick.AllowDrop = True
         Me.btnlight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnlight_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btnlight_pick.ForceNoNerd = False
+        Me.btnlight_pick.DontShowInfo = False
         Me.btnlight_pick.Location = New System.Drawing.Point(3, 24)
         Me.btnlight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnlight_pick.Name = "btnlight_pick"
@@ -840,9 +842,10 @@ Partial Class Win32UI
         '
         'btnhilight_pick
         '
+        Me.btnhilight_pick.AllowDrop = True
         Me.btnhilight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnhilight_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btnhilight_pick.ForceNoNerd = False
+        Me.btnhilight_pick.DontShowInfo = False
         Me.btnhilight_pick.Location = New System.Drawing.Point(3, 24)
         Me.btnhilight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnhilight_pick.Name = "btnhilight_pick"
@@ -875,9 +878,10 @@ Partial Class Win32UI
         '
         'Frame_pick
         '
+        Me.Frame_pick.AllowDrop = True
         Me.Frame_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Frame_pick.DefaultColor = System.Drawing.Color.Black
-        Me.Frame_pick.ForceNoNerd = False
+        Me.Frame_pick.DontShowInfo = False
         Me.Frame_pick.Location = New System.Drawing.Point(3, 24)
         Me.Frame_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Frame_pick.Name = "Frame_pick"
@@ -910,9 +914,10 @@ Partial Class Win32UI
         '
         'btntext_pick
         '
+        Me.btntext_pick.AllowDrop = True
         Me.btntext_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btntext_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btntext_pick.ForceNoNerd = False
+        Me.btntext_pick.DontShowInfo = False
         Me.btntext_pick.Location = New System.Drawing.Point(3, 24)
         Me.btntext_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btntext_pick.Name = "btntext_pick"
@@ -945,9 +950,10 @@ Partial Class Win32UI
         '
         'btndkshadow_pick
         '
+        Me.btndkshadow_pick.AllowDrop = True
         Me.btndkshadow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btndkshadow_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btndkshadow_pick.ForceNoNerd = False
+        Me.btndkshadow_pick.DontShowInfo = False
         Me.btndkshadow_pick.Location = New System.Drawing.Point(3, 24)
         Me.btndkshadow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btndkshadow_pick.Name = "btndkshadow_pick"
@@ -980,9 +986,10 @@ Partial Class Win32UI
         '
         'btnshadow_pick
         '
+        Me.btnshadow_pick.AllowDrop = True
         Me.btnshadow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnshadow_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btnshadow_pick.ForceNoNerd = False
+        Me.btnshadow_pick.DontShowInfo = False
         Me.btnshadow_pick.Location = New System.Drawing.Point(3, 24)
         Me.btnshadow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnshadow_pick.Name = "btnshadow_pick"
@@ -1130,10 +1137,11 @@ Partial Class Win32UI
         '
         'GActivetitle_pick
         '
+        Me.GActivetitle_pick.AllowDrop = True
         Me.GActivetitle_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GActivetitle_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.GActivetitle_pick.DefaultColor = System.Drawing.Color.Black
-        Me.GActivetitle_pick.ForceNoNerd = False
+        Me.GActivetitle_pick.DontShowInfo = False
         Me.GActivetitle_pick.Location = New System.Drawing.Point(251, 4)
         Me.GActivetitle_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.GActivetitle_pick.Name = "GActivetitle_pick"
@@ -1142,10 +1150,11 @@ Partial Class Win32UI
         '
         'activetitle_pick
         '
+        Me.activetitle_pick.AllowDrop = True
         Me.activetitle_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.activetitle_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.activetitle_pick.DefaultColor = System.Drawing.Color.Black
-        Me.activetitle_pick.ForceNoNerd = False
+        Me.activetitle_pick.DontShowInfo = False
         Me.activetitle_pick.Location = New System.Drawing.Point(159, 4)
         Me.activetitle_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.activetitle_pick.Name = "activetitle_pick"
@@ -1194,10 +1203,11 @@ Partial Class Win32UI
         '
         'TitleText_pick
         '
+        Me.TitleText_pick.AllowDrop = True
         Me.TitleText_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TitleText_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.TitleText_pick.DefaultColor = System.Drawing.Color.Black
-        Me.TitleText_pick.ForceNoNerd = False
+        Me.TitleText_pick.DontShowInfo = False
         Me.TitleText_pick.Location = New System.Drawing.Point(251, 4)
         Me.TitleText_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TitleText_pick.Name = "TitleText_pick"
@@ -1246,10 +1256,11 @@ Partial Class Win32UI
         '
         'ActiveBorder_pick
         '
+        Me.ActiveBorder_pick.AllowDrop = True
         Me.ActiveBorder_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ActiveBorder_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.ActiveBorder_pick.DefaultColor = System.Drawing.Color.Black
-        Me.ActiveBorder_pick.ForceNoNerd = False
+        Me.ActiveBorder_pick.DontShowInfo = False
         Me.ActiveBorder_pick.Location = New System.Drawing.Point(251, 4)
         Me.ActiveBorder_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ActiveBorder_pick.Name = "ActiveBorder_pick"
@@ -1298,10 +1309,11 @@ Partial Class Win32UI
         '
         'InactivetitleText_pick
         '
+        Me.InactivetitleText_pick.AllowDrop = True
         Me.InactivetitleText_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InactivetitleText_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InactivetitleText_pick.DefaultColor = System.Drawing.Color.Black
-        Me.InactivetitleText_pick.ForceNoNerd = False
+        Me.InactivetitleText_pick.DontShowInfo = False
         Me.InactivetitleText_pick.Location = New System.Drawing.Point(251, 4)
         Me.InactivetitleText_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InactivetitleText_pick.Name = "InactivetitleText_pick"
@@ -1337,10 +1349,11 @@ Partial Class Win32UI
         '
         'GInactivetitle_pick
         '
+        Me.GInactivetitle_pick.AllowDrop = True
         Me.GInactivetitle_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GInactivetitle_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.GInactivetitle_pick.DefaultColor = System.Drawing.Color.Black
-        Me.GInactivetitle_pick.ForceNoNerd = False
+        Me.GInactivetitle_pick.DontShowInfo = False
         Me.GInactivetitle_pick.Location = New System.Drawing.Point(251, 4)
         Me.GInactivetitle_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.GInactivetitle_pick.Name = "GInactivetitle_pick"
@@ -1363,10 +1376,11 @@ Partial Class Win32UI
         '
         'InactiveTitle_pick
         '
+        Me.InactiveTitle_pick.AllowDrop = True
         Me.InactiveTitle_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InactiveTitle_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InactiveTitle_pick.DefaultColor = System.Drawing.Color.Black
-        Me.InactiveTitle_pick.ForceNoNerd = False
+        Me.InactiveTitle_pick.DontShowInfo = False
         Me.InactiveTitle_pick.Location = New System.Drawing.Point(159, 4)
         Me.InactiveTitle_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InactiveTitle_pick.Name = "InactiveTitle_pick"
@@ -1415,10 +1429,11 @@ Partial Class Win32UI
         '
         'InactiveBorder_pick
         '
+        Me.InactiveBorder_pick.AllowDrop = True
         Me.InactiveBorder_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InactiveBorder_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InactiveBorder_pick.DefaultColor = System.Drawing.Color.Black
-        Me.InactiveBorder_pick.ForceNoNerd = False
+        Me.InactiveBorder_pick.DontShowInfo = False
         Me.InactiveBorder_pick.Location = New System.Drawing.Point(251, 4)
         Me.InactiveBorder_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InactiveBorder_pick.Name = "InactiveBorder_pick"
@@ -1484,10 +1499,11 @@ Partial Class Win32UI
         '
         'menu_pick
         '
+        Me.menu_pick.AllowDrop = True
         Me.menu_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.menu_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.menu_pick.DefaultColor = System.Drawing.Color.Black
-        Me.menu_pick.ForceNoNerd = False
+        Me.menu_pick.DontShowInfo = False
         Me.menu_pick.Location = New System.Drawing.Point(251, 4)
         Me.menu_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.menu_pick.Name = "menu_pick"
@@ -1536,10 +1552,11 @@ Partial Class Win32UI
         '
         'menubar_pick
         '
+        Me.menubar_pick.AllowDrop = True
         Me.menubar_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.menubar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.menubar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.menubar_pick.ForceNoNerd = False
+        Me.menubar_pick.DontShowInfo = False
         Me.menubar_pick.Location = New System.Drawing.Point(251, 4)
         Me.menubar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.menubar_pick.Name = "menubar_pick"
@@ -1588,10 +1605,11 @@ Partial Class Win32UI
         '
         'menuhilight_pick
         '
+        Me.menuhilight_pick.AllowDrop = True
         Me.menuhilight_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.menuhilight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.menuhilight_pick.DefaultColor = System.Drawing.Color.Black
-        Me.menuhilight_pick.ForceNoNerd = False
+        Me.menuhilight_pick.DontShowInfo = False
         Me.menuhilight_pick.Location = New System.Drawing.Point(251, 4)
         Me.menuhilight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.menuhilight_pick.Name = "menuhilight_pick"
@@ -1640,10 +1658,11 @@ Partial Class Win32UI
         '
         'hottracking_pick
         '
+        Me.hottracking_pick.AllowDrop = True
         Me.hottracking_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.hottracking_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.hottracking_pick.DefaultColor = System.Drawing.Color.Black
-        Me.hottracking_pick.ForceNoNerd = False
+        Me.hottracking_pick.DontShowInfo = False
         Me.hottracking_pick.Location = New System.Drawing.Point(251, 4)
         Me.hottracking_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.hottracking_pick.Name = "hottracking_pick"
@@ -1692,10 +1711,11 @@ Partial Class Win32UI
         '
         'hilighttext_pick
         '
+        Me.hilighttext_pick.AllowDrop = True
         Me.hilighttext_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.hilighttext_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.hilighttext_pick.DefaultColor = System.Drawing.Color.Black
-        Me.hilighttext_pick.ForceNoNerd = False
+        Me.hilighttext_pick.DontShowInfo = False
         Me.hilighttext_pick.Location = New System.Drawing.Point(251, 4)
         Me.hilighttext_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.hilighttext_pick.Name = "hilighttext_pick"
@@ -1744,10 +1764,11 @@ Partial Class Win32UI
         '
         'hilight_pick
         '
+        Me.hilight_pick.AllowDrop = True
         Me.hilight_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.hilight_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.hilight_pick.DefaultColor = System.Drawing.Color.Black
-        Me.hilight_pick.ForceNoNerd = False
+        Me.hilight_pick.DontShowInfo = False
         Me.hilight_pick.Location = New System.Drawing.Point(251, 4)
         Me.hilight_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.hilight_pick.Name = "hilight_pick"
@@ -1796,10 +1817,11 @@ Partial Class Win32UI
         '
         'menutext_pick
         '
+        Me.menutext_pick.AllowDrop = True
         Me.menutext_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.menutext_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.menutext_pick.DefaultColor = System.Drawing.Color.Black
-        Me.menutext_pick.ForceNoNerd = False
+        Me.menutext_pick.DontShowInfo = False
         Me.menutext_pick.Location = New System.Drawing.Point(251, 4)
         Me.menutext_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.menutext_pick.Name = "menutext_pick"
@@ -1865,10 +1887,11 @@ Partial Class Win32UI
         '
         'Window_pick
         '
+        Me.Window_pick.AllowDrop = True
         Me.Window_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Window_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Window_pick.DefaultColor = System.Drawing.Color.Black
-        Me.Window_pick.ForceNoNerd = False
+        Me.Window_pick.DontShowInfo = False
         Me.Window_pick.Location = New System.Drawing.Point(251, 4)
         Me.Window_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Window_pick.Name = "Window_pick"
@@ -1917,10 +1940,11 @@ Partial Class Win32UI
         '
         'InfoWindow_pick
         '
+        Me.InfoWindow_pick.AllowDrop = True
         Me.InfoWindow_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InfoWindow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InfoWindow_pick.DefaultColor = System.Drawing.Color.Black
-        Me.InfoWindow_pick.ForceNoNerd = False
+        Me.InfoWindow_pick.DontShowInfo = False
         Me.InfoWindow_pick.Location = New System.Drawing.Point(251, 4)
         Me.InfoWindow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InfoWindow_pick.Name = "InfoWindow_pick"
@@ -1969,10 +1993,11 @@ Partial Class Win32UI
         '
         'InfoText_pick
         '
+        Me.InfoText_pick.AllowDrop = True
         Me.InfoText_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InfoText_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.InfoText_pick.DefaultColor = System.Drawing.Color.Black
-        Me.InfoText_pick.ForceNoNerd = False
+        Me.InfoText_pick.DontShowInfo = False
         Me.InfoText_pick.Location = New System.Drawing.Point(251, 4)
         Me.InfoText_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.InfoText_pick.Name = "InfoText_pick"
@@ -2021,10 +2046,11 @@ Partial Class Win32UI
         '
         'AppWorkspace_pick
         '
+        Me.AppWorkspace_pick.AllowDrop = True
         Me.AppWorkspace_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.AppWorkspace_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.AppWorkspace_pick.DefaultColor = System.Drawing.Color.Black
-        Me.AppWorkspace_pick.ForceNoNerd = False
+        Me.AppWorkspace_pick.DontShowInfo = False
         Me.AppWorkspace_pick.Location = New System.Drawing.Point(251, 4)
         Me.AppWorkspace_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.AppWorkspace_pick.Name = "AppWorkspace_pick"
@@ -2073,10 +2099,11 @@ Partial Class Win32UI
         '
         'background_pick
         '
+        Me.background_pick.AllowDrop = True
         Me.background_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.background_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.background_pick.DefaultColor = System.Drawing.Color.Black
-        Me.background_pick.ForceNoNerd = False
+        Me.background_pick.DontShowInfo = False
         Me.background_pick.Location = New System.Drawing.Point(251, 4)
         Me.background_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.background_pick.Name = "background_pick"
@@ -2125,10 +2152,11 @@ Partial Class Win32UI
         '
         'GrayText_pick
         '
+        Me.GrayText_pick.AllowDrop = True
         Me.GrayText_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GrayText_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.GrayText_pick.DefaultColor = System.Drawing.Color.Black
-        Me.GrayText_pick.ForceNoNerd = False
+        Me.GrayText_pick.DontShowInfo = False
         Me.GrayText_pick.Location = New System.Drawing.Point(251, 4)
         Me.GrayText_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.GrayText_pick.Name = "GrayText_pick"
@@ -2177,10 +2205,11 @@ Partial Class Win32UI
         '
         'WindowText_pick
         '
+        Me.WindowText_pick.AllowDrop = True
         Me.WindowText_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WindowText_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.WindowText_pick.DefaultColor = System.Drawing.Color.Black
-        Me.WindowText_pick.ForceNoNerd = False
+        Me.WindowText_pick.DontShowInfo = False
         Me.WindowText_pick.Location = New System.Drawing.Point(251, 4)
         Me.WindowText_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.WindowText_pick.Name = "WindowText_pick"
@@ -2216,10 +2245,11 @@ Partial Class Win32UI
         '
         'btnaltface_pick
         '
+        Me.btnaltface_pick.AllowDrop = True
         Me.btnaltface_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnaltface_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btnaltface_pick.DefaultColor = System.Drawing.Color.Black
-        Me.btnaltface_pick.ForceNoNerd = False
+        Me.btnaltface_pick.DontShowInfo = False
         Me.btnaltface_pick.Location = New System.Drawing.Point(251, 4)
         Me.btnaltface_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnaltface_pick.Name = "btnaltface_pick"
@@ -2293,10 +2323,11 @@ Partial Class Win32UI
         '
         'desktop_pick
         '
+        Me.desktop_pick.AllowDrop = True
         Me.desktop_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.desktop_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.desktop_pick.DefaultColor = System.Drawing.Color.Black
-        Me.desktop_pick.ForceNoNerd = False
+        Me.desktop_pick.DontShowInfo = False
         Me.desktop_pick.Location = New System.Drawing.Point(251, 4)
         Me.desktop_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.desktop_pick.Name = "desktop_pick"
@@ -2345,10 +2376,11 @@ Partial Class Win32UI
         '
         'Scrollbar_pick
         '
+        Me.Scrollbar_pick.AllowDrop = True
         Me.Scrollbar_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Scrollbar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.Scrollbar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.Scrollbar_pick.ForceNoNerd = False
+        Me.Scrollbar_pick.DontShowInfo = False
         Me.Scrollbar_pick.Location = New System.Drawing.Point(251, 4)
         Me.Scrollbar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Scrollbar_pick.Name = "Scrollbar_pick"

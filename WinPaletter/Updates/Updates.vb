@@ -235,7 +235,7 @@ Public Class Updates
         If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
         If XenonRadioButton1.Checked And Not Disturbed Then
             Process.Start(OldName)
-            Process.GetCurrentProcess.Kill()
+            Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
         End If
     End Sub
 

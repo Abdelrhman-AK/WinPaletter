@@ -793,9 +793,9 @@ Public Class PreviewHelpers
         Start.SuspendRefresh = False
         ActionCenter.SuspendRefresh = False
 
-        Taskbar.Refresh()
-        Start.Refresh()
-        ActionCenter.Refresh()
+        Taskbar.Invalidate()
+        Start.Invalidate()
+        ActionCenter.Invalidate()
 
         If Not IsFontInstalled("Segoe MDL2 Assets") Then
             setting_icon_preview.Font = New Font("Arial", 28, FontStyle.Regular)
@@ -1196,11 +1196,11 @@ Public Class PreviewHelpers
         XenonWindow1.ProcessBack()
         XenonWindow2.ProcessBack()
 
-        Taskbar.Refresh()
-        Start.Refresh()
-        ActionCenter.Refresh()
-        XenonWindow1.Refresh()
-        XenonWindow2.Refresh()
+        Taskbar.Invalidate()
+        Start.Invalidate()
+        ActionCenter.Invalidate()
+        XenonWindow1.Invalidate()
+        XenonWindow2.Invalidate()
 
     End Sub
     Public Shared Sub ApplyWindowStyles([CP] As CP, [Style] As WindowStyle, XenonWindow1 As XenonWindow, XenonWindow2 As XenonWindow, Optional StartButton As XenonButton = Nothing, Optional LogonUIButton As XenonButton = Nothing)

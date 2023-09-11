@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Runtime.ConstrainedExecution
 Imports Microsoft.Win32
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.XenonCore
@@ -494,7 +495,14 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.Default
     End Sub
 
+    Private Sub color_pick_DragDrop(sender As Object, e As DragEventArgs) Handles color_pick.DragDrop
+        pnl_preview.BackColor = color_pick.BackColor
+    End Sub
+
     Private Sub Color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+
+        If TypeOf e Is DragEventArgs Then Exit Sub
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             Dim clr As Color = SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then

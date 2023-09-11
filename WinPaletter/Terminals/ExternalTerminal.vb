@@ -369,7 +369,12 @@ Public Class ExternalTerminal
         ApplyCursorShape()
     End Sub
 
-    Private Sub ExtTerminal_CursorColor_Click(sender As Object, e As EventArgs) Handles ExtTerminal_CursorColor.Click
+    Private Sub ExtTerminal_CursorColor_Click(sender As Object, e As EventArgs) Handles ExtTerminal_CursorColor.Click, ExtTerminal_CursorColor.DragDrop
+        If TypeOf e Is DragEventArgs Then
+            ExtTerminal_PreviewCUR2.BackColor = ExtTerminal_CursorColor.BackColor
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             Exit Sub
@@ -405,11 +410,20 @@ Public Class ExternalTerminal
 
 #End Region
 
-    Private Sub ColorTable00_Click(sender As Object, e As EventArgs) Handles ExtTerminal_ColorTable15.Click, ExtTerminal_ColorTable14.Click, ExtTerminal_ColorTable13.Click, ExtTerminal_ColorTable12.Click, ExtTerminal_ColorTable11.Click, ExtTerminal_ColorTable10.Click, ExtTerminal_ColorTable09.Click, ExtTerminal_ColorTable08.Click, ExtTerminal_ColorTable07.Click, ExtTerminal_ColorTable06.Click, ExtTerminal_ColorTable05.Click, ExtTerminal_ColorTable04.Click, ExtTerminal_ColorTable03.Click, ExtTerminal_ColorTable02.Click, ExtTerminal_ColorTable01.Click, ExtTerminal_ColorTable00.Click
+    Private Sub ColorTable00_Click(sender As Object, e As EventArgs) Handles ExtTerminal_ColorTable15.Click, ExtTerminal_ColorTable14.Click, ExtTerminal_ColorTable13.Click, ExtTerminal_ColorTable12.Click, ExtTerminal_ColorTable11.Click, ExtTerminal_ColorTable10.Click, ExtTerminal_ColorTable09.Click, ExtTerminal_ColorTable08.Click, ExtTerminal_ColorTable07.Click, ExtTerminal_ColorTable06.Click, ExtTerminal_ColorTable05.Click, ExtTerminal_ColorTable04.Click, ExtTerminal_ColorTable03.Click, ExtTerminal_ColorTable02.Click, ExtTerminal_ColorTable01.Click, ExtTerminal_ColorTable00.Click, ExtTerminal_ColorTable00.DragDrop, ExtTerminal_ColorTable01.DragDrop, ExtTerminal_ColorTable02.DragDrop, ExtTerminal_ColorTable03.DragDrop, ExtTerminal_ColorTable04.DragDrop, ExtTerminal_ColorTable05.DragDrop,
+                                                                             ExtTerminal_ColorTable06.DragDrop, ExtTerminal_ColorTable07.DragDrop, ExtTerminal_ColorTable08.DragDrop, ExtTerminal_ColorTable09.DragDrop, ExtTerminal_ColorTable10.DragDrop, ExtTerminal_ColorTable11.DragDrop,
+                                                                             ExtTerminal_ColorTable12.DragDrop, ExtTerminal_ColorTable13.DragDrop, ExtTerminal_ColorTable14.DragDrop, ExtTerminal_ColorTable15.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            ApplyPreview()
+            UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
+            Exit Sub
+        End If
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             ApplyPreview()
+            UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
             Exit Sub
         End If
 

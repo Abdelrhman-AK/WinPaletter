@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Net
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports System.Windows.Documents
 Imports Devcorp.Controls.VisualStyles
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinPaletter.CP
@@ -22,11 +23,11 @@ Public Class MainFrm
     Private elapsedSecs As Integer = 0
 
 #Region "Preview Subs"
-    Sub ApplyColorsToElements(ByVal [CP] As CP)
+    Sub ApplyColorsToElements([CP] As CP)
         ApplyWinElementsColors([CP], My.PreviewStyle, True, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
         ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2, W81_start, W81_logonui)
     End Sub
-    Sub ApplyStylesToElements(ByVal [CP] As CP, Optional AnimateThePreview As Boolean = True)
+    Sub ApplyStylesToElements([CP] As CP, Optional AnimateThePreview As Boolean = True)
         Dim ItWasVisible As Boolean = tabs_preview.Visible
 
         If AnimateThePreview And ItWasVisible Then
@@ -490,6 +491,29 @@ Public Class MainFrm
         If My.Application.ShowWhatsNew Then Whatsnew.ShowDialog()
     End Sub
 
+    Private Sub MainFrm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+            RemoveHandler btn.MouseEnter, AddressOf UpdateHint
+            RemoveHandler btn.Enter, AddressOf UpdateHint
+            RemoveHandler btn.MouseLeave, AddressOf EraseHint
+            RemoveHandler btn.Leave, AddressOf EraseHint
+        Next
+
+        For Each btn As XenonButton In XenonGroupBox3.Controls.OfType(Of XenonButton)
+            RemoveHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
+            RemoveHandler btn.Enter, AddressOf UpdateHint_Dashboard
+            RemoveHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
+            RemoveHandler btn.Leave, AddressOf EraseHint_Dashboard
+        Next
+
+        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
+            RemoveHandler btn.MouseEnter, AddressOf UpdateHint
+            RemoveHandler btn.Enter, AddressOf UpdateHint
+            RemoveHandler btn.MouseLeave, AddressOf EraseHint
+            RemoveHandler btn.Leave, AddressOf EraseHint
+        Next
+    End Sub
+
     Private Sub MainFrm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         If Me.WindowState = FormWindowState.Normal Then
             My.Settings.General.MainFormWidth = Me.Size.Width
@@ -577,6 +601,23 @@ Public Class MainFrm
 
 
 #Region "Windows 11"
+    Private Sub W11_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W11_ActiveTitlebar_pick.DragDrop, W11_InactiveTitlebar_pick.DragDrop, W11_TaskbarFrontAndFoldersOnStart_pick.DragDrop, W11_Color_Index0.DragDrop, W11_Color_Index1.DragDrop, W11_Color_Index2.DragDrop, W11_Color_Index3.DragDrop, W11_Color_Index4.DragDrop, W11_Color_Index5.DragDrop, W11_Color_Index6.DragDrop, W11_Color_Index7.DragDrop
+        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W11 Then
+            My.CP.Windows11.Titlebar_Active = W11_ActiveTitlebar_pick.BackColor
+            My.CP.Windows11.Titlebar_Inactive = W11_InactiveTitlebar_pick.BackColor
+            My.CP.Windows11.StartMenu_Accent = W11_Color_Index5.BackColor
+            My.CP.Windows11.Color_Index2 = W11_Color_Index4.BackColor
+            My.CP.Windows11.Color_Index6 = W11_Color_Index6.BackColor
+            My.CP.Windows11.Color_Index1 = W11_Color_Index1.BackColor
+            My.CP.Windows11.Color_Index4 = W11_Color_Index2.BackColor
+            My.CP.Windows11.Color_Index5 = W11_TaskbarFrontAndFoldersOnStart_pick.BackColor
+            My.CP.Windows11.Color_Index0 = W11_Color_Index0.BackColor
+            My.CP.Windows11.Color_Index3 = W11_Color_Index3.BackColor
+            My.CP.Windows11.Color_Index7 = W11_Color_Index7.BackColor
+            ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
     Private Sub W11_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W11_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -1015,6 +1056,23 @@ Public Class MainFrm
 #End Region
 
 #Region "Windows 10"
+    Private Sub W10_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W10_ActiveTitlebar_pick.DragDrop, W10_InactiveTitlebar_pick.DragDrop, W10_TaskbarFrontAndFoldersOnStart_pick.DragDrop, W10_Color_Index0.DragDrop, W10_Color_Index1.DragDrop, W10_Color_Index2.DragDrop, W10_Color_Index3.DragDrop, W10_Color_Index4.DragDrop, W10_Color_Index5.DragDrop, W10_Color_Index6.DragDrop, W10_Color_Index7.DragDrop
+        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W10 Then
+            My.CP.Windows10.Titlebar_Active = W10_ActiveTitlebar_pick.BackColor
+            My.CP.Windows10.Titlebar_Inactive = W10_InactiveTitlebar_pick.BackColor
+            My.CP.Windows10.StartMenu_Accent = W10_Color_Index5.BackColor
+            My.CP.Windows10.Color_Index2 = W10_Color_Index4.BackColor
+            My.CP.Windows10.Color_Index6 = W10_Color_Index6.BackColor
+            My.CP.Windows10.Color_Index1 = W10_Color_Index1.BackColor
+            My.CP.Windows10.Color_Index4 = W10_Color_Index2.BackColor
+            My.CP.Windows10.Color_Index5 = W10_TaskbarFrontAndFoldersOnStart_pick.BackColor
+            My.CP.Windows10.Color_Index0 = W10_Color_Index0.BackColor
+            My.CP.Windows10.Color_Index3 = W10_Color_Index3.BackColor
+            My.CP.Windows10.Color_Index7 = W10_Color_Index7.BackColor
+            ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
     Private Sub W10_ActiveTitlebar_pick_Click(sender As Object, e As EventArgs) Handles W10_ActiveTitlebar_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -1513,6 +1571,17 @@ Public Class MainFrm
 #End Region
 
 #Region "Windows 8.1"
+    Private Sub W81_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W81_ColorizationColor_pick.DragDrop, W81_start_pick.DragDrop, W81_accent_pick.DragDrop, W81_personalcls_background_pick.DragDrop, W81_personalcolor_accent_pick.DragDrop
+        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W81 Then
+            My.CP.Windows81.ColorizationColor = W81_ColorizationColor_pick.BackColor
+            My.CP.Windows81.StartColor = W81_start_pick.BackColor
+            My.CP.Windows81.AccentColor = W81_accent_pick.BackColor
+            My.CP.Windows81.PersonalColors_Background = W81_personalcls_background_pick.BackColor
+            My.CP.Windows81.PersonalColors_Accent = W81_personalcolor_accent_pick.BackColor
+            ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
     Private Sub W8_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W81_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -1680,6 +1749,14 @@ Public Class MainFrm
 #End Region
 
 #Region "Windows 7"
+    Private Sub W7_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W7_ColorizationColor_pick.DragDrop, W7_ColorizationAfterglow_pick.DragDrop
+        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W7 Then
+            My.CP.Windows7.ColorizationColor = W7_ColorizationColor_pick.BackColor
+            My.CP.Windows7.ColorizationAfterglow = W7_ColorizationAfterglow_pick.BackColor
+            ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
     Private Sub W7_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles W7_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -1847,6 +1924,13 @@ Public Class MainFrm
 #End Region
 
 #Region "Windows Vista"
+    Private Sub WVista_pick_DragDrop(sender As Object, e As DragEventArgs) Handles WVista_ColorizationColor_pick.DragDrop
+        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.WVista Then
+            My.CP.WindowsVista.ColorizationColor = WVista_ColorizationColor_pick.BackColor
+            ApplyColorsToElements(My.CP)
+        End If
+    End Sub
+
     Private Sub WVista_ColorizationColor_pick_Click(sender As Object, e As EventArgs) Handles WVista_ColorizationColor_pick.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -2464,6 +2548,10 @@ Public Class MainFrm
 
     Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
         Process.Start(My.Resources.Link_Wiki)
+    End Sub
+
+    Private Sub XenonButton40_Click(sender As Object, e As EventArgs) Handles XenonButton40.Click
+        PaletteGenerateDashboard.ShowDialog()
     End Sub
 
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click

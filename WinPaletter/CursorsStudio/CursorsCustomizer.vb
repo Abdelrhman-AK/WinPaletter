@@ -2086,7 +2086,7 @@ Public Class CursorControl : Inherits ContainerControl
 
     Public Angle As Single = 180
 
-    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+    Private Sub CursorControl_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
         Try
             If Not DesignMode Then
@@ -2097,6 +2097,17 @@ Public Class CursorControl : Inherits ContainerControl
         Catch
         End Try
 
+    End Sub
+
+    Private Sub CursorControl_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Try
+            If Not DesignMode Then
+                RemoveHandler FindForm.Load, AddressOf Loaded
+                RemoveHandler FindForm.Shown, AddressOf Showed
+                RemoveHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+            End If
+        Catch
+        End Try
     End Sub
 
     Sub Loaded()
@@ -2186,4 +2197,5 @@ Public Class CursorControl : Inherits ContainerControl
         Next
 
     End Sub
+
 End Class

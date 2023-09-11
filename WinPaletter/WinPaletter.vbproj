@@ -245,16 +245,22 @@
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.Designer.vb">
-      <DependentUpon>About.vb</DependentUpon>
+    <Compile Include="ColorItemControllers\ColorInfoDragDrop.Designer.vb">
+      <DependentUpon>ColorInfoDragDrop.vb</DependentUpon>
     </Compile>
-    <Compile Include="About.vb">
+    <Compile Include="ColorItemControllers\ColorInfoDragDrop.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Error_Dialogs\PE_Warning.Designer.vb">
+    <Compile Include="Dialogs\About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\About.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PE_Warning.Designer.vb">
       <DependentUpon>PE_Warning.vb</DependentUpon>
     </Compile>
-    <Compile Include="Error_Dialogs\PE_Warning.vb">
+    <Compile Include="Dialogs\PE_Warning.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\Bitmap_Mgr.vb" />
@@ -282,10 +288,10 @@
     <Compile Include="bk.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Error_Dialogs\BugReport.Designer.vb">
+    <Compile Include="Dialogs\BugReport.Designer.vb">
       <DependentUpon>BugReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Error_Dialogs\BugReport.vb">
+    <Compile Include="Dialogs\BugReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\PE.vb" />
@@ -321,29 +327,47 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb" />
+    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.vb">
+      <DependentUpon>PaletteGenerateFromColor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.Designer.vb">
+      <DependentUpon>PaletteGenerateFromImage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.Designer.vb">
+      <DependentUpon>PaletteGenerateDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Settings\XeSettings.vb" />
-    <Compile Include="Controllers\ColorPickerDlg.Designer.vb">
+    <Compile Include="ColorItemControllers\ColorPickerDlg.Designer.vb">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\ColorPickerDlg.vb">
+    <Compile Include="ColorItemControllers\ColorPickerDlg.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controllers\ComplexSave.Designer.vb">
+    <Compile Include="Dialogs\ComplexSave.Designer.vb">
       <DependentUpon>ComplexSave.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\ComplexSave.vb">
+    <Compile Include="Dialogs\ComplexSave.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controllers\Saving_ex_list.Designer.vb">
+    <Compile Include="Dialogs\Saving_ex_list.Designer.vb">
       <DependentUpon>Saving_ex_list.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Saving_ex_list.vb">
+    <Compile Include="Dialogs\Saving_ex_list.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controllers\SubMenu.Designer.vb">
+    <Compile Include="ColorItemControllers\SubMenu.Designer.vb">
       <DependentUpon>SubMenu.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\SubMenu.vb">
+    <Compile Include="ColorItemControllers\SubMenu.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CP\CP.vb" />
@@ -403,10 +427,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Localizer.vb" />
-    <Compile Include="LicenseForm.Designer.vb">
+    <Compile Include="Dialogs\LicenseForm.Designer.vb">
       <DependentUpon>LicenseForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="LicenseForm.vb">
+    <Compile Include="Dialogs\LicenseForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LogonUI\LogonUI.Designer.vb">
@@ -671,8 +695,8 @@
     <Content Include="Resources\CMD_8x8_P.png" />
     <Content Include="Resources\GaussianBlur.png" />
     <Content Include="Resources\GaussianBlurOpaque.png" />
-    <Content Include="Resources\icons8_command_line.ico" />
-    <Content Include="Resources\icons8_PowerShell.ico" />
+    <None Include="Resources\icons8_PowerShell.ico" />
+    <None Include="Resources\icons8_command_line.ico" />
     <Content Include="Resources\Icon_Uninstall.ico" />
     <Content Include="Resources\LangNode_JSON.png" />
     <Content Include="Resources\LangNode_Main.png" />
@@ -791,10 +815,13 @@
     <Content Include="Resources\Win8_Close_ToolWindow.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="About.resx">
+    <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
+      <DependentUpon>ColorInfoDragDrop.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Error_Dialogs\PE_Warning.resx">
+    <EmbeddedResource Include="Dialogs\PE_Warning.resx">
       <DependentUpon>PE_Warning.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Converter\Converter_Form.resx">
@@ -808,19 +835,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>bk1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Error_Dialogs\BugReport.resx">
+    <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\ColorPickerDlg.resx">
+    <EmbeddedResource Include="ColorItemControllers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\ComplexSave.resx">
+    <EmbeddedResource Include="Dialogs\ComplexSave.resx">
       <DependentUpon>ComplexSave.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\Saving_ex_list.resx">
+    <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">
       <DependentUpon>Saving_ex_list.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\SubMenu.resx">
+    <EmbeddedResource Include="ColorItemControllers\SubMenu.resx">
       <DependentUpon>SubMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
@@ -847,7 +874,7 @@
     <EmbeddedResource Include="Languages\Lang_JSON_Update.resx">
       <DependentUpon>Lang_JSON_Update.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LicenseForm.resx">
+    <EmbeddedResource Include="Dialogs\LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
@@ -881,6 +908,15 @@
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
+      <DependentUpon>PaletteGenerateFromColor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromImage.resx">
+      <DependentUpon>PaletteGenerateFromImage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateDashboard.resx">
+      <DependentUpon>PaletteGenerateDashboard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.vb</DependentUpon>

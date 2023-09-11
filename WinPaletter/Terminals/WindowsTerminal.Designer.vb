@@ -306,7 +306,7 @@ Partial Class WindowsTerminal
         Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
         Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -494,10 +494,11 @@ Partial Class WindowsTerminal
         '
         'TerTitlebarActive
         '
+        Me.TerTitlebarActive.AllowDrop = True
         Me.TerTitlebarActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTitlebarActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTitlebarActive.ForceNoNerd = False
+        Me.TerTitlebarActive.DontShowInfo = False
         Me.TerTitlebarActive.Location = New System.Drawing.Point(242, 3)
         Me.TerTitlebarActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarActive.Name = "TerTitlebarActive"
@@ -506,10 +507,11 @@ Partial Class WindowsTerminal
         '
         'TerTitlebarInactive
         '
+        Me.TerTitlebarInactive.AllowDrop = True
         Me.TerTitlebarInactive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTitlebarInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTitlebarInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTitlebarInactive.ForceNoNerd = False
+        Me.TerTitlebarInactive.DontShowInfo = False
         Me.TerTitlebarInactive.Location = New System.Drawing.Point(242, 33)
         Me.TerTitlebarInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTitlebarInactive.Name = "TerTitlebarInactive"
@@ -541,10 +543,11 @@ Partial Class WindowsTerminal
         '
         'TerTabActive
         '
+        Me.TerTabActive.AllowDrop = True
         Me.TerTabActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTabActive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabActive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTabActive.ForceNoNerd = False
+        Me.TerTabActive.DontShowInfo = False
         Me.TerTabActive.Location = New System.Drawing.Point(242, 63)
         Me.TerTabActive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabActive.Name = "TerTabActive"
@@ -553,10 +556,11 @@ Partial Class WindowsTerminal
         '
         'TerTabInactive
         '
+        Me.TerTabInactive.AllowDrop = True
         Me.TerTabInactive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerTabInactive.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerTabInactive.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerTabInactive.ForceNoNerd = False
+        Me.TerTabInactive.DontShowInfo = False
         Me.TerTabInactive.Location = New System.Drawing.Point(242, 93)
         Me.TerTabInactive.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerTabInactive.Name = "TerTabInactive"
@@ -1001,10 +1005,11 @@ Partial Class WindowsTerminal
         '
         'TerCursor
         '
+        Me.TerCursor.AllowDrop = True
         Me.TerCursor.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerCursor.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerCursor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerCursor.ForceNoNerd = False
+        Me.TerCursor.DontShowInfo = False
         Me.TerCursor.Location = New System.Drawing.Point(245, 153)
         Me.TerCursor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCursor.Name = "TerCursor"
@@ -1013,10 +1018,11 @@ Partial Class WindowsTerminal
         '
         'TerWhiteB
         '
+        Me.TerWhiteB.AllowDrop = True
         Me.TerWhiteB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerWhiteB.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.TerWhiteB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.TerWhiteB.ForceNoNerd = False
+        Me.TerWhiteB.DontShowInfo = False
         Me.TerWhiteB.Location = New System.Drawing.Point(245, 401)
         Me.TerWhiteB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhiteB.Name = "TerWhiteB"
@@ -1038,10 +1044,11 @@ Partial Class WindowsTerminal
         '
         'TerBlue
         '
+        Me.TerBlue.AllowDrop = True
         Me.TerBlue.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBlue.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.TerBlue.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.TerBlue.ForceNoNerd = False
+        Me.TerBlue.DontShowInfo = False
         Me.TerBlue.Location = New System.Drawing.Point(140, 222)
         Me.TerBlue.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlue.Name = "TerBlue"
@@ -1063,10 +1070,11 @@ Partial Class WindowsTerminal
         '
         'TerSelection
         '
+        Me.TerSelection.AllowDrop = True
         Me.TerSelection.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerSelection.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerSelection.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerSelection.ForceNoNerd = False
+        Me.TerSelection.DontShowInfo = False
         Me.TerSelection.Location = New System.Drawing.Point(245, 123)
         Me.TerSelection.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerSelection.Name = "TerSelection"
@@ -1101,10 +1109,11 @@ Partial Class WindowsTerminal
         '
         'TerWhite
         '
+        Me.TerWhite.AllowDrop = True
         Me.TerWhite.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerWhite.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.TerWhite.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.TerWhite.ForceNoNerd = False
+        Me.TerWhite.DontShowInfo = False
         Me.TerWhite.Location = New System.Drawing.Point(140, 401)
         Me.TerWhite.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerWhite.Name = "TerWhite"
@@ -1113,10 +1122,11 @@ Partial Class WindowsTerminal
         '
         'TerForeground
         '
+        Me.TerForeground.AllowDrop = True
         Me.TerForeground.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerForeground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerForeground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerForeground.ForceNoNerd = False
+        Me.TerForeground.DontShowInfo = False
         Me.TerForeground.Location = New System.Drawing.Point(245, 93)
         Me.TerForeground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerForeground.Name = "TerForeground"
@@ -1125,10 +1135,11 @@ Partial Class WindowsTerminal
         '
         'TerCyanB
         '
+        Me.TerCyanB.AllowDrop = True
         Me.TerCyanB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerCyanB.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.TerCyanB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.TerCyanB.ForceNoNerd = False
+        Me.TerCyanB.DontShowInfo = False
         Me.TerCyanB.Location = New System.Drawing.Point(245, 251)
         Me.TerCyanB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyanB.Name = "TerCyanB"
@@ -1150,10 +1161,11 @@ Partial Class WindowsTerminal
         '
         'TerCyan
         '
+        Me.TerCyan.AllowDrop = True
         Me.TerCyan.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerCyan.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.TerCyan.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.TerCyan.ForceNoNerd = False
+        Me.TerCyan.DontShowInfo = False
         Me.TerCyan.Location = New System.Drawing.Point(140, 251)
         Me.TerCyan.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerCyan.Name = "TerCyan"
@@ -1162,10 +1174,11 @@ Partial Class WindowsTerminal
         '
         'TerGreen
         '
+        Me.TerGreen.AllowDrop = True
         Me.TerGreen.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerGreen.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.TerGreen.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.TerGreen.ForceNoNerd = False
+        Me.TerGreen.DontShowInfo = False
         Me.TerGreen.Location = New System.Drawing.Point(140, 281)
         Me.TerGreen.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreen.Name = "TerGreen"
@@ -1187,10 +1200,11 @@ Partial Class WindowsTerminal
         '
         'TerBackground
         '
+        Me.TerBackground.AllowDrop = True
         Me.TerBackground.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBackground.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBackground.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerBackground.ForceNoNerd = False
+        Me.TerBackground.DontShowInfo = False
         Me.TerBackground.Location = New System.Drawing.Point(245, 63)
         Me.TerBackground.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBackground.Name = "TerBackground"
@@ -1199,10 +1213,11 @@ Partial Class WindowsTerminal
         '
         'TerYellow
         '
+        Me.TerYellow.AllowDrop = True
         Me.TerYellow.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerYellow.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.TerYellow.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.TerYellow.ForceNoNerd = False
+        Me.TerYellow.DontShowInfo = False
         Me.TerYellow.Location = New System.Drawing.Point(140, 371)
         Me.TerYellow.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellow.Name = "TerYellow"
@@ -1211,10 +1226,11 @@ Partial Class WindowsTerminal
         '
         'TerGreenB
         '
+        Me.TerGreenB.AllowDrop = True
         Me.TerGreenB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerGreenB.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerGreenB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerGreenB.ForceNoNerd = False
+        Me.TerGreenB.DontShowInfo = False
         Me.TerGreenB.Location = New System.Drawing.Point(245, 281)
         Me.TerGreenB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerGreenB.Name = "TerGreenB"
@@ -1249,10 +1265,11 @@ Partial Class WindowsTerminal
         '
         'TerBlack
         '
+        Me.TerBlack.AllowDrop = True
         Me.TerBlack.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBlack.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.TerBlack.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.TerBlack.ForceNoNerd = False
+        Me.TerBlack.DontShowInfo = False
         Me.TerBlack.Location = New System.Drawing.Point(140, 191)
         Me.TerBlack.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlack.Name = "TerBlack"
@@ -1261,10 +1278,11 @@ Partial Class WindowsTerminal
         '
         'TerYellowB
         '
+        Me.TerYellowB.AllowDrop = True
         Me.TerYellowB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerYellowB.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.TerYellowB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.TerYellowB.ForceNoNerd = False
+        Me.TerYellowB.DontShowInfo = False
         Me.TerYellowB.Location = New System.Drawing.Point(245, 371)
         Me.TerYellowB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerYellowB.Name = "TerYellowB"
@@ -1286,10 +1304,11 @@ Partial Class WindowsTerminal
         '
         'TerBlackB
         '
+        Me.TerBlackB.AllowDrop = True
         Me.TerBlackB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBlackB.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.TerBlackB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.TerBlackB.ForceNoNerd = False
+        Me.TerBlackB.DontShowInfo = False
         Me.TerBlackB.Location = New System.Drawing.Point(245, 191)
         Me.TerBlackB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlackB.Name = "TerBlackB"
@@ -1298,10 +1317,11 @@ Partial Class WindowsTerminal
         '
         'TerPurple
         '
+        Me.TerPurple.AllowDrop = True
         Me.TerPurple.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerPurple.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.TerPurple.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.TerPurple.ForceNoNerd = False
+        Me.TerPurple.DontShowInfo = False
         Me.TerPurple.Location = New System.Drawing.Point(140, 341)
         Me.TerPurple.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurple.Name = "TerPurple"
@@ -1323,10 +1343,11 @@ Partial Class WindowsTerminal
         '
         'TerPurpleB
         '
+        Me.TerPurpleB.AllowDrop = True
         Me.TerPurpleB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerPurpleB.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.TerPurpleB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.TerPurpleB.ForceNoNerd = False
+        Me.TerPurpleB.DontShowInfo = False
         Me.TerPurpleB.Location = New System.Drawing.Point(245, 341)
         Me.TerPurpleB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerPurpleB.Name = "TerPurpleB"
@@ -1335,10 +1356,11 @@ Partial Class WindowsTerminal
         '
         'TerBlueB
         '
+        Me.TerBlueB.AllowDrop = True
         Me.TerBlueB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerBlueB.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.TerBlueB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.TerBlueB.ForceNoNerd = False
+        Me.TerBlueB.DontShowInfo = False
         Me.TerBlueB.Location = New System.Drawing.Point(245, 222)
         Me.TerBlueB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerBlueB.Name = "TerBlueB"
@@ -1373,10 +1395,11 @@ Partial Class WindowsTerminal
         '
         'TerRedB
         '
+        Me.TerRedB.AllowDrop = True
         Me.TerRedB.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerRedB.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.TerRedB.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.TerRedB.ForceNoNerd = False
+        Me.TerRedB.DontShowInfo = False
         Me.TerRedB.Location = New System.Drawing.Point(245, 311)
         Me.TerRedB.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRedB.Name = "TerRedB"
@@ -1385,10 +1408,11 @@ Partial Class WindowsTerminal
         '
         'TerRed
         '
+        Me.TerRed.AllowDrop = True
         Me.TerRed.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerRed.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.TerRed.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.TerRed.ForceNoNerd = False
+        Me.TerRed.DontShowInfo = False
         Me.TerRed.Location = New System.Drawing.Point(140, 311)
         Me.TerRed.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.TerRed.Name = "TerRed"

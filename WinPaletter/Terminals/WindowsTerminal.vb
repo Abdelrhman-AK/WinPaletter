@@ -548,8 +548,13 @@ Public Class WindowsTerminal
     Private Sub ColorClick(sender As Object, e As EventArgs) Handles TerBlack.Click,
                                                                      TerBlue.Click, TerGreen.Click, TerCyan.Click, TerRed.Click, TerPurple.Click, TerYellow.Click,
                                                                      TerWhite.Click, TerBlackB.Click, TerBlueB.Click, TerGreenB.Click, TerCyanB.Click, TerRedB.Click,
-                                                                     TerPurpleB.Click, TerYellowB.Click, TerWhiteB.Click
+                                                                     TerPurpleB.Click, TerYellowB.Click, TerWhiteB.Click,
+                                                                     TerBlack.DragDrop, TerBlue.DragDrop, TerGreen.DragDrop, TerCyan.DragDrop, TerRed.DragDrop, TerPurple.DragDrop, TerYellow.DragDrop,
+                                                                     TerWhite.DragDrop, TerBlackB.DragDrop, TerBlueB.DragDrop, TerGreenB.DragDrop, TerCyanB.DragDrop, TerRedB.DragDrop,
+                                                                     TerPurpleB.DragDrop, TerYellowB.DragDrop, TerWhiteB.DragDrop
 
+
+        If TypeOf e Is DragEventArgs Then Exit Sub
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -586,7 +591,46 @@ Public Class WindowsTerminal
     End Sub
 
     Private Sub ColorMainsClick(sender As Object, e As EventArgs) Handles TerBackground.Click, TerForeground.Click, TerSelection.Click, TerCursor.Click,
-                                                                          TerTabActive.Click, TerTabInactive.Click, TerTitlebarActive.Click, TerTitlebarInactive.Click
+                                                                          TerTabActive.Click, TerTabInactive.Click, TerTitlebarActive.Click, TerTitlebarInactive.Click,
+                                                                          TerBackground.DragDrop, TerForeground.DragDrop, TerSelection.DragDrop, TerCursor.DragDrop,
+                                                                          TerTabActive.DragDrop, TerTabInactive.DragDrop, TerTitlebarActive.DragDrop, TerTitlebarInactive.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).Background = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerForeground.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerSelection.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerCursor.Name.ToLower) Then
+                _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTabActive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTabInactive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTitlebarActive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = CType(sender, XenonCP).BackColor
+            End If
+
+            If sender.Name.ToString.ToLower.Contains(TerTitlebarInactive.Name.ToLower) Then
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = CType(sender, XenonCP).BackColor
+            End If
+
+            ApplyPreview(_Terminal)
+            Exit Sub
+        End If
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             Dim cx As Color = SubMenu.ShowMenu(sender, sender IsNot TerBackground And sender IsNot TerForeground And sender IsNot TerSelection And sender IsNot TerCursor)

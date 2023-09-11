@@ -395,9 +395,10 @@ Partial Class CursorsStudio
         '
         'XenonCP1
         '
+        Me.XenonCP1.AllowDrop = True
         Me.XenonCP1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.XenonCP1.DefaultColor = System.Drawing.Color.White
-        Me.XenonCP1.ForceNoNerd = False
+        Me.XenonCP1.DontShowInfo = False
         Me.XenonCP1.Location = New System.Drawing.Point(413, 42)
         Me.XenonCP1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonCP1.Name = "XenonCP1"
@@ -825,9 +826,10 @@ Partial Class CursorsStudio
         '
         'CircleColor1
         '
+        Me.CircleColor1.AllowDrop = True
         Me.CircleColor1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.CircleColor1.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CircleColor1.ForceNoNerd = False
+        Me.CircleColor1.DontShowInfo = False
         Me.CircleColor1.Location = New System.Drawing.Point(5, 4)
         Me.CircleColor1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.CircleColor1.Name = "CircleColor1"
@@ -848,9 +850,10 @@ Partial Class CursorsStudio
         '
         'CircleColor2
         '
+        Me.CircleColor2.AllowDrop = True
         Me.CircleColor2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.CircleColor2.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.CircleColor2.ForceNoNerd = False
+        Me.CircleColor2.DontShowInfo = False
         Me.CircleColor2.Location = New System.Drawing.Point(104, 4)
         Me.CircleColor2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.CircleColor2.Name = "CircleColor2"
@@ -943,9 +946,10 @@ Partial Class CursorsStudio
         '
         'LoadingColor1
         '
+        Me.LoadingColor1.AllowDrop = True
         Me.LoadingColor1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.LoadingColor1.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.LoadingColor1.ForceNoNerd = False
+        Me.LoadingColor1.DontShowInfo = False
         Me.LoadingColor1.Location = New System.Drawing.Point(5, 4)
         Me.LoadingColor1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LoadingColor1.Name = "LoadingColor1"
@@ -982,9 +986,10 @@ Partial Class CursorsStudio
         '
         'LoadingColor2
         '
+        Me.LoadingColor2.AllowDrop = True
         Me.LoadingColor2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.LoadingColor2.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.LoadingColor2.ForceNoNerd = False
+        Me.LoadingColor2.DontShowInfo = False
         Me.LoadingColor2.Location = New System.Drawing.Point(104, 4)
         Me.LoadingColor2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.LoadingColor2.Name = "LoadingColor2"
@@ -1313,9 +1318,10 @@ Partial Class CursorsStudio
         '
         'SecondaryColor1
         '
+        Me.SecondaryColor1.AllowDrop = True
         Me.SecondaryColor1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.SecondaryColor1.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.SecondaryColor1.ForceNoNerd = False
+        Me.SecondaryColor1.DontShowInfo = False
         Me.SecondaryColor1.Location = New System.Drawing.Point(5, 4)
         Me.SecondaryColor1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.SecondaryColor1.Name = "SecondaryColor1"
@@ -1324,9 +1330,10 @@ Partial Class CursorsStudio
         '
         'SecondaryColor2
         '
+        Me.SecondaryColor2.AllowDrop = True
         Me.SecondaryColor2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.SecondaryColor2.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(65, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.SecondaryColor2.ForceNoNerd = False
+        Me.SecondaryColor2.DontShowInfo = False
         Me.SecondaryColor2.Location = New System.Drawing.Point(104, 4)
         Me.SecondaryColor2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.SecondaryColor2.Name = "SecondaryColor2"
@@ -1407,9 +1414,10 @@ Partial Class CursorsStudio
         '
         'PrimaryColor2
         '
+        Me.PrimaryColor2.AllowDrop = True
         Me.PrimaryColor2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.PrimaryColor2.DefaultColor = System.Drawing.Color.White
-        Me.PrimaryColor2.ForceNoNerd = False
+        Me.PrimaryColor2.DontShowInfo = False
         Me.PrimaryColor2.Location = New System.Drawing.Point(104, 4)
         Me.PrimaryColor2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.PrimaryColor2.Name = "PrimaryColor2"
@@ -1418,9 +1426,10 @@ Partial Class CursorsStudio
         '
         'PrimaryColor1
         '
+        Me.PrimaryColor1.AllowDrop = True
         Me.PrimaryColor1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.PrimaryColor1.DefaultColor = System.Drawing.Color.White
-        Me.PrimaryColor1.ForceNoNerd = False
+        Me.PrimaryColor1.DontShowInfo = False
         Me.PrimaryColor1.Location = New System.Drawing.Point(5, 4)
         Me.PrimaryColor1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.PrimaryColor1.Name = "PrimaryColor1"

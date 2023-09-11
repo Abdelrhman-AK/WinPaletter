@@ -798,7 +798,13 @@ Public Class CMD
         ApplyCursorShape()
     End Sub
 
-    Private Sub CMD_CursorColor_Click(sender As Object, e As EventArgs) Handles CMD_CursorColor.Click
+    Private Sub CMD_CursorColor_Click(sender As Object, e As EventArgs) Handles CMD_CursorColor.Click, CMD_CursorColor.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            CMD_PreviewCUR2.BackColor = CMD_CursorColor.BackColor
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             CMD_PreviewCUR2.BackColor = SubMenu.ShowMenu(sender)
             Exit Sub
@@ -822,7 +828,15 @@ Public Class CMD
 
     Private Sub ColorTable00_Click(sender As Object, e As EventArgs) Handles ColorTable00.Click, ColorTable01.Click, ColorTable02.Click, ColorTable03.Click, ColorTable04.Click, ColorTable05.Click,
                                                                              ColorTable06.Click, ColorTable07.Click, ColorTable08.Click, ColorTable09.Click, ColorTable10.Click, ColorTable11.Click,
-                                                                             ColorTable12.Click, ColorTable13.Click, ColorTable14.Click, ColorTable15.Click
+                                                                             ColorTable12.Click, ColorTable13.Click, ColorTable14.Click, ColorTable15.Click, ColorTable00.DragDrop, ColorTable01.DragDrop, ColorTable02.DragDrop, ColorTable03.DragDrop, ColorTable04.DragDrop, ColorTable05.DragDrop,
+                                                                             ColorTable06.DragDrop, ColorTable07.DragDrop, ColorTable08.DragDrop, ColorTable09.DragDrop, ColorTable10.DragDrop, ColorTable11.DragDrop,
+                                                                             ColorTable12.DragDrop, ColorTable13.DragDrop, ColorTable14.DragDrop, ColorTable15.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            ApplyPreview()
+            UpdateFromTrack(1) : UpdateFromTrack(2) : UpdateFromTrack(3) : UpdateFromTrack(4)
+            Exit Sub
+        End If
 
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
@@ -850,7 +864,6 @@ Public Class CMD
         If sender.Name.ToString.ToLower.Contains("ColorTable13".ToLower) Then _Conditions.CMD_ColorTable13 = True
         If sender.Name.ToString.ToLower.Contains("ColorTable14".ToLower) Then _Conditions.CMD_ColorTable14 = True
         If sender.Name.ToString.ToLower.Contains("ColorTable15".ToLower) Then _Conditions.CMD_ColorTable15 = True
-
 
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
 

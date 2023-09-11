@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Win32
-Imports WinPaletter.NativeMethods
 Imports WinPaletter.XenonCore
 
 Public Class Uninstall
@@ -69,7 +68,7 @@ Public Class Uninstall
         Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
 
         Me.Close()
-        Process.GetCurrentProcess.Kill()
+        Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
 
     End Sub
 

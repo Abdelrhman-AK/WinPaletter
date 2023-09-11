@@ -345,6 +345,9 @@ Public Class XeSettings
             Public UseWindowsMonospacedFont As Boolean
             Public MoreLabelTransparency As Boolean
             Public DotDefaultChangedIndicator As Boolean
+            Public DragAndDrop As Boolean
+            Public DragAndDropColorsGuide As Boolean
+            Public DragAndDropRippleEffect As Boolean
 
             Public Enum Formats
                 HEX
@@ -360,6 +363,9 @@ Public Class XeSettings
                 UseWindowsMonospacedFont = GetReg(REG_NerdStats, "UseWindowsMonospacedFont", False)
                 MoreLabelTransparency = GetReg(REG_NerdStats, "MoreLabelTransparency", False)
                 DotDefaultChangedIndicator = GetReg(REG_NerdStats, "DotDefaultChangedIndicator", True)
+                DragAndDrop = GetReg(REG_NerdStats, "DragAndDrop", True)
+                DragAndDropColorsGuide = GetReg(REG_NerdStats, "DragAndDropColorsGuide", True)
+                DragAndDropRippleEffect = GetReg(REG_NerdStats, "DragAndDropRippleEffect", True)
 
             End Sub
 
@@ -370,6 +376,9 @@ Public Class XeSettings
                 EditReg(REG_NerdStats, "UseWindowsMonospacedFont", UseWindowsMonospacedFont)
                 EditReg(REG_NerdStats, "MoreLabelTransparency", MoreLabelTransparency)
                 EditReg(REG_NerdStats, "DotDefaultChangedIndicator", DotDefaultChangedIndicator)
+                EditReg(REG_NerdStats, "DragAndDrop", DragAndDrop)
+                EditReg(REG_NerdStats, "DragAndDropColorsGuide", DragAndDropColorsGuide)
+                EditReg(REG_NerdStats, "DragAndDropRippleEffect", DragAndDropRippleEffect)
 
             End Sub
 
@@ -486,7 +495,10 @@ Public Class XeSettings
         .ShowHexHash = True,
         .MoreLabelTransparency = False,
         .UseWindowsMonospacedFont = False,
-        .DotDefaultChangedIndicator = True
+        .DotDefaultChangedIndicator = True,
+        .DragAndDrop = True,
+        .DragAndDropColorsGuide = True,
+        .DragAndDropRippleEffect = True
     }
 
     Public Miscellaneous As New Structures.Miscellaneous With {

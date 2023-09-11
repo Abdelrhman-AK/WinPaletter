@@ -54,7 +54,17 @@ Public Class TerminalInfo
         If DialogResult <> DialogResult.OK Then DialogResult = DialogResult.Cancel
     End Sub
 
-    Private Sub TerTabColor_Click(sender As Object, e As EventArgs) Handles TerTabColor.Click
+    Private Sub TerTabColor_Click(sender As Object, e As EventArgs) Handles TerTabColor.Click, TerTabColor.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            With If(WindowsTerminal.TerProfiles.SelectedIndex = 0, WindowsTerminal._Terminal.DefaultProf, WindowsTerminal._Terminal.Profiles(WindowsTerminal.TerProfiles.SelectedIndex - 1))
+                .TabColor = TerTabColor.BackColor
+            End With
+
+            WindowsTerminal.ApplyPreview(WindowsTerminal._Terminal)
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             Dim cx As Color = SubMenu.ShowMenu(sender, True)
 

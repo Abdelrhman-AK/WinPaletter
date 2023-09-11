@@ -149,6 +149,16 @@ Public Class CursorsStudio
         Timer1.Enabled = False
         Timer1.Stop()
 
+        'Remove handler to avoid doubling/tripling events
+        For Each i As CursorControl In FlowLayoutPanel1.Controls
+            If TypeOf i Is CursorControl Then
+                Try
+                    RemoveHandler i.Click, AddressOf Clicked
+                Catch
+                End Try
+            End If
+        Next
+
         For Each i As CursorControl In FlowLayoutPanel1.Controls
             If TypeOf i Is CursorControl Then
                 AddHandler i.Click, AddressOf Clicked
@@ -266,7 +276,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles PrimaryColor1.Click
+    Private Sub TaskbarFrontAndFoldersOnStart_picker_Click(sender As Object, e As EventArgs) Handles PrimaryColor1.Click, PrimaryColor1.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_PrimaryColor1 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -291,7 +308,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles PrimaryColor2.Click
+    Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles PrimaryColor2.Click, PrimaryColor2.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_PrimaryColor2 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -315,7 +339,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles SecondaryColor1.Click
+    Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles SecondaryColor1.Click, SecondaryColor1.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_SecondaryColor1 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -339,7 +370,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles SecondaryColor2.Click
+    Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles SecondaryColor2.Click, SecondaryColor2.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_SecondaryColor2 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -363,7 +401,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles CircleColor1.Click
+    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles CircleColor1.Click, CircleColor1.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -436,11 +481,6 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonNumericUpDown3_Click(sender As Object, e As EventArgs)
-        '_SelectedControl.Prop_LineThickness = sender.Value / 10
-        _SelectedControl.Invalidate()
-    End Sub
-
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         If Not _Shown Then Exit Sub
 
@@ -488,7 +528,14 @@ Public Class CursorsStudio
         Timer1.Start()
     End Sub
 
-    Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles CircleColor2.Click
+    Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles CircleColor2.Click, CircleColor2.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -512,7 +559,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles LoadingColor1.Click
+    Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles LoadingColor1.Click, LoadingColor1.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_LoadingCircleHot1 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -536,7 +590,14 @@ Public Class CursorsStudio
 
     End Sub
 
-    Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles LoadingColor2.Click
+    Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles LoadingColor2.Click, LoadingColor2.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_LoadingCircleHot2 = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
@@ -810,7 +871,14 @@ Public Class CursorsStudio
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click
+    Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click, XenonCP1.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            _SelectedControl.Prop_Shadow_Color = sender.BackColor
+            _SelectedControl.Invalidate()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then

@@ -2012,13 +2012,13 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
-        '''    &lt;Description&gt;Play Windows Logoff sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
+        '''    &lt;Description&gt;Play Windows logoff sound forcibly on Windows 8 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Logoff&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[Ev [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Security&quot;&amp;gt;*[System[Even [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logoff() As String
             Get
@@ -2031,7 +2031,7 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
-        '''    &lt;Description&gt;Play Windows Logon sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
+        '''    &lt;Description&gt;Play Windows logon sound forcibly on Windows 8 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Play logon sound&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
@@ -2040,7 +2040,7 @@ Namespace My.Resources
         '''    &lt;/LogonTrigger&gt;
         '''    &lt;SessionStateChangeTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;StateChange&gt;C [rest of string was truncated]&quot;;.
+        '''      &lt;StateChange&gt;Con [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Logon() As String
             Get
@@ -2053,13 +2053,13 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.4&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter&lt;/Author&gt;
-        '''    &lt;Description&gt;Play Windows Shutdown sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
+        '''    &lt;Description&gt;Play Windows shutdown sound forcibly on Windows 8 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Play shutdown sound&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&amp;gt;&amp;lt;Select Path=&quot;System&quot;&amp;gt; [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;System&quot;&amp;gt;&amp;lt;Select Path=&quot;System&quot;&amp;gt;*[ [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Shutdown() As String
             Get
@@ -2072,13 +2072,13 @@ Namespace My.Resources
         '''&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
         '''  &lt;RegistrationInfo&gt;
         '''    &lt;Author&gt;WinPaletter, MuscularPukyy&lt;/Author&gt;
-        '''    &lt;Description&gt;Play Windows account unlock sound forcibly on Windows 8.1 and higher&lt;/Description&gt;
+        '''    &lt;Description&gt;Play Windows account unlock sound forcibly on Windows 8 and higher&lt;/Description&gt;
         '''    &lt;URI&gt;\WinPaletter\Unlock&lt;/URI&gt;
         '''  &lt;/RegistrationInfo&gt;
         '''  &lt;Triggers&gt;
         '''    &lt;EventTrigger&gt;
         '''      &lt;Enabled&gt;true&lt;/Enabled&gt;
-        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;S [rest of string was truncated]&quot;;.
+        '''      &lt;Subscription&gt;&amp;lt;QueryList&amp;gt;&amp;lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&amp;gt;&amp;lt;Select Path=&quot;Sec [rest of string was truncated]&quot;;.
         '''</summary>
         Public ReadOnly Property XML_Unlock() As String
             Get

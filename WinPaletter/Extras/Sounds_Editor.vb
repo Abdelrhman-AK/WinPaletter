@@ -157,6 +157,20 @@ Public Class Sounds_Editor
         ApplyFromCP(My.CP)
         XenonCheckBox35_SFC.Checked = My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound
 
+        'Remove handler to avoid doubling/tripling events
+        For Each page As TabPage In XenonTabControl1.TabPages
+            For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
+                For Each btn As XenonButton In pnl.Controls.OfType(Of XenonButton)
+                    Try
+                        If btn.Tag = "1" Then RemoveHandler btn.Click, AddressOf PressPlay
+                        If btn.Tag = "2" Then RemoveHandler btn.Click, AddressOf StopPlayer
+                        If btn.Tag = "3" Then RemoveHandler btn.Click, AddressOf BrowseForWAV
+                    Catch
+                    End Try
+                Next
+            Next
+        Next
+
         For Each page As TabPage In XenonTabControl1.TabPages
             For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
                 For Each btn As XenonButton In pnl.Controls.OfType(Of XenonButton)

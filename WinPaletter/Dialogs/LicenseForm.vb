@@ -20,6 +20,6 @@ Public Class LicenseForm
         DialogResult = DialogResult.Cancel
         My.Settings.General.LicenseAccepted = False
         My.Settings.General.Save()
-        Process.GetCurrentProcess.Kill()
+        Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
     End Sub
 End Class

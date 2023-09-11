@@ -137,7 +137,8 @@ Friend Module Privileges
     End Function
 
     Public Function EnablePrivilege(ByVal privilege As String, ByVal disable As Boolean) As Boolean
-        Dim value As Long = Process.GetCurrentProcess().Handle.ToInt32()
+        Dim value As Long
+        Using Prc As Process = Process.GetCurrentProcess : value = Prc.Handle.ToInt32 : End Using
         Dim h As New IntPtr(value)
         Dim phtok = IntPtr.Zero
         Dim flag = OpenProcessToken(h, 40, phtok)

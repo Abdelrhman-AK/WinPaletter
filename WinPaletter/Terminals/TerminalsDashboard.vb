@@ -63,6 +63,7 @@ Public Class TerminalsDashboard
     Private Sub TerminalsDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyDarkMode(Me)
+        Icon = CMD.Icon
 
         _shown = False
 

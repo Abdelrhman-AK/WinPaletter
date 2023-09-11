@@ -36,10 +36,10 @@ Public Class Localizer : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 #End Region
+
     Sub New()
 
     End Sub
-
 
     Public JSON As JObject
     Dim J_Information As JObject

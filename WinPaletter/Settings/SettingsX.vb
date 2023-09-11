@@ -115,6 +115,9 @@ Public Class SettingsX
             XenonCheckBox36.Checked = .ThemeApplyingBehavior.Ignore_PE_Modify_Alert
             XenonRadioButton25.Checked = .ThemeApplyingBehavior.PE_ModifyByDefault
             XenonRadioButton24.Checked = Not .ThemeApplyingBehavior.PE_ModifyByDefault
+            XenonCheckBox35.Checked = .NerdStats.DragAndDrop
+            XenonCheckBox37.Checked = .NerdStats.DragAndDropColorsGuide
+            XenonCheckBox38.Checked = .NerdStats.DragAndDropRippleEffect
 
             Label38.Text = CalcStoreCache().SizeString
             Label43.Text = CalcThemesResCache().SizeString
@@ -279,6 +282,9 @@ Public Class SettingsX
             .NerdStats.MoreLabelTransparency = XenonCheckBox3.Checked
             .NerdStats.UseWindowsMonospacedFont = XenonCheckBox31.Checked
             .NerdStats.DotDefaultChangedIndicator = XenonCheckBox34.Checked
+            .NerdStats.DragAndDrop = XenonCheckBox35.Checked
+            .NerdStats.DragAndDropColorsGuide = XenonCheckBox37.Checked
+            .NerdStats.DragAndDropRippleEffect = XenonCheckBox38.Checked
 
             .WindowsTerminals.Bypass = XenonCheckBox12.Checked
             .WindowsTerminals.ListAllFonts = XenonCheckBox13.Checked
@@ -355,9 +361,17 @@ Public Class SettingsX
 
             If .Language.Enabled <> XenonCheckBox8.Checked Then Changed = True
             If .Language.File <> XenonTextBox3.Text Then Changed = True
+
             If .NerdStats.Enabled <> XenonCheckBox10.Checked Then Changed = True
             If .NerdStats.Type <> XenonComboBox3.SelectedIndex Then Changed = True
             If .NerdStats.ShowHexHash <> XenonCheckBox11.Checked Then Changed = True
+            If .NerdStats.MoreLabelTransparency <> XenonCheckBox3.Checked Then Changed = True
+            If .NerdStats.UseWindowsMonospacedFont <> XenonCheckBox31.Checked Then Changed = True
+            If .NerdStats.DotDefaultChangedIndicator <> XenonCheckBox34.Checked Then Changed = True
+            If .NerdStats.DragAndDrop <> XenonCheckBox35.Checked Then Changed = True
+            If .NerdStats.DragAndDropColorsGuide <> XenonCheckBox37.Checked Then Changed = True
+            If .NerdStats.DragAndDropRippleEffect <> XenonCheckBox38.Checked Then Changed = True
+
             If .WindowsTerminals.Bypass <> XenonCheckBox12.Checked Then Changed = True
             If .WindowsTerminals.ListAllFonts <> XenonCheckBox13.Checked Then Changed = True
             If .WindowsTerminals.Path_Deflection <> XenonCheckBox14.Checked Then Changed = True

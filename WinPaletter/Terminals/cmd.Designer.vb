@@ -841,11 +841,12 @@ Partial Class CMD
         '
         'CMD_CursorColor
         '
+        Me.CMD_CursorColor.AllowDrop = True
         Me.CMD_CursorColor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CMD_CursorColor.BackColor = System.Drawing.Color.White
         Me.CMD_CursorColor.DefaultColor = System.Drawing.Color.White
-        Me.CMD_CursorColor.ForceNoNerd = False
+        Me.CMD_CursorColor.DontShowInfo = False
         Me.CMD_CursorColor.Location = New System.Drawing.Point(97, 6)
         Me.CMD_CursorColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.CMD_CursorColor.Name = "CMD_CursorColor"
@@ -1211,9 +1212,10 @@ Partial Class CMD
         '
         'ColorTable00
         '
+        Me.ColorTable00.AllowDrop = True
         Me.ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ColorTable00.ForceNoNerd = False
+        Me.ColorTable00.DontShowInfo = False
         Me.ColorTable00.Location = New System.Drawing.Point(28, 36)
         Me.ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable00.Name = "ColorTable00"
@@ -1244,9 +1246,10 @@ Partial Class CMD
         '
         'ColorTable01
         '
+        Me.ColorTable01.AllowDrop = True
         Me.ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ColorTable01.ForceNoNerd = False
+        Me.ColorTable01.DontShowInfo = False
         Me.ColorTable01.Location = New System.Drawing.Point(28, 67)
         Me.ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable01.Name = "ColorTable01"
@@ -1266,9 +1269,10 @@ Partial Class CMD
         '
         'ColorTable02
         '
+        Me.ColorTable02.AllowDrop = True
         Me.ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.ColorTable02.ForceNoNerd = False
+        Me.ColorTable02.DontShowInfo = False
         Me.ColorTable02.Location = New System.Drawing.Point(28, 98)
         Me.ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable02.Name = "ColorTable02"
@@ -1277,9 +1281,10 @@ Partial Class CMD
         '
         'ColorTable03
         '
+        Me.ColorTable03.AllowDrop = True
         Me.ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.ColorTable03.ForceNoNerd = False
+        Me.ColorTable03.DontShowInfo = False
         Me.ColorTable03.Location = New System.Drawing.Point(28, 129)
         Me.ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable03.Name = "ColorTable03"
@@ -1321,9 +1326,10 @@ Partial Class CMD
         '
         'ColorTable04
         '
+        Me.ColorTable04.AllowDrop = True
         Me.ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.ColorTable04.ForceNoNerd = False
+        Me.ColorTable04.DontShowInfo = False
         Me.ColorTable04.Location = New System.Drawing.Point(28, 160)
         Me.ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable04.Name = "ColorTable04"
@@ -1354,9 +1360,10 @@ Partial Class CMD
         '
         'ColorTable05
         '
+        Me.ColorTable05.AllowDrop = True
         Me.ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ColorTable05.ForceNoNerd = False
+        Me.ColorTable05.DontShowInfo = False
         Me.ColorTable05.Location = New System.Drawing.Point(28, 191)
         Me.ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable05.Name = "ColorTable05"
@@ -1376,9 +1383,10 @@ Partial Class CMD
         '
         'ColorTable06
         '
+        Me.ColorTable06.AllowDrop = True
         Me.ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ColorTable06.ForceNoNerd = False
+        Me.ColorTable06.DontShowInfo = False
         Me.ColorTable06.Location = New System.Drawing.Point(28, 222)
         Me.ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable06.Name = "ColorTable06"
@@ -1409,9 +1417,10 @@ Partial Class CMD
         '
         'ColorTable15
         '
+        Me.ColorTable15.AllowDrop = True
         Me.ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.ColorTable15.ForceNoNerd = False
+        Me.ColorTable15.DontShowInfo = False
         Me.ColorTable15.Location = New System.Drawing.Point(189, 253)
         Me.ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable15.Name = "ColorTable15"
@@ -1420,9 +1429,10 @@ Partial Class CMD
         '
         'ColorTable07
         '
+        Me.ColorTable07.AllowDrop = True
         Me.ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.ColorTable07.ForceNoNerd = False
+        Me.ColorTable07.DontShowInfo = False
         Me.ColorTable07.Location = New System.Drawing.Point(28, 253)
         Me.ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable07.Name = "ColorTable07"
@@ -1442,9 +1452,10 @@ Partial Class CMD
         '
         'ColorTable08
         '
+        Me.ColorTable08.AllowDrop = True
         Me.ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.ColorTable08.ForceNoNerd = False
+        Me.ColorTable08.DontShowInfo = False
         Me.ColorTable08.Location = New System.Drawing.Point(189, 36)
         Me.ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable08.Name = "ColorTable08"
@@ -1453,9 +1464,10 @@ Partial Class CMD
         '
         'ColorTable14
         '
+        Me.ColorTable14.AllowDrop = True
         Me.ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.ColorTable14.ForceNoNerd = False
+        Me.ColorTable14.DontShowInfo = False
         Me.ColorTable14.Location = New System.Drawing.Point(189, 222)
         Me.ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable14.Name = "ColorTable14"
@@ -1486,9 +1498,10 @@ Partial Class CMD
         '
         'ColorTable09
         '
+        Me.ColorTable09.AllowDrop = True
         Me.ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ColorTable09.ForceNoNerd = False
+        Me.ColorTable09.DontShowInfo = False
         Me.ColorTable09.Location = New System.Drawing.Point(189, 67)
         Me.ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable09.Name = "ColorTable09"
@@ -1497,9 +1510,10 @@ Partial Class CMD
         '
         'ColorTable13
         '
+        Me.ColorTable13.AllowDrop = True
         Me.ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.ColorTable13.ForceNoNerd = False
+        Me.ColorTable13.DontShowInfo = False
         Me.ColorTable13.Location = New System.Drawing.Point(189, 191)
         Me.ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable13.Name = "ColorTable13"
@@ -1519,9 +1533,10 @@ Partial Class CMD
         '
         'ColorTable12
         '
+        Me.ColorTable12.AllowDrop = True
         Me.ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.ColorTable12.ForceNoNerd = False
+        Me.ColorTable12.DontShowInfo = False
         Me.ColorTable12.Location = New System.Drawing.Point(189, 160)
         Me.ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable12.Name = "ColorTable12"
@@ -1530,9 +1545,10 @@ Partial Class CMD
         '
         'ColorTable10
         '
+        Me.ColorTable10.AllowDrop = True
         Me.ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ColorTable10.ForceNoNerd = False
+        Me.ColorTable10.DontShowInfo = False
         Me.ColorTable10.Location = New System.Drawing.Point(189, 98)
         Me.ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable10.Name = "ColorTable10"
@@ -1541,9 +1557,10 @@ Partial Class CMD
         '
         'ColorTable11
         '
+        Me.ColorTable11.AllowDrop = True
         Me.ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.ColorTable11.ForceNoNerd = False
+        Me.ColorTable11.DontShowInfo = False
         Me.ColorTable11.Location = New System.Drawing.Point(189, 129)
         Me.ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ColorTable11.Name = "ColorTable11"

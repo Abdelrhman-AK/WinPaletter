@@ -74,7 +74,9 @@ Public Class LogonUIXP
         Me.Close()
     End Sub
 
-    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+    Private Sub color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click, color_pick.DragDrop
+        If TypeOf e Is DragEventArgs Then Exit Sub
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             Exit Sub

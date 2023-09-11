@@ -397,6 +397,7 @@ Partial Class MainFrm
         Me.apply_btn = New WinPaletter.XenonButton()
         Me.XenonButton13 = New WinPaletter.XenonButton()
         Me.MainToolbar = New WinPaletter.XenonGroupBox()
+        Me.XenonButton40 = New WinPaletter.XenonButton()
         Me.XenonButton39 = New WinPaletter.XenonButton()
         Me.XenonButton36 = New WinPaletter.XenonButton()
         Me.BetaBadge = New WinPaletter.XenonAlertBox()
@@ -717,7 +718,7 @@ Partial Class MainFrm
         Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
         Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.WXP_Alert2.CenterText = True
         Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1418,11 +1419,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index7
         '
+        Me.W11_Color_Index7.AllowDrop = True
         Me.W11_Color_Index7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index7.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index7.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index7.ForceNoNerd = False
+        Me.W11_Color_Index7.DontShowInfo = False
         Me.W11_Color_Index7.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index7.Name = "W11_Color_Index7"
@@ -1484,11 +1486,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index6
         '
+        Me.W11_Color_Index6.AllowDrop = True
         Me.W11_Color_Index6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index6.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index6.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index6.ForceNoNerd = False
+        Me.W11_Color_Index6.DontShowInfo = False
         Me.W11_Color_Index6.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index6.Name = "W11_Color_Index6"
@@ -1550,11 +1553,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index5
         '
+        Me.W11_Color_Index5.AllowDrop = True
         Me.W11_Color_Index5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index5.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index5.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index5.ForceNoNerd = False
+        Me.W11_Color_Index5.DontShowInfo = False
         Me.W11_Color_Index5.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index5.Name = "W11_Color_Index5"
@@ -1616,11 +1620,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index2
         '
+        Me.W11_Color_Index2.AllowDrop = True
         Me.W11_Color_Index2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index2.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index2.ForceNoNerd = False
+        Me.W11_Color_Index2.DontShowInfo = False
         Me.W11_Color_Index2.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index2.Name = "W11_Color_Index2"
@@ -1693,11 +1698,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index4
         '
+        Me.W11_Color_Index4.AllowDrop = True
         Me.W11_Color_Index4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index4.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index4.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index4.ForceNoNerd = False
+        Me.W11_Color_Index4.DontShowInfo = False
         Me.W11_Color_Index4.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index4.Name = "W11_Color_Index4"
@@ -1745,11 +1751,12 @@ Partial Class MainFrm
         '
         'W11_TaskbarFrontAndFoldersOnStart_pick
         '
+        Me.W11_TaskbarFrontAndFoldersOnStart_pick.AllowDrop = True
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W11_TaskbarFrontAndFoldersOnStart_pick.ForceNoNerd = False
+        Me.W11_TaskbarFrontAndFoldersOnStart_pick.DontShowInfo = False
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.Location = New System.Drawing.Point(420, 4)
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_TaskbarFrontAndFoldersOnStart_pick.Name = "W11_TaskbarFrontAndFoldersOnStart_pick"
@@ -1811,11 +1818,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index1
         '
+        Me.W11_Color_Index1.AllowDrop = True
         Me.W11_Color_Index1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index1.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index1.ForceNoNerd = False
+        Me.W11_Color_Index1.DontShowInfo = False
         Me.W11_Color_Index1.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index1.Name = "W11_Color_Index1"
@@ -1880,11 +1888,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index0
         '
+        Me.W11_Color_Index0.AllowDrop = True
         Me.W11_Color_Index0.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index0.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index0.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index0.ForceNoNerd = False
+        Me.W11_Color_Index0.DontShowInfo = False
         Me.W11_Color_Index0.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index0.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index0.Name = "W11_Color_Index0"
@@ -1970,11 +1979,12 @@ Partial Class MainFrm
         '
         'W11_Color_Index3
         '
+        Me.W11_Color_Index3.AllowDrop = True
         Me.W11_Color_Index3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_Color_Index3.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_Color_Index3.DefaultColor = System.Drawing.Color.Black
-        Me.W11_Color_Index3.ForceNoNerd = False
+        Me.W11_Color_Index3.DontShowInfo = False
         Me.W11_Color_Index3.Location = New System.Drawing.Point(420, 4)
         Me.W11_Color_Index3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_Color_Index3.Name = "W11_Color_Index3"
@@ -2342,11 +2352,12 @@ Partial Class MainFrm
         '
         'W11_InactiveTitlebar_pick
         '
+        Me.W11_InactiveTitlebar_pick.AllowDrop = True
         Me.W11_InactiveTitlebar_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W11_InactiveTitlebar_pick.ForceNoNerd = False
+        Me.W11_InactiveTitlebar_pick.DontShowInfo = False
         Me.W11_InactiveTitlebar_pick.Location = New System.Drawing.Point(156, 4)
         Me.W11_InactiveTitlebar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_InactiveTitlebar_pick.Name = "W11_InactiveTitlebar_pick"
@@ -2418,11 +2429,12 @@ Partial Class MainFrm
         '
         'W11_ActiveTitlebar_pick
         '
+        Me.W11_ActiveTitlebar_pick.AllowDrop = True
         Me.W11_ActiveTitlebar_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W11_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W11_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W11_ActiveTitlebar_pick.ForceNoNerd = False
+        Me.W11_ActiveTitlebar_pick.DontShowInfo = False
         Me.W11_ActiveTitlebar_pick.Location = New System.Drawing.Point(168, 4)
         Me.W11_ActiveTitlebar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W11_ActiveTitlebar_pick.Name = "W11_ActiveTitlebar_pick"
@@ -2548,11 +2560,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index7
         '
+        Me.W10_Color_Index7.AllowDrop = True
         Me.W10_Color_Index7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index7.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index7.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index7.ForceNoNerd = False
+        Me.W10_Color_Index7.DontShowInfo = False
         Me.W10_Color_Index7.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index7.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index7.Name = "W10_Color_Index7"
@@ -2614,11 +2627,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index6
         '
+        Me.W10_Color_Index6.AllowDrop = True
         Me.W10_Color_Index6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index6.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index6.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index6.ForceNoNerd = False
+        Me.W10_Color_Index6.DontShowInfo = False
         Me.W10_Color_Index6.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index6.Name = "W10_Color_Index6"
@@ -2680,11 +2694,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index5
         '
+        Me.W10_Color_Index5.AllowDrop = True
         Me.W10_Color_Index5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index5.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index5.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index5.ForceNoNerd = False
+        Me.W10_Color_Index5.DontShowInfo = False
         Me.W10_Color_Index5.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index5.Name = "W10_Color_Index5"
@@ -2746,11 +2761,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index2
         '
+        Me.W10_Color_Index2.AllowDrop = True
         Me.W10_Color_Index2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index2.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index2.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index2.ForceNoNerd = False
+        Me.W10_Color_Index2.DontShowInfo = False
         Me.W10_Color_Index2.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index2.Name = "W10_Color_Index2"
@@ -2823,11 +2839,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index4
         '
+        Me.W10_Color_Index4.AllowDrop = True
         Me.W10_Color_Index4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index4.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index4.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index4.ForceNoNerd = False
+        Me.W10_Color_Index4.DontShowInfo = False
         Me.W10_Color_Index4.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index4.Name = "W10_Color_Index4"
@@ -2875,11 +2892,12 @@ Partial Class MainFrm
         '
         'W10_TaskbarFrontAndFoldersOnStart_pick
         '
+        Me.W10_TaskbarFrontAndFoldersOnStart_pick.AllowDrop = True
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W10_TaskbarFrontAndFoldersOnStart_pick.ForceNoNerd = False
+        Me.W10_TaskbarFrontAndFoldersOnStart_pick.DontShowInfo = False
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.Location = New System.Drawing.Point(420, 4)
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_TaskbarFrontAndFoldersOnStart_pick.Name = "W10_TaskbarFrontAndFoldersOnStart_pick"
@@ -2941,11 +2959,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index1
         '
+        Me.W10_Color_Index1.AllowDrop = True
         Me.W10_Color_Index1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index1.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index1.ForceNoNerd = False
+        Me.W10_Color_Index1.DontShowInfo = False
         Me.W10_Color_Index1.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index1.Name = "W10_Color_Index1"
@@ -3010,11 +3029,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index0
         '
+        Me.W10_Color_Index0.AllowDrop = True
         Me.W10_Color_Index0.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index0.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index0.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index0.ForceNoNerd = False
+        Me.W10_Color_Index0.DontShowInfo = False
         Me.W10_Color_Index0.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index0.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index0.Name = "W10_Color_Index0"
@@ -3100,11 +3120,12 @@ Partial Class MainFrm
         '
         'W10_Color_Index3
         '
+        Me.W10_Color_Index3.AllowDrop = True
         Me.W10_Color_Index3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_Color_Index3.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_Color_Index3.DefaultColor = System.Drawing.Color.Black
-        Me.W10_Color_Index3.ForceNoNerd = False
+        Me.W10_Color_Index3.DontShowInfo = False
         Me.W10_Color_Index3.Location = New System.Drawing.Point(420, 4)
         Me.W10_Color_Index3.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_Color_Index3.Name = "W10_Color_Index3"
@@ -3553,11 +3574,12 @@ Partial Class MainFrm
         '
         'W10_InactiveTitlebar_pick
         '
+        Me.W10_InactiveTitlebar_pick.AllowDrop = True
         Me.W10_InactiveTitlebar_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_InactiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_InactiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W10_InactiveTitlebar_pick.ForceNoNerd = False
+        Me.W10_InactiveTitlebar_pick.DontShowInfo = False
         Me.W10_InactiveTitlebar_pick.Location = New System.Drawing.Point(156, 4)
         Me.W10_InactiveTitlebar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_InactiveTitlebar_pick.Name = "W10_InactiveTitlebar_pick"
@@ -3629,11 +3651,12 @@ Partial Class MainFrm
         '
         'W10_ActiveTitlebar_pick
         '
+        Me.W10_ActiveTitlebar_pick.AllowDrop = True
         Me.W10_ActiveTitlebar_pick.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W10_ActiveTitlebar_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W10_ActiveTitlebar_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W10_ActiveTitlebar_pick.ForceNoNerd = False
+        Me.W10_ActiveTitlebar_pick.DontShowInfo = False
         Me.W10_ActiveTitlebar_pick.Location = New System.Drawing.Point(168, 4)
         Me.W10_ActiveTitlebar_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W10_ActiveTitlebar_pick.Name = "W10_ActiveTitlebar_pick"
@@ -3865,10 +3888,11 @@ Partial Class MainFrm
         '
         'W81_personalcolor_accent_pick
         '
+        Me.W81_personalcolor_accent_pick.AllowDrop = True
         Me.W81_personalcolor_accent_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W81_personalcolor_accent_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W81_personalcolor_accent_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W81_personalcolor_accent_pick.ForceNoNerd = False
+        Me.W81_personalcolor_accent_pick.DontShowInfo = False
         Me.W81_personalcolor_accent_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_personalcolor_accent_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W81_personalcolor_accent_pick.Name = "W81_personalcolor_accent_pick"
@@ -3916,10 +3940,11 @@ Partial Class MainFrm
         '
         'W81_personalcls_background_pick
         '
+        Me.W81_personalcls_background_pick.AllowDrop = True
         Me.W81_personalcls_background_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W81_personalcls_background_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W81_personalcls_background_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W81_personalcls_background_pick.ForceNoNerd = False
+        Me.W81_personalcls_background_pick.DontShowInfo = False
         Me.W81_personalcls_background_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_personalcls_background_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W81_personalcls_background_pick.Name = "W81_personalcls_background_pick"
@@ -3967,10 +3992,11 @@ Partial Class MainFrm
         '
         'W81_start_pick
         '
+        Me.W81_start_pick.AllowDrop = True
         Me.W81_start_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W81_start_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W81_start_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W81_start_pick.ForceNoNerd = False
+        Me.W81_start_pick.DontShowInfo = False
         Me.W81_start_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_start_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W81_start_pick.Name = "W81_start_pick"
@@ -4050,10 +4076,11 @@ Partial Class MainFrm
         '
         'W81_ColorizationColor_pick
         '
+        Me.W81_ColorizationColor_pick.AllowDrop = True
         Me.W81_ColorizationColor_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W81_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W81_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W81_ColorizationColor_pick.ForceNoNerd = False
+        Me.W81_ColorizationColor_pick.DontShowInfo = False
         Me.W81_ColorizationColor_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_ColorizationColor_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W81_ColorizationColor_pick.Name = "W81_ColorizationColor_pick"
@@ -4101,10 +4128,11 @@ Partial Class MainFrm
         '
         'W81_accent_pick
         '
+        Me.W81_accent_pick.AllowDrop = True
         Me.W81_accent_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W81_accent_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W81_accent_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W81_accent_pick.ForceNoNerd = False
+        Me.W81_accent_pick.DontShowInfo = False
         Me.W81_accent_pick.Location = New System.Drawing.Point(401, 4)
         Me.W81_accent_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W81_accent_pick.Name = "W81_accent_pick"
@@ -4679,10 +4707,11 @@ Partial Class MainFrm
         '
         'W7_ColorizationColor_pick
         '
+        Me.W7_ColorizationColor_pick.AllowDrop = True
         Me.W7_ColorizationColor_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W7_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W7_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W7_ColorizationColor_pick.ForceNoNerd = False
+        Me.W7_ColorizationColor_pick.DontShowInfo = False
         Me.W7_ColorizationColor_pick.Location = New System.Drawing.Point(401, 3)
         Me.W7_ColorizationColor_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W7_ColorizationColor_pick.Name = "W7_ColorizationColor_pick"
@@ -4749,10 +4778,11 @@ Partial Class MainFrm
         '
         'W7_ColorizationAfterglow_pick
         '
+        Me.W7_ColorizationAfterglow_pick.AllowDrop = True
         Me.W7_ColorizationAfterglow_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.W7_ColorizationAfterglow_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.W7_ColorizationAfterglow_pick.DefaultColor = System.Drawing.Color.Black
-        Me.W7_ColorizationAfterglow_pick.ForceNoNerd = False
+        Me.W7_ColorizationAfterglow_pick.DontShowInfo = False
         Me.W7_ColorizationAfterglow_pick.Location = New System.Drawing.Point(401, 4)
         Me.W7_ColorizationAfterglow_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.W7_ColorizationAfterglow_pick.Name = "W7_ColorizationAfterglow_pick"
@@ -4876,10 +4906,11 @@ Partial Class MainFrm
         '
         'WVista_ColorizationColor_pick
         '
+        Me.WVista_ColorizationColor_pick.AllowDrop = True
         Me.WVista_ColorizationColor_pick.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WVista_ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.WVista_ColorizationColor_pick.DefaultColor = System.Drawing.Color.Black
-        Me.WVista_ColorizationColor_pick.ForceNoNerd = False
+        Me.WVista_ColorizationColor_pick.DontShowInfo = False
         Me.WVista_ColorizationColor_pick.Location = New System.Drawing.Point(404, 38)
         Me.WVista_ColorizationColor_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.WVista_ColorizationColor_pick.Name = "WVista_ColorizationColor_pick"
@@ -5681,6 +5712,7 @@ Partial Class MainFrm
         Me.MainToolbar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.MainToolbar.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.MainToolbar.Controls.Add(Me.XenonButton40)
         Me.MainToolbar.Controls.Add(Me.XenonButton39)
         Me.MainToolbar.Controls.Add(Me.XenonButton36)
         Me.MainToolbar.Controls.Add(Me.BetaBadge)
@@ -5705,6 +5737,23 @@ Partial Class MainFrm
         Me.MainToolbar.Size = New System.Drawing.Size(1070, 60)
         Me.MainToolbar.TabIndex = 1
         '
+        'XenonButton40
+        '
+        Me.XenonButton40.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
+        Me.XenonButton40.DrawOnGlass = False
+        Me.XenonButton40.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton40.ForeColor = System.Drawing.Color.White
+        Me.XenonButton40.Image = CType(resources.GetObject("XenonButton40.Image"), System.Drawing.Image)
+        Me.XenonButton40.LineColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(86, Byte), Integer), CType(CType(86, Byte), Integer))
+        Me.XenonButton40.LineSize = 1
+        Me.XenonButton40.Location = New System.Drawing.Point(208, 3)
+        Me.XenonButton40.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.XenonButton40.Name = "XenonButton40"
+        Me.XenonButton40.Size = New System.Drawing.Size(40, 54)
+        Me.XenonButton40.TabIndex = 58
+        Me.XenonButton40.Tag = "Generate a palette for your theme"
+        Me.XenonButton40.UseVisualStyleBackColor = False
+        '
         'XenonButton39
         '
         Me.XenonButton39.BackColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(44, Byte), Integer))
@@ -5714,7 +5763,7 @@ Partial Class MainFrm
         Me.XenonButton39.Image = CType(resources.GetObject("XenonButton39.Image"), System.Drawing.Image)
         Me.XenonButton39.LineColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(100, Byte), Integer), CType(CType(136, Byte), Integer))
         Me.XenonButton39.LineSize = 1
-        Me.XenonButton39.Location = New System.Drawing.Point(543, 3)
+        Me.XenonButton39.Location = New System.Drawing.Point(586, 3)
         Me.XenonButton39.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton39.Name = "XenonButton39"
         Me.XenonButton39.Size = New System.Drawing.Size(40, 54)
@@ -5731,7 +5780,7 @@ Partial Class MainFrm
         Me.XenonButton36.Image = CType(resources.GetObject("XenonButton36.Image"), System.Drawing.Image)
         Me.XenonButton36.LineColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(117, Byte), Integer))
         Me.XenonButton36.LineSize = 1
-        Me.XenonButton36.Location = New System.Drawing.Point(208, 3)
+        Me.XenonButton36.Location = New System.Drawing.Point(374, 3)
         Me.XenonButton36.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton36.Name = "XenonButton36"
         Me.XenonButton36.Size = New System.Drawing.Size(40, 54)
@@ -5766,7 +5815,7 @@ Partial Class MainFrm
         Me.XenonButton31.Image = CType(resources.GetObject("XenonButton31.Image"), System.Drawing.Image)
         Me.XenonButton31.LineColor = System.Drawing.Color.FromArgb(CType(CType(114, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(112, Byte), Integer))
         Me.XenonButton31.LineSize = 1
-        Me.XenonButton31.Location = New System.Drawing.Point(461, 3)
+        Me.XenonButton31.Location = New System.Drawing.Point(504, 3)
         Me.XenonButton31.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton31.Name = "XenonButton31"
         Me.XenonButton31.Size = New System.Drawing.Size(40, 54)
@@ -5834,7 +5883,7 @@ Partial Class MainFrm
         Me.XenonButton12.Image = CType(resources.GetObject("XenonButton12.Image"), System.Drawing.Image)
         Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(23, Byte), Integer), CType(CType(94, Byte), Integer), CType(CType(130, Byte), Integer))
         Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(584, 3)
+        Me.XenonButton12.Location = New System.Drawing.Point(627, 3)
         Me.XenonButton12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton12.Name = "XenonButton12"
         Me.XenonButton12.Size = New System.Drawing.Size(40, 54)
@@ -5851,7 +5900,7 @@ Partial Class MainFrm
         Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
         Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(9, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(75, Byte), Integer))
         Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(420, 3)
+        Me.XenonButton5.Location = New System.Drawing.Point(463, 3)
         Me.XenonButton5.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(40, 54)
@@ -5868,7 +5917,7 @@ Partial Class MainFrm
         Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
         Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(101, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(137, Byte), Integer))
         Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(502, 3)
+        Me.XenonButton6.Location = New System.Drawing.Point(545, 3)
         Me.XenonButton6.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton6.Name = "XenonButton6"
         Me.XenonButton6.Size = New System.Drawing.Size(40, 54)
@@ -5902,7 +5951,7 @@ Partial Class MainFrm
         Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
         Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(73, Byte), Integer), CType(CType(81, Byte), Integer))
         Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(379, 3)
+        Me.XenonButton11.Location = New System.Drawing.Point(422, 3)
         Me.XenonButton11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.XenonButton11.Name = "XenonButton11"
         Me.XenonButton11.Size = New System.Drawing.Size(40, 54)
@@ -5913,7 +5962,7 @@ Partial Class MainFrm
         'XenonSeparatorVertical1
         '
         Me.XenonSeparatorVertical1.AlternativeLook = False
-        Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(375, 5)
+        Me.XenonSeparatorVertical1.Location = New System.Drawing.Point(418, 5)
         Me.XenonSeparatorVertical1.Name = "XenonSeparatorVertical1"
         Me.XenonSeparatorVertical1.Size = New System.Drawing.Size(1, 50)
         Me.XenonSeparatorVertical1.TabIndex = 7
@@ -5924,10 +5973,10 @@ Partial Class MainFrm
         '
         Me.status_lbl.BackColor = System.Drawing.Color.Transparent
         Me.status_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.status_lbl.Location = New System.Drawing.Point(628, 5)
+        Me.status_lbl.Location = New System.Drawing.Point(671, 5)
         Me.status_lbl.Name = "status_lbl"
         Me.status_lbl.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.status_lbl.Size = New System.Drawing.Size(377, 50)
+        Me.status_lbl.Size = New System.Drawing.Size(333, 50)
         Me.status_lbl.TabIndex = 19
         Me.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -6788,4 +6837,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton38 As XenonButton
     Friend WithEvents XenonButton39 As XenonButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents XenonButton40 As XenonButton
 End Class

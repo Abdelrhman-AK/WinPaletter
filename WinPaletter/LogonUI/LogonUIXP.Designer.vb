@@ -127,9 +127,10 @@ Partial Class LogonUIXP
         '
         'color_pick
         '
+        Me.color_pick.AllowDrop = True
         Me.color_pick.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.color_pick.DefaultColor = System.Drawing.Color.Black
-        Me.color_pick.ForceNoNerd = False
+        Me.color_pick.DontShowInfo = False
         Me.color_pick.Location = New System.Drawing.Point(195, 42)
         Me.color_pick.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.color_pick.Name = "color_pick"

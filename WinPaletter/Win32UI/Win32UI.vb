@@ -114,7 +114,7 @@ Public Class Win32UI
         desktop_pick.DefaultColor = DefCP.Win32.Desktop
     End Sub
 
-    Sub ApplyToCP(ByVal [CP] As CP)
+    Sub ApplyToCP([CP] As CP)
         [CP].Win32.EnableTheming = XenonToggle1.Checked
         [CP].Win32.EnableGradient = XenonToggle2.Checked
         [CP].Win32.ActiveBorder = ActiveBorder_pick.BackColor
@@ -166,15 +166,24 @@ Public Class Win32UI
             btnaltface_pick.Click, btndkshadow_pick.Click, btnface_pick.Click, btnhilight_pick.Click, btnlight_pick.Click, btnshadow_pick.Click, btntext_pick.Click, GActivetitle_pick.Click,
             GInactivetitle_pick.Click, GrayText_pick.Click, hilighttext_pick.Click, hottracking_pick.Click, InactiveBorder_pick.Click, InactiveTitle_pick.Click, InactivetitleText_pick.Click,
             InfoText_pick.Click, InfoWindow_pick.Click, menu_pick.Click, menubar_pick.Click, menutext_pick.Click, Scrollbar_pick.Click, TitleText_pick.Click, Window_pick.Click, Frame_pick.Click,
-            WindowText_pick.Click, hilight_pick.Click, menuhilight_pick.Click, desktop_pick.Click
+            WindowText_pick.Click, hilight_pick.Click, menuhilight_pick.Click, desktop_pick.Click, ActiveBorder_pick.DragDrop, activetitle_pick.DragDrop, AppWorkspace_pick.DragDrop, background_pick.DragDrop,
+            btnaltface_pick.DragDrop, btndkshadow_pick.DragDrop, btnface_pick.DragDrop, btnhilight_pick.DragDrop, btnlight_pick.DragDrop, btnshadow_pick.DragDrop, btntext_pick.DragDrop, GActivetitle_pick.DragDrop,
+            GInactivetitle_pick.DragDrop, GrayText_pick.DragDrop, hilighttext_pick.DragDrop, hottracking_pick.DragDrop, InactiveBorder_pick.DragDrop, InactiveTitle_pick.DragDrop, InactivetitleText_pick.DragDrop,
+            InfoText_pick.DragDrop, InfoWindow_pick.DragDrop, menu_pick.DragDrop, menubar_pick.DragDrop, menutext_pick.DragDrop, Scrollbar_pick.DragDrop, TitleText_pick.DragDrop, Window_pick.DragDrop, Frame_pick.DragDrop,
+            WindowText_pick.DragDrop, hilight_pick.DragDrop, menuhilight_pick.DragDrop, desktop_pick.DragDrop
 
-        If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
-            SubMenu.ShowMenu(sender)
-            If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
-                ApplyRetroPreview()
+        If TypeOf e Is DragEventArgs Then Exit Sub
+
+        Try
+            If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
+                SubMenu.ShowMenu(sender)
+                If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
+                    ApplyRetroPreview()
+                End If
+                Exit Sub
             End If
-            Exit Sub
-        End If
+        Catch
+        End Try
 
         Dim CList As New List(Of Control) From {sender}
 
@@ -599,6 +608,119 @@ Public Class Win32UI
         Next
 
         CList.Clear()
+
+        RetroWindow1.Invalidate()
+        RetroWindow2.Invalidate()
+        RetroWindow3.Invalidate()
+
+        Refresh17BitPreference()
+    End Sub
+
+    Private Sub X_DragDrop(sender As Object, e As DragEventArgs) Handles ActiveBorder_pick.DragDrop, activetitle_pick.DragDrop, AppWorkspace_pick.DragDrop, background_pick.DragDrop,
+        btnaltface_pick.DragDrop, btndkshadow_pick.DragDrop, btnface_pick.DragDrop, btnhilight_pick.DragDrop, btnlight_pick.DragDrop, btnshadow_pick.DragDrop, btntext_pick.DragDrop, GActivetitle_pick.DragDrop,
+        GInactivetitle_pick.DragDrop, GrayText_pick.DragDrop, hilighttext_pick.DragDrop, hottracking_pick.DragDrop, InactiveBorder_pick.DragDrop, InactiveTitle_pick.DragDrop, InactivetitleText_pick.DragDrop,
+        InfoText_pick.DragDrop, InfoWindow_pick.DragDrop, menu_pick.DragDrop, menubar_pick.DragDrop, menutext_pick.DragDrop, Scrollbar_pick.DragDrop, TitleText_pick.DragDrop, Window_pick.DragDrop, Frame_pick.DragDrop,
+        WindowText_pick.DragDrop, hilight_pick.DragDrop, menuhilight_pick.DragDrop, desktop_pick.DragDrop
+
+        RetroWindow2.Color1 = activetitle_pick.BackColor
+        RetroWindow3.Color1 = activetitle_pick.BackColor
+        RetroWindow4.Color1 = activetitle_pick.BackColor
+        RetroWindow2.Color2 = GActivetitle_pick.BackColor
+        RetroWindow3.Color2 = GActivetitle_pick.BackColor
+        RetroWindow4.Color2 = GActivetitle_pick.BackColor
+        RetroWindow2.ForeColor = TitleText_pick.BackColor
+        RetroWindow3.ForeColor = TitleText_pick.BackColor
+        RetroWindow4.ForeColor = TitleText_pick.BackColor
+        RetroWindow2.ColorBorder = ActiveBorder_pick.BackColor
+        RetroWindow3.ColorBorder = ActiveBorder_pick.BackColor
+        RetroWindow4.ColorBorder = ActiveBorder_pick.BackColor
+
+        RetroWindow1.Color1 = InactiveTitle_pick.BackColor
+        RetroWindow1.Color2 = GInactivetitle_pick.BackColor
+        RetroWindow1.ForeColor = InactivetitleText_pick.BackColor
+        RetroWindow1.ColorBorder = InactiveBorder_pick.BackColor
+
+        Retro3DPreview1.WindowFrame = Frame_pick.BackColor
+        Retro3DPreview1.BackColor = btnface_pick.BackColor
+        RetroPanel2.BackColor = btnface_pick.BackColor
+        Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor
+        RetroTextBox1.ButtonDkShadow = btndkshadow_pick.BackColor
+        RetroTextBox1.ButtonHilight = btnhilight_pick.BackColor
+        RetroPanel1.ButtonHilight = btnhilight_pick.BackColor
+        RetroPanel2.ButtonHilight = btnhilight_pick.BackColor
+        Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor
+        RetroTextBox1.ButtonLight = btnlight_pick.BackColor
+        Retro3DPreview1.ButtonLight = btnlight_pick.BackColor
+        Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor
+        RetroTextBox1.ButtonShadow = btnshadow_pick.BackColor
+        RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
+        Retro3DPreview1.ForeColor = btntext_pick.BackColor
+        programcontainer.BackColor = AppWorkspace_pick.BackColor
+        pnl_preview.BackColor = background_pick.BackColor
+        Menu_Window.BackColor = menu_pick.BackColor
+        Menu_Window.Invalidate()
+
+        If XenonToggle1.Checked Then
+            highlight.BackColor = hilight_pick.BackColor
+            menuhilight.BackColor = menuhilight_pick.BackColor
+            RetroLabel3.ForeColor = hilighttext_pick.BackColor
+            RetroPanel1.ButtonShadow = hilight_pick.BackColor
+            RetroPanel1.BackColor = menuhilight_pick.BackColor
+            menucontainer0.BackColor = menubar_pick.BackColor
+        Else
+            highlight.BackColor = hilight_pick.BackColor
+            menuhilight.BackColor = hilight_pick.BackColor
+            RetroLabel3.ForeColor = menutext_pick.BackColor
+            RetroPanel1.BackColor = menu_pick.BackColor
+            menucontainer0.BackColor = menu_pick.BackColor
+        End If
+
+        RetroLabel1.ForeColor = menutext_pick.BackColor
+        RetroLabel2.ForeColor = menutext_pick.BackColor
+        RetroLabel6.ForeColor = menutext_pick.BackColor
+        RetroLabel5.ForeColor = hilighttext_pick.BackColor
+
+        RetroLabel2.ForeColor = GrayText_pick.BackColor
+        RetroLabel9.ForeColor = GrayText_pick.BackColor
+        RetroTextBox1.BackColor = Window_pick.BackColor
+        RetroTextBox1.ForeColor = WindowText_pick.BackColor
+        RetroLabel4.ForeColor = WindowText_pick.BackColor
+        RetroLabel13.BackColor = InfoWindow_pick.BackColor
+        RetroLabel13.ForeColor = InfoText_pick.BackColor
+
+        For Each RW As RetroWindow In pnl_preview.Controls.OfType(Of RetroWindow)
+            If RW IsNot Menu Then RW.BackColor = btnface_pick.BackColor Else RW.ButtonFace = btnface_pick.BackColor
+            RW.ButtonDkShadow = btndkshadow_pick.BackColor
+            RW.ButtonHilight = btnhilight_pick.BackColor
+            RW.ButtonLight = btnlight_pick.BackColor
+            RW.ButtonShadow = btnshadow_pick.BackColor
+            RW.ButtonText = btntext_pick.BackColor
+
+            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+                RB.WindowFrame = Frame_pick.BackColor
+                RB.BackColor = btnface_pick.BackColor
+                RB.ButtonDkShadow = btndkshadow_pick.BackColor
+                RB.ButtonHilight = btnhilight_pick.BackColor
+                RB.ButtonLight = btnlight_pick.BackColor
+                RB.ButtonShadow = btnshadow_pick.BackColor
+                RB.ForeColor = btntext_pick.BackColor
+            Next
+        Next
+
+        For Each RB As RetroPanelRaised In pnl_preview.Controls.OfType(Of RetroPanelRaised)
+            RB.ButtonHilight = btnhilight_pick.BackColor
+            RB.ButtonShadow = btnshadow_pick.BackColor
+        Next
+
+        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+            RB.WindowFrame = Frame_pick.BackColor
+            RB.BackColor = btnface_pick.BackColor
+            RB.ButtonDkShadow = btndkshadow_pick.BackColor
+            RB.ButtonHilight = btnhilight_pick.BackColor
+            RB.ButtonLight = btnlight_pick.BackColor
+            RB.ButtonShadow = btnshadow_pick.BackColor
+            RB.ForeColor = btntext_pick.BackColor
+        Next
 
         RetroWindow1.Invalidate()
         RetroWindow2.Invalidate()

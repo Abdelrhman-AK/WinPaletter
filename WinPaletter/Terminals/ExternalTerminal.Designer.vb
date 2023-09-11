@@ -834,9 +834,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable00
         '
+        Me.ExtTerminal_ColorTable00.AllowDrop = True
         Me.ExtTerminal_ColorTable00.BackColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable00.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ExtTerminal_ColorTable00.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable00.DontShowInfo = False
         Me.ExtTerminal_ColorTable00.Location = New System.Drawing.Point(28, 36)
         Me.ExtTerminal_ColorTable00.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable00.Name = "ExtTerminal_ColorTable00"
@@ -867,9 +868,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable01
         '
+        Me.ExtTerminal_ColorTable01.AllowDrop = True
         Me.ExtTerminal_ColorTable01.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
         Me.ExtTerminal_ColorTable01.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(218, Byte), Integer))
-        Me.ExtTerminal_ColorTable01.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable01.DontShowInfo = False
         Me.ExtTerminal_ColorTable01.Location = New System.Drawing.Point(28, 67)
         Me.ExtTerminal_ColorTable01.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable01.Name = "ExtTerminal_ColorTable01"
@@ -889,9 +891,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable02
         '
+        Me.ExtTerminal_ColorTable02.AllowDrop = True
         Me.ExtTerminal_ColorTable02.BackColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
         Me.ExtTerminal_ColorTable02.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(19, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.ExtTerminal_ColorTable02.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable02.DontShowInfo = False
         Me.ExtTerminal_ColorTable02.Location = New System.Drawing.Point(28, 98)
         Me.ExtTerminal_ColorTable02.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable02.Name = "ExtTerminal_ColorTable02"
@@ -900,9 +903,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable03
         '
+        Me.ExtTerminal_ColorTable03.AllowDrop = True
         Me.ExtTerminal_ColorTable03.BackColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
         Me.ExtTerminal_ColorTable03.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.ExtTerminal_ColorTable03.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable03.DontShowInfo = False
         Me.ExtTerminal_ColorTable03.Location = New System.Drawing.Point(28, 129)
         Me.ExtTerminal_ColorTable03.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable03.Name = "ExtTerminal_ColorTable03"
@@ -944,9 +948,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable04
         '
+        Me.ExtTerminal_ColorTable04.AllowDrop = True
         Me.ExtTerminal_ColorTable04.BackColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
         Me.ExtTerminal_ColorTable04.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.ExtTerminal_ColorTable04.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable04.DontShowInfo = False
         Me.ExtTerminal_ColorTable04.Location = New System.Drawing.Point(28, 160)
         Me.ExtTerminal_ColorTable04.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable04.Name = "ExtTerminal_ColorTable04"
@@ -977,9 +982,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable05
         '
+        Me.ExtTerminal_ColorTable05.AllowDrop = True
         Me.ExtTerminal_ColorTable05.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
         Me.ExtTerminal_ColorTable05.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(23, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ExtTerminal_ColorTable05.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable05.DontShowInfo = False
         Me.ExtTerminal_ColorTable05.Location = New System.Drawing.Point(28, 191)
         Me.ExtTerminal_ColorTable05.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable05.Name = "ExtTerminal_ColorTable05"
@@ -999,9 +1005,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable06
         '
+        Me.ExtTerminal_ColorTable06.AllowDrop = True
         Me.ExtTerminal_ColorTable06.BackColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ExtTerminal_ColorTable06.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(156, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ExtTerminal_ColorTable06.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable06.DontShowInfo = False
         Me.ExtTerminal_ColorTable06.Location = New System.Drawing.Point(28, 222)
         Me.ExtTerminal_ColorTable06.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable06.Name = "ExtTerminal_ColorTable06"
@@ -1032,9 +1039,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable15
         '
+        Me.ExtTerminal_ColorTable15.AllowDrop = True
         Me.ExtTerminal_ColorTable15.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.ExtTerminal_ColorTable15.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(242, Byte), Integer))
-        Me.ExtTerminal_ColorTable15.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable15.DontShowInfo = False
         Me.ExtTerminal_ColorTable15.Location = New System.Drawing.Point(189, 253)
         Me.ExtTerminal_ColorTable15.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable15.Name = "ExtTerminal_ColorTable15"
@@ -1043,9 +1051,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable07
         '
+        Me.ExtTerminal_ColorTable07.AllowDrop = True
         Me.ExtTerminal_ColorTable07.BackColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
         Me.ExtTerminal_ColorTable07.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer), CType(CType(204, Byte), Integer))
-        Me.ExtTerminal_ColorTable07.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable07.DontShowInfo = False
         Me.ExtTerminal_ColorTable07.Location = New System.Drawing.Point(28, 253)
         Me.ExtTerminal_ColorTable07.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable07.Name = "ExtTerminal_ColorTable07"
@@ -1065,9 +1074,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable08
         '
+        Me.ExtTerminal_ColorTable08.AllowDrop = True
         Me.ExtTerminal_ColorTable08.BackColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
         Me.ExtTerminal_ColorTable08.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer), CType(CType(118, Byte), Integer))
-        Me.ExtTerminal_ColorTable08.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable08.DontShowInfo = False
         Me.ExtTerminal_ColorTable08.Location = New System.Drawing.Point(189, 36)
         Me.ExtTerminal_ColorTable08.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable08.Name = "ExtTerminal_ColorTable08"
@@ -1076,9 +1086,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable14
         '
+        Me.ExtTerminal_ColorTable14.AllowDrop = True
         Me.ExtTerminal_ColorTable14.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
         Me.ExtTerminal_ColorTable14.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(165, Byte), Integer))
-        Me.ExtTerminal_ColorTable14.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable14.DontShowInfo = False
         Me.ExtTerminal_ColorTable14.Location = New System.Drawing.Point(189, 222)
         Me.ExtTerminal_ColorTable14.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable14.Name = "ExtTerminal_ColorTable14"
@@ -1109,9 +1120,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable09
         '
+        Me.ExtTerminal_ColorTable09.AllowDrop = True
         Me.ExtTerminal_ColorTable09.BackColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ExtTerminal_ColorTable09.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ExtTerminal_ColorTable09.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable09.DontShowInfo = False
         Me.ExtTerminal_ColorTable09.Location = New System.Drawing.Point(189, 67)
         Me.ExtTerminal_ColorTable09.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable09.Name = "ExtTerminal_ColorTable09"
@@ -1120,9 +1132,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable13
         '
+        Me.ExtTerminal_ColorTable13.AllowDrop = True
         Me.ExtTerminal_ColorTable13.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
         Me.ExtTerminal_ColorTable13.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(158, Byte), Integer))
-        Me.ExtTerminal_ColorTable13.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable13.DontShowInfo = False
         Me.ExtTerminal_ColorTable13.Location = New System.Drawing.Point(189, 191)
         Me.ExtTerminal_ColorTable13.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable13.Name = "ExtTerminal_ColorTable13"
@@ -1142,9 +1155,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable12
         '
+        Me.ExtTerminal_ColorTable12.AllowDrop = True
         Me.ExtTerminal_ColorTable12.BackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
         Me.ExtTerminal_ColorTable12.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(86, Byte), Integer))
-        Me.ExtTerminal_ColorTable12.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable12.DontShowInfo = False
         Me.ExtTerminal_ColorTable12.Location = New System.Drawing.Point(189, 160)
         Me.ExtTerminal_ColorTable12.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable12.Name = "ExtTerminal_ColorTable12"
@@ -1153,9 +1167,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable10
         '
+        Me.ExtTerminal_ColorTable10.AllowDrop = True
         Me.ExtTerminal_ColorTable10.BackColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
         Me.ExtTerminal_ColorTable10.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(22, Byte), Integer), CType(CType(198, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.ExtTerminal_ColorTable10.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable10.DontShowInfo = False
         Me.ExtTerminal_ColorTable10.Location = New System.Drawing.Point(189, 98)
         Me.ExtTerminal_ColorTable10.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable10.Name = "ExtTerminal_ColorTable10"
@@ -1164,9 +1179,10 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_ColorTable11
         '
+        Me.ExtTerminal_ColorTable11.AllowDrop = True
         Me.ExtTerminal_ColorTable11.BackColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
         Me.ExtTerminal_ColorTable11.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(97, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(214, Byte), Integer))
-        Me.ExtTerminal_ColorTable11.ForceNoNerd = False
+        Me.ExtTerminal_ColorTable11.DontShowInfo = False
         Me.ExtTerminal_ColorTable11.Location = New System.Drawing.Point(189, 129)
         Me.ExtTerminal_ColorTable11.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_ColorTable11.Name = "ExtTerminal_ColorTable11"
@@ -1608,11 +1624,12 @@ Partial Class ExternalTerminal
         '
         'ExtTerminal_CursorColor
         '
+        Me.ExtTerminal_CursorColor.AllowDrop = True
         Me.ExtTerminal_CursorColor.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_CursorColor.BackColor = System.Drawing.Color.White
         Me.ExtTerminal_CursorColor.DefaultColor = System.Drawing.Color.White
-        Me.ExtTerminal_CursorColor.ForceNoNerd = False
+        Me.ExtTerminal_CursorColor.DontShowInfo = False
         Me.ExtTerminal_CursorColor.Location = New System.Drawing.Point(97, 6)
         Me.ExtTerminal_CursorColor.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.ExtTerminal_CursorColor.Name = "ExtTerminal_CursorColor"

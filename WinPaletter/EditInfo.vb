@@ -94,6 +94,11 @@ Public Class EditInfo
         Me.Close()
     End Sub
 
+    Private Sub color1_2_DragDrop(sender As Object, e As DragEventArgs) Handles color1.DragDrop, color2.DragDrop
+        StoreItem1.CP.Info.Color1 = color1.BackColor
+        StoreItem1.CP.Info.Color2 = color2.BackColor
+    End Sub
+
     Private Sub Color1_Click(sender As Object, e As EventArgs) Handles color1.Click
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             sender.BackColor = SubMenu.ShowMenu(sender)

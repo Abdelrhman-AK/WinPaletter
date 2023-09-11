@@ -202,6 +202,7 @@ Partial Class Sounds_Editor
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox86 = New WinPaletter.XenonGroupBox()
+        Me.Label87 = New System.Windows.Forms.Label()
         Me.XenonButton260 = New WinPaletter.XenonButton()
         Me.XenonButton261 = New WinPaletter.XenonButton()
         Me.XenonButton262 = New WinPaletter.XenonButton()
@@ -654,7 +655,6 @@ Partial Class Sounds_Editor
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.Label87 = New System.Windows.Forms.Label()
         Me.XenonTabControl1.SuspendLayout
         Me.TabPage1.SuspendLayout
         Me.XenonGroupBox85.SuspendLayout
@@ -3717,6 +3717,17 @@ Partial Class Sounds_Editor
         Me.XenonGroupBox86.Name = "XenonGroupBox86"
         Me.XenonGroupBox86.Size = New System.Drawing.Size(754, 55)
         Me.XenonGroupBox86.TabIndex = 118
+        '
+        'Label87
+        '
+        Me.Label87.BackColor = System.Drawing.Color.Transparent
+        Me.Label87.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label87.Location = New System.Drawing.Point(4, 30)
+        Me.Label87.Name = "Label87"
+        Me.Label87.Size = New System.Drawing.Size(748, 20)
+        Me.Label87.TabIndex = 116
+        Me.Label87.Text = "*This item is made by creating a task in Task Scheduler"
+        Me.Label87.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'XenonButton260
         '
@@ -11035,17 +11046,6 @@ Partial Class Sounds_Editor
         'OpenThemeDialog
         '
         Me.OpenThemeDialog.Filter = "Windows Theme (*.theme)|*.theme|All Files (*.*)|*.*"
-        '
-        'Label87
-        '
-        Me.Label87.BackColor = System.Drawing.Color.Transparent
-        Me.Label87.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label87.Location = New System.Drawing.Point(4, 30)
-        Me.Label87.Name = "Label87"
-        Me.Label87.Size = New System.Drawing.Size(748, 20)
-        Me.Label87.TabIndex = 116
-        Me.Label87.Text = "*This item is made by creating a task in Task Scheduler"
-        Me.Label87.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Sounds_Editor
         '

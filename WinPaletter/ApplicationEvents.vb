@@ -414,7 +414,7 @@ Namespace My
             Dim RegPath As String = "Software\Microsoft\Windows\CurrentVersion\Uninstall"
             Registry.CurrentUser.OpenSubKey(RegPath, True).DeleteSubKeyTree(guidText, False)
 
-            Process.GetCurrentProcess.Kill()
+            Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
         End Sub
 #End Region
 
@@ -659,6 +659,12 @@ Namespace My
             RemoveHandler AppDomain.CurrentDomain.AssemblyResolve, AddressOf DomainCheck
             RemoveHandler AppDomain.CurrentDomain.UnhandledException, AddressOf Domain_UnhandledException
             RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
+
+            RemoveHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+            RemoveHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+            RemoveHandler WallMon_Watcher3.EventArrived, AddressOf Wallpaper_Changed
+            RemoveHandler WallMon_Watcher4.EventArrived, AddressOf Wallpaper_Changed
+            RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
@@ -694,12 +700,12 @@ Namespace My
                 If arg.ToLower = "/exportlanguage" Then
                     Lang.ExportJSON(String.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", Now.Hour, Now.Minute, Now.Second, Now.Day, Now.Month, Now.Year))
                     MsgBox(Lang.LngExported, MsgBoxStyle.Information)
-                    Process.GetCurrentProcess.Kill()
+                    Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
                     Exit For
 
                 ElseIf arg.ToLower = "/uninstall" Then
                     Uninstall.ShowDialog()
-                    Process.GetCurrentProcess.Kill()
+                    Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
                     Exit For
 
                 ElseIf arg.ToLower = "/uninstall-quiet" Then
@@ -724,7 +730,9 @@ Namespace My
             End If
 
             If Not [Settings].General.LicenseAccepted Then
-                If LicenseForm.ShowDialog <> DialogResult.OK Then Process.GetCurrentProcess.Kill()
+                If LicenseForm.ShowDialog <> DialogResult.OK Then
+                    Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
+                End If
             End If
 
             ExternalLink = False
@@ -741,7 +749,7 @@ Namespace My
                             Dim CPx As New CP(CP.CP_Type.File, arg)
                             CPx.Save(CP.CP_Type.Registry, arg)
                             If [Settings].ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
-                            Process.GetCurrentProcess.Kill()
+                            Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
                         End If
                     End If
 
@@ -749,7 +757,7 @@ Namespace My
                         SettingsX._External = True
                         SettingsX._File = arg
                         SettingsX.ShowDialog()
-                        Process.GetCurrentProcess.Kill()
+                        Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
                     End If
 
                 Else
@@ -760,7 +768,7 @@ Namespace My
                             Dim CPx As New CP(CP.CP_Type.File, File)
                             CPx.Save(CP.CP_Type.Registry)
                             If [Settings].ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
-                            Process.GetCurrentProcess.Kill()
+                            Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
                         End If
 
                     ElseIf arg.StartsWith("/edit:", _ignore) Then
@@ -1093,7 +1101,9 @@ Namespace My
                 BugReport.ThrowError(ex)
             End Try
 
-            If KillProcessAfterConvert Then Process.GetCurrentProcess.Kill()
+            If KillProcessAfterConvert Then
+                Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
+            End If
         End Sub
 
         Sub CMD_Convert_List(arg As String, KillProcessAfterConvert As Boolean)
@@ -1140,7 +1150,9 @@ Namespace My
                 BugReport.ThrowError(ex)
             End Try
 
-            If KillProcessAfterConvert Then Process.GetCurrentProcess.Kill()
+            If KillProcessAfterConvert Then
+                Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
+            End If
         End Sub
 
 #End Region

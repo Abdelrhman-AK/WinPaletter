@@ -66,38 +66,40 @@ Public Class SubMenu
 #End Region
 
 
-    Public Function ShowMenu(ColorHandle As XenonCP, Optional EnableDelete As Boolean = False) As Color
+    Public Function ShowMenu(ColorItem As XenonCP, Optional EnableDelete As Boolean = False) As Color
         XenonButton5.Visible = EnableDelete
 
-        MainColor.BackColor = ColorHandle.BackColor.CB((XenonTrackbar1.Value - 100) / 100)
-        DefaultColor.BackColor = ColorHandle.DefaultColor.CB((XenonTrackbar2.Value - 100) / 100)
-        InvertedColor.BackColor = ColorHandle.BackColor.Invert.CB((XenonTrackbar3.Value - 100) / 100)
+        MainColor.BackColor = ColorItem.BackColor.CB((XenonTrackbar1.Value - 100) / 100)
+        DefaultColor.BackColor = ColorItem.DefaultColor.CB((XenonTrackbar2.Value - 100) / 100)
+        InvertedColor.BackColor = ColorItem.BackColor.Invert.CB((XenonTrackbar3.Value - 100) / 100)
 
-        MainColor.DefaultColor = ColorHandle.BackColor
-        DefaultColor.DefaultColor = ColorHandle.DefaultColor
-        InvertedColor.DefaultColor = ColorHandle.BackColor.Invert
+        MainColor.DefaultColor = ColorItem.BackColor
+        DefaultColor.DefaultColor = ColorItem.DefaultColor
+        InvertedColor.DefaultColor = ColorItem.BackColor.Invert
+
+        GetHistoryColors(ColorItem)
 
         If ShowDialog() = DialogResult.OK Then
             Select Case My.Application.ColorEvent
                 Case My.MyApplication.MenuEvent.Copy
                     My.Application.CopiedColor = MainColor.BackColor
-                    Return ColorHandle.BackColor
+                    Return ColorItem.BackColor
 
                 Case My.MyApplication.MenuEvent.Cut
                     My.Application.CopiedColor = MainColor.BackColor
-                    ColorHandle.BackColor = Color.Black
+                    ColorItem.BackColor = Color.Black
 
                 Case My.MyApplication.MenuEvent.Paste
-                    ColorHandle.BackColor = My.Application.CopiedColor
+                    ColorItem.BackColor = My.Application.CopiedColor
                     Return My.Application.CopiedColor
 
                 Case My.MyApplication.MenuEvent.Override
-                    ColorHandle.BackColor = _overrideColor
-                    Return ColorHandle.BackColor
+                    ColorItem.BackColor = _overrideColor
+                    Return ColorItem.BackColor
 
                 Case My.MyApplication.MenuEvent.Delete
-                    ColorHandle.BackColor = Color.FromArgb(0, 0, 0, 0)
-                    Return ColorHandle.BackColor
+                    ColorItem.BackColor = Color.FromArgb(0, 0, 0, 0)
+                    Return ColorItem.BackColor
 
                 Case My.MyApplication.MenuEvent.None
                     Return MainColor.DefaultColor
@@ -142,13 +144,13 @@ Public Class SubMenu
                 Width = PaletteContainer.Right + 8
 
                 PaletteContainer.Visible = True
-                XenonComboBox1.Visible = True
+                Label2.Visible = True
 
             Case True
                 XenonButton4.Text = ">"
 
                 PaletteContainer.Visible = False
-                XenonComboBox1.Visible = False
+                Label2.Visible = False
 
                 For i = PaletteContainer.Right + 8 To PaletteContainer.Left + 3 Step -2
                     Width = i
@@ -188,15 +190,11 @@ Public Class SubMenu
         Width = PaletteContainer.Left + 3
 
         PaletteContainer.Visible = False
-        XenonComboBox1.Visible = False
+        Label2.Visible = False
         XenonButton4.Text = ">"
 
         LoadLanguage
         ApplyDarkMode(Me)
-
-        XenonComboBox1.SelectedIndex = 0
-
-        GetColorsFromPalette(My.CP)
 
         If My.Application.CopiedColor = Nothing Then
 
@@ -234,7 +232,6 @@ Public Class SubMenu
             XenonButton3.Enabled = True
         End If
 
-
         BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
@@ -242,7 +239,7 @@ Public Class SubMenu
         Invalidate()
     End Sub
 
-    Sub Pnl_Click(sender As Object, e As EventArgs)
+    Sub MiniColorItem_Clicked(sender As Object, e As EventArgs)
         MainColor.BackColor = sender.BackColor
         MainColor.DefaultColor = sender.BackColor
 
@@ -252,24 +249,26 @@ Public Class SubMenu
         Collapse_Expand()
     End Sub
 
-    Sub GetColorsFromPalette(CP As CP)
+    Sub GetHistoryColors(XenonCP As XenonCP)
         PaletteContainer.SuspendLayout()
 
         For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
+            RemoveHandler c.Click, AddressOf MiniColorItem_Clicked
             c.Dispose()
             PaletteContainer.Controls.Remove(c)
         Next
 
         PaletteContainer.Controls.Clear()
 
-        For Each c As Color In CP.ListColors
-            Dim pnl As New XenonCP With {
-                .Size = New Size(If(My.Settings.NerdStats.Enabled, 85, 30), 20),
-                .BackColor = c,
-                .DefaultColor = c
-            }
-            PaletteContainer.Controls.Add(pnl)
-            AddHandler pnl.Click, AddressOf Pnl_Click
+        For Each c As Color In XenonCP.ColorsHistory
+            Dim MiniColorItem As New XenonCP With {
+                .Size = .GetMiniColorItemSize,
+                .AllowDrop = False,
+                .PauseColorsHistory = True,
+                .BackColor = c, .DefaultColor = .BackColor}
+
+            PaletteContainer.Controls.Add(MiniColorItem)
+            AddHandler MiniColorItem.Click, AddressOf MiniColorItem_Clicked
         Next
 
         PaletteContainer.ResumeLayout()
@@ -301,9 +300,7 @@ Public Class SubMenu
         Close()
     End Sub
 
-    Private Sub MainColor_Click(sender As Object, e As EventArgs) Handles MainColor.Click, InvertedColor.Click,
-             DefaultColor.Click
-
+    Private Sub MainColor_Click(sender As Object, e As EventArgs) Handles MainColor.Click, InvertedColor.Click, DefaultColor.Click
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Override
         _overrideColor = sender.BackColor
@@ -313,29 +310,6 @@ Public Class SubMenu
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         Collapse_Expand()
-    End Sub
-
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
-        If _shown Then
-            Select Case XenonComboBox1.SelectedIndex
-                Case 0
-                    GetColorsFromPalette(My.CP)
-                Case 1
-                    GetColorsFromPalette(New CP_Defaults().Default_Windows11)
-                Case 2
-                    GetColorsFromPalette(New CP_Defaults().Default_Windows10)
-                Case 3
-                    GetColorsFromPalette(New CP_Defaults().Default_Windows81)
-                Case 4
-                    GetColorsFromPalette(New CP_Defaults().Default_Windows7)
-                Case 5
-                    GetColorsFromPalette(New CP_Defaults().Default_WindowsVista)
-                Case 6
-                    GetColorsFromPalette(New CP_Defaults().Default_WindowsXP)
-                Case Else
-                    GetColorsFromPalette(My.CP)
-            End Select
-        End If
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click

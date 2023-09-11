@@ -240,46 +240,49 @@ Public Class XenonCore
 
 #Region "Dark\Light Mode"
     Public Shared Function GetDarkMode() As Boolean
+        Try
+            If My.Settings.Appearance.ManagedByTheme AndAlso My.Settings.Appearance.CustomColors Then
+                Return My.Settings.Appearance.CustomTheme
 
-        If My.Settings.Appearance.ManagedByTheme AndAlso My.Settings.Appearance.CustomColors Then
-            Return My.Settings.Appearance.CustomTheme
-
-        Else
-            Dim i As Long
-
-            If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
-                Return True
             Else
-                Try
-                    If My.Settings.Appearance.AutoDarkMode Then
-                        If My.W11 Or My.W10 Then
-                            Try
-                                i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
-                                Return Not (i = 1)
-                            Catch ex As Exception
-                                Try
-                                    Return My.Settings.Appearance.DarkMode
-                                Catch
-                                    Return My.W11 Or My.W10
-                                End Try
-                            Finally
-                                My.Computer.Registry.CurrentUser.Close()
-                            End Try
-                        Else
-                            Return False
-                        End If
-                    Else
-                        Return My.Settings.Appearance.DarkMode
-                    End If
-                Catch
+                Dim i As Long
+
+                If System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime Then
+                    Return True
+                Else
                     Try
-                        Return My.Settings.Appearance.DarkMode
+                        If My.Settings.Appearance.AutoDarkMode Then
+                            If My.W11 Or My.W10 Then
+                                Try
+                                    i = CLng(My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize").GetValue("AppsUseLightTheme", 0))
+                                    Return Not (i = 1)
+                                Catch ex As Exception
+                                    Try
+                                        Return My.Settings.Appearance.DarkMode
+                                    Catch
+                                        Return My.W11 Or My.W10
+                                    End Try
+                                Finally
+                                    My.Computer.Registry.CurrentUser.Close()
+                                End Try
+                            Else
+                                Return False
+                            End If
+                        Else
+                            Return My.Settings.Appearance.DarkMode
+                        End If
                     Catch
-                        Return My.W11 Or My.W10
+                        Try
+                            Return My.Settings.Appearance.DarkMode
+                        Catch
+                            Return My.W11 Or My.W10
+                        End Try
                     End Try
-                End Try
+                End If
             End If
-        End If
+        Catch ex As Exception
+            Return True
+        End Try
     End Function
 
     Public Shared ReadOnly DefaultAccent As Color = Color.FromArgb(0, 81, 210)
@@ -911,6 +914,7 @@ Public Class Visual
 
     Private Shared ReadOnly colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
     Private Shared ReadOnly backgroundWorkers As New Dictionary(Of BackgroundWorker, ColorFaderInformation) 'Associate each background worker with information it needs
+    Private Shared PreviousXenonCPPauseColorsHistory As Boolean
 
     ' The delegate of a method that will be called when the color finishes fading
     Public Delegate Sub DoneFading(ByVal container As Object, ByVal colorProperty As String)
@@ -993,6 +997,10 @@ Public Class Visual
             AddHandler colorFader.RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
             colorFader.WorkerReportsProgress = True
             colorFader.WorkerSupportsCancellation = True
+            If TypeOf container Is XenonCP Then
+                PreviousXenonCPPauseColorsHistory = CType(container, XenonCP).PauseColorsHistory
+                CType(container, XenonCP).PauseColorsHistory = True
+            End If
 
             backgroundWorkers.Add(colorFader, colorFaderInfo)
             colorsFading.Add(GenerateHashCode(container, colorProperty), colorFader)
@@ -1097,13 +1105,22 @@ Public Class Visual
                 info.CallBack?.Invoke(info.Container, info.ColorProperty)
                 backgroundWorkers.Remove(CType(sender, BackgroundWorker))
                 colorsFading.Remove(GenerateHashCode(info.Container, info.ColorProperty))
+
+                If TypeOf info.Container Is XenonCP Then
+                    With CType(info.Container, XenonCP)
+                        .PauseColorsHistory = PreviousXenonCPPauseColorsHistory
+                        If Not PreviousXenonCPPauseColorsHistory Then .ColorsHistory.Add(.BackColor)
+                    End With
+                End If
+
+                RemoveHandler CType(sender, BackgroundWorker).DoWork, AddressOf BackgroundWorker_DoWork
+                RemoveHandler CType(sender, BackgroundWorker).ProgressChanged, AddressOf BackgroundWorker_ProgressChanged
+                RemoveHandler CType(sender, BackgroundWorker).RunWorkerCompleted, AddressOf BackgroundWorker_RunWorkerCompleted
             Else
 
                 If info.Rerun Then
-
                     info.Rerun = False
                     CType(sender, BackgroundWorker).RunWorkerAsync(info)
-
                 End If
 
             End If

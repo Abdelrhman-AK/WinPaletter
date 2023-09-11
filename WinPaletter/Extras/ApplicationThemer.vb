@@ -131,7 +131,13 @@ Public Class ApplicationThemer
         AdjustPreview()
     End Sub
 
+    Private Sub AccentColor_BackColorPick_DragDrop(sender As Object, e As DragEventArgs) Handles AccentColor.DragDrop, BackColorPick.DragDrop
+        AdjustPreview()
+    End Sub
+
     Private Sub AccentColor_Click(sender As Object, e As EventArgs) Handles AccentColor.Click
+
+        If TypeOf e Is DragEventArgs Then Exit Sub
 
         With My.Settings.Appearance
             .CustomColors = BackupSettings.Appearance.CustomColors
@@ -261,4 +267,5 @@ Public Class ApplicationThemer
     Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
         Process.Start(My.Resources.Link_Wiki & "/Edit-WinPaletter-application-theme")
     End Sub
+
 End Class

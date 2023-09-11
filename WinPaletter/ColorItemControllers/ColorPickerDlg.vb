@@ -93,12 +93,39 @@ Public Class ColorPickerDlg
         Invalidate()
     End Sub
 
+    Sub GetColorsHistory(XenonCP As XenonCP)
+        FlowLayoutPanel1.SuspendLayout()
+
+        For Each c As XenonCP In FlowLayoutPanel1.Controls.OfType(Of XenonCP)
+            RemoveHandler c.Click, AddressOf MiniColorItem_click
+            c.Dispose()
+            FlowLayoutPanel1.Controls.Remove(c)
+        Next
+
+        FlowLayoutPanel1.Controls.Clear()
+
+        For Each c As Color In XenonCP.ColorsHistory
+
+            Dim MiniColorItem As New XenonCP With {
+                .Size = .GetMiniColorItemSize,
+                .AllowDrop = False,
+                .PauseColorsHistory = True,
+                .BackColor = c, .DefaultColor = .BackColor}
+
+            FlowLayoutPanel1.Controls.Add(MiniColorItem)
+            AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
+        Next
+
+        FlowLayoutPanel1.ResumeLayout()
+    End Sub
+
+
     Sub GetColorsFromPalette(CP As CP)
         PaletteContainer.SuspendLayout()
 
         For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
+            RemoveHandler c.Click, AddressOf MiniColorItem_click
             c.Dispose()
-            RemoveHandler c.Click, AddressOf Pnl_click
             PaletteContainer.Controls.Remove(c)
         Next
 
@@ -106,14 +133,14 @@ Public Class ColorPickerDlg
 
         For Each c As Color In CP.ListColors
 
-            Dim pnl As New XenonCP With {
-                .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
-                .BackColor = c,
-                .DefaultColor = .BackColor
-            }
+            Dim MiniColorItem As New XenonCP With {
+                .Size = .GetMiniColorItemSize,
+                .AllowDrop = False,
+                .PauseColorsHistory = True,
+                .BackColor = c, .DefaultColor = .BackColor}
 
-            PaletteContainer.Controls.Add(pnl)
-            AddHandler pnl.Click, AddressOf Pnl_click
+            PaletteContainer.Controls.Add(MiniColorItem)
+            AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
         Next
 
         PaletteContainer.ResumeLayout()
@@ -165,13 +192,15 @@ Public Class ColorPickerDlg
             ColorControls_List = Ctrl
 
             If TypeOf Ctrl(0) Is XenonCP Then
-                CType(Ctrl(0), XenonCP).ColorPickerOpened = True
-                CType(Ctrl(0), XenonCP).Refresh()
+                With CType(Ctrl(0), XenonCP)
+                    GetColorsHistory(CType(Ctrl(0), XenonCP))
+                    .PauseColorsHistory = True
+                    .ColorPickerOpened = True
+                    .Refresh()
+                End With
             End If
 
             If [Conditions] Is Nothing Then _Conditions = New Conditions Else _Conditions = [Conditions]
-
-            AddHandler ColorEditorManager1.ColorChanged, AddressOf Change_Color_Preview
 
             Location = Ctrl(0).PointToScreen(Point.Empty) + New Point(-Width + Ctrl(0).Width + 5, Ctrl(0).Height - 1)
             If Location.Y + Height > My.Computer.Screen.Bounds.Height Then Location = New Point(Location.X, My.Computer.Screen.Bounds.Height - Height)
@@ -182,11 +211,13 @@ Public Class ColorPickerDlg
             If ShowDialog() = DialogResult.OK Then c = ColorEditorManager1.Color
 
             If TypeOf Ctrl(0) Is XenonCP Then
-                CType(Ctrl(0), XenonCP).ColorPickerOpened = False
-                CType(Ctrl(0), XenonCP).Refresh()
+                With CType(Ctrl(0), XenonCP)
+                    .Refresh()
+                    .PauseColorsHistory = False
+                    .ColorPickerOpened = False
+                    .UpdateColorsHistory()
+                End With
             End If
-
-            RemoveHandler ColorEditorManager1.ColorChanged, AddressOf Change_Color_Preview
 
             If EnableAlpha Then
                 Return c
@@ -210,7 +241,7 @@ Public Class ColorPickerDlg
 
     End Function
 
-    Public Sub Change_Color_Preview()
+    Private Sub Change_Color_Preview(sender As Object, e As EventArgs) Handles ColorEditorManager1.ColorChanged
         Dim steps As Integer = 30
         Dim delay As Integer = 1
 
@@ -609,13 +640,11 @@ Public Class ColorPickerDlg
 #End Region
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        Me.DialogResult = DialogResult.Cancel
-        Me.Close()
+        DialogResult = DialogResult.Cancel
+        Close()
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-
-
         Select Case XenonRadioButton1.Checked
             Case True
                 img = My.Wallpaper_Unscaled
@@ -658,6 +687,7 @@ Public Class ColorPickerDlg
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
 
         For Each ctrl As XenonCP In ImgPaletteContainer.Controls.OfType(Of XenonCP)
+            RemoveHandler ctrl.Click, AddressOf MiniColorItem_click
             ctrl.Dispose()
         Next
         ImgPaletteContainer.Controls.Clear()
@@ -666,13 +696,14 @@ Public Class ColorPickerDlg
         Colors_List.Sort(New RGBColorComparer())
 
         For Each C As Color In Colors_List
-            Dim pnl As New XenonCP With {
-                    .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
-                    .BackColor = Color.FromArgb(255, C),
-                    .DefaultColor = .BackColor
-                }
-            ImgPaletteContainer.Controls.Add(pnl)
-            AddHandler pnl.Click, AddressOf Pnl_click
+            Dim MiniColorItem As New XenonCP With {
+                .Size = .GetMiniColorItemSize,
+                .AllowDrop = False,
+                .PauseColorsHistory = True,
+                .BackColor = Color.FromArgb(255, C), .DefaultColor = .BackColor}
+
+            ImgPaletteContainer.Controls.Add(MiniColorItem)
+            AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
         Next
 
         ProgressBar1.Visible = False
@@ -681,15 +712,8 @@ Public Class ColorPickerDlg
         My.Animator.ShowSync(XenonButton6, True)
     End Sub
 
-    Private Sub Pnl_click(sender As Object, e As EventArgs)
-        With CType(sender, XenonCP)
-            ColorEditorManager1.Color = .BackColor
-            ColorEditor1.Color = .BackColor
-            ColorGrid1.Color = .BackColor
-            ColorWheel1.Color = .BackColor
-        End With
-
-        Change_Color_Preview()
+    Private Sub MiniColorItem_click(sender As Object, e As EventArgs)
+        ColorEditorManager1.Color = CType(sender, XenonCP).BackColor
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
@@ -716,8 +740,8 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        Me.DialogResult = DialogResult.OK
-        Me.Close()
+        DialogResult = DialogResult.OK
+        Close()
     End Sub
 
     Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
@@ -758,8 +782,8 @@ Public Class ColorPickerDlg
 
 
         For Each c As XenonCP In ThemePaletteContainer.Controls.OfType(Of XenonCP)
+            RemoveHandler c.Click, AddressOf MiniColorItem_click
             c.Dispose()
-            RemoveHandler c.Click, AddressOf Pnl_click
             ThemePaletteContainer.Controls.Remove(c)
         Next
 
@@ -768,13 +792,14 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim pnl As New XenonCP With {
-                        .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
-                        .BackColor = Color.FromArgb(255, C),
-                        .DefaultColor = .BackColor
-                        }
-                    ThemePaletteContainer.Controls.Add(pnl)
-                    AddHandler pnl.Click, AddressOf Pnl_click
+                    Dim MiniColorItem As New XenonCP With {
+                        .Size = .GetMiniColorItemSize,
+                        .AllowDrop = False,
+                        .PauseColorsHistory = True,
+                        .BackColor = Color.FromArgb(255, C), .DefaultColor = .BackColor}
+
+                    ThemePaletteContainer.Controls.Add(MiniColorItem)
+                    AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
                 Next
             End If
         Catch
@@ -802,18 +827,26 @@ Public Class ColorPickerDlg
 
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
         If IO.File.Exists(XenonTextBox1.Text) Then
-            If IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
-                ThemePaletteContainer.Controls.Clear()
 
+            For Each c As XenonCP In ThemePaletteContainer.Controls.OfType(Of XenonCP)
+                RemoveHandler c.Click, AddressOf MiniColorItem_click
+                c.Dispose()
+                ThemePaletteContainer.Controls.Remove(c)
+            Next
+
+            ThemePaletteContainer.Controls.Clear()
+
+            If IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                        Dim pnl As New XenonCP With {
-                            .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
-                            .BackColor = Color.FromArgb(255, C),
-                            .DefaultColor = .BackColor
-                        }
-                        ThemePaletteContainer.Controls.Add(pnl)
-                        AddHandler pnl.Click, AddressOf Pnl_click
+                        Dim MiniColorItem As New XenonCP With {
+                            .Size = .GetMiniColorItemSize,
+                            .AllowDrop = False,
+                            .PauseColorsHistory = True,
+                            .BackColor = Color.FromArgb(255, C), .DefaultColor = .BackColor}
+
+                        ThemePaletteContainer.Controls.Add(MiniColorItem)
+                        AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
                     Next
                 Catch
                     MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
@@ -828,13 +861,14 @@ Public Class ColorPickerDlg
                     For Each field In GetType(VisualStyleMetricColors).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
                         If field.FieldType.Name.ToLower = "color" Then
 
-                            Dim pnl As New XenonCP With {
-                                .Size = New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 20),
-                                .BackColor = field.GetValue(vs.Metrics.Colors),
-                                .DefaultColor = .BackColor
-                                }
-                            ThemePaletteContainer.Controls.Add(pnl)
-                            AddHandler pnl.Click, AddressOf Pnl_click
+                            Dim MiniColorItem As New XenonCP With {
+                                .Size = .GetMiniColorItemSize,
+                                .AllowDrop = False,
+                                .PauseColorsHistory = True,
+                                .BackColor = field.GetValue(vs.Metrics.Colors), .DefaultColor = .BackColor}
+
+                            ThemePaletteContainer.Controls.Add(MiniColorItem)
+                            AddHandler MiniColorItem.Click, AddressOf MiniColorItem_click
 
                         End If
                     Next

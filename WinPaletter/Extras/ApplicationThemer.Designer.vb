@@ -123,9 +123,10 @@ Partial Class ApplicationThemer
         '
         'BackColorPick
         '
+        Me.BackColorPick.AllowDrop = True
         Me.BackColorPick.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.BackColorPick.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.BackColorPick.ForceNoNerd = False
+        Me.BackColorPick.DontShowInfo = False
         Me.BackColorPick.Location = New System.Drawing.Point(178, 181)
         Me.BackColorPick.Name = "BackColorPick"
         Me.BackColorPick.Size = New System.Drawing.Size(112, 24)
@@ -133,9 +134,10 @@ Partial Class ApplicationThemer
         '
         'AccentColor
         '
+        Me.AccentColor.AllowDrop = True
         Me.AccentColor.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.AccentColor.DefaultColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.AccentColor.ForceNoNerd = False
+        Me.AccentColor.DontShowInfo = False
         Me.AccentColor.Location = New System.Drawing.Point(178, 151)
         Me.AccentColor.Name = "AccentColor"
         Me.AccentColor.Size = New System.Drawing.Size(112, 24)

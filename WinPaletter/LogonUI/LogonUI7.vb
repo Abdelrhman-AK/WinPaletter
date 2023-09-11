@@ -297,7 +297,13 @@ Public Class LogonUI7
         End If
     End Sub
 
-    Private Sub Color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click
+    Private Sub Color_pick_Click(sender As Object, e As EventArgs) Handles color_pick.Click, color_pick.DragDrop
+
+        If TypeOf e Is DragEventArgs Then
+            pnl_preview.BackgroundImage = ReturnBK()
+            Exit Sub
+        End If
+
         If DirectCast(e, MouseEventArgs).Button = MouseButtons.Right Then
             SubMenu.ShowMenu(sender)
             If My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste Or My.Application.ColorEvent = My.MyApplication.MenuEvent.Override Then
