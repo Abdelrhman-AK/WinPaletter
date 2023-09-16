@@ -30,6 +30,17 @@ Public Class LogonUI7
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
     End Sub
 
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
+    End Sub
+
     Private Sub LogonUI7_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
     End Sub

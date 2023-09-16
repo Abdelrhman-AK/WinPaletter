@@ -2372,9 +2372,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public File As String
 
             Public Sub Load(_DefScrSaver As ScreenSaver)
-                Enabled = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", _DefScrSaver.Enabled.ToInteger)).ToBoolean
-                IsSecure = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", _DefScrSaver.IsSecure.ToInteger)).ToBoolean
-                TimeOut = CInt(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", _DefScrSaver.TimeOut))
+                Enabled = Val(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", _DefScrSaver.Enabled.ToInteger))
+                IsSecure = Val(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", _DefScrSaver.IsSecure.ToInteger))
+                TimeOut = Val(GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", _DefScrSaver.TimeOut))
                 File = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", _DefScrSaver.File)
             End Sub
 

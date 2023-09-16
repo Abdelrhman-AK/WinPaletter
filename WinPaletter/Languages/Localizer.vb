@@ -336,6 +336,16 @@ Public Class Localizer : Implements IDisposable
     Property PE_RunSFCinCMD_Node As String = "Run this in Command Prompt as administrator to restore PE file integrity (health)"
     Property PE_DontForgetToRestart As String = "Don't forget to restart your Windows after that to complete restoring PE file integrity"
 
+    Property ColorItem_Copy As String = "Copy color into dropped item"
+    Property ColorItem_Copy_Invert As String = "Copy color into dropped item as inverted"
+    Property ColorItem_Copy_Darker As String = "Copy color into dropped item but darker"
+    Property ColorItem_Copy_Lighter As String = "Copy color into dropped item but lighter"
+    Property ColorItem_Copy_Mix As String = "Mix into dropped item"
+    Property ColorItem_Swap As String = "Swap two colors"
+    Property ColorItem_Swap_Invert As String = "Swap two colors as inverted"
+    Property ColorItem_Swap_Darker As String = "Swap two colors but darker"
+    Property ColorItem_Swap_Lighter As String = "Swap two colors but lighter"
+
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
     Property Store_NoNetwork As String = "No internet connection"
     Property Store_TryOffline As String = "Press 'Yes' if you want to continue in offline Store mode. You can select its folders from Settings > Store."

@@ -8,6 +8,7 @@ Public Class SubMenu
     Private _eventDone As Boolean
     ReadOnly _Speed As Integer = 20
     ReadOnly _dark As Single = 0.7
+    Private PreviousClr As Color
 
 #Region "Form Shadow"
 
@@ -76,6 +77,16 @@ Public Class SubMenu
         MainColor.DefaultColor = ColorItem.BackColor
         DefaultColor.DefaultColor = ColorItem.DefaultColor
         InvertedColor.DefaultColor = ColorItem.BackColor.Invert
+
+        If ColorItem.ColorsHistory.Count > 1 Then
+            PreviousColor.BackColor = ColorItem.ColorsHistory.Item(ColorItem.ColorsHistory.Count - 2).CB((XenonTrackbar4.Value - 100) / 100)
+            PreviousColor.DefaultColor = ColorItem.ColorsHistory.Item(ColorItem.ColorsHistory.Count - 2)
+        Else
+            PreviousColor.BackColor = ColorItem.BackColor.CB((XenonTrackbar4.Value - 100) / 100)
+            PreviousColor.DefaultColor = ColorItem.BackColor
+        End If
+
+        PreviousClr = PreviousColor.DefaultColor
 
         GetHistoryColors(ColorItem)
 
@@ -343,4 +354,27 @@ Public Class SubMenu
         XenonTrackbar3.Value = 100
     End Sub
 
+    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
+        PreviousColor.BackColor = PreviousColor.DefaultColor.CB((XenonTrackbar4.Value - 100) / 100)
+    End Sub
+
+    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+        XenonTrackbar4.Value = 100
+    End Sub
+
+    Private Sub PreviousColor_Click(sender As Object, e As EventArgs) Handles PreviousColor.Click
+        _eventDone = True
+        My.Application.ColorEvent = My.MyApplication.MenuEvent.Override
+        _overrideColor = sender.BackColor
+        DialogResult = DialogResult.OK
+        Close()
+    End Sub
+
+    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+        _eventDone = True
+        My.Application.ColorEvent = My.MyApplication.MenuEvent.Override
+        _overrideColor = PreviousClr
+        DialogResult = DialogResult.OK
+        Close()
+    End Sub
 End Class

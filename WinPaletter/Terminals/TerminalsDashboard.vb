@@ -97,7 +97,7 @@ Public Class TerminalsDashboard
         If My.Settings.WindowsTerminals.Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Stable
             Me.Close()
-            WindowsTerminal.ShowDialog()
+            WindowsTerminal.Show()
         Else
 
             If My.W10 Or My.W11 Then
@@ -116,7 +116,7 @@ Public Class TerminalsDashboard
                 If IO.File.Exists(TerDir) Then
                     WindowsTerminal._Mode = WinTerminal.Version.Stable
                     Me.Close()
-                    WindowsTerminal.ShowDialog()
+                    WindowsTerminal.Show()
                 Else
                     MsgBox(My.Lang.TerminalStable_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & TerDir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
                 End If
@@ -133,7 +133,7 @@ Public Class TerminalsDashboard
         If My.Settings.WindowsTerminals.Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Preview
             Me.Close()
-            WindowsTerminal.ShowDialog()
+            WindowsTerminal.Show()
         Else
             If My.W10 Or My.W11 Then
                 Dim TerPreDir As String
@@ -151,7 +151,7 @@ Public Class TerminalsDashboard
                 If IO.File.Exists(TerPreDir) Then
                     WindowsTerminal._Mode = WinTerminal.Version.Preview
                     Me.Close()
-                    WindowsTerminal.ShowDialog()
+                    WindowsTerminal.Show()
                 Else
                     MsgBox(My.Lang.TerminalPreview_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & TerPreDir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
                 End If
@@ -163,29 +163,29 @@ Public Class TerminalsDashboard
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        cmd._Edition = CMD.Edition.CMD
+        CMD._Edition = CMD.Edition.CMD
         Me.Close()
-        cmd.ShowDialog()
+        CMD.Show()
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        ExternalTerminal.ShowDialog()
+        ExternalTerminal.Show()
         Me.Close()
     End Sub
 
     Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
         If My.Settings.WindowsTerminals.Bypass Then
-            cmd._Edition = CMD.Edition.PowerShellx86
+            CMD._Edition = CMD.Edition.PowerShellx86
             Me.Close()
-            cmd.ShowDialog()
+            CMD.Show()
         Else
             Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
             Dim Dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0"
 
             If IO.Directory.Exists(Dir) Then
-                cmd._Edition = CMD.Edition.PowerShellx86
+                CMD._Edition = CMD.Edition.PowerShellx86
                 Me.Close()
-                cmd.ShowDialog()
+                CMD.Show()
             Else
                 MsgBox(My.Lang.PowerShellx86_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & Dir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If
@@ -196,17 +196,17 @@ Public Class TerminalsDashboard
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
         If My.Settings.WindowsTerminals.Bypass Then
-            cmd._Edition = CMD.Edition.PowerShellx64
+            CMD._Edition = CMD.Edition.PowerShellx64
             Me.Close()
-            cmd.ShowDialog()
+            CMD.Show()
         Else
             Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
             Dim Dir As String = Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0"
 
             If IO.Directory.Exists(Dir) Then
-                cmd._Edition = CMD.Edition.PowerShellx64
+                CMD._Edition = CMD.Edition.PowerShellx64
                 Me.Close()
-                cmd.ShowDialog()
+                CMD.Show()
             Else
                 MsgBox(My.Lang.PowerShellx64_notFound, MsgBoxStyle.Exclamation, My.Lang.Terminal_supposed & """" & Dir & """", My.Lang.CollapseNote, My.Lang.ExpandNote, My.Lang.Terminal_Bypass)
             End If

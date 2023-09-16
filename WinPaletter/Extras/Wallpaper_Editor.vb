@@ -39,8 +39,17 @@ Public Class Wallpaper_Editor
             Case Else
                 XenonAlertBox3.Text = String.Format(My.Lang.WallpaperTone_Notice, My.Lang.OS_WinUndefined)
         End Select
+    End Sub
 
-        MainFrm.Visible = False
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -570,10 +579,6 @@ Public Class Wallpaper_Editor
 
     Private Sub Style_fill_CheckedChanged(sender As Object) Handles style_fill.CheckedChanged, style_fit.CheckedChanged, style_stretch.CheckedChanged, style_center.CheckedChanged, style_tile.CheckedChanged
         If sender.Checked Then ApplyPreviewStyle()
-    End Sub
-
-    Private Sub Wallpaper_Editor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
     End Sub
 
     Sub ApplyHSLPreview()

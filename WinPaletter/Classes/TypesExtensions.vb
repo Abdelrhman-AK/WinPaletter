@@ -30,7 +30,7 @@ Public Module ColorsExtensions
     '''Return HEX Color As String From RGB
     '''</summary>
     <Extension()>
-    Public Function HEX(ByVal [Color] As Color, Optional Alpha As Boolean = True, Optional Hash As Boolean = False) As String
+    Public Function HEX([Color] As Color, Optional Alpha As Boolean = True, Optional Hash As Boolean = False) As String
         Dim S As String
         If Alpha Then
             S = String.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B) & String.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B) &
@@ -164,7 +164,7 @@ Public Module ColorsExtensions
     '''Change Color Brightness
     '''</summary>
     <Extension()>
-    Public Function CB(ByVal color As Color, ByVal correctionFactor As Single) As Color
+    Public Function CB(color As Color, correctionFactor As Single) As Color
         Dim red As Single = CSng(color.R)
         Dim green As Single = CSng(color.G)
         Dim blue As Single = CSng(color.B)
@@ -238,14 +238,14 @@ Public Module ColorsExtensions
     '''Return Color by blending two colors
     '''</summary>
     <Extension()>
-    Public Function Blend(ByVal color As Color, ByVal backColor As Color, ByVal amount As Double) As Color
+    Public Function Blend(color As Color, backColor As Color, amount As Double) As Color
         If amount > 100 Then amount = 100
         If amount < 0 Then amount = 0
 
-        Dim a As Byte = CByte((color.A * amount / 100 + backColor.A * (amount / 100)) / 2)
-        Dim r As Byte = CByte((color.R * amount / 100 + backColor.R * (amount / 100)) / 2)
-        Dim g As Byte = CByte((color.G * amount / 100 + backColor.G * (amount / 100)) / 2)
-        Dim b As Byte = CByte((color.B * amount / 100 + backColor.B * (amount / 100)) / 2)
+        Dim a As Byte = CByte((color.A * (amount / 100) + backColor.A * (amount / 100)) / 2)
+        Dim r As Byte = CByte((color.R * (amount / 100) + backColor.R * (amount / 100)) / 2)
+        Dim g As Byte = CByte((color.G * (amount / 100) + backColor.G * (amount / 100)) / 2)
+        Dim b As Byte = CByte((color.B * (amount / 100) + backColor.B * (amount / 100)) / 2)
         Return Color.FromArgb(a, r, g, b)
     End Function
 
@@ -301,7 +301,7 @@ Public Module ColorsExtensions
     '''Get Inverted Color From a Color
     '''</summary>
     <Extension()>
-    Public Function Invert(ByVal [Color] As Color) As Color
+    Public Function Invert([Color] As Color) As Color
         Return Color.FromArgb([Color].A, 255 - [Color].R, 255 - [Color].G, 255 - [Color].B)
     End Function
 
@@ -309,7 +309,7 @@ Public Module ColorsExtensions
     '''Get If the color is dark or not
     '''</summary>
     <Extension()>
-    Public Function IsDark(ByVal [Color] As Color) As Boolean
+    Public Function IsDark([Color] As Color) As Boolean
         Return Not ([Color].R * 0.2126 + [Color].G * 0.7152 + [Color].B * 0.0722 > 255 / 2)
     End Function
 
@@ -422,7 +422,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Long, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Long, Optional ShowSecondUnit As Boolean = False) As String
         Dim B As Long = 0, KB As Long = 1024, MB As Long = KB * 1024, GB As Long = MB * 1024, TB As Long = GB * 1024
         Dim size As Double = length
         Dim suffix As String = My.Lang.ByteSizeUnit
@@ -454,7 +454,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Short, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Short, Optional ShowSecondUnit As Boolean = False) As String
         Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
@@ -462,7 +462,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Single, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Single, Optional ShowSecondUnit As Boolean = False) As String
         Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
@@ -470,7 +470,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Double, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Double, Optional ShowSecondUnit As Boolean = False) As String
         Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
@@ -478,7 +478,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Decimal, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Decimal, Optional ShowSecondUnit As Boolean = False) As String
         Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 
@@ -486,7 +486,7 @@ Public Module IntegerExtensions
     '''Return string in the format of XX.XX YY, where XX.XX is the size of a file, YY is the appropriate size unit
     '''</summary>
     <Extension()>
-    Public Function SizeString(ByVal length As Integer, Optional ShowSecondUnit As Boolean = False) As String
+    Public Function SizeString(length As Integer, Optional ShowSecondUnit As Boolean = False) As String
         Return SizeString(CLng(length), ShowSecondUnit)
     End Function
 End Module
@@ -541,7 +541,7 @@ Public Module StringExtensions
     '''Convert String to List (String should be multi-lines)
     '''</summary>
     <Extension()>
-    Public Function CList(ByVal [String] As String) As List(Of String)
+    Public Function CList([String] As String) As List(Of String)
         Dim [List] As New List(Of String)
         [List].Clear()
         Using Reader As New StringReader([String])
@@ -591,7 +591,7 @@ Public Module StringExtensions
 
 
     <Extension()>
-    Public Function Compress(ByVal uncompressedString As String) As String
+    Public Function Compress(uncompressedString As String) As String
         Dim compressedBytes As Byte()
 
         Using uncompressedStream = New MemoryStream(Encoding.UTF8.GetBytes(uncompressedString))
@@ -608,7 +608,7 @@ Public Module StringExtensions
 
 
     <Extension()>
-    Public Function Decompress(ByVal compressedString As String) As String
+    Public Function Decompress(compressedString As String) As String
         Dim decompressedBytes As Byte()
         Dim compressedStream = New MemoryStream(Convert.FromBase64String(compressedString))
 
@@ -629,7 +629,7 @@ Public Module ListOfStringExtensions
     '''Deduplicate list of string
     '''</summary>
     <Extension()>
-    Function DeDuplicate(ByVal [List] As List(Of String)) As List(Of String)
+    Function DeDuplicate([List] As List(Of String)) As List(Of String)
         Dim Result As New List(Of String)
 
         Dim Exist As Boolean
@@ -665,7 +665,7 @@ Public Module BitmapExtensions
     '''Return Most Used Color From Bitmap
     '''</summary>
     <Extension()>
-    Public Function AverageColor(ByVal [Bitmap] As Bitmap) As Color
+    Public Function AverageColor([Bitmap] As Bitmap) As Color
         Try
             Using bmp As Bitmap = [Bitmap].Clone
                 Dim totalR As Integer = 0
@@ -706,7 +706,7 @@ Public Module BitmapExtensions
     '''Return Most Used Color From Image
     '''</summary>
     <Extension()>
-    Public Function AverageColor(ByVal [Image] As Image) As Color
+    Public Function AverageColor([Image] As Image) As Color
         Return AverageColor(DirectCast([Image], Bitmap))
     End Function
 
@@ -745,7 +745,7 @@ Public Module BitmapExtensions
     '''Return Blurred Bitmap
     '''</summary>
     <Extension()>
-    Public Function Blur(ByRef Bitmap As Image, Optional ByVal BlurForce As Integer = 2) As Bitmap
+    Public Function Blur(ByRef Bitmap As Image, Optional BlurForce As Integer = 2) As Bitmap
         Return Blur(DirectCast(Bitmap, Bitmap), BlurForce)
     End Function
 
@@ -782,7 +782,7 @@ Public Module BitmapExtensions
     '''Replace Color in Bitmap (Pixels) by color you choose
     '''</summary>
     <Extension()>
-    Public Function ReplaceColor(ByVal inputImage As Bitmap, ByVal oldColor As Color, ByVal NewColor As Color) As Bitmap
+    Public Function ReplaceColor(inputImage As Bitmap, oldColor As Color, NewColor As Color) As Bitmap
         Dim outputImage As New Bitmap(inputImage.Width, inputImage.Height)
         Dim G As Graphics = Graphics.FromImage(outputImage)
 
@@ -812,7 +812,7 @@ Public Module BitmapExtensions
     '''Replace Color in Image (Pixels) by color you choose
     '''</summary>
     <Extension()>
-    Public Function ReplaceColor(ByVal inputImage As Image, ByVal oldColor As Color, ByVal NewColor As Color) As Image
+    Public Function ReplaceColor(inputImage As Image, oldColor As Color, NewColor As Color) As Image
         Return ReplaceColor(DirectCast(inputImage, Bitmap), oldColor, NewColor)
     End Function
 
@@ -820,7 +820,7 @@ Public Module BitmapExtensions
     '''Return Bitmap filled in the scale of size you choose
     '''</summary>
     <Extension()>
-    Public Function FillScale(ByVal Bitmap As Bitmap, Size As Size) As Bitmap
+    Public Function FillScale(Bitmap As Bitmap, Size As Size) As Bitmap
         Try
             Dim sourceWidth As Integer = Bitmap.Width
             Dim sourceHeight As Integer = Bitmap.Height
@@ -872,7 +872,7 @@ Public Module BitmapExtensions
     '''Return Image filled in the scale of size you choose
     '''</summary>
     <Extension()>
-    Public Function FillScale(ByVal Image As Image, Size As Size) As Image
+    Public Function FillScale(Image As Image, Size As Size) As Image
         Return FillScale(DirectCast(Image, Bitmap), Size)
     End Function
 
@@ -928,7 +928,7 @@ Public Module BitmapExtensions
     '''Return Image Tinted by a color
     '''</summary>
     <Extension()>
-    Public Function Tint(ByVal sourceImage As Image, [Color] As Color) As Bitmap
+    Public Function Tint(sourceImage As Image, [Color] As Color) As Bitmap
         Return Tint(DirectCast(sourceImage, Bitmap), [Color])
     End Function
 
@@ -936,7 +936,7 @@ Public Module BitmapExtensions
     '''Return Bitmap Tinted by a color
     '''</summary>
     <Extension()>
-    Public Function Tint(ByVal sourceBitmap As Bitmap, [Color] As Color) As Bitmap
+    Public Function Tint(sourceBitmap As Bitmap, [Color] As Color) As Bitmap
         Dim sourceData As BitmapData = sourceBitmap.LockBits(New Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.[ReadOnly], PixelFormat.Format32bppArgb)
         Dim pixelBuffer As Byte() = New Byte(sourceData.Stride * sourceData.Height - 1) {}
         Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length)
@@ -980,7 +980,7 @@ Public Module BitmapExtensions
     '''Fade Bitmap (Change Opacity)
     '''</summary>
     <Extension()>
-    Public Function Fade(ByVal originalBitmap As Bitmap, ByVal opacity As Double) As Bitmap
+    Public Function Fade(originalBitmap As Bitmap, opacity As Double) As Bitmap
         Try
             Using bmp As New Bitmap(originalBitmap.Width, originalBitmap.Height)
 
@@ -1002,7 +1002,7 @@ Public Module BitmapExtensions
     '''Fade Image (Change Opacity)
     '''</summary>
     <Extension()>
-    Public Function Fade(ByVal originalImage As Image, ByVal opacity As Double) As Image
+    Public Function Fade(originalImage As Image, opacity As Double) As Image
         Return Fade(DirectCast(originalImage, Bitmap), opacity)
     End Function
 
@@ -1010,7 +1010,7 @@ Public Module BitmapExtensions
     '''Return Bitmap in Grayscale
     '''</summary>
     <Extension()>
-    Public Function Grayscale(ByVal original As Image) As Bitmap
+    Public Function Grayscale(original As Image) As Bitmap
         Return Grayscale(DirectCast(original, Bitmap))
     End Function
 
@@ -1018,7 +1018,7 @@ Public Module BitmapExtensions
     '''Return Bitmap in Grayscale
     '''</summary>
     <Extension()>
-    Public Function Grayscale(ByVal original As Bitmap) As Bitmap
+    Public Function Grayscale(original As Bitmap) As Bitmap
         Dim newBitmap As New Bitmap(original.Width, original.Height)
 
         Using g As Graphics = Graphics.FromImage(newBitmap)
@@ -1075,7 +1075,7 @@ Public Module ControlExtensions
     '''Return graphical state of a control to a bitmap
     '''</summary>
     <Extension()>
-    Public Function ToBitmap([Control] As Control, Optional ByVal FixMethod As Boolean = False) As Bitmap
+    Public Function ToBitmap([Control] As Control, Optional FixMethod As Boolean = False) As Bitmap
         If Not FixMethod Then
             Dim bm As New Bitmap([Control].Width, [Control].Height)
 
@@ -1089,7 +1089,7 @@ Public Module ControlExtensions
 
     End Function
 
-    Private Function DrawToBitmap(ByVal Control As Control) As Bitmap
+    Private Function DrawToBitmap(Control As Control) As Bitmap
         Dim childControls = Control.Controls.Cast(Of Control)().ToArray()
         Array.Reverse(childControls)
 
@@ -1102,7 +1102,7 @@ Public Module ControlExtensions
         Return bmp
     End Function
 
-    Public Sub DoubleBufferedControl(ByVal [Control] As Control, ByVal setting As Boolean)
+    Public Sub DoubleBufferedControl([Control] As Control, setting As Boolean)
         Dim panType As Type = [Control].[GetType]()
         Dim pi As PropertyInfo = panType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
         pi.SetValue([Control], setting, Nothing)
@@ -1110,7 +1110,7 @@ Public Module ControlExtensions
 
 
     <Extension()>
-    Public Sub DoubleBuffer(ByVal Parent As Control)
+    Public Sub DoubleBuffer(Parent As Control)
         DoubleBufferedControl(Parent, True)
 
         For Each ctrl As Control In Parent.Controls
@@ -1143,7 +1143,7 @@ Public Module TreeViewExtensions
     '''Serialize from a JSON File to TreeView Nodes
     '''</summary>
     <Extension()>
-    Public Sub FromJSON([TreeView] As TreeView, ByVal JSON_File As String, ByVal rootName As String)
+    Public Sub FromJSON([TreeView] As TreeView, JSON_File As String, rootName As String)
         Dim reader = New StreamReader(JSON_File)
         Dim jsonReader = New JsonTextReader(reader)
         Dim root = JToken.Load(jsonReader)
@@ -1167,7 +1167,7 @@ Public Module TreeViewExtensions
         End Try
     End Sub
 
-    Private Sub AddNode(ByVal token As JToken, ByVal inTreeNode As TreeNode)
+    Private Sub AddNode(token As JToken, inTreeNode As TreeNode)
         If token Is Nothing Then Return
 
         If TypeOf token Is JValue Then
@@ -1234,7 +1234,7 @@ End Module
 Public Module Icons
 
     <Extension()>
-    Public Function ToByteArray(ByVal icon As System.Drawing.Icon) As Byte()
+    Public Function ToByteArray(icon As System.Drawing.Icon) As Byte()
         Using ms As New MemoryStream()
             icon.Save(ms)
             Dim b As Byte() = ms.ToArray()
@@ -1244,7 +1244,7 @@ Public Module Icons
     End Function
 
     <Extension()>
-    Public Function ToIcon(ByVal bytes As Byte()) As System.Drawing.Icon
+    Public Function ToIcon(bytes As Byte()) As System.Drawing.Icon
         Using ms As New MemoryStream(bytes)
             Return New Icon(ms)
         End Using
@@ -1266,6 +1266,6 @@ Public Module Others
 
         End Try
     End Sub
-    Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, ByVal text As String)
+    Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, text As String)
 
 End Module

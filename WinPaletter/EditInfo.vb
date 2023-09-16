@@ -7,13 +7,20 @@ Public Class EditInfo
         LoadLanguage
         ApplyDarkMode(Me)
         Load_Info(My.CP)
-        MainFrm.Visible = False
         XenonTextBox3.Font = My.Application.ConsoleFontMedium
         XenonTextBox6.Font = My.Application.ConsoleFontMedium
 
     End Sub
-    Private Sub EditInfo_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
+
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

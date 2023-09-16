@@ -660,10 +660,14 @@ Namespace My
             RemoveHandler AppDomain.CurrentDomain.UnhandledException, AddressOf Domain_UnhandledException
             RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
 
-            RemoveHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
-            RemoveHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
-            RemoveHandler WallMon_Watcher3.EventArrived, AddressOf Wallpaper_Changed
-            RemoveHandler WallMon_Watcher4.EventArrived, AddressOf Wallpaper_Changed
+            Try
+                RemoveHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+                RemoveHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+                RemoveHandler WallMon_Watcher3.EventArrived, AddressOf Wallpaper_Changed
+                RemoveHandler WallMon_Watcher4.EventArrived, AddressOf Wallpaper_Changed
+            Catch
+            End Try
+
             RemoveHandler SystemEvents.UserPreferenceChanged, AddressOf OldWinPreferenceChanged
         End Sub
 

@@ -450,6 +450,21 @@ Public Class XenonTabControl : Inherits TabControl
         Font = New Font("Segoe UI", 9)
     End Sub
 
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            drgevent.Effect = DragDropEffects.None
+            For i = 0 To TabCount - 1
+                If Not SelectedIndex = i AndAlso GetTabRect(i).Contains(PointToClient(MousePosition)) Then
+                    SelectedIndex = i
+                    Invalidate()
+                End If
+            Next
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
+    End Sub
     Protected Overrides Sub CreateHandle()
         MyBase.CreateHandle()
 
@@ -1162,7 +1177,7 @@ Public Class XenonRadioImage
 
     Sub New()
         SetStyle(DirectCast(139286, ControlStyles), True)
-        SetStyle(ControlStyles.Selectable, False)
+        SetStyle(ControlStyles.Selectable, True)
         DoubleBuffered = True
         Font = New Font("Segoe UI", 9)
         ForeColor = Color.White
@@ -1223,6 +1238,15 @@ Public Class XenonRadioImage
     Public State As MouseState = MouseState.None
     Private AnimateOnClick As Boolean = False
 
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If Not Checked AndAlso TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            drgevent.Effect = DragDropEffects.None
+            Checked = True
+        Else
+            Exit Sub
+        End If
+        MyBase.OnDragOver(drgevent)
+    End Sub
     Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
         AnimateOnClick = True
         Checked = True
@@ -1905,6 +1929,19 @@ Public Class XenonCP : Inherits Panel
     <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
     <Bindable(True)>
     Public Overrides Property Text As String = ""
+
+#End Region
+
+#Region "Rectangles"
+    Private Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+    Private RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+    Private Rect_DefColor As New Rectangle(0, 0, Height, Height)
+    Protected Overrides Sub OnSizeChanged(e As EventArgs)
+        Rect = New Rectangle(0, 0, Width - 1, Height - 1)
+        RectInner = New Rectangle(1, 1, Width - 3, Height - 3)
+        Rect_DefColor = New Rectangle(0, 0, Height, Height)
+        MyBase.OnSizeChanged(e)
+    End Sub
 #End Region
 
 #Region "Variables"
@@ -1912,54 +1949,49 @@ Public Class XenonCP : Inherits Panel
     Public ColorsHistory As New List(Of Color)
     Private LineColor As Color
     Public State As MouseState = MouseState.None
-    Private SwapNotCopy As Boolean = False
-    Private InitializeDrag As Boolean = False
-    Private AfterDropEffect As AfterDropEffects = XenonCP.AfterDropEffects.None
     Public PauseColorsHistory As Boolean = False
-    Private DraggedColor As Color
-    Private DragDropMouseHovering As Boolean = False
-
-    Private MakeAfterDropEffect As Boolean = False
-    Private BeforeDropColor As Color
-    Private BeforeDropMousePosition As Point
 
     Enum MouseState
         None
         Over
         Down
     End Enum
+#End Region
+
+#Region "Drag and drop"
+    Private SwapNotCopy As Boolean = False
+    Private InitializeDrag As Boolean = False
+    Private AfterDropEffect As AfterDropEffects = XenonCP.AfterDropEffects.None
+    Private DragDefaultColor As Boolean = False
+    Private DraggedColor As Color
+    Private DragDropMouseHovering As Boolean = False
+    Private MakeAfterDropEffect As Boolean = False
+    Private BeforeDropColor As Color
+    Private BeforeDropMousePosition As Point
+    Private HoverOverDefColorDot As Boolean = False
 
     Public Enum AfterDropEffects
         None
         Invert
         Darker
         Lighter
+        Mix
     End Enum
 
-#End Region
-
-#Region "Subs/Functions"
-    Public Sub UpdateColorsHistory()
-        If Not PauseColorsHistory Then
-            If ColorsHistory.Count > 0 Then
-                If ColorsHistory.Last <> BackColor Then ColorsHistory.Add(BackColor)
-            Else
-                ColorsHistory.Add(BackColor)
-            End If
-        End If
-    End Sub
-
-    Public Function GetMiniColorItemSize() As Size
-        Return New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 24)
-    End Function
-#End Region
-
-#Region "Events"
-
-#Region "DragAndDrop"
     Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
-        If InitializeDrag Then DoDragDrop(Me, DragDropEffects.Copy)
+
+        If InitializeDrag Then
+            DragDefaultColor = CanRaiseEventsForDefColorDot()
+            DoDragDrop(Me, DragDropEffects.Copy)
+        End If
+
         InitializeDrag = False
+
+        If Not DesignMode AndAlso My.Settings.NerdStats.DotDefaultChangedIndicator Then
+            HoverOverDefColorDot = CanRaiseEventsForDefColorDot()
+            Refresh()
+        End If
+
         MyBase.OnMouseMove(e)
     End Sub
 
@@ -1975,7 +2007,11 @@ Public Class XenonCP : Inherits Panel
 
             If Not SwapNotCopy Then
                 e.Effect = DragDropEffects.Copy
-                BackColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).BackColor
+                If Not CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).DragDefaultColor Then
+                    BackColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).BackColor
+                Else
+                    BackColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).DefaultColor
+                End If
 
             Else
                 e.Effect = DragDropEffects.Link
@@ -2011,6 +2047,9 @@ Public Class XenonCP : Inherits Panel
 
                 Case AfterDropEffects.Lighter
                     BackColor = BackColor.Light
+
+                Case AfterDropEffects.Mix
+                    BackColor = BackColor.Blend(BeforeDropColor, 100)
 
             End Select
 
@@ -2055,6 +2094,12 @@ Public Class XenonCP : Inherits Panel
 
             End If
 
+            If (e.KeyState And 32 + 8) = 32 + 8 Then
+                'Ctrl+Alt are pressed
+                AfterDropEffect = AfterDropEffects.Mix
+
+            End If
+
             If (e.KeyState And 2) = 2 Then
                 'Right mouse button is pressed
                 SwapNotCopy = True
@@ -2068,37 +2113,45 @@ Public Class XenonCP : Inherits Panel
             If Not SwapNotCopy Then
                 Select Case AfterDropEffect
                     Case AfterDropEffects.Invert
-                        ColorInfoDragDrop.Label1.Text = "Copy color into dropped item as inverted"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Copy_Invert
 
                     Case AfterDropEffects.Darker
-                        ColorInfoDragDrop.Label1.Text = "Copy color into dropped item but darker"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Copy_Darker
 
                     Case AfterDropEffects.Lighter
-                        ColorInfoDragDrop.Label1.Text = "Copy color into dropped item but lighter"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Copy_Lighter
+
+                    Case AfterDropEffects.Mix
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Copy_Mix
 
                     Case Else
-                        ColorInfoDragDrop.Label1.Text = "Copy color into dropped item"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Copy
                 End Select
 
             Else
                 Select Case AfterDropEffect
                     Case AfterDropEffects.Invert
-                        ColorInfoDragDrop.Label1.Text = "Swap two colors as inverted"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Swap_Invert
 
                     Case AfterDropEffects.Darker
-                        ColorInfoDragDrop.Label1.Text = "Swap two colors but darker"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Swap_Darker
 
                     Case AfterDropEffects.Lighter
-                        ColorInfoDragDrop.Label1.Text = "Swap two colors but lighter"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Swap_Lighter
 
                     Case Else
-                        ColorInfoDragDrop.Label1.Text = "Swap two colors"
+                        ColorInfoDragDrop.Label1.Text = My.Lang.ColorItem_Swap
 
                 End Select
 
             End If
 
-            DraggedColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).BackColor
+            If Not CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).DragDefaultColor Then
+                DraggedColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).BackColor
+            Else
+                DraggedColor = CType(e.Data.GetData("WinPaletter.XenonCP"), XenonCP).DefaultColor
+            End If
+
             Select Case AfterDropEffect
                 Case AfterDropEffects.Invert
                     ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Invert
@@ -2109,12 +2162,16 @@ Public Class XenonCP : Inherits Panel
                 Case AfterDropEffects.Lighter
                     ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Light
 
+                Case AfterDropEffects.Mix
+                    ColorInfoDragDrop.Color_From.BackColor = DraggedColor.Blend(BackColor, 100)
+
                 Case Else
                     ColorInfoDragDrop.Color_From.BackColor = DraggedColor
 
             End Select
 
-            ColorInfoDragDrop.Color_To.BackColor = DefaultColor
+            DraggedColor = ColorInfoDragDrop.Color_From.BackColor
+
             If Not SwapNotCopy Then
                 ColorInfoDragDrop.Color_To.BackColor = BackColor
             Else
@@ -2147,8 +2204,6 @@ Public Class XenonCP : Inherits Panel
             ColorInfoDragDrop.Visible = False
         End If
 
-
-
         MyBase.OnDragEnter(e)
     End Sub
 
@@ -2171,8 +2226,30 @@ Public Class XenonCP : Inherits Panel
         End If
 
     End Sub
+
 #End Region
 
+#Region "Subs/Functions"
+    Public Sub UpdateColorsHistory()
+        If Not PauseColorsHistory Then
+            If ColorsHistory.Count > 0 Then
+                If ColorsHistory.Last <> BackColor Then ColorsHistory.Add(BackColor)
+            Else
+                ColorsHistory.Add(BackColor)
+            End If
+        End If
+    End Sub
+
+    Public Function GetMiniColorItemSize() As Size
+        Return New Size(If(My.Settings.NerdStats.Enabled, 80, 30), 24)
+    End Function
+
+    Public Function CanRaiseEventsForDefColorDot() As Boolean
+        Return My.Settings.NerdStats.DotDefaultChangedIndicator AndAlso Rect_DefColor.Contains(PointToClient(MousePosition)) AndAlso BackColor <> DefaultColor
+    End Function
+#End Region
+
+#Region "Events"
     Protected Overrides Sub OnBackColorChanged(e As EventArgs)
         UpdateColorsHistory()
         MyBase.OnBackColorChanged(e)
@@ -2193,33 +2270,37 @@ Public Class XenonCP : Inherits Panel
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
+
+        MyBase.OnMouseUp(e)
     End Sub
 
-    Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+    Private Sub XenonCP_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
         State = MouseState.Over
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
     End Sub
 
-    Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+    Private Sub XenonCP_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         InitializeDrag = False
+        HoverOverDefColorDot = False
         State = MouseState.None
         Tmr.Enabled = True
         Tmr.Start()
         Invalidate()
     End Sub
 
-    Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+    Private Sub XenonCP_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         alpha = 0
+        Tmr2_factor = 0
     End Sub
 #End Region
 
-#Region "Animator"
-    Dim alpha As Integer
+#Region "Animators"
+    Private alpha As Integer
     ReadOnly Factor As Integer = 15
-    Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
-    Dim Tmr2_factor As Integer = 0
+    Private WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+    Private Tmr2_factor As Integer = 0
 
     Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
         If Not DesignMode Then
@@ -2276,8 +2357,7 @@ Public Class XenonCP : Inherits Panel
         Dim G As Graphics = e.Graphics
         G.SmoothingMode = SmoothingMode.AntiAlias
         DoubleBuffered = True
-        Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Dim RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+
         Dim R As Integer = 5
 
         G.Clear(GetParentColor)
@@ -2306,7 +2386,7 @@ Public Class XenonCP : Inherits Panel
 
             Using br As New SolidBrush(BeforeDropColor) : G.FillRoundedRect(br, RectInner, R) : End Using
 
-            Using path As GraphicsPath = If(State = MouseState.None, RectInner.Round(R), Rect.Round(R))
+            Using path As GraphicsPath = RectInner.Round(R)
                 Dim reg As New Region(path)
                 G.Clip = reg
                 Dim i As Integer = Math.Max(Width, Height) + Tmr2_factor
@@ -2317,13 +2397,13 @@ Public Class XenonCP : Inherits Panel
                 Dim pgb As New PathGradientBrush(gp) With {
                                     .CenterPoint = px,
                                     .CenterColor = BackColor,
-                                    .SurroundColors = New Color() {BeforeDropColor}
+                                    .SurroundColors = New Color() {Color.Transparent}
                                     }
                 G.FillEllipse(pgb, MouseCircle)
 
                 G.ResetClip()
 
-                If i / 2.5 > (Width * Height) Then
+                If i / 2 > (Width * Height) Then
                     Tmr2.Enabled = False
                     Tmr2.Stop()
                     Tmr2_factor = 0
@@ -2351,13 +2431,13 @@ Public Class XenonCP : Inherits Panel
                 Dim pgb As New PathGradientBrush(gp) With {
                                             .CenterPoint = px,
                                             .CenterColor = DraggedColor,
-                                            .SurroundColors = New Color() {BackColor}
+                                            .SurroundColors = New Color() {Color.Transparent}
                                             }
                 G.FillEllipse(pgb, MouseCircle)
                 G.ResetClip()
             End Using
 
-            Using P As New Pen(DraggedColor, 2.0F) With {.DashStyle = DashStyle.Dot} : G.DrawRoundedRect_LikeW11(P, Rect, R) : End Using
+            Using P As New Pen(If(BackColor.IsDark, Color.White, Color.Black), 1.5F) With {.DashStyle = DashStyle.Dot} : G.DrawRoundedRect_LikeW11(P, Rect, R) : End Using
 
         Else
             'Normal appearance
@@ -2370,12 +2450,20 @@ Public Class XenonCP : Inherits Panel
         End If
 
         Try
-            If My.Settings.NerdStats.DotDefaultChangedIndicator Then
+            If Not DesignMode AndAlso My.Settings.NerdStats.DotDefaultChangedIndicator Then
                 Using br As New SolidBrush(DefaultColor)
+
                     Dim L As Integer = Math.Max(6, RectInner.Height - 10)
                     Dim Y As Integer = RectInner.Y + (RectInner.Height - L) / 2
-                    Dim DefDotRect As New Rectangle(Y, Y, L, L)
-                    G.FillEllipse(br, DefDotRect)
+                    Dim DefDotRect As Rectangle
+
+                    If Not HoverOverDefColorDot Then
+                        DefDotRect = New Rectangle(Y, Y, L, L)
+                    Else
+                        DefDotRect = New Rectangle(Y - 1, Y - 1, L + 2, L + 2)
+                    End If
+
+                    G.FillEllipse(New SolidBrush(DefaultColor), DefDotRect)
                 End Using
             End If
         Catch
@@ -2384,9 +2472,10 @@ Public Class XenonCP : Inherits Panel
         If Not DesignMode Then
             If My.Settings.NerdStats.Enabled And Not DontShowInfo Then
                 G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
-                Dim IsDefault As Boolean = (BackColor = DefaultColor)
-                Dim FC0 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
-                Dim FC1 As Color = If(BackColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
+
+                Dim TargetColor As Color = If(Not HoverOverDefColorDot Or Not My.Settings.NerdStats.DotDefaultChangedIndicator, BackColor, DefaultColor)
+                Dim FC0 As Color = If(TargetColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
+                Dim FC1 As Color = If(TargetColor.IsDark, LineColor.LightLight, LineColor.Dark(0.9))
 
                 FC0 = Color.FromArgb(If(My.Settings.NerdStats.MoreLabelTransparency, 75, 125), FC0)
                 FC1 = Color.FromArgb(alpha, FC1)
@@ -2400,7 +2489,7 @@ Public Class XenonCP : Inherits Panel
                 If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HSL Then CF = ColorFormat.HSL
                 If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.Dec Then CF = ColorFormat.Dec
 
-                Dim S As String = BackColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (BackColor.A = 255))
+                Dim S As String = TargetColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (TargetColor.A = 255))
                 Dim F As Font
 
                 If Not My.Settings.NerdStats.UseWindowsMonospacedFont Then
@@ -2421,8 +2510,8 @@ Public Class XenonCP : Inherits Panel
         End If
 
     End Sub
-
 End Class
+
 Public Class XenonButton : Inherits Button
     Sub New()
         Font = New Font("Segoe UI", 9)

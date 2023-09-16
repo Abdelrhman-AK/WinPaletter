@@ -653,6 +653,7 @@ Partial Class MainFrm
         '
         'Select_WXP
         '
+        Me.Select_WXP.AllowDrop = True
         Me.Select_WXP.Checked = False
         Me.Select_WXP.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_WXP.ForeColor = System.Drawing.Color.White
@@ -666,6 +667,7 @@ Partial Class MainFrm
         '
         'Select_WVista
         '
+        Me.Select_WVista.AllowDrop = True
         Me.Select_WVista.Checked = False
         Me.Select_WVista.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_WVista.ForeColor = System.Drawing.Color.White
@@ -1124,6 +1126,7 @@ Partial Class MainFrm
         '
         'Select_W7
         '
+        Me.Select_W7.AllowDrop = True
         Me.Select_W7.Checked = False
         Me.Select_W7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W7.ForeColor = System.Drawing.Color.White
@@ -1153,6 +1156,7 @@ Partial Class MainFrm
         '
         'Select_W81
         '
+        Me.Select_W81.AllowDrop = True
         Me.Select_W81.Checked = False
         Me.Select_W81.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W81.ForeColor = System.Drawing.Color.White
@@ -1185,6 +1189,7 @@ Partial Class MainFrm
         '
         'Select_W10
         '
+        Me.Select_W10.AllowDrop = True
         Me.Select_W10.Checked = False
         Me.Select_W10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W10.ForeColor = System.Drawing.Color.White
@@ -1215,6 +1220,7 @@ Partial Class MainFrm
         '
         'Select_W11
         '
+        Me.Select_W11.AllowDrop = True
         Me.Select_W11.Checked = False
         Me.Select_W11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Select_W11.ForeColor = System.Drawing.Color.White
@@ -6133,7 +6139,7 @@ Partial Class MainFrm
         Me.XenonButton33.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonButton33.ForeColor = System.Drawing.Color.White
         Me.XenonButton33.Image = CType(resources.GetObject("XenonButton33.Image"), System.Drawing.Image)
-        Me.XenonButton33.LineColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(89, Byte), Integer), CType(CType(112, Byte), Integer))
+        Me.XenonButton33.LineColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(67, Byte), Integer))
         Me.XenonButton33.LineSize = 1
         Me.XenonButton33.Location = New System.Drawing.Point(159, 3)
         Me.XenonButton33.Name = "XenonButton33"

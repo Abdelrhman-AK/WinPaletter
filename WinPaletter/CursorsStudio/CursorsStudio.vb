@@ -137,7 +137,6 @@ Public Class CursorsStudio
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyDarkMode(Me)
-        MainFrm.Visible = False
         FlowLayoutPanel1.DoubleBuffer
 
         AnimateList.Clear()
@@ -171,8 +170,15 @@ Public Class CursorsStudio
         LoadFromCP(My.CP)
     End Sub
 
-    Private Sub CursorsStudio_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Private Sub CursorsStudio_Shown(sender As Object, e As EventArgs) Handles Me.Shown

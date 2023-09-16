@@ -10,6 +10,17 @@ Public Class LogonUIXP
         ApplyFromCP(My.CP)
     End Sub
 
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
+    End Sub
+
     Sub ApplyFromCP(CP As CP)
         With CP.LogonUIXP
             XenonToggle1.Checked = .Enabled

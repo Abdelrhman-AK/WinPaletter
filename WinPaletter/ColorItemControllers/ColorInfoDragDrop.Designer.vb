@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ColorInfoDragDrop
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,8 @@ Partial Class ColorInfoDragDrop
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
         Me.Color_From = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -40,32 +39,9 @@ Partial Class ColorInfoDragDrop
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonAnimatedBox1.SuspendLayout()
         Me.Color_From.SuspendLayout()
         Me.Color_To.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'XenonAnimatedBox1
-        '
-        Me.XenonAnimatedBox1.Color = System.Drawing.Color.DodgerBlue
-        Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue
-        Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.Crimson
-        Me.XenonAnimatedBox1.Controls.Add(Me.Color_From)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label17)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label19)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label15)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label20)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label1)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label18)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label14)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Color_To)
-        Me.XenonAnimatedBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.XenonAnimatedBox1.Location = New System.Drawing.Point(1, 1)
-        Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
-        Me.XenonAnimatedBox1.Size = New System.Drawing.Size(281, 141)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.MixedColors
-        Me.XenonAnimatedBox1.TabIndex = 35
-        Me.XenonAnimatedBox1.Text = "XenonAnimatedBox1"
         '
         'Color_From
         '
@@ -74,7 +50,7 @@ Partial Class ColorInfoDragDrop
         Me.Color_From.Controls.Add(Me.Label7)
         Me.Color_From.Controls.Add(Me.Label9)
         Me.Color_From.Controls.Add(Me.Label8)
-        Me.Color_From.Location = New System.Drawing.Point(61, 55)
+        Me.Color_From.Location = New System.Drawing.Point(60, 56)
         Me.Color_From.Name = "Color_From"
         Me.Color_From.Size = New System.Drawing.Size(109, 84)
         Me.Color_From.TabIndex = 33
@@ -127,7 +103,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label17.BackColor = System.Drawing.Color.Transparent
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(2, 118)
+        Me.Label17.Location = New System.Drawing.Point(1, 119)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(55, 21)
         Me.Label17.TabIndex = 30
@@ -138,7 +114,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label19.BackColor = System.Drawing.Color.Transparent
         Me.Label19.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(3, 57)
+        Me.Label19.Location = New System.Drawing.Point(2, 58)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(55, 21)
         Me.Label19.TabIndex = 27
@@ -149,7 +125,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label15.BackColor = System.Drawing.Color.Transparent
         Me.Label15.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(170, 30)
+        Me.Label15.Location = New System.Drawing.Point(169, 31)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(109, 22)
         Me.Label15.TabIndex = 32
@@ -160,7 +136,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label20.BackColor = System.Drawing.Color.Transparent
         Me.Label20.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(3, 77)
+        Me.Label20.Location = New System.Drawing.Point(2, 78)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(55, 21)
         Me.Label20.TabIndex = 28
@@ -172,9 +148,9 @@ Partial Class ColorInfoDragDrop
         Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
+        Me.Label1.Location = New System.Drawing.Point(1, 1)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(281, 30)
+        Me.Label1.Size = New System.Drawing.Size(275, 30)
         Me.Label1.TabIndex = 18
         Me.Label1.Text = "0"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -183,7 +159,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label18.BackColor = System.Drawing.Color.Transparent
         Me.Label18.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(3, 98)
+        Me.Label18.Location = New System.Drawing.Point(2, 99)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(55, 21)
         Me.Label18.TabIndex = 29
@@ -194,7 +170,7 @@ Partial Class ColorInfoDragDrop
         '
         Me.Label14.BackColor = System.Drawing.Color.Transparent
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(61, 30)
+        Me.Label14.Location = New System.Drawing.Point(60, 31)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(109, 22)
         Me.Label14.TabIndex = 32
@@ -208,7 +184,7 @@ Partial Class ColorInfoDragDrop
         Me.Color_To.Controls.Add(Me.Label13)
         Me.Color_To.Controls.Add(Me.Label11)
         Me.Color_To.Controls.Add(Me.Label12)
-        Me.Color_To.Location = New System.Drawing.Point(169, 55)
+        Me.Color_To.Location = New System.Drawing.Point(168, 56)
         Me.Color_To.Name = "Color_To"
         Me.Color_To.Size = New System.Drawing.Size(109, 84)
         Me.Color_To.TabIndex = 34
@@ -262,8 +238,16 @@ Partial Class ColorInfoDragDrop
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(283, 143)
-        Me.Controls.Add(Me.XenonAnimatedBox1)
+        Me.ClientSize = New System.Drawing.Size(277, 140)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.Color_From)
+        Me.Controls.Add(Me.Label17)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.Color_To)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.Label20)
+        Me.Controls.Add(Me.Label18)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -271,7 +255,6 @@ Partial Class ColorInfoDragDrop
         Me.Name = "ColorInfoDragDrop"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
-        Me.XenonAnimatedBox1.ResumeLayout(False)
         Me.Color_From.ResumeLayout(False)
         Me.Color_To.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -294,5 +277,4 @@ Partial Class ColorInfoDragDrop
     Friend WithEvents Label20 As Label
     Friend WithEvents Color_To As Panel
     Friend WithEvents Color_From As Panel
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
 End Class

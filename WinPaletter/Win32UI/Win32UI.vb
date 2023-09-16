@@ -12,11 +12,21 @@ Public Class Win32UI
         ApplyDarkMode(Me)
         XenonComboBox1.PopulateThemes
         XenonComboBox1.SelectedIndex = 0
-        MainFrm.Visible = False
         ApplyDefaultCPValues()
         LoadCP(My.CP)
         SetMetics(My.CP)
         DoubleBuffer
+    End Sub
+
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Sub LoadCP(ByVal [CP] As CP)
@@ -727,10 +737,6 @@ Public Class Win32UI
         RetroWindow3.Invalidate()
 
         Refresh17BitPreference()
-    End Sub
-
-    Private Sub Win32UI_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
     End Sub
 
     Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click

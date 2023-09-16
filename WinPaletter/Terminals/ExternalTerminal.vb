@@ -15,7 +15,6 @@ Public Class ExternalTerminal
         RasterList.BringToFront()
 
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
-        MainFrm.Visible = False
 
         ExtTerminal_PopupForegroundLbl.Font = My.Application.ConsoleFont
         ExtTerminal_PopupBackgroundLbl.Font = My.Application.ConsoleFont
@@ -24,6 +23,17 @@ Public Class ExternalTerminal
 
         XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
 
+    End Sub
+
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Private Sub ExternalTerminal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -799,10 +809,6 @@ Public Class ExternalTerminal
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
         Me.Close()
-    End Sub
-
-    Private Sub ExternalTerminal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
     End Sub
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click

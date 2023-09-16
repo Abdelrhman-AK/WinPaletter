@@ -73,8 +73,7 @@ Public Class ColorInfoDragDrop
 
     Private Sub Color_From_BackColorChanged(sender As Object, e As EventArgs) Handles Color_From.BackColorChanged
         Dim Color As Color = CType(sender, Panel).BackColor
-        XenonAnimatedBox1.Color = Color
-        XenonAnimatedBox1.Color1 = Color
+        BackColor = If(GetDarkMode(), Color.Dark(_dark), Color.LightLight)
 
         Label6.Text = Color.ReturnFormat(ColorFormat.RGB, True, Color.A < 255).Replace(" ", ", ")
         Label7.Text = Color.ReturnFormat(ColorFormat.HEX, True, Color.A < 255).Replace(" ", ", ")
@@ -89,7 +88,6 @@ Public Class ColorInfoDragDrop
 
     Private Sub Color_To_BackColorChanged(sender As Object, e As EventArgs) Handles Color_To.BackColorChanged
         Dim Color As Color = CType(sender, Panel).BackColor
-        XenonAnimatedBox1.Color2 = Color
 
         Label13.Text = Color.ReturnFormat(ColorFormat.RGB, True, Color.A < 255).Replace(" ", ", ")
         Label12.Text = Color.ReturnFormat(ColorFormat.HEX, True, Color.A < 255).Replace(" ", ", ")

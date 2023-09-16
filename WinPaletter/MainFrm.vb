@@ -385,6 +385,17 @@ Public Class MainFrm
         End If
     End Sub
 
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
+    End Sub
+
     Private Sub MainFrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         Visible = False
@@ -2276,7 +2287,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
-        EditInfo.ShowDialog()
+        EditInfo.Show()
     End Sub
 
     Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
@@ -2293,7 +2304,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        Win32UI.ShowDialog()
+        Win32UI.Show()
     End Sub
 
     Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
@@ -2304,9 +2315,9 @@ Public Class MainFrm
         If My.PreviewStyle = WindowStyle.W11 Or My.PreviewStyle = WindowStyle.W10 Then
             LogonUI.ShowDialog()
         ElseIf My.PreviewStyle = WindowStyle.W81 Or My.PreviewStyle = WindowStyle.W7 Then
-            LogonUI7.ShowDialog()
+            LogonUI7.Show()
         ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            LogonUIXP.ShowDialog()
+            LogonUIXP.Show()
         ElseIf My.PreviewStyle = WindowStyle.WVista Then
             MsgBox(My.Lang.VistaLogonNotSupported, MsgBoxStyle.Exclamation)
         Else
@@ -2357,7 +2368,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
-        CursorsStudio.ShowDialog()
+        CursorsStudio.Show()
     End Sub
 
     Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
@@ -2511,11 +2522,11 @@ Public Class MainFrm
             Wallpaper_Editor.WT = My.CP.WallpaperTone_W11
         End If
 
-        Wallpaper_Editor.ShowDialog()
+        Wallpaper_Editor.Show()
     End Sub
 
     Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
-        ApplicationThemer.ShowDialog()
+        ApplicationThemer.Show()
     End Sub
 
     Private Sub XenonButton36_Click(sender As Object, e As EventArgs) Handles XenonButton36.Click

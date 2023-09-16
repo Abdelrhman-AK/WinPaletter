@@ -10,8 +10,6 @@ Public Class WindowsTerminal
     Public _TerminalDefault As WinTerminal
 
     Private Sub WindowsTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MainFrm.Visible = False
-
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
 
         LoadLanguage
@@ -36,6 +34,17 @@ Public Class WindowsTerminal
 
         Load_FromTerminal()
 
+    End Sub
+
+    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
+        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+            Focus()
+            BringToFront()
+        Else
+            Exit Sub
+        End If
+
+        MyBase.OnDragOver(drgevent)
     End Sub
 
     Sub Load_FromTerminal()
@@ -1140,10 +1149,6 @@ Public Class WindowsTerminal
             MsgBox(My.Lang.CMD_Enable, MsgBoxStyle.Critical)
         End If
 
-    End Sub
-
-    Private Sub WindowsTerminal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-        MainFrm.Visible = True
     End Sub
 
     Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
