@@ -428,6 +428,7 @@ Partial Class MainFrm
         Me.XenonButton21 = New WinPaletter.XenonButton()
         Me.XenonButton16 = New WinPaletter.XenonButton()
         Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.XenonButton41 = New WinPaletter.XenonButton()
         Me.previewContainer.SuspendLayout()
         Me.tabs_preview.SuspendLayout()
         Me.TabPage6.SuspendLayout()
@@ -6274,6 +6275,23 @@ Partial Class MainFrm
         Me.XenonButton4.Tag = "Classic Colors"
         Me.XenonButton4.UseVisualStyleBackColor = False
         '
+        'XenonButton41
+        '
+        Me.XenonButton41.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonButton41.BackColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.XenonButton41.DrawOnGlass = False
+        Me.XenonButton41.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton41.ForeColor = System.Drawing.Color.White
+        Me.XenonButton41.Image = Nothing
+        Me.XenonButton41.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.XenonButton41.LineSize = 1
+        Me.XenonButton41.Location = New System.Drawing.Point(778, 554)
+        Me.XenonButton41.Name = "XenonButton41"
+        Me.XenonButton41.Size = New System.Drawing.Size(80, 34)
+        Me.XenonButton41.TabIndex = 35
+        Me.XenonButton41.Text = "0000"
+        Me.XenonButton41.UseVisualStyleBackColor = False
+        '
         'MainFrm
         '
         Me.AllowDrop = True
@@ -6281,6 +6299,7 @@ Partial Class MainFrm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(26, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1094, 701)
+        Me.Controls.Add(Me.XenonButton41)
         Me.Controls.Add(Me.XenonButton28)
         Me.Controls.Add(Me.previewContainer)
         Me.Controls.Add(Me.TablessControl1)
@@ -6844,4 +6863,5 @@ Partial Class MainFrm
     Friend WithEvents XenonButton39 As XenonButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents XenonButton40 As XenonButton
+    Friend WithEvents XenonButton41 As XenonButton
 End Class

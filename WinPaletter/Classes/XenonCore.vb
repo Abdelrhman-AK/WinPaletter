@@ -441,6 +441,25 @@ Public Class XenonCore
                 .ForeColor = If(DarkMode, Color.White, Color.Black)
             End With
 
+        ElseIf TypeOf ctrl Is DataGridView Then
+            Dim ColumnBack As Color
+            Dim CellBack As Color
+
+            Select Case DarkMode
+                Case True
+                    ColumnBack = Style.Colors.Back.Light(0.05)
+                    CellBack = Style.Colors.Back
+
+                Case False
+                    ColumnBack = Style.Colors.Back.Dark(0.05)
+                    CellBack = Style.Colors.Back
+            End Select
+
+            TryCast(ctrl, DataGridView).ColumnHeadersDefaultCellStyle.BackColor = ColumnBack
+            TryCast(ctrl, DataGridView).BackColor = ctrl.Parent.BackColor
+            TryCast(ctrl, DataGridView).BackgroundColor = ctrl.Parent.BackColor
+            TryCast(ctrl, DataGridView).DefaultCellStyle.BackColor = CellBack
+
         End If
 
         If ctrl.HasChildren Then

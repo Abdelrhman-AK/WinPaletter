@@ -341,10 +341,10 @@ Public Class Localizer : Implements IDisposable
     Property ColorItem_Copy_Darker As String = "Copy color into dropped item but darker"
     Property ColorItem_Copy_Lighter As String = "Copy color into dropped item but lighter"
     Property ColorItem_Copy_Mix As String = "Mix into dropped item"
-    Property ColorItem_Swap As String = "Swap two colors"
-    Property ColorItem_Swap_Invert As String = "Swap two colors as inverted"
-    Property ColorItem_Swap_Darker As String = "Swap two colors but darker"
-    Property ColorItem_Swap_Lighter As String = "Swap two colors but lighter"
+    Property ColorItem_Swap As String = "Swap between two colors"
+    Property ColorItem_Swap_Invert As String = "Swap between two colors as inverted"
+    Property ColorItem_Swap_Darker As String = "Swap between two colors but darker"
+    Property ColorItem_Swap_Lighter As String = "Swap between two colors but lighter"
 
     Property Store_RemoveTip As String = "You can't remove an essential themes database repository. Try again with another custom repository."
     Property Store_NoNetwork As String = "No internet connection"
@@ -521,11 +521,7 @@ Public Class Localizer : Implements IDisposable
         End If
     End Sub
 
-    Public Sub FormLoadEventHandler(sender As Object, e As EventArgs)
-        If sender IsNot Nothing Then CType(sender, Form).LoadLanguage
-    End Sub
-
-    Sub Populate(ByVal PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)
+    Sub Populate(PopCtrlList As List(Of Tuple(Of String, String, String, String)), [Form] As Form)
         'Item1 = FormName
         'Item2 = ControlName
         'Item3 = Prop
@@ -544,7 +540,6 @@ Public Class Localizer : Implements IDisposable
                         Catch : End Try
                     Else
                         '# Control
-
                         If Not String.IsNullOrEmpty(member.Item2) Then
 
                             For Each ctrl As Control In [Form].Controls.Find(member.Item2, True)
@@ -579,7 +574,7 @@ Public Class Localizer : Implements IDisposable
     End Sub
 #End Region
 
-    Public Sub ExportJSON(File As String)
+    Public Sub ExportJSON(File As String, Optional Forms As Form() = Nothing)
         Dim JSON_Overall As New JObject()
         Dim newL As New Localizer
 
@@ -613,51 +608,104 @@ Public Class Localizer : Implements IDisposable
 
         Dim j_Forms As New JObject()
 
-        For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
-            'If allForms.Contains(f.Name) Then
-            Dim ins As New Form
-            ins = DirectCast(Activator.CreateInstance(f), Form)
+        If Forms Is Nothing Then
+            For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
+                'If allForms.Contains(f.Name) Then
+                Dim ins As New Form
+                ins = DirectCast(Activator.CreateInstance(f), Form)
 
-            If ins.Name.ToLower <> BK.Name.ToLower Then
-                Dim j_ctrl, j_child As New JObject()
-                j_ctrl.RemoveAll()
-                j_child.RemoveAll()
+                If ins.Name.ToLower <> BK.Name.ToLower Then
+                    Dim j_ctrl, j_child As New JObject()
+                    j_ctrl.RemoveAll()
+                    j_child.RemoveAll()
 
-                j_ctrl.Add("Text", ins.Text)
+                    j_ctrl.Add("Text", ins.Text)
 
-                For Each ctrl In GetAllControls(ins)
+                    For Each ctrl In GetAllControls(ins)
 
-                    If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
+                        If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
 
-                        If ins.Name.ToLower <> Whatsnew.Name.ToLower Then
-                            j_child.Add(ctrl.Name & ".Text", ctrl.Text)
-                        Else
-                            Try
-                                If Not ins.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
-                                                And TypeOf ctrl IsNot TabPage Then
-                                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
-                                End If
-                            Catch
+                            If ins.Name.ToLower <> Whatsnew.Name.ToLower Then
                                 j_child.Add(ctrl.Name & ".Text", ctrl.Text)
-                            End Try
+                            Else
+                                Try
+                                    If Not ins.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                                    And TypeOf ctrl IsNot TabPage Then
+                                        j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                                    End If
+                                Catch
+                                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                                End Try
+                            End If
+
                         End If
 
-                    End If
+                        If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                            j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
+                        End If
 
-                    If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
-                        j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
-                    End If
+                    Next
 
-                Next
+                    If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
 
-                If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
+                    j_Forms.Add(ins.Name, j_ctrl)
+                End If
 
-                j_Forms.Add(ins.Name, j_ctrl)
+                ins.Dispose()
+                'End If
+            Next
+        Else
+            Dim Overwrite As Boolean = IO.File.Exists(File)
+
+            If Overwrite Then
+                Dim OldSource As JObject = JToken.Parse(IO.File.ReadAllText(File))
+                j_Forms = OldSource("Forms Strings")
             End If
 
-            ins.Dispose()
-            'End If
-        Next
+            For Each f In Forms
+                If f.Name.ToLower <> BK.Name.ToLower Then
+                    Dim j_ctrl, j_child As New JObject()
+                    j_ctrl.RemoveAll()
+                    j_child.RemoveAll()
+
+                    j_ctrl.Add("Text", f.Text)
+
+                    For Each ctrl In GetAllControls(f)
+
+                        If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
+
+                            If f.Name.ToLower <> Whatsnew.Name.ToLower Then
+                                j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                            Else
+                                Try
+                                    If Not f.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                                    And TypeOf ctrl IsNot TabPage Then
+                                        j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                                    End If
+                                Catch
+                                    j_child.Add(ctrl.Name & ".Text", ctrl.Text)
+                                End Try
+                            End If
+
+                        End If
+
+                        If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                            j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
+                        End If
+
+                    Next
+
+                    If j_ctrl.Count <> 0 Then j_ctrl.Add("Controls", j_child)
+
+                    If Overwrite Then
+                        j_Forms(f.Name) = j_ctrl
+                    Else
+                        j_Forms.Add(f.Name, j_ctrl)
+                    End If
+
+                End If
+            Next
+        End If
 
         JSON_Overall.Add("Information", j_info)
         JSON_Overall.Add("Global Strings", j_globalstrings)

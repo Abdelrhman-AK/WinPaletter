@@ -319,6 +319,12 @@
     <Compile Include="Extras\Sounds_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Languages\Lang_JSON_GUI.Designer.vb">
+      <DependentUpon>Lang_JSON_GUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_GUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
@@ -876,6 +882,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LicenseForm.resx">
       <DependentUpon>LicenseForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_GUI.resx">
+      <DependentUpon>Lang_JSON_GUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>

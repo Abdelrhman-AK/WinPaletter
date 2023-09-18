@@ -2565,6 +2565,10 @@ Public Class MainFrm
         PaletteGenerateDashboard.ShowDialog()
     End Sub
 
+    Private Sub XenonButton41_Click(sender As Object, e As EventArgs) Handles XenonButton41.Click
+        Lang_JSON_GUI.Show()
+    End Sub
+
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
