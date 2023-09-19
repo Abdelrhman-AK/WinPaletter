@@ -285,6 +285,7 @@ Public Class Localizer : Implements IDisposable
     Property ServerError As String = "Error: Network issues or GitHub repository is private or deleted. Visit GitHub page for details."
     Property Msgbox_Downloaded As String = "Downloaded successfully"
     Property LngExported As String = "Language exported successfully"
+    Property LangSaved As String = "Language file has been saved successfully"
     Property ScalingTip As String = "Scaling option is only a preview, the cursor will be saved with different sizes and the suitable size will be loaded according to your DPI settings."
     Property LngShouldClose As String = "You should close the app if you want to export language."
     Property CMD_Enable As String = "You should enable terminal editing from the toggle above."
@@ -724,8 +725,12 @@ End Class
 Public Module FormLangHelper
 
     <Extension()>
-    Public Sub LoadLanguage(Form As Form)
-        If My.Settings.Language.Enabled AndAlso IO.File.Exists(My.Settings.Language.File) Then My.Lang.LoadFromStrings(Form)
+    Public Sub LoadLanguage(Form As Form, Optional Localizer As Localizer = Nothing)
+        If Localizer Is Nothing Then
+            If My.Settings.Language.Enabled AndAlso IO.File.Exists(My.Settings.Language.File) Then My.Lang.LoadFromStrings(Form)
+        Else
+            Localizer.LoadFromStrings(Form)
+        End If
     End Sub
 
 End Module

@@ -10,8 +10,6 @@ Public Class Lang_JSON_Manage
         Label6.Font = My.Application.ConsoleFontMedium
         TreeView1.ImageList = My.Lang_IL
 
-
-
         If My.Settings.Language.Enabled And IO.File.Exists(My.Settings.Language.File) Then
             TreeView1.FromJSON(My.Settings.Language.File, Path.GetFileName(My.Settings.Language.File))
             OpenJSONDlg.FileName = My.Settings.Language.File
