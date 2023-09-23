@@ -323,7 +323,7 @@ Namespace UI.Simulation
         Dim Button1 As Rectangle
         Dim Button2 As Rectangle
 
-        Private Sub XenonAcrylic_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
+        Private Sub Acrylic_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
             If Style = Styles.ActionCenter11 Then
 
                 If Button1.Contains(PointToClient(MousePosition)) Then
@@ -349,7 +349,7 @@ Namespace UI.Simulation
             End If
         End Sub
 
-        Private Sub XenonAcrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub Acrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             If Style = Styles.ActionCenter11 Then
                 _State_Btn1 = MouseState.Normal
                 _State_Btn2 = MouseState.Normal
@@ -1291,14 +1291,14 @@ Namespace UI.Simulation
 
         End Sub
 
-        Private Sub XenonWinElement_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub WinElement_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             If Not DesignMode Then
                 Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
                 ProcessBack()
             End If
         End Sub
 
-        Private Sub XenonWinElement_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub WinElement_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
             End If
@@ -1375,7 +1375,7 @@ Namespace UI.Simulation
 
         End Sub
 
-        Private Sub XenonWinElement_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+        Private Sub WinElement_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
             If Not BackColor = Color.Transparent Then BackColor = Color.Transparent
         End Sub
     End Class

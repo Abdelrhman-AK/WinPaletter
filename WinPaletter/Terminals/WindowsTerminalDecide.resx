@@ -141,7 +141,7 @@
         AAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonRadioImage2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAXuSURBVGhD7dh9
@@ -173,7 +173,7 @@
         IhWp/2cFAv8Bxtg04spBDIgAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonRadioImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAA9lJREFUaEPt
         2DlPHEEQBWB+E7Dc982yCLFIhAScWkIkUmISCEDiEscPIUQgzl0CUlsWwr+jPdWaNypqanpqSD0tPdmy

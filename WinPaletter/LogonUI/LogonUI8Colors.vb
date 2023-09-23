@@ -38,11 +38,11 @@
 
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         For Each ri As UI.WP.RadioImage In Controls.OfType(Of UI.WP.RadioImage)
             If ri.Checked Then

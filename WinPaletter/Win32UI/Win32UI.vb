@@ -2,15 +2,15 @@ Imports System.ComponentModel
 Imports WinPaletter.PreviewHelpers
 
 Public Class Win32UI
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
     Private Sub Win32UI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyStyle(Me)
-        XenonComboBox1.PopulateThemes
-        XenonComboBox1.SelectedIndex = 0
+        ComboBox1.PopulateThemes
+        ComboBox1.SelectedIndex = 0
         ApplyDefaultCPValues()
         LoadCP(My.CP)
         SetMetics(My.CP)
@@ -34,8 +34,8 @@ Public Class Win32UI
     End Sub
 
     Sub ApplyCPValues(ByVal [CP] As CP)
-        XenonToggle1.Checked = [CP].Win32.EnableTheming
-        XenonToggle2.Checked = [CP].Win32.EnableGradient
+        Toggle1.Checked = [CP].Win32.EnableTheming
+        Toggle2.Checked = [CP].Win32.EnableGradient
         ActiveBorder_pick.BackColor = [CP].Win32.ActiveBorder
         activetitle_pick.BackColor = [CP].Win32.ActiveTitle
         AppWorkspace_pick.BackColor = [CP].Win32.AppWorkspace
@@ -124,8 +124,8 @@ Public Class Win32UI
     End Sub
 
     Sub ApplyToCP([CP] As CP)
-        [CP].Win32.EnableTheming = XenonToggle1.Checked
-        [CP].Win32.EnableGradient = XenonToggle2.Checked
+        [CP].Win32.EnableTheming = Toggle1.Checked
+        [CP].Win32.EnableGradient = Toggle2.Checked
         [CP].Win32.ActiveBorder = ActiveBorder_pick.BackColor
         [CP].Win32.ActiveTitle = activetitle_pick.BackColor
         [CP].Win32.AppWorkspace = AppWorkspace_pick.BackColor
@@ -160,7 +160,7 @@ Public Class Win32UI
         [CP].Win32.Desktop = desktop_pick.BackColor
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ApplyToCP(My.CP)
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow1)
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow2, False)
@@ -489,19 +489,19 @@ Public Class Win32UI
             Case "menu_pick"
                 CList.Add(Menu_Window)
 
-                If Not XenonToggle1.Checked Then CList.Add(RetroPanel1)
-                If Not XenonToggle1.Checked Then CList.Add(menucontainer0)
+                If Not Toggle1.Checked Then CList.Add(RetroPanel1)
+                If Not Toggle1.Checked Then CList.Add(menucontainer0)
 
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
                 Menu_Window.BackColor = C
                 Menu_Window.Invalidate()
 
-                If Not XenonToggle1.Checked Then RetroPanel1.BackColor = C
-                If Not XenonToggle1.Checked Then menucontainer0.BackColor = C
+                If Not Toggle1.Checked Then RetroPanel1.BackColor = C
+                If Not Toggle1.Checked Then menucontainer0.BackColor = C
 
             Case "menubar_pick"
-                If XenonToggle1.Checked Then
+                If Toggle1.Checked Then
                     CList.Add(menucontainer0)
                     Dim _Conditions As New Conditions With {.RetroBackground = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
@@ -513,7 +513,7 @@ Public Class Win32UI
 
             Case "hilight_pick"
 
-                If XenonToggle1.Checked Then
+                If Toggle1.Checked Then
                     CList.Add(highlight)
                     CList.Add(RetroPanel1)
                     Dim _Conditions As New Conditions With {.RetroButtonShadow = True, .RetroBackground = True, .RetroHighlight17BitFixer = True}
@@ -532,7 +532,7 @@ Public Class Win32UI
 
             Case "menuhilight_pick"
 
-                If XenonToggle1.Checked Then
+                If Toggle1.Checked Then
                     CList.Add(menuhilight)
                     CList.Add(RetroPanel1)
                     Dim _Conditions As New Conditions With {.RetroBackground = True}
@@ -548,23 +548,23 @@ Public Class Win32UI
             Case "menutext_pick"
                 CList.Add(RetroLabel1)
                 CList.Add(RetroLabel2)
-                If Not XenonToggle1.Checked Then CList.Add(RetroLabel3)
+                If Not Toggle1.Checked Then CList.Add(RetroLabel3)
                 CList.Add(RetroLabel6)
 
                 C = ColorPickerDlg.Pick(CList)
 
                 RetroLabel1.ForeColor = C
                 RetroLabel2.ForeColor = C
-                If Not XenonToggle1.Checked Then RetroLabel3.ForeColor = C
+                If Not Toggle1.Checked Then RetroLabel3.ForeColor = C
                 RetroLabel6.ForeColor = C
 
             Case "hilighttext_pick"
                 CList.Add(RetroLabel5)
-                If XenonToggle1.Checked Then CList.Add(RetroLabel3)
+                If Toggle1.Checked Then CList.Add(RetroLabel3)
 
                 C = ColorPickerDlg.Pick(CList)
                 RetroLabel5.ForeColor = C
-                If XenonToggle1.Checked Then RetroLabel3.ForeColor = C
+                If Toggle1.Checked Then RetroLabel3.ForeColor = C
 
             Case "GrayText_pick"
                 CList.Add(RetroLabel2)
@@ -669,7 +669,7 @@ Public Class Win32UI
         Menu_Window.BackColor = menu_pick.BackColor
         Menu_Window.Invalidate()
 
-        If XenonToggle1.Checked Then
+        If Toggle1.Checked Then
             highlight.BackColor = hilight_pick.BackColor
             menuhilight.BackColor = menuhilight_pick.BackColor
             RetroLabel3.ForeColor = hilighttext_pick.BackColor
@@ -738,9 +738,9 @@ Public Class Win32UI
         Refresh17BitPreference()
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
-            XenonToggle1.Checked = False
+            Toggle1.Checked = False
             Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
                 LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32)
             End Using
@@ -965,10 +965,10 @@ Public Class Win32UI
     End Sub
 
     Sub ApplyRetroPreview()
-        RetroWindow1.ColorGradient = XenonToggle2.Checked
-        RetroWindow2.ColorGradient = XenonToggle2.Checked
-        RetroWindow3.ColorGradient = XenonToggle2.Checked
-        RetroWindow4.ColorGradient = XenonToggle2.Checked
+        RetroWindow1.ColorGradient = Toggle2.Checked
+        RetroWindow2.ColorGradient = Toggle2.Checked
+        RetroWindow3.ColorGradient = Toggle2.Checked
+        RetroWindow4.ColorGradient = Toggle2.Checked
 
         RetroWindow2.Color1 = activetitle_pick.BackColor
         RetroWindow3.Color1 = activetitle_pick.BackColor
@@ -1102,13 +1102,13 @@ Public Class Win32UI
         Retro3DPreview1.Refresh()
     End Sub
 
-    Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
+    Private Sub Toggle1_CheckedChanged(sender As Object, e As EventArgs) Handles Toggle1.CheckedChanged
         Refresh17BitPreference()
     End Sub
 
     Sub Refresh17BitPreference()
 
-        If XenonToggle1.Checked Then
+        If Toggle1.Checked Then
             'Theming Enabled (Menus Has colors and borders)
             Menu_Window.Flat = True
             RetroPanel1.Flat = True
@@ -1140,7 +1140,7 @@ Public Class Win32UI
 
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim cpx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadCP(cpx)
@@ -1148,18 +1148,18 @@ Public Class Win32UI
         End If
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Dim cpx As New CP(CP.CP_Type.Registry)
         LoadCP(cpx)
         cpx.Dispose()
     End Sub
 
 
-    Private Sub XenonToggle2_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle2.CheckedChanged
-        RetroWindow1.ColorGradient = XenonToggle2.Checked
-        RetroWindow2.ColorGradient = XenonToggle2.Checked
-        RetroWindow3.ColorGradient = XenonToggle2.Checked
-        RetroWindow4.ColorGradient = XenonToggle2.Checked
+    Private Sub Toggle2_CheckedChanged(sender As Object, e As EventArgs) Handles Toggle2.CheckedChanged
+        RetroWindow1.ColorGradient = Toggle2.Checked
+        RetroWindow2.ColorGradient = Toggle2.Checked
+        RetroWindow3.ColorGradient = Toggle2.Checked
+        RetroWindow4.ColorGradient = Toggle2.Checked
 
         RetroWindow1.Invalidate()
         RetroWindow2.Invalidate()
@@ -1176,7 +1176,7 @@ Public Class Win32UI
         [Control].Invalidate()
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
@@ -1198,7 +1198,7 @@ Public Class Win32UI
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
             Dim s As New List(Of String)
             s.Clear()
@@ -1273,20 +1273,20 @@ Public Class Win32UI
         End If
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         VS2Win32UI.ShowDialog()
     End Sub
 
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
-        If String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then Exit Sub
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        If String.IsNullOrWhiteSpace(ComboBox1.SelectedItem) Then Exit Sub
 
-        Dim condition0 As Boolean = (XenonComboBox1.SelectedIndex <= 3)
-        Dim condition1 As Boolean = XenonComboBox1.SelectedItem.ToString.StartsWith("Windows Classic (3.1)")
-        Dim condition2 As Boolean = XenonComboBox1.SelectedItem.ToString.StartsWith("Windows 3.1 - ")
+        Dim condition0 As Boolean = (ComboBox1.SelectedIndex <= 3)
+        Dim condition1 As Boolean = ComboBox1.SelectedItem.ToString.StartsWith("Windows Classic (3.1)")
+        Dim condition2 As Boolean = ComboBox1.SelectedItem.ToString.StartsWith("Windows 3.1 - ")
 
-        XenonToggle1.Checked = condition0 Or condition1 Or condition2
+        Toggle1.Checked = condition0 Or condition1 Or condition2
 
-        LoadFromWinThemeString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+        LoadFromWinThemeString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem)
     End Sub
 
     Private Sub Menu_Window_SizeChanged(sender As Object, e As EventArgs) Handles Menu_Window.SizeChanged, Menu_Window.LocationChanged
@@ -1304,7 +1304,7 @@ Public Class Win32UI
         Menu_Window.BringToFront()
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         btndkshadow_pick.BackColor = btnface_pick.BackColor
         btnshadow_pick.BackColor = btnface_pick.BackColor
         btnhilight_pick.BackColor = btnface_pick.BackColor
@@ -1312,7 +1312,7 @@ Public Class Win32UI
         ApplyRetroPreview()
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         btndkshadow_pick.BackColor = btnshadow_pick.BackColor
         btnhilight_pick.BackColor = btnshadow_pick.BackColor
         btnlight_pick.BackColor = btnface_pick.BackColor

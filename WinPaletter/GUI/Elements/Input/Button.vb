@@ -211,7 +211,7 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonButton_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+        Private Sub Button_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
             State = MouseState.None : Invalidate()
         End Sub
 
@@ -424,7 +424,7 @@ Namespace UI.WP
 
         End Sub
 
-        Private Sub XenonButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub Button_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             Try
                 If Not DesignMode Then
                     Try
@@ -441,7 +441,7 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Private Sub XenonButton_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub Button_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             Try
                 If Not DesignMode Then
                     Try

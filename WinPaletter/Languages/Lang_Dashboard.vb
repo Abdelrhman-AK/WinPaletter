@@ -6,15 +6,15 @@ Public Class Lang_Dashboard
         ApplyStyle(Me)
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Lang_JSON_Manage.ShowDialog()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Lang_JSON_Update.ShowDialog()
     End Sub
 
@@ -22,7 +22,7 @@ Public Class Lang_Dashboard
         Process.Start(My.Resources.Link_Wiki & "/Language-creation")
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Lang_JSON_GUI.ShowDialog()
     End Sub
 End Class

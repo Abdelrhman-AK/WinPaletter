@@ -83,21 +83,21 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonCheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub CheckBox_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonCheckbox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub Checkbox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             Try
                 alpha = If(DesignMode, 255, 0)
                 alpha2 = If(Checked, 255, 0)
@@ -116,7 +116,7 @@ Namespace UI.WP
 
         End Sub
 
-        Private Sub XenonCheckBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub CheckBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try
                     RemoveHandler FindForm.Shown, AddressOf Showed

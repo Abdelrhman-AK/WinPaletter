@@ -6,7 +6,7 @@ Public Class LogonUI
         LoadLanguage
         ApplyStyle(Me)
         Load_FromCP(My.CP)
-        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
     End Sub
 
     Sub Load_FromCP(ByVal ColorPalette As CP)
@@ -21,11 +21,11 @@ Public Class LogonUI
         ColorPalette.LogonUI10x.NoLockScreen = Not LogonUI_Lockscreen_Toggle.Checked
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             Load_FromCP(CPx)
@@ -33,13 +33,13 @@ Public Class LogonUI
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         Load_FromCP(CPx)
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         Dim CPx As CP
         Select Case My.PreviewStyle
             Case WindowStyle.W11
@@ -61,7 +61,7 @@ Public Class LogonUI
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Save(My.CP)
         Me.Close()
     End Sub

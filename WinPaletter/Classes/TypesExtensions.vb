@@ -1190,8 +1190,13 @@ Public Module ControlExtensions
 
     <Extension()>
     Public Function GetAllControls(parent As Control) As IEnumerable(Of Control)
-        Dim cs = parent.Controls.OfType(Of Control)
-        Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
+        Try
+            Dim cs = parent.Controls.OfType(Of Control).OrderBy(Function(c) c.Name)
+            Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs).OrderBy(Function(c) c.Name)
+        Catch ex As Exception
+            Dim cs = parent.Controls.OfType(Of Control)
+            Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
+        End Try
     End Function
 
     <Extension()>

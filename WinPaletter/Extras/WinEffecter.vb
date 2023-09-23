@@ -5,7 +5,7 @@ Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyStyle(Me)
-        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         SetClassicButtonColors(My.CP, RetroButton1)
 
@@ -14,69 +14,69 @@ Public Class WinEffecter
     Sub ApplyFromCP(CP As CP)
         With CP.WindowsEffects
             EffectsEnabled.Checked = .Enabled
-            XenonCheckBox1.Checked = .WindowAnimation
-            XenonCheckBox2.Checked = .WindowShadow
-            XenonCheckBox3.Checked = .WindowUIEffects
-            XenonCheckBox6.Checked = .MenuAnimation
-            If .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Then XenonComboBox1.SelectedIndex = 0 Else XenonComboBox1.SelectedIndex = 1
-            XenonCheckBox5.Checked = .MenuSelectionFade
-            XenonTrackbar1.Value = .MenuShowDelay
-            XenonCheckBox8.Checked = .ComboboxAnimation
-            XenonCheckBox7.Checked = .ListBoxSmoothScrolling
-            XenonCheckBox9.Checked = .TooltipAnimation
-            If .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Then XenonComboBox2.SelectedIndex = 0 Else XenonComboBox2.SelectedIndex = 1
-            XenonCheckBox4.Checked = .IconsShadow
-            XenonCheckBox10.Checked = .IconsDesktopTranslSel
-            XenonCheckBox11.Checked = .ShowWinContentDrag
-            XenonCheckBox12.Checked = .KeyboardUnderline
-            XenonTrackbar5.Value = .NotificationDuration
-            XenonTrackbar2.Value = .FocusRectWidth
-            XenonTrackbar3.Value = .FocusRectHeight
-            XenonTrackbar4.Value = .Caret
-            XenonCheckBox13.Checked = .AWT_Enabled
-            XenonCheckBox14.Checked = .AWT_BringActivatedWindowToTop
-            XenonTrackbar6.Value = .AWT_Delay
-            XenonCheckBox15.Checked = .SnapCursorToDefButton
-            XenonCheckBox16.Checked = .Win11ClassicContextMenu
-            XenonCheckBox17.Checked = .BalloonNotifications
-            XenonCheckBox20.Checked = .SysListView32
-            XenonCheckBox19.Checked = .ShowSecondsInSystemClock
-            XenonCheckBox18.Checked = .PaintDesktopVersion
-            XenonCheckBox21.Checked = .ShakeToMinimize
-            XenonCheckBox22.Checked = .Win11BootDots
-            XenonCheckBox26.Checked = .ClassicVolMixer
+            CheckBox1.Checked = .WindowAnimation
+            CheckBox2.Checked = .WindowShadow
+            CheckBox3.Checked = .WindowUIEffects
+            CheckBox6.Checked = .MenuAnimation
+            If .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Then ComboBox1.SelectedIndex = 0 Else ComboBox1.SelectedIndex = 1
+            CheckBox5.Checked = .MenuSelectionFade
+            Trackbar1.Value = .MenuShowDelay
+            CheckBox8.Checked = .ComboboxAnimation
+            CheckBox7.Checked = .ListBoxSmoothScrolling
+            CheckBox9.Checked = .TooltipAnimation
+            If .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Then ComboBox2.SelectedIndex = 0 Else ComboBox2.SelectedIndex = 1
+            CheckBox4.Checked = .IconsShadow
+            CheckBox10.Checked = .IconsDesktopTranslSel
+            CheckBox11.Checked = .ShowWinContentDrag
+            CheckBox12.Checked = .KeyboardUnderline
+            Trackbar5.Value = .NotificationDuration
+            Trackbar2.Value = .FocusRectWidth
+            Trackbar3.Value = .FocusRectHeight
+            Trackbar4.Value = .Caret
+            CheckBox13.Checked = .AWT_Enabled
+            CheckBox14.Checked = .AWT_BringActivatedWindowToTop
+            Trackbar6.Value = .AWT_Delay
+            CheckBox15.Checked = .SnapCursorToDefButton
+            CheckBox16.Checked = .Win11ClassicContextMenu
+            CheckBox17.Checked = .BalloonNotifications
+            CheckBox20.Checked = .SysListView32
+            CheckBox19.Checked = .ShowSecondsInSystemClock
+            CheckBox18.Checked = .PaintDesktopVersion
+            CheckBox21.Checked = .ShakeToMinimize
+            CheckBox22.Checked = .Win11BootDots
+            CheckBox26.Checked = .ClassicVolMixer
 
-            XenonRadioButton1.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default)
-            XenonRadioButton2.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon)
-            XenonRadioButton3.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar)
-            XenonCheckBox23.Checked = .DisableNavBar
-            XenonCheckBox24.Checked = .AutoHideScrollBars
-            XenonCheckBox25.Checked = .FullScreenStartMenu
+            RadioButton1.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default)
+            RadioButton2.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon)
+            RadioButton3.Checked = (.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar)
+            CheckBox23.Checked = .DisableNavBar
+            CheckBox24.Checked = .AutoHideScrollBars
+            CheckBox25.Checked = .FullScreenStartMenu
 
             If Not .ColorFilter_Enabled Then
-                XenonRadioImage1.Checked = True
+                RadioImage1.Checked = True
             Else
                 Select Case .ColorFilter
                     Case CP.Structures.WinEffects.ColorFilters.Grayscale
-                        XenonRadioImage5.Checked = True
+                        RadioImage5.Checked = True
 
                     Case CP.Structures.WinEffects.ColorFilters.Inverted
-                        XenonRadioImage7.Checked = True
+                        RadioImage7.Checked = True
 
                     Case CP.Structures.WinEffects.ColorFilters.GrayscaleInverted
-                        XenonRadioImage6.Checked = True
+                        RadioImage6.Checked = True
 
                     Case CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia
-                        XenonRadioImage2.Checked = True
+                        RadioImage2.Checked = True
 
                     Case CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia
-                        XenonRadioImage3.Checked = True
+                        RadioImage3.Checked = True
 
                     Case CP.Structures.WinEffects.ColorFilters.BlueYellow
-                        XenonRadioImage4.Checked = True
+                        RadioImage4.Checked = True
 
                     Case Else
-                        XenonRadioImage1.Checked = True
+                        RadioImage1.Checked = True
 
                 End Select
             End If
@@ -90,77 +90,77 @@ Public Class WinEffecter
     Sub ApplyToCP(CP As CP)
         With CP.WindowsEffects
             .Enabled = EffectsEnabled.Checked
-            .WindowAnimation = XenonCheckBox1.Checked
-            .WindowShadow = XenonCheckBox2.Checked
-            .WindowUIEffects = XenonCheckBox3.Checked
-            .MenuAnimation = XenonCheckBox6.Checked
-            If XenonComboBox1.SelectedIndex = 0 Then .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .MenuFade = CP.Structures.WinEffects.MenuAnimType.Scroll
-            .MenuSelectionFade = XenonCheckBox5.Checked
-            .MenuShowDelay = XenonTrackbar1.Value
-            .ComboBoxAnimation = XenonCheckBox8.Checked
-            .ListBoxSmoothScrolling = XenonCheckBox7.Checked
-            .TooltipAnimation = XenonCheckBox9.Checked
-            If XenonComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Scroll
-            .IconsShadow = XenonCheckBox4.Checked
-            .IconsDesktopTranslSel = XenonCheckBox10.Checked
-            .ShowWinContentDrag = XenonCheckBox11.Checked
-            .KeyboardUnderline = XenonCheckBox12.Checked
-            .NotificationDuration = XenonTrackbar5.Value
-            .FocusRectWidth = XenonTrackbar2.Value
-            .FocusRectHeight = XenonTrackbar3.Value
-            .Caret = XenonTrackbar4.Value
-            .AWT_Enabled = XenonCheckBox13.Checked
-            .AWT_BringActivatedWindowToTop = XenonCheckBox14.Checked
-            .AWT_Delay = XenonTrackbar6.Value
-            .SnapCursorToDefButton = XenonCheckBox15.Checked
-            .Win11ClassicContextMenu = XenonCheckBox16.Checked
-            .BalloonNotifications = XenonCheckBox17.Checked
-            .SysListView32 = XenonCheckBox20.Checked
-            .ShowSecondsInSystemClock = XenonCheckBox19.Checked
-            .PaintDesktopVersion = XenonCheckBox18.Checked
-            .ShakeToMinimize = XenonCheckBox21.Checked
-            .Win11BootDots = XenonCheckBox22.Checked
-            .ClassicVolMixer = XenonCheckBox26.Checked
+            .WindowAnimation = CheckBox1.Checked
+            .WindowShadow = CheckBox2.Checked
+            .WindowUIEffects = CheckBox3.Checked
+            .MenuAnimation = CheckBox6.Checked
+            If ComboBox1.SelectedIndex = 0 Then .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .MenuFade = CP.Structures.WinEffects.MenuAnimType.Scroll
+            .MenuSelectionFade = CheckBox5.Checked
+            .MenuShowDelay = Trackbar1.Value
+            .ComboBoxAnimation = CheckBox8.Checked
+            .ListBoxSmoothScrolling = CheckBox7.Checked
+            .TooltipAnimation = CheckBox9.Checked
+            If ComboBox2.SelectedIndex = 0 Then .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .TooltipFade = CP.Structures.WinEffects.MenuAnimType.Scroll
+            .IconsShadow = CheckBox4.Checked
+            .IconsDesktopTranslSel = CheckBox10.Checked
+            .ShowWinContentDrag = CheckBox11.Checked
+            .KeyboardUnderline = CheckBox12.Checked
+            .NotificationDuration = Trackbar5.Value
+            .FocusRectWidth = Trackbar2.Value
+            .FocusRectHeight = Trackbar3.Value
+            .Caret = Trackbar4.Value
+            .AWT_Enabled = CheckBox13.Checked
+            .AWT_BringActivatedWindowToTop = CheckBox14.Checked
+            .AWT_Delay = Trackbar6.Value
+            .SnapCursorToDefButton = CheckBox15.Checked
+            .Win11ClassicContextMenu = CheckBox16.Checked
+            .BalloonNotifications = CheckBox17.Checked
+            .SysListView32 = CheckBox20.Checked
+            .ShowSecondsInSystemClock = CheckBox19.Checked
+            .PaintDesktopVersion = CheckBox18.Checked
+            .ShakeToMinimize = CheckBox21.Checked
+            .Win11BootDots = CheckBox22.Checked
+            .ClassicVolMixer = CheckBox26.Checked
 
-            If XenonRadioButton1.Checked Then
+            If RadioButton1.Checked Then
                 .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default
 
-            ElseIf XenonRadioButton2.Checked Then
+            ElseIf RadioButton2.Checked Then
                 .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon
 
-            ElseIf XenonRadioButton3.Checked Then
+            ElseIf RadioButton3.Checked Then
                 .Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar
 
             End If
 
-            .DisableNavBar = XenonCheckBox23.Checked
-            .AutoHideScrollBars = XenonCheckBox24.Checked
-            .FullScreenStartMenu = XenonCheckBox25.Checked
+            .DisableNavBar = CheckBox23.Checked
+            .AutoHideScrollBars = CheckBox24.Checked
+            .FullScreenStartMenu = CheckBox25.Checked
 
-            If XenonRadioImage1.Checked Then
+            If RadioImage1.Checked Then
                 .ColorFilter_Enabled = False
 
-            ElseIf XenonRadioImage5.Checked Then
+            ElseIf RadioImage5.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.Grayscale
 
-            ElseIf XenonRadioImage7.Checked Then
+            ElseIf RadioImage7.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.Inverted
 
-            ElseIf XenonRadioImage6.Checked Then
+            ElseIf RadioImage6.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.GrayscaleInverted
 
-            ElseIf XenonRadioImage2.Checked Then
+            ElseIf RadioImage2.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia
 
-            ElseIf XenonRadioImage3.Checked Then
+            ElseIf RadioImage3.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia
 
-            ElseIf XenonRadioImage4.Checked Then
+            ElseIf RadioImage4.Checked Then
                 .ColorFilter_Enabled = True
                 .ColorFilter = CP.Structures.WinEffects.ColorFilters.BlueYellow
 
@@ -169,7 +169,7 @@ Public Class WinEffecter
         End With
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             ApplyFromCP(CPx)
@@ -177,23 +177,23 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyFromCP(CPx)
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
             ApplyFromCP(_Def)
         End Using
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
@@ -205,7 +205,7 @@ Public Class WinEffecter
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Cursor = Cursors.WaitCursor
         ApplyToCP(My.CP)
         MainFrm.ApplyColorsToElements(My.CP)
@@ -220,66 +220,66 @@ Public Class WinEffecter
 
     Private Sub MD_Click(sender As Object, e As EventArgs) Handles MD.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar1.Maximum), Trackbar1.Minimum) : Trackbar1.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         MD.Text = sender.Value
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar5.Maximum), Trackbar5.Minimum) : Trackbar5.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar2.Maximum), Trackbar2.Minimum) : Trackbar2.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar3.Maximum), Trackbar3.Minimum) : Trackbar3.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar4.Maximum), Trackbar4.Minimum) : Trackbar4.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar6.Maximum), Trackbar6.Minimum) : Trackbar6.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
-        XenonButton4.Text = sender.Value
+    Private Sub Trackbar5_Scroll(sender As Object) Handles Trackbar5.Scroll
+        Button4.Text = sender.Value
     End Sub
 
-    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
-        XenonButton1.Text = sender.Value
+    Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
+        Button1.Text = sender.Value
         RetroButton1.FocusRectWidth = sender.Value : RetroButton1.Refresh()
     End Sub
 
-    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
-        XenonButton2.Text = sender.Value
+    Private Sub Trackbar3_Scroll(sender As Object) Handles Trackbar3.Scroll
+        Button2.Text = sender.Value
         RetroButton1.FocusRectHeight = sender.Value : RetroButton1.Refresh()
     End Sub
 
-    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
-        XenonButton3.Text = sender.Value
+    Private Sub Trackbar4_Scroll(sender As Object) Handles Trackbar4.Scroll
+        Button3.Text = sender.Value
         Panel2.Width = sender.Value
     End Sub
 
-    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
-        XenonButton5.Text = sender.Value
+    Private Sub Trackbar6_Scroll(sender As Object) Handles Trackbar6.Scroll
+        Button5.Text = sender.Value
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Panel2.Visible = Not Panel2.Visible
     End Sub
 
-    Private Sub XenonRadioImage1_CheckedChanged(sender As Object) Handles XenonRadioImage1.CheckedChanged
+    Private Sub RadioImage1_CheckedChanged(sender As Object) Handles RadioImage1.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Normal
             PictureBox32.Image = My.Resources.CF_Pie_Normal
@@ -310,7 +310,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage5_CheckedChanged(sender As Object) Handles XenonRadioImage5.CheckedChanged
+    Private Sub RadioImage5_CheckedChanged(sender As Object) Handles RadioImage5.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Grayscale
             PictureBox32.Image = My.Resources.CF_Pie_Grayscale
@@ -341,7 +341,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage7_CheckedChanged(sender As Object) Handles XenonRadioImage7.CheckedChanged
+    Private Sub RadioImage7_CheckedChanged(sender As Object) Handles RadioImage7.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Normal.Invert
             PictureBox32.Image = My.Resources.CF_Pie_Normal.Invert
@@ -372,7 +372,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage6_CheckedChanged(sender As Object) Handles XenonRadioImage6.CheckedChanged
+    Private Sub RadioImage6_CheckedChanged(sender As Object) Handles RadioImage6.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Grayscale.Invert
             PictureBox32.Image = My.Resources.CF_Pie_Grayscale.Invert
@@ -403,7 +403,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage2_CheckedChanged(sender As Object) Handles XenonRadioImage2.CheckedChanged
+    Private Sub RadioImage2_CheckedChanged(sender As Object) Handles RadioImage2.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Red_green_green_weak_deuteranopia
             PictureBox32.Image = My.Resources.CF_Pie_Red_green_green_weak_deuteranopia
@@ -434,7 +434,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage3_CheckedChanged(sender As Object) Handles XenonRadioImage3.CheckedChanged
+    Private Sub RadioImage3_CheckedChanged(sender As Object) Handles RadioImage3.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Red_green_red_weak_protanopia
             PictureBox32.Image = My.Resources.CF_Pie_Red_green_red_weak_protanopia
@@ -465,7 +465,7 @@ Public Class WinEffecter
         End If
     End Sub
 
-    Private Sub XenonRadioImage4_CheckedChanged(sender As Object) Handles XenonRadioImage4.CheckedChanged
+    Private Sub RadioImage4_CheckedChanged(sender As Object) Handles RadioImage4.CheckedChanged
         If sender.Checked Then
             PictureBox33.Image = My.Resources.CF_Img_Blue_yellow_tritanopia
             PictureBox32.Image = My.Resources.CF_Pie_Blue_yellow__tritanopia

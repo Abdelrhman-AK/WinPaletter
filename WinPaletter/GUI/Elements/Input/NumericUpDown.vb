@@ -173,7 +173,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonNumericUpDown_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        Private Sub NumericUpDown_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
             State = MouseState.Down
             _Shown = True
 
@@ -195,7 +195,7 @@ Namespace UI.WP
 
         Dim State As MouseState = MouseState.None
 
-        Private Sub XenonNumericUpDown_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub NumericUpDown_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
 
             If Not DesignMode Then
@@ -208,7 +208,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonNumericUpDown_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub NumericUpDown_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try
                     RemoveHandler FindForm.Load, AddressOf Loaded

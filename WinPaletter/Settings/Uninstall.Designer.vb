@@ -28,30 +28,30 @@ Partial Class Uninstall
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox1 = New UI.WP.CheckBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.CheckBox2 = New UI.WP.CheckBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
-        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
-        Me.XenonRadioImage3 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage1 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage2 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage3 = New WinPaletter.UI.WP.RadioImage()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
-        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
-        Me.XenonAlertBox4 = New WinPaletter.UI.WP.AlertBox()
-        Me.XenonCheckBox3 = New UI.WP.CheckBox()
+        Me.Separator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.Button6 = New WinPaletter.UI.WP.Button()
+        Me.Button2 = New WinPaletter.UI.WP.Button()
+        Me.AlertBox4 = New WinPaletter.UI.WP.AlertBox()
+        Me.CheckBox3 = New UI.WP.CheckBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
-        Me.XenonAlertBox2 = New WinPaletter.UI.WP.AlertBox()
+        Me.AnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.AlertBox2 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonAnimatedBox1.SuspendLayout()
+        Me.AnimatedBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label2
@@ -115,17 +115,17 @@ Partial Class Uninstall
         Me.PictureBox6.TabIndex = 7
         Me.PictureBox6.TabStop = False
         '
-        'XenonCheckBox1
+        'CheckBox1
         '
-        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox1.Checked = True
-        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(59, 125)
-        Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(178, 24)
-        Me.XenonCheckBox1.TabIndex = 8
-        Me.XenonCheckBox1.Text = "Delete registry associations"
+        Me.CheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(59, 125)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(178, 24)
+        Me.CheckBox1.TabIndex = 8
+        Me.CheckBox1.Text = "Delete registry associations"
         '
         'PictureBox2
         '
@@ -137,17 +137,17 @@ Partial Class Uninstall
         Me.PictureBox2.TabIndex = 9
         Me.PictureBox2.TabStop = False
         '
-        'XenonCheckBox2
+        'CheckBox2
         '
-        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox2.Checked = True
-        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox2.Location = New System.Drawing.Point(59, 185)
-        Me.XenonCheckBox2.Name = "XenonCheckBox2"
-        Me.XenonCheckBox2.Size = New System.Drawing.Size(411, 24)
-        Me.XenonCheckBox2.TabIndex = 10
-        Me.XenonCheckBox2.Text = "Delete application data: %localappdata%\Abdelrhman-AK\WinPaletter"
+        Me.CheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox2.ForeColor = System.Drawing.Color.White
+        Me.CheckBox2.Location = New System.Drawing.Point(59, 185)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(411, 24)
+        Me.CheckBox2.TabIndex = 10
+        Me.CheckBox2.Text = "Delete application data: %localappdata%\Abdelrhman-AK\WinPaletter"
         '
         'PictureBox3
         '
@@ -159,44 +159,44 @@ Partial Class Uninstall
         Me.PictureBox3.TabIndex = 11
         Me.PictureBox3.TabStop = False
         '
-        'XenonRadioImage1
+        'RadioImage1
         '
-        Me.XenonRadioImage1.Checked = True
-        Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage1.Image = Nothing
-        Me.XenonRadioImage1.Location = New System.Drawing.Point(156, 292)
-        Me.XenonRadioImage1.Name = "XenonRadioImage1"
-        Me.XenonRadioImage1.ShowText = True
-        Me.XenonRadioImage1.Size = New System.Drawing.Size(280, 24)
-        Me.XenonRadioImage1.TabIndex = 12
-        Me.XenonRadioImage1.Text = "Do nothing"
+        Me.RadioImage1.Checked = True
+        Me.RadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage1.ForeColor = System.Drawing.Color.White
+        Me.RadioImage1.Image = Nothing
+        Me.RadioImage1.Location = New System.Drawing.Point(156, 292)
+        Me.RadioImage1.Name = "RadioImage1"
+        Me.RadioImage1.ShowText = True
+        Me.RadioImage1.Size = New System.Drawing.Size(280, 24)
+        Me.RadioImage1.TabIndex = 12
+        Me.RadioImage1.Text = "Do nothing"
         '
-        'XenonRadioImage2
+        'RadioImage2
         '
-        Me.XenonRadioImage2.Checked = False
-        Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage2.Image = Nothing
-        Me.XenonRadioImage2.Location = New System.Drawing.Point(156, 322)
-        Me.XenonRadioImage2.Name = "XenonRadioImage2"
-        Me.XenonRadioImage2.ShowText = True
-        Me.XenonRadioImage2.Size = New System.Drawing.Size(280, 24)
-        Me.XenonRadioImage2.TabIndex = 13
-        Me.XenonRadioImage2.Text = "Restore from a theme file you backed-up before"
+        Me.RadioImage2.Checked = False
+        Me.RadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage2.ForeColor = System.Drawing.Color.White
+        Me.RadioImage2.Image = Nothing
+        Me.RadioImage2.Location = New System.Drawing.Point(156, 322)
+        Me.RadioImage2.Name = "RadioImage2"
+        Me.RadioImage2.ShowText = True
+        Me.RadioImage2.Size = New System.Drawing.Size(280, 24)
+        Me.RadioImage2.TabIndex = 13
+        Me.RadioImage2.Text = "Restore from a theme file you backed-up before"
         '
-        'XenonRadioImage3
+        'RadioImage3
         '
-        Me.XenonRadioImage3.Checked = False
-        Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage3.Image = Nothing
-        Me.XenonRadioImage3.Location = New System.Drawing.Point(156, 352)
-        Me.XenonRadioImage3.Name = "XenonRadioImage3"
-        Me.XenonRadioImage3.ShowText = True
-        Me.XenonRadioImage3.Size = New System.Drawing.Size(280, 24)
-        Me.XenonRadioImage3.TabIndex = 14
-        Me.XenonRadioImage3.Text = "Restore to default Windows"
+        Me.RadioImage3.Checked = False
+        Me.RadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage3.ForeColor = System.Drawing.Color.White
+        Me.RadioImage3.Image = Nothing
+        Me.RadioImage3.Location = New System.Drawing.Point(156, 352)
+        Me.RadioImage3.Name = "RadioImage3"
+        Me.RadioImage3.ShowText = True
+        Me.RadioImage3.Size = New System.Drawing.Size(280, 24)
+        Me.RadioImage3.TabIndex = 14
+        Me.RadioImage3.Text = "Restore to default Windows"
         '
         'Label4
         '
@@ -208,77 +208,77 @@ Partial Class Uninstall
         Me.Label4.Text = "Theme restore:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonSeparator1
+        'Separator1
         '
-        Me.XenonSeparator1.AlternativeLook = False
-        Me.XenonSeparator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Separator1.AlternativeLook = False
+        Me.Separator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonSeparator1.Location = New System.Drawing.Point(12, 387)
-        Me.XenonSeparator1.Name = "XenonSeparator1"
-        Me.XenonSeparator1.Size = New System.Drawing.Size(671, 1)
-        Me.XenonSeparator1.TabIndex = 16
-        Me.XenonSeparator1.TabStop = False
+        Me.Separator1.Location = New System.Drawing.Point(12, 387)
+        Me.Separator1.Name = "Separator1"
+        Me.Separator1.Size = New System.Drawing.Size(671, 1)
+        Me.Separator1.TabIndex = 16
+        Me.Separator1.TabStop = False
         '
-        'XenonButton6
+        'Button6
         '
-        Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
-        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(88, Byte), Integer), CType(CType(59, Byte), Integer))
-        Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(578, 400)
-        Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(105, 34)
-        Me.XenonButton6.TabIndex = 21
-        Me.XenonButton6.Text = "Uninstall"
-        Me.XenonButton6.UseVisualStyleBackColor = False
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(126, Byte), Integer), CType(CType(88, Byte), Integer), CType(CType(59, Byte), Integer))
+        Me.Button6.LineSize = 1
+        Me.Button6.Location = New System.Drawing.Point(578, 400)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(105, 34)
+        Me.Button6.TabIndex = 21
+        Me.Button6.Text = "Uninstall"
+        Me.Button6.UseVisualStyleBackColor = False
         '
-        'XenonButton2
+        'Button2
         '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(492, 400)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton2.TabIndex = 22
-        Me.XenonButton2.Text = "Cancel"
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Nothing
+        Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button2.LineSize = 1
+        Me.Button2.Location = New System.Drawing.Point(492, 400)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(80, 34)
+        Me.Button2.TabIndex = 22
+        Me.Button2.Text = "Cancel"
+        Me.Button2.UseVisualStyleBackColor = False
         '
-        'XenonAlertBox4
+        'AlertBox4
         '
-        Me.XenonAlertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
-        Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox4.CenterText = False
-        Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox4.Image = Nothing
-        Me.XenonAlertBox4.Location = New System.Drawing.Point(59, 215)
-        Me.XenonAlertBox4.Name = "XenonAlertBox4"
-        Me.XenonAlertBox4.Size = New System.Drawing.Size(624, 22)
-        Me.XenonAlertBox4.TabIndex = 23
-        Me.XenonAlertBox4.TabStop = False
-        Me.XenonAlertBox4.Text = "Note: This will reset cursors to Aero as the custom cursors are rendered and save" &
+        Me.AlertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
+        Me.AlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.AlertBox4.CenterText = False
+        Me.AlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AlertBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.AlertBox4.Image = Nothing
+        Me.AlertBox4.Location = New System.Drawing.Point(59, 215)
+        Me.AlertBox4.Name = "AlertBox4"
+        Me.AlertBox4.Size = New System.Drawing.Size(624, 22)
+        Me.AlertBox4.TabIndex = 23
+        Me.AlertBox4.TabStop = False
+        Me.AlertBox4.Text = "Note: This will reset cursors to Aero as the custom cursors are rendered and save" &
     "d there"
         '
-        'XenonCheckBox3
+        'CheckBox3
         '
-        Me.XenonCheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox3.Checked = True
-        Me.XenonCheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox3.Location = New System.Drawing.Point(59, 155)
-        Me.XenonCheckBox3.Name = "XenonCheckBox3"
-        Me.XenonCheckBox3.Size = New System.Drawing.Size(188, 24)
-        Me.XenonCheckBox3.TabIndex = 25
-        Me.XenonCheckBox3.Text = "Delete WinPaletter's settings"
+        Me.CheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox3.Checked = True
+        Me.CheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox3.ForeColor = System.Drawing.Color.White
+        Me.CheckBox3.Location = New System.Drawing.Point(59, 155)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(188, 24)
+        Me.CheckBox3.TabIndex = 25
+        Me.CheckBox3.Text = "Delete WinPaletter's settings"
         '
         'PictureBox4
         '
@@ -290,22 +290,22 @@ Partial Class Uninstall
         Me.PictureBox4.TabIndex = 24
         Me.PictureBox4.TabStop = False
         '
-        'XenonAlertBox1
+        'AlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
+        Me.AlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = True
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 405)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(474, 24)
-        Me.XenonAlertBox1.TabIndex = 26
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "WinPaletter won't be able to delete itself, so delete the exe file after uninstal" &
+        Me.AlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.AlertBox1.CenterText = True
+        Me.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.AlertBox1.Image = Nothing
+        Me.AlertBox1.Location = New System.Drawing.Point(12, 405)
+        Me.AlertBox1.Name = "AlertBox1"
+        Me.AlertBox1.Size = New System.Drawing.Size(474, 24)
+        Me.AlertBox1.TabIndex = 26
+        Me.AlertBox1.TabStop = False
+        Me.AlertBox1.Text = "WinPaletter won't be able to delete itself, so delete the exe file after uninstal" &
     "l"
         '
         'OpenFileDialog1
@@ -313,35 +313,35 @@ Partial Class Uninstall
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
-        'XenonAnimatedBox1
+        'AnimatedBox1
         '
-        Me.XenonAnimatedBox1.Color = System.Drawing.Color.Maroon
-        Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.Maroon
-        Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.Crimson
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label2)
-        Me.XenonAnimatedBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label1)
-        Me.XenonAnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
-        Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
-        Me.XenonAnimatedBox1.Size = New System.Drawing.Size(695, 86)
-        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors
-        Me.XenonAnimatedBox1.TabIndex = 27
+        Me.AnimatedBox1.Color = System.Drawing.Color.Maroon
+        Me.AnimatedBox1.Color1 = System.Drawing.Color.Maroon
+        Me.AnimatedBox1.Color2 = System.Drawing.Color.Crimson
+        Me.AnimatedBox1.Controls.Add(Me.Label2)
+        Me.AnimatedBox1.Controls.Add(Me.PictureBox1)
+        Me.AnimatedBox1.Controls.Add(Me.Label1)
+        Me.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.AnimatedBox1.Location = New System.Drawing.Point(0, 0)
+        Me.AnimatedBox1.Name = "AnimatedBox1"
+        Me.AnimatedBox1.Size = New System.Drawing.Size(695, 86)
+        Me.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors
+        Me.AnimatedBox1.TabIndex = 27
         '
-        'XenonAlertBox2
+        'AlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
-        Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox2.CenterText = False
-        Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox2.Image = Nothing
-        Me.XenonAlertBox2.Location = New System.Drawing.Point(59, 243)
-        Me.XenonAlertBox2.Name = "XenonAlertBox2"
-        Me.XenonAlertBox2.Size = New System.Drawing.Size(624, 40)
-        Me.XenonAlertBox2.TabIndex = 28
-        Me.XenonAlertBox2.TabStop = False
-        Me.XenonAlertBox2.Text = "Note: Windows (Vista and later) Startup backup wave file is located there. If you" &
+        Me.AlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
+        Me.AlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.AlertBox2.CenterText = False
+        Me.AlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AlertBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.AlertBox2.Image = Nothing
+        Me.AlertBox2.Location = New System.Drawing.Point(59, 243)
+        Me.AlertBox2.Name = "AlertBox2"
+        Me.AlertBox2.Size = New System.Drawing.Size(624, 40)
+        Me.AlertBox2.TabIndex = 28
+        Me.AlertBox2.TabStop = False
+        Me.AlertBox2.Text = "Note: Windows (Vista and later) Startup backup wave file is located there. If you" &
     " delete this folder, you won't be able to restore this sound. Restore this sound" &
     " first then you can do an uninstall."
         '
@@ -351,25 +351,25 @@ Partial Class Uninstall
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(695, 446)
-        Me.Controls.Add(Me.XenonAlertBox2)
-        Me.Controls.Add(Me.XenonAlertBox1)
-        Me.Controls.Add(Me.XenonCheckBox3)
+        Me.Controls.Add(Me.AlertBox2)
+        Me.Controls.Add(Me.AlertBox1)
+        Me.Controls.Add(Me.CheckBox3)
         Me.Controls.Add(Me.PictureBox4)
-        Me.Controls.Add(Me.XenonAlertBox4)
-        Me.Controls.Add(Me.XenonButton2)
-        Me.Controls.Add(Me.XenonButton6)
-        Me.Controls.Add(Me.XenonSeparator1)
+        Me.Controls.Add(Me.AlertBox4)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button6)
+        Me.Controls.Add(Me.Separator1)
         Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.XenonRadioImage3)
-        Me.Controls.Add(Me.XenonRadioImage2)
+        Me.Controls.Add(Me.RadioImage3)
+        Me.Controls.Add(Me.RadioImage2)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.XenonRadioImage1)
-        Me.Controls.Add(Me.XenonCheckBox1)
+        Me.Controls.Add(Me.RadioImage1)
+        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.PictureBox3)
         Me.Controls.Add(Me.PictureBox6)
         Me.Controls.Add(Me.PictureBox2)
-        Me.Controls.Add(Me.XenonCheckBox2)
-        Me.Controls.Add(Me.XenonAnimatedBox1)
+        Me.Controls.Add(Me.CheckBox2)
+        Me.Controls.Add(Me.AnimatedBox1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -385,7 +385,7 @@ Partial Class Uninstall
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonAnimatedBox1.ResumeLayout(False)
+        Me.AnimatedBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -394,22 +394,22 @@ Partial Class Uninstall
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents CheckBox1 As UI.WP.CheckBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents CheckBox2 As UI.WP.CheckBox
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
-    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
-    Friend WithEvents XenonRadioImage3 As UI.WP.RadioImage
+    Friend WithEvents RadioImage1 As UI.WP.RadioImage
+    Friend WithEvents RadioImage2 As UI.WP.RadioImage
+    Friend WithEvents RadioImage3 As UI.WP.RadioImage
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
-    Friend WithEvents XenonButton6 As UI.WP.Button
-    Friend WithEvents XenonButton2 As UI.WP.Button
-    Friend WithEvents XenonAlertBox4 As UI.WP.AlertBox
-    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
+    Friend WithEvents Separator1 As UI.WP.SeparatorH
+    Friend WithEvents Button6 As UI.WP.Button
+    Friend WithEvents Button2 As UI.WP.Button
+    Friend WithEvents AlertBox4 As UI.WP.AlertBox
+    Friend WithEvents CheckBox3 As UI.WP.CheckBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents AlertBox1 As UI.WP.AlertBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
-    Friend WithEvents XenonAlertBox2 As UI.WP.AlertBox
+    Friend WithEvents AnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents AlertBox2 As UI.WP.AlertBox
 End Class

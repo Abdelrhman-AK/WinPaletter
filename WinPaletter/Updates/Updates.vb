@@ -13,15 +13,15 @@ Public Class Updates
     Private _Shown As Boolean = False
     Public ls As New List(Of String)
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         MainFrm.NotifyUpdates.Visible = False
 
         If url Is Nothing Then
             Me.Cursor = Cursors.AppStarting
 
-            My.Animator.HideSync(XenonAlertBox2, True)
-            My.Animator.HideSync(XenonButton1, True)
-            My.Animator.HideSync(XenonButton3, True)
+            My.Animator.HideSync(AlertBox2, True)
+            My.Animator.HideSync(Button1, True)
+            My.Animator.HideSync(Button3, True)
             My.Animator.HideSync(Panel1, True)
             ProgressBar1.Visible = False
             ProgressBar1.Value = 0
@@ -57,16 +57,16 @@ Public Class Updates
                         LinkLabel3.Visible = True
 
                         My.Animator.Show(Panel1, True)
-                        XenonButton1.Text = My.Lang.DoAction_Update
-                        XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
-                        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
+                        Button1.Text = My.Lang.DoAction_Update
+                        AlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
+                        AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
                     Else
                         Label7.Text = ""
                         Label9.Text = ""
                         url = Nothing
-                        XenonButton1.Text = My.Lang.CheckForUpdates
-                        XenonAlertBox2.Text = String.Format(My.Lang.NoUpdateAvailable)
-                        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success
+                        Button1.Text = My.Lang.CheckForUpdates
+                        AlertBox2.Text = String.Format(My.Lang.NoUpdateAvailable)
+                        AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success
                     End If
 
                     Label17.SetText(Text)
@@ -74,31 +74,31 @@ Public Class Updates
                     Label7.Text = ""
                     Label9.Text = ""
                     url = Nothing
-                    XenonButton1.Text = My.Lang.CheckForUpdates
-                    XenonAlertBox2.Text = String.Format(My.Lang.NetworkError)
-                    XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
+                    Button1.Text = My.Lang.CheckForUpdates
+                    AlertBox2.Text = String.Format(My.Lang.NetworkError)
+                    AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
                 End If
             Catch ex As Exception
                 Label7.Text = ""
                 Label9.Text = ""
                 url = Nothing
-                XenonButton1.Text = My.Lang.CheckForUpdates
-                XenonAlertBox2.Text = String.Format(My.Lang.ServerError)
-                XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
+                Button1.Text = My.Lang.CheckForUpdates
+                AlertBox2.Text = String.Format(My.Lang.ServerError)
+                AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
                 BugReport.ThrowError(ex)
             End Try
 
-            My.Animator.Show(XenonAlertBox2, True)
-            My.Animator.Show(XenonButton1, True)
-            My.Animator.ShowSync(XenonButton3, True)
+            My.Animator.Show(AlertBox2, True)
+            My.Animator.Show(Button1, True)
+            My.Animator.ShowSync(Button3, True)
 
             Me.Cursor = Cursors.Default
         Else
             ProgressBar1.Visible = False
             ProgressBar1.Value = 0
 
-            If XenonRadioButton1.Checked Then
-                XenonButton1.Enabled = False
+            If RadioButton1.Checked Then
+                Button1.Enabled = False
                 Panel1.Enabled = False
                 ProgressBar1.Visible = True
                 OldName = Reflection.Assembly.GetExecutingAssembly().Location
@@ -110,12 +110,12 @@ Public Class Updates
                 UC.DownloadFileAsync(New Uri(url), OldName)
             End If
 
-            If XenonRadioButton2.Checked Then
+            If RadioButton2.Checked Then
                 SaveFileDialog1.FileName = String.Format("WinPaletter ({0})", ver)
 
                 If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
                     Panel1.Enabled = False
-                    XenonButton1.Enabled = False
+                    Button1.Enabled = False
                     ProgressBar1.Visible = True
                     UC.DownloadFileAsync(New Uri(url), SaveFileDialog1.FileName)
                 Else
@@ -123,7 +123,7 @@ Public Class Updates
                 End If
             End If
 
-            If XenonRadioButton3.Checked Then
+            If RadioButton3.Checked Then
                 Process.Start(My.Resources.Link_Releases)
             End If
 
@@ -138,18 +138,18 @@ Public Class Updates
         LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
         Label3.Text = String.Format(F, If(My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
-        XenonCheckBox1.Checked = My.Settings.Updates.AutoCheck
+        CheckBox1.Checked = My.Settings.Updates.AutoCheck
         _Shown = False
-        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
-        XenonAlertBox2.Visible = False
+        AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
+        AlertBox2.Visible = False
         Panel1.Visible = False
         Label7.Text = ""
         Label9.Text = ""
         url = Nothing
-        XenonButton1.Enabled = True
+        Button1.Enabled = True
         Panel1.Enabled = True
 
-        XenonButton1.Text = My.Lang.CheckForUpdates
+        Button1.Text = My.Lang.CheckForUpdates
         Label2.Text = My.AppVersion
 
         If ls.Count > 0 Then
@@ -176,23 +176,23 @@ Public Class Updates
             LinkLabel3.Visible = True
 
             My.Animator.Show(Panel1, True)
-            XenonButton1.Text = My.Lang.DoAction_Update
-            XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
-            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
+            Button1.Text = My.Lang.DoAction_Update
+            AlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
+            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
 
-            My.Animator.Show(XenonAlertBox2, True)
-            My.Animator.ShowSync(XenonButton1, True)
+            My.Animator.Show(AlertBox2, True)
+            My.Animator.ShowSync(Button1, True)
         End If
 
         If My.WXP Then
-            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
-            XenonAlertBox2.Visible = True
-            XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
+            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
+            AlertBox2.Visible = True
+            AlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
 
         ElseIf My.WVista Then
-            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
-            XenonAlertBox2.Visible = True
-            XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
+            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
+            AlertBox2.Visible = True
+            AlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
         End If
 
     End Sub
@@ -208,9 +208,9 @@ Public Class Updates
         _Shown = True
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
         If _Shown Then
-            My.Settings.Updates.AutoCheck = XenonCheckBox1.Checked
+            My.Settings.Updates.AutoCheck = CheckBox1.Checked
             My.Settings.Updates.Save()
         End If
     End Sub
@@ -219,7 +219,7 @@ Public Class Updates
         Process.Start(My.Resources.Link_Changelog)
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Me.Close()
     End Sub
 
@@ -228,12 +228,12 @@ Public Class Updates
     End Sub
 
     Private Sub UC_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles UC.DownloadFileCompleted
-        XenonButton1.Enabled = True
+        Button1.Enabled = True
         Panel1.Enabled = True
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
-        If XenonRadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
-        If XenonRadioButton1.Checked And Not Disturbed Then
+        If RadioButton2.Checked Then MsgBox(My.Lang.Msgbox_Downloaded, MsgBoxStyle.Information)
+        If RadioButton1.Checked And Not Disturbed Then
             Process.Start(OldName)
             Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
         End If
@@ -258,7 +258,7 @@ Public Class Updates
             UC.CancelAsync()
             UC.Dispose()
 
-            If XenonRadioButton1.Checked Then
+            If RadioButton1.Checked Then
                 Try
                     If IO.File.Exists("oldWinpaletter_2.trash") Then Kill("oldWinpaletter_2.trash")
                 Catch
@@ -274,7 +274,7 @@ Public Class Updates
 
         End If
 
-        If XenonRadioButton2.Checked Then
+        If RadioButton2.Checked Then
             If IO.File.Exists(SaveFileDialog1.FileName) Then Kill(SaveFileDialog1.FileName)
         End If
     End Sub

@@ -445,7 +445,7 @@ Namespace UI.Simulation
             End If
         End Sub
 
-        Private Sub XenonTaskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub Taskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             If Not DesignMode Then
                 Tm.Enabled = True
                 Tm.Start()
@@ -484,7 +484,7 @@ Namespace UI.Simulation
             Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
         End Sub
 
-        Private Sub XenonTerminal_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub Terminal_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try : RemoveHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
                 Try : RemoveHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try

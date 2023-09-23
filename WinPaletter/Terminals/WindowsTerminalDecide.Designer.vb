@@ -27,12 +27,12 @@ Partial Class WindowsTerminalDecide
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label144 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
-        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
-        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
+        Me.Button2 = New WinPaletter.UI.WP.Button()
+        Me.Button1 = New WinPaletter.UI.WP.Button()
+        Me.RadioImage2 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage1 = New WinPaletter.UI.WP.RadioImage()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -83,62 +83,62 @@ Partial Class WindowsTerminalDecide
         Me.Label1.Text = "Preview"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'XenonButton2
+        'Button2
         '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(231, 305)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton2.TabIndex = 108
-        Me.XenonButton2.Text = "Cancel"
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Nothing
+        Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button2.LineSize = 1
+        Me.Button2.Location = New System.Drawing.Point(231, 305)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(80, 34)
+        Me.Button2.TabIndex = 108
+        Me.Button2.Text = "Cancel"
+        Me.Button2.UseVisualStyleBackColor = False
         '
-        'XenonButton1
+        'Button12
         '
-        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = Nothing
-        Me.XenonButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(317, 305)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton1.TabIndex = 107
-        Me.XenonButton1.Text = "OK"
-        Me.XenonButton1.UseVisualStyleBackColor = False
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(75, Byte), Integer))
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = Nothing
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(317, 305)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 34)
+        Me.Button1.TabIndex = 107
+        Me.Button1.Text = "OK"
+        Me.Button1.UseVisualStyleBackColor = False
         '
-        'XenonRadioImage2
+        'RadioImage2
         '
-        Me.XenonRadioImage2.Checked = False
-        Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage2.Image = CType(resources.GetObject("XenonRadioImage2.Image"), System.Drawing.Image)
-        Me.XenonRadioImage2.Location = New System.Drawing.Point(213, 130)
-        Me.XenonRadioImage2.Name = "XenonRadioImage2"
-        Me.XenonRadioImage2.ShowText = False
-        Me.XenonRadioImage2.Size = New System.Drawing.Size(64, 64)
-        Me.XenonRadioImage2.TabIndex = 87
+        Me.RadioImage2.Checked = False
+        Me.RadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage2.ForeColor = System.Drawing.Color.White
+        Me.RadioImage2.Image = CType(resources.GetObject("RadioImage2.Image"), System.Drawing.Image)
+        Me.RadioImage2.Location = New System.Drawing.Point(213, 130)
+        Me.RadioImage2.Name = "RadioImage2"
+        Me.RadioImage2.ShowText = False
+        Me.RadioImage2.Size = New System.Drawing.Size(64, 64)
+        Me.RadioImage2.TabIndex = 87
         '
-        'XenonRadioImage1
+        'RadioImage1
         '
-        Me.XenonRadioImage1.Checked = False
-        Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage1.Image = CType(resources.GetObject("XenonRadioImage1.Image"), System.Drawing.Image)
-        Me.XenonRadioImage1.Location = New System.Drawing.Point(131, 130)
-        Me.XenonRadioImage1.Name = "XenonRadioImage1"
-        Me.XenonRadioImage1.ShowText = False
-        Me.XenonRadioImage1.Size = New System.Drawing.Size(64, 64)
-        Me.XenonRadioImage1.TabIndex = 86
+        Me.RadioImage1.Checked = False
+        Me.RadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage1.ForeColor = System.Drawing.Color.White
+        Me.RadioImage1.Image = CType(resources.GetObject("RadioImage1.Image"), System.Drawing.Image)
+        Me.RadioImage1.Location = New System.Drawing.Point(131, 130)
+        Me.RadioImage1.Name = "RadioImage1"
+        Me.RadioImage1.ShowText = False
+        Me.RadioImage1.Size = New System.Drawing.Size(64, 64)
+        Me.RadioImage1.TabIndex = 86
         '
         'Panel1
         '
@@ -151,38 +151,38 @@ Partial Class WindowsTerminalDecide
         Me.Panel1.Size = New System.Drawing.Size(409, 110)
         Me.Panel1.TabIndex = 109
         '
-        'XenonAlertBox1
+        'AlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
-        Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
+        Me.AlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Global.WinPaletter.My.Resources.notify_warning
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(12, 248)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(385, 49)
-        Me.XenonAlertBox1.TabIndex = 199
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "This will override the already existing terminal settings (but won't delete them " &
+        Me.AlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.AlertBox1.CenterText = False
+        Me.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.AlertBox1.Image = Global.WinPaletter.My.Resources.notify_warning
+        Me.AlertBox1.Location = New System.Drawing.Point(12, 248)
+        Me.AlertBox1.Name = "AlertBox1"
+        Me.AlertBox1.Size = New System.Drawing.Size(385, 49)
+        Me.AlertBox1.TabIndex = 199
+        Me.AlertBox1.TabStop = False
+        Me.AlertBox1.Text = "This will override the already existing terminal settings (but won't delete them " &
     "even if they are not visible)"
         '
         'WindowsTerminalDecide
         '
-        Me.AcceptButton = Me.XenonButton1
+        Me.AcceptButton = Me.Button1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(4, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(67, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(409, 351)
-        Me.Controls.Add(Me.XenonAlertBox1)
-        Me.Controls.Add(Me.XenonButton2)
-        Me.Controls.Add(Me.XenonButton1)
+        Me.Controls.Add(Me.AlertBox1)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label144)
-        Me.Controls.Add(Me.XenonRadioImage2)
-        Me.Controls.Add(Me.XenonRadioImage1)
+        Me.Controls.Add(Me.RadioImage2)
+        Me.Controls.Add(Me.RadioImage1)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
@@ -204,12 +204,12 @@ Partial Class WindowsTerminalDecide
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
-    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
+    Friend WithEvents RadioImage1 As UI.WP.RadioImage
+    Friend WithEvents RadioImage2 As UI.WP.RadioImage
     Friend WithEvents Label144 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonButton2 As UI.WP.Button
-    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents Button2 As UI.WP.Button
+    Friend WithEvents Button1 As UI.WP.Button
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents AlertBox1 As UI.WP.AlertBox
 End Class

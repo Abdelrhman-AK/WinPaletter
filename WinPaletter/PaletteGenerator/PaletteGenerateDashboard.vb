@@ -65,7 +65,7 @@ Public Class PaletteGenerateDashboard
         Icon = PaletteGenerateFromImage.Icon
         _shown = False
 
-        Location = MainFrm.XenonButton40.PointToScreen(Point.Empty) + New Point(0, MainFrm.XenonButton40.Height)
+        Location = MainFrm.Button40.PointToScreen(Point.Empty) + New Point(0, MainFrm.Button40.Height)
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 
@@ -88,12 +88,12 @@ Public Class PaletteGenerateDashboard
         End If
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Close()
         PaletteGenerateFromImage.ShowDialog()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Close()
         PaletteGenerateFromColor.ShowDialog()
     End Sub

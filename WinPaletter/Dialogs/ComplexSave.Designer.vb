@@ -25,37 +25,37 @@ Partial Class ComplexSave
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ComplexSave))
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.GroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage3 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage3 = New WinPaletter.UI.WP.RadioImage()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage2 = New WinPaletter.UI.WP.RadioImage()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage1 = New WinPaletter.UI.WP.RadioImage()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
+        Me.GroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage7 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage7 = New WinPaletter.UI.WP.RadioImage()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage4 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage4 = New WinPaletter.UI.WP.RadioImage()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage5 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage5 = New WinPaletter.UI.WP.RadioImage()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage6 = New WinPaletter.UI.WP.RadioImage()
+        Me.RadioImage6 = New WinPaletter.UI.WP.RadioImage()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
-        Me.XenonCheckBox2 = New UI.WP.CheckBox()
-        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.Button1 = New WinPaletter.UI.WP.Button()
+        Me.Button2 = New WinPaletter.UI.WP.Button()
+        Me.Button3 = New WinPaletter.UI.WP.Button()
+        Me.CheckBox2 = New UI.WP.CheckBox()
+        Me.AnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox2.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonAnimatedBox1.SuspendLayout()
+        Me.AnimatedBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PictureBox1
@@ -81,25 +81,25 @@ Partial Class ComplexSave
         Me.Label17.Text = "Current theme is changed. Choose what you want."
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonGroupBox1
+        'GroupBox1
         '
-        Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox1.Controls.Add(Me.Label5)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonRadioImage3)
-        Me.XenonGroupBox1.Controls.Add(Me.Label4)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonRadioImage2)
-        Me.XenonGroupBox1.Controls.Add(Me.Label3)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonRadioImage1)
-        Me.XenonGroupBox1.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox1.Controls.Add(Me.Label1)
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(6, 65)
-        Me.XenonGroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(422, 165)
-        Me.XenonGroupBox1.TabIndex = 3
-        Me.XenonGroupBox1.Text = "XenonGroupBox1"
+        Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.RadioImage3)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.RadioImage2)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.RadioImage1)
+        Me.GroupBox1.Controls.Add(Me.PictureBox2)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Location = New System.Drawing.Point(6, 65)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(422, 165)
+        Me.GroupBox1.TabIndex = 3
+        Me.GroupBox1.Text = "GroupBox1"
         '
         'Label5
         '
@@ -113,18 +113,18 @@ Partial Class ComplexSave
         Me.Label5.Text = "Don't save"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage3
+        'RadioImage3
         '
-        Me.XenonRadioImage3.Checked = True
-        Me.XenonRadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage3.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage3.Image = CType(resources.GetObject("XenonRadioImage3.Image"), System.Drawing.Image)
-        Me.XenonRadioImage3.Location = New System.Drawing.Point(48, 123)
-        Me.XenonRadioImage3.Name = "XenonRadioImage3"
-        Me.XenonRadioImage3.ShowText = False
-        Me.XenonRadioImage3.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage3.TabIndex = 9
-        Me.XenonRadioImage3.Text = "XenonRadioImage3"
+        Me.RadioImage3.Checked = True
+        Me.RadioImage3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage3.ForeColor = System.Drawing.Color.White
+        Me.RadioImage3.Image = CType(resources.GetObject("RadioImage3.Image"), System.Drawing.Image)
+        Me.RadioImage3.Location = New System.Drawing.Point(48, 123)
+        Me.RadioImage3.Name = "RadioImage3"
+        Me.RadioImage3.ShowText = False
+        Me.RadioImage3.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage3.TabIndex = 9
+        Me.RadioImage3.Text = "RadioImage3"
         '
         'Label4
         '
@@ -138,18 +138,18 @@ Partial Class ComplexSave
         Me.Label4.Text = "Save as ..."
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage2
+        'RadioImage2
         '
-        Me.XenonRadioImage2.Checked = False
-        Me.XenonRadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage2.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage2.Image = CType(resources.GetObject("XenonRadioImage2.Image"), System.Drawing.Image)
-        Me.XenonRadioImage2.Location = New System.Drawing.Point(48, 82)
-        Me.XenonRadioImage2.Name = "XenonRadioImage2"
-        Me.XenonRadioImage2.ShowText = False
-        Me.XenonRadioImage2.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage2.TabIndex = 7
-        Me.XenonRadioImage2.Text = "XenonRadioImage2"
+        Me.RadioImage2.Checked = False
+        Me.RadioImage2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage2.ForeColor = System.Drawing.Color.White
+        Me.RadioImage2.Image = CType(resources.GetObject("RadioImage2.Image"), System.Drawing.Image)
+        Me.RadioImage2.Location = New System.Drawing.Point(48, 82)
+        Me.RadioImage2.Name = "RadioImage2"
+        Me.RadioImage2.ShowText = False
+        Me.RadioImage2.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage2.TabIndex = 7
+        Me.RadioImage2.Text = "RadioImage2"
         '
         'Label3
         '
@@ -163,18 +163,18 @@ Partial Class ComplexSave
         Me.Label3.Text = "Save"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage1
+        'RadioImage1
         '
-        Me.XenonRadioImage1.Checked = False
-        Me.XenonRadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage1.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage1.Image = CType(resources.GetObject("XenonRadioImage1.Image"), System.Drawing.Image)
-        Me.XenonRadioImage1.Location = New System.Drawing.Point(48, 41)
-        Me.XenonRadioImage1.Name = "XenonRadioImage1"
-        Me.XenonRadioImage1.ShowText = False
-        Me.XenonRadioImage1.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage1.TabIndex = 5
-        Me.XenonRadioImage1.Text = "XenonRadioImage1"
+        Me.RadioImage1.Checked = False
+        Me.RadioImage1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage1.ForeColor = System.Drawing.Color.White
+        Me.RadioImage1.Image = CType(resources.GetObject("RadioImage1.Image"), System.Drawing.Image)
+        Me.RadioImage1.Location = New System.Drawing.Point(48, 41)
+        Me.RadioImage1.Name = "RadioImage1"
+        Me.RadioImage1.ShowText = False
+        Me.RadioImage1.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage1.TabIndex = 5
+        Me.RadioImage1.Text = "RadioImage1"
         '
         'PictureBox2
         '
@@ -198,27 +198,27 @@ Partial Class ComplexSave
         Me.Label1.Text = "Theme file"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonGroupBox2
+        'GroupBox2
         '
-        Me.XenonGroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox2.Controls.Add(Me.Label9)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonRadioImage7)
-        Me.XenonGroupBox2.Controls.Add(Me.Label6)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonRadioImage4)
-        Me.XenonGroupBox2.Controls.Add(Me.Label7)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonRadioImage5)
-        Me.XenonGroupBox2.Controls.Add(Me.Label8)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonRadioImage6)
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox3)
-        Me.XenonGroupBox2.Controls.Add(Me.Label2)
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(9, 236)
-        Me.XenonGroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonGroupBox2.Name = "XenonGroupBox2"
-        Me.XenonGroupBox2.Size = New System.Drawing.Size(422, 205)
-        Me.XenonGroupBox2.TabIndex = 4
-        Me.XenonGroupBox2.Text = "XenonGroupBox2"
+        Me.GroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox2.Controls.Add(Me.Label9)
+        Me.GroupBox2.Controls.Add(Me.RadioImage7)
+        Me.GroupBox2.Controls.Add(Me.Label6)
+        Me.GroupBox2.Controls.Add(Me.RadioImage4)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Controls.Add(Me.RadioImage5)
+        Me.GroupBox2.Controls.Add(Me.Label8)
+        Me.GroupBox2.Controls.Add(Me.RadioImage6)
+        Me.GroupBox2.Controls.Add(Me.PictureBox3)
+        Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Location = New System.Drawing.Point(9, 236)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(422, 205)
+        Me.GroupBox2.TabIndex = 4
+        Me.GroupBox2.Text = "GroupBox2"
         '
         'Label9
         '
@@ -232,18 +232,18 @@ Partial Class ComplexSave
         Me.Label9.Text = "Default Windows"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage7
+        'RadioImage7
         '
-        Me.XenonRadioImage7.Checked = False
-        Me.XenonRadioImage7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage7.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage7.Image = Nothing
-        Me.XenonRadioImage7.Location = New System.Drawing.Point(45, 123)
-        Me.XenonRadioImage7.Name = "XenonRadioImage7"
-        Me.XenonRadioImage7.ShowText = False
-        Me.XenonRadioImage7.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage7.TabIndex = 17
-        Me.XenonRadioImage7.Text = "XenonRadioImage7"
+        Me.RadioImage7.Checked = False
+        Me.RadioImage7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage7.ForeColor = System.Drawing.Color.White
+        Me.RadioImage7.Image = Nothing
+        Me.RadioImage7.Location = New System.Drawing.Point(45, 123)
+        Me.RadioImage7.Name = "RadioImage7"
+        Me.RadioImage7.ShowText = False
+        Me.RadioImage7.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage7.TabIndex = 17
+        Me.RadioImage7.Text = "RadioImage7"
         '
         'Label6
         '
@@ -257,18 +257,18 @@ Partial Class ComplexSave
         Me.Label6.Text = "Don't apply"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage4
+        'RadioImage4
         '
-        Me.XenonRadioImage4.Checked = False
-        Me.XenonRadioImage4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage4.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage4.Image = CType(resources.GetObject("XenonRadioImage4.Image"), System.Drawing.Image)
-        Me.XenonRadioImage4.Location = New System.Drawing.Point(45, 164)
-        Me.XenonRadioImage4.Name = "XenonRadioImage4"
-        Me.XenonRadioImage4.ShowText = False
-        Me.XenonRadioImage4.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage4.TabIndex = 15
-        Me.XenonRadioImage4.Text = "XenonRadioImage4"
+        Me.RadioImage4.Checked = False
+        Me.RadioImage4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage4.ForeColor = System.Drawing.Color.White
+        Me.RadioImage4.Image = CType(resources.GetObject("RadioImage4.Image"), System.Drawing.Image)
+        Me.RadioImage4.Location = New System.Drawing.Point(45, 164)
+        Me.RadioImage4.Name = "RadioImage4"
+        Me.RadioImage4.ShowText = False
+        Me.RadioImage4.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage4.TabIndex = 15
+        Me.RadioImage4.Text = "RadioImage4"
         '
         'Label7
         '
@@ -282,18 +282,18 @@ Partial Class ComplexSave
         Me.Label7.Text = "First theme (undo applied changes)"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage5
+        'RadioImage5
         '
-        Me.XenonRadioImage5.Checked = False
-        Me.XenonRadioImage5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage5.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage5.Image = CType(resources.GetObject("XenonRadioImage5.Image"), System.Drawing.Image)
-        Me.XenonRadioImage5.Location = New System.Drawing.Point(45, 82)
-        Me.XenonRadioImage5.Name = "XenonRadioImage5"
-        Me.XenonRadioImage5.ShowText = False
-        Me.XenonRadioImage5.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage5.TabIndex = 13
-        Me.XenonRadioImage5.Text = "XenonRadioImage5"
+        Me.RadioImage5.Checked = False
+        Me.RadioImage5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage5.ForeColor = System.Drawing.Color.White
+        Me.RadioImage5.Image = CType(resources.GetObject("RadioImage5.Image"), System.Drawing.Image)
+        Me.RadioImage5.Location = New System.Drawing.Point(45, 82)
+        Me.RadioImage5.Name = "RadioImage5"
+        Me.RadioImage5.ShowText = False
+        Me.RadioImage5.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage5.TabIndex = 13
+        Me.RadioImage5.Text = "RadioImage5"
         '
         'Label8
         '
@@ -307,18 +307,18 @@ Partial Class ComplexSave
         Me.Label8.Text = "Current theme"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonRadioImage6
+        'RadioImage6
         '
-        Me.XenonRadioImage6.Checked = True
-        Me.XenonRadioImage6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonRadioImage6.ForeColor = System.Drawing.Color.White
-        Me.XenonRadioImage6.Image = CType(resources.GetObject("XenonRadioImage6.Image"), System.Drawing.Image)
-        Me.XenonRadioImage6.Location = New System.Drawing.Point(45, 41)
-        Me.XenonRadioImage6.Name = "XenonRadioImage6"
-        Me.XenonRadioImage6.ShowText = False
-        Me.XenonRadioImage6.Size = New System.Drawing.Size(48, 35)
-        Me.XenonRadioImage6.TabIndex = 11
-        Me.XenonRadioImage6.Text = "XenonRadioImage6"
+        Me.RadioImage6.Checked = True
+        Me.RadioImage6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.RadioImage6.ForeColor = System.Drawing.Color.White
+        Me.RadioImage6.Image = CType(resources.GetObject("RadioImage6.Image"), System.Drawing.Image)
+        Me.RadioImage6.Location = New System.Drawing.Point(45, 41)
+        Me.RadioImage6.Name = "RadioImage6"
+        Me.RadioImage6.ShowText = False
+        Me.RadioImage6.Size = New System.Drawing.Size(48, 35)
+        Me.RadioImage6.TabIndex = 11
+        Me.RadioImage6.Text = "RadioImage6"
         '
         'PictureBox3
         '
@@ -342,99 +342,99 @@ Partial Class ComplexSave
         Me.Label2.Text = "Apply"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonButton1
+        'Button12
         '
-        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton1.DrawOnGlass = False
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = Nothing
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(341, 453)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton1.TabIndex = 5
-        Me.XenonButton1.Text = "Do actions"
-        Me.XenonButton1.UseVisualStyleBackColor = False
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Button1.DrawOnGlass = False
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = Nothing
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(341, 453)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 34)
+        Me.Button1.TabIndex = 5
+        Me.Button1.Text = "Do actions"
+        Me.Button1.UseVisualStyleBackColor = False
         '
-        'XenonButton2
+        'Button2
         '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton2.DrawOnGlass = False
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(255, 453)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton2.TabIndex = 6
-        Me.XenonButton2.Text = "Close"
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Button2.DrawOnGlass = False
+        Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Nothing
+        Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button2.LineSize = 1
+        Me.Button2.Location = New System.Drawing.Point(255, 453)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(80, 34)
+        Me.Button2.TabIndex = 6
+        Me.Button2.Text = "Close"
+        Me.Button2.UseVisualStyleBackColor = False
         '
-        'XenonButton3
+        'Button3
         '
-        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.XenonButton3.DrawOnGlass = False
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(169, 453)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton3.TabIndex = 7
-        Me.XenonButton3.Text = "Cancel"
-        Me.XenonButton3.UseVisualStyleBackColor = False
+        Me.Button3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Button3.DrawOnGlass = False
+        Me.Button3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Nothing
+        Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button3.LineSize = 1
+        Me.Button3.Location = New System.Drawing.Point(169, 453)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(80, 34)
+        Me.Button3.TabIndex = 7
+        Me.Button3.Text = "Cancel"
+        Me.Button3.UseVisualStyleBackColor = False
         '
-        'XenonCheckBox2
+        'CheckBox2
         '
-        Me.XenonCheckBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox2.Checked = True
-        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox2.Location = New System.Drawing.Point(12, 459)
-        Me.XenonCheckBox2.Name = "XenonCheckBox2"
-        Me.XenonCheckBox2.Size = New System.Drawing.Size(143, 23)
-        Me.XenonCheckBox2.TabIndex = 9
-        Me.XenonCheckBox2.Text = "Always show this"
+        Me.CheckBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox2.ForeColor = System.Drawing.Color.White
+        Me.CheckBox2.Location = New System.Drawing.Point(12, 459)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(143, 23)
+        Me.CheckBox2.TabIndex = 9
+        Me.CheckBox2.Text = "Always show this"
         '
-        'XenonAnimatedBox1
+        'AnimatedBox1
         '
-        Me.XenonAnimatedBox1.Color = System.Drawing.Color.DodgerBlue
-        Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue
-        Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.Crimson
-        Me.XenonAnimatedBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label17)
-        Me.XenonAnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
-        Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
-        Me.XenonAnimatedBox1.Size = New System.Drawing.Size(434, 59)
-        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
-        Me.XenonAnimatedBox1.TabIndex = 10
-        Me.XenonAnimatedBox1.Text = "XenonAnimatedBox1"
+        Me.AnimatedBox1.Color = System.Drawing.Color.DodgerBlue
+        Me.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue
+        Me.AnimatedBox1.Color2 = System.Drawing.Color.Crimson
+        Me.AnimatedBox1.Controls.Add(Me.PictureBox1)
+        Me.AnimatedBox1.Controls.Add(Me.Label17)
+        Me.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.AnimatedBox1.Location = New System.Drawing.Point(0, 0)
+        Me.AnimatedBox1.Name = "AnimatedBox1"
+        Me.AnimatedBox1.Size = New System.Drawing.Size(434, 59)
+        Me.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
+        Me.AnimatedBox1.TabIndex = 10
+        Me.AnimatedBox1.Text = "AnimatedBox1"
         '
         'ComplexSave
         '
-        Me.AcceptButton = Me.XenonButton1
+        Me.AcceptButton = Me.Button1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(434, 499)
-        Me.Controls.Add(Me.XenonAnimatedBox1)
-        Me.Controls.Add(Me.XenonCheckBox2)
-        Me.Controls.Add(Me.XenonButton3)
-        Me.Controls.Add(Me.XenonButton2)
-        Me.Controls.Add(Me.XenonButton1)
-        Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Controls.Add(Me.XenonGroupBox1)
+        Me.Controls.Add(Me.AnimatedBox1)
+        Me.Controls.Add(Me.CheckBox2)
+        Me.Controls.Add(Me.Button3)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -447,40 +447,40 @@ Partial Class ComplexSave
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Theme operations"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox1.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox2.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonAnimatedBox1.ResumeLayout(False)
+        Me.AnimatedBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents GroupBox1 As UI.WP.GroupBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
+    Friend WithEvents GroupBox2 As UI.WP.GroupBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonButton1 As UI.WP.Button
-    Friend WithEvents XenonButton2 As UI.WP.Button
-    Friend WithEvents XenonButton3 As UI.WP.Button
-    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents Button1 As UI.WP.Button
+    Friend WithEvents Button2 As UI.WP.Button
+    Friend WithEvents Button3 As UI.WP.Button
+    Friend WithEvents CheckBox2 As UI.WP.CheckBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
+    Friend WithEvents RadioImage1 As UI.WP.RadioImage
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonRadioImage3 As UI.WP.RadioImage
+    Friend WithEvents RadioImage3 As UI.WP.RadioImage
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
+    Friend WithEvents RadioImage2 As UI.WP.RadioImage
     Friend WithEvents Label9 As Label
-    Friend WithEvents XenonRadioImage7 As UI.WP.RadioImage
+    Friend WithEvents RadioImage7 As UI.WP.RadioImage
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonRadioImage4 As UI.WP.RadioImage
+    Friend WithEvents RadioImage4 As UI.WP.RadioImage
     Friend WithEvents Label7 As Label
-    Friend WithEvents XenonRadioImage5 As UI.WP.RadioImage
+    Friend WithEvents RadioImage5 As UI.WP.RadioImage
     Friend WithEvents Label8 As Label
-    Friend WithEvents XenonRadioImage6 As UI.WP.RadioImage
-    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents RadioImage6 As UI.WP.RadioImage
+    Friend WithEvents AnimatedBox1 As UI.WP.AnimatedBox
 End Class

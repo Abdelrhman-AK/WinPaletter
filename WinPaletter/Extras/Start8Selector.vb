@@ -57,7 +57,7 @@
         img20.Image = My.Wallpaper.Resize(64, 64)
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If img1.Checked Then My.CP.Windows81.Start = 1
         If img2.Checked Then My.CP.Windows81.Start = 2
         If img3.Checked Then My.CP.Windows81.Start = 3
@@ -81,7 +81,7 @@
         Me.Close()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 End Class

@@ -100,7 +100,7 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonComboBox_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        Private Sub ComboBox_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Try
                 If e.Delta < 0 Then
                     If SelectedIndex < Items.Count - 1 Then
@@ -115,7 +115,7 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Private Sub XenonComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        Private Sub ComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
             State = MouseState.Down
             _Shown = True
             Tmr.Enabled = True
@@ -123,7 +123,7 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
+        Private Sub ComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
             State = MouseState.Over
             _Shown = True
             Tmr.Enabled = True
@@ -133,7 +133,7 @@ Namespace UI.WP
 
         Private _Shown As Boolean = False
 
-        Private Sub XenonComboBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub ComboBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
             alpha2 = 0
             Try
@@ -145,7 +145,7 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Private Sub XenonComboBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub ComboBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             Try
                 If Not DesignMode Then
                     If Parent IsNot Nothing Then RemoveHandler Parent.BackColorChanged, AddressOf Invalidate
@@ -154,14 +154,14 @@ Namespace UI.WP
             Catch
             End Try
         End Sub
-        Private Sub XenonComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
+        Private Sub ComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
             If _Shown Then
                 Tmr2.Enabled = True
                 Tmr2.Start()
             End If
         End Sub
 
-        Private Sub XenonComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
+        Private Sub ComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
             If _Shown Then
                 Tmr2.Enabled = True
                 Tmr2.Start()

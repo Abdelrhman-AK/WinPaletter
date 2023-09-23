@@ -6,8 +6,8 @@ Public Class EditInfo
         LoadLanguage
         ApplyStyle(Me)
         Load_Info(My.CP)
-        XenonTextBox3.Font = My.Application.ConsoleFontMedium
-        XenonTextBox6.Font = My.Application.ConsoleFontMedium
+        TextBox3.Font = My.Application.ConsoleFontMedium
+        TextBox6.Font = My.Application.ConsoleFontMedium
 
     End Sub
 
@@ -22,24 +22,24 @@ Public Class EditInfo
         MyBase.OnDragOver(drgevent)
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         With My.Lang
-            If String.IsNullOrWhiteSpace(XenonTextBox1.Text) Then
+            If String.IsNullOrWhiteSpace(TextBox1.Text) Then
                 MsgBox(.EmptyName, MsgBoxStyle.Critical)
                 Exit Sub
             End If
 
-            If String.IsNullOrWhiteSpace(XenonTextBox2.Text) Then
+            If String.IsNullOrWhiteSpace(TextBox2.Text) Then
                 MsgBox(.EmptyVer, MsgBoxStyle.Critical)
                 Exit Sub
             End If
 
-            If Not IsNumeric(XenonTextBox2.Text.Replace(".", "")) Then
+            If Not IsNumeric(TextBox2.Text.Replace(".", "")) Then
                 MsgBox(.WrongVerFormat, MsgBoxStyle.Critical)
                 Exit Sub
             End If
 
-            If String.IsNullOrWhiteSpace(XenonTextBox4.Text) Then
+            If String.IsNullOrWhiteSpace(TextBox4.Text) Then
                 MsgBox(.EmptyAuthorName, MsgBoxStyle.Critical)
                 Exit Sub
             End If
@@ -55,48 +55,48 @@ Public Class EditInfo
 
     Public Sub Load_Info(ByVal [CP] As CP)
         StoreItem1.CP = [CP]
-        XenonTextBox1.Text = [CP].Info.ThemeName
-        XenonTextBox2.Text = [CP].Info.ThemeVersion
-        XenonTextBox3.Text = [CP].Info.Description
-        XenonTextBox4.Text = [CP].Info.Author
-        XenonTextBox5.Text = [CP].Info.AuthorSocialMediaLink
-        XenonTextBox6.Text = [CP].Info.License
-        XenonCheckBox7.Checked = [CP].Info.ExportResThemePack
+        TextBox1.Text = [CP].Info.ThemeName
+        TextBox2.Text = [CP].Info.ThemeVersion
+        TextBox3.Text = [CP].Info.Description
+        TextBox4.Text = [CP].Info.Author
+        TextBox5.Text = [CP].Info.AuthorSocialMediaLink
+        TextBox6.Text = [CP].Info.License
+        CheckBox7.Checked = [CP].Info.ExportResThemePack
 
         color1.BackColor = [CP].Info.Color1
         color2.BackColor = [CP].Info.Color2
-        XenonTrackbar1.Value = [CP].Info.Pattern
+        Trackbar1.Value = [CP].Info.Pattern
 
-        XenonCheckBox1.Checked = [CP].Info.DesignedFor_Win11
-        XenonCheckBox2.Checked = [CP].Info.DesignedFor_Win10
-        XenonCheckBox3.Checked = [CP].Info.DesignedFor_Win81
-        XenonCheckBox4.Checked = [CP].Info.DesignedFor_Win7
-        XenonCheckBox5.Checked = [CP].Info.DesignedFor_WinVista
-        XenonCheckBox6.Checked = [CP].Info.DesignedFor_WinXP
+        CheckBox1.Checked = [CP].Info.DesignedFor_Win11
+        CheckBox2.Checked = [CP].Info.DesignedFor_Win10
+        CheckBox3.Checked = [CP].Info.DesignedFor_Win81
+        CheckBox4.Checked = [CP].Info.DesignedFor_Win7
+        CheckBox5.Checked = [CP].Info.DesignedFor_WinVista
+        CheckBox6.Checked = [CP].Info.DesignedFor_WinXP
     End Sub
 
     Sub Save_Info(ByVal [CP] As CP)
-        [CP].Info.ThemeName = String.Concat(XenonTextBox1.Text.Split(IO.Path.GetInvalidFileNameChars())).Trim
-        [CP].Info.ThemeVersion = XenonTextBox2.Text
-        [CP].Info.Description = XenonTextBox3.Text
-        [CP].Info.Author = XenonTextBox4.Text
-        [CP].Info.AuthorSocialMediaLink = XenonTextBox5.Text
-        [CP].Info.License = XenonTextBox6.Text
-        [CP].Info.ExportResThemePack = XenonCheckBox7.Checked
+        [CP].Info.ThemeName = String.Concat(TextBox1.Text.Split(IO.Path.GetInvalidFileNameChars())).Trim
+        [CP].Info.ThemeVersion = TextBox2.Text
+        [CP].Info.Description = TextBox3.Text
+        [CP].Info.Author = TextBox4.Text
+        [CP].Info.AuthorSocialMediaLink = TextBox5.Text
+        [CP].Info.License = TextBox6.Text
+        [CP].Info.ExportResThemePack = CheckBox7.Checked
 
         [CP].Info.Color1 = color1.BackColor
         [CP].Info.Color2 = color2.BackColor
-        [CP].Info.Pattern = XenonTrackbar1.Value
+        [CP].Info.Pattern = Trackbar1.Value
 
-        [CP].Info.DesignedFor_Win11 = XenonCheckBox1.Checked
-        [CP].Info.DesignedFor_Win10 = XenonCheckBox2.Checked
-        [CP].Info.DesignedFor_Win81 = XenonCheckBox3.Checked
-        [CP].Info.DesignedFor_Win7 = XenonCheckBox4.Checked
-        [CP].Info.DesignedFor_WinVista = XenonCheckBox5.Checked
-        [CP].Info.DesignedFor_WinXP = XenonCheckBox6.Checked
+        [CP].Info.DesignedFor_Win11 = CheckBox1.Checked
+        [CP].Info.DesignedFor_Win10 = CheckBox2.Checked
+        [CP].Info.DesignedFor_Win81 = CheckBox3.Checked
+        [CP].Info.DesignedFor_Win7 = CheckBox4.Checked
+        [CP].Info.DesignedFor_WinVista = CheckBox5.Checked
+        [CP].Info.DesignedFor_WinXP = CheckBox6.Checked
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
@@ -139,7 +139,7 @@ Public Class EditInfo
         clist.Clear()
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win11 = sender.Checked
@@ -148,7 +148,7 @@ Public Class EditInfo
         End Try
     End Sub
 
-    Private Sub XenonCheckBox2_CheckedChanged(sender As Object) Handles XenonCheckBox2.CheckedChanged
+    Private Sub CheckBox2_CheckedChanged(sender As Object) Handles CheckBox2.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win10 = sender.Checked
@@ -157,7 +157,7 @@ Public Class EditInfo
         End Try
     End Sub
 
-    Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
+    Private Sub CheckBox3_CheckedChanged(sender As Object) Handles CheckBox3.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win81 = sender.Checked
@@ -166,7 +166,7 @@ Public Class EditInfo
         End Try
     End Sub
 
-    Private Sub XenonCheckBox4_CheckedChanged(sender As Object) Handles XenonCheckBox4.CheckedChanged
+    Private Sub CheckBox4_CheckedChanged(sender As Object) Handles CheckBox4.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_Win7 = sender.Checked
@@ -175,7 +175,7 @@ Public Class EditInfo
         End Try
     End Sub
 
-    Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
+    Private Sub CheckBox5_CheckedChanged(sender As Object) Handles CheckBox5.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_WinVista = sender.Checked
@@ -184,7 +184,7 @@ Public Class EditInfo
         End Try
     End Sub
 
-    Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
+    Private Sub CheckBox6_CheckedChanged(sender As Object) Handles CheckBox6.CheckedChanged
         If Not CheckAllOS() Then sender.Checked = True
         Try
             If StoreItem1.CP IsNot Nothing Then StoreItem1.CP.Info.DesignedFor_WinXP = sender.Checked
@@ -194,22 +194,22 @@ Public Class EditInfo
     End Sub
 
     Function CheckAllOS() As Boolean
-        Return XenonCheckBox1.Checked Or XenonCheckBox2.Checked Or XenonCheckBox3.Checked Or XenonCheckBox4.Checked Or XenonCheckBox5.Checked Or XenonCheckBox6.Checked
+        Return CheckBox1.Checked Or CheckBox2.Checked Or CheckBox3.Checked Or CheckBox4.Checked Or CheckBox5.Checked Or CheckBox6.Checked
     End Function
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
-        StoreItem1.UpdatePattern(XenonTrackbar1.Value)
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
+        StoreItem1.UpdatePattern(Trackbar1.Value)
     End Sub
 
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
         StoreItem1.CP.Info.ThemeName = sender.Text
     End Sub
 
-    Private Sub XenonTextBox4_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox4.TextChanged
+    Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
         StoreItem1.CP.Info.Author = sender.Text
     End Sub
 
-    Private Sub XenonTextBox2_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox2.TextChanged
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         StoreItem1.CP.Info.ThemeVersion = sender.Text
     End Sub
 

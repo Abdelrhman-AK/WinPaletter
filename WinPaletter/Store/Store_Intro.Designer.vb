@@ -24,12 +24,12 @@ Partial Class Store_Intro
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store_Intro))
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.XenonCheckBox1 = New UI.WP.CheckBox()
-        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.Button2 = New WinPaletter.UI.WP.Button()
+        Me.Button1 = New WinPaletter.UI.WP.Button()
         Me.TablessControl1 = New WinPaletter.UI.WP.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.AnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -38,29 +38,29 @@ Partial Class Store_Intro
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.Button4 = New WinPaletter.UI.WP.Button()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.Button5 = New WinPaletter.UI.WP.Button()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.Button3 = New WinPaletter.UI.WP.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.XenonAnimatedBox2 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.AnimatedBox2 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.TablessControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        Me.XenonAnimatedBox1.SuspendLayout()
+        Me.AnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -71,67 +71,67 @@ Partial Class Store_Intro
         Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
-        Me.XenonAnimatedBox2.SuspendLayout()
+        Me.AnimatedBox2.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.XenonCheckBox1)
-        Me.Panel1.Controls.Add(Me.XenonButton2)
-        Me.Panel1.Controls.Add(Me.XenonButton1)
+        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.Button2)
+        Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 330)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(660, 50)
         Me.Panel1.TabIndex = 2
         '
-        'XenonCheckBox1
+        'CheckBox1
         '
-        Me.XenonCheckBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.CheckBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.XenonCheckBox1.Checked = True
-        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(12, 13)
-        Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(464, 23)
-        Me.XenonCheckBox1.TabIndex = 2
-        Me.XenonCheckBox1.Text = "Always show this on opening WinPaletter Store"
-        Me.XenonCheckBox1.Visible = False
+        Me.CheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(12, 13)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(464, 23)
+        Me.CheckBox1.TabIndex = 2
+        Me.CheckBox1.Text = "Always show this on opening WinPaletter Store"
+        Me.CheckBox1.Visible = False
         '
-        'XenonButton2
+        'Button2
         '
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton2.DrawOnGlass = False
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = Nothing
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(482, 10)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(80, 28)
-        Me.XenonButton2.TabIndex = 1
-        Me.XenonButton2.Text = "Back"
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button2.DrawOnGlass = False
+        Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Nothing
+        Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.Button2.LineSize = 1
+        Me.Button2.Location = New System.Drawing.Point(482, 10)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(80, 28)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "Back"
+        Me.Button2.UseVisualStyleBackColor = False
         '
-        'XenonButton1
+        'Button12
         '
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton1.DrawOnGlass = False
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = Nothing
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(568, 10)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(80, 28)
-        Me.XenonButton1.TabIndex = 0
-        Me.XenonButton1.Text = "Next"
-        Me.XenonButton1.UseVisualStyleBackColor = False
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button1.DrawOnGlass = False
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = Nothing
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(568, 10)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 28)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Text = "Next"
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'TablessControl1
         '
@@ -151,28 +151,28 @@ Partial Class Store_Intro
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.Black
-        Me.TabPage1.Controls.Add(Me.XenonAnimatedBox1)
+        Me.TabPage1.Controls.Add(Me.AnimatedBox1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Size = New System.Drawing.Size(652, 302)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "0"
         '
-        'XenonAnimatedBox1
+        'AnimatedBox1
         '
-        Me.XenonAnimatedBox1.Color = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
-        Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
-        Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label2)
-        Me.XenonAnimatedBox1.Controls.Add(Me.PictureBox1)
-        Me.XenonAnimatedBox1.Controls.Add(Me.Label1)
-        Me.XenonAnimatedBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
-        Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
-        Me.XenonAnimatedBox1.Size = New System.Drawing.Size(652, 302)
-        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
-        Me.XenonAnimatedBox1.TabIndex = 0
-        Me.XenonAnimatedBox1.Text = "XenonAnimatedBox1"
+        Me.AnimatedBox1.Color = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
+        Me.AnimatedBox1.Color1 = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
+        Me.AnimatedBox1.Color2 = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.AnimatedBox1.Controls.Add(Me.Label2)
+        Me.AnimatedBox1.Controls.Add(Me.PictureBox1)
+        Me.AnimatedBox1.Controls.Add(Me.Label1)
+        Me.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AnimatedBox1.Location = New System.Drawing.Point(0, 0)
+        Me.AnimatedBox1.Name = "AnimatedBox1"
+        Me.AnimatedBox1.Size = New System.Drawing.Size(652, 302)
+        Me.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
+        Me.AnimatedBox1.TabIndex = 0
+        Me.AnimatedBox1.Text = "AnimatedBox1"
         '
         'Label2
         '
@@ -259,7 +259,7 @@ Partial Class Store_Intro
         'TabPage4
         '
         Me.TabPage4.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage4.Controls.Add(Me.XenonButton4)
+        Me.TabPage4.Controls.Add(Me.Button4)
         Me.TabPage4.Controls.Add(Me.Label7)
         Me.TabPage4.Controls.Add(Me.PictureBox4)
         Me.TabPage4.Controls.Add(Me.Label8)
@@ -269,21 +269,21 @@ Partial Class Store_Intro
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "2"
         '
-        'XenonButton4
+        'Button4
         '
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton4.DrawOnGlass = False
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = Nothing
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(23, 105)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(157, 33)
-        Me.XenonButton4.TabIndex = 8
-        Me.XenonButton4.Text = "Documentation"
-        Me.XenonButton4.UseVisualStyleBackColor = False
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button4.DrawOnGlass = False
+        Me.Button4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = Nothing
+        Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button4.LineSize = 1
+        Me.Button4.Location = New System.Drawing.Point(23, 105)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(157, 33)
+        Me.Button4.TabIndex = 8
+        Me.Button4.Text = "Documentation"
+        Me.Button4.UseVisualStyleBackColor = False
         '
         'Label7
         '
@@ -326,7 +326,7 @@ Partial Class Store_Intro
         'TabPage7
         '
         Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage7.Controls.Add(Me.XenonButton5)
+        Me.TabPage7.Controls.Add(Me.Button5)
         Me.TabPage7.Controls.Add(Me.Label14)
         Me.TabPage7.Controls.Add(Me.PictureBox6)
         Me.TabPage7.Controls.Add(Me.Label15)
@@ -336,21 +336,21 @@ Partial Class Store_Intro
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "3"
         '
-        'XenonButton5
+        'Button5
         '
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton5.DrawOnGlass = False
-        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = Nothing
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(23, 145)
-        Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(157, 33)
-        Me.XenonButton5.TabIndex = 10
-        Me.XenonButton5.Text = "Documentation"
-        Me.XenonButton5.UseVisualStyleBackColor = False
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button5.DrawOnGlass = False
+        Me.Button5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = Nothing
+        Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button5.LineSize = 1
+        Me.Button5.Location = New System.Drawing.Point(23, 145)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(157, 33)
+        Me.Button5.TabIndex = 10
+        Me.Button5.Text = "Documentation"
+        Me.Button5.UseVisualStyleBackColor = False
         '
         'Label14
         '
@@ -394,7 +394,7 @@ Partial Class Store_Intro
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage3.Controls.Add(Me.XenonButton3)
+        Me.TabPage3.Controls.Add(Me.Button3)
         Me.TabPage3.Controls.Add(Me.Label5)
         Me.TabPage3.Controls.Add(Me.PictureBox3)
         Me.TabPage3.Controls.Add(Me.Label6)
@@ -404,21 +404,21 @@ Partial Class Store_Intro
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "4"
         '
-        'XenonButton3
+        'Button3
         '
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonButton3.DrawOnGlass = False
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(23, 121)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(157, 33)
-        Me.XenonButton3.TabIndex = 6
-        Me.XenonButton3.Text = "Documentation"
-        Me.XenonButton3.UseVisualStyleBackColor = False
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button3.DrawOnGlass = False
+        Me.Button3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Nothing
+        Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button3.LineSize = 1
+        Me.Button3.Location = New System.Drawing.Point(23, 121)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(157, 33)
+        Me.Button3.TabIndex = 6
+        Me.Button3.Text = "Documentation"
+        Me.Button3.UseVisualStyleBackColor = False
         '
         'Label5
         '
@@ -461,28 +461,28 @@ Partial Class Store_Intro
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage6.Controls.Add(Me.XenonAnimatedBox2)
+        Me.TabPage6.Controls.Add(Me.AnimatedBox2)
         Me.TabPage6.Location = New System.Drawing.Point(4, 24)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Size = New System.Drawing.Size(652, 302)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "5"
         '
-        'XenonAnimatedBox2
+        'AnimatedBox2
         '
-        Me.XenonAnimatedBox2.Color = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
-        Me.XenonAnimatedBox2.Color1 = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
-        Me.XenonAnimatedBox2.Color2 = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.XenonAnimatedBox2.Controls.Add(Me.Label11)
-        Me.XenonAnimatedBox2.Controls.Add(Me.PictureBox5)
-        Me.XenonAnimatedBox2.Controls.Add(Me.Label12)
-        Me.XenonAnimatedBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.XenonAnimatedBox2.Location = New System.Drawing.Point(0, 0)
-        Me.XenonAnimatedBox2.Name = "XenonAnimatedBox2"
-        Me.XenonAnimatedBox2.Size = New System.Drawing.Size(652, 302)
-        Me.XenonAnimatedBox2.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
-        Me.XenonAnimatedBox2.TabIndex = 1
-        Me.XenonAnimatedBox2.Text = "XenonAnimatedBox2"
+        Me.AnimatedBox2.Color = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
+        Me.AnimatedBox2.Color1 = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(115, Byte), Integer), CType(CType(182, Byte), Integer))
+        Me.AnimatedBox2.Color2 = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.AnimatedBox2.Controls.Add(Me.Label11)
+        Me.AnimatedBox2.Controls.Add(Me.PictureBox5)
+        Me.AnimatedBox2.Controls.Add(Me.Label12)
+        Me.AnimatedBox2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AnimatedBox2.Location = New System.Drawing.Point(0, 0)
+        Me.AnimatedBox2.Name = "AnimatedBox2"
+        Me.AnimatedBox2.Size = New System.Drawing.Size(652, 302)
+        Me.AnimatedBox2.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
+        Me.AnimatedBox2.TabIndex = 1
+        Me.AnimatedBox2.Text = "AnimatedBox2"
         '
         'Label11
         '
@@ -539,7 +539,7 @@ Partial Class Store_Intro
         Me.Panel1.ResumeLayout(False)
         Me.TablessControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
-        Me.XenonAnimatedBox1.ResumeLayout(False)
+        Me.AnimatedBox1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -550,7 +550,7 @@ Partial Class Store_Intro
         Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage6.ResumeLayout(False)
-        Me.XenonAnimatedBox2.ResumeLayout(False)
+        Me.AnimatedBox2.ResumeLayout(False)
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -561,16 +561,16 @@ Partial Class Store_Intro
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents XenonButton2 As UI.WP.Button
-    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents Button2 As UI.WP.Button
+    Friend WithEvents Button1 As UI.WP.Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents AnimatedBox1 As UI.WP.AnimatedBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents Button3 As UI.WP.Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents PictureBox3 As PictureBox
@@ -578,16 +578,16 @@ Partial Class Store_Intro
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents Button4 As UI.WP.Button
     Friend WithEvents TabPage6 As TabPage
-    Friend WithEvents XenonAnimatedBox2 As UI.WP.AnimatedBox
+    Friend WithEvents AnimatedBox2 As UI.WP.AnimatedBox
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents CheckBox1 As UI.WP.CheckBox
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents Button5 As UI.WP.Button
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
 End Class

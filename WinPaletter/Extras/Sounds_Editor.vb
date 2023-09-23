@@ -7,12 +7,12 @@ Public Class Sounds_Editor
     Private AltPlayingMethod As Boolean = False
 #Region "Main Subs"
 
-    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click 'imageres.dll player
+    Private Sub Button20_Click(sender As Object, e As EventArgs) Handles Button20.Click 'imageres.dll player
         AltPlayingMethod = False
         snd = DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0).Text
 
 
-        If XenonTextBox2.Text.ToUpper.Trim = "CURRENT" Then
+        If TextBox2.Text.ToUpper.Trim = "CURRENT" Then
             If Not My.WXP Then
 
                 Dim SoundBytes As Byte() = PE.GetResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080))
@@ -32,7 +32,7 @@ Public Class Sounds_Editor
 
             End If
 
-        ElseIf XenonTextBox2.Text.ToUpper.Trim = "DEFAULT" Then
+        ElseIf TextBox2.Text.ToUpper.Trim = "DEFAULT" Then
             If Not My.WXP Then
 
                 Try
@@ -152,12 +152,12 @@ Public Class Sounds_Editor
     Private Sub Sounds_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyStyle(Me)
-        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
-        XenonCheckBox35_SFC.Checked = My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound
+        CheckBox35_SFC.Checked = My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound
 
         'Remove handler to avoid doubling/tripling events
-        For Each page As TabPage In XenonTabControl1.TabPages
+        For Each page As TabPage In TabControl1.TabPages
             For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
                 For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     Try
@@ -170,7 +170,7 @@ Public Class Sounds_Editor
             Next
         Next
 
-        For Each page As TabPage In XenonTabControl1.TabPages
+        For Each page As TabPage In TabControl1.TabPages
             For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
                 For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     If btn.Tag = "1" Then AddHandler btn.Click, AddressOf PressPlay
@@ -182,7 +182,7 @@ Public Class Sounds_Editor
     End Sub
 
     Private Sub Sounds_Editor_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        For Each page As TabPage In XenonTabControl1.TabPages
+        For Each page As TabPage In TabControl1.TabPages
             For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
                 For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     If btn.Tag = "1" Then RemoveHandler btn.Click, AddressOf PressPlay
@@ -200,96 +200,96 @@ Public Class Sounds_Editor
     Sub ApplyFromCP(Sounds As CP.Structures.Sounds)
         With Sounds
             SoundsEnabled.Checked = .Enabled
-            XenonTextBox1.Text = .Snd_Win_SystemStart
-            XenonTextBox2.Text = .Snd_Imageres_SystemStart
-            XenonTextBox3.Text = .Snd_Win_SystemExit
-            XenonTextBox4.Text = .Snd_Win_WindowsLogoff
-            XenonTextBox5.Text = .Snd_Win_WindowsLogon
-            XenonTextBox6.Text = .Snd_Win_WindowsUnlock
-            XenonTextBox64.Text = .Snd_Win_ChangeTheme
-            XenonTextBox7.Text = .Snd_Win_SystemQuestion
-            XenonTextBox8.Text = .Snd_Win_SystemExclamation
-            XenonTextBox9.Text = .Snd_Win_SystemAsterisk
-            XenonTextBox10.Text = .Snd_Win_SystemNotification
-            XenonTextBox11.Text = .Snd_Win_WindowsUAC
-            XenonTextBox16.Text = .Snd_Win_Open
-            XenonTextBox15.Text = .Snd_Win_Close
-            XenonTextBox14.Text = .Snd_Win_Maximize
-            XenonTextBox13.Text = .Snd_Win_Minimize
-            XenonTextBox12.Text = .Snd_Win_RestoreDown
-            XenonTextBox17.Text = .Snd_Win_RestoreUp
-            XenonTextBox53.Text = .Snd_Win_MenuPopup
-            XenonTextBox54.Text = .Snd_Win_MenuCommand
-            XenonTextBox55.Text = .Snd_Win_Default
-            XenonTextBox23.Text = .Snd_Win_Notification_Default
-            XenonTextBox22.Text = .Snd_Win_Notification_IM
-            XenonTextBox21.Text = .Snd_Win_MessageNudge
-            XenonTextBox20.Text = .Snd_Win_Notification_Mail
-            XenonTextBox65.Text = .Snd_Win_MailBeep
-            XenonTextBox19.Text = .Snd_Win_Notification_Proximity
-            XenonTextBox18.Text = .Snd_Win_Notification_Reminder
-            XenonTextBox24.Text = .Snd_Win_Notification_SMS
-            XenonTextBox31.Text = .Snd_Win_Notification_Looping_Alarm
-            XenonTextBox30.Text = .Snd_Win_Notification_Looping_Alarm2
-            XenonTextBox29.Text = .Snd_Win_Notification_Looping_Alarm3
-            XenonTextBox28.Text = .Snd_Win_Notification_Looping_Alarm4
-            XenonTextBox27.Text = .Snd_Win_Notification_Looping_Alarm5
-            XenonTextBox26.Text = .Snd_Win_Notification_Looping_Alarm6
-            XenonTextBox25.Text = .Snd_Win_Notification_Looping_Alarm7
-            XenonTextBox34.Text = .Snd_Win_Notification_Looping_Alarm8
-            XenonTextBox33.Text = .Snd_Win_Notification_Looping_Alarm9
-            XenonTextBox32.Text = .Snd_Win_Notification_Looping_Alarm10
-            XenonTextBox44.Text = .Snd_Win_Notification_Looping_Call
-            XenonTextBox43.Text = .Snd_Win_Notification_Looping_Call2
-            XenonTextBox42.Text = .Snd_Win_Notification_Looping_Call3
-            XenonTextBox41.Text = .Snd_Win_Notification_Looping_Call4
-            XenonTextBox40.Text = .Snd_Win_Notification_Looping_Call5
-            XenonTextBox39.Text = .Snd_Win_Notification_Looping_Call6
-            XenonTextBox38.Text = .Snd_Win_Notification_Looping_Call7
-            XenonTextBox37.Text = .Snd_Win_Notification_Looping_Call8
-            XenonTextBox36.Text = .Snd_Win_Notification_Looping_Call9
-            XenonTextBox35.Text = .Snd_Win_Notification_Looping_Call10
-            XenonTextBox45.Text = .Snd_Win_DeviceConnect
-            XenonTextBox46.Text = .Snd_Win_DeviceDisconnect
-            XenonTextBox47.Text = .Snd_Win_DeviceFail
-            XenonTextBox48.Text = .Snd_Win_LowBatteryAlarm
-            XenonTextBox49.Text = .Snd_Win_CriticalBatteryAlarm
-            XenonTextBox50.Text = .Snd_Win_PrintComplete
-            XenonTextBox51.Text = .Snd_Win_FaxBeep
-            XenonTextBox52.Text = .Snd_Win_ProximityConnection
-            XenonTextBox62.Text = .Snd_Explorer_Navigating
-            XenonTextBox61.Text = .Snd_Explorer_EmptyRecycleBin
-            XenonTextBox56.Text = .Snd_Explorer_MoveMenuItem
-            XenonTextBox60.Text = .Snd_Explorer_ActivatingDocument
-            XenonTextBox63.Text = .Snd_Win_ShowBand
-            XenonTextBox59.Text = .Snd_Explorer_SecurityBand
-            XenonTextBox58.Text = .Snd_Explorer_BlockedPopup
-            XenonTextBox57.Text = .Snd_Explorer_FeedDiscovered
-            XenonTextBox68.Text = .Snd_Win_AppGPFault
-            XenonTextBox67.Text = .Snd_Win_CCSelect
-            XenonTextBox66.Text = .Snd_Win_SystemHand
-            XenonTextBox75.Text = .Snd_Explorer_SearchProviderDiscovered
-            XenonTextBox76.Text = .Snd_Explorer_FaxNew
-            XenonTextBox77.Text = .Snd_Explorer_FaxSent
-            XenonTextBox79.Text = .Snd_Explorer_FaxLineRings
-            XenonTextBox78.Text = .Snd_Explorer_FaxError
-            XenonTextBox83.Text = .Snd_NetMeeting_PersonJoins
-            XenonTextBox82.Text = .Snd_NetMeeting_PersonLeaves
-            XenonTextBox80.Text = .Snd_NetMeeting_ReceiveCall
-            XenonTextBox81.Text = .Snd_NetMeeting_ReceiveRequestToJoin
-            XenonTextBox70.Text = .Snd_SpeechRec_DisNumbersSound
-            XenonTextBox74.Text = .Snd_SpeechRec_PanelSound
-            XenonTextBox69.Text = .Snd_SpeechRec_MisrecoSound
-            XenonTextBox73.Text = .Snd_SpeechRec_HubOffSound
-            XenonTextBox72.Text = .Snd_SpeechRec_HubOnSound
-            XenonTextBox71.Text = .Snd_SpeechRec_HubSleepSound
+            TextBox1.Text = .Snd_Win_SystemStart
+            TextBox2.Text = .Snd_Imageres_SystemStart
+            TextBox3.Text = .Snd_Win_SystemExit
+            TextBox4.Text = .Snd_Win_WindowsLogoff
+            TextBox5.Text = .Snd_Win_WindowsLogon
+            TextBox6.Text = .Snd_Win_WindowsUnlock
+            TextBox64.Text = .Snd_Win_ChangeTheme
+            TextBox7.Text = .Snd_Win_SystemQuestion
+            TextBox8.Text = .Snd_Win_SystemExclamation
+            TextBox9.Text = .Snd_Win_SystemAsterisk
+            TextBox10.Text = .Snd_Win_SystemNotification
+            TextBox11.Text = .Snd_Win_WindowsUAC
+            TextBox16.Text = .Snd_Win_Open
+            TextBox15.Text = .Snd_Win_Close
+            TextBox14.Text = .Snd_Win_Maximize
+            TextBox13.Text = .Snd_Win_Minimize
+            TextBox12.Text = .Snd_Win_RestoreDown
+            TextBox17.Text = .Snd_Win_RestoreUp
+            TextBox53.Text = .Snd_Win_MenuPopup
+            TextBox54.Text = .Snd_Win_MenuCommand
+            TextBox55.Text = .Snd_Win_Default
+            TextBox23.Text = .Snd_Win_Notification_Default
+            TextBox22.Text = .Snd_Win_Notification_IM
+            TextBox21.Text = .Snd_Win_MessageNudge
+            TextBox20.Text = .Snd_Win_Notification_Mail
+            TextBox65.Text = .Snd_Win_MailBeep
+            TextBox19.Text = .Snd_Win_Notification_Proximity
+            TextBox18.Text = .Snd_Win_Notification_Reminder
+            TextBox24.Text = .Snd_Win_Notification_SMS
+            TextBox31.Text = .Snd_Win_Notification_Looping_Alarm
+            TextBox30.Text = .Snd_Win_Notification_Looping_Alarm2
+            TextBox29.Text = .Snd_Win_Notification_Looping_Alarm3
+            TextBox28.Text = .Snd_Win_Notification_Looping_Alarm4
+            TextBox27.Text = .Snd_Win_Notification_Looping_Alarm5
+            TextBox26.Text = .Snd_Win_Notification_Looping_Alarm6
+            TextBox25.Text = .Snd_Win_Notification_Looping_Alarm7
+            TextBox34.Text = .Snd_Win_Notification_Looping_Alarm8
+            TextBox33.Text = .Snd_Win_Notification_Looping_Alarm9
+            TextBox32.Text = .Snd_Win_Notification_Looping_Alarm10
+            TextBox44.Text = .Snd_Win_Notification_Looping_Call
+            TextBox43.Text = .Snd_Win_Notification_Looping_Call2
+            TextBox42.Text = .Snd_Win_Notification_Looping_Call3
+            TextBox41.Text = .Snd_Win_Notification_Looping_Call4
+            TextBox40.Text = .Snd_Win_Notification_Looping_Call5
+            TextBox39.Text = .Snd_Win_Notification_Looping_Call6
+            TextBox38.Text = .Snd_Win_Notification_Looping_Call7
+            TextBox37.Text = .Snd_Win_Notification_Looping_Call8
+            TextBox36.Text = .Snd_Win_Notification_Looping_Call9
+            TextBox35.Text = .Snd_Win_Notification_Looping_Call10
+            TextBox45.Text = .Snd_Win_DeviceConnect
+            TextBox46.Text = .Snd_Win_DeviceDisconnect
+            TextBox47.Text = .Snd_Win_DeviceFail
+            TextBox48.Text = .Snd_Win_LowBatteryAlarm
+            TextBox49.Text = .Snd_Win_CriticalBatteryAlarm
+            TextBox50.Text = .Snd_Win_PrintComplete
+            TextBox51.Text = .Snd_Win_FaxBeep
+            TextBox52.Text = .Snd_Win_ProximityConnection
+            TextBox62.Text = .Snd_Explorer_Navigating
+            TextBox61.Text = .Snd_Explorer_EmptyRecycleBin
+            TextBox56.Text = .Snd_Explorer_MoveMenuItem
+            TextBox60.Text = .Snd_Explorer_ActivatingDocument
+            TextBox63.Text = .Snd_Win_ShowBand
+            TextBox59.Text = .Snd_Explorer_SecurityBand
+            TextBox58.Text = .Snd_Explorer_BlockedPopup
+            TextBox57.Text = .Snd_Explorer_FeedDiscovered
+            TextBox68.Text = .Snd_Win_AppGPFault
+            TextBox67.Text = .Snd_Win_CCSelect
+            TextBox66.Text = .Snd_Win_SystemHand
+            TextBox75.Text = .Snd_Explorer_SearchProviderDiscovered
+            TextBox76.Text = .Snd_Explorer_FaxNew
+            TextBox77.Text = .Snd_Explorer_FaxSent
+            TextBox79.Text = .Snd_Explorer_FaxLineRings
+            TextBox78.Text = .Snd_Explorer_FaxError
+            TextBox83.Text = .Snd_NetMeeting_PersonJoins
+            TextBox82.Text = .Snd_NetMeeting_PersonLeaves
+            TextBox80.Text = .Snd_NetMeeting_ReceiveCall
+            TextBox81.Text = .Snd_NetMeeting_ReceiveRequestToJoin
+            TextBox70.Text = .Snd_SpeechRec_DisNumbersSound
+            TextBox74.Text = .Snd_SpeechRec_PanelSound
+            TextBox69.Text = .Snd_SpeechRec_MisrecoSound
+            TextBox73.Text = .Snd_SpeechRec_HubOffSound
+            TextBox72.Text = .Snd_SpeechRec_HubOnSound
+            TextBox71.Text = .Snd_SpeechRec_HubSleepSound
 
-            XenonCheckBox1.Checked = .Snd_Win_SystemExit_TaskMgmt
-            XenonCheckBox2.Checked = .Snd_Win_WindowsLogoff_TaskMgmt
-            XenonCheckBox3.Checked = .Snd_Win_WindowsLogon_TaskMgmt
-            XenonCheckBox4.Checked = .Snd_Win_WindowsUnlock_TaskMgmt
+            CheckBox1.Checked = .Snd_Win_SystemExit_TaskMgmt
+            CheckBox2.Checked = .Snd_Win_WindowsLogoff_TaskMgmt
+            CheckBox3.Checked = .Snd_Win_WindowsLogon_TaskMgmt
+            CheckBox4.Checked = .Snd_Win_WindowsUnlock_TaskMgmt
 
-            XenonTextBox84.Text = .Snd_ChargerConnected
+            TextBox84.Text = .Snd_ChargerConnected
         End With
 
     End Sub
@@ -297,95 +297,95 @@ Public Class Sounds_Editor
     Sub ApplyToCP(CP As CP)
         With CP.Sounds
             .Enabled = SoundsEnabled.Checked
-            .Snd_Win_SystemStart = XenonTextBox1.Text
-            .Snd_Imageres_SystemStart = XenonTextBox2.Text
-            .Snd_Win_SystemExit = XenonTextBox3.Text
-            .Snd_Win_WindowsLogoff = XenonTextBox4.Text
-            .Snd_Win_WindowsLogon = XenonTextBox5.Text
-            .Snd_Win_WindowsUnlock = XenonTextBox6.Text
-            .Snd_Win_ChangeTheme = XenonTextBox64.Text
-            .Snd_Win_SystemQuestion = XenonTextBox7.Text
-            .Snd_Win_SystemExclamation = XenonTextBox8.Text
-            .Snd_Win_SystemAsterisk = XenonTextBox9.Text
-            .Snd_Win_SystemHand = XenonTextBox66.Text
-            .Snd_Win_SystemNotification = XenonTextBox10.Text
-            .Snd_Win_WindowsUAC = XenonTextBox11.Text
-            .Snd_Win_Open = XenonTextBox16.Text
-            .Snd_Win_Close = XenonTextBox15.Text
-            .Snd_Win_Maximize = XenonTextBox14.Text
-            .Snd_Win_Minimize = XenonTextBox13.Text
-            .Snd_Win_RestoreDown = XenonTextBox12.Text
-            .Snd_Win_RestoreUp = XenonTextBox17.Text
-            .Snd_Win_MenuPopup = XenonTextBox53.Text
-            .Snd_Win_MenuCommand = XenonTextBox54.Text
-            .Snd_Win_Default = XenonTextBox55.Text
-            .Snd_Win_Notification_Default = XenonTextBox23.Text
-            .Snd_Win_Notification_IM = XenonTextBox22.Text
-            .Snd_Win_MessageNudge = XenonTextBox21.Text
-            .Snd_Win_Notification_Mail = XenonTextBox20.Text
-            .Snd_Win_MailBeep = XenonTextBox65.Text
-            .Snd_Win_Notification_Proximity = XenonTextBox19.Text
-            .Snd_Win_Notification_Reminder = XenonTextBox18.Text
-            .Snd_Win_Notification_SMS = XenonTextBox24.Text
-            .Snd_Win_Notification_Looping_Alarm = XenonTextBox31.Text
-            .Snd_Win_Notification_Looping_Alarm2 = XenonTextBox30.Text
-            .Snd_Win_Notification_Looping_Alarm3 = XenonTextBox29.Text
-            .Snd_Win_Notification_Looping_Alarm4 = XenonTextBox28.Text
-            .Snd_Win_Notification_Looping_Alarm5 = XenonTextBox27.Text
-            .Snd_Win_Notification_Looping_Alarm6 = XenonTextBox26.Text
-            .Snd_Win_Notification_Looping_Alarm7 = XenonTextBox25.Text
-            .Snd_Win_Notification_Looping_Alarm8 = XenonTextBox34.Text
-            .Snd_Win_Notification_Looping_Alarm9 = XenonTextBox33.Text
-            .Snd_Win_Notification_Looping_Alarm10 = XenonTextBox32.Text
-            .Snd_Win_Notification_Looping_Call = XenonTextBox44.Text
-            .Snd_Win_Notification_Looping_Call2 = XenonTextBox43.Text
-            .Snd_Win_Notification_Looping_Call3 = XenonTextBox42.Text
-            .Snd_Win_Notification_Looping_Call4 = XenonTextBox41.Text
-            .Snd_Win_Notification_Looping_Call5 = XenonTextBox40.Text
-            .Snd_Win_Notification_Looping_Call6 = XenonTextBox39.Text
-            .Snd_Win_Notification_Looping_Call7 = XenonTextBox38.Text
-            .Snd_Win_Notification_Looping_Call8 = XenonTextBox37.Text
-            .Snd_Win_Notification_Looping_Call9 = XenonTextBox36.Text
-            .Snd_Win_Notification_Looping_Call10 = XenonTextBox35.Text
-            .Snd_Win_DeviceConnect = XenonTextBox45.Text
-            .Snd_Win_DeviceDisconnect = XenonTextBox46.Text
-            .Snd_Win_DeviceFail = XenonTextBox47.Text
-            .Snd_Win_LowBatteryAlarm = XenonTextBox48.Text
-            .Snd_Win_CriticalBatteryAlarm = XenonTextBox49.Text
-            .Snd_Win_PrintComplete = XenonTextBox50.Text
-            .Snd_Win_FaxBeep = XenonTextBox51.Text
-            .Snd_Win_ProximityConnection = XenonTextBox52.Text
-            .Snd_Explorer_Navigating = XenonTextBox62.Text
-            .Snd_Explorer_EmptyRecycleBin = XenonTextBox61.Text
-            .Snd_Explorer_MoveMenuItem = XenonTextBox56.Text
-            .Snd_Explorer_ActivatingDocument = XenonTextBox60.Text
-            .Snd_Win_ShowBand = XenonTextBox63.Text
-            .Snd_Explorer_SecurityBand = XenonTextBox59.Text
-            .Snd_Explorer_BlockedPopup = XenonTextBox58.Text
-            .Snd_Explorer_FeedDiscovered = XenonTextBox57.Text
-            .Snd_Win_AppGPFault = XenonTextBox68.Text
-            .Snd_Win_CCSelect = XenonTextBox67.Text
-            .Snd_Explorer_SearchProviderDiscovered = XenonTextBox75.Text
-            .Snd_Explorer_FaxNew = XenonTextBox76.Text
-            .Snd_Explorer_FaxSent = XenonTextBox77.Text
-            .Snd_Explorer_FaxLineRings = XenonTextBox79.Text
-            .Snd_Explorer_FaxError = XenonTextBox78.Text
-            .Snd_NetMeeting_PersonJoins = XenonTextBox83.Text
-            .Snd_NetMeeting_PersonLeaves = XenonTextBox82.Text
-            .Snd_NetMeeting_ReceiveCall = XenonTextBox80.Text
-            .Snd_NetMeeting_ReceiveRequestToJoin = XenonTextBox81.Text
-            .Snd_SpeechRec_DisNumbersSound = XenonTextBox70.Text
-            .Snd_SpeechRec_PanelSound = XenonTextBox74.Text
-            .Snd_SpeechRec_MisrecoSound = XenonTextBox69.Text
-            .Snd_SpeechRec_HubOffSound = XenonTextBox73.Text
-            .Snd_SpeechRec_HubOnSound = XenonTextBox72.Text
-            .Snd_SpeechRec_HubSleepSound = XenonTextBox71.Text
+            .Snd_Win_SystemStart = TextBox1.Text
+            .Snd_Imageres_SystemStart = TextBox2.Text
+            .Snd_Win_SystemExit = TextBox3.Text
+            .Snd_Win_WindowsLogoff = TextBox4.Text
+            .Snd_Win_WindowsLogon = TextBox5.Text
+            .Snd_Win_WindowsUnlock = TextBox6.Text
+            .Snd_Win_ChangeTheme = TextBox64.Text
+            .Snd_Win_SystemQuestion = TextBox7.Text
+            .Snd_Win_SystemExclamation = TextBox8.Text
+            .Snd_Win_SystemAsterisk = TextBox9.Text
+            .Snd_Win_SystemHand = TextBox66.Text
+            .Snd_Win_SystemNotification = TextBox10.Text
+            .Snd_Win_WindowsUAC = TextBox11.Text
+            .Snd_Win_Open = TextBox16.Text
+            .Snd_Win_Close = TextBox15.Text
+            .Snd_Win_Maximize = TextBox14.Text
+            .Snd_Win_Minimize = TextBox13.Text
+            .Snd_Win_RestoreDown = TextBox12.Text
+            .Snd_Win_RestoreUp = TextBox17.Text
+            .Snd_Win_MenuPopup = TextBox53.Text
+            .Snd_Win_MenuCommand = TextBox54.Text
+            .Snd_Win_Default = TextBox55.Text
+            .Snd_Win_Notification_Default = TextBox23.Text
+            .Snd_Win_Notification_IM = TextBox22.Text
+            .Snd_Win_MessageNudge = TextBox21.Text
+            .Snd_Win_Notification_Mail = TextBox20.Text
+            .Snd_Win_MailBeep = TextBox65.Text
+            .Snd_Win_Notification_Proximity = TextBox19.Text
+            .Snd_Win_Notification_Reminder = TextBox18.Text
+            .Snd_Win_Notification_SMS = TextBox24.Text
+            .Snd_Win_Notification_Looping_Alarm = TextBox31.Text
+            .Snd_Win_Notification_Looping_Alarm2 = TextBox30.Text
+            .Snd_Win_Notification_Looping_Alarm3 = TextBox29.Text
+            .Snd_Win_Notification_Looping_Alarm4 = TextBox28.Text
+            .Snd_Win_Notification_Looping_Alarm5 = TextBox27.Text
+            .Snd_Win_Notification_Looping_Alarm6 = TextBox26.Text
+            .Snd_Win_Notification_Looping_Alarm7 = TextBox25.Text
+            .Snd_Win_Notification_Looping_Alarm8 = TextBox34.Text
+            .Snd_Win_Notification_Looping_Alarm9 = TextBox33.Text
+            .Snd_Win_Notification_Looping_Alarm10 = TextBox32.Text
+            .Snd_Win_Notification_Looping_Call = TextBox44.Text
+            .Snd_Win_Notification_Looping_Call2 = TextBox43.Text
+            .Snd_Win_Notification_Looping_Call3 = TextBox42.Text
+            .Snd_Win_Notification_Looping_Call4 = TextBox41.Text
+            .Snd_Win_Notification_Looping_Call5 = TextBox40.Text
+            .Snd_Win_Notification_Looping_Call6 = TextBox39.Text
+            .Snd_Win_Notification_Looping_Call7 = TextBox38.Text
+            .Snd_Win_Notification_Looping_Call8 = TextBox37.Text
+            .Snd_Win_Notification_Looping_Call9 = TextBox36.Text
+            .Snd_Win_Notification_Looping_Call10 = TextBox35.Text
+            .Snd_Win_DeviceConnect = TextBox45.Text
+            .Snd_Win_DeviceDisconnect = TextBox46.Text
+            .Snd_Win_DeviceFail = TextBox47.Text
+            .Snd_Win_LowBatteryAlarm = TextBox48.Text
+            .Snd_Win_CriticalBatteryAlarm = TextBox49.Text
+            .Snd_Win_PrintComplete = TextBox50.Text
+            .Snd_Win_FaxBeep = TextBox51.Text
+            .Snd_Win_ProximityConnection = TextBox52.Text
+            .Snd_Explorer_Navigating = TextBox62.Text
+            .Snd_Explorer_EmptyRecycleBin = TextBox61.Text
+            .Snd_Explorer_MoveMenuItem = TextBox56.Text
+            .Snd_Explorer_ActivatingDocument = TextBox60.Text
+            .Snd_Win_ShowBand = TextBox63.Text
+            .Snd_Explorer_SecurityBand = TextBox59.Text
+            .Snd_Explorer_BlockedPopup = TextBox58.Text
+            .Snd_Explorer_FeedDiscovered = TextBox57.Text
+            .Snd_Win_AppGPFault = TextBox68.Text
+            .Snd_Win_CCSelect = TextBox67.Text
+            .Snd_Explorer_SearchProviderDiscovered = TextBox75.Text
+            .Snd_Explorer_FaxNew = TextBox76.Text
+            .Snd_Explorer_FaxSent = TextBox77.Text
+            .Snd_Explorer_FaxLineRings = TextBox79.Text
+            .Snd_Explorer_FaxError = TextBox78.Text
+            .Snd_NetMeeting_PersonJoins = TextBox83.Text
+            .Snd_NetMeeting_PersonLeaves = TextBox82.Text
+            .Snd_NetMeeting_ReceiveCall = TextBox80.Text
+            .Snd_NetMeeting_ReceiveRequestToJoin = TextBox81.Text
+            .Snd_SpeechRec_DisNumbersSound = TextBox70.Text
+            .Snd_SpeechRec_PanelSound = TextBox74.Text
+            .Snd_SpeechRec_MisrecoSound = TextBox69.Text
+            .Snd_SpeechRec_HubOffSound = TextBox73.Text
+            .Snd_SpeechRec_HubOnSound = TextBox72.Text
+            .Snd_SpeechRec_HubSleepSound = TextBox71.Text
 
-            .Snd_Win_SystemExit_TaskMgmt = XenonCheckBox1.Checked
-            .Snd_Win_WindowsLogoff_TaskMgmt = XenonCheckBox2.Checked
-            .Snd_Win_WindowsLogon_TaskMgmt = XenonCheckBox3.Checked
-            .Snd_Win_WindowsUnlock_TaskMgmt = XenonCheckBox4.Checked
-            .Snd_ChargerConnected = XenonTextBox84.Text
+            .Snd_Win_SystemExit_TaskMgmt = CheckBox1.Checked
+            .Snd_Win_WindowsLogoff_TaskMgmt = CheckBox2.Checked
+            .Snd_Win_WindowsLogon_TaskMgmt = CheckBox3.Checked
+            .Snd_Win_WindowsUnlock_TaskMgmt = CheckBox4.Checked
+            .Snd_ChargerConnected = TextBox84.Text
         End With
     End Sub
 
@@ -393,7 +393,7 @@ Public Class Sounds_Editor
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             ApplyFromCP(CPx)
@@ -401,30 +401,30 @@ Public Class Sounds_Editor
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyFromCP(CPx)
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
             ApplyFromCP(_Def)
         End Using
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = XenonCheckBox35_SFC.Checked
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked
         My.Settings.Save(XeSettings.Mode.Registry)
 
         ApplyToCP(My.CP)
         Close()
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         Cursor = Cursors.WaitCursor
 
-        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = XenonCheckBox35_SFC.Checked
+        My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked
         My.Settings.Save(XeSettings.Mode.Registry)
 
         Dim CPx As New CP(CP.CP_Type.Registry)
@@ -435,23 +435,23 @@ Public Class Sounds_Editor
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Close()
     End Sub
 
-    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
-        XenonTextBox2.Text = "Default"
+    Private Sub Button22_Click(sender As Object, e As EventArgs) Handles Button22.Click
+        TextBox2.Text = "Default"
     End Sub
 
-    Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        XenonTextBox2.Text = ""
+    Private Sub Button23_Click(sender As Object, e As EventArgs) Handles Button23.Click
+        TextBox2.Text = ""
     End Sub
 
-    Private Sub XenonButton24_Click(sender As Object, e As EventArgs) Handles XenonButton24.Click
-        XenonTextBox2.Text = "Current"
+    Private Sub Button24_Click(sender As Object, e As EventArgs) Handles Button24.Click
+        TextBox2.Text = "Current"
     End Sub
 
-    Private Sub XenonButton259_Click(sender As Object, e As EventArgs) Handles XenonButton259.Click
+    Private Sub Button259_Click(sender As Object, e As EventArgs) Handles Button259.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
             Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
                 GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds)

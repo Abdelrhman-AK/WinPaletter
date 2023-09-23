@@ -175,7 +175,7 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="XenonButton9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAYRJREFUOE/N
         krtPwkAcx6uLMTqoic8YaaE8apEU1MTFxbmjJi4uuDq6uPkXOJgYYVOeeuFlEYJAYpzdXBwgLEKf0IoL
@@ -187,7 +187,7 @@
         VQNwZQP4SnoESY7YUncGH/83EMQX2NG5dvdkTj4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAYRJREFUOE/N
         krtPwkAcx6uLMTqoic8YaaE8apEU1MTFxbmjJi4uuDq6uPkXOJgYYVOeeuFlEYJAYpzdXBwgLEKf0IoL
@@ -199,7 +199,7 @@
         VQNwZQP4SnoESY7YUncGH/83EMQX2NG5dvdkTj4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAYRJREFUOE/N
         krtPwkAcx6uLMTqoic8YaaE8apEU1MTFxbmjJi4uuDq6uPkXOJgYYVOeeuFlEYJAYpzdXBwgLEKf0IoL
@@ -211,7 +211,7 @@
         VQNwZQP4SnoESY7YUncGH/83EMQX2NG5dvdkTj4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAYRJREFUOE/N
         krtPwkAcx6uLMTqoic8YaaE8apEU1MTFxbmjJi4uuDq6uPkXOJgYYVOeeuFlEYJAYpzdXBwgLEKf0IoL
@@ -223,7 +223,7 @@
         VQNwZQP4SnoESY7YUncGH/83EMQX2NG5dvdkTj4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAaFJREFUOE/V
         k01LAkEYx+3QoVNEUFbka7qrbm5QBN2jj9C9Y3ToewgFgSR6inQza9s0jRDrGn6COoSU6L7MbqsgRHSI
@@ -236,7 +236,7 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="XenonButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAllJREFUOE/N
         lN9rUlEcwK1Vgyn+CKNFD4MGSdGWUPQQRAU99hr0F/jQy6T3geFD2vXq1OvVfPDBGFumhEV3ioqoOEX8
@@ -252,7 +252,7 @@
         fwcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAAONJREFUOE/tjr0KglAUgKXeoRp6icboRRqbeoWGIO7UCwkO/iIGKhoOiqCio61F
@@ -262,7 +262,7 @@
         AAk1qKOSxFYXAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAAo9JREFUOE+VkktPE2EUhmehG/+GOxKjGDcmlBA0+heMW5QENeEiUNSVITEoCxdq
@@ -279,7 +279,7 @@
         CNx+gtVEDPMHzDdgKf4qPc4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAAeVJREFUOE+9
         011LFFEcx/EJ8l0Yu7JbZtnquoqzprYPrTq7zey4y64uEoHkIJVID/gQYlF5FwTSVdB19D4iKOoquq90

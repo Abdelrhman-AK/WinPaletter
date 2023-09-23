@@ -86,11 +86,11 @@ Namespace UI.Controllers
             Invalidate()
         End Sub
 
-        Private Sub XenonButton_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+        Private Sub Button_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
             Pressed = False : Invalidate()
         End Sub
 
-        Private Sub XenonItemSelection_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
+        Private Sub ItemSelection_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
             Pressed = True
             BringToFront()
             Focus()

@@ -155,11 +155,11 @@ Namespace UI.Simulation
             ProcessBack()
             Refresh()
         End Sub
-        Public Sub SetMetrics([XenonWindow] As Window)
-            [XenonWindow].Metrics_BorderWidth = Metrics_BorderWidth
-            [XenonWindow].Metrics_CaptionHeight = Metrics_CaptionHeight
-            [XenonWindow].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
-            [XenonWindow].Refresh()
+        Public Sub SetMetrics([Window] As Window)
+            [Window].Metrics_BorderWidth = Metrics_BorderWidth
+            [Window].Metrics_CaptionHeight = Metrics_CaptionHeight
+            [Window].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
+            [Window].Refresh()
         End Sub
         Sub AdjustPadding()
             Dim i, iTop As Integer
@@ -937,7 +937,7 @@ Namespace UI.Simulation
 
         End Sub
 
-        Private Sub XenonWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub Window_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             If Not DesignMode Then
                 Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
                 Try : AddHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
@@ -946,7 +946,7 @@ Namespace UI.Simulation
             ProcessBack()
         End Sub
 
-        Private Sub XenonWindow_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub Window_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
                 Try : RemoveHandler FontChanged, AddressOf AdjustPadding : Catch : End Try

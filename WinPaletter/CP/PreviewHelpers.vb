@@ -804,7 +804,7 @@ Public Class PreviewHelpers
 
     End Sub
     Public Shared Sub ApplyWinElementsStyle([CP] As CP, [Style] As WindowStyle, Taskbar As UI.Simulation.WinElement, Start As UI.Simulation.WinElement, ActionCenter As UI.Simulation.WinElement,
-                                         XenonWindow1 As UI.Simulation.Window, XenonWindow2 As UI.Simulation.Window,
+                                         Window1 As UI.Simulation.Window, Window2 As UI.Simulation.Window,
                                          Settings_Container As Panel, Link_preview As Label,
                                          ClassicTaskbar As UI.Retro.PanelRaisedR, ClassicStartButton As UI.Retro.ButtonR, ClassicAppButton1 As UI.Retro.ButtonR, ClassicAppButton2 As UI.Retro.ButtonR,
                                          ClassicWindow1 As UI.Retro.WindowR, ClassicWindow2 As UI.Retro.WindowR,
@@ -815,13 +815,13 @@ Public Class PreviewHelpers
         Taskbar.SuspendRefresh = True
         Start.SuspendRefresh = True
         ActionCenter.SuspendRefresh = True
-        XenonWindow1.SuspendRefresh = True
-        XenonWindow2.SuspendRefresh = True
+        Window1.SuspendRefresh = True
+        Window2.SuspendRefresh = True
 
         Dim AC_Style As UI.Simulation.WinElement.Styles = ActionCenter.Style
         Dim Start_Style As UI.Simulation.WinElement.Styles = Start.Style
         Dim Taskbar_Style As UI.Simulation.WinElement.Styles = Taskbar.Style
-        Dim XenonWindow_Style As UI.Simulation.Window.Preview_Enum = XenonWindow1.Preview
+        Dim Window_Style As UI.Simulation.Window.Preview_Enum = Window1.Preview
 
         Settings_Container.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
         Link_preview.Visible = ([Style] = WindowStyle.W11 Or [Style] = WindowStyle.W10)
@@ -830,7 +830,7 @@ Public Class PreviewHelpers
 
         Select Case [Style]
             Case WindowStyle.W11
-                XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W11
+                Window_Style = UI.Simulation.Window.Preview_Enum.W11
 
                 AC_Style = UI.Simulation.WinElement.Styles.ActionCenter11
 
@@ -854,29 +854,29 @@ Public Class PreviewHelpers
                 End If
 
             Case WindowStyle.W10
-                XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W10
+                Window_Style = UI.Simulation.Window.Preview_Enum.W10
                 AC_Style = UI.Simulation.WinElement.Styles.ActionCenter10
                 Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar10
                 Start_Style = UI.Simulation.WinElement.Styles.Start10
 
             Case WindowStyle.W81
-                XenonWindow_Style = If(CP.Windows81.Theme = Structures.Windows7.Themes.AeroLite, UI.Simulation.Window.Preview_Enum.W8Lite, UI.Simulation.Window.Preview_Enum.W8)
+                Window_Style = If(CP.Windows81.Theme = Structures.Windows7.Themes.AeroLite, UI.Simulation.Window.Preview_Enum.W8Lite, UI.Simulation.Window.Preview_Enum.W8)
                 Taskbar_Style = If(CP.Windows81.Theme = Structures.Windows7.Themes.Aero, UI.Simulation.WinElement.Styles.Taskbar8Aero, UI.Simulation.WinElement.Styles.Taskbar8Lite)
 
             Case WindowStyle.W7
                 Select Case CP.Windows7.Theme
                     Case Structures.Windows7.Themes.Aero
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Aero
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Aero
                         Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Aero
                         Start_Style = UI.Simulation.WinElement.Styles.Start7Aero
 
                     Case Structures.Windows7.Themes.AeroOpaque
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Opaque
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Opaque
                         Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Opaque
                         Start_Style = UI.Simulation.WinElement.Styles.Start7Opaque
 
                     Case Structures.Windows7.Themes.Basic
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Basic
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Basic
                         Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Basic
                         Start_Style = UI.Simulation.WinElement.Styles.Start7Basic
 
@@ -885,24 +885,24 @@ Public Class PreviewHelpers
             Case WindowStyle.WVista
                 Select Case CP.WindowsVista.Theme     'Windows Vista uses the same aero of Windows 7
                     Case Structures.Windows7.Themes.Aero
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Aero
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Aero
                         Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaAero
                         Start_Style = UI.Simulation.WinElement.Styles.StartVistaAero
 
                     Case Structures.Windows7.Themes.AeroOpaque
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Opaque
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Opaque
                         Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaOpaque
                         Start_Style = UI.Simulation.WinElement.Styles.StartVistaOpaque
 
                     Case Structures.Windows7.Themes.Basic
-                        XenonWindow_Style = UI.Simulation.Window.Preview_Enum.W7Basic
+                        Window_Style = UI.Simulation.Window.Preview_Enum.W7Basic
                         Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaBasic
                         Start_Style = UI.Simulation.WinElement.Styles.StartVistaBasic
 
                 End Select
 
             Case WindowStyle.WXP
-                XenonWindow_Style = UI.Simulation.Window.Preview_Enum.WXP
+                Window_Style = UI.Simulation.Window.Preview_Enum.WXP
                 Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarXP
                 Start_Style = UI.Simulation.WinElement.Styles.StartXP
 
@@ -962,16 +962,16 @@ Public Class PreviewHelpers
                 End If
 
         End Select
-        XenonWindow1.Preview = XenonWindow_Style
+        Window1.Preview = Window_Style
         Start.Style = Start_Style
         Taskbar.Style = Taskbar_Style
         ActionCenter.Style = AC_Style
-        XenonWindow1.WinVista = ([Style] = WindowStyle.WVista)
-        XenonWindow2.WinVista = ([Style] = WindowStyle.WVista)
-        XenonWindow2.Preview = XenonWindow1.Preview
+        Window1.WinVista = ([Style] = WindowStyle.WVista)
+        Window2.WinVista = ([Style] = WindowStyle.WVista)
+        Window2.Preview = Window1.Preview
 
-        SetModernWindowMetrics([CP], XenonWindow1)
-        SetModernWindowMetrics([CP], XenonWindow2)
+        SetModernWindowMetrics([CP], Window1)
+        SetModernWindowMetrics([CP], Window2)
         SetClassicWindowMetrics([CP], ClassicWindow1)
         SetClassicWindowMetrics([CP], ClassicWindow2)
         SetClassicWindowColors([CP], ClassicWindow1)
@@ -1171,20 +1171,20 @@ Public Class PreviewHelpers
         End Select
 
         If ([Style] = WindowStyle.W10 And Not [CP].WindowsEffects.FullScreenStartMenu) Or [Style] = WindowStyle.W11 Then
-            XenonWindow1.Left = Start.Right + (XenonWindow1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - XenonWindow1.Width) / 2
+            Window1.Left = Start.Right + (Window1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - Window1.Width) / 2
         Else
-            XenonWindow1.Left = (XenonWindow1.Parent.Width - XenonWindow1.Width) / 2
+            Window1.Left = (Window1.Parent.Width - Window1.Width) / 2
         End If
 
-        XenonWindow1.Top = (XenonWindow1.Parent.Height - Taskbar.Height - (XenonWindow1.Height + XenonWindow2.Height)) / 2
-        XenonWindow2.Top = XenonWindow1.Bottom
-        XenonWindow2.Left = XenonWindow1.Left
+        Window1.Top = (Window1.Parent.Height - Taskbar.Height - (Window1.Height + Window2.Height)) / 2
+        Window2.Top = Window1.Bottom
+        Window2.Left = Window1.Left
 
         Taskbar.SuspendRefresh = False
         Start.SuspendRefresh = False
         ActionCenter.SuspendRefresh = False
-        XenonWindow1.SuspendRefresh = False
-        XenonWindow2.SuspendRefresh = False
+        Window1.SuspendRefresh = False
+        Window2.SuspendRefresh = False
 
         Taskbar.NoiseBack()
         Start.NoiseBack()
@@ -1193,60 +1193,60 @@ Public Class PreviewHelpers
         Taskbar.ProcessBack()
         Start.ProcessBack()
         ActionCenter.ProcessBack()
-        XenonWindow1.ProcessBack()
-        XenonWindow2.ProcessBack()
+        Window1.ProcessBack()
+        Window2.ProcessBack()
 
         Taskbar.Invalidate()
         Start.Invalidate()
         ActionCenter.Invalidate()
-        XenonWindow1.Invalidate()
-        XenonWindow2.Invalidate()
+        Window1.Invalidate()
+        Window2.Invalidate()
 
     End Sub
-    Public Shared Sub ApplyWindowStyles([CP] As CP, [Style] As WindowStyle, XenonWindow1 As UI.Simulation.Window, XenonWindow2 As UI.Simulation.Window, Optional StartButton As UI.WP.Button = Nothing, Optional LogonUIButton As UI.WP.Button = Nothing)
-        XenonWindow1.Active = True
-        XenonWindow2.Active = False
+    Public Shared Sub ApplyWindowStyles([CP] As CP, [Style] As WindowStyle, Window1 As UI.Simulation.Window, Window2 As UI.Simulation.Window, Optional StartButton As UI.WP.Button = Nothing, Optional LogonUIButton As UI.WP.Button = Nothing)
+        Window1.Active = True
+        Window2.Active = False
 
         If ExplorerPatcher.IsAllowed Then My.EP = New ExplorerPatcher
 
-        XenonWindow1.SuspendRefresh = True
-        XenonWindow2.SuspendRefresh = True
+        Window1.SuspendRefresh = True
+        Window2.SuspendRefresh = True
 
         Select Case [Style]
             Case WindowStyle.W11
 #Region "Win11"
-                XenonWindow1.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
-                XenonWindow2.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
+                Window1.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
+                Window2.AccentColor_Enabled = [CP].Windows11.ApplyAccentOnTitlebars
 
-                XenonWindow1.AccentColor_Active = [CP].Windows11.Titlebar_Active
-                XenonWindow2.AccentColor_Active = [CP].Windows11.Titlebar_Active
+                Window1.AccentColor_Active = [CP].Windows11.Titlebar_Active
+                Window2.AccentColor_Active = [CP].Windows11.Titlebar_Active
 
-                XenonWindow1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
-                XenonWindow2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+                Window1.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
+                Window2.AccentColor_Inactive = [CP].Windows11.Titlebar_Inactive
 
-                XenonWindow1.DarkMode = Not [CP].Windows11.AppMode_Light
-                XenonWindow2.DarkMode = Not [CP].Windows11.AppMode_Light
+                Window1.DarkMode = Not [CP].Windows11.AppMode_Light
+                Window2.DarkMode = Not [CP].Windows11.AppMode_Light
 
-                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
-                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+                Window1.Shadow = [CP].WindowsEffects.WindowShadow
+                Window2.Shadow = [CP].WindowsEffects.WindowShadow
 
 #End Region
             Case WindowStyle.W10
 #Region "Win10"
-                XenonWindow1.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
-                XenonWindow2.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
+                Window1.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
+                Window2.AccentColor_Enabled = [CP].Windows10.ApplyAccentOnTitlebars
 
-                XenonWindow1.AccentColor_Active = [CP].Windows10.Titlebar_Active
-                XenonWindow2.AccentColor_Active = [CP].Windows10.Titlebar_Active
+                Window1.AccentColor_Active = [CP].Windows10.Titlebar_Active
+                Window2.AccentColor_Active = [CP].Windows10.Titlebar_Active
 
-                XenonWindow1.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
-                XenonWindow2.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+                Window1.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
+                Window2.AccentColor_Inactive = [CP].Windows10.Titlebar_Inactive
 
-                XenonWindow1.DarkMode = Not [CP].Windows10.AppMode_Light
-                XenonWindow2.DarkMode = Not [CP].Windows10.AppMode_Light
+                Window1.DarkMode = Not [CP].Windows10.AppMode_Light
+                Window2.DarkMode = Not [CP].Windows10.AppMode_Light
 
-                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
-                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+                Window1.Shadow = [CP].WindowsEffects.WindowShadow
+                Window2.Shadow = [CP].WindowsEffects.WindowShadow
 #End Region
             Case WindowStyle.W81
 #Region "Win8.1"
@@ -1259,18 +1259,18 @@ Public Class PreviewHelpers
 
                 Select Case [CP].Windows81.Theme
                     Case CP.Structures.Windows7.Themes.Aero
-                        XenonWindow1.Preview = UI.Simulation.Window.Preview_Enum.W8
-                        XenonWindow2.Preview = UI.Simulation.Window.Preview_Enum.W8
+                        Window1.Preview = UI.Simulation.Window.Preview_Enum.W8
+                        Window2.Preview = UI.Simulation.Window.Preview_Enum.W8
                     Case CP.Structures.Windows7.Themes.AeroLite
-                        XenonWindow1.Preview = UI.Simulation.Window.Preview_Enum.W8Lite
-                        XenonWindow2.Preview = UI.Simulation.Window.Preview_Enum.W8Lite
+                        Window1.Preview = UI.Simulation.Window.Preview_Enum.W8Lite
+                        Window2.Preview = UI.Simulation.Window.Preview_Enum.W8Lite
                 End Select
 
-                XenonWindow1.AccentColor_Active = [CP].Windows81.ColorizationColor
-                XenonWindow1.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
+                Window1.AccentColor_Active = [CP].Windows81.ColorizationColor
+                Window1.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
 
-                XenonWindow2.AccentColor_Active = [CP].Windows81.ColorizationColor
-                XenonWindow2.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
+                Window2.AccentColor_Active = [CP].Windows81.ColorizationColor
+                Window2.Win7ColorBal = [CP].Windows81.ColorizationColorBalance
 
 #End Region
             Case WindowStyle.W7
@@ -1279,12 +1279,12 @@ Public Class PreviewHelpers
                     RefreshDWM([CP])
                 End If
 
-                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
-                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+                Window1.Shadow = [CP].WindowsEffects.WindowShadow
+                Window2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].Windows7.Theme
                     Case CP.Structures.Windows7.Themes.Aero
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
@@ -1295,7 +1295,7 @@ Public Class PreviewHelpers
                             .AccentColor2_Inactive = [CP].Windows7.ColorizationAfterglow
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Aero
                             .Win7Alpha = [CP].Windows7.ColorizationBlurBalance
                             .Win7ColorBal = [CP].Windows7.ColorizationColorBalance
@@ -1308,14 +1308,14 @@ Public Class PreviewHelpers
                         End With
 
                     Case CP.Structures.Windows7.Themes.AeroOpaque
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
                             .AccentColor_Inactive = [CP].Windows7.ColorizationColor
                             .Win7Noise = [CP].Windows7.ColorizationGlassReflectionIntensity
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Opaque
                             .Win7Alpha = [CP].Windows7.ColorizationColorBalance
                             .AccentColor_Active = [CP].Windows7.ColorizationColor
@@ -1324,13 +1324,13 @@ Public Class PreviewHelpers
                         End With
 
                     Case CP.Structures.Windows7.Themes.Basic
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
@@ -1344,12 +1344,12 @@ Public Class PreviewHelpers
                     RefreshDWM([CP])
                 End If
 
-                XenonWindow1.Shadow = [CP].WindowsEffects.WindowShadow
-                XenonWindow2.Shadow = [CP].WindowsEffects.WindowShadow
+                Window1.Shadow = [CP].WindowsEffects.WindowShadow
+                Window2.Shadow = [CP].WindowsEffects.WindowShadow
 
                 Select Case [CP].WindowsVista.Theme
                     Case CP.Structures.Windows7.Themes.Aero
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Aero
                             .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
                             .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
@@ -1360,7 +1360,7 @@ Public Class PreviewHelpers
                             .AccentColor2_Inactive = Color.FromArgb(100, [CP].WindowsVista.ColorizationColor)
                             .Win7Noise = 100
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Aero
                             .Win7Alpha = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
                             .Win7ColorBal = ((255 - [CP].WindowsVista.Alpha) / 255) * 100
@@ -1373,14 +1373,14 @@ Public Class PreviewHelpers
                         End With
 
                     Case CP.Structures.Windows7.Themes.AeroOpaque
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Opaque
                             .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
                             .AccentColor_Active = [CP].WindowsVista.ColorizationColor
                             .AccentColor_Inactive = [CP].WindowsVista.ColorizationColor
                             .Win7Noise = 100
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Opaque
                             .Win7Alpha = (([CP].WindowsVista.Alpha) / 255) * 100
                             .AccentColor_Active = [CP].WindowsVista.ColorizationColor
@@ -1389,13 +1389,13 @@ Public Class PreviewHelpers
                         End With
 
                     Case CP.Structures.Windows7.Themes.Basic
-                        With XenonWindow1
+                        With Window1
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Active = Color.FromArgb(166, 190, 218)
                             .Win7Noise = 0
                         End With
-                        With XenonWindow2
+                        With Window2
                             .Preview = UI.Simulation.Window.Preview_Enum.W7Basic
                             .Win7Alpha = 100
                             .AccentColor_Inactive = Color.FromArgb(166, 190, 218)
@@ -1407,11 +1407,11 @@ Public Class PreviewHelpers
 
         End Select
 
-        XenonWindow1.SuspendRefresh = False
-        XenonWindow2.SuspendRefresh = False
+        Window1.SuspendRefresh = False
+        Window2.SuspendRefresh = False
 
-        XenonWindow1.Invalidate()
-        XenonWindow2.Invalidate()
+        Window1.Invalidate()
+        Window2.Invalidate()
     End Sub
     Public Shared Sub AdjustPreview_ModernOrClassic([CP] As CP, [Style] As WindowStyle, tabs_preview As UI.WP.TablessControl, WXP_Alert As UI.WP.AlertBox)
         If [CP] IsNot Nothing Then
@@ -1433,13 +1433,13 @@ Public Class PreviewHelpers
             [Window].Refresh()
         End If
     End Sub
-    Public Shared Sub SetModernWindowMetrics([CP] As CP, XenonWindow As UI.Simulation.Window)
+    Public Shared Sub SetModernWindowMetrics([CP] As CP, Window As UI.Simulation.Window)
         If [CP] IsNot Nothing Then
-            XenonWindow.Font = [CP].MetricsFonts.CaptionFont
-            XenonWindow.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
-            XenonWindow.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
-            XenonWindow.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
-            XenonWindow.Invalidate()
+            Window.Font = [CP].MetricsFonts.CaptionFont
+            Window.Metrics_BorderWidth = [CP].MetricsFonts.BorderWidth
+            Window.Metrics_CaptionHeight = [CP].MetricsFonts.CaptionHeight
+            Window.Metrics_PaddedBorderWidth = [CP].MetricsFonts.PaddedBorderWidth
+            Window.Invalidate()
         End If
     End Sub
     Public Shared Sub SetClassicWindowColors([CP] As CP, [Window] As UI.Retro.WindowR, Optional Active As Boolean = True)

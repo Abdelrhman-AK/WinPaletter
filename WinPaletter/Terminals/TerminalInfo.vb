@@ -30,7 +30,7 @@
         Return ShowDialog()
     End Function
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         If WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) And Not WindowsTerminal.TerProfiles.SelectedItem.ToString.ToLower = TerName.Text.ToLower Then
             MsgBox(My.Lang.Terminal_alreadyset, MsgBoxStyle.Critical)
@@ -45,7 +45,7 @@
         DialogResult = DialogResult.OK
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         DialogResult = DialogResult.Cancel
     End Sub
 
@@ -76,7 +76,7 @@
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, WindowsTerminal.XenonTerminal1}
+        Dim CList As New List(Of Control) From {sender, WindowsTerminal.Terminal1}
 
         Dim _Conditions As New Conditions With {.Terminal_TabColor = True}
 

@@ -66,7 +66,7 @@ Public Class TerminalsDashboard
 
         _shown = False
 
-        Location = MainFrm.XenonButton24.PointToScreen(Point.Empty) - New Point(0, Height)
+        Location = MainFrm.Button24.PointToScreen(Point.Empty) - New Point(0, Height)
 
         If My.W10 Then PictureBox1.Image = My.Resources.Native10 Else PictureBox1.Image = My.Resources.Native11
 
@@ -91,7 +91,7 @@ Public Class TerminalsDashboard
         End If
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
 
         If My.Settings.WindowsTerminals.Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Stable
@@ -128,7 +128,7 @@ Public Class TerminalsDashboard
 
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         If My.Settings.WindowsTerminals.Bypass Then
             WindowsTerminal._Mode = WinTerminal.Version.Preview
             Me.Close()
@@ -161,18 +161,18 @@ Public Class TerminalsDashboard
         End If
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         CMD._Edition = CMD.Edition.CMD
         Me.Close()
         CMD.Show()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         ExternalTerminal.Show()
         Me.Close()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If My.Settings.WindowsTerminals.Bypass Then
             CMD._Edition = CMD.Edition.PowerShellx86
             Me.Close()
@@ -193,7 +193,7 @@ Public Class TerminalsDashboard
         End If
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         If My.Settings.WindowsTerminals.Bypass Then
             CMD._Edition = CMD.Edition.PowerShellx64
             Me.Close()

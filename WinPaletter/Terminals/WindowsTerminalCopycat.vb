@@ -5,15 +5,15 @@
         Icon = WindowsTerminal.Icon
 
         Try
-            XenonComboBox1.SelectedIndex = 0
+            ComboBox1.SelectedIndex = 0
         Catch
         End Try
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        If Not String.IsNullOrEmpty(XenonComboBox1.SelectedItem) Then
-            WindowsTerminal.CCat = XenonComboBox1.SelectedItem.ToString
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If Not String.IsNullOrEmpty(ComboBox1.SelectedItem) Then
+            WindowsTerminal.CCat = ComboBox1.SelectedItem.ToString
             DialogResult = DialogResult.OK
         Else
             WindowsTerminal.CCat = Nothing
@@ -23,7 +23,7 @@
         Close()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         DialogResult = DialogResult.Cancel
         Close()
     End Sub

@@ -86,7 +86,7 @@ Public Class ColorPickerDlg
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyStyle(Me)
-        XenonComboBox1.PopulateThemes
+        ComboBox1.PopulateThemes
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
         Invalidate()
@@ -638,13 +638,13 @@ Public Class ColorPickerDlg
 
 #End Region
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         DialogResult = DialogResult.Cancel
         Close()
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        Select Case XenonRadioButton1.Checked
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Select Case RadioButton1.Checked
             Case True
                 img = My.Wallpaper_Unscaled
 
@@ -653,11 +653,11 @@ Public Class ColorPickerDlg
 
         End Select
 
-        If XenonCheckBox2.Checked Then img = img.Resize(MainFrm.pnl_preview.Size)
+        If CheckBox2.Checked Then img = img.Resize(MainFrm.pnl_preview.Size)
 
         If img IsNot Nothing Then
             Label4.Text = My.Lang.Extracting
-            My.Animator.HideSync(XenonButton6, True)
+            My.Animator.HideSync(Button6, True)
             My.Animator.HideSync(ImgPaletteContainer, True)
             ProgressBar1.Visible = True
             Colors_List.Clear()
@@ -672,7 +672,7 @@ Public Class ColorPickerDlg
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         If img IsNot Nothing Then
             Dim ColorThiefX As New ColorThiefDotNet.ColorThief
-            Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(img, XenonTrackbar1.Value, XenonTrackbar2.Value, XenonCheckBox1.Checked)
+            Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(img, Trackbar1.Value, Trackbar2.Value, CheckBox1.Checked)
             For Each C As ColorThiefDotNet.QuantizedColor In Colors
                 Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
             Next
@@ -708,43 +708,43 @@ Public Class ColorPickerDlg
         ProgressBar1.Visible = False
         Colors_List.Clear()
         My.Animator.ShowSync(ImgPaletteContainer, True)
-        My.Animator.ShowSync(XenonButton6, True)
+        My.Animator.ShowSync(Button6, True)
     End Sub
 
     Private Sub MiniColorItem_click(sender As Object, e As EventArgs)
         ColorEditorManager1.Color = CType(sender, UI.Controllers.ColorItem).BackColor
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
+    Private Sub Button5_Click(sender As Object, e As EventArgs)
         ColorWheel1.Visible = False
         ColorGrid1.Visible = False
     End Sub
 
-    Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click_1(sender As Object, e As EventArgs) Handles Button4.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             TextBox1.Text = OpenFileDialog1.FileName
         End If
     End Sub
 
-    Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             ColorGrid1.Colors = ColorCollection.LoadPalette(OpenFileDialog2.FileName)
         End If
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         If OpenThemeDialog.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenThemeDialog.FileName
+            TextBox2.Text = OpenThemeDialog.FileName
         End If
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         DialogResult = DialogResult.OK
         Close()
     End Sub
 
-    Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
-        Select Case XenonComboBox2.SelectedIndex
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+        Select Case ComboBox2.SelectedIndex
             Case 0
                 GetColorsFromPalette(My.CP)
             Case 1
@@ -776,8 +776,8 @@ Public Class ColorPickerDlg
         End If
     End Sub
 
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
-        If XenonComboBox1.SelectedItem Is Nothing Then Exit Sub
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        If ComboBox1.SelectedItem Is Nothing Then Exit Sub
 
 
         For Each c As UI.Controllers.ColorItem In ThemePaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
@@ -789,8 +789,8 @@ Public Class ColorPickerDlg
         ThemePaletteContainer.Controls.Clear()
 
         Try
-            If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
-                For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
+            If Not String.IsNullOrWhiteSpace(ComboBox1.SelectedItem) Then
+                For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem)
                     Dim MiniColorItem As New UI.Controllers.ColorItem With {
                         .Size = .GetMiniColorItemSize,
                         .AllowDrop = False,
@@ -808,24 +808,24 @@ Public Class ColorPickerDlg
 
     Private Sub Ttl_h_Click(sender As Object, e As EventArgs) Handles val1.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar1.Maximum), Trackbar1.Minimum) : Trackbar1.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles val2.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles val2.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar2.Maximum), Trackbar2.Minimum) : Trackbar2.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         val1.Text = sender.Value
     End Sub
 
-    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+    Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
         val2.Text = sender.Value
     End Sub
 
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
-        If IO.File.Exists(XenonTextBox1.Text) Then
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
+        If IO.File.Exists(TextBox2.Text) Then
 
             For Each c As UI.Controllers.ColorItem In ThemePaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
                 RemoveHandler c.Click, AddressOf MiniColorItem_click
@@ -835,9 +835,9 @@ Public Class ColorPickerDlg
 
             ThemePaletteContainer.Controls.Clear()
 
-            If IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
+            If IO.Path.GetExtension(TextBox2.Text).ToLower = ".theme" Then
                 Try
-                    For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
+                    For Each C As Color In CP.GetPaletteFromMSTheme(TextBox2.Text)
                         Dim MiniColorItem As New UI.Controllers.ColorItem With {
                             .Size = .GetMiniColorItemSize,
                             .AllowDrop = False,
@@ -851,9 +851,9 @@ Public Class ColorPickerDlg
                     MsgBox(My.Lang.InvalidTheme, MsgBoxStyle.Critical)
                 End Try
 
-            ElseIf IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".msstyles" Then
+            ElseIf IO.Path.GetExtension(TextBox2.Text).ToLower = ".msstyles" Then
                 Try
-                    IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+                    IO.File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox2.Text, vbCrLf))
 
                     Dim vs As New VisualStyleFile(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme")
 

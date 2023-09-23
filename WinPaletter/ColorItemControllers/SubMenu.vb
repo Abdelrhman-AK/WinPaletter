@@ -67,21 +67,21 @@ Public Class SubMenu
 
 
     Public Function ShowMenu(ColorItem As UI.Controllers.ColorItem, Optional EnableDelete As Boolean = False) As Color
-        XenonButton5.Visible = EnableDelete
+        Button5.Visible = EnableDelete
 
-        MainColor.BackColor = ColorItem.BackColor.CB((XenonTrackbar1.Value - 100) / 100)
-        DefaultColor.BackColor = ColorItem.DefaultColor.CB((XenonTrackbar2.Value - 100) / 100)
-        InvertedColor.BackColor = ColorItem.BackColor.Invert.CB((XenonTrackbar3.Value - 100) / 100)
+        MainColor.BackColor = ColorItem.BackColor.CB((Trackbar1.Value - 100) / 100)
+        DefaultColor.BackColor = ColorItem.DefaultColor.CB((Trackbar2.Value - 100) / 100)
+        InvertedColor.BackColor = ColorItem.BackColor.Invert.CB((Trackbar3.Value - 100) / 100)
 
         MainColor.DefaultColor = ColorItem.BackColor
         DefaultColor.DefaultColor = ColorItem.DefaultColor
         InvertedColor.DefaultColor = ColorItem.BackColor.Invert
 
         If ColorItem.ColorsHistory.Count > 1 Then
-            PreviousColor.BackColor = ColorItem.ColorsHistory.Item(ColorItem.ColorsHistory.Count - 2).CB((XenonTrackbar4.Value - 100) / 100)
+            PreviousColor.BackColor = ColorItem.ColorsHistory.Item(ColorItem.ColorsHistory.Count - 2).CB((Trackbar4.Value - 100) / 100)
             PreviousColor.DefaultColor = ColorItem.ColorsHistory.Item(ColorItem.ColorsHistory.Count - 2)
         Else
-            PreviousColor.BackColor = ColorItem.BackColor.CB((XenonTrackbar4.Value - 100) / 100)
+            PreviousColor.BackColor = ColorItem.BackColor.CB((Trackbar4.Value - 100) / 100)
             PreviousColor.DefaultColor = ColorItem.BackColor
         End If
 
@@ -141,11 +141,11 @@ Public Class SubMenu
 
     Sub Collapse_Expand()
 
-        XenonButton4.Visible = False
+        Button4.Visible = False
 
         Select Case PaletteContainer.Visible
             Case False
-                XenonButton4.Text = "<"
+                Button4.Text = "<"
 
                 For i = PaletteContainer.Left + 3 To PaletteContainer.Right + 8 Step 2
                     Width = i
@@ -157,7 +157,7 @@ Public Class SubMenu
                 Label2.Visible = True
 
             Case True
-                XenonButton4.Text = ">"
+                Button4.Text = ">"
 
                 PaletteContainer.Visible = False
                 Label2.Visible = False
@@ -170,7 +170,7 @@ Public Class SubMenu
 
         End Select
 
-        XenonButton4.Visible = True
+        Button4.Visible = True
     End Sub
 
     Private Sub SubMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -201,14 +201,14 @@ Public Class SubMenu
 
         PaletteContainer.Visible = False
         Label2.Visible = False
-        XenonButton4.Text = ">"
+        Button4.Text = ">"
 
         LoadLanguage
         ApplyStyle(Me)
 
         If My.Application.CopiedColor = Nothing Then
 
-            XenonButton3.Enabled = False
+            Button3.Enabled = False
 
             Try
                 If Clipboard.GetData("Text") IsNot Nothing Then
@@ -230,16 +230,16 @@ Public Class SubMenu
                         Next
 
                         My.Application.CopiedColor = C
-                        XenonButton3.Enabled = True
+                        Button3.Enabled = True
                     End If
                 End If
 
             Catch
-                XenonButton3.Enabled = False
+                Button3.Enabled = False
             End Try
 
         Else
-            XenonButton3.Enabled = True
+            Button3.Enabled = True
         End If
 
         BackColor = If(My.Style.DarkMode, MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
@@ -253,7 +253,7 @@ Public Class SubMenu
         MainColor.BackColor = sender.BackColor
         MainColor.DefaultColor = sender.BackColor
 
-        InvertedColor.BackColor = MainColor.BackColor.Invert.CB((XenonTrackbar3.Value - 100) / 100)
+        InvertedColor.BackColor = MainColor.BackColor.Invert.CB((Trackbar3.Value - 100) / 100)
         InvertedColor.DefaultColor = MainColor.BackColor.Invert
 
         Collapse_Expand()
@@ -288,7 +288,7 @@ Public Class SubMenu
         InvertedColor.DefaultColor = MainColor.DefaultColor.Invert
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Clipboard.SetData("Text", MainColor.BackColor)
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Copy
@@ -296,14 +296,14 @@ Public Class SubMenu
         Close()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Cut
         DialogResult = DialogResult.OK
         Close()
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Paste
         DialogResult = DialogResult.OK
@@ -318,47 +318,47 @@ Public Class SubMenu
         Close()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Collapse_Expand()
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Delete
         DialogResult = DialogResult.OK
         Close()
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
-        MainColor.BackColor = MainColor.DefaultColor.CB((XenonTrackbar1.Value - 100) / 100)
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
+        MainColor.BackColor = MainColor.DefaultColor.CB((Trackbar1.Value - 100) / 100)
     End Sub
 
-    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
-        DefaultColor.BackColor = DefaultColor.DefaultColor.CB((XenonTrackbar2.Value - 100) / 100)
+    Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
+        DefaultColor.BackColor = DefaultColor.DefaultColor.CB((Trackbar2.Value - 100) / 100)
     End Sub
 
-    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
-        InvertedColor.BackColor = InvertedColor.DefaultColor.CB((XenonTrackbar3.Value - 100) / 100)
+    Private Sub Trackbar3_Scroll(sender As Object) Handles Trackbar3.Scroll
+        InvertedColor.BackColor = InvertedColor.DefaultColor.CB((Trackbar3.Value - 100) / 100)
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        XenonTrackbar1.Value = 100
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Trackbar1.Value = 100
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        XenonTrackbar2.Value = 100
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Trackbar2.Value = 100
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        XenonTrackbar3.Value = 100
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Trackbar3.Value = 100
     End Sub
 
-    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
-        PreviousColor.BackColor = PreviousColor.DefaultColor.CB((XenonTrackbar4.Value - 100) / 100)
+    Private Sub Trackbar4_Scroll(sender As Object) Handles Trackbar4.Scroll
+        PreviousColor.BackColor = PreviousColor.DefaultColor.CB((Trackbar4.Value - 100) / 100)
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
-        XenonTrackbar4.Value = 100
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        Trackbar4.Value = 100
     End Sub
 
     Private Sub PreviousColor_Click(sender As Object, e As EventArgs) Handles PreviousColor.Click
@@ -369,7 +369,7 @@ Public Class SubMenu
         Close()
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         _eventDone = True
         My.Application.ColorEvent = My.MyApplication.MenuEvent.Override
         _overrideColor = PreviousClr

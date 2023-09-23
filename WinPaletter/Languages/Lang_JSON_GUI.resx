@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>109, 17</value>
-  </metadata>
-  <metadata name="OpenJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>227, 17</value>
-  </metadata>
-  <metadata name="SaveJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>356, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="XenonButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>109, 17</value>
+  </data>
+  <data name="OpenJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>227, 17</value>
+  </data>
+  <data name="SaveJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>356, 17</value>
+  </data>
+  <data name="Button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAZhJREFUOE/N
         0lsvw2Acx/G9BVeu5rzNxhzilbh2TyTEG5B4F04REuIwNoaJmRFmZIS4WdEl3brt6bq2W9XExNVP++js
@@ -140,12 +140,12 @@
         gg==
 </value>
   </data>
-  <data name="XenonAlertBox3.Text" xml:space="preserve">
+  <data name="AlertBox3.Text" xml:space="preserve">
     <value>Notes:
 - Red rectangles/colors mean that their associated values aren't translated from English. Double click a rectangle to edit it.
 - Numbers in curly brackets should be left unchanged, for example: "There are {0} files" is translated into Arabic like that: "يوجد {0} ملف"</value>
   </data>
-  <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAVVJREFUOE9j
         oDpYZHVRbJHZVScgDsWOL4UuNruiD1WOChaZXq0A4m+LTK/8X2R6GY4XmqBh0yuroFoQYInpRWeoghsL
@@ -156,7 +156,7 @@
         3X875XfOamDYzwKVIg60yW3TapXe7twsvkkRKkQPwMAAANijuVx0P6XzAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonButton5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAAdBJREFUOE9joAr4//8/88uXL4Nev36dhoxfvXqVeu3aNUugPCNUKXYAVKj25s2b
@@ -170,7 +170,7 @@
         +DbY/AAuAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonButton8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAORJREFUOE9j
         GBzg1VKGya+XMuxGwxuA2BiqBD94NI/hPw78/vF8htSH8xlC0fGDeQxWUO0MDLemM/wnA/+CamdguDyR
@@ -180,7 +180,7 @@
         gg==
 </value>
   </data>
-  <data name="XenonButton4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vAAADrwBlbxySQAAAdBJREFUOE9joAr4//8/88uXL4Nev36dhoxfvXqVeu3aNUugPCNUKXYAVKj25s2b
@@ -213,7 +213,7 @@
         i4nnSOiZahr4h8ZHV+lYzD+DTPYDyjQ1R87BLNsAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAa1JREFUOE/N
         jktLAlEUgOdf+Ejt4SIiIYoIFxHVIogw2kzgaEabNoKteiyjRQhBm8CFVIhl0YAQaaZOplRUULQoDCKi
@@ -241,7 +241,7 @@
         DfzV38m6ymn0LvIpcEUerYuchqyo5kBl30Z+/Y3odL8A+nMSa2kLfZ0AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAa1JREFUOE/N
         jktLAlEUgOdf+Ejt4SIiIYoIFxHVIogw2kzgaEabNoKteiyjRQhBm8CFVIhl0YAQaaZOplRUULQoDCKi
@@ -335,16 +335,17 @@
         fwFlcAVUvCnatQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column1.UserAddedColumn" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="Column2.UserAddedColumn" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="Column3.UserAddedColumn" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <data name="XenonButton12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  </data>
+  <data name="Button12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAbNJREFUOE+1
         kssuBEEUhjtxi4Ughq6uHkLiPlYiEQ9AIuIZJDbiAUTCxgMgcRu6q3oYFkK8CTYSC3GZrqoZIh6BGOeU
@@ -357,10 +358,10 @@
         QhNMwqSa+wK7l+jbD35kmQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>17, 17</value>
-  </metadata>
-  <data name="XenonButton13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  </data>
+  <data name="Button13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAbNJREFUOE+1
         kssuBEEUhjtxi4Ughq6uHkLiPlYiEQ9AIuIZJDbiAUTCxgMgcRu6q3oYFkK8CTYSC3GZrqoZIh6BGOeU
@@ -416,19 +417,19 @@
   </data>
   <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAHdSURBVDhPtdLNT9NgHAfw5w4TgQVxIRBGZCLIYBy58A/wLxAv/gPAQYMH9YAsIcGZEWEEGmC8
-        7AVfADMZICcTvSjEGJS229q5Tdy6GrzggX55yJ651rEbfK/t5/fWkktJ5zvVbg8rj+2hjLdtPeO9tZp+
-        ZAsetrPHpdOxo151bKsrHeEs2kMKKEbL6zRsLw5xI/BTs/pSAas/W8FeN4bhvRIYTcspNC4k0TCX2LVO
-        isVFHFtqUI/7tpNY3Ffg+6bgzkYcjd7EGUbdTByWKXmZsVy6NrO3Kdb0ndcEFR+SfxD9fQwNQE9AymPU
-        TkharVtqZZwQ+4b64P+xHb4YmpaS6N/5QTnQuxLLY9SMx1DtEu8zTguEFO68nbv9EuJHf/GWTlPnif7D
-        5mcRVD0VZxgnpHU9wxUdjO788ruC9/IR6j0RA64cE1ExyhcKtLz6NXTOtdG/KaNv1dg5hwWYRvh7jBPS
-        HMzcpPhEj88OdvdNDINhGTXuqBE7+RPT8H4z47lQPKfHFo8E98cU/F/SMLsEPUbZ8EFh/Hxs02lTw3zi
-        s+5T5ToX40/k4ddyxowx0yLXp+RZirWinZ28VvbkgCuJ9bn2XG4zuyKDVWMid2VU4ExOYaB8hC/8OBcX
-        Qk4B5minGwXIRcgAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAd1JREFUOE+1
+        0s1P02AcB/DnDhOBBXEhEEZkIshgHLnwD/AvEC/+A8BBgwf1gCwhwZkRYQQaYLzsBV8AMxkgJxO9KMQY
+        lLbb2rlN3LoavOCBfnnInrnWsRt8r+3n99aSS0nnO9VuDyuP7aGMt2094721mn5kCx62s8el07GjXnVs
+        qysd4SzaQwooRsvrNGwvDnEj8FOz+lIBqz9bwV43huG9EhhNyyk0LiTRMJfYtU6KxUUcW2pQj/u2k1jc
+        V+D7puDORhyN3sQZRt1MHJYpeZmxXLo2s7cp1vSd1wQVH5J/EP19DA1AT0DKY9ROSFqtW2plnBD7hvrg
+        /7EdvhialpLo3/lBOdC7Estj1IzHUO0S7zNOC4QU7rydu/0S4kd/8ZZOU+eJ/sPmZxFUPRVnGCekdT3D
+        FR2M7vzyu4L38hHqPREDrhwTUTHKFwq0vPo1dM610b8po2/V2DmHBZhG+HuME9IczNyk+ESPzw52900M
+        g2EZNe6oETv5E9PwfjPjuVA8p8cWjwT3xxT8X9IwuwQ9RtnwQWH8fGzTaVPDfOKz7lPlOhfjT+Th13LG
+        jDHTIten5FmKtaKdnbxW9uSAK4n1ufZcbjO7IoNVYyJ3ZVTgTE5hoHyEL/w4FxdCTgHmaKcbBchFyAAA
+        AABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
     <value>51</value>
-  </metadata>
+  </data>
 </root>

@@ -10,33 +10,33 @@
         TextBox1.Text = My.CP.Wallpaper.ImageFile
     End Sub
 
-    Private Sub XenonRadioButton1_CheckedChanged(sender As Object) Handles XenonRadioButton1.CheckedChanged
+    Private Sub RadioButton1_CheckedChanged(sender As Object) Handles RadioButton1.CheckedChanged
         If CType(sender, UI.WP.RadioImage).Checked Then GetColors(My.Wallpaper)
     End Sub
 
-    Private Sub XenonRadioButton2_CheckedChanged(sender As Object) Handles XenonRadioButton2.CheckedChanged
+    Private Sub RadioButton2_CheckedChanged(sender As Object) Handles RadioButton2.CheckedChanged
         If CType(sender, UI.WP.RadioImage).Checked Then GetColors(Bitmap_Mgr.Load(TextBox1.Text))
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-        If XenonRadioButton2.Checked Then GetColors(Bitmap_Mgr.Load(TextBox1.Text))
+        If RadioButton2.Checked Then GetColors(Bitmap_Mgr.Load(TextBox1.Text))
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then TextBox1.Text = OpenFileDialog1.FileName
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
-        If XenonRadioButton1.Checked Then
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
+        If RadioButton1.Checked Then
             GetColors(My.Wallpaper)
         Else
             GetColors(Bitmap_Mgr.Load(TextBox1.Text))
         End If
     End Sub
 
-    Private Sub XenonRadioButton3_CheckedChanged(sender As Object) Handles XenonRadioButton3.CheckedChanged, XenonRadioButton5.CheckedChanged, XenonRadioButton4.CheckedChanged, XenonRadioButton6.CheckedChanged, XenonRadioButton7.CheckedChanged
+    Private Sub RadioButton3_CheckedChanged(sender As Object) Handles RadioButton3.CheckedChanged, RadioButton5.CheckedChanged, RadioButton4.CheckedChanged, RadioButton6.CheckedChanged, RadioButton7.CheckedChanged
         If CType(sender, UI.WP.RadioButton).Checked Then
-            If XenonRadioButton1.Checked Then
+            If RadioButton1.Checked Then
                 GetColors(My.Wallpaper)
             Else
                 GetColors(Bitmap_Mgr.Load(TextBox1.Text))
@@ -44,20 +44,20 @@
         End If
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         val1.Text = sender.Value
 
-        If XenonRadioButton1.Checked Then
+        If RadioButton1.Checked Then
             GetColors(My.Wallpaper)
         Else
             GetColors(Bitmap_Mgr.Load(TextBox1.Text))
         End If
     End Sub
 
-    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+    Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
         val2.Text = sender.Value
 
-        If XenonRadioButton1.Checked Then
+        If RadioButton1.Checked Then
             GetColors(My.Wallpaper)
         Else
             GetColors(Bitmap_Mgr.Load(TextBox1.Text))
@@ -66,12 +66,12 @@
 
     Private Sub val1_Click(sender As Object, e As EventArgs) Handles val1.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar1.Maximum), Trackbar1.Minimum) : Trackbar1.Value = Val(sender.Text)
     End Sub
 
     Private Sub val2_Click(sender As Object, e As EventArgs) Handles val2.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar2.Maximum), Trackbar2.Minimum) : Trackbar2.Value = Val(sender.Text)
     End Sub
 
     Sub GetColors(Source As Bitmap)
@@ -85,22 +85,22 @@
             Source = Source.GetThumbnailImage(MainFrm.pnl_preview.Width, MainFrm.pnl_preview.Height, Nothing, IntPtr.Zero)
             Colors_List.Clear()
             Dim ColorThiefX As New ColorThiefDotNet.ColorThief
-            Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(Source, Math.Max(13, XenonTrackbar1.Value), XenonTrackbar2.Value, XenonCheckBox1.Checked)
+            Dim Colors As List(Of ColorThiefDotNet.QuantizedColor) = ColorThiefX.GetPalette(Source, Math.Max(13, Trackbar1.Value), Trackbar2.Value, CheckBox1.Checked)
 
             For Each C As ColorThiefDotNet.QuantizedColor In Colors
-                If XenonRadioButton3.Checked Then
+                If RadioButton3.Checked Then
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B))
 
-                ElseIf XenonRadioButton5.Checked Then
+                ElseIf RadioButton5.Checked Then
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B).Light)
 
-                ElseIf XenonRadioButton4.Checked Then
+                ElseIf RadioButton4.Checked Then
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B).LightLight)
 
-                ElseIf XenonRadioButton6.Checked Then
+                ElseIf RadioButton6.Checked Then
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B).Dark)
 
-                ElseIf XenonRadioButton7.Checked Then
+                ElseIf RadioButton7.Checked Then
                     Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B).Dark(0.8))
 
                 Else
@@ -124,7 +124,7 @@
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim arr As List(Of Integer) = GetUniqueRandomNumbers(0, Colors_List.Count)
 
         Select Case My.PreviewStyle
@@ -182,7 +182,7 @@
         End SyncLock
     End Function
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Select Case My.PreviewStyle
             Case PreviewHelpers.WindowStyle.W11
                 My.CP.Windows11.Titlebar_Active = CP_Backup.Windows11.Titlebar_Active
@@ -230,7 +230,7 @@
         Close()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Close()
     End Sub
 End Class

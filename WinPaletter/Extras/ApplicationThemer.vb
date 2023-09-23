@@ -12,7 +12,7 @@ Public Class ApplicationThemer
         BackupSettings = New XeSettings(XeSettings.Mode.Registry)
         LoadLanguage
         ApplyStyle(Me)
-        XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         AdjustPreview()
         CloseAndApply = False
@@ -79,12 +79,12 @@ Public Class ApplicationThemer
             ctrl.Invalidate()
         Next
 
-        For Each ctrl As Control In XenonGroupBox12.Controls
+        For Each ctrl As Control In GroupBox12.Controls
             ctrl.Invalidate()
         Next
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             ApplyFromCP(CPx)
@@ -93,27 +93,27 @@ Public Class ApplicationThemer
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyFromCP(CPx)
         AdjustPreview()
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
             ApplyFromCP(_Def)
             AdjustPreview()
         End Using
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         ApplyToCP(My.CP)
         CloseAndApply = False
         Close()
     End Sub
 
-    Private Sub XenonButton10_Click_1(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click_1(sender As Object, e As EventArgs) Handles Button10.Click
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)
@@ -125,7 +125,7 @@ Public Class ApplicationThemer
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         CloseAndApply = False
         Close()
     End Sub
@@ -263,7 +263,7 @@ Public Class ApplicationThemer
             ctrl.Invalidate()
         Next
 
-        For Each ctrl As Control In XenonGroupBox12.Controls
+        For Each ctrl As Control In GroupBox12.Controls
             ctrl.Invalidate()
         Next
     End Sub

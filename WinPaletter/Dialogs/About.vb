@@ -11,11 +11,11 @@
         Process.Start("https://github.com/KSemenenko/ColorThief")
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Process.Start(My.Resources.Link_Repository)
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Process.Start("https://www.reddit.com/user/abdelrhman_ak")
     End Sub
 
@@ -26,7 +26,7 @@
         Label2.Text = My.AppVersion
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Close()
     End Sub
 
@@ -51,27 +51,27 @@
         Process.Start("https://github.com/JetBrains/JetBrainsMono")
     End Sub
 
-    Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
+    Private Sub LinkLabel9_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel9.LinkClicked
         Process.Start("https://github.com/JamesNK/Newtonsoft.Json")
     End Sub
 
-    Private Sub XenonLinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel1.LinkClicked
+    Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
         Process.Start("https://github.com/ookii-dialogs/ookii-dialogs-winforms")
     End Sub
 
-    Private Sub XenonLinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel3.LinkClicked
+    Private Sub LinkLabel11_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel11.LinkClicked
         Process.Start("https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper")
     End Sub
 
-    Private Sub XenonLinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel4.LinkClicked
+    Private Sub LinkLabel12_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel12.LinkClicked
         Process.Start("https://imageprocessor.org")
     End Sub
 
-    Private Sub XenonLinkLabel2_LinkClicked_1(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel2.LinkClicked
+    Private Sub LinkLabel13_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel13.LinkClicked
         Process.Start("https://github.com/evanolds/AnimCur")
     End Sub
 
-    Private Sub XenonLinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XenonLinkLabel5.LinkClicked
+    Private Sub LinkLabel14_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel14.LinkClicked
         Process.Start("https://github.com/Tyrrrz/Ressy")
     End Sub
 End Class

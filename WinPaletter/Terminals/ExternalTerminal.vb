@@ -10,17 +10,17 @@ Public Class ExternalTerminal
         LoadLanguage
         ApplyStyle(Me)
         _Shown = False
-        FillTerminals(XenonComboBox1)
+        FillTerminals(ComboBox1)
         RasterList.BringToFront()
 
-        XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
+        CheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
 
         ExtTerminal_PopupForegroundLbl.Font = My.Application.ConsoleFont
         ExtTerminal_PopupBackgroundLbl.Font = My.Application.ConsoleFont
         ExtTerminal_AccentForegroundLbl.Font = My.Application.ConsoleFont
         ExtTerminal_AccentBackgroundLbl.Font = My.Application.ConsoleFont
 
-        XenonButton4.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button4.Image = MainFrm.Button20.Image.Resize(16, 16)
 
     End Sub
 
@@ -334,7 +334,7 @@ Public Class ExternalTerminal
     End Sub
 
     Private Sub ExtTerminal_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles ExtTerminal_RasterToggle.CheckedChanged
-        XenonButton5.Enabled = Not ExtTerminal_RasterToggle.Checked
+        Button5.Enabled = Not ExtTerminal_RasterToggle.Checked
         ExtTerminal_FontWeightBox.Enabled = Not ExtTerminal_RasterToggle.Checked
 
         If _Shown Then
@@ -436,7 +436,7 @@ Public Class ExternalTerminal
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonCMD4}
+        Dim CList As New List(Of Control) From {sender, CMD4}
 
         Dim _Conditions As New Conditions
         If sender.Name.ToString.ToLower.Contains("ColorTable00".ToLower) Then _Conditions.CMD_ColorTable00 = True
@@ -545,75 +545,75 @@ Public Class ExternalTerminal
     Sub ApplyPreview()
 
 #Region " External Terminal"
-        XenonCMD4.CMD_ColorTable00 = ExtTerminal_ColorTable00.BackColor
-        XenonCMD4.CMD_ColorTable01 = ExtTerminal_ColorTable01.BackColor
-        XenonCMD4.CMD_ColorTable02 = ExtTerminal_ColorTable02.BackColor
-        XenonCMD4.CMD_ColorTable03 = ExtTerminal_ColorTable03.BackColor
-        XenonCMD4.CMD_ColorTable04 = ExtTerminal_ColorTable04.BackColor
-        XenonCMD4.CMD_ColorTable05 = ExtTerminal_ColorTable05.BackColor
-        XenonCMD4.CMD_ColorTable06 = ExtTerminal_ColorTable06.BackColor
-        XenonCMD4.CMD_ColorTable07 = ExtTerminal_ColorTable07.BackColor
-        XenonCMD4.CMD_ColorTable08 = ExtTerminal_ColorTable08.BackColor
-        XenonCMD4.CMD_ColorTable09 = ExtTerminal_ColorTable09.BackColor
-        XenonCMD4.CMD_ColorTable10 = ExtTerminal_ColorTable10.BackColor
-        XenonCMD4.CMD_ColorTable11 = ExtTerminal_ColorTable11.BackColor
-        XenonCMD4.CMD_ColorTable12 = ExtTerminal_ColorTable12.BackColor
-        XenonCMD4.CMD_ColorTable13 = ExtTerminal_ColorTable13.BackColor
-        XenonCMD4.CMD_ColorTable14 = ExtTerminal_ColorTable14.BackColor
-        XenonCMD4.CMD_ColorTable15 = ExtTerminal_ColorTable15.BackColor
-        XenonCMD4.CMD_PopupForeground = ExtTerminal_PopupForegroundBar.Value
-        XenonCMD4.CMD_PopupBackground = ExtTerminal_PopupBackgroundBar.Value
-        XenonCMD4.CMD_ScreenColorsForeground = ExtTerminal_AccentForegroundBar.Value
-        XenonCMD4.CMD_ScreenColorsBackground = ExtTerminal_AccentBackgroundBar.Value
-        XenonCMD4.Font = New Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style)
-        XenonCMD4.Raster = ExtTerminal_RasterToggle.Checked
+        CMD4.CMD_ColorTable00 = ExtTerminal_ColorTable00.BackColor
+        CMD4.CMD_ColorTable01 = ExtTerminal_ColorTable01.BackColor
+        CMD4.CMD_ColorTable02 = ExtTerminal_ColorTable02.BackColor
+        CMD4.CMD_ColorTable03 = ExtTerminal_ColorTable03.BackColor
+        CMD4.CMD_ColorTable04 = ExtTerminal_ColorTable04.BackColor
+        CMD4.CMD_ColorTable05 = ExtTerminal_ColorTable05.BackColor
+        CMD4.CMD_ColorTable06 = ExtTerminal_ColorTable06.BackColor
+        CMD4.CMD_ColorTable07 = ExtTerminal_ColorTable07.BackColor
+        CMD4.CMD_ColorTable08 = ExtTerminal_ColorTable08.BackColor
+        CMD4.CMD_ColorTable09 = ExtTerminal_ColorTable09.BackColor
+        CMD4.CMD_ColorTable10 = ExtTerminal_ColorTable10.BackColor
+        CMD4.CMD_ColorTable11 = ExtTerminal_ColorTable11.BackColor
+        CMD4.CMD_ColorTable12 = ExtTerminal_ColorTable12.BackColor
+        CMD4.CMD_ColorTable13 = ExtTerminal_ColorTable13.BackColor
+        CMD4.CMD_ColorTable14 = ExtTerminal_ColorTable14.BackColor
+        CMD4.CMD_ColorTable15 = ExtTerminal_ColorTable15.BackColor
+        CMD4.CMD_PopupForeground = ExtTerminal_PopupForegroundBar.Value
+        CMD4.CMD_PopupBackground = ExtTerminal_PopupBackgroundBar.Value
+        CMD4.CMD_ScreenColorsForeground = ExtTerminal_AccentForegroundBar.Value
+        CMD4.CMD_ScreenColorsBackground = ExtTerminal_AccentBackgroundBar.Value
+        CMD4.Font = New Font(f_extterminal.Name, f_extterminal.Size, f_extterminal.Style)
+        CMD4.Raster = ExtTerminal_RasterToggle.Checked
 
         Select Case RasterList.SelectedItem
             Case "4x6"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
 
             Case "6x8"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "6x9"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "8x8"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "8x9"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "16x8"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
 
             Case "5x12"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
 
             Case "7x12"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
 
             Case "8x12"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
             Case "16x12"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
 
             Case "12x16"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
 
             Case "10x18"
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
 
             Case Else
-                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
         End Select
 
 #End Region
 
 
-        XenonCMD4.Refresh()
+        CMD4.Refresh()
     End Sub
     Sub UpdateFromTrack(i As Integer)
 
@@ -794,23 +794,23 @@ Public Class ExternalTerminal
     End Sub
 #End Region
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
-        FillTerminals(XenonComboBox1)
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        FillTerminals(ComboBox1)
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
-        GetFromExtTerminal(XenonComboBox1.SelectedItem)
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        GetFromExtTerminal(ComboBox1.SelectedItem)
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
-        If XenonComboBox1.SelectedItem IsNot Nothing Then SetToExtTerminal(XenonComboBox1.SelectedItem)
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        If ComboBox1.SelectedItem IsNot Nothing Then SetToExtTerminal(ComboBox1.SelectedItem)
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         NewExtTerminal.ShowDialog()
     End Sub
 
@@ -922,8 +922,8 @@ Public Class ExternalTerminal
         UpdateCurPreview()
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
-        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(ComboBox1.SelectedItem) Then
             MsgBox(My.Lang.ExtTer_NotFound, MsgBoxStyle.Critical)
             Exit Sub
         End If
@@ -936,8 +936,8 @@ Public Class ExternalTerminal
         End If
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
-        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(ComboBox1.SelectedItem) Then
             MsgBox(My.Lang.ExtTer_NotFound, MsgBoxStyle.Critical)
             Exit Sub
         End If
@@ -948,8 +948,8 @@ Public Class ExternalTerminal
         CPx.Dispose()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
-        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(XenonComboBox1.SelectedItem) Then
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        If Not Registry.CurrentUser.OpenSubKey("Console", True).GetSubKeyNames().Contains(ComboBox1.SelectedItem) Then
             MsgBox(My.Lang.ExtTer_NotFound, MsgBoxStyle.Critical)
             Exit Sub
         End If
@@ -975,7 +975,7 @@ Public Class ExternalTerminal
         sender.Text = Math.Max(Math.Min(Val(response), ExtTerminal_OpacityBar.Maximum), ExtTerminal_OpacityBar.Minimum) : ExtTerminal_OpacityBar.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         FontDialog1.FixedPitchOnly = Not My.Settings.WindowsTerminals.ListAllFonts
         FontDialog1.Font = f_extterminal
         If FontDialog1.ShowDialog = DialogResult.OK Then

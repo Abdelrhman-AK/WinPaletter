@@ -172,7 +172,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonToggle_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Private Sub Toggle_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             Me.Height = 20
             If Width < 40 Then Width = 40
 
@@ -184,7 +184,7 @@ Namespace UI.WP
             Refresh()
         End Sub
 
-        Private Sub XenonToggle_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub Toggle_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
             If Checked Then
                 CheckC = New Rectangle(Width - 17, 4, 11, 11)
@@ -207,7 +207,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonToggle_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub Toggle_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try
                     RemoveHandler FindForm.Load, AddressOf Loaded
@@ -233,7 +233,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonToggle_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        Private Sub Toggle_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
             If e.Button = MouseButtons.Left Then
 
                 Dim i As Integer = e.X - 0.5 * CheckC.Width
@@ -253,7 +253,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonToggle_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        Private Sub Toggle_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
             MouseState = 0
             CheckC.Width = 11
 
@@ -270,7 +270,7 @@ Namespace UI.WP
             Refresh()
         End Sub
 
-        Private Sub XenonToggle_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        Private Sub Toggle_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
             MouseState = 1
             CheckC.Width = 13
 

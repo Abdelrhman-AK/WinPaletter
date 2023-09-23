@@ -17,13 +17,13 @@
         Next
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
 
         If TreeView1.SelectedNode IsNot Nothing Then BugReport.ThrowError(ex_List.Item(TreeView1.SelectedNode.Index).Item2)
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.Close()
     End Sub
 End Class

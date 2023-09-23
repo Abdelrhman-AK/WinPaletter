@@ -552,7 +552,7 @@ Public Class Localizer : Implements IDisposable
                                         If member.Item1.ToLower <> Whatsnew.Name.ToLower Then
                                             ctrl.SetText(member.Item4.ToString)
                                         Else
-                                            If Not Whatsnew.XenonTabControl1.TabPages.Cast(Of TabPage)().SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                            If Not Whatsnew.TabControl1.TabPages.Cast(Of TabPage)().SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
                                                 And TypeOf ctrl IsNot TabPage Then
                                                 ctrl.SetText(member.Item4.ToString)
                                             End If
@@ -614,7 +614,6 @@ Public Class Localizer : Implements IDisposable
 
         If Forms Is Nothing Then
             For Each f In Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
-                'If allForms.Contains(f.Name) Then
                 Dim ins As New Form
                 ins = DirectCast(Activator.CreateInstance(f), Form)
 
@@ -644,7 +643,7 @@ Public Class Localizer : Implements IDisposable
 
                         End If
 
-                        If Not String.IsNullOrWhiteSpace(ctrl.Tag) Then
+                        If ctrl.Tag IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(ctrl.Tag) AndAlso Not IsNumeric(ctrl.Tag) Then
                             j_child.Add(ctrl.Name & ".Tag", ctrl.Tag.ToString)
                         End If
 
@@ -656,7 +655,6 @@ Public Class Localizer : Implements IDisposable
                 End If
 
                 ins.Dispose()
-                'End If
             Next
         Else
             Dim Overwrite As Boolean = IO.File.Exists(File)

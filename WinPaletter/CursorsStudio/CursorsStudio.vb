@@ -78,10 +78,10 @@
     End Function
 
     Sub LoadFromCP([CP] As CP)
-        XenonToggle1.Checked = [CP].Cursor_Enabled
-        XenonCheckBox9.Checked = [CP].Cursor_Shadow
-        XenonTrackbar2.Value = [CP].Cursor_Trails
-        XenonCheckBox10.Checked = [CP].Cursor_Sonar
+        Toggle1.Checked = [CP].Cursor_Enabled
+        CheckBox9.Checked = [CP].Cursor_Shadow
+        Trackbar2.Value = [CP].Cursor_Trails
+        CheckBox10.Checked = [CP].Cursor_Sonar
         CursorCP_to_Cursor(Arrow, [CP].Cursor_Arrow)
         CursorCP_to_Cursor(Help, [CP].Cursor_Help)
         CursorCP_to_Cursor(AppLoading, [CP].Cursor_AppLoading)
@@ -108,10 +108,10 @@
     End Sub
 
     Sub SaveToCP([CP] As CP)
-        [CP].Cursor_Enabled = XenonToggle1.Checked
-        [CP].Cursor_Shadow = XenonCheckBox9.Checked
-        [CP].Cursor_Trails = XenonTrackbar2.Value
-        [CP].Cursor_Sonar = XenonCheckBox10.Checked
+        [CP].Cursor_Enabled = Toggle1.Checked
+        [CP].Cursor_Shadow = CheckBox9.Checked
+        [CP].Cursor_Trails = Trackbar2.Value
+        [CP].Cursor_Sonar = CheckBox10.Checked
         [CP].Cursor_Arrow = Cursor_to_CursorCP(Arrow)
         [CP].Cursor_Help = Cursor_to_CursorCP(Help)
         [CP].Cursor_AppLoading = Cursor_to_CursorCP(AppLoading)
@@ -163,7 +163,7 @@
             End If
         Next
 
-        XenonButton8.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button8.Image = MainFrm.Button20.Image.Resize(16, 16)
 
         LoadFromCP(My.CP)
     End Sub
@@ -186,96 +186,96 @@
     Sub Clicked(sender As Object, e As MouseEventArgs)
         _SelectedControl = DirectCast(sender, CursorControl)
         ApplyColorsFromCursor(_SelectedControl)
-        XenonButton1.Enabled = True
-        XenonGroupBox9.Enabled = True
-        XenonGroupBox6.Enabled = True
-        XenonGroupBox5.Enabled = True
-        XenonGroupBox2.Enabled = True
-        XenonGroupBox10.Enabled = True
+        Button1.Enabled = True
+        GroupBox9.Enabled = True
+        GroupBox6.Enabled = True
+        GroupBox5.Enabled = True
+        GroupBox2.Enabled = True
+        GroupBox10.Enabled = True
     End Sub
 
     Sub ApplyColorsFromCursor([CursorControl] As CursorControl)
         With [CursorControl]
-            XenonComboBox5.SelectedIndex = .Prop_ArrowStyle
-            XenonComboBox6.SelectedIndex = .Prop_CircleStyle
+            ComboBox5.SelectedIndex = .Prop_ArrowStyle
+            ComboBox6.SelectedIndex = .Prop_CircleStyle
 
             PrimaryColor1.BackColor = .Prop_PrimaryColor1
             PrimaryColor2.BackColor = .Prop_PrimaryColor2
-            XenonCheckBox1.Checked = .Prop_PrimaryColorGradient
-            XenonComboBox1.SelectedItem = ReturnStringFromGradientMode(.Prop_PrimaryColorGradientMode)
-            XenonCheckBox5.Checked = .Prop_PrimaryNoise
-            XenonTrackbar3.Value = .Prop_PrimaryNoiseOpacity * 100
+            CheckBox1.Checked = .Prop_PrimaryColorGradient
+            ComboBox1.SelectedItem = ReturnStringFromGradientMode(.Prop_PrimaryColorGradientMode)
+            CheckBox5.Checked = .Prop_PrimaryNoise
+            Trackbar3.Value = .Prop_PrimaryNoiseOpacity * 100
 
             SecondaryColor1.BackColor = .Prop_SecondaryColor1
             SecondaryColor2.BackColor = .Prop_SecondaryColor2
-            XenonCheckBox4.Checked = .Prop_SecondaryColorGradient
-            XenonComboBox2.SelectedItem = ReturnStringFromGradientMode(.Prop_SecondaryColorGradientMode)
-            XenonCheckBox3.Checked = .Prop_SecondaryNoise
-            XenonTrackbar4.Value = .Prop_SecondaryNoiseOpacity * 100
+            CheckBox4.Checked = .Prop_SecondaryColorGradient
+            ComboBox2.SelectedItem = ReturnStringFromGradientMode(.Prop_SecondaryColorGradientMode)
+            CheckBox3.Checked = .Prop_SecondaryNoise
+            Trackbar4.Value = .Prop_SecondaryNoiseOpacity * 100
 
             CircleColor1.BackColor = .Prop_LoadingCircleBack1
             CircleColor2.BackColor = .Prop_LoadingCircleBack2
-            XenonCheckBox8.Checked = .Prop_LoadingCircleBackGradient
-            XenonComboBox4.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
-            XenonCheckBox7.Checked = .Prop_LoadingCircleBackNoise
-            XenonTrackbar5.Value = .Prop_LoadingCircleBackNoiseOpacity * 100
+            CheckBox8.Checked = .Prop_LoadingCircleBackGradient
+            ComboBox4.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleBackGradientMode)
+            CheckBox7.Checked = .Prop_LoadingCircleBackNoise
+            Trackbar5.Value = .Prop_LoadingCircleBackNoiseOpacity * 100
 
             LoadingColor1.BackColor = .Prop_LoadingCircleHot1
             LoadingColor2.BackColor = .Prop_LoadingCircleHot2
-            XenonCheckBox2.Checked = .Prop_LoadingCircleHotGradient
-            XenonComboBox3.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
-            XenonCheckBox6.Checked = .Prop_LoadingCircleHotNoise
-            XenonTrackbar6.Value = .Prop_LoadingCircleHotNoiseOpacity * 100
+            CheckBox2.Checked = .Prop_LoadingCircleHotGradient
+            ComboBox3.SelectedItem = ReturnStringFromGradientMode(.Prop_LoadingCircleHotGradientMode)
+            CheckBox6.Checked = .Prop_LoadingCircleHotNoise
+            Trackbar6.Value = .Prop_LoadingCircleHotNoiseOpacity * 100
 
-            XenonCheckBox11.Checked = .Prop_Shadow_Enabled
+            CheckBox11.Checked = .Prop_Shadow_Enabled
             ColorItem1.BackColor = .Prop_Shadow_Color
-            XenonTrackbar7.Value = .Prop_Shadow_Blur
-            XenonTrackbar8.Value = .Prop_Shadow_Opacity * 100
-            XenonTrackbar9.Value = .Prop_Shadow_OffsetX
-            XenonTrackbar10.Value = .Prop_Shadow_OffsetY
+            Trackbar7.Value = .Prop_Shadow_Blur
+            Trackbar8.Value = .Prop_Shadow_Opacity * 100
+            Trackbar9.Value = .Prop_Shadow_OffsetX
+            Trackbar10.Value = .Prop_Shadow_OffsetY
         End With
 
     End Sub
 
     Sub ApplyColorsToPreview([CursorControl] As CursorControl)
         With [CursorControl]
-            .Prop_ArrowStyle = XenonComboBox5.SelectedIndex
-            .Prop_CircleStyle = XenonComboBox6.SelectedIndex
+            .Prop_ArrowStyle = ComboBox5.SelectedIndex
+            .Prop_CircleStyle = ComboBox6.SelectedIndex
 
             .Prop_PrimaryColor1 = PrimaryColor1.BackColor
             .Prop_PrimaryColor2 = PrimaryColor2.BackColor
-            .Prop_PrimaryColorGradient = XenonCheckBox1.Checked
-            .Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox1.SelectedItem)
-            .Prop_PrimaryNoise = XenonCheckBox5.Checked
-            .Prop_PrimaryNoiseOpacity = XenonTrackbar3.Value / 100
+            .Prop_PrimaryColorGradient = CheckBox1.Checked
+            .Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(ComboBox1.SelectedItem)
+            .Prop_PrimaryNoise = CheckBox5.Checked
+            .Prop_PrimaryNoiseOpacity = Trackbar3.Value / 100
 
             .Prop_SecondaryColor1 = SecondaryColor1.BackColor
             .Prop_SecondaryColor2 = SecondaryColor2.BackColor
-            .Prop_SecondaryColorGradient = XenonCheckBox4.Checked
-            .Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(XenonComboBox2.SelectedItem)
-            .Prop_SecondaryNoise = XenonCheckBox3.Checked
-            .Prop_SecondaryNoiseOpacity = XenonTrackbar4.Value / 100
+            .Prop_SecondaryColorGradient = CheckBox4.Checked
+            .Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(ComboBox2.SelectedItem)
+            .Prop_SecondaryNoise = CheckBox3.Checked
+            .Prop_SecondaryNoiseOpacity = Trackbar4.Value / 100
 
             .Prop_LoadingCircleBack1 = CircleColor1.BackColor
             .Prop_LoadingCircleBack2 = CircleColor2.BackColor
-            .Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
-            .Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(XenonComboBox4.SelectedItem)
-            .Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
-            .Prop_LoadingCircleBackNoiseOpacity = XenonTrackbar5.Value / 100
+            .Prop_LoadingCircleBackGradient = CheckBox8.Checked
+            .Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(ComboBox4.SelectedItem)
+            .Prop_LoadingCircleBackNoise = CheckBox7.Checked
+            .Prop_LoadingCircleBackNoiseOpacity = Trackbar5.Value / 100
 
             .Prop_LoadingCircleHot1 = LoadingColor1.BackColor
             .Prop_LoadingCircleHot2 = LoadingColor2.BackColor
-            .Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
-            .Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(XenonComboBox3.SelectedItem)
-            .Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
-            .Prop_LoadingCircleHotNoiseOpacity = XenonTrackbar6.Value / 100
+            .Prop_LoadingCircleHotGradient = CheckBox2.Checked
+            .Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(ComboBox3.SelectedItem)
+            .Prop_LoadingCircleHotNoise = CheckBox6.Checked
+            .Prop_LoadingCircleHotNoiseOpacity = Trackbar6.Value / 100
 
-            .Prop_Shadow_Enabled = XenonCheckBox11.Checked
+            .Prop_Shadow_Enabled = CheckBox11.Checked
             .Prop_Shadow_Color = ColorItem1.BackColor
-            .Prop_Shadow_Blur = XenonTrackbar7.Value
-            .Prop_Shadow_Opacity = XenonTrackbar8.Value / 100
-            .Prop_Shadow_OffsetX = XenonTrackbar9.Value
-            .Prop_Shadow_OffsetY = XenonTrackbar10.Value
+            .Prop_Shadow_Blur = Trackbar7.Value
+            .Prop_Shadow_Opacity = Trackbar8.Value / 100
+            .Prop_Shadow_OffsetX = Trackbar9.Value
+            .Prop_Shadow_OffsetY = Trackbar10.Value
         End With
 
     End Sub
@@ -312,7 +312,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox3_Click(sender As Object, e As EventArgs) Handles PrimaryColor2.Click, PrimaryColor2.DragDrop
+    Private Sub GroupBox3_Click(sender As Object, e As EventArgs) Handles PrimaryColor2.Click, PrimaryColor2.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_PrimaryColor2 = sender.BackColor
@@ -343,7 +343,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox5_Click(sender As Object, e As EventArgs) Handles SecondaryColor1.Click, SecondaryColor1.DragDrop
+    Private Sub GroupBox5_Click(sender As Object, e As EventArgs) Handles SecondaryColor1.Click, SecondaryColor1.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_SecondaryColor1 = sender.BackColor
@@ -374,7 +374,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox4_Click(sender As Object, e As EventArgs) Handles SecondaryColor2.Click, SecondaryColor2.DragDrop
+    Private Sub GroupBox4_Click(sender As Object, e As EventArgs) Handles SecondaryColor2.Click, SecondaryColor2.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_SecondaryColor2 = sender.BackColor
@@ -405,7 +405,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox10_Click(sender As Object, e As EventArgs) Handles CircleColor1.Click, CircleColor1.DragDrop
+    Private Sub GroupBox10_Click(sender As Object, e As EventArgs) Handles CircleColor1.Click, CircleColor1.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
@@ -436,30 +436,30 @@
 
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
         If Not _Shown Then Exit Sub
-        _SelectedControl.Prop_PrimaryColorGradient = XenonCheckBox1.Checked
+        _SelectedControl.Prop_PrimaryColorGradient = CheckBox1.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox1.Invalidate()
+        CheckBox1.Invalidate()
     End Sub
 
-    Private Sub XenonCheckBox4_CheckedChanged(sender As Object) Handles XenonCheckBox4.CheckedChanged
+    Private Sub CheckBox4_CheckedChanged(sender As Object) Handles CheckBox4.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryColorGradient = XenonCheckBox4.Checked
+        _SelectedControl.Prop_SecondaryColorGradient = CheckBox4.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox4.Invalidate()
+        CheckBox4.Invalidate()
 
     End Sub
 
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox1.SelectedIndexChanged
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_PrimaryColorGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox2.SelectedIndexChanged
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_SecondaryColorGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
@@ -467,25 +467,25 @@
 
     End Sub
 
-    Private Sub XenonCheckBox5_CheckedChanged(sender As Object) Handles XenonCheckBox5.CheckedChanged
+    Private Sub CheckBox5_CheckedChanged(sender As Object) Handles CheckBox5.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_PrimaryNoise = XenonCheckBox5.Checked
+        _SelectedControl.Prop_PrimaryNoise = CheckBox5.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox5.Invalidate()
+        CheckBox5.Invalidate()
 
     End Sub
 
-    Private Sub XenonCheckBox3_CheckedChanged(sender As Object) Handles XenonCheckBox3.CheckedChanged
+    Private Sub CheckBox3_CheckedChanged(sender As Object) Handles CheckBox3.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_SecondaryNoise = XenonCheckBox3.Checked
+        _SelectedControl.Prop_SecondaryNoise = CheckBox3.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox3.Invalidate()
+        CheckBox3.Invalidate()
 
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         If Not _Shown Then Exit Sub
 
         For Each i As CursorControl In FlowLayoutPanel1.Controls
@@ -525,14 +525,14 @@
         End Try
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Angle = 180
         Cycles = 0
         Timer1.Enabled = True
         Timer1.Start()
     End Sub
 
-    Private Sub XenonGroupBox9_Click(sender As Object, e As EventArgs) Handles CircleColor2.Click, CircleColor2.DragDrop
+    Private Sub GroupBox9_Click(sender As Object, e As EventArgs) Handles CircleColor2.Click, CircleColor2.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_LoadingCircleBack1 = sender.BackColor
@@ -563,7 +563,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox8_Click(sender As Object, e As EventArgs) Handles LoadingColor1.Click, LoadingColor1.DragDrop
+    Private Sub GroupBox8_Click(sender As Object, e As EventArgs) Handles LoadingColor1.Click, LoadingColor1.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_LoadingCircleHot1 = sender.BackColor
@@ -594,7 +594,7 @@
 
     End Sub
 
-    Private Sub XenonGroupBox7_Click(sender As Object, e As EventArgs) Handles LoadingColor2.Click, LoadingColor2.DragDrop
+    Private Sub GroupBox7_Click(sender As Object, e As EventArgs) Handles LoadingColor2.Click, LoadingColor2.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_LoadingCircleHot2 = sender.BackColor
@@ -625,41 +625,41 @@
 
     End Sub
 
-    Private Sub XenonCheckBox8_CheckedChanged(sender As Object) Handles XenonCheckBox8.CheckedChanged
+    Private Sub CheckBox8_CheckedChanged(sender As Object) Handles CheckBox8.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackGradient = XenonCheckBox8.Checked
+        _SelectedControl.Prop_LoadingCircleBackGradient = CheckBox8.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox8.Invalidate()
+        CheckBox8.Invalidate()
     End Sub
 
-    Private Sub XenonCheckBox2_CheckedChanged(sender As Object) Handles XenonCheckBox2.CheckedChanged
+    Private Sub CheckBox2_CheckedChanged(sender As Object) Handles CheckBox2.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleHotGradient = XenonCheckBox2.Checked
+        _SelectedControl.Prop_LoadingCircleHotGradient = CheckBox2.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox2.Invalidate()
+        CheckBox2.Invalidate()
     End Sub
 
-    Private Sub XenonCheckBox7_CheckedChanged(sender As Object) Handles XenonCheckBox7.CheckedChanged
+    Private Sub CheckBox7_CheckedChanged(sender As Object) Handles CheckBox7.CheckedChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_LoadingCircleBackNoise = XenonCheckBox7.Checked
+        _SelectedControl.Prop_LoadingCircleBackNoise = CheckBox7.Checked
         _SelectedControl.Invalidate()
-        XenonCheckBox7.Invalidate()
-
-    End Sub
-
-    Private Sub XenonCheckBox6_CheckedChanged(sender As Object) Handles XenonCheckBox6.CheckedChanged
-        If Not _Shown Then Exit Sub
-
-        _SelectedControl.Prop_LoadingCircleHotNoise = XenonCheckBox6.Checked
-        _SelectedControl.Invalidate()
-        XenonCheckBox6.Invalidate()
+        CheckBox7.Invalidate()
 
     End Sub
 
-    Private Sub XenonComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox4.SelectedIndexChanged
+    Private Sub CheckBox6_CheckedChanged(sender As Object) Handles CheckBox6.CheckedChanged
+        If Not _Shown Then Exit Sub
+
+        _SelectedControl.Prop_LoadingCircleHotNoise = CheckBox6.Checked
+        _SelectedControl.Invalidate()
+        CheckBox6.Invalidate()
+
+    End Sub
+
+    Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_LoadingCircleBackGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
@@ -667,7 +667,7 @@
 
     End Sub
 
-    Private Sub XenonComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox3.SelectedIndexChanged
+    Private Sub ComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox3.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
         _SelectedControl.Prop_LoadingCircleHotGradientMode = ReturnGradientModeFromString(sender.SelectedItem)
@@ -675,19 +675,19 @@
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         _CopiedControl = _SelectedControl
-        XenonButton2.Enabled = True
-        XenonButton6.Enabled = True
+        Button2.Enabled = True
+        Button6.Enabled = True
 
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         ApplyColorsFromCursor(_CopiedControl)
         ApplyColorsToPreview(_SelectedControl)
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
         For Each i As CursorControl In FlowLayoutPanel1.Controls
             If TypeOf i Is CursorControl Then
                 ApplyColorsFromCursor(_CopiedControl)
@@ -698,16 +698,16 @@
     End Sub
 
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         SaveToCP(My.CP)
         Me.Close()
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
             LoadFromCP(CPx)
@@ -723,7 +723,7 @@
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         LoadFromCP(CPx)
         CPx.Dispose()
@@ -736,7 +736,7 @@
         Next
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
             LoadFromCP(_Def)
         End Using
@@ -749,11 +749,11 @@
         Next
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
         MsgBox(My.Lang.ScalingTip, MsgBoxStyle.Information)
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         Cursor = Cursors.WaitCursor
         Dim CPx As New CP(CP.CP_Type.Registry)
         SaveToCP(CPx)
@@ -766,38 +766,38 @@
 
     Private Sub Ttl_h_Click(sender As Object, e As EventArgs) Handles trails_btn.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar2.Maximum), XenonTrackbar2.Minimum) : XenonTrackbar2.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar2.Maximum), Trackbar2.Minimum) : Trackbar2.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar2_Scroll(sender As Object) Handles XenonTrackbar2.Scroll
+    Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
         trails_btn.Text = sender.Value.ToString
     End Sub
 
-    Private Sub XenonToggle1_CheckedChanged(sender As Object, e As EventArgs) Handles XenonToggle1.CheckedChanged
+    Private Sub Toggle1_CheckedChanged(sender As Object, e As EventArgs) Handles Toggle1.CheckedChanged
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
-    Private Sub XenonComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox5.SelectedIndexChanged
+    Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_ArrowStyle = XenonComboBox5.SelectedIndex
+        _SelectedControl.Prop_ArrowStyle = ComboBox5.SelectedIndex
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles XenonComboBox6.SelectedIndexChanged
+    Private Sub ComboBox6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox6.SelectedIndexChanged
         If Not _Shown Then Exit Sub
 
-        _SelectedControl.Prop_CircleStyle = XenonComboBox6.SelectedIndex
+        _SelectedControl.Prop_CircleStyle = ComboBox6.SelectedIndex
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar3.Maximum), XenonTrackbar3.Minimum) : XenonTrackbar3.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar3.Maximum), Trackbar3.Minimum) : Trackbar3.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar3_Scroll(sender As Object) Handles XenonTrackbar3.Scroll
-        XenonButton12.Text = sender.Value
+    Private Sub Trackbar3_Scroll(sender As Object) Handles Trackbar3.Scroll
+        Button12.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -812,13 +812,13 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar4.Maximum), XenonTrackbar4.Minimum) : XenonTrackbar4.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar4.Maximum), Trackbar4.Minimum) : Trackbar4.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar4_Scroll(sender As Object) Handles XenonTrackbar4.Scroll
-        XenonButton13.Text = sender.Value
+    Private Sub Trackbar4_Scroll(sender As Object) Handles Trackbar4.Scroll
+        Button13.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -833,13 +833,13 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar5.Maximum), XenonTrackbar5.Minimum) : XenonTrackbar5.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar5.Maximum), Trackbar5.Minimum) : Trackbar5.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar5_Scroll(sender As Object) Handles XenonTrackbar5.Scroll
-        XenonButton14.Text = sender.Value
+    Private Sub Trackbar5_Scroll(sender As Object) Handles Trackbar5.Scroll
+        Button14.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -854,13 +854,13 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+    Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar6.Maximum), XenonTrackbar6.Minimum) : XenonTrackbar6.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar6.Maximum), Trackbar6.Minimum) : Trackbar6.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar6_Scroll(sender As Object) Handles XenonTrackbar6.Scroll
-        XenonButton15.Text = sender.Value
+    Private Sub Trackbar6_Scroll(sender As Object) Handles Trackbar6.Scroll
+        Button15.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -906,28 +906,28 @@
 
     End Sub
 
-    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar7.Maximum), XenonTrackbar7.Minimum) : XenonTrackbar7.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar7.Maximum), Trackbar7.Minimum) : Trackbar7.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+    Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar8.Maximum), XenonTrackbar8.Minimum) : XenonTrackbar8.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar8.Maximum), Trackbar8.Minimum) : Trackbar8.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+    Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar9.Maximum), XenonTrackbar9.Minimum) : XenonTrackbar9.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar9.Maximum), Trackbar9.Minimum) : Trackbar9.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+    Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar10.Maximum), XenonTrackbar10.Minimum) : XenonTrackbar10.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar10.Maximum), Trackbar10.Minimum) : Trackbar10.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonTrackbar7_Scroll(sender As Object) Handles XenonTrackbar7.Scroll
-        XenonButton16.Text = sender.Value
+    Private Sub Trackbar7_Scroll(sender As Object) Handles Trackbar7.Scroll
+        Button16.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -942,8 +942,8 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonTrackbar8_Scroll(sender As Object) Handles XenonTrackbar8.Scroll
-        XenonButton17.Text = sender.Value
+    Private Sub Trackbar8_Scroll(sender As Object) Handles Trackbar8.Scroll
+        Button17.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -958,8 +958,8 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonTrackbar9_Scroll(sender As Object) Handles XenonTrackbar9.Scroll
-        XenonButton18.Text = sender.Value
+    Private Sub Trackbar9_Scroll(sender As Object) Handles Trackbar9.Scroll
+        Button18.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -974,8 +974,8 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonTrackbar10_Scroll(sender As Object) Handles XenonTrackbar10.Scroll
-        XenonButton19.Text = sender.Value
+    Private Sub Trackbar10_Scroll(sender As Object) Handles Trackbar10.Scroll
+        Button19.Text = sender.Value
 
         If Not _Shown Then Exit Sub
 
@@ -990,9 +990,9 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonCheckBox11_CheckedChanged(sender As Object) Handles XenonCheckBox11.CheckedChanged
+    Private Sub CheckBox11_CheckedChanged(sender As Object) Handles CheckBox11.CheckedChanged
         If Not _Shown Then Exit Sub
-        _SelectedControl.Prop_Shadow_Enabled = XenonCheckBox11.Checked
+        _SelectedControl.Prop_Shadow_Enabled = CheckBox11.Checked
         _SelectedControl.Invalidate()
     End Sub
 

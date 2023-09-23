@@ -26,115 +26,115 @@ Partial Class CursorsStudio
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CursorsStudio))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonGroupBox10 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonCheckBox11 = New UI.WP.CheckBox()
+        Me.GroupBox10 = New WinPaletter.UI.WP.GroupBox()
+        Me.CheckBox11 = New UI.WP.CheckBox()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton19 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar10 = New WinPaletter.UI.WP.Trackbar()
-        Me.XenonButton18 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar9 = New WinPaletter.UI.WP.Trackbar()
+        Me.Button19 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar10 = New WinPaletter.UI.WP.Trackbar()
+        Me.Button18 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar9 = New WinPaletter.UI.WP.Trackbar()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.PictureBox20 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton17 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar8 = New WinPaletter.UI.WP.Trackbar()
+        Me.Button17 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar8 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
-        Me.XenonButton16 = New WinPaletter.UI.WP.Button()
+        Me.Button16 = New WinPaletter.UI.WP.Button()
         Me.ColorItem1 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonTrackbar7 = New WinPaletter.UI.WP.Trackbar()
+        Me.Trackbar7 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox9 = New WinPaletter.UI.WP.GroupBox()
+        Me.GroupBox9 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.trails_btn = New WinPaletter.UI.WP.Button()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.XenonCheckBox9 = New UI.WP.CheckBox()
+        Me.CheckBox9 = New UI.WP.CheckBox()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.XenonTrackbar2 = New WinPaletter.UI.WP.Trackbar()
-        Me.XenonCheckBox10 = New UI.WP.CheckBox()
-        Me.XenonGroupBox6 = New WinPaletter.UI.WP.GroupBox()
+        Me.Trackbar2 = New WinPaletter.UI.WP.Trackbar()
+        Me.CheckBox10 = New UI.WP.CheckBox()
+        Me.GroupBox6 = New WinPaletter.UI.WP.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.XenonComboBox5 = New WinPaletter.UI.WP.ComboBox()
-        Me.XenonComboBox6 = New WinPaletter.UI.WP.ComboBox()
-        Me.XenonGroupBox5 = New WinPaletter.UI.WP.GroupBox()
+        Me.ComboBox5 = New WinPaletter.UI.WP.ComboBox()
+        Me.ComboBox6 = New WinPaletter.UI.WP.ComboBox()
+        Me.GroupBox5 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox7 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonButton14 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar5 = New WinPaletter.UI.WP.Trackbar()
+        Me.GroupBox7 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button14 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar5 = New WinPaletter.UI.WP.Trackbar()
         Me.CircleColor1 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonCheckBox7 = New UI.WP.CheckBox()
+        Me.CheckBox7 = New UI.WP.CheckBox()
         Me.CircleColor2 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonComboBox4 = New WinPaletter.UI.WP.ComboBox()
-        Me.XenonCheckBox8 = New UI.WP.CheckBox()
+        Me.ComboBox4 = New WinPaletter.UI.WP.ComboBox()
+        Me.CheckBox8 = New UI.WP.CheckBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox8 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonButton15 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar6 = New WinPaletter.UI.WP.Trackbar()
+        Me.GroupBox8 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button15 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar6 = New WinPaletter.UI.WP.Trackbar()
         Me.LoadingColor1 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonComboBox3 = New WinPaletter.UI.WP.ComboBox()
-        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.ComboBox3 = New WinPaletter.UI.WP.ComboBox()
+        Me.CheckBox2 = New UI.WP.CheckBox()
         Me.LoadingColor2 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonCheckBox6 = New UI.WP.CheckBox()
+        Me.CheckBox6 = New UI.WP.CheckBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
-        Me.XenonGroupBox13 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button11 = New WinPaletter.UI.WP.Button()
+        Me.GroupBox13 = New WinPaletter.UI.WP.GroupBox()
         Me.checker_img = New System.Windows.Forms.PictureBox()
-        Me.XenonToggle1 = New UI.WP.Toggle()
-        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
+        Me.Toggle1 = New UI.WP.Toggle()
+        Me.Button7 = New WinPaletter.UI.WP.Button()
+        Me.Button8 = New WinPaletter.UI.WP.Button()
+        Me.Button9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
+        Me.GroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonButton13 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar4 = New WinPaletter.UI.WP.Trackbar()
-        Me.XenonCheckBox4 = New UI.WP.CheckBox()
-        Me.XenonCheckBox3 = New UI.WP.CheckBox()
+        Me.GroupBox4 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button13 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar4 = New WinPaletter.UI.WP.Trackbar()
+        Me.CheckBox4 = New UI.WP.CheckBox()
+        Me.CheckBox3 = New UI.WP.CheckBox()
         Me.SecondaryColor1 = New WinPaletter.UI.Controllers.ColorItem()
         Me.SecondaryColor2 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonComboBox2 = New WinPaletter.UI.WP.ComboBox()
+        Me.ComboBox2 = New WinPaletter.UI.WP.ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
-        Me.XenonTrackbar3 = New WinPaletter.UI.WP.Trackbar()
+        Me.GroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button12 = New WinPaletter.UI.WP.Button()
+        Me.Trackbar3 = New WinPaletter.UI.WP.Trackbar()
         Me.PrimaryColor2 = New WinPaletter.UI.Controllers.ColorItem()
         Me.PrimaryColor1 = New WinPaletter.UI.Controllers.ColorItem()
-        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
-        Me.XenonCheckBox1 = New UI.WP.CheckBox()
-        Me.XenonCheckBox5 = New UI.WP.CheckBox()
+        Me.ComboBox1 = New WinPaletter.UI.WP.ComboBox()
+        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox5 = New UI.WP.CheckBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
-        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
-        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.Button3 = New WinPaletter.UI.WP.Button()
+        Me.Button4 = New WinPaletter.UI.WP.Button()
+        Me.GroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.Button5 = New WinPaletter.UI.WP.Button()
+        Me.Button10 = New WinPaletter.UI.WP.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Arrow = New WinPaletter.CursorControl()
@@ -156,44 +156,44 @@ Partial Class CursorsStudio
         Me.Cross = New WinPaletter.CursorControl()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonTrackbar1 = New WinPaletter.UI.WP.Trackbar()
-        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
-        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
-        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
-        Me.XenonGroupBox10.SuspendLayout()
+        Me.Trackbar1 = New WinPaletter.UI.WP.Trackbar()
+        Me.Button6 = New WinPaletter.UI.WP.Button()
+        Me.Button2 = New WinPaletter.UI.WP.Button()
+        Me.Button1 = New WinPaletter.UI.WP.Button()
+        Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.GroupBox10.SuspendLayout()
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox9.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox6.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox5.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox7.SuspendLayout()
-        Me.XenonGroupBox8.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox13.SuspendLayout()
+        Me.GroupBox13.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox2.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox4.SuspendLayout()
-        Me.XenonGroupBox3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.XenonGroupBox1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -207,47 +207,47 @@ Partial Class CursorsStudio
         Me.OpenFileDialog1.DefaultExt = "wpt"
         Me.OpenFileDialog1.Filter = "WinPaletter Theme (*.wpth)|*.wpth|All Files|*.*"
         '
-        'XenonGroupBox10
+        'GroupBox10
         '
-        Me.XenonGroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox10.Controls.Add(Me.XenonCheckBox11)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox24)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonButton19)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar10)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonButton18)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar9)
-        Me.XenonGroupBox10.Controls.Add(Me.Label22)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox20)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonButton17)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar8)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox19)
-        Me.XenonGroupBox10.Controls.Add(Me.Label26)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonButton16)
-        Me.XenonGroupBox10.Controls.Add(Me.ColorItem1)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar7)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox16)
-        Me.XenonGroupBox10.Controls.Add(Me.Label14)
-        Me.XenonGroupBox10.Controls.Add(Me.Label24)
-        Me.XenonGroupBox10.Controls.Add(Me.Label25)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox17)
-        Me.XenonGroupBox10.Controls.Add(Me.PictureBox18)
-        Me.XenonGroupBox10.Enabled = False
-        Me.XenonGroupBox10.Location = New System.Drawing.Point(12, 391)
-        Me.XenonGroupBox10.Name = "XenonGroupBox10"
-        Me.XenonGroupBox10.Size = New System.Drawing.Size(552, 132)
-        Me.XenonGroupBox10.TabIndex = 136
+        Me.GroupBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox10.Controls.Add(Me.CheckBox11)
+        Me.GroupBox10.Controls.Add(Me.PictureBox24)
+        Me.GroupBox10.Controls.Add(Me.Button19)
+        Me.GroupBox10.Controls.Add(Me.Trackbar10)
+        Me.GroupBox10.Controls.Add(Me.Button18)
+        Me.GroupBox10.Controls.Add(Me.Trackbar9)
+        Me.GroupBox10.Controls.Add(Me.Label22)
+        Me.GroupBox10.Controls.Add(Me.PictureBox20)
+        Me.GroupBox10.Controls.Add(Me.Button17)
+        Me.GroupBox10.Controls.Add(Me.Trackbar8)
+        Me.GroupBox10.Controls.Add(Me.PictureBox19)
+        Me.GroupBox10.Controls.Add(Me.Label26)
+        Me.GroupBox10.Controls.Add(Me.Button16)
+        Me.GroupBox10.Controls.Add(Me.ColorItem1)
+        Me.GroupBox10.Controls.Add(Me.Trackbar7)
+        Me.GroupBox10.Controls.Add(Me.PictureBox16)
+        Me.GroupBox10.Controls.Add(Me.Label14)
+        Me.GroupBox10.Controls.Add(Me.Label24)
+        Me.GroupBox10.Controls.Add(Me.Label25)
+        Me.GroupBox10.Controls.Add(Me.PictureBox17)
+        Me.GroupBox10.Controls.Add(Me.PictureBox18)
+        Me.GroupBox10.Enabled = False
+        Me.GroupBox10.Location = New System.Drawing.Point(12, 391)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(552, 132)
+        Me.GroupBox10.TabIndex = 136
         '
-        'XenonCheckBox11
+        'CheckBox11
         '
-        Me.XenonCheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonCheckBox11.Checked = False
-        Me.XenonCheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox11.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox11.Location = New System.Drawing.Point(62, 40)
-        Me.XenonCheckBox11.Name = "XenonCheckBox11"
-        Me.XenonCheckBox11.Size = New System.Drawing.Size(78, 24)
-        Me.XenonCheckBox11.TabIndex = 150
-        Me.XenonCheckBox11.Text = "Enabled"
+        Me.CheckBox11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CheckBox11.Checked = False
+        Me.CheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox11.ForeColor = System.Drawing.Color.White
+        Me.CheckBox11.Location = New System.Drawing.Point(62, 40)
+        Me.CheckBox11.Name = "CheckBox11"
+        Me.CheckBox11.Size = New System.Drawing.Size(78, 24)
+        Me.CheckBox11.TabIndex = 150
+        Me.CheckBox11.Text = "Enabled"
         '
         'PictureBox24
         '
@@ -258,59 +258,59 @@ Partial Class CursorsStudio
         Me.PictureBox24.TabIndex = 149
         Me.PictureBox24.TabStop = False
         '
-        'XenonButton19
+        'Button19
         '
-        Me.XenonButton19.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton19.DrawOnGlass = False
-        Me.XenonButton19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton19.ForeColor = System.Drawing.Color.White
-        Me.XenonButton19.Image = Nothing
-        Me.XenonButton19.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton19.LineSize = 1
-        Me.XenonButton19.Location = New System.Drawing.Point(510, 101)
-        Me.XenonButton19.Name = "XenonButton19"
-        Me.XenonButton19.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton19.TabIndex = 148
-        Me.XenonButton19.UseVisualStyleBackColor = False
+        Me.Button19.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button19.DrawOnGlass = False
+        Me.Button19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button19.ForeColor = System.Drawing.Color.White
+        Me.Button19.Image = Nothing
+        Me.Button19.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button19.LineSize = 1
+        Me.Button19.Location = New System.Drawing.Point(510, 101)
+        Me.Button19.Name = "Button19"
+        Me.Button19.Size = New System.Drawing.Size(34, 24)
+        Me.Button19.TabIndex = 148
+        Me.Button19.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar10
+        'Trackbar10
         '
-        Me.XenonTrackbar10.LargeChange = 2
-        Me.XenonTrackbar10.Location = New System.Drawing.Point(304, 104)
-        Me.XenonTrackbar10.Maximum = 5
-        Me.XenonTrackbar10.Minimum = 0
-        Me.XenonTrackbar10.Name = "XenonTrackbar10"
-        Me.XenonTrackbar10.Size = New System.Drawing.Size(160, 19)
-        Me.XenonTrackbar10.SmallChange = 1
-        Me.XenonTrackbar10.TabIndex = 147
-        Me.XenonTrackbar10.Value = 0
+        Me.Trackbar10.LargeChange = 2
+        Me.Trackbar10.Location = New System.Drawing.Point(304, 104)
+        Me.Trackbar10.Maximum = 5
+        Me.Trackbar10.Minimum = 0
+        Me.Trackbar10.Name = "Trackbar10"
+        Me.Trackbar10.Size = New System.Drawing.Size(160, 19)
+        Me.Trackbar10.SmallChange = 1
+        Me.Trackbar10.TabIndex = 147
+        Me.Trackbar10.Value = 0
         '
-        'XenonButton18
+        'Button18
         '
-        Me.XenonButton18.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton18.DrawOnGlass = False
-        Me.XenonButton18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton18.ForeColor = System.Drawing.Color.White
-        Me.XenonButton18.Image = Nothing
-        Me.XenonButton18.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton18.LineSize = 1
-        Me.XenonButton18.Location = New System.Drawing.Point(470, 101)
-        Me.XenonButton18.Name = "XenonButton18"
-        Me.XenonButton18.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton18.TabIndex = 144
-        Me.XenonButton18.UseVisualStyleBackColor = False
+        Me.Button18.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button18.DrawOnGlass = False
+        Me.Button18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button18.ForeColor = System.Drawing.Color.White
+        Me.Button18.Image = Nothing
+        Me.Button18.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button18.LineSize = 1
+        Me.Button18.Location = New System.Drawing.Point(470, 101)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(34, 24)
+        Me.Button18.TabIndex = 144
+        Me.Button18.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar9
+        'Trackbar9
         '
-        Me.XenonTrackbar9.LargeChange = 2
-        Me.XenonTrackbar9.Location = New System.Drawing.Point(137, 104)
-        Me.XenonTrackbar9.Maximum = 5
-        Me.XenonTrackbar9.Minimum = 0
-        Me.XenonTrackbar9.Name = "XenonTrackbar9"
-        Me.XenonTrackbar9.Size = New System.Drawing.Size(160, 19)
-        Me.XenonTrackbar9.SmallChange = 1
-        Me.XenonTrackbar9.TabIndex = 143
-        Me.XenonTrackbar9.Value = 0
+        Me.Trackbar9.LargeChange = 2
+        Me.Trackbar9.Location = New System.Drawing.Point(137, 104)
+        Me.Trackbar9.Maximum = 5
+        Me.Trackbar9.Minimum = 0
+        Me.Trackbar9.Name = "Trackbar9"
+        Me.Trackbar9.Size = New System.Drawing.Size(160, 19)
+        Me.Trackbar9.SmallChange = 1
+        Me.Trackbar9.TabIndex = 143
+        Me.Trackbar9.Value = 0
         '
         'Label22
         '
@@ -332,32 +332,32 @@ Partial Class CursorsStudio
         Me.PictureBox20.TabIndex = 141
         Me.PictureBox20.TabStop = False
         '
-        'XenonButton17
+        'Button17
         '
-        Me.XenonButton17.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton17.DrawOnGlass = False
-        Me.XenonButton17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton17.ForeColor = System.Drawing.Color.White
-        Me.XenonButton17.Image = Nothing
-        Me.XenonButton17.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton17.LineSize = 1
-        Me.XenonButton17.Location = New System.Drawing.Point(511, 70)
-        Me.XenonButton17.Name = "XenonButton17"
-        Me.XenonButton17.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton17.TabIndex = 140
-        Me.XenonButton17.UseVisualStyleBackColor = False
+        Me.Button17.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button17.DrawOnGlass = False
+        Me.Button17.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button17.ForeColor = System.Drawing.Color.White
+        Me.Button17.Image = Nothing
+        Me.Button17.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button17.LineSize = 1
+        Me.Button17.Location = New System.Drawing.Point(511, 70)
+        Me.Button17.Name = "Button17"
+        Me.Button17.Size = New System.Drawing.Size(34, 24)
+        Me.Button17.TabIndex = 140
+        Me.Button17.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar8
+        'Trackbar8
         '
-        Me.XenonTrackbar8.LargeChange = 2
-        Me.XenonTrackbar8.Location = New System.Drawing.Point(410, 73)
-        Me.XenonTrackbar8.Maximum = 100
-        Me.XenonTrackbar8.Minimum = 0
-        Me.XenonTrackbar8.Name = "XenonTrackbar8"
-        Me.XenonTrackbar8.Size = New System.Drawing.Size(95, 19)
-        Me.XenonTrackbar8.SmallChange = 1
-        Me.XenonTrackbar8.TabIndex = 139
-        Me.XenonTrackbar8.Value = 0
+        Me.Trackbar8.LargeChange = 2
+        Me.Trackbar8.Location = New System.Drawing.Point(410, 73)
+        Me.Trackbar8.Maximum = 100
+        Me.Trackbar8.Minimum = 0
+        Me.Trackbar8.Name = "Trackbar8"
+        Me.Trackbar8.Size = New System.Drawing.Size(95, 19)
+        Me.Trackbar8.SmallChange = 1
+        Me.Trackbar8.TabIndex = 139
+        Me.Trackbar8.Value = 0
         '
         'PictureBox19
         '
@@ -378,20 +378,20 @@ Partial Class CursorsStudio
         Me.Label26.Text = "Color"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonButton16
+        'Button16
         '
-        Me.XenonButton16.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton16.DrawOnGlass = False
-        Me.XenonButton16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton16.ForeColor = System.Drawing.Color.White
-        Me.XenonButton16.Image = Nothing
-        Me.XenonButton16.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton16.LineSize = 1
-        Me.XenonButton16.Location = New System.Drawing.Point(238, 71)
-        Me.XenonButton16.Name = "XenonButton16"
-        Me.XenonButton16.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton16.TabIndex = 138
-        Me.XenonButton16.UseVisualStyleBackColor = False
+        Me.Button16.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button16.DrawOnGlass = False
+        Me.Button16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button16.ForeColor = System.Drawing.Color.White
+        Me.Button16.Image = Nothing
+        Me.Button16.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button16.LineSize = 1
+        Me.Button16.Location = New System.Drawing.Point(238, 71)
+        Me.Button16.Name = "Button16"
+        Me.Button16.Size = New System.Drawing.Size(34, 24)
+        Me.Button16.TabIndex = 138
+        Me.Button16.UseVisualStyleBackColor = False
         '
         'ColorItem1
         '
@@ -405,17 +405,17 @@ Partial Class CursorsStudio
         Me.ColorItem1.Size = New System.Drawing.Size(95, 21)
         Me.ColorItem1.TabIndex = 77
         '
-        'XenonTrackbar7
+        'Trackbar7
         '
-        Me.XenonTrackbar7.LargeChange = 2
-        Me.XenonTrackbar7.Location = New System.Drawing.Point(137, 74)
-        Me.XenonTrackbar7.Maximum = 10
-        Me.XenonTrackbar7.Minimum = 0
-        Me.XenonTrackbar7.Name = "XenonTrackbar7"
-        Me.XenonTrackbar7.Size = New System.Drawing.Size(95, 19)
-        Me.XenonTrackbar7.SmallChange = 1
-        Me.XenonTrackbar7.TabIndex = 137
-        Me.XenonTrackbar7.Value = 0
+        Me.Trackbar7.LargeChange = 2
+        Me.Trackbar7.Location = New System.Drawing.Point(137, 74)
+        Me.Trackbar7.Maximum = 10
+        Me.Trackbar7.Minimum = 0
+        Me.Trackbar7.Name = "Trackbar7"
+        Me.Trackbar7.Size = New System.Drawing.Size(95, 19)
+        Me.Trackbar7.SmallChange = 1
+        Me.Trackbar7.TabIndex = 137
+        Me.Trackbar7.Value = 0
         '
         'PictureBox16
         '
@@ -478,23 +478,23 @@ Partial Class CursorsStudio
         Me.PictureBox18.TabIndex = 53
         Me.PictureBox18.TabStop = False
         '
-        'XenonGroupBox9
+        'GroupBox9
         '
-        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox13)
-        Me.XenonGroupBox9.Controls.Add(Me.Label6)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox9)
-        Me.XenonGroupBox9.Controls.Add(Me.trails_btn)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox22)
-        Me.XenonGroupBox9.Controls.Add(Me.Label11)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonCheckBox9)
-        Me.XenonGroupBox9.Controls.Add(Me.PictureBox21)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonTrackbar2)
-        Me.XenonGroupBox9.Controls.Add(Me.XenonCheckBox10)
-        Me.XenonGroupBox9.Location = New System.Drawing.Point(12, 526)
-        Me.XenonGroupBox9.Name = "XenonGroupBox9"
-        Me.XenonGroupBox9.Size = New System.Drawing.Size(552, 102)
-        Me.XenonGroupBox9.TabIndex = 135
+        Me.GroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox9.Controls.Add(Me.PictureBox13)
+        Me.GroupBox9.Controls.Add(Me.Label6)
+        Me.GroupBox9.Controls.Add(Me.PictureBox9)
+        Me.GroupBox9.Controls.Add(Me.trails_btn)
+        Me.GroupBox9.Controls.Add(Me.PictureBox22)
+        Me.GroupBox9.Controls.Add(Me.Label11)
+        Me.GroupBox9.Controls.Add(Me.CheckBox9)
+        Me.GroupBox9.Controls.Add(Me.PictureBox21)
+        Me.GroupBox9.Controls.Add(Me.Trackbar2)
+        Me.GroupBox9.Controls.Add(Me.CheckBox10)
+        Me.GroupBox9.Location = New System.Drawing.Point(12, 526)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(552, 102)
+        Me.GroupBox9.TabIndex = 135
         '
         'PictureBox13
         '
@@ -566,17 +566,17 @@ Partial Class CursorsStudio
         Me.Label11.Text = "Trails"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonCheckBox9
+        'CheckBox9
         '
-        Me.XenonCheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonCheckBox9.Checked = False
-        Me.XenonCheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox9.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox9.Location = New System.Drawing.Point(62, 43)
-        Me.XenonCheckBox9.Name = "XenonCheckBox9"
-        Me.XenonCheckBox9.Size = New System.Drawing.Size(235, 24)
-        Me.XenonCheckBox9.TabIndex = 83
-        Me.XenonCheckBox9.Text = "Make cursors have a shadow"
+        Me.CheckBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CheckBox9.Checked = False
+        Me.CheckBox9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox9.ForeColor = System.Drawing.Color.White
+        Me.CheckBox9.Location = New System.Drawing.Point(62, 43)
+        Me.CheckBox9.Name = "CheckBox9"
+        Me.CheckBox9.Size = New System.Drawing.Size(235, 24)
+        Me.CheckBox9.TabIndex = 83
+        Me.CheckBox9.Text = "Make cursors have a shadow"
         '
         'PictureBox21
         '
@@ -587,48 +587,48 @@ Partial Class CursorsStudio
         Me.PictureBox21.TabIndex = 87
         Me.PictureBox21.TabStop = False
         '
-        'XenonTrackbar2
+        'Trackbar2
         '
-        Me.XenonTrackbar2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Trackbar2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar2.LargeChange = 2
-        Me.XenonTrackbar2.Location = New System.Drawing.Point(121, 76)
-        Me.XenonTrackbar2.Maximum = 16
-        Me.XenonTrackbar2.Minimum = 0
-        Me.XenonTrackbar2.Name = "XenonTrackbar2"
-        Me.XenonTrackbar2.Size = New System.Drawing.Size(383, 19)
-        Me.XenonTrackbar2.SmallChange = 1
-        Me.XenonTrackbar2.TabIndex = 85
-        Me.XenonTrackbar2.Value = 0
+        Me.Trackbar2.LargeChange = 2
+        Me.Trackbar2.Location = New System.Drawing.Point(121, 76)
+        Me.Trackbar2.Maximum = 16
+        Me.Trackbar2.Minimum = 0
+        Me.Trackbar2.Name = "Trackbar2"
+        Me.Trackbar2.Size = New System.Drawing.Size(383, 19)
+        Me.Trackbar2.SmallChange = 1
+        Me.Trackbar2.TabIndex = 85
+        Me.Trackbar2.Value = 0
         '
-        'XenonCheckBox10
+        'CheckBox10
         '
-        Me.XenonCheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonCheckBox10.Checked = False
-        Me.XenonCheckBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox10.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox10.Location = New System.Drawing.Point(337, 43)
-        Me.XenonCheckBox10.Name = "XenonCheckBox10"
-        Me.XenonCheckBox10.Size = New System.Drawing.Size(207, 24)
-        Me.XenonCheckBox10.TabIndex = 131
-        Me.XenonCheckBox10.Text = "Cursor tracking (Sonar)"
+        Me.CheckBox10.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.CheckBox10.Checked = False
+        Me.CheckBox10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox10.ForeColor = System.Drawing.Color.White
+        Me.CheckBox10.Location = New System.Drawing.Point(337, 43)
+        Me.CheckBox10.Name = "CheckBox10"
+        Me.CheckBox10.Size = New System.Drawing.Size(207, 24)
+        Me.CheckBox10.TabIndex = 131
+        Me.CheckBox10.Text = "Cursor tracking (Sonar)"
         '
-        'XenonGroupBox6
+        'GroupBox6
         '
-        Me.XenonGroupBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox6.Controls.Add(Me.Label8)
-        Me.XenonGroupBox6.Controls.Add(Me.PictureBox14)
-        Me.XenonGroupBox6.Controls.Add(Me.Label10)
-        Me.XenonGroupBox6.Controls.Add(Me.PictureBox15)
-        Me.XenonGroupBox6.Controls.Add(Me.PictureBox11)
-        Me.XenonGroupBox6.Controls.Add(Me.Label7)
-        Me.XenonGroupBox6.Controls.Add(Me.XenonComboBox5)
-        Me.XenonGroupBox6.Controls.Add(Me.XenonComboBox6)
-        Me.XenonGroupBox6.Enabled = False
-        Me.XenonGroupBox6.Location = New System.Drawing.Point(12, 55)
-        Me.XenonGroupBox6.Name = "XenonGroupBox6"
-        Me.XenonGroupBox6.Size = New System.Drawing.Size(552, 69)
-        Me.XenonGroupBox6.TabIndex = 134
+        Me.GroupBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox6.Controls.Add(Me.Label8)
+        Me.GroupBox6.Controls.Add(Me.PictureBox14)
+        Me.GroupBox6.Controls.Add(Me.Label10)
+        Me.GroupBox6.Controls.Add(Me.PictureBox15)
+        Me.GroupBox6.Controls.Add(Me.PictureBox11)
+        Me.GroupBox6.Controls.Add(Me.Label7)
+        Me.GroupBox6.Controls.Add(Me.ComboBox5)
+        Me.GroupBox6.Controls.Add(Me.ComboBox6)
+        Me.GroupBox6.Enabled = False
+        Me.GroupBox6.Location = New System.Drawing.Point(12, 55)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(552, 69)
+        Me.GroupBox6.TabIndex = 134
         '
         'Label8
         '
@@ -692,59 +692,59 @@ Partial Class CursorsStudio
         Me.Label7.Text = "Style (For selected cursor)"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonComboBox5
+        'ComboBox5
         '
-        Me.XenonComboBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonComboBox5.CustomFont = False
-        Me.XenonComboBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox5.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox5.FormattingEnabled = True
-        Me.XenonComboBox5.ItemHeight = 20
-        Me.XenonComboBox5.Items.AddRange(New Object() {"Aero", "Modern", "Classic"})
-        Me.XenonComboBox5.Location = New System.Drawing.Point(136, 39)
-        Me.XenonComboBox5.Name = "XenonComboBox5"
-        Me.XenonComboBox5.Size = New System.Drawing.Size(148, 26)
-        Me.XenonComboBox5.TabIndex = 65
+        Me.ComboBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ComboBox5.CustomFont = False
+        Me.ComboBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox5.ForeColor = System.Drawing.Color.White
+        Me.ComboBox5.FormattingEnabled = True
+        Me.ComboBox5.ItemHeight = 20
+        Me.ComboBox5.Items.AddRange(New Object() {"Aero", "Modern", "Classic"})
+        Me.ComboBox5.Location = New System.Drawing.Point(136, 39)
+        Me.ComboBox5.Name = "ComboBox5"
+        Me.ComboBox5.Size = New System.Drawing.Size(148, 26)
+        Me.ComboBox5.TabIndex = 65
         '
-        'XenonComboBox6
+        'ComboBox6
         '
-        Me.XenonComboBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonComboBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonComboBox6.CustomFont = False
-        Me.XenonComboBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox6.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox6.FormattingEnabled = True
-        Me.XenonComboBox6.ItemHeight = 20
-        Me.XenonComboBox6.Items.AddRange(New Object() {"Aero", "Dot", "Classic"})
-        Me.XenonComboBox6.Location = New System.Drawing.Point(399, 39)
-        Me.XenonComboBox6.Name = "XenonComboBox6"
-        Me.XenonComboBox6.Size = New System.Drawing.Size(148, 26)
-        Me.XenonComboBox6.TabIndex = 68
+        Me.ComboBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ComboBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.ComboBox6.CustomFont = False
+        Me.ComboBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox6.ForeColor = System.Drawing.Color.White
+        Me.ComboBox6.FormattingEnabled = True
+        Me.ComboBox6.ItemHeight = 20
+        Me.ComboBox6.Items.AddRange(New Object() {"Aero", "Dot", "Classic"})
+        Me.ComboBox6.Location = New System.Drawing.Point(399, 39)
+        Me.ComboBox6.Name = "ComboBox6"
+        Me.ComboBox6.Size = New System.Drawing.Size(148, 26)
+        Me.ComboBox6.TabIndex = 68
         '
-        'XenonGroupBox5
+        'GroupBox5
         '
-        Me.XenonGroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox5.Controls.Add(Me.PictureBox3)
-        Me.XenonGroupBox5.Controls.Add(Me.Label13)
-        Me.XenonGroupBox5.Controls.Add(Me.Label4)
-        Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox7)
-        Me.XenonGroupBox5.Controls.Add(Me.Label9)
-        Me.XenonGroupBox5.Controls.Add(Me.XenonGroupBox8)
-        Me.XenonGroupBox5.Controls.Add(Me.Label19)
-        Me.XenonGroupBox5.Controls.Add(Me.Label20)
-        Me.XenonGroupBox5.Controls.Add(Me.PictureBox7)
-        Me.XenonGroupBox5.Controls.Add(Me.PictureBox8)
-        Me.XenonGroupBox5.Controls.Add(Me.Label21)
-        Me.XenonGroupBox5.Controls.Add(Me.PictureBox10)
-        Me.XenonGroupBox5.Enabled = False
-        Me.XenonGroupBox5.Location = New System.Drawing.Point(12, 259)
-        Me.XenonGroupBox5.Name = "XenonGroupBox5"
-        Me.XenonGroupBox5.Size = New System.Drawing.Size(552, 129)
-        Me.XenonGroupBox5.TabIndex = 133
+        Me.GroupBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox5.Controls.Add(Me.PictureBox3)
+        Me.GroupBox5.Controls.Add(Me.Label13)
+        Me.GroupBox5.Controls.Add(Me.Label4)
+        Me.GroupBox5.Controls.Add(Me.GroupBox7)
+        Me.GroupBox5.Controls.Add(Me.Label9)
+        Me.GroupBox5.Controls.Add(Me.GroupBox8)
+        Me.GroupBox5.Controls.Add(Me.Label19)
+        Me.GroupBox5.Controls.Add(Me.Label20)
+        Me.GroupBox5.Controls.Add(Me.PictureBox7)
+        Me.GroupBox5.Controls.Add(Me.PictureBox8)
+        Me.GroupBox5.Controls.Add(Me.Label21)
+        Me.GroupBox5.Controls.Add(Me.PictureBox10)
+        Me.GroupBox5.Enabled = False
+        Me.GroupBox5.Location = New System.Drawing.Point(12, 259)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(552, 129)
+        Me.GroupBox5.TabIndex = 133
         '
         'PictureBox3
         '
@@ -778,51 +778,51 @@ Partial Class CursorsStudio
         Me.Label4.Text = "Rotating part"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'XenonGroupBox7
+        'GroupBox7
         '
-        Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox7.Controls.Add(Me.XenonButton14)
-        Me.XenonGroupBox7.Controls.Add(Me.XenonTrackbar5)
-        Me.XenonGroupBox7.Controls.Add(Me.CircleColor1)
-        Me.XenonGroupBox7.Controls.Add(Me.XenonCheckBox7)
-        Me.XenonGroupBox7.Controls.Add(Me.CircleColor2)
-        Me.XenonGroupBox7.Controls.Add(Me.XenonComboBox4)
-        Me.XenonGroupBox7.Controls.Add(Me.XenonCheckBox8)
-        Me.XenonGroupBox7.Location = New System.Drawing.Point(139, 39)
-        Me.XenonGroupBox7.Name = "XenonGroupBox7"
-        Me.XenonGroupBox7.Size = New System.Drawing.Size(203, 86)
-        Me.XenonGroupBox7.TabIndex = 71
-        Me.XenonGroupBox7.Text = "XenonGroupBox7"
+        Me.GroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.GroupBox7.Controls.Add(Me.Button14)
+        Me.GroupBox7.Controls.Add(Me.Trackbar5)
+        Me.GroupBox7.Controls.Add(Me.CircleColor1)
+        Me.GroupBox7.Controls.Add(Me.CheckBox7)
+        Me.GroupBox7.Controls.Add(Me.CircleColor2)
+        Me.GroupBox7.Controls.Add(Me.ComboBox4)
+        Me.GroupBox7.Controls.Add(Me.CheckBox8)
+        Me.GroupBox7.Location = New System.Drawing.Point(139, 39)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Size = New System.Drawing.Size(203, 86)
+        Me.GroupBox7.TabIndex = 71
+        Me.GroupBox7.Text = "GroupBox7"
         '
-        'XenonButton14
+        'Button14
         '
-        Me.XenonButton14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton14.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.XenonButton14.DrawOnGlass = False
-        Me.XenonButton14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton14.ForeColor = System.Drawing.Color.White
-        Me.XenonButton14.Image = Nothing
-        Me.XenonButton14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton14.LineSize = 1
-        Me.XenonButton14.Location = New System.Drawing.Point(165, 59)
-        Me.XenonButton14.Name = "XenonButton14"
-        Me.XenonButton14.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton14.TabIndex = 136
-        Me.XenonButton14.UseVisualStyleBackColor = False
+        Me.Button14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button14.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.Button14.DrawOnGlass = False
+        Me.Button14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button14.ForeColor = System.Drawing.Color.White
+        Me.Button14.Image = Nothing
+        Me.Button14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button14.LineSize = 1
+        Me.Button14.Location = New System.Drawing.Point(165, 59)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(34, 24)
+        Me.Button14.TabIndex = 136
+        Me.Button14.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar5
+        'Trackbar5
         '
-        Me.XenonTrackbar5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Trackbar5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar5.LargeChange = 2
-        Me.XenonTrackbar5.Location = New System.Drawing.Point(33, 63)
-        Me.XenonTrackbar5.Maximum = 100
-        Me.XenonTrackbar5.Minimum = 0
-        Me.XenonTrackbar5.Name = "XenonTrackbar5"
-        Me.XenonTrackbar5.Size = New System.Drawing.Size(126, 19)
-        Me.XenonTrackbar5.SmallChange = 1
-        Me.XenonTrackbar5.TabIndex = 135
-        Me.XenonTrackbar5.Value = 0
+        Me.Trackbar5.LargeChange = 2
+        Me.Trackbar5.Location = New System.Drawing.Point(33, 63)
+        Me.Trackbar5.Maximum = 100
+        Me.Trackbar5.Minimum = 0
+        Me.Trackbar5.Name = "Trackbar5"
+        Me.Trackbar5.Size = New System.Drawing.Size(126, 19)
+        Me.Trackbar5.SmallChange = 1
+        Me.Trackbar5.TabIndex = 135
+        Me.Trackbar5.Value = 0
         '
         'CircleColor1
         '
@@ -836,17 +836,17 @@ Partial Class CursorsStudio
         Me.CircleColor1.Size = New System.Drawing.Size(95, 21)
         Me.CircleColor1.TabIndex = 11
         '
-        'XenonCheckBox7
+        'CheckBox7
         '
-        Me.XenonCheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox7.Checked = False
-        Me.XenonCheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox7.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox7.Location = New System.Drawing.Point(3, 60)
-        Me.XenonCheckBox7.Name = "XenonCheckBox7"
-        Me.XenonCheckBox7.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox7.TabIndex = 49
-        Me.XenonCheckBox7.Text = Nothing
+        Me.CheckBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox7.Checked = False
+        Me.CheckBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox7.ForeColor = System.Drawing.Color.White
+        Me.CheckBox7.Location = New System.Drawing.Point(3, 60)
+        Me.CheckBox7.Name = "CheckBox7"
+        Me.CheckBox7.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox7.TabIndex = 49
+        Me.CheckBox7.Text = Nothing
         '
         'CircleColor2
         '
@@ -860,33 +860,33 @@ Partial Class CursorsStudio
         Me.CircleColor2.Size = New System.Drawing.Size(95, 21)
         Me.CircleColor2.TabIndex = 13
         '
-        'XenonComboBox4
+        'ComboBox4
         '
-        Me.XenonComboBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.XenonComboBox4.CustomFont = False
-        Me.XenonComboBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox4.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox4.FormattingEnabled = True
-        Me.XenonComboBox4.ItemHeight = 20
-        Me.XenonComboBox4.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox4.Location = New System.Drawing.Point(33, 30)
-        Me.XenonComboBox4.Name = "XenonComboBox4"
-        Me.XenonComboBox4.Size = New System.Drawing.Size(166, 26)
-        Me.XenonComboBox4.TabIndex = 17
+        Me.ComboBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.ComboBox4.CustomFont = False
+        Me.ComboBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox4.ForeColor = System.Drawing.Color.White
+        Me.ComboBox4.FormattingEnabled = True
+        Me.ComboBox4.ItemHeight = 20
+        Me.ComboBox4.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
+        Me.ComboBox4.Location = New System.Drawing.Point(33, 30)
+        Me.ComboBox4.Name = "ComboBox4"
+        Me.ComboBox4.Size = New System.Drawing.Size(166, 26)
+        Me.ComboBox4.TabIndex = 17
         '
-        'XenonCheckBox8
+        'CheckBox8
         '
-        Me.XenonCheckBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox8.Checked = False
-        Me.XenonCheckBox8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox8.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox8.Location = New System.Drawing.Point(3, 31)
-        Me.XenonCheckBox8.Name = "XenonCheckBox8"
-        Me.XenonCheckBox8.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox8.TabIndex = 15
-        Me.XenonCheckBox8.Text = Nothing
+        Me.CheckBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox8.Checked = False
+        Me.CheckBox8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox8.ForeColor = System.Drawing.Color.White
+        Me.CheckBox8.Location = New System.Drawing.Point(3, 31)
+        Me.CheckBox8.Name = "CheckBox8"
+        Me.CheckBox8.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox8.TabIndex = 15
+        Me.CheckBox8.Text = Nothing
         '
         'Label9
         '
@@ -898,51 +898,51 @@ Partial Class CursorsStudio
         Me.Label9.Text = "Background"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'XenonGroupBox8
+        'GroupBox8
         '
-        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox8.Controls.Add(Me.XenonButton15)
-        Me.XenonGroupBox8.Controls.Add(Me.XenonTrackbar6)
-        Me.XenonGroupBox8.Controls.Add(Me.LoadingColor1)
-        Me.XenonGroupBox8.Controls.Add(Me.XenonComboBox3)
-        Me.XenonGroupBox8.Controls.Add(Me.XenonCheckBox2)
-        Me.XenonGroupBox8.Controls.Add(Me.LoadingColor2)
-        Me.XenonGroupBox8.Controls.Add(Me.XenonCheckBox6)
-        Me.XenonGroupBox8.Location = New System.Drawing.Point(345, 39)
-        Me.XenonGroupBox8.Name = "XenonGroupBox8"
-        Me.XenonGroupBox8.Size = New System.Drawing.Size(203, 86)
-        Me.XenonGroupBox8.TabIndex = 68
-        Me.XenonGroupBox8.Text = "XenonGroupBox8"
+        Me.GroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.GroupBox8.Controls.Add(Me.Button15)
+        Me.GroupBox8.Controls.Add(Me.Trackbar6)
+        Me.GroupBox8.Controls.Add(Me.LoadingColor1)
+        Me.GroupBox8.Controls.Add(Me.ComboBox3)
+        Me.GroupBox8.Controls.Add(Me.CheckBox2)
+        Me.GroupBox8.Controls.Add(Me.LoadingColor2)
+        Me.GroupBox8.Controls.Add(Me.CheckBox6)
+        Me.GroupBox8.Location = New System.Drawing.Point(345, 39)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(203, 86)
+        Me.GroupBox8.TabIndex = 68
+        Me.GroupBox8.Text = "GroupBox8"
         '
-        'XenonButton15
+        'Button15
         '
-        Me.XenonButton15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton15.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.XenonButton15.DrawOnGlass = False
-        Me.XenonButton15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton15.ForeColor = System.Drawing.Color.White
-        Me.XenonButton15.Image = Nothing
-        Me.XenonButton15.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton15.LineSize = 1
-        Me.XenonButton15.Location = New System.Drawing.Point(165, 59)
-        Me.XenonButton15.Name = "XenonButton15"
-        Me.XenonButton15.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton15.TabIndex = 138
-        Me.XenonButton15.UseVisualStyleBackColor = False
+        Me.Button15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button15.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.Button15.DrawOnGlass = False
+        Me.Button15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button15.ForeColor = System.Drawing.Color.White
+        Me.Button15.Image = Nothing
+        Me.Button15.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button15.LineSize = 1
+        Me.Button15.Location = New System.Drawing.Point(165, 59)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(34, 24)
+        Me.Button15.TabIndex = 138
+        Me.Button15.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar6
+        'Trackbar6
         '
-        Me.XenonTrackbar6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Trackbar6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar6.LargeChange = 2
-        Me.XenonTrackbar6.Location = New System.Drawing.Point(33, 63)
-        Me.XenonTrackbar6.Maximum = 100
-        Me.XenonTrackbar6.Minimum = 0
-        Me.XenonTrackbar6.Name = "XenonTrackbar6"
-        Me.XenonTrackbar6.Size = New System.Drawing.Size(126, 19)
-        Me.XenonTrackbar6.SmallChange = 1
-        Me.XenonTrackbar6.TabIndex = 137
-        Me.XenonTrackbar6.Value = 0
+        Me.Trackbar6.LargeChange = 2
+        Me.Trackbar6.Location = New System.Drawing.Point(33, 63)
+        Me.Trackbar6.Maximum = 100
+        Me.Trackbar6.Minimum = 0
+        Me.Trackbar6.Name = "Trackbar6"
+        Me.Trackbar6.Size = New System.Drawing.Size(126, 19)
+        Me.Trackbar6.SmallChange = 1
+        Me.Trackbar6.TabIndex = 137
+        Me.Trackbar6.Value = 0
         '
         'LoadingColor1
         '
@@ -956,33 +956,33 @@ Partial Class CursorsStudio
         Me.LoadingColor1.Size = New System.Drawing.Size(95, 21)
         Me.LoadingColor1.TabIndex = 31
         '
-        'XenonComboBox3
+        'ComboBox3
         '
-        Me.XenonComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.XenonComboBox3.CustomFont = False
-        Me.XenonComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox3.FormattingEnabled = True
-        Me.XenonComboBox3.ItemHeight = 20
-        Me.XenonComboBox3.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox3.Location = New System.Drawing.Point(33, 30)
-        Me.XenonComboBox3.Name = "XenonComboBox3"
-        Me.XenonComboBox3.Size = New System.Drawing.Size(166, 26)
-        Me.XenonComboBox3.TabIndex = 35
+        Me.ComboBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.ComboBox3.CustomFont = False
+        Me.ComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox3.ForeColor = System.Drawing.Color.White
+        Me.ComboBox3.FormattingEnabled = True
+        Me.ComboBox3.ItemHeight = 20
+        Me.ComboBox3.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
+        Me.ComboBox3.Location = New System.Drawing.Point(33, 30)
+        Me.ComboBox3.Name = "ComboBox3"
+        Me.ComboBox3.Size = New System.Drawing.Size(166, 26)
+        Me.ComboBox3.TabIndex = 35
         '
-        'XenonCheckBox2
+        'CheckBox2
         '
-        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox2.Checked = False
-        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox2.Location = New System.Drawing.Point(3, 31)
-        Me.XenonCheckBox2.Name = "XenonCheckBox2"
-        Me.XenonCheckBox2.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox2.TabIndex = 52
-        Me.XenonCheckBox2.Text = Nothing
+        Me.CheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox2.Checked = False
+        Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox2.ForeColor = System.Drawing.Color.White
+        Me.CheckBox2.Location = New System.Drawing.Point(3, 31)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox2.TabIndex = 52
+        Me.CheckBox2.Text = Nothing
         '
         'LoadingColor2
         '
@@ -996,17 +996,17 @@ Partial Class CursorsStudio
         Me.LoadingColor2.Size = New System.Drawing.Size(95, 21)
         Me.LoadingColor2.TabIndex = 33
         '
-        'XenonCheckBox6
+        'CheckBox6
         '
-        Me.XenonCheckBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox6.Checked = False
-        Me.XenonCheckBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox6.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox6.Location = New System.Drawing.Point(3, 60)
-        Me.XenonCheckBox6.Name = "XenonCheckBox6"
-        Me.XenonCheckBox6.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox6.TabIndex = 59
-        Me.XenonCheckBox6.Text = Nothing
+        Me.CheckBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox6.Checked = False
+        Me.CheckBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox6.ForeColor = System.Drawing.Color.White
+        Me.CheckBox6.Location = New System.Drawing.Point(3, 60)
+        Me.CheckBox6.Name = "CheckBox6"
+        Me.CheckBox6.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox6.TabIndex = 59
+        Me.CheckBox6.Text = Nothing
         '
         'Label19
         '
@@ -1066,39 +1066,39 @@ Partial Class CursorsStudio
         Me.PictureBox10.TabIndex = 9
         Me.PictureBox10.TabStop = False
         '
-        'XenonButton11
+        'Button11
         '
-        Me.XenonButton11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton11.DrawOnGlass = False
-        Me.XenonButton11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton11.ForeColor = System.Drawing.Color.White
-        Me.XenonButton11.Image = CType(resources.GetObject("XenonButton11.Image"), System.Drawing.Image)
-        Me.XenonButton11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.XenonButton11.LineSize = 1
-        Me.XenonButton11.Location = New System.Drawing.Point(574, 642)
-        Me.XenonButton11.Name = "XenonButton11"
-        Me.XenonButton11.Size = New System.Drawing.Size(115, 34)
-        Me.XenonButton11.TabIndex = 82
-        Me.XenonButton11.Text = "Quick apply"
-        Me.XenonButton11.UseVisualStyleBackColor = False
+        Me.Button11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button11.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button11.DrawOnGlass = False
+        Me.Button11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button11.ForeColor = System.Drawing.Color.White
+        Me.Button11.Image = CType(resources.GetObject("Button11.Image"), System.Drawing.Image)
+        Me.Button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.Button11.LineSize = 1
+        Me.Button11.Location = New System.Drawing.Point(574, 642)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(115, 34)
+        Me.Button11.TabIndex = 82
+        Me.Button11.Text = "Quick apply"
+        Me.Button11.UseVisualStyleBackColor = False
         '
-        'XenonGroupBox13
+        'GroupBox13
         '
-        Me.XenonGroupBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox13.Controls.Add(Me.checker_img)
-        Me.XenonGroupBox13.Controls.Add(Me.XenonToggle1)
-        Me.XenonGroupBox13.Controls.Add(Me.XenonButton7)
-        Me.XenonGroupBox13.Controls.Add(Me.XenonButton8)
-        Me.XenonGroupBox13.Controls.Add(Me.XenonButton9)
-        Me.XenonGroupBox13.Controls.Add(Me.Label12)
-        Me.XenonGroupBox13.Location = New System.Drawing.Point(12, 12)
-        Me.XenonGroupBox13.Name = "XenonGroupBox13"
-        Me.XenonGroupBox13.Size = New System.Drawing.Size(863, 39)
-        Me.XenonGroupBox13.TabIndex = 78
+        Me.GroupBox13.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox13.Controls.Add(Me.checker_img)
+        Me.GroupBox13.Controls.Add(Me.Toggle1)
+        Me.GroupBox13.Controls.Add(Me.Button7)
+        Me.GroupBox13.Controls.Add(Me.Button8)
+        Me.GroupBox13.Controls.Add(Me.Button9)
+        Me.GroupBox13.Controls.Add(Me.Label12)
+        Me.GroupBox13.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox13.Name = "GroupBox13"
+        Me.GroupBox13.Size = New System.Drawing.Size(863, 39)
+        Me.GroupBox13.TabIndex = 78
         '
         'checker_img
         '
@@ -1112,73 +1112,73 @@ Partial Class CursorsStudio
         Me.checker_img.TabIndex = 84
         Me.checker_img.TabStop = False
         '
-        'XenonToggle1
+        'Toggle1
         '
-        Me.XenonToggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonToggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonToggle1.Checked = True
-        Me.XenonToggle1.DarkLight_Toggler = False
-        Me.XenonToggle1.Location = New System.Drawing.Point(816, 9)
-        Me.XenonToggle1.Name = "XenonToggle1"
-        Me.XenonToggle1.Size = New System.Drawing.Size(40, 20)
-        Me.XenonToggle1.TabIndex = 77
+        Me.Toggle1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Toggle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Toggle1.Checked = True
+        Me.Toggle1.DarkLight_Toggler = False
+        Me.Toggle1.Location = New System.Drawing.Point(816, 9)
+        Me.Toggle1.Name = "Toggle1"
+        Me.Toggle1.Size = New System.Drawing.Size(40, 20)
+        Me.Toggle1.TabIndex = 77
         '
-        'XenonButton7
+        'Button7
         '
-        Me.XenonButton7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Button7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton7.DrawOnGlass = False
-        Me.XenonButton7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton7.ForeColor = System.Drawing.Color.White
-        Me.XenonButton7.Image = CType(resources.GetObject("XenonButton7.Image"), System.Drawing.Image)
-        Me.XenonButton7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(82, 5)
-        Me.XenonButton7.Name = "XenonButton7"
-        Me.XenonButton7.Size = New System.Drawing.Size(146, 29)
-        Me.XenonButton7.TabIndex = 69
-        Me.XenonButton7.Text = "WinPaletter Theme"
-        Me.XenonButton7.UseVisualStyleBackColor = False
+        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button7.DrawOnGlass = False
+        Me.Button7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button7.ForeColor = System.Drawing.Color.White
+        Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
+        Me.Button7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
+        Me.Button7.LineSize = 1
+        Me.Button7.Location = New System.Drawing.Point(82, 5)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(146, 29)
+        Me.Button7.TabIndex = 69
+        Me.Button7.Text = "WinPaletter Theme"
+        Me.Button7.UseVisualStyleBackColor = False
         '
-        'XenonButton8
+        'Button8
         '
-        Me.XenonButton8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Button8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton8.DrawOnGlass = False
-        Me.XenonButton8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton8.ForeColor = System.Drawing.Color.White
-        Me.XenonButton8.Image = Nothing
-        Me.XenonButton8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.XenonButton8.LineSize = 1
-        Me.XenonButton8.Location = New System.Drawing.Point(366, 5)
-        Me.XenonButton8.Name = "XenonButton8"
-        Me.XenonButton8.Size = New System.Drawing.Size(134, 29)
-        Me.XenonButton8.TabIndex = 68
-        Me.XenonButton8.Text = "Default Windows"
-        Me.XenonButton8.UseVisualStyleBackColor = False
+        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button8.DrawOnGlass = False
+        Me.Button8.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = Nothing
+        Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
+        Me.Button8.LineSize = 1
+        Me.Button8.Location = New System.Drawing.Point(366, 5)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(134, 29)
+        Me.Button8.TabIndex = 68
+        Me.Button8.Text = "Default Windows"
+        Me.Button8.UseVisualStyleBackColor = False
         '
-        'XenonButton9
+        'Button9
         '
-        Me.XenonButton9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Button9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton9.DrawOnGlass = False
-        Me.XenonButton9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton9.ForeColor = System.Drawing.Color.White
-        Me.XenonButton9.Image = CType(resources.GetObject("XenonButton9.Image"), System.Drawing.Image)
-        Me.XenonButton9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.XenonButton9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.XenonButton9.LineSize = 1
-        Me.XenonButton9.Location = New System.Drawing.Point(230, 5)
-        Me.XenonButton9.Name = "XenonButton9"
-        Me.XenonButton9.Size = New System.Drawing.Size(134, 29)
-        Me.XenonButton9.TabIndex = 67
-        Me.XenonButton9.Text = "Current applied"
-        Me.XenonButton9.UseVisualStyleBackColor = False
+        Me.Button9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button9.DrawOnGlass = False
+        Me.Button9.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button9.ForeColor = System.Drawing.Color.White
+        Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
+        Me.Button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
+        Me.Button9.LineSize = 1
+        Me.Button9.Location = New System.Drawing.Point(230, 5)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(134, 29)
+        Me.Button9.TabIndex = 67
+        Me.Button9.Text = "Current applied"
+        Me.Button9.UseVisualStyleBackColor = False
         '
         'Label12
         '
@@ -1193,26 +1193,26 @@ Partial Class CursorsStudio
         Me.Label12.Text = "Open from:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonGroupBox2
+        'GroupBox2
         '
-        Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox6)
-        Me.XenonGroupBox2.Controls.Add(Me.Label2)
-        Me.XenonGroupBox2.Controls.Add(Me.Label18)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonGroupBox4)
-        Me.XenonGroupBox2.Controls.Add(Me.Label17)
-        Me.XenonGroupBox2.Controls.Add(Me.XenonGroupBox3)
-        Me.XenonGroupBox2.Controls.Add(Me.Label16)
-        Me.XenonGroupBox2.Controls.Add(Me.Label15)
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox5)
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox4)
-        Me.XenonGroupBox2.Controls.Add(Me.Label3)
-        Me.XenonGroupBox2.Controls.Add(Me.PictureBox2)
-        Me.XenonGroupBox2.Enabled = False
-        Me.XenonGroupBox2.Location = New System.Drawing.Point(12, 127)
-        Me.XenonGroupBox2.Name = "XenonGroupBox2"
-        Me.XenonGroupBox2.Size = New System.Drawing.Size(552, 129)
-        Me.XenonGroupBox2.TabIndex = 8
+        Me.GroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox2.Controls.Add(Me.PictureBox6)
+        Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Controls.Add(Me.Label18)
+        Me.GroupBox2.Controls.Add(Me.GroupBox4)
+        Me.GroupBox2.Controls.Add(Me.Label17)
+        Me.GroupBox2.Controls.Add(Me.GroupBox3)
+        Me.GroupBox2.Controls.Add(Me.Label16)
+        Me.GroupBox2.Controls.Add(Me.Label15)
+        Me.GroupBox2.Controls.Add(Me.PictureBox5)
+        Me.GroupBox2.Controls.Add(Me.PictureBox4)
+        Me.GroupBox2.Controls.Add(Me.Label3)
+        Me.GroupBox2.Controls.Add(Me.PictureBox2)
+        Me.GroupBox2.Enabled = False
+        Me.GroupBox2.Location = New System.Drawing.Point(12, 127)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(552, 129)
+        Me.GroupBox2.TabIndex = 8
         '
         'PictureBox6
         '
@@ -1246,75 +1246,75 @@ Partial Class CursorsStudio
         Me.Label18.Text = "Border"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'XenonGroupBox4
+        'GroupBox4
         '
-        Me.XenonGroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox4.Controls.Add(Me.XenonButton13)
-        Me.XenonGroupBox4.Controls.Add(Me.XenonTrackbar4)
-        Me.XenonGroupBox4.Controls.Add(Me.XenonCheckBox4)
-        Me.XenonGroupBox4.Controls.Add(Me.XenonCheckBox3)
-        Me.XenonGroupBox4.Controls.Add(Me.SecondaryColor1)
-        Me.XenonGroupBox4.Controls.Add(Me.SecondaryColor2)
-        Me.XenonGroupBox4.Controls.Add(Me.XenonComboBox2)
-        Me.XenonGroupBox4.Location = New System.Drawing.Point(345, 40)
-        Me.XenonGroupBox4.Name = "XenonGroupBox4"
-        Me.XenonGroupBox4.Size = New System.Drawing.Size(203, 86)
-        Me.XenonGroupBox4.TabIndex = 71
-        Me.XenonGroupBox4.Text = "XenonGroupBox4"
+        Me.GroupBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.GroupBox4.Controls.Add(Me.Button13)
+        Me.GroupBox4.Controls.Add(Me.Trackbar4)
+        Me.GroupBox4.Controls.Add(Me.CheckBox4)
+        Me.GroupBox4.Controls.Add(Me.CheckBox3)
+        Me.GroupBox4.Controls.Add(Me.SecondaryColor1)
+        Me.GroupBox4.Controls.Add(Me.SecondaryColor2)
+        Me.GroupBox4.Controls.Add(Me.ComboBox2)
+        Me.GroupBox4.Location = New System.Drawing.Point(345, 40)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(203, 86)
+        Me.GroupBox4.TabIndex = 71
+        Me.GroupBox4.Text = "GroupBox4"
         '
-        'XenonButton13
+        'Button13
         '
-        Me.XenonButton13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.XenonButton13.DrawOnGlass = False
-        Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton13.ForeColor = System.Drawing.Color.White
-        Me.XenonButton13.Image = Nothing
-        Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton13.LineSize = 1
-        Me.XenonButton13.Location = New System.Drawing.Point(165, 59)
-        Me.XenonButton13.Name = "XenonButton13"
-        Me.XenonButton13.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton13.TabIndex = 134
-        Me.XenonButton13.UseVisualStyleBackColor = False
+        Me.Button13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button13.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.Button13.DrawOnGlass = False
+        Me.Button13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button13.ForeColor = System.Drawing.Color.White
+        Me.Button13.Image = Nothing
+        Me.Button13.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button13.LineSize = 1
+        Me.Button13.Location = New System.Drawing.Point(165, 59)
+        Me.Button13.Name = "Button13"
+        Me.Button13.Size = New System.Drawing.Size(34, 24)
+        Me.Button13.TabIndex = 134
+        Me.Button13.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar4
+        'Trackbar4
         '
-        Me.XenonTrackbar4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Trackbar4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar4.LargeChange = 2
-        Me.XenonTrackbar4.Location = New System.Drawing.Point(33, 63)
-        Me.XenonTrackbar4.Maximum = 100
-        Me.XenonTrackbar4.Minimum = 0
-        Me.XenonTrackbar4.Name = "XenonTrackbar4"
-        Me.XenonTrackbar4.Size = New System.Drawing.Size(126, 19)
-        Me.XenonTrackbar4.SmallChange = 1
-        Me.XenonTrackbar4.TabIndex = 133
-        Me.XenonTrackbar4.Value = 0
+        Me.Trackbar4.LargeChange = 2
+        Me.Trackbar4.Location = New System.Drawing.Point(33, 63)
+        Me.Trackbar4.Maximum = 100
+        Me.Trackbar4.Minimum = 0
+        Me.Trackbar4.Name = "Trackbar4"
+        Me.Trackbar4.Size = New System.Drawing.Size(126, 19)
+        Me.Trackbar4.SmallChange = 1
+        Me.Trackbar4.TabIndex = 133
+        Me.Trackbar4.Value = 0
         '
-        'XenonCheckBox4
+        'CheckBox4
         '
-        Me.XenonCheckBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox4.Checked = False
-        Me.XenonCheckBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox4.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox4.Location = New System.Drawing.Point(3, 31)
-        Me.XenonCheckBox4.Name = "XenonCheckBox4"
-        Me.XenonCheckBox4.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox4.TabIndex = 52
-        Me.XenonCheckBox4.Text = Nothing
+        Me.CheckBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox4.Checked = False
+        Me.CheckBox4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox4.ForeColor = System.Drawing.Color.White
+        Me.CheckBox4.Location = New System.Drawing.Point(3, 31)
+        Me.CheckBox4.Name = "CheckBox4"
+        Me.CheckBox4.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox4.TabIndex = 52
+        Me.CheckBox4.Text = Nothing
         '
-        'XenonCheckBox3
+        'CheckBox3
         '
-        Me.XenonCheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox3.Checked = False
-        Me.XenonCheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox3.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox3.Location = New System.Drawing.Point(3, 60)
-        Me.XenonCheckBox3.Name = "XenonCheckBox3"
-        Me.XenonCheckBox3.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox3.TabIndex = 59
-        Me.XenonCheckBox3.Text = Nothing
+        Me.CheckBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox3.Checked = False
+        Me.CheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox3.ForeColor = System.Drawing.Color.White
+        Me.CheckBox3.Location = New System.Drawing.Point(3, 60)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox3.TabIndex = 59
+        Me.CheckBox3.Text = Nothing
         '
         'SecondaryColor1
         '
@@ -1340,21 +1340,21 @@ Partial Class CursorsStudio
         Me.SecondaryColor2.Size = New System.Drawing.Size(95, 21)
         Me.SecondaryColor2.TabIndex = 33
         '
-        'XenonComboBox2
+        'ComboBox2
         '
-        Me.XenonComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.XenonComboBox2.CustomFont = False
-        Me.XenonComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox2.FormattingEnabled = True
-        Me.XenonComboBox2.ItemHeight = 20
-        Me.XenonComboBox2.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox2.Location = New System.Drawing.Point(33, 30)
-        Me.XenonComboBox2.Name = "XenonComboBox2"
-        Me.XenonComboBox2.Size = New System.Drawing.Size(166, 26)
-        Me.XenonComboBox2.TabIndex = 35
+        Me.ComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.ComboBox2.CustomFont = False
+        Me.ComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox2.ForeColor = System.Drawing.Color.White
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.ItemHeight = 20
+        Me.ComboBox2.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
+        Me.ComboBox2.Location = New System.Drawing.Point(33, 30)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(166, 26)
+        Me.ComboBox2.TabIndex = 35
         '
         'Label17
         '
@@ -1366,51 +1366,51 @@ Partial Class CursorsStudio
         Me.Label17.Text = "Background"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'XenonGroupBox3
+        'GroupBox3
         '
-        Me.XenonGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonGroupBox3.Controls.Add(Me.XenonButton12)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonTrackbar3)
-        Me.XenonGroupBox3.Controls.Add(Me.PrimaryColor2)
-        Me.XenonGroupBox3.Controls.Add(Me.PrimaryColor1)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonComboBox1)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox1)
-        Me.XenonGroupBox3.Controls.Add(Me.XenonCheckBox5)
-        Me.XenonGroupBox3.Location = New System.Drawing.Point(139, 40)
-        Me.XenonGroupBox3.Name = "XenonGroupBox3"
-        Me.XenonGroupBox3.Size = New System.Drawing.Size(203, 86)
-        Me.XenonGroupBox3.TabIndex = 68
-        Me.XenonGroupBox3.Text = "XenonGroupBox3"
+        Me.GroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.GroupBox3.Controls.Add(Me.Button12)
+        Me.GroupBox3.Controls.Add(Me.Trackbar3)
+        Me.GroupBox3.Controls.Add(Me.PrimaryColor2)
+        Me.GroupBox3.Controls.Add(Me.PrimaryColor1)
+        Me.GroupBox3.Controls.Add(Me.ComboBox1)
+        Me.GroupBox3.Controls.Add(Me.CheckBox1)
+        Me.GroupBox3.Controls.Add(Me.CheckBox5)
+        Me.GroupBox3.Location = New System.Drawing.Point(139, 40)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(203, 86)
+        Me.GroupBox3.TabIndex = 68
+        Me.GroupBox3.Text = "GroupBox3"
         '
-        'XenonButton12
+        'Button12
         '
-        Me.XenonButton12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.XenonButton12.DrawOnGlass = False
-        Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton12.ForeColor = System.Drawing.Color.White
-        Me.XenonButton12.Image = Nothing
-        Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonButton12.LineSize = 1
-        Me.XenonButton12.Location = New System.Drawing.Point(165, 59)
-        Me.XenonButton12.Name = "XenonButton12"
-        Me.XenonButton12.Size = New System.Drawing.Size(34, 24)
-        Me.XenonButton12.TabIndex = 132
-        Me.XenonButton12.UseVisualStyleBackColor = False
+        Me.Button12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button12.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.Button12.DrawOnGlass = False
+        Me.Button12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button12.ForeColor = System.Drawing.Color.White
+        Me.Button12.Image = Nothing
+        Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.Button12.LineSize = 1
+        Me.Button12.Location = New System.Drawing.Point(165, 59)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(34, 24)
+        Me.Button12.TabIndex = 132
+        Me.Button12.UseVisualStyleBackColor = False
         '
-        'XenonTrackbar3
+        'Trackbar3
         '
-        Me.XenonTrackbar3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Trackbar3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar3.LargeChange = 2
-        Me.XenonTrackbar3.Location = New System.Drawing.Point(33, 63)
-        Me.XenonTrackbar3.Maximum = 100
-        Me.XenonTrackbar3.Minimum = 0
-        Me.XenonTrackbar3.Name = "XenonTrackbar3"
-        Me.XenonTrackbar3.Size = New System.Drawing.Size(126, 19)
-        Me.XenonTrackbar3.SmallChange = 1
-        Me.XenonTrackbar3.TabIndex = 131
-        Me.XenonTrackbar3.Value = 0
+        Me.Trackbar3.LargeChange = 2
+        Me.Trackbar3.Location = New System.Drawing.Point(33, 63)
+        Me.Trackbar3.Maximum = 100
+        Me.Trackbar3.Minimum = 0
+        Me.Trackbar3.Name = "Trackbar3"
+        Me.Trackbar3.Size = New System.Drawing.Size(126, 19)
+        Me.Trackbar3.SmallChange = 1
+        Me.Trackbar3.TabIndex = 131
+        Me.Trackbar3.Value = 0
         '
         'PrimaryColor2
         '
@@ -1436,45 +1436,45 @@ Partial Class CursorsStudio
         Me.PrimaryColor1.Size = New System.Drawing.Size(95, 21)
         Me.PrimaryColor1.TabIndex = 11
         '
-        'XenonComboBox1
+        'ComboBox1
         '
-        Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.XenonComboBox1.CustomFont = False
-        Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonComboBox1.FormattingEnabled = True
-        Me.XenonComboBox1.ItemHeight = 20
-        Me.XenonComboBox1.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
-        Me.XenonComboBox1.Location = New System.Drawing.Point(33, 30)
-        Me.XenonComboBox1.Name = "XenonComboBox1"
-        Me.XenonComboBox1.Size = New System.Drawing.Size(166, 26)
-        Me.XenonComboBox1.TabIndex = 17
+        Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.ComboBox1.CustomFont = False
+        Me.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ComboBox1.ForeColor = System.Drawing.Color.White
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.ItemHeight = 20
+        Me.ComboBox1.Items.AddRange(New Object() {"Vertical", "Horizontal", "Forward Diagonal", "Backward Diagonal", "Circle"})
+        Me.ComboBox1.Location = New System.Drawing.Point(33, 30)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(166, 26)
+        Me.ComboBox1.TabIndex = 17
         '
-        'XenonCheckBox1
+        'CheckBox1
         '
-        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox1.Checked = False
-        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox1.Location = New System.Drawing.Point(3, 31)
-        Me.XenonCheckBox1.Name = "XenonCheckBox1"
-        Me.XenonCheckBox1.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox1.TabIndex = 15
-        Me.XenonCheckBox1.Text = Nothing
+        Me.CheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox1.Checked = False
+        Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(3, 31)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox1.TabIndex = 15
+        Me.CheckBox1.Text = Nothing
         '
-        'XenonCheckBox5
+        'CheckBox5
         '
-        Me.XenonCheckBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonCheckBox5.Checked = False
-        Me.XenonCheckBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonCheckBox5.ForeColor = System.Drawing.Color.White
-        Me.XenonCheckBox5.Location = New System.Drawing.Point(3, 60)
-        Me.XenonCheckBox5.Name = "XenonCheckBox5"
-        Me.XenonCheckBox5.Size = New System.Drawing.Size(24, 24)
-        Me.XenonCheckBox5.TabIndex = 49
-        Me.XenonCheckBox5.Text = Nothing
+        Me.CheckBox5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.CheckBox5.Checked = False
+        Me.CheckBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox5.ForeColor = System.Drawing.Color.White
+        Me.CheckBox5.Location = New System.Drawing.Point(3, 60)
+        Me.CheckBox5.Name = "CheckBox5"
+        Me.CheckBox5.Size = New System.Drawing.Size(24, 24)
+        Me.CheckBox5.TabIndex = 49
+        Me.CheckBox5.Text = Nothing
         '
         'Label16
         '
@@ -1534,96 +1534,96 @@ Partial Class CursorsStudio
         Me.PictureBox2.TabIndex = 9
         Me.PictureBox2.TabStop = False
         '
-        'XenonButton3
+        'Button3
         '
-        Me.XenonButton3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton3.DrawOnGlass = False
-        Me.XenonButton3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton3.ForeColor = System.Drawing.Color.White
-        Me.XenonButton3.Image = Nothing
-        Me.XenonButton3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton3.LineSize = 1
-        Me.XenonButton3.Location = New System.Drawing.Point(488, 642)
-        Me.XenonButton3.Name = "XenonButton3"
-        Me.XenonButton3.Size = New System.Drawing.Size(80, 34)
-        Me.XenonButton3.TabIndex = 66
-        Me.XenonButton3.Text = "Cancel"
-        Me.XenonButton3.UseVisualStyleBackColor = False
+        Me.Button3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button3.DrawOnGlass = False
+        Me.Button3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Nothing
+        Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button3.LineSize = 1
+        Me.Button3.Location = New System.Drawing.Point(488, 642)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(80, 34)
+        Me.Button3.TabIndex = 66
+        Me.Button3.Text = "Cancel"
+        Me.Button3.UseVisualStyleBackColor = False
         '
-        'XenonButton4
+        'Button4
         '
-        Me.XenonButton4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonButton4.DrawOnGlass = False
-        Me.XenonButton4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton4.ForeColor = System.Drawing.Color.White
-        Me.XenonButton4.Image = CType(resources.GetObject("XenonButton4.Image"), System.Drawing.Image)
-        Me.XenonButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton4.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.XenonButton4.LineSize = 1
-        Me.XenonButton4.Location = New System.Drawing.Point(695, 642)
-        Me.XenonButton4.Name = "XenonButton4"
-        Me.XenonButton4.Size = New System.Drawing.Size(180, 34)
-        Me.XenonButton4.TabIndex = 65
-        Me.XenonButton4.Text = "Load into current theme"
-        Me.XenonButton4.UseVisualStyleBackColor = False
+        Me.Button4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button4.DrawOnGlass = False
+        Me.Button4.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button4.LineSize = 1
+        Me.Button4.Location = New System.Drawing.Point(695, 642)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(180, 34)
+        Me.Button4.TabIndex = 65
+        Me.Button4.Text = "Load into current theme"
+        Me.Button4.UseVisualStyleBackColor = False
         '
-        'XenonGroupBox1
+        'GroupBox1
         '
-        Me.XenonGroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.XenonGroupBox1.Controls.Add(Me.XenonButton5)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonButton10)
-        Me.XenonGroupBox1.Controls.Add(Me.Label1)
-        Me.XenonGroupBox1.Controls.Add(Me.FlowLayoutPanel1)
-        Me.XenonGroupBox1.Controls.Add(Me.PictureBox12)
-        Me.XenonGroupBox1.Controls.Add(Me.Label5)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonTrackbar1)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonButton6)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonButton2)
-        Me.XenonGroupBox1.Controls.Add(Me.XenonButton1)
-        Me.XenonGroupBox1.Location = New System.Drawing.Point(567, 55)
-        Me.XenonGroupBox1.Name = "XenonGroupBox1"
-        Me.XenonGroupBox1.Padding = New System.Windows.Forms.Padding(3)
-        Me.XenonGroupBox1.Size = New System.Drawing.Size(308, 468)
-        Me.XenonGroupBox1.TabIndex = 7
+        Me.GroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.GroupBox1.Controls.Add(Me.Button5)
+        Me.GroupBox1.Controls.Add(Me.Button10)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.FlowLayoutPanel1)
+        Me.GroupBox1.Controls.Add(Me.PictureBox12)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.Trackbar1)
+        Me.GroupBox1.Controls.Add(Me.Button6)
+        Me.GroupBox1.Controls.Add(Me.Button2)
+        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Location = New System.Drawing.Point(567, 55)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3)
+        Me.GroupBox1.Size = New System.Drawing.Size(308, 468)
+        Me.GroupBox1.TabIndex = 7
         '
-        'XenonButton5
+        'Button5
         '
-        Me.XenonButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton5.DrawOnGlass = False
-        Me.XenonButton5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton5.ForeColor = System.Drawing.Color.White
-        Me.XenonButton5.Image = CType(resources.GetObject("XenonButton5.Image"), System.Drawing.Image)
-        Me.XenonButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton5.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.XenonButton5.LineSize = 1
-        Me.XenonButton5.Location = New System.Drawing.Point(149, 434)
-        Me.XenonButton5.Name = "XenonButton5"
-        Me.XenonButton5.Size = New System.Drawing.Size(152, 28)
-        Me.XenonButton5.TabIndex = 66
-        Me.XenonButton5.Text = "Animate (3 Cycles)"
-        Me.XenonButton5.UseVisualStyleBackColor = False
+        Me.Button5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button5.DrawOnGlass = False
+        Me.Button5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
+        Me.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
+        Me.Button5.LineSize = 1
+        Me.Button5.Location = New System.Drawing.Point(149, 434)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(152, 28)
+        Me.Button5.TabIndex = 66
+        Me.Button5.Text = "Animate (3 Cycles)"
+        Me.Button5.UseVisualStyleBackColor = False
         '
-        'XenonButton10
+        'Button10
         '
-        Me.XenonButton10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton10.DrawOnGlass = False
-        Me.XenonButton10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton10.ForeColor = System.Drawing.Color.White
-        Me.XenonButton10.Image = Nothing
-        Me.XenonButton10.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.XenonButton10.LineSize = 1
-        Me.XenonButton10.Location = New System.Drawing.Point(280, 406)
-        Me.XenonButton10.Name = "XenonButton10"
-        Me.XenonButton10.Size = New System.Drawing.Size(20, 21)
-        Me.XenonButton10.TabIndex = 58
-        Me.XenonButton10.Text = "?"
-        Me.XenonButton10.UseVisualStyleBackColor = False
+        Me.Button10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button10.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button10.DrawOnGlass = False
+        Me.Button10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button10.ForeColor = System.Drawing.Color.White
+        Me.Button10.Image = Nothing
+        Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
+        Me.Button10.LineSize = 1
+        Me.Button10.Location = New System.Drawing.Point(280, 406)
+        Me.Button10.Name = "Button10"
+        Me.Button10.Size = New System.Drawing.Size(20, 21)
+        Me.Button10.TabIndex = 58
+        Me.Button10.Text = "?"
+        Me.Button10.UseVisualStyleBackColor = False
         '
         'Label1
         '
@@ -2382,87 +2382,87 @@ Partial Class CursorsStudio
         Me.Label5.Text = "Scaling (1x)"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'XenonTrackbar1
+        'Trackbar1
         '
-        Me.XenonTrackbar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonTrackbar1.LargeChange = 50
-        Me.XenonTrackbar1.Location = New System.Drawing.Point(128, 407)
-        Me.XenonTrackbar1.Maximum = 320
-        Me.XenonTrackbar1.Minimum = 100
-        Me.XenonTrackbar1.Name = "XenonTrackbar1"
-        Me.XenonTrackbar1.Size = New System.Drawing.Size(146, 19)
-        Me.XenonTrackbar1.SmallChange = 20
-        Me.XenonTrackbar1.TabIndex = 9
-        Me.XenonTrackbar1.Value = 100
+        Me.Trackbar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Trackbar1.LargeChange = 50
+        Me.Trackbar1.Location = New System.Drawing.Point(128, 407)
+        Me.Trackbar1.Maximum = 320
+        Me.Trackbar1.Minimum = 100
+        Me.Trackbar1.Name = "Trackbar1"
+        Me.Trackbar1.Size = New System.Drawing.Size(146, 19)
+        Me.Trackbar1.SmallChange = 20
+        Me.Trackbar1.TabIndex = 9
+        Me.Trackbar1.Value = 100
         '
-        'XenonButton6
+        'Button6
         '
-        Me.XenonButton6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton6.DrawOnGlass = False
-        Me.XenonButton6.Enabled = False
-        Me.XenonButton6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton6.ForeColor = System.Drawing.Color.White
-        Me.XenonButton6.Image = CType(resources.GetObject("XenonButton6.Image"), System.Drawing.Image)
-        Me.XenonButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.XenonButton6.LineColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.XenonButton6.LineSize = 1
-        Me.XenonButton6.Location = New System.Drawing.Point(73, 434)
-        Me.XenonButton6.Name = "XenonButton6"
-        Me.XenonButton6.Size = New System.Drawing.Size(70, 28)
-        Me.XenonButton6.TabIndex = 67
-        Me.XenonButton6.Text = "to all"
-        Me.XenonButton6.UseVisualStyleBackColor = False
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button6.DrawOnGlass = False
+        Me.Button6.Enabled = False
+        Me.Button6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(153, Byte), Integer))
+        Me.Button6.LineSize = 1
+        Me.Button6.Location = New System.Drawing.Point(73, 434)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(70, 28)
+        Me.Button6.TabIndex = 67
+        Me.Button6.Text = "to all"
+        Me.Button6.UseVisualStyleBackColor = False
         '
-        'XenonButton2
+        'Button2
         '
-        Me.XenonButton2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton2.DrawOnGlass = False
-        Me.XenonButton2.Enabled = False
-        Me.XenonButton2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton2.ForeColor = System.Drawing.Color.White
-        Me.XenonButton2.Image = CType(resources.GetObject("XenonButton2.Image"), System.Drawing.Image)
-        Me.XenonButton2.LineColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.XenonButton2.LineSize = 1
-        Me.XenonButton2.Location = New System.Drawing.Point(40, 434)
-        Me.XenonButton2.Name = "XenonButton2"
-        Me.XenonButton2.Size = New System.Drawing.Size(27, 28)
-        Me.XenonButton2.TabIndex = 11
-        Me.XenonButton2.UseVisualStyleBackColor = False
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button2.DrawOnGlass = False
+        Me.Button2.Enabled = False
+        Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(153, Byte), Integer))
+        Me.Button2.LineSize = 1
+        Me.Button2.Location = New System.Drawing.Point(40, 434)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(27, 28)
+        Me.Button2.TabIndex = 11
+        Me.Button2.UseVisualStyleBackColor = False
         '
-        'XenonButton1
+        'Button12
         '
-        Me.XenonButton1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.XenonButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.XenonButton1.DrawOnGlass = False
-        Me.XenonButton1.Enabled = False
-        Me.XenonButton1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonButton1.ForeColor = System.Drawing.Color.White
-        Me.XenonButton1.Image = CType(resources.GetObject("XenonButton1.Image"), System.Drawing.Image)
-        Me.XenonButton1.LineColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(143, Byte), Integer))
-        Me.XenonButton1.LineSize = 1
-        Me.XenonButton1.Location = New System.Drawing.Point(7, 434)
-        Me.XenonButton1.Name = "XenonButton1"
-        Me.XenonButton1.Size = New System.Drawing.Size(27, 28)
-        Me.XenonButton1.TabIndex = 10
-        Me.XenonButton1.UseVisualStyleBackColor = False
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.Button1.DrawOnGlass = False
+        Me.Button1.Enabled = False
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(143, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(7, 434)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(27, 28)
+        Me.Button1.TabIndex = 10
+        Me.Button1.UseVisualStyleBackColor = False
         '
-        'XenonAlertBox1
+        'AlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
-        Me.XenonAlertBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.XenonAlertBox1.CenterText = False
-        Me.XenonAlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.XenonAlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.XenonAlertBox1.Image = Nothing
-        Me.XenonAlertBox1.Location = New System.Drawing.Point(567, 526)
-        Me.XenonAlertBox1.Name = "XenonAlertBox1"
-        Me.XenonAlertBox1.Size = New System.Drawing.Size(308, 102)
-        Me.XenonAlertBox1.TabIndex = 137
-        Me.XenonAlertBox1.TabStop = False
-        Me.XenonAlertBox1.Text = "- Shadow in ""Miscellaneous"" part is rendered by Windows, while custom shadow is r" &
+        Me.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
+        Me.AlertBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.AlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.AlertBox1.CenterText = False
+        Me.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.AlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.AlertBox1.Image = Nothing
+        Me.AlertBox1.Location = New System.Drawing.Point(567, 526)
+        Me.AlertBox1.Name = "AlertBox1"
+        Me.AlertBox1.Size = New System.Drawing.Size(308, 102)
+        Me.AlertBox1.TabIndex = 137
+        Me.AlertBox1.TabStop = False
+        Me.AlertBox1.Text = "- Shadow in ""Miscellaneous"" part is rendered by Windows, while custom shadow is r" &
     "endered by WinPaletter itself." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- The more you enable custom shadow, the more Wi" &
     "nPaletter will take to render."
         '
@@ -2473,17 +2473,17 @@ Partial Class CursorsStudio
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(887, 688)
-        Me.Controls.Add(Me.XenonAlertBox1)
-        Me.Controls.Add(Me.XenonGroupBox10)
-        Me.Controls.Add(Me.XenonGroupBox9)
-        Me.Controls.Add(Me.XenonGroupBox6)
-        Me.Controls.Add(Me.XenonGroupBox5)
-        Me.Controls.Add(Me.XenonButton11)
-        Me.Controls.Add(Me.XenonGroupBox13)
-        Me.Controls.Add(Me.XenonGroupBox2)
-        Me.Controls.Add(Me.XenonButton3)
-        Me.Controls.Add(Me.XenonButton4)
-        Me.Controls.Add(Me.XenonGroupBox1)
+        Me.Controls.Add(Me.AlertBox1)
+        Me.Controls.Add(Me.GroupBox10)
+        Me.Controls.Add(Me.GroupBox9)
+        Me.Controls.Add(Me.GroupBox6)
+        Me.Controls.Add(Me.GroupBox5)
+        Me.Controls.Add(Me.Button11)
+        Me.Controls.Add(Me.GroupBox13)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.Button3)
+        Me.Controls.Add(Me.Button4)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -2495,39 +2495,39 @@ Partial Class CursorsStudio
         Me.Name = "CursorsStudio"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Cursors Studio"
-        Me.XenonGroupBox10.ResumeLayout(False)
+        Me.GroupBox10.ResumeLayout(False)
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox18, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox9.ResumeLayout(False)
+        Me.GroupBox9.ResumeLayout(False)
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox21, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox6.ResumeLayout(False)
+        Me.GroupBox6.ResumeLayout(False)
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox5.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox7.ResumeLayout(False)
-        Me.XenonGroupBox8.ResumeLayout(False)
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox8.ResumeLayout(False)
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox13.ResumeLayout(False)
+        Me.GroupBox13.ResumeLayout(False)
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox2.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox4.ResumeLayout(False)
-        Me.XenonGroupBox3.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.XenonGroupBox1.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
         Me.FlowLayoutPanel1.ResumeLayout(False)
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -2551,82 +2551,82 @@ Partial Class CursorsStudio
     Friend WithEvents Person As CursorControl
     Friend WithEvents IBeam As CursorControl
     Friend WithEvents Cross As CursorControl
-    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents GroupBox1 As UI.WP.GroupBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
+    Friend WithEvents GroupBox2 As UI.WP.GroupBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PrimaryColor2 As UI.Controllers.ColorItem
     Friend WithEvents Label3 As Label
     Friend WithEvents PrimaryColor1 As UI.Controllers.ColorItem
-    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
-    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
-    Friend WithEvents XenonCheckBox5 As UI.WP.CheckBox
-    Friend WithEvents XenonComboBox2 As UI.WP.ComboBox
+    Friend WithEvents ComboBox1 As UI.WP.ComboBox
+    Friend WithEvents CheckBox1 As UI.WP.CheckBox
+    Friend WithEvents CheckBox5 As UI.WP.CheckBox
+    Friend WithEvents ComboBox2 As UI.WP.ComboBox
     Friend WithEvents SecondaryColor2 As UI.Controllers.ColorItem
     Friend WithEvents SecondaryColor1 As UI.Controllers.ColorItem
-    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
+    Friend WithEvents CheckBox3 As UI.WP.CheckBox
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonCheckBox4 As UI.WP.CheckBox
-    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
-    Friend WithEvents XenonCheckBox6 As UI.WP.CheckBox
-    Friend WithEvents XenonCheckBox7 As UI.WP.CheckBox
-    Friend WithEvents XenonComboBox3 As UI.WP.ComboBox
+    Friend WithEvents CheckBox4 As UI.WP.CheckBox
+    Friend WithEvents CheckBox2 As UI.WP.CheckBox
+    Friend WithEvents CheckBox6 As UI.WP.CheckBox
+    Friend WithEvents CheckBox7 As UI.WP.CheckBox
+    Friend WithEvents ComboBox3 As UI.WP.ComboBox
     Friend WithEvents LoadingColor2 As UI.Controllers.ColorItem
     Friend WithEvents LoadingColor1 As UI.Controllers.ColorItem
-    Friend WithEvents XenonComboBox4 As UI.WP.ComboBox
-    Friend WithEvents XenonCheckBox8 As UI.WP.CheckBox
+    Friend WithEvents ComboBox4 As UI.WP.ComboBox
+    Friend WithEvents CheckBox8 As UI.WP.CheckBox
     Friend WithEvents CircleColor2 As UI.Controllers.ColorItem
     Friend WithEvents CircleColor1 As UI.Controllers.ColorItem
-    Friend WithEvents XenonButton1 As UI.WP.Button
-    Friend WithEvents XenonButton2 As UI.WP.Button
-    Friend WithEvents XenonButton3 As UI.WP.Button
-    Friend WithEvents XenonButton4 As UI.WP.Button
-    Friend WithEvents XenonTrackbar1 As UI.WP.Trackbar
+    Friend WithEvents Button1 As UI.WP.Button
+    Friend WithEvents Button2 As UI.WP.Button
+    Friend WithEvents Button3 As UI.WP.Button
+    Friend WithEvents Button4 As UI.WP.Button
+    Friend WithEvents Trackbar1 As UI.WP.Trackbar
     Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents Button5 As UI.WP.Button
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents XenonButton6 As UI.WP.Button
-    Friend WithEvents XenonToggle1 As UI.WP.Toggle
-    Friend WithEvents XenonGroupBox13 As UI.WP.GroupBox
-    Friend WithEvents XenonButton7 As UI.WP.Button
-    Friend WithEvents XenonButton8 As UI.WP.Button
-    Friend WithEvents XenonButton9 As UI.WP.Button
+    Friend WithEvents Button6 As UI.WP.Button
+    Friend WithEvents Toggle1 As UI.WP.Toggle
+    Friend WithEvents GroupBox13 As UI.WP.GroupBox
+    Friend WithEvents Button7 As UI.WP.Button
+    Friend WithEvents Button8 As UI.WP.Button
+    Friend WithEvents Button9 As UI.WP.Button
     Friend WithEvents Label12 As Label
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents Button10 As UI.WP.Button
     Friend WithEvents checker_img As PictureBox
-    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents Button11 As UI.WP.Button
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents XenonCheckBox9 As UI.WP.CheckBox
-    Friend WithEvents XenonTrackbar2 As UI.WP.Trackbar
+    Friend WithEvents CheckBox9 As UI.WP.CheckBox
+    Friend WithEvents Trackbar2 As UI.WP.Trackbar
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox21 As PictureBox
     Friend WithEvents trails_btn As UI.WP.Button
     Friend WithEvents PictureBox22 As PictureBox
-    Friend WithEvents XenonCheckBox10 As UI.WP.CheckBox
-    Friend WithEvents XenonComboBox5 As UI.WP.ComboBox
-    Friend WithEvents XenonComboBox6 As UI.WP.ComboBox
+    Friend WithEvents CheckBox10 As UI.WP.CheckBox
+    Friend WithEvents ComboBox5 As UI.WP.ComboBox
+    Friend WithEvents ComboBox6 As UI.WP.ComboBox
     Friend WithEvents Label18 As Label
-    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
+    Friend WithEvents GroupBox4 As UI.WP.GroupBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
+    Friend WithEvents GroupBox3 As UI.WP.GroupBox
     Friend WithEvents Label16 As Label
     Friend WithEvents Label15 As Label
-    Friend WithEvents XenonGroupBox5 As UI.WP.GroupBox
+    Friend WithEvents GroupBox5 As UI.WP.GroupBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonGroupBox7 As UI.WP.GroupBox
+    Friend WithEvents GroupBox7 As UI.WP.GroupBox
     Friend WithEvents Label9 As Label
-    Friend WithEvents XenonGroupBox8 As UI.WP.GroupBox
+    Friend WithEvents GroupBox8 As UI.WP.GroupBox
     Friend WithEvents Label19 As Label
     Friend WithEvents Label20 As Label
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents Label21 As Label
     Friend WithEvents PictureBox10 As PictureBox
-    Friend WithEvents XenonGroupBox6 As UI.WP.GroupBox
-    Friend WithEvents XenonGroupBox9 As UI.WP.GroupBox
+    Friend WithEvents GroupBox6 As UI.WP.GroupBox
+    Friend WithEvents GroupBox9 As UI.WP.GroupBox
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox3 As PictureBox
@@ -2639,15 +2639,15 @@ Partial Class CursorsStudio
     Friend WithEvents Label7 As Label
     Friend WithEvents PictureBox13 As PictureBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonButton12 As UI.WP.Button
-    Friend WithEvents XenonTrackbar3 As UI.WP.Trackbar
-    Friend WithEvents XenonButton13 As UI.WP.Button
-    Friend WithEvents XenonTrackbar4 As UI.WP.Trackbar
-    Friend WithEvents XenonButton14 As UI.WP.Button
-    Friend WithEvents XenonTrackbar5 As UI.WP.Trackbar
-    Friend WithEvents XenonButton15 As UI.WP.Button
-    Friend WithEvents XenonTrackbar6 As UI.WP.Trackbar
-    Friend WithEvents XenonGroupBox10 As UI.WP.GroupBox
+    Friend WithEvents Button12 As UI.WP.Button
+    Friend WithEvents Trackbar3 As UI.WP.Trackbar
+    Friend WithEvents Button13 As UI.WP.Button
+    Friend WithEvents Trackbar4 As UI.WP.Trackbar
+    Friend WithEvents Button14 As UI.WP.Button
+    Friend WithEvents Trackbar5 As UI.WP.Trackbar
+    Friend WithEvents Button15 As UI.WP.Button
+    Friend WithEvents Trackbar6 As UI.WP.Trackbar
+    Friend WithEvents GroupBox10 As UI.WP.GroupBox
     Friend WithEvents ColorItem1 As UI.Controllers.ColorItem
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label14 As Label
@@ -2657,17 +2657,17 @@ Partial Class CursorsStudio
     Friend WithEvents PictureBox18 As PictureBox
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox19 As PictureBox
-    Friend WithEvents XenonCheckBox11 As UI.WP.CheckBox
+    Friend WithEvents CheckBox11 As UI.WP.CheckBox
     Friend WithEvents PictureBox24 As PictureBox
-    Friend WithEvents XenonButton19 As UI.WP.Button
-    Friend WithEvents XenonTrackbar10 As UI.WP.Trackbar
-    Friend WithEvents XenonButton18 As UI.WP.Button
-    Friend WithEvents XenonTrackbar9 As UI.WP.Trackbar
+    Friend WithEvents Button19 As UI.WP.Button
+    Friend WithEvents Trackbar10 As UI.WP.Trackbar
+    Friend WithEvents Button18 As UI.WP.Button
+    Friend WithEvents Trackbar9 As UI.WP.Trackbar
     Friend WithEvents Label22 As Label
     Friend WithEvents PictureBox20 As PictureBox
-    Friend WithEvents XenonButton17 As UI.WP.Button
-    Friend WithEvents XenonTrackbar8 As UI.WP.Trackbar
-    Friend WithEvents XenonButton16 As UI.WP.Button
-    Friend WithEvents XenonTrackbar7 As UI.WP.Trackbar
-    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents Button17 As UI.WP.Button
+    Friend WithEvents Trackbar8 As UI.WP.Trackbar
+    Friend WithEvents Button16 As UI.WP.Button
+    Friend WithEvents Trackbar7 As UI.WP.Trackbar
+    Friend WithEvents AlertBox1 As UI.WP.AlertBox
 End Class

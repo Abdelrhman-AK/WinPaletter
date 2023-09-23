@@ -7,25 +7,25 @@ Public Class VS2Win32UI
         Icon = Win32UI.Icon
     End Sub
 
-    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenFileDialog2.FileName
+            TextBox1.Text = OpenFileDialog2.FileName
         End If
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Try
             Dim theme As String = ""
 
-            If Path.GetExtension(XenonTextBox1.Text) = ".theme" Then
-                theme = XenonTextBox1.Text
+            If Path.GetExtension(TextBox1.Text) = ".theme" Then
+                theme = TextBox1.Text
 
-            ElseIf Path.GetExtension(XenonTextBox1.Text) = ".msstyles" Then
+            ElseIf Path.GetExtension(TextBox1.Text) = ".msstyles" Then
                 theme = My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme"
-                File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", XenonTextBox1.Text, vbCrLf))
+                File.WriteAllText(My.PATH_appData & "\VisualStyles\Luna\win32uischeme.theme", String.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", TextBox1.Text, vbCrLf))
             End If
 
-            If File.Exists(XenonTextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
+            If File.Exists(TextBox1.Text) AndAlso File.Exists(theme) And Not String.IsNullOrEmpty(theme) Then
                 Dim vs As New VisualStyleFile(theme)
                 LoadColors(vs.Metrics)
                 Win32UI.ApplyRetroPreview()
@@ -37,7 +37,7 @@ Public Class VS2Win32UI
     End Sub
 
     Sub LoadColors(vs As VisualStyleMetrics)
-        Win32UI.XenonToggle1.Checked = vs.FlatMenus
+        Win32UI.Toggle1.Checked = vs.FlatMenus
         'Win32UI.ActiveBorder_pick.BackColor = vs.colors.ActiveBorder
         Win32UI.activetitle_pick.BackColor = vs.Colors.ActiveCaption
         Win32UI.AppWorkspace_pick.BackColor = vs.Colors.AppWorkspace
@@ -72,7 +72,7 @@ Public Class VS2Win32UI
         Win32UI.desktop_pick.BackColor = vs.Colors.Background
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Close()
     End Sub
 End Class

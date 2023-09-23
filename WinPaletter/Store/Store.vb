@@ -41,9 +41,9 @@ Public Class Store
         pnl_preview_classic.BackgroundImage = My.Wallpaper
 
         ApplyWinElementsColors([CP], My.PreviewStyle, False, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
-        ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2)
+        ApplyWindowStyles([CP], My.PreviewStyle, Window1, Window2)
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
-                           XenonWindow1, XenonWindow2, Panel3, lnk_preview,
+                           Window1, Window2, Panel3, lnk_preview,
                            ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
                            MainFrm.WXP_VS_ReplaceColors.Checked, MainFrm.WXP_VS_ReplaceMetrics.Checked, MainFrm.WXP_VS_ReplaceFonts.Checked)
 
@@ -381,74 +381,74 @@ Public Class Store
 
     End Sub
 
-    Sub ApplyCMDPreview(XenonCMD As UI.Simulation.WinCMD, [Console] As CP.Structures.Console, PS As Boolean)
-        XenonCMD.CMD_ColorTable00 = [Console].ColorTable00
-        XenonCMD.CMD_ColorTable01 = [Console].ColorTable01
-        XenonCMD.CMD_ColorTable02 = [Console].ColorTable02
-        XenonCMD.CMD_ColorTable03 = [Console].ColorTable03
-        XenonCMD.CMD_ColorTable04 = [Console].ColorTable04
-        XenonCMD.CMD_ColorTable05 = [Console].ColorTable05
-        XenonCMD.CMD_ColorTable06 = [Console].ColorTable06
-        XenonCMD.CMD_ColorTable07 = [Console].ColorTable07
-        XenonCMD.CMD_ColorTable08 = [Console].ColorTable08
-        XenonCMD.CMD_ColorTable09 = [Console].ColorTable09
-        XenonCMD.CMD_ColorTable10 = [Console].ColorTable10
-        XenonCMD.CMD_ColorTable11 = [Console].ColorTable11
-        XenonCMD.CMD_ColorTable12 = [Console].ColorTable12
-        XenonCMD.CMD_ColorTable13 = [Console].ColorTable13
-        XenonCMD.CMD_ColorTable14 = [Console].ColorTable14
-        XenonCMD.CMD_ColorTable15 = [Console].ColorTable15
-        XenonCMD.CMD_PopupForeground = [Console].PopupForeground
-        XenonCMD.CMD_PopupBackground = [Console].PopupBackground
-        XenonCMD.CMD_ScreenColorsForeground = [Console].ScreenColorsForeground
-        XenonCMD.CMD_ScreenColorsBackground = [Console].ScreenColorsBackground
+    Sub ApplyCMDPreview(CMD As UI.Simulation.WinCMD, [Console] As CP.Structures.Console, PS As Boolean)
+        CMD.CMD_ColorTable00 = [Console].ColorTable00
+        CMD.CMD_ColorTable01 = [Console].ColorTable01
+        CMD.CMD_ColorTable02 = [Console].ColorTable02
+        CMD.CMD_ColorTable03 = [Console].ColorTable03
+        CMD.CMD_ColorTable04 = [Console].ColorTable04
+        CMD.CMD_ColorTable05 = [Console].ColorTable05
+        CMD.CMD_ColorTable06 = [Console].ColorTable06
+        CMD.CMD_ColorTable07 = [Console].ColorTable07
+        CMD.CMD_ColorTable08 = [Console].ColorTable08
+        CMD.CMD_ColorTable09 = [Console].ColorTable09
+        CMD.CMD_ColorTable10 = [Console].ColorTable10
+        CMD.CMD_ColorTable11 = [Console].ColorTable11
+        CMD.CMD_ColorTable12 = [Console].ColorTable12
+        CMD.CMD_ColorTable13 = [Console].ColorTable13
+        CMD.CMD_ColorTable14 = [Console].ColorTable14
+        CMD.CMD_ColorTable15 = [Console].ColorTable15
+        CMD.CMD_PopupForeground = [Console].PopupForeground
+        CMD.CMD_PopupBackground = [Console].PopupBackground
+        CMD.CMD_ScreenColorsForeground = [Console].ScreenColorsForeground
+        CMD.CMD_ScreenColorsBackground = [Console].ScreenColorsBackground
 
         If Not [Console].FontRaster Then
             With Font.FromLogFont(New LogFont With {.lfFaceName = [Console].FaceName, .lfWeight = [Console].FontWeight})
-                XenonCMD.Font = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style)
+                CMD.Font = New Font(.FontFamily, CInt([Console].FontSize / 65536), .Style)
             End With
         End If
 
-        XenonCMD.PowerShell = PS
-        XenonCMD.Raster = [Console].FontRaster
+        CMD.PowerShell = PS
+        CMD.Raster = [Console].FontRaster
         Select Case [Console].FontSize
             Case 393220
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
 
             Case 524294
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
 
             Case 524296
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case 524304
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
 
             Case 786437
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
 
             Case 786439
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
 
             Case 0
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
             Case 786448
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
 
             Case 1048588
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
 
             Case 1179658
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
 
             Case Else
-                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
         End Select
 
-        XenonCMD.Refresh()
+        CMD.Refresh()
     End Sub
 
     Sub LoadCursorsFromCP([CP] As CP)
@@ -534,12 +534,12 @@ Public Class Store
         taskbar.CopycatFrom(MainFrm.taskbar)
         ActionCenter.CopycatFrom(MainFrm.ActionCenter)
         start.CopycatFrom(MainFrm.start)
-        XenonWindow1.CopycatFrom(MainFrm.XenonWindow1)
-        XenonWindow2.CopycatFrom(MainFrm.XenonWindow2)
+        Window1.CopycatFrom(MainFrm.Window1)
+        Window2.CopycatFrom(MainFrm.Window2)
 
         log.ImageList = My.Notifications_IL
         Apply_btn.Image = MainFrm.apply_btn.Image
-        RestartExplorer.Image = MainFrm.XenonButton19.Image
+        RestartExplorer.Image = MainFrm.Button19.Image
 
         WXP_Alert2.Text = MainFrm.WXP_Alert2.Text
         WXP_Alert2.Size = WXP_Alert2.Parent.Size - New Size(40, 40)
@@ -933,9 +933,9 @@ Public Class Store
                     Adjust_Preview(.CP)
                     ApplyRetroPreview(.CP)
                     SetClassicMetrics(.CP)
-                    ApplyCMDPreview(XenonCMD1, .CP.CommandPrompt, False)
-                    ApplyCMDPreview(XenonCMD2, .CP.PowerShellx86, True)
-                    ApplyCMDPreview(XenonCMD3, .CP.PowerShellx64, True)
+                    ApplyCMDPreview(CMD1, .CP.CommandPrompt, False)
+                    ApplyCMDPreview(CMD2, .CP.PowerShellx86, True)
+                    ApplyCMDPreview(CMD3, .CP.PowerShellx64, True)
                     LoadCursorsFromCP(.CP)
                     My.RenderingHint = If(.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
@@ -1002,9 +1002,9 @@ Public Class Store
                         desc_txt.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
                     End If
 
-                    XenonCMD1.Visible = .CP.CommandPrompt.Enabled
-                    XenonCMD2.Visible = .CP.PowerShellx86.Enabled
-                    XenonCMD3.Visible = .CP.PowerShellx64.Enabled
+                    CMD1.Visible = .CP.CommandPrompt.Enabled
+                    CMD2.Visible = .CP.PowerShellx86.Enabled
+                    CMD3.Visible = .CP.PowerShellx64.Enabled
                     Panel1.Visible = .CP.Cursor_Enabled
                     author_url_button.Visible = Not String.IsNullOrWhiteSpace(.CP.Info.AuthorSocialMediaLink)
 
@@ -1391,7 +1391,7 @@ Public Class Store
         ApplyOrEditToggle = sender Is Apply_btn
 
         If Not String.IsNullOrWhiteSpace(selectedItem.CP.Info.License) Then
-            Store_ThemeLicense.XenonTextBox1.Text = selectedItem.CP.Info.License
+            Store_ThemeLicense.TextBox1.Text = selectedItem.CP.Info.License
             If Not Store_ThemeLicense.ShowDialog = DialogResult.OK Then Exit Sub
         End If
 
@@ -1563,10 +1563,10 @@ Public Class Store
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         If Not String.IsNullOrWhiteSpace(selectedItem.CP.Info.License) Then
-            Store_ThemeLicense.XenonTextBox1.Text = selectedItem.CP.Info.License
+            Store_ThemeLicense.TextBox1.Text = selectedItem.CP.Info.License
             If Not Store_ThemeLicense.ShowDialog = DialogResult.OK Then Exit Sub
         End If
 

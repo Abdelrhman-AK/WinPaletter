@@ -126,7 +126,7 @@ Namespace UI.WP
 
         End Sub
 
-        Private Sub XenonAnimatedBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub AnimatedBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             If Not DesignMode Then
                 Tmr.Enabled = True
                 Tmr.Start()
@@ -140,7 +140,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonAnimatedBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub AnimatedBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try : RemoveHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
                 Try : RemoveHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try

@@ -40,21 +40,21 @@
         If Not PickerOpened Then GetColors()
     End Sub
 
-    Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
+    Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         val1.Text = sender.Value
         GetColors()
     End Sub
 
     Private Sub val1_Click(sender As Object, e As EventArgs) Handles val1.Click
         Dim response As String = InputBox(My.Lang.InputValue, sender.text, My.Lang.ItMustBeNumerical)
-        sender.Text = Math.Max(Math.Min(Val(response), XenonTrackbar1.Maximum), XenonTrackbar1.Minimum) : XenonTrackbar1.Value = Val(sender.Text)
+        sender.Text = Math.Max(Math.Min(Val(response), Trackbar1.Maximum), Trackbar1.Minimum) : Trackbar1.Value = Val(sender.Text)
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
         GetColors()
     End Sub
 
-    Private Sub XenonRadioButton3_CheckedChanged(sender As Object) Handles XenonRadioButton3.CheckedChanged, XenonRadioButton5.CheckedChanged, XenonRadioButton4.CheckedChanged, XenonRadioButton6.CheckedChanged, XenonRadioButton7.CheckedChanged
+    Private Sub RadioButton3_CheckedChanged(sender As Object) Handles RadioButton3.CheckedChanged, RadioButton5.CheckedChanged, RadioButton4.CheckedChanged, RadioButton6.CheckedChanged, RadioButton7.CheckedChanged
         If CType(sender, UI.WP.RadioButton).Checked Then GetColors()
     End Sub
 
@@ -70,34 +70,34 @@
         Dim _Color As Color = SelectedColor.BackColor
         Dim _ColorInverted As Color = _Color.Invert
 
-        If XenonRadioButton5.Checked Then
+        If RadioButton5.Checked Then
             _Color = _Color.Light
             _ColorInverted = _ColorInverted.Light
 
-        ElseIf XenonRadioButton4.Checked Then
+        ElseIf RadioButton4.Checked Then
             _Color = _Color.LightLight
             _ColorInverted = _ColorInverted.LightLight
 
-        ElseIf XenonRadioButton6.Checked Then
+        ElseIf RadioButton6.Checked Then
             _Color = _Color.Dark
             _ColorInverted = _ColorInverted.Dark
 
-        ElseIf XenonRadioButton7.Checked Then
+        ElseIf RadioButton7.Checked Then
             _Color = _Color.Dark(0.8)
             _ColorInverted = _ColorInverted.Dark(0.8)
 
         End If
 
         Colors_List.Add(_Color)
-        If XenonCheckBox1.Checked Then Colors_List.Add(_ColorInverted)
+        If CheckBox1.Checked Then Colors_List.Add(_ColorInverted)
 
-        For i = 0 To XenonTrackbar1.Value / 2
-            Colors_List.Add(_Color.Dark(i / XenonTrackbar1.Value))
-            Colors_List.Add(_Color.Light(i / XenonTrackbar1.Value))
+        For i = 0 To Trackbar1.Value / 2
+            Colors_List.Add(_Color.Dark(i / Trackbar1.Value))
+            Colors_List.Add(_Color.Light(i / Trackbar1.Value))
 
-            If XenonCheckBox1.Checked Then
-                Colors_List.Add(_ColorInverted.Dark(i / XenonTrackbar1.Value))
-                Colors_List.Add(_ColorInverted.Light(i / XenonTrackbar1.Value))
+            If CheckBox1.Checked Then
+                Colors_List.Add(_ColorInverted.Dark(i / Trackbar1.Value))
+                Colors_List.Add(_ColorInverted.Light(i / Trackbar1.Value))
             End If
         Next
 
@@ -115,7 +115,7 @@
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim arr As List(Of Integer) = GetUniqueRandomNumbers(0, Colors_List.Count)
 
         Select Case My.PreviewStyle
@@ -173,7 +173,7 @@
         End SyncLock
     End Function
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Select Case My.PreviewStyle
             Case PreviewHelpers.WindowStyle.W11
                 My.CP.Windows11.Titlebar_Active = CP_Backup.Windows11.Titlebar_Active
@@ -221,7 +221,7 @@
         Close()
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Close()
     End Sub
 End Class

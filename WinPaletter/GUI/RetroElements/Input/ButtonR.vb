@@ -71,7 +71,7 @@ Namespace UI.Retro
             State = MouseState.Over : Invalidate()
         End Sub
 
-        Private Sub XenonButton_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+        Private Sub Button_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
             State = MouseState.None : Pressed = False : Invalidate()
         End Sub
 

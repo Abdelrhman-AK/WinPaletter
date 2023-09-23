@@ -8,19 +8,19 @@ Public Class Uninstall
         Icon = My.Resources.Icon_Uninstall
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
 
-        If XenonCheckBox1.Checked Then
+        If CheckBox1.Checked Then
             My.Application.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile")
             My.Application.DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile")
             My.Application.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack")
         End If
 
-        If XenonCheckBox3.Checked Then
+        If CheckBox3.Checked Then
             Registry.CurrentUser.DeleteSubKeyTree("Software\WinPaletter", False)
         End If
 
@@ -31,7 +31,7 @@ Public Class Uninstall
         Catch
         End Try
 
-        If XenonCheckBox2.Checked Then
+        If CheckBox2.Checked Then
             If IO.Directory.Exists(My.PATH_appData) Then
                 IO.Directory.Delete(My.PATH_appData, True)
                 If Not My.WXP Then
@@ -46,17 +46,17 @@ Public Class Uninstall
             End If
         End If
 
-        If XenonRadioImage1.Checked Then
+        If RadioImage1.Checked Then
             '# Nothing
 
-        ElseIf XenonRadioImage2.Checked Then
+        ElseIf RadioImage2.Checked Then
             If OpenFileDialog1.ShowDialog = DialogResult.OK Then
                 Dim cpx As New CP(CP.CP_Type.File, OpenFileDialog1.FileName)
                 cpx.Save(CP.CP_Type.Registry)
                 If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()
                 cpx.Dispose()
             End If
-        ElseIf XenonRadioImage3.Checked Then
+        ElseIf RadioImage3.Checked Then
             Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
                 _Def.Save(CP.CP_Type.Registry)
                 If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then RestartExplorer()

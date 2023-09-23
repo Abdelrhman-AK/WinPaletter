@@ -5,17 +5,17 @@ Public Class BugReport
         LoadLanguage
         ApplyStyle(Me)
         Dim c As Color = PictureBox1.Image.AverageColor.CB(If(My.Style.DarkMode, -0.35, 0.35))
-        XenonAnimatedBox1.BackColor = c
+        AnimatedBox1.BackColor = c
         DrawCustomTitlebar(c)
 
         Label2.Font = My.Application.ConsoleFontMedium
         Label3.Font = My.Application.ConsoleFontMedium
-        XenonTreeView1.Font = My.Application.ConsoleFontMedium
+        TreeView1.Font = My.Application.ConsoleFontMedium
 
         Try : BK.Close() : Catch : End Try
         Try : BK.Show() : Catch : End Try
 
-        For Each lbl In XenonAnimatedBox1.Controls.OfType(Of Label)
+        For Each lbl In AnimatedBox1.Controls.OfType(Of Label)
             lbl.ForeColor = Color.White
         Next
 
@@ -84,21 +84,21 @@ Public Class BugReport
 
         Label3.Text = My.AppVersion
 
-        XenonAlertBox1.Visible = NoRecovery
+        AlertBox1.Visible = NoRecovery
 
         Dim IE As String = ""
 
-        XenonTreeView1.Nodes.Clear()
+        TreeView1.Nodes.Clear()
         If Exception IsNot Nothing Then
-            AddException("Exception", Exception, XenonTreeView1)
+            AddException("Exception", Exception, TreeView1)
 
             If Exception.InnerException IsNot Nothing Then
                 Dim x As Exception = Exception.InnerException
-                AddException("Inner exception", x, XenonTreeView1)
+                AddException("Inner exception", x, TreeView1)
             End If
         End If
 
-        XenonTreeView1.ExpandAll()
+        TreeView1.ExpandAll()
 
         If Not IO.Directory.Exists(My.PATH_appData & "\Reports") Then IO.Directory.CreateDirectory(My.PATH_appData & "\Reports")
 
@@ -113,27 +113,27 @@ Public Class BugReport
     End Sub
 
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         DialogResult = DialogResult.Abort
         Me.Close()
         Using Prc As Process = Process.GetCurrentProcess : Prc.Kill() : End Using
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         DialogResult = DialogResult.OK
         Me.Close()
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Process.Start(My.Resources.Link_Repository & "issues")
         Try : BK.Close() : Catch : End Try
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Clipboard.SetText(GetDetails)
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             IO.File.WriteAllText(SaveFileDialog1.FileName, GetDetails)
         End If
@@ -153,7 +153,7 @@ Public Class BugReport
         SB.AppendLine("'Error details")
         SB.AppendLine("'-----------------------------------------------------------")
 
-        For Each x As TreeNode In XenonTreeView1.Nodes
+        For Each x As TreeNode In TreeView1.Nodes
             Dim prop As String = x.Text.Replace(" ", ".").Replace("'s", "").Replace("\", "_")
 
             If x.Nodes.Count = 1 Then
@@ -175,7 +175,7 @@ Public Class BugReport
         Return SB.ToString
     End Function
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
 
         If IO.Directory.Exists(My.PATH_appData & "\Reports") Then
             Process.Start(My.PATH_appData & "\Reports")
@@ -186,9 +186,9 @@ Public Class BugReport
 
     End Sub
 
-    Private Sub XenonTreeView1_DoubleClick(sender As Object, e As EventArgs) Handles XenonTreeView1.DoubleClick
+    Private Sub TreeView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeView1.DoubleClick
         Try
-            If XenonTreeView1.SelectedNode IsNot Nothing Then Clipboard.SetText(XenonTreeView1.SelectedNode.Text)
+            If TreeView1.SelectedNode IsNot Nothing Then Clipboard.SetText(TreeView1.SelectedNode.Text)
         Catch
         End Try
     End Sub

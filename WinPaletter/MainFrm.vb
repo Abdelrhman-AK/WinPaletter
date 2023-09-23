@@ -21,7 +21,7 @@ Public Class MainFrm
 #Region "Preview Subs"
     Sub ApplyColorsToElements([CP] As CP)
         ApplyWinElementsColors([CP], My.PreviewStyle, True, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview)
-        ApplyWindowStyles([CP], My.PreviewStyle, XenonWindow1, XenonWindow2, W81_start, W81_logonui)
+        ApplyWindowStyles([CP], My.PreviewStyle, Window1, Window2, W81_start, W81_logonui)
     End Sub
     Sub ApplyStylesToElements([CP] As CP, Optional AnimateThePreview As Boolean = True)
         Dim ItWasVisible As Boolean = tabs_preview.Visible
@@ -39,11 +39,11 @@ Public Class MainFrm
         pnl_preview_classic.BackgroundImage = My.Wallpaper
 
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
-                           XenonWindow1, XenonWindow2, Panel3, lnk_preview,
+                           Window1, Window2, Panel3, lnk_preview,
                            ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
                            WXP_VS_ReplaceColors.Checked, WXP_VS_ReplaceMetrics.Checked, WXP_VS_ReplaceFonts.Checked)
 
-        XenonButton23.Visible = (My.PreviewStyle = WindowStyle.W7)
+        Button23.Visible = (My.PreviewStyle = WindowStyle.W7)
 
         AdjustPreview_ModernOrClassic([CP], My.PreviewStyle, tabs_preview, WXP_Alert2)
 
@@ -366,7 +366,7 @@ Public Class MainFrm
         If RaiseUpdate Then
             Updates.ls = Updates_ls
             NotifyUpdates.Visible = True
-            XenonButton5.Image = My.Resources.Update_Dot
+            Button5.Image = My.Resources.Update_Dot
             NotifyUpdates.ShowBalloonTip(10000, My.Application.Info.Title, String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver), ToolTipIcon.Info)
         End If
     End Sub
@@ -413,37 +413,37 @@ Public Class MainFrm
 
         If My.PreviewStyle = WindowStyle.W11 Then
             TablessControl1.SelectedIndex = 0
-            XenonButton20.Image = My.Resources.add_win11
+            Button20.Image = My.Resources.add_win11
             Select_W11.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
             TablessControl1.SelectedIndex = 1
-            XenonButton20.Image = My.Resources.add_win10
+            Button20.Image = My.Resources.add_win10
             Select_W10.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.W81 Then
             TablessControl1.SelectedIndex = 2
-            XenonButton20.Image = My.Resources.add_win8
+            Button20.Image = My.Resources.add_win8
             Select_W81.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
             TablessControl1.SelectedIndex = 3
-            XenonButton20.Image = My.Resources.add_win7
+            Button20.Image = My.Resources.add_win7
             Select_W7.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.WVista Then
             TablessControl1.SelectedIndex = 4
-            XenonButton20.Image = My.Resources.add_winvista
+            Button20.Image = My.Resources.add_winvista
             Select_WVista.Checked = True
 
         ElseIf My.PreviewStyle = WindowStyle.WXP Then
             TablessControl1.SelectedIndex = 5
-            XenonButton20.Image = My.Resources.add_winxp
+            Button20.Image = My.Resources.add_winxp
             Select_WXP.Checked = True
 
         Else
             TablessControl1.SelectedIndex = 0
-            XenonButton20.Image = My.Resources.add_win11
+            Button20.Image = My.Resources.add_win11
             Select_W11.Checked = True
         End If
 
@@ -479,7 +479,7 @@ Public Class MainFrm
             AddHandler btn.Leave, AddressOf EraseHint
         Next
 
-        For Each btn As UI.WP.Button In XenonGroupBox3.Controls.OfType(Of UI.WP.Button)
+        For Each btn As UI.WP.Button In GroupBox3.Controls.OfType(Of UI.WP.Button)
             AddHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
             AddHandler btn.Enter, AddressOf UpdateHint_Dashboard
             AddHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
@@ -506,7 +506,7 @@ Public Class MainFrm
             RemoveHandler btn.Leave, AddressOf EraseHint
         Next
 
-        For Each btn As UI.WP.Button In XenonGroupBox3.Controls.OfType(Of UI.WP.Button)
+        For Each btn As UI.WP.Button In GroupBox3.Controls.OfType(Of UI.WP.Button)
             RemoveHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
             RemoveHandler btn.Enter, AddressOf UpdateHint_Dashboard
             RemoveHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
@@ -635,7 +635,7 @@ Public Class MainFrm
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonWindow1}
+        Dim CList As New List(Of Control) From {sender, Window1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         My.CP.Windows11.Titlebar_Active = Color.FromArgb(255, C)
@@ -658,7 +658,7 @@ Public Class MainFrm
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonWindow2}
+        Dim CList As New List(Of Control) From {sender, Window2}
 
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
@@ -1048,11 +1048,11 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W11_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W11_XenonButton8.Click
+    Private Sub W11_Button8_Click_1(sender As Object, e As EventArgs) Handles W11_Button8.Click
         MsgBox(My.Lang.TitlebarColorNotice, MsgBoxStyle.Information)
     End Sub
 
-    Private Sub XenonButton38_Click(sender As Object, e As EventArgs) Handles XenonButton38.Click
+    Private Sub Button38_Click(sender As Object, e As EventArgs) Handles Button38.Click
         'Copycat from Windows 11 colors
         tabs_preview.Visible = False
         My.CP.Windows10 = My.CP.Windows11.Clone
@@ -1090,7 +1090,7 @@ Public Class MainFrm
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonWindow1}
+        Dim CList As New List(Of Control) From {sender, Window1}
 
         Dim C As Color = ColorPickerDlg.Pick(CList)
         My.CP.Windows10.Titlebar_Active = Color.FromArgb(255, C)
@@ -1112,7 +1112,7 @@ Public Class MainFrm
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonWindow2}
+        Dim CList As New List(Of Control) From {sender, Window2}
 
         Dim _Conditions As New Conditions With {.Window_InactiveTitlebar = True}
         Dim C As Color = ColorPickerDlg.Pick(CList, _Conditions)
@@ -1551,11 +1551,11 @@ Public Class MainFrm
         CList.Clear()
     End Sub
 
-    Private Sub W10_XenonButton8_Click_1(sender As Object, e As EventArgs) Handles W10_XenonButton8.Click
+    Private Sub W10_Button8_Click_1(sender As Object, e As EventArgs) Handles W10_Button8.Click
         MsgBox(My.Lang.TitlebarColorNotice, MsgBoxStyle.Information)
     End Sub
 
-    Private Sub W10_XenonButton25_Click(sender As Object, e As EventArgs) Handles W10_XenonButton25.Click
+    Private Sub W10_Button25_Click(sender As Object, e As EventArgs) Handles W10_Button25.Click
         MsgBox(My.Lang.CP_AccentOnTaskbarTib, MsgBoxStyle.Information)
     End Sub
 
@@ -1566,7 +1566,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton37_Click(sender As Object, e As EventArgs) Handles XenonButton37.Click
+    Private Sub Button37_Click(sender As Object, e As EventArgs) Handles Button37.Click
         'Copycat from Windows 10 colors
         tabs_preview.Visible = False
         My.CP.Windows11 = My.CP.Windows10.Clone
@@ -1603,8 +1603,8 @@ Public Class MainFrm
            sender,
            start,
            taskbar,
-           XenonWindow1,
-           XenonWindow2
+           Window1,
+           Window2
        }
 
         Dim _Conditions As New Conditions With {.Window_ActiveTitlebar = True, .Window_InactiveTitlebar = True, .Win7LivePreview_Colorization = True}
@@ -1778,8 +1778,8 @@ Public Class MainFrm
             sender,
             start,
             taskbar,
-            XenonWindow1,
-            XenonWindow2
+            Window1,
+            Window2
         }
 
         Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
@@ -1810,8 +1810,8 @@ Public Class MainFrm
             sender,
             start,
             taskbar,
-            XenonWindow1,
-            XenonWindow2
+            Window1,
+            Window2
         }
 
         Dim _Conditions As New Conditions With {.Win7 = True, .Color2 = True, .BackColor2 = True, .Win7LivePreview_AfterGlow = True}
@@ -1952,8 +1952,8 @@ Public Class MainFrm
             sender,
             start,
             taskbar,
-            XenonWindow1,
-            XenonWindow2
+            Window1,
+            Window2
         }
 
         Dim _Conditions As New Conditions With {.Win7 = True, .Color1 = True, .BackColor1 = True, .Win7LivePreview_Colorization = True}
@@ -2062,7 +2062,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles WXP_VS_textbox.TextChanged
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles WXP_VS_textbox.TextChanged
         Dim theme As String = ""
 
         If IO.Path.GetExtension(WXP_VS_textbox.Text) = ".theme" Then
@@ -2096,13 +2096,13 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton30_Click(sender As Object, e As EventArgs) Handles WXP_VS_Browse.Click
+    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles WXP_VS_Browse.Click
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             WXP_VS_textbox.Text = OpenFileDialog2.FileName
         End If
     End Sub
 
-    Private Sub XenonComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles WXP_VS_ColorsList.SelectedIndexChanged
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles WXP_VS_ColorsList.SelectedIndexChanged
         If _Shown AndAlso WXP_CustomTheme.Checked Then
             My.CP.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem
             If My.PreviewStyle = WindowStyle.WXP Then ApplyStylesToElements(My.CP, False)
@@ -2110,7 +2110,7 @@ Public Class MainFrm
     End Sub
 #End Region
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles apply_btn.Click
         Apply_Theme()
     End Sub
 
@@ -2121,10 +2121,10 @@ Public Class MainFrm
 
         log_lbl.Visible = False
         log_lbl.Text = ""
-        XenonButton8.Visible = False
-        XenonButton14.Visible = False
-        XenonButton22.Visible = False
-        XenonButton25.Visible = False
+        Button8.Visible = False
+        Button14.Visible = False
+        Button22.Visible = False
+        Button25.Visible = False
 
         If My.Settings.ThemeLog.Enabled Then
             TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
@@ -2150,13 +2150,13 @@ Public Class MainFrm
         If [CP].MetricsFonts.Enabled And GetWindowsScreenScalingFactor() > 100 Then CP.AddNode(TreeView1, String.Format("{0}", My.Lang.CP_MetricsHighDPIAlert), "info")
 
         log_lbl.Visible = True
-        XenonButton8.Visible = True
-        XenonButton22.Visible = True
-        XenonButton25.Visible = True
+        Button8.Visible = True
+        Button22.Visible = True
+        Button25.Visible = True
 
         If Not My.Saving_Exceptions.Count = 0 Then
             log_lbl.Text = My.Lang.CP_ErrorHappened
-            XenonButton14.Visible = True
+            Button14.Visible = True
         Else
             If My.Settings.ThemeLog.CountDown Then
                 log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds)
@@ -2182,7 +2182,7 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub XenonButton14_Click(sender As Object, e As EventArgs) Handles XenonButton14.Click
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
@@ -2190,14 +2190,14 @@ Public Class MainFrm
         Saving_ex_list.ShowDialog()
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
         SelectLeftPanelIndex()
     End Sub
 
-    Private Sub XenonButton22_Click(sender As Object, e As EventArgs) Handles XenonButton22.Click
+    Private Sub Button22_Click(sender As Object, e As EventArgs) Handles Button22.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
@@ -2229,17 +2229,17 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton19_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton19.MouseEnter
+    Private Sub Button19_MouseEnter(sender As Object, e As EventArgs) Handles Button19.MouseEnter
         status_lbl.Text = My.Lang.ThisWillRestartExplorer
         status_lbl.ForeColor = If(My.Style.DarkMode, Color.Gold, Color.Gold.Dark(0.1))
     End Sub
 
-    Private Sub XenonButton19_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton19.MouseLeave
+    Private Sub Button19_MouseLeave(sender As Object, e As EventArgs) Handles Button19.MouseLeave
         status_lbl.Text = ""
         status_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         If Not IO.File.Exists(SaveFileDialog1.FileName) Then
             If SaveFileDialog1.ShowDialog = DialogResult.OK Then
                 My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
@@ -2249,7 +2249,7 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
 
             ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
@@ -2264,13 +2264,13 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton9_Click(sender As Object, e As EventArgs) Handles XenonButton9.Click
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             My.CP.Save(CP.CP_Type.File, SaveFileDialog1.FileNames(0))
         End If
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
 
         ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
 
@@ -2282,32 +2282,32 @@ Public Class MainFrm
         ApplyColorsToElements(My.CP)
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click, author_lbl.DoubleClick, themename_lbl.DoubleClick
         EditInfo.Show()
     End Sub
 
-    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         About.ShowDialog()
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Updates.ShowDialog()
-        XenonButton5.Image = My.Resources.Update
+        Button5.Image = My.Resources.Update
     End Sub
 
-    Private Sub XenonButton11_Click(sender As Object, e As EventArgs) Handles XenonButton11.Click
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         SettingsX.ShowDialog()
     End Sub
 
-    Private Sub XenonButton4_Click_1(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click_1(sender As Object, e As EventArgs) Handles Button4.Click
         Win32UI.Show()
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
         Whatsnew.ShowDialog()
     End Sub
 
-    Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
         If My.PreviewStyle = WindowStyle.W11 Or My.PreviewStyle = WindowStyle.W10 Then
             LogonUI.ShowDialog()
         ElseIf My.PreviewStyle = WindowStyle.W81 Or My.PreviewStyle = WindowStyle.W7 Then
@@ -2321,39 +2321,39 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton15_Click(sender As Object, e As EventArgs) Handles XenonButton15.Click
+    Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
         Update_Wallpaper_Preview()
     End Sub
 
-    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         Me.Close()
     End Sub
 
-    Private Sub XenonButton1_Click_1(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         If SaveFileDialog2.ShowDialog = DialogResult.OK Then
             tabs_preview.ToBitmap.Save(SaveFileDialog2.FileName)
         End If
     End Sub
 
-    Private Sub XenonButton17_Click(sender As Object, e As EventArgs) Handles XenonButton17.Click
+    Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
         My.CP = My.CP_Original.Clone
         ApplyStylesToElements(My.CP, False)
         ApplyCPValues(My.CP)
         ApplyColorsToElements(My.CP)
     End Sub
 
-    Private Sub XenonButton18_Click(sender As Object, e As EventArgs) Handles XenonButton18.Click
+    Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
         My.CP = My.CP_FirstTime.Clone
         ApplyStylesToElements(My.CP, False)
         ApplyCPValues(My.CP)
         ApplyColorsToElements(My.CP)
     End Sub
 
-    Private Sub XenonButton19_Click(sender As Object, e As EventArgs) Handles XenonButton19.Click
+    Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
         RestartExplorer()
     End Sub
 
-    Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click
+    Private Sub Button20_Click(sender As Object, e As EventArgs) Handles Button20.Click
         ComplexSave.GetResponse(SaveFileDialog1, Sub() Apply_Theme(), Sub() Apply_Theme(My.CP_FirstTime), Sub() Apply_Theme(CP_Defaults.GetDefault))
 
         My.CP = CP_Defaults.GetDefault.Clone
@@ -2363,21 +2363,21 @@ Public Class MainFrm
         ApplyColorsToElements(My.CP)
     End Sub
 
-    Private Sub XenonButton21_Click(sender As Object, e As EventArgs) Handles XenonButton21.Click
+    Private Sub Button21_Click(sender As Object, e As EventArgs) Handles Button21.Click
         CursorsStudio.Show()
     End Sub
 
-    Private Sub XenonButton23_Click(sender As Object, e As EventArgs) Handles XenonButton23.Click
-        If XenonButton23.Text.ToLower = My.Lang.Hide.ToLower Then
+    Private Sub Button23_Click(sender As Object, e As EventArgs) Handles Button23.Click
+        If Button23.Text.ToLower = My.Lang.Hide.ToLower Then
             tabs_preview.Visible = False
-            XenonButton23.Text = My.Lang.Show
+            Button23.Text = My.Lang.Show
         Else
             tabs_preview.Visible = True
-            XenonButton23.Text = My.Lang.Hide
+            Button23.Text = My.Lang.Hide
         End If
     End Sub
 
-    Private Sub XenonButton24_Click(sender As Object, e As EventArgs) Handles XenonButton24.Click
+    Private Sub Button24_Click(sender As Object, e As EventArgs) Handles Button24.Click
         TerminalsDashboard.ShowDialog()
     End Sub
 
@@ -2393,7 +2393,7 @@ Public Class MainFrm
         'TablessControl1.Visible = True
     End Sub
 
-    Private Sub XenonButton27_Click(sender As Object, e As EventArgs) Handles XenonButton27.Click
+    Private Sub Button27_Click(sender As Object, e As EventArgs) Handles Button27.Click
         Metrics_Fonts.ShowDialog()
     End Sub
 
@@ -2410,19 +2410,19 @@ Public Class MainFrm
         SelectLeftPanelIndex()
 
         If My.PreviewStyle = WindowStyle.W11 Then
-            XenonButton20.Image = My.Resources.add_win11
+            Button20.Image = My.Resources.add_win11
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
-            XenonButton20.Image = My.Resources.add_win10
+            Button20.Image = My.Resources.add_win10
         ElseIf My.PreviewStyle = WindowStyle.W81 Then
-            XenonButton20.Image = My.Resources.add_win8
+            Button20.Image = My.Resources.add_win8
         ElseIf My.PreviewStyle = WindowStyle.W7 Then
-            XenonButton20.Image = My.Resources.add_win7
+            Button20.Image = My.Resources.add_win7
         ElseIf My.PreviewStyle = WindowStyle.WVista Then
-            XenonButton20.Image = My.Resources.add_winvista
+            Button20.Image = My.Resources.add_winvista
         ElseIf My.PreviewStyle = WindowStyle.WXP Then
-            XenonButton20.Image = My.Resources.add_winxp
+            Button20.Image = My.Resources.add_winxp
         Else
-            XenonButton20.Image = My.Resources.add_win11
+            Button20.Image = My.Resources.add_win11
         End If
 
 
@@ -2473,11 +2473,11 @@ Public Class MainFrm
         End If
     End Sub
 
-    Private Sub XenonButton29_Click(sender As Object, e As EventArgs) Handles XenonButton29.Click
+    Private Sub Button29_Click(sender As Object, e As EventArgs) Handles Button29.Click
         WinEffecter.ShowDialog()
     End Sub
 
-    Private Sub XenonButton32_Click(sender As Object, e As EventArgs) Handles XenonButton32.Click
+    Private Sub Button32_Click(sender As Object, e As EventArgs) Handles Button32.Click
         If My.PreviewStyle <> WindowStyle.WXP AndAlso My.PreviewStyle <> WindowStyle.WVista Then
             AltTabEditor.ShowDialog()
         Else
@@ -2487,21 +2487,21 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+    Private Sub Button25_Click(sender As Object, e As EventArgs) Handles Button25.Click
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
     End Sub
 
-    Private Sub XenonButton33_Click(sender As Object, e As EventArgs) Handles XenonButton33.Click
+    Private Sub Button33_Click(sender As Object, e As EventArgs) Handles Button33.Click
         ScreenSaver_Editor.ShowDialog()
     End Sub
 
-    Private Sub XenonButton34_Click(sender As Object, e As EventArgs) Handles XenonButton34.Click
+    Private Sub Button34_Click(sender As Object, e As EventArgs) Handles Button34.Click
         Sounds_Editor.ShowDialog()
     End Sub
 
-    Private Sub XenonButton35_Click(sender As Object, e As EventArgs) Handles XenonButton35.Click
+    Private Sub Button35_Click(sender As Object, e As EventArgs) Handles Button35.Click
         If My.PreviewStyle = WindowStyle.W11 Then
             Wallpaper_Editor.WT = My.CP.WallpaperTone_W11
         ElseIf My.PreviewStyle = WindowStyle.W10 Then
@@ -2521,16 +2521,16 @@ Public Class MainFrm
         Wallpaper_Editor.Show()
     End Sub
 
-    Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+    Private Sub Button26_Click(sender As Object, e As EventArgs) Handles Button26.Click
         ApplicationThemer.FixLanguageDarkModeBug = False
         ApplicationThemer.Show()
     End Sub
 
-    Private Sub XenonButton36_Click(sender As Object, e As EventArgs) Handles XenonButton36.Click
+    Private Sub Button36_Click(sender As Object, e As EventArgs) Handles Button36.Click
         Converter_Form.ShowDialog()
     End Sub
 
-    Private Sub XenonButton28_Click(sender As Object, e As EventArgs) Handles XenonButton28.Click
+    Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
 
         If MsgBox(My.Lang.LogoffQuestion, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.LogoffAlert1, "", "", "", "", My.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
             LoggingOff = True
@@ -2544,29 +2544,29 @@ Public Class MainFrm
 
     End Sub
 
-    Private Sub XenonButton28_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton28.MouseEnter
+    Private Sub Button28_MouseEnter(sender As Object, e As EventArgs) Handles Button28.MouseEnter
         status_lbl.Text = My.Lang.LogoffNotice
         status_lbl.ForeColor = If(My.Style.DarkMode, Color.Gold, Color.Gold.Dark(0.1))
     End Sub
 
-    Private Sub XenonButton28_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton28.MouseLeave
+    Private Sub Button28_MouseLeave(sender As Object, e As EventArgs) Handles Button28.MouseLeave
         status_lbl.Text = ""
         status_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
     End Sub
 
-    Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
+    Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         Process.Start(My.Resources.Link_Wiki)
     End Sub
 
-    Private Sub XenonButton40_Click(sender As Object, e As EventArgs) Handles XenonButton40.Click
+    Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
         PaletteGenerateDashboard.ShowDialog()
     End Sub
 
-    Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click
+    Private Sub Button30_Click_1(sender As Object, e As EventArgs) Handles Button30.Click
         MsgBox(My.Lang.Win11ColorsDescTip, MsgBoxStyle.Information, My.Lang.Win11ColorsDescTip2)
     End Sub
 
-    Private Sub XenonButton31_Click(sender As Object, e As EventArgs) Handles XenonButton31.Click
+    Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
         If My.WXP Then
             If MsgBox(String.Format(My.Lang.Store_WontWork_Protocol, My.Lang.OS_WinXP), MsgBoxStyle.Critical + MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then Exit Sub
         ElseIf My.WVista Then

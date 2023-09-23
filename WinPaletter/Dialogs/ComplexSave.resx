@@ -138,7 +138,7 @@
         cxSKP7/z0+KDFNX7AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonRadioImage3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAIKSURBVDhPvdRZTxNBAAfwFX0XvoDRQqxKuVrK0YuW2svStVytJRhA44EShWg06gsvhoTwFY0R
@@ -153,7 +153,7 @@
         SUVORK5CYII=
 </value>
   </data>
-  <data name="XenonRadioImage2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAMTSURBVDhP1dPLTxNRFAbw+h+4kmgiL0UQEBFNdOXKhS58RF0YV2LEhYkxkShKjBZd+NqY+IoK
@@ -172,7 +172,7 @@
         JJSuqxVX6cw/H4PhFztu/8icm8aBAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonRadioImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAKkSURBVDhP1dNLTxNRFAdwPoUkLnhaHgUR2OAHcCGJojF+ARcmboyJiBgWWiTR6MKFEWJUCNjy
@@ -210,7 +210,7 @@
         a/a4FBbmpywfvzorJijobx+7oDGRVTZmAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonRadioImage4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAIKSURBVDhPvdRZTxNBAAfwFX0XvoDRQqxKuVrK0YuW2svStVytJRhA44EShWg06gsvhoTwFY0R
@@ -225,7 +225,7 @@
         SUVORK5CYII=
 </value>
   </data>
-  <data name="XenonRadioImage5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wgAADsIBFShKgAAAAuZJREFUOE+1VE1IFVEUPs7fHZ+pqSRkZOkmsXwz8+6dl7pIIttESQQRZJuKKJA2
@@ -243,7 +243,7 @@
         opweRd/zmVnoxbM50gBlNv594vVQPYJrGk8Dt2BTA/4vAP4BZnkKegUIEvEAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonRadioImage6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="RadioImage6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         vQAADr0BR/uQrQAAA2ZJREFUOE9tk11Mk1ccxt9s9WZZshuvpHyVlra0lJZ+KZHpQtCpQRcW1G03Ji5R

@@ -66,7 +66,7 @@ Public Class Store_DownloadProgress
         ThemeDownloader.Dispose()
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         If ThemeDownloader.IsBusy Then ThemeDownloader.CancelAsync()
         DialogResult = DialogResult.Abort
         Close()

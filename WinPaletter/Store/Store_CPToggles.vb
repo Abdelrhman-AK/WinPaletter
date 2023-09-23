@@ -33,7 +33,7 @@
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         For i = 0 To CheckedListBox1.Items.Count - 1
             If CheckedListBox1.Items.Item(i) = My.Lang.Store_Toggle_AppTheme Then CP.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i)
 
@@ -62,12 +62,12 @@
         Close()
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         DialogResult = DialogResult.OK
         Close()
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         DialogResult = DialogResult.Cancel
         Close()
     End Sub

@@ -97,21 +97,21 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub RadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonRadioImage_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub RadioImage_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
             Try
                 If Not DesignMode Then
@@ -131,7 +131,7 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Private Sub XenonRadioImage_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub RadioImage_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             Try
                 If Not DesignMode Then
                     RemoveHandler FindForm.Shown, AddressOf Showed

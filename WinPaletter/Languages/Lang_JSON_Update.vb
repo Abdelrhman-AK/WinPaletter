@@ -9,41 +9,41 @@ Public Class Lang_JSON_Update
         ApplyStyle(Me)
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         If OpenJSONDlg.ShowDialog = DialogResult.OK Then
-            XenonTextBox1.Text = OpenJSONDlg.FileName
+            TextBox1.Text = OpenJSONDlg.FileName
         End If
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If OpenJSONDlg.ShowDialog = DialogResult.OK Then
-            XenonTextBox2.Text = OpenJSONDlg.FileName
+            TextBox2.Text = OpenJSONDlg.FileName
         End If
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         If SaveJSONDlg.ShowDialog = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
             Dim Lang As New Localizer
             Lang.ExportJSON(SaveJSONDlg.FileName)
             Lang.Dispose()
-            XenonTextBox2.Text = SaveJSONDlg.FileName
+            TextBox2.Text = SaveJSONDlg.FileName
             Cursor = Cursors.Default
         End If
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
 
         If SaveJSONDlg.ShowDialog = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
 
             Dim _output As String = SaveJSONDlg.FileName
 
-            Dim _Old_File As New StreamReader(XenonTextBox1.Text)
+            Dim _Old_File As New StreamReader(TextBox1.Text)
             Dim J_Old As JObject = JObject.Parse(_Old_File.ReadToEnd)
             _Old_File.Close()
 
-            Dim _New_File As New StreamReader(XenonTextBox2.Text)
+            Dim _New_File As New StreamReader(TextBox2.Text)
             Dim J_New As JObject = JObject.Parse(_New_File.ReadToEnd)
             _New_File.Close()
 
@@ -59,7 +59,7 @@ Public Class Lang_JSON_Update
             Next
 
             For Each j In x_old.Properties
-                If XenonCheckBox1.Checked Then
+                If CheckBox1.Checked Then
                     If x_new.ContainsKey(j.Name) Then J_GlobalStrings.Add(j.Name, j.Value)  'Add with exclusion of Old JSON
                 Else
                     J_GlobalStrings.Add(j.Name, j.Value)                                    'Add Rest of items from Old JSON
@@ -113,7 +113,7 @@ Public Class Lang_JSON_Update
         End If
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Close()
     End Sub
 

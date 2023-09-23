@@ -992,6 +992,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_JSON_GUI.resx">
       <DependentUpon>Lang_JSON_GUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_ReplaceText.resx">
       <DependentUpon>Lang_ReplaceText.vb</DependentUpon>

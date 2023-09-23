@@ -5,21 +5,21 @@
         ApplyStyle(Me)
         Icon = Store.Icon
 
-        XenonCheckBox1.Checked = My.Settings.Store.Search_ThemeNames
-        XenonCheckBox2.Checked = My.Settings.Store.Search_AuthorsNames
-        XenonCheckBox3.Checked = My.Settings.Store.Search_Descriptions
+        CheckBox1.Checked = My.Settings.Store.Search_ThemeNames
+        CheckBox2.Checked = My.Settings.Store.Search_AuthorsNames
+        CheckBox3.Checked = My.Settings.Store.Search_Descriptions
 
     End Sub
 
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-        My.Settings.Store.Search_ThemeNames = XenonCheckBox1.Checked
-        My.Settings.Store.Search_AuthorsNames = XenonCheckBox2.Checked
-        My.Settings.Store.Search_Descriptions = XenonCheckBox3.Checked
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        My.Settings.Store.Search_ThemeNames = CheckBox1.Checked
+        My.Settings.Store.Search_AuthorsNames = CheckBox2.Checked
+        My.Settings.Store.Search_Descriptions = CheckBox3.Checked
         My.Settings.Store.Save()
         Close()
     End Sub
 
-    Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Close()
     End Sub
 End Class

@@ -491,7 +491,7 @@ Namespace UI.WP
 
         End Sub
 
-        Private Sub XenonTextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub TextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
             If Not DesignMode Then
                 Try
@@ -502,7 +502,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonTextBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub TextBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             If Not DesignMode Then
                 Try
                     RemoveHandler FindForm.Load, AddressOf Loaded

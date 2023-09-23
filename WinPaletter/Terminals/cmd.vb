@@ -17,7 +17,7 @@ Public Class CMD
         _Shown = False
         LoadLanguage
         ApplyStyle(Me)
-        XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
+        CheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
         RasterList.BringToFront()
 
         ApplyFromCP(My.CP, _Edition)
@@ -32,21 +32,21 @@ Public Class CMD
             Case Edition.CMD
                 Text = My.Lang.CommandPrompt
                 Icon = My.Resources.icons8_command_line
-                XenonButton4.Text = My.Lang.Open_Testing_CMD
+                Button4.Text = My.Lang.Open_Testing_CMD
 
             Case Edition.PowerShellx86
                 Text = My.Lang.PowerShellx86
                 Icon = My.Resources.icons8_PowerShell
-                XenonButton4.Text = My.Lang.Open_Testing_PowerShellx86
+                Button4.Text = My.Lang.Open_Testing_PowerShellx86
 
             Case Edition.PowerShellx64
                 Text = My.Lang.PowerShellx64
                 Icon = My.Resources.icons8_PowerShell
-                XenonButton4.Text = My.Lang.Open_Testing_PowerShellx64
+                Button4.Text = My.Lang.Open_Testing_PowerShellx64
 
         End Select
 
-        XenonButton6.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
+        Button6.Image = MainFrm.Button20.Image.Resize(16, 16)
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
@@ -60,14 +60,14 @@ Public Class CMD
         MyBase.OnDragOver(drgevent)
     End Sub
 
-    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object) Handles CheckBox1.CheckedChanged
         If _Shown Then
-            My.Settings.WindowsTerminals.ListAllFonts = XenonCheckBox1.Checked
+            My.Settings.WindowsTerminals.ListAllFonts = CheckBox1.Checked
             My.Settings.WindowsTerminals.Save()
         End If
     End Sub
 
-    Private Sub XenonButton10_Click(sender As Object, e As EventArgs) Handles XenonButton10.Click
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
 
         If CMDEnabled.Checked Then
             Cursor = Cursors.WaitCursor
@@ -98,11 +98,11 @@ Public Class CMD
         End If
 
     End Sub
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ApplyToCP(My.CP, _Edition)
         Me.Close()
     End Sub
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
     Private Sub CMD_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -184,75 +184,75 @@ Public Class CMD
         ApplyCursorShape()
     End Sub
     Sub ApplyPreview()
-        XenonCMD1.CMD_ColorTable00 = ColorTable00.BackColor
-        XenonCMD1.CMD_ColorTable01 = ColorTable01.BackColor
-        XenonCMD1.CMD_ColorTable02 = ColorTable02.BackColor
-        XenonCMD1.CMD_ColorTable03 = ColorTable03.BackColor
-        XenonCMD1.CMD_ColorTable04 = ColorTable04.BackColor
-        XenonCMD1.CMD_ColorTable05 = ColorTable05.BackColor
-        XenonCMD1.CMD_ColorTable06 = ColorTable06.BackColor
-        XenonCMD1.CMD_ColorTable07 = ColorTable07.BackColor
-        XenonCMD1.CMD_ColorTable08 = ColorTable08.BackColor
-        XenonCMD1.CMD_ColorTable09 = ColorTable09.BackColor
-        XenonCMD1.CMD_ColorTable10 = ColorTable10.BackColor
-        XenonCMD1.CMD_ColorTable11 = ColorTable11.BackColor
-        XenonCMD1.CMD_ColorTable12 = ColorTable12.BackColor
-        XenonCMD1.CMD_ColorTable13 = ColorTable13.BackColor
-        XenonCMD1.CMD_ColorTable14 = ColorTable14.BackColor
-        XenonCMD1.CMD_ColorTable15 = ColorTable15.BackColor
-        XenonCMD1.CMD_PopupForeground = CMD_PopupForegroundBar.Value
-        XenonCMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value
-        XenonCMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value
-        XenonCMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
-        XenonCMD1.Font = New Font(F_cmd.Name, F_cmd.Size, F_cmd.Style)
-        XenonCMD1.PowerShell = (_Edition = Edition.PowerShellx64) Or (_Edition = Edition.PowerShellx86)
-        XenonCMD1.Raster = CMD_RasterToggle.Checked
+        CMD1.CMD_ColorTable00 = ColorTable00.BackColor
+        CMD1.CMD_ColorTable01 = ColorTable01.BackColor
+        CMD1.CMD_ColorTable02 = ColorTable02.BackColor
+        CMD1.CMD_ColorTable03 = ColorTable03.BackColor
+        CMD1.CMD_ColorTable04 = ColorTable04.BackColor
+        CMD1.CMD_ColorTable05 = ColorTable05.BackColor
+        CMD1.CMD_ColorTable06 = ColorTable06.BackColor
+        CMD1.CMD_ColorTable07 = ColorTable07.BackColor
+        CMD1.CMD_ColorTable08 = ColorTable08.BackColor
+        CMD1.CMD_ColorTable09 = ColorTable09.BackColor
+        CMD1.CMD_ColorTable10 = ColorTable10.BackColor
+        CMD1.CMD_ColorTable11 = ColorTable11.BackColor
+        CMD1.CMD_ColorTable12 = ColorTable12.BackColor
+        CMD1.CMD_ColorTable13 = ColorTable13.BackColor
+        CMD1.CMD_ColorTable14 = ColorTable14.BackColor
+        CMD1.CMD_ColorTable15 = ColorTable15.BackColor
+        CMD1.CMD_PopupForeground = CMD_PopupForegroundBar.Value
+        CMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value
+        CMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value
+        CMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value
+        CMD1.Font = New Font(F_cmd.Name, F_cmd.Size, F_cmd.Style)
+        CMD1.PowerShell = (_Edition = Edition.PowerShellx64) Or (_Edition = Edition.PowerShellx86)
+        CMD1.Raster = CMD_RasterToggle.Checked
         Select Case RasterList.SelectedItem
             Case "4x6"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
 
             Case "6x8"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "6x9"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "8x8"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "8x9"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "16x8"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
 
             Case "5x12"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
 
             Case "7x12"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
 
             Case "8x12"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
             Case "16x12"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
 
             Case "12x16"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
 
             Case "10x18"
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
 
             Case Else
-                XenonCMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
+                CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
         End Select
 
         FontName.Text = F_cmd.Name
         FontName.Font = New Font(F_cmd.Name, 9, F_cmd.Style)
 
-        XenonCMD1.Refresh()
+        CMD1.Refresh()
     End Sub
 
     Sub UpdateFromTrack(i As Integer)
@@ -721,7 +721,7 @@ Public Class CMD
         ApplyPreview()
     End Sub
 
-    Private Sub XenonButton4_Click(sender As Object, e As EventArgs) Handles XenonButton4.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
         Kernel32.Wow64DisableWow64FsRedirection(IntPtr.Zero)
 
@@ -756,7 +756,7 @@ Public Class CMD
     End Sub
 
     Private Sub CMD_RasterToggle_CheckedChanged(sender As Object, e As EventArgs) Handles CMD_RasterToggle.CheckedChanged
-        XenonButton5.Enabled = Not CMD_RasterToggle.Checked
+        Button5.Enabled = Not CMD_RasterToggle.Checked
         CMD_FontWeightBox.Enabled = Not CMD_RasterToggle.Checked
 
         If _Shown Then
@@ -852,7 +852,7 @@ Public Class CMD
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {sender, XenonCMD1}
+        Dim CList As New List(Of Control) From {sender, CMD1}
 
         Dim _Conditions As New Conditions
         If sender.Name.ToString.ToLower.Contains("ColorTable00".ToLower) Then _Conditions.CMD_ColorTable00 = True
@@ -883,7 +883,7 @@ Public Class CMD
         CList.Clear()
     End Sub
 
-    Private Sub XenonButton6_Click(sender As Object, e As EventArgs) Handles XenonButton6.Click
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
         Using _Def As CP = CP_Defaults.From(My.PreviewStyle)
             Dim ee As Boolean = CMDEnabled.Checked
             ApplyFromCP(_Def, _Edition)
@@ -892,7 +892,7 @@ Public Class CMD
         End Using
     End Sub
 
-    Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         If OpenWPTHDlg.ShowDialog = DialogResult.OK Then
             Dim CPx As New CP(CP.CP_Type.File, OpenWPTHDlg.FileName)
             Dim ee As Boolean = CMDEnabled.Checked
@@ -903,11 +903,11 @@ Public Class CMD
         End If
     End Sub
 
-    Private Sub XenonButton25_Click(sender As Object, e As EventArgs) Handles XenonButton25.Click
+    Private Sub Button25_Click(sender As Object, e As EventArgs) Handles Button25.Click
         MsgBox(My.Lang.CMD_NotAllWeights, MsgBoxStyle.Information)
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim CPx As New CP(CP.CP_Type.Registry)
         Dim ee As Boolean = CMDEnabled.Checked
         ApplyFromCP(CPx, _Edition)
@@ -935,7 +935,7 @@ Public Class CMD
         checker_img.Image = If(sender.Checked, My.Resources.checker_enabled, My.Resources.checker_disabled)
     End Sub
 
-    Private Sub XenonButton5_Click(sender As Object, e As EventArgs) Handles XenonButton5.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         FontDialog1.FixedPitchOnly = Not My.Settings.WindowsTerminals.ListAllFonts
         FontDialog1.Font = F_cmd
         If FontDialog1.ShowDialog = DialogResult.OK Then

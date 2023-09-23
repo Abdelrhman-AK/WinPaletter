@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="XenonButton4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAy9JREFUOE+1
         lMtPU0EUxo+v6EbduVERdScS4w7BBDaaaMSFiooJPiGi6Iadr8AfYOLKjU+CiUqFiEiIgrbQFih9AC2v
@@ -140,7 +140,7 @@
         55rgpmxaVJO/ZNRDFlm8gqR5Eb2wjXX/DwH8AYcqevIJAy8+AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAmRJREFUOE+9
         1N1PUmEABnD6uHGRcpprMIZYac2BBF54UcnirtYf0dZt63/wokSNXBhFOjPMbKVm2szSYF60dVPr60rg
@@ -156,7 +156,7 @@
         3Xtksr/nyJTsvUr8twAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="XenonAlertBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="AlertBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAY5JREFUSEvt
         lbtOwmAYhpFq5KgMiBjvwSjgoCauOkEhYeUODGB0R0Fng62GqLdg3AzxUBaxsqgsUhmMNwAIYSJQf5Kv
@@ -168,7 +168,7 @@
         tWWgavHwATj9M4xtphe0YTFLnjprYfl5OPzr0Wg+Afghv04CqlUTAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="XenonAlertBox1.Text" xml:space="preserve">
+  <data name="AlertBox1.Text" xml:space="preserve">
     <value>There is a weak posibility that Windows Security (Defender) will consider this action as a suspicious action (like malwares) as WinPaletter will modify a system file. You can ignore Windows Security alert that might pop-up.</value>
   </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -192,7 +192,7 @@
         u1v4svWNONtc3HWW0BVRej2EpOTmP/9/wYTrHcRcu/jX11lDJOlfJPF/weHDI4sAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="XenonButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOE+9
         00tPE1EYBuBheplpq1DKRSxEURISf4f+CIWAWAVLFYFaUXZdudSF/0CDkhCteKlpKS2FlpYWSikUxWBI

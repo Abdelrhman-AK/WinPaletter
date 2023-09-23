@@ -360,7 +360,7 @@ Namespace UI.WP
             Invalidate()
         End Sub
 
-        Private Sub XenonScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub ScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             If Thumb.Contains(MousePosition) Then
                 State = MouseState.Over
                 Invalidate()
@@ -369,14 +369,14 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub ScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        Private Sub ScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             If e.Delta < 0 Then
                 If Value < Maximum Then
                     If e.Delta <= -240 Then Value += LargeChange Else Value += SmallChange
@@ -388,7 +388,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub XenonRadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub RadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
 
             Try
                 If Not DesignMode Then
@@ -410,7 +410,7 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Private Sub XenonColorBar_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+        Private Sub ColorBar_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             Try
                 If Not DesignMode Then
                     RemoveHandler FindForm.Load, AddressOf Loaded

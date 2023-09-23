@@ -1,5 +1,5 @@
 ﻿Public Class ComplexSave
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.DialogResult = DialogResult.Yes
         Me.Close()
     End Sub
@@ -8,17 +8,17 @@
         Dim i1 As Integer = 0
         Dim i2 As Integer = 0
 
-        If XenonRadioImage1.Checked Then i1 = 0
-        If XenonRadioImage2.Checked Then i1 = 1
-        If XenonRadioImage3.Checked Then i1 = 2
+        If RadioImage1.Checked Then i1 = 0
+        If RadioImage2.Checked Then i1 = 1
+        If RadioImage3.Checked Then i1 = 2
 
-        If XenonRadioImage6.Checked Then i2 = 1
-        If XenonRadioImage5.Checked Then i2 = 2
-        If XenonRadioImage7.Checked Then i2 = 3
-        If XenonRadioImage4.Checked Then i2 = 0
+        If RadioImage6.Checked Then i2 = 1
+        If RadioImage5.Checked Then i2 = 2
+        If RadioImage7.Checked Then i2 = 3
+        If RadioImage4.Checked Then i2 = 0
 
         My.Settings.General.ComplexSaveResult = i1 & "." & i2
-        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = XenonCheckBox2.Checked
+        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked
         My.Settings.General.Save()
         My.Settings.ThemeApplyingBehavior.Save()
     End Sub
@@ -29,9 +29,9 @@
 
         Dim c As Color = PictureBox1.Image.AverageColor
 
-        XenonAnimatedBox1.Color = c
-        XenonAnimatedBox1.Color1 = c
-        XenonAnimatedBox1.Color2 = c
+        AnimatedBox1.Color = c
+        AnimatedBox1.Color1 = c
+        AnimatedBox1.Color2 = c
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
 
@@ -40,70 +40,70 @@
         Dim r2 As String = r(1)
 
         If My.W11 Then
-            XenonRadioImage7.Image = My.Resources.Native11.Resize(20, 20)
+            RadioImage7.Image = My.Resources.Native11.Resize(20, 20)
 
         ElseIf My.W10 Then
-            XenonRadioImage7.Image = My.Resources.Native10.Resize(20, 20)
+            RadioImage7.Image = My.Resources.Native10.Resize(20, 20)
 
         ElseIf My.W8 Or My.W81 Then
-            XenonRadioImage7.Image = My.Resources.Native8.Resize(20, 20)
+            RadioImage7.Image = My.Resources.Native8.Resize(20, 20)
 
         ElseIf My.W7 Then
-            XenonRadioImage7.Image = My.Resources.Native7.Resize(20, 20)
+            RadioImage7.Image = My.Resources.Native7.Resize(20, 20)
 
         ElseIf My.WVista Then
-            XenonRadioImage7.Image = My.Resources.NativeVista.Resize(20, 20)
+            RadioImage7.Image = My.Resources.NativeVista.Resize(20, 20)
 
         ElseIf My.WXP Then
-            XenonRadioImage7.Image = My.Resources.NativeXP.Resize(20, 20)
+            RadioImage7.Image = My.Resources.NativeXP.Resize(20, 20)
 
         Else
-            XenonRadioImage7.Image = My.Resources.Native11.Resize(20, 20)
+            RadioImage7.Image = My.Resources.Native11.Resize(20, 20)
         End If
 
 
         If r1 = 0 Then
-            XenonRadioImage1.Checked = True
+            RadioImage1.Checked = True
         ElseIf r1 = 1 Then
-            XenonRadioImage2.Checked = True
+            RadioImage2.Checked = True
         ElseIf r1 = 2 Then
-            XenonRadioImage3.Checked = True
+            RadioImage3.Checked = True
         Else
-            XenonRadioImage3.Checked = True
+            RadioImage3.Checked = True
         End If
 
         If r2 = 0 Then
-            XenonRadioImage4.Checked = True
+            RadioImage4.Checked = True
         ElseIf r2 = 1 Then
-            XenonRadioImage6.Checked = True
+            RadioImage6.Checked = True
         ElseIf r2 = 2 Then
-            XenonRadioImage5.Checked = True
+            RadioImage5.Checked = True
         ElseIf r2 = 3 Then
-            XenonRadioImage7.Checked = True
+            RadioImage7.Checked = True
         Else
-            XenonRadioImage6.Checked = True
+            RadioImage6.Checked = True
         End If
 
-        XenonCheckBox2.Checked = My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation
+        CheckBox2.Checked = My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation
 
         Me.DialogResult = DialogResult.None
     End Sub
 
-    Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = XenonCheckBox2.Checked
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation = CheckBox2.Checked
         My.Settings.ThemeApplyingBehavior.Save()
         Me.DialogResult = DialogResult.No
         Me.Close()
     End Sub
 
-    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
 
     Public Function GetResponse(SaveFileDialog As System.Windows.Forms.SaveFileDialog, Apply_Theme_Sub As MethodInvoker, Apply_FirstTheme_Sub As MethodInvoker, Apply_DefaultWin_Sub As MethodInvoker) As Boolean
         If My.CP <> My.CP_Original AndAlso My.Settings.ThemeApplyingBehavior.ShowSaveConfirmation Then
-            XenonGroupBox2.Enabled = Apply_Theme_Sub IsNot Nothing Or Apply_FirstTheme_Sub IsNot Nothing Or Apply_DefaultWin_Sub IsNot Nothing
+            GroupBox2.Enabled = Apply_Theme_Sub IsNot Nothing Or Apply_FirstTheme_Sub IsNot Nothing Or Apply_DefaultWin_Sub IsNot Nothing
 
             Select Case ShowDialog()
                 Case DialogResult.Yes

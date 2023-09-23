@@ -124,14 +124,14 @@ Namespace UI.Controllers
             Invalidate()
         End Sub
 
-        Private Sub XenonRadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub RadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonCheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
             Tmr.Enabled = True
             Tmr.Start()
