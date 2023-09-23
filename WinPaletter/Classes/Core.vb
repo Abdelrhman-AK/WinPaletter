@@ -5,7 +5,7 @@ Imports System.Runtime.InteropServices
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 
-Public Class XenonCore
+Public Class Core
     Public Shared Sub RefreshDWM(CP As CP)
 
         Try
@@ -363,7 +363,7 @@ Public Class Visual
 
     Private Shared ReadOnly colorsFading As New Dictionary(Of String, BackgroundWorker) 'Keeps track of any backgroundworkers already fading colors
     Private Shared ReadOnly backgroundWorkers As New Dictionary(Of BackgroundWorker, ColorFaderInformation) 'Associate each background worker with information it needs
-    Private Shared PreviousXenonCPPauseColorsHistory As Boolean
+    Private Shared PreviousColorItemPauseColorsHistory As Boolean
 
     ' The delegate of a method that will be called when the color finishes fading
     Public Delegate Sub DoneFading(ByVal container As Object, ByVal colorProperty As String)
@@ -447,7 +447,7 @@ Public Class Visual
             colorFader.WorkerReportsProgress = True
             colorFader.WorkerSupportsCancellation = True
             If TypeOf container Is UI.Controllers.ColorItem Then
-                PreviousXenonCPPauseColorsHistory = CType(container, UI.Controllers.ColorItem).PauseColorsHistory
+                PreviousColorItemPauseColorsHistory = CType(container, UI.Controllers.ColorItem).PauseColorsHistory
                 CType(container, UI.Controllers.ColorItem).PauseColorsHistory = True
             End If
 
@@ -557,8 +557,8 @@ Public Class Visual
 
                 If TypeOf info.Container Is UI.Controllers.ColorItem Then
                     With CType(info.Container, UI.Controllers.ColorItem)
-                        .PauseColorsHistory = PreviousXenonCPPauseColorsHistory
-                        If Not PreviousXenonCPPauseColorsHistory Then .ColorsHistory.Add(.BackColor)
+                        .PauseColorsHistory = PreviousColorItemPauseColorsHistory
+                        If Not PreviousColorItemPauseColorsHistory Then .ColorsHistory.Add(.BackColor)
                     End With
                 End If
 

@@ -71,10 +71,10 @@ Partial Class Lang_JSON_GUI
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.XenonGroupBox9 = New WinPaletter.UI.WP.GroupBox()
         Me.XenonButton12 = New WinPaletter.UI.WP.Button()
-        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonCheckBox2 = New WinPaletter.UI.WP.CheckBox()
         Me.XenonTextBox8 = New WinPaletter.UI.WP.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonCheckBox1 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
@@ -102,6 +102,7 @@ Partial Class Lang_JSON_GUI
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Button1 = New WinPaletter.UI.WP.Button()
         Me.XenonGroupBox3.SuspendLayout()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -150,7 +151,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(754, 671)
+        Me.XenonButton7.Location = New System.Drawing.Point(668, 671)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 205
@@ -1155,7 +1156,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonGroupBox8.Controls.Add(Me.Label8)
         Me.XenonGroupBox8.Location = New System.Drawing.Point(12, 672)
         Me.XenonGroupBox8.Name = "XenonGroupBox8"
-        Me.XenonGroupBox8.Size = New System.Drawing.Size(734, 32)
+        Me.XenonGroupBox8.Size = New System.Drawing.Size(650, 32)
         Me.XenonGroupBox8.TabIndex = 210
         Me.XenonGroupBox8.Visible = False
         '
@@ -1179,7 +1180,7 @@ Partial Class Lang_JSON_GUI
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(158, 5)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(573, 22)
+        Me.Label9.Size = New System.Drawing.Size(489, 22)
         Me.Label9.TabIndex = 71
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -1195,6 +1196,24 @@ Partial Class Lang_JSON_GUI
         Me.Label8.Text = "Current open file:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button1.DrawOnGlass = False
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(146, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(754, 671)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 34)
+        Me.Button1.TabIndex = 211
+        Me.Button1.Text = "Help"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'Lang_JSON_GUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1207,6 +1226,7 @@ Partial Class Lang_JSON_GUI
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonAlertBox1)
         Me.Controls.Add(Me.XenonGroupBox8)
+        Me.Controls.Add(Me.Button1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1322,4 +1342,5 @@ Partial Class Lang_JSON_GUI
     Friend WithEvents XenonGroupBox8 As UI.WP.GroupBox
     Friend WithEvents XenonGroupBox9 As UI.WP.GroupBox
     Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents Button1 As UI.WP.Button
 End Class

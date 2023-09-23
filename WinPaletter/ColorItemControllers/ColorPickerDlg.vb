@@ -92,7 +92,7 @@ Public Class ColorPickerDlg
         Invalidate()
     End Sub
 
-    Sub GetColorsHistory(XenonCP As UI.Controllers.ColorItem)
+    Sub GetColorsHistory(ColorItem As UI.Controllers.ColorItem)
         FlowLayoutPanel1.SuspendLayout()
 
         For Each c As UI.Controllers.ColorItem In FlowLayoutPanel1.Controls.OfType(Of UI.Controllers.ColorItem)
@@ -103,7 +103,7 @@ Public Class ColorPickerDlg
 
         FlowLayoutPanel1.Controls.Clear()
 
-        For Each c As Color In XenonCP.ColorsHistory
+        For Each c As Color In ColorItem.ColorsHistory
 
             Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,

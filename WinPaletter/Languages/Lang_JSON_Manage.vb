@@ -176,7 +176,7 @@ Public Class Lang_JSON_Manage
         TreeView1.Visible = True
     End Sub
 
-    Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
-        Process.Start(My.Resources.Link_Wiki & "/Language-creation")
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation-(old-methods)")
     End Sub
 End Class

@@ -259,7 +259,7 @@ Public Class SubMenu
         Collapse_Expand()
     End Sub
 
-    Sub GetHistoryColors(XenonCP As UI.Controllers.ColorItem)
+    Sub GetHistoryColors(ColorItem As UI.Controllers.ColorItem)
         PaletteContainer.SuspendLayout()
 
         For Each c As UI.Controllers.ColorItem In PaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
@@ -270,7 +270,7 @@ Public Class SubMenu
 
         PaletteContainer.Controls.Clear()
 
-        For Each c As Color In XenonCP.ColorsHistory
+        For Each c As Color In ColorItem.ColorsHistory
             Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,

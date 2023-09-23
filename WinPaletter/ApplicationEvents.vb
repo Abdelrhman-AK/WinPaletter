@@ -11,7 +11,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.XenonCore
+Imports WinPaletter.Core
 
 Namespace My
     Module Env

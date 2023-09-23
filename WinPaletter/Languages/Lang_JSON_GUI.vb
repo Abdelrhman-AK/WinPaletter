@@ -706,30 +706,32 @@ Public Class Lang_JSON_GUI
     End Sub
 
     Private Sub XenonButton2_Click(sender As Object, e As EventArgs) Handles XenonButton2.Click
-        Lang.ExportJSON(LangFile, FormsList.ToArray)
+        If IO.File.Exists(LangFile) Then
+            Lang.ExportJSON(LangFile, FormsList.ToArray)
 
-        Dim JObj As JObject = JToken.Parse(IO.File.ReadAllText(LangFile))
+            Dim JObj As JObject = JToken.Parse(IO.File.ReadAllText(LangFile))
 
-        Dim j_info As New JObject From {
-            {"Name".ToLower, XenonTextBox5.Text},
-            {"TranslationVersion".ToLower, XenonTextBox6.Text},
-            {"Lang".ToLower, XenonTextBox3.Text},
-            {"LangCode".ToLower, XenonTextBox4.Text},
-            {"AppVer".ToLower, XenonTextBox7.Text},
-            {"RightToLeft".ToLower, XenonRadioButton2.Checked}
-        }
+            Dim j_info As New JObject From {
+                {"Name".ToLower, XenonTextBox5.Text},
+                {"TranslationVersion".ToLower, XenonTextBox6.Text},
+                {"Lang".ToLower, XenonTextBox3.Text},
+                {"LangCode".ToLower, XenonTextBox4.Text},
+                {"AppVer".ToLower, XenonTextBox7.Text},
+                {"RightToLeft".ToLower, XenonRadioButton2.Checked}
+            }
 
-        Dim j_globalstrings As New JObject()
-        For r = 0 To data.Rows.Count - 1
-            j_globalstrings(data.Item(0, r).Value.ToString.ToLower) = data.Item(1, r).Value.ToString
-        Next
+            Dim j_globalstrings As New JObject()
+            For r = 0 To data.Rows.Count - 1
+                j_globalstrings(data.Item(0, r).Value.ToString.ToLower) = data.Item(1, r).Value.ToString
+            Next
 
-        JObj("Information") = j_info
-        JObj("Global Strings") = j_globalstrings
+            JObj("Information") = j_info
+            JObj("Global Strings") = j_globalstrings
 
-        IO.File.WriteAllText(LangFile, JObj.ToString)
+            IO.File.WriteAllText(LangFile, JObj.ToString)
 
-        MsgBox(My.Lang.LangSaved, MsgBoxStyle.Information)
+            MsgBox(My.Lang.LangSaved, MsgBoxStyle.Information)
+        End If
     End Sub
 
     Private Sub data_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles data.CellEndEdit
@@ -750,5 +752,9 @@ Public Class Lang_JSON_GUI
 
     Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged, XenonCheckBox2.CheckedChanged
         data.Refresh()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation")
     End Sub
 End Class

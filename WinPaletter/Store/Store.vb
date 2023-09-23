@@ -5,7 +5,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
+Imports WinPaletter.Core
 
 Public Class Store
 
@@ -1078,7 +1078,7 @@ Public Class Store
         Cursor = Cursors.Default
 
         If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
-            XenonCore.RestartExplorer(If(My.Settings.ThemeLog.Enabled, log, Nothing))
+            Core.RestartExplorer(If(My.Settings.ThemeLog.Enabled, log, Nothing))
         Else
             If My.Settings.ThemeLog.Enabled Then CP.AddNode(log, My.Lang.NoDefResExplorer, "warning")
         End If
@@ -1436,7 +1436,7 @@ Public Class Store
     End Sub
 
     Private Sub RestartExplorer_Click(sender As Object, e As EventArgs) Handles RestartExplorer.Click
-        XenonCore.RestartExplorer()
+        Core.RestartExplorer()
     End Sub
 
 #End Region

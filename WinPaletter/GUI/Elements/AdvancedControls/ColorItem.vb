@@ -369,14 +369,14 @@ Namespace UI.Controllers
             MyBase.OnMouseUp(e)
         End Sub
 
-        Private Sub XenonCP_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub ColorItem_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
             Tmr.Enabled = True
             Tmr.Start()
             Invalidate()
         End Sub
 
-        Private Sub XenonCP_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub ColorItem_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             InitializeDrag = False
             HoverOverDefColorDot = False
             State = MouseState.None
@@ -385,7 +385,7 @@ Namespace UI.Controllers
             Invalidate()
         End Sub
 
-        Private Sub XenonCP_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub ColorItem_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
             Tmr2_factor = 0
         End Sub

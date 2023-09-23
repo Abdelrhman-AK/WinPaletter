@@ -12,7 +12,7 @@ Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.XenonCore
+Imports WinPaletter.Core
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 
@@ -1836,7 +1836,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 FontSubstitute_MSShellDlg2 = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", _DefMetricsFonts.FontSubstitute_MSShellDlg2)
                 FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
-                If XenonCore.GetWindowsScreenScalingFactor > 100 Then
+                If Core.GetWindowsScreenScalingFactor > 100 Then
                     CaptionFont = AdjustFont(CaptionFont)
                     IconFont = AdjustFont(IconFont)
                     MenuFont = AdjustFont(MenuFont)
@@ -1851,7 +1851,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Sub
 
             Private Function AdjustFont([Font] As Font) As Font
-                Dim DPI As Integer = XenonCore.GetWindowsScreenScalingFactor
+                Dim DPI As Integer = Core.GetWindowsScreenScalingFactor
                 If DPI > 0 Then
                     Dim font_size As Single = [Font].Size * (100 / DPI)
                     If font_size > 0 Then
@@ -1868,7 +1868,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
 
                 If Enabled Then
-                    If XenonCore.GetWindowsScreenScalingFactor > 100 Then
+                    If Core.GetWindowsScreenScalingFactor > 100 Then
                         CaptionFont = New Font(CaptionFont.Name, CaptionFont.SizeInPoints, CaptionFont.Style)
                         IconFont = New Font(IconFont.Name, IconFont.SizeInPoints, IconFont.Style)
                         MenuFont = New Font(MenuFont.Name, MenuFont.SizeInPoints, MenuFont.Style)
@@ -3387,7 +3387,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .H = 0, .S = 100, .L = 100}
 
     Public MetricsFonts As New Structures.MetricsFonts With {
-                .Enabled = XenonCore.GetWindowsScreenScalingFactor() = 100,
+                .Enabled = Core.GetWindowsScreenScalingFactor() = 100,
                 .BorderWidth = 1,
                 .CaptionHeight = 22,
                 .CaptionWidth = 22,

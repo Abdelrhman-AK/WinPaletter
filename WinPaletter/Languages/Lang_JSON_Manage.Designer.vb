@@ -54,6 +54,7 @@ Partial Class Lang_JSON_Manage
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.Button1 = New WinPaletter.UI.WP.Button()
         Me.XenonGroupBox3.SuspendLayout()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -77,7 +78,7 @@ Partial Class Lang_JSON_Manage
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(13, 579)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(645, 29)
+        Me.Label5.Size = New System.Drawing.Size(429, 29)
         Me.Label5.TabIndex = 202
         Me.Label5.Text = "Numbers in curly brackets should be left unchanged, for example: {0}"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -92,7 +93,7 @@ Partial Class Lang_JSON_Manage
         Me.XenonButton7.Image = Nothing
         Me.XenonButton7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
         Me.XenonButton7.LineSize = 1
-        Me.XenonButton7.Location = New System.Drawing.Point(664, 576)
+        Me.XenonButton7.Location = New System.Drawing.Point(578, 576)
         Me.XenonButton7.Name = "XenonButton7"
         Me.XenonButton7.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton7.TabIndex = 201
@@ -503,12 +504,31 @@ Partial Class Lang_JSON_Manage
         Me.TreeView1.Size = New System.Drawing.Size(385, 425)
         Me.TreeView1.TabIndex = 6
         '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.Button1.DrawOnGlass = False
+        Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(146, Byte), Integer))
+        Me.Button1.LineSize = 1
+        Me.Button1.Location = New System.Drawing.Point(664, 576)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 34)
+        Me.Button1.TabIndex = 212
+        Me.Button1.Text = "Help"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'Lang_JSON_Manage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(857, 622)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton2)
@@ -562,4 +582,5 @@ Partial Class Lang_JSON_Manage
     Friend WithEvents XenonButton11 As UI.WP.Button
     Friend WithEvents XenonButton10 As UI.WP.Button
     Friend WithEvents Label5 As Label
+    Friend WithEvents Button1 As UI.WP.Button
 End Class

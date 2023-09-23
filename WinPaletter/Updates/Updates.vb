@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Net
-Imports WinPaletter.XenonCore
+Imports WinPaletter.Core
 
 Public Class Updates
     Dim WithEvents WebCL, UC As New WebClient

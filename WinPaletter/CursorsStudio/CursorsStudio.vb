@@ -228,7 +228,7 @@
             XenonTrackbar6.Value = .Prop_LoadingCircleHotNoiseOpacity * 100
 
             XenonCheckBox11.Checked = .Prop_Shadow_Enabled
-            XenonCP1.BackColor = .Prop_Shadow_Color
+            ColorItem1.BackColor = .Prop_Shadow_Color
             XenonTrackbar7.Value = .Prop_Shadow_Blur
             XenonTrackbar8.Value = .Prop_Shadow_Opacity * 100
             XenonTrackbar9.Value = .Prop_Shadow_OffsetX
@@ -271,7 +271,7 @@
             .Prop_LoadingCircleHotNoiseOpacity = XenonTrackbar6.Value / 100
 
             .Prop_Shadow_Enabled = XenonCheckBox11.Checked
-            .Prop_Shadow_Color = XenonCP1.BackColor
+            .Prop_Shadow_Color = ColorItem1.BackColor
             .Prop_Shadow_Blur = XenonTrackbar7.Value
             .Prop_Shadow_Opacity = XenonTrackbar8.Value / 100
             .Prop_Shadow_OffsetX = XenonTrackbar9.Value
@@ -875,7 +875,7 @@
         _SelectedControl.Invalidate()
     End Sub
 
-    Private Sub XenonCP1_Click(sender As Object, e As EventArgs) Handles XenonCP1.Click, XenonCP1.DragDrop
+    Private Sub ColorItem1_Click(sender As Object, e As EventArgs) Handles ColorItem1.Click, ColorItem1.DragDrop
 
         If TypeOf e Is DragEventArgs Then
             _SelectedControl.Prop_Shadow_Color = sender.BackColor

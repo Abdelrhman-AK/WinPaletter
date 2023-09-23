@@ -40,7 +40,7 @@ Partial Class CursorsStudio
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.XenonButton16 = New WinPaletter.UI.WP.Button()
-        Me.XenonCP1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ColorItem1 = New WinPaletter.UI.Controllers.ColorItem()
         Me.XenonTrackbar7 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -223,7 +223,7 @@ Partial Class CursorsStudio
         Me.XenonGroupBox10.Controls.Add(Me.PictureBox19)
         Me.XenonGroupBox10.Controls.Add(Me.Label26)
         Me.XenonGroupBox10.Controls.Add(Me.XenonButton16)
-        Me.XenonGroupBox10.Controls.Add(Me.XenonCP1)
+        Me.XenonGroupBox10.Controls.Add(Me.ColorItem1)
         Me.XenonGroupBox10.Controls.Add(Me.XenonTrackbar7)
         Me.XenonGroupBox10.Controls.Add(Me.PictureBox16)
         Me.XenonGroupBox10.Controls.Add(Me.Label14)
@@ -393,17 +393,17 @@ Partial Class CursorsStudio
         Me.XenonButton16.TabIndex = 138
         Me.XenonButton16.UseVisualStyleBackColor = False
         '
-        'XenonCP1
+        'ColorItem1
         '
-        Me.XenonCP1.AllowDrop = True
-        Me.XenonCP1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.XenonCP1.DefaultColor = System.Drawing.Color.White
-        Me.XenonCP1.DontShowInfo = False
-        Me.XenonCP1.Location = New System.Drawing.Point(413, 42)
-        Me.XenonCP1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.XenonCP1.Name = "XenonCP1"
-        Me.XenonCP1.Size = New System.Drawing.Size(95, 21)
-        Me.XenonCP1.TabIndex = 77
+        Me.ColorItem1.AllowDrop = True
+        Me.ColorItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(48, Byte), Integer))
+        Me.ColorItem1.DefaultColor = System.Drawing.Color.White
+        Me.ColorItem1.DontShowInfo = False
+        Me.ColorItem1.Location = New System.Drawing.Point(413, 42)
+        Me.ColorItem1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.ColorItem1.Name = "ColorItem1"
+        Me.ColorItem1.Size = New System.Drawing.Size(95, 21)
+        Me.ColorItem1.TabIndex = 77
         '
         'XenonTrackbar7
         '
@@ -2648,7 +2648,7 @@ Partial Class CursorsStudio
     Friend WithEvents XenonButton15 As UI.WP.Button
     Friend WithEvents XenonTrackbar6 As UI.WP.Trackbar
     Friend WithEvents XenonGroupBox10 As UI.WP.GroupBox
-    Friend WithEvents XenonCP1 As UI.Controllers.ColorItem
+    Friend WithEvents ColorItem1 As UI.Controllers.ColorItem
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label14 As Label
     Friend WithEvents Label24 As Label

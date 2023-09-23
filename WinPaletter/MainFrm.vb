@@ -5,7 +5,7 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
+Imports WinPaletter.Core
 
 Public Class MainFrm
     Private _Shown As Boolean = False

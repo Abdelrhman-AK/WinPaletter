@@ -118,6 +118,6 @@ Public Class Lang_JSON_Update
     End Sub
 
     Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
-        Process.Start(My.Resources.Link_Wiki & "/Language-creation#3-update-your-language-file-when-a-new-winpaletter-is-released")
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation-(old-methods)#3-update-your-language-file-when-a-new-winpaletter-is-released")
     End Sub
 End Class
