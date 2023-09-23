@@ -1,11 +1,10 @@
-﻿Imports WinPaletter.XenonCore
-Public Class Saving_ex_list
+﻿Public Class Saving_ex_list
 
     Public ex_List As List(Of Tuple(Of String, Exception))
 
     Private Sub Saving_exceptions_list_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = BugReport.Icon
 
         TreeView1.ImageList = My.Notifications_IL

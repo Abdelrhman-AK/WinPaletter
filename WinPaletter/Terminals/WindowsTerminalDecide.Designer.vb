@@ -27,12 +27,12 @@ Partial Class WindowsTerminalDecide
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label144 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage1 = New WinPaletter.XenonRadioImage()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
+        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -153,7 +153,7 @@ Partial Class WindowsTerminalDecide
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
@@ -204,12 +204,12 @@ Partial Class WindowsTerminalDecide
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents XenonRadioImage1 As XenonRadioImage
-    Friend WithEvents XenonRadioImage2 As XenonRadioImage
+    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
+    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
     Friend WithEvents Label144 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
 End Class

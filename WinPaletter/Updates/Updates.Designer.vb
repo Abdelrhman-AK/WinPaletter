@@ -25,10 +25,10 @@ Partial Class Updates
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Updates))
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
-        Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton1 = New WinPaletter.XenonRadioButton()
+        Me.LinkLabel3 = New WinPaletter.UI.WP.LinkLabel()
+        Me.XenonRadioButton2 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton3 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton1 = New WinPaletter.UI.WP.RadioButton()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -39,15 +39,15 @@ Partial Class Updates
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
-        Me.Label3 = New WinPaletter.XenonLinkLabel()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.Label3 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonAlertBox2 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -245,7 +245,7 @@ Partial Class Updates
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(421, 68)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 32
         '
         'Label3
@@ -302,7 +302,7 @@ Partial Class Updates
         '
         'XenonAlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
@@ -408,16 +408,16 @@ Partial Class Updates
 
     End Sub
 
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonAlertBox2 As XenonAlertBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonAlertBox2 As UI.WP.AlertBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As XenonLinkLabel
+    Friend WithEvents Label3 As UI.WP.LinkLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents XenonRadioButton2 As XenonRadioButton
-    Friend WithEvents XenonRadioButton3 As XenonRadioButton
-    Friend WithEvents XenonRadioButton1 As XenonRadioButton
+    Friend WithEvents XenonRadioButton2 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton3 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton1 As UI.WP.RadioButton
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents Label1 As Label
@@ -428,9 +428,9 @@ Partial Class Updates
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents LinkLabel3 As XenonLinkLabel
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents LinkLabel3 As UI.WP.LinkLabel
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label17 As Label
 End Class

@@ -30,24 +30,24 @@ Partial Class ApplicationThemer
         Me.PictureBox45 = New System.Windows.Forms.PictureBox()
         Me.PictureBox44 = New System.Windows.Forms.PictureBox()
         Me.PictureBox43 = New System.Windows.Forms.PictureBox()
-        Me.BackColorPick = New WinPaletter.XenonCP()
-        Me.AccentColor = New WinPaletter.XenonCP()
-        Me.RoundedCorners = New WinPaletter.XenonCheckBox()
-        Me.appearance_dark = New WinPaletter.XenonCheckBox()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.BackColorPick = New WinPaletter.UI.Controllers.ColorItem()
+        Me.AccentColor = New WinPaletter.UI.Controllers.ColorItem()
+        Me.RoundedCorners = New UI.WP.CheckBox()
+        Me.appearance_dark = New UI.WP.CheckBox()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox12 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.AppThemeEnabled = New WinPaletter.XenonToggle()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
+        Me.AppThemeEnabled = New UI.WP.Toggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.appearance_list = New WinPaletter.XenonComboBox()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.appearance_list = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonAlertBox2 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox46, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox45, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox44, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -354,7 +354,7 @@ Partial Class ApplicationThemer
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -371,7 +371,7 @@ Partial Class ApplicationThemer
         '
         'XenonAlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -429,29 +429,29 @@ Partial Class ApplicationThemer
 
     End Sub
 
-    Friend WithEvents XenonGroupBox12 As XenonGroupBox
-    Friend WithEvents XenonButton9 As XenonButton
+    Friend WithEvents XenonGroupBox12 As UI.WP.GroupBox
+    Friend WithEvents XenonButton9 As UI.WP.Button
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents AppThemeEnabled As XenonToggle
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents XenonButton12 As UI.WP.Button
+    Friend WithEvents AppThemeEnabled As UI.WP.Toggle
     Friend WithEvents checker_img As PictureBox
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents BackColorPick As XenonCP
+    Friend WithEvents BackColorPick As UI.Controllers.ColorItem
     Friend WithEvents Label29 As Label
     Friend WithEvents PictureBox46 As PictureBox
-    Friend WithEvents AccentColor As XenonCP
+    Friend WithEvents AccentColor As UI.Controllers.ColorItem
     Friend WithEvents Label28 As Label
     Friend WithEvents PictureBox45 As PictureBox
-    Friend WithEvents RoundedCorners As XenonCheckBox
+    Friend WithEvents RoundedCorners As UI.WP.CheckBox
     Friend WithEvents PictureBox44 As PictureBox
-    Friend WithEvents appearance_dark As XenonCheckBox
+    Friend WithEvents appearance_dark As UI.WP.CheckBox
     Friend WithEvents PictureBox43 As PictureBox
-    Friend WithEvents appearance_list As XenonComboBox
+    Friend WithEvents appearance_list As UI.WP.ComboBox
     Friend WithEvents Label25 As Label
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonAlertBox2 As XenonAlertBox
+    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents XenonAlertBox2 As UI.WP.AlertBox
 End Class

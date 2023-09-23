@@ -25,9 +25,9 @@ Partial Class WindowsTerminalCopycat
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(WindowsTerminalCopycat))
         Me.Label163 = New System.Windows.Forms.Label()
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         CType(Me.PictureBox33, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -131,7 +131,7 @@ Partial Class WindowsTerminalCopycat
 
     Friend WithEvents Label163 As Label
     Friend WithEvents PictureBox33 As PictureBox
-    Friend WithEvents XenonComboBox1 As XenonComboBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
 End Class

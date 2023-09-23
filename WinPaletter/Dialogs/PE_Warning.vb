@@ -1,13 +1,11 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class PE_Warning
+﻿Public Class PE_Warning
 
     Dim PE_File As String
 
     Private Sub BugReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
-        Dim c As Color = PictureBox1.Image.AverageColor.CB(If(GetDarkMode(), -0.35, 0.35))
+        ApplyStyle(Me)
+        Dim c As Color = PictureBox1.Image.AverageColor.CB(If(My.Style.DarkMode, -0.35, 0.35))
         XenonAnimatedBox1.BackColor = c
         XenonCheckBox1.Checked = My.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert
 

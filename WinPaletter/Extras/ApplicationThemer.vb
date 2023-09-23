@@ -1,17 +1,17 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class ApplicationThemer
 
     Private BackupSettings As XeSettings
     Private _Shown As Boolean = False
     Private CloseAndApply As Boolean = False
+    Public FixLanguageDarkModeBug As Boolean = True
 
     Private Sub ApplicationThemer_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
         BackupSettings = New XeSettings(XeSettings.Mode.Registry)
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         AdjustPreview()
@@ -34,9 +34,11 @@ Public Class ApplicationThemer
                 .Save()
             End With
 
-            ApplyDarkMode()
+            FetchDarkMode()
+            ApplyStyle()
         End If
 
+        FixLanguageDarkModeBug = True
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -61,6 +63,8 @@ Public Class ApplicationThemer
     End Sub
 
     Sub AdjustPreview()
+        If FixLanguageDarkModeBug Then Exit Sub
+
         With My.Settings.Appearance
             .CustomColors = True
             .CustomTheme = appearance_dark.Checked
@@ -69,7 +73,7 @@ Public Class ApplicationThemer
             .AccentColor = AccentColor.BackColor
         End With
 
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         For Each ctrl As Control In Controls
             ctrl.Invalidate()
@@ -191,25 +195,25 @@ Public Class ApplicationThemer
                 Case "Default Dark".ToLower
                     appearance_dark.Checked = True
                     RoundedCorners.Checked = (My.W11 Or My.W7)
-                    AccentColor.BackColor = DefaultAccent
-                    BackColorPick.BackColor = DefaultBackColorDark
+                    AccentColor.BackColor = My.DefaultAccent
+                    BackColorPick.BackColor = My.DefaultBackColorDark
 
                 Case "Default Light".ToLower
                     appearance_dark.Checked = False
                     RoundedCorners.Checked = (My.W11 Or My.W7)
-                    AccentColor.BackColor = DefaultAccent
-                    BackColorPick.BackColor = DefaultBackColorLight
+                    AccentColor.BackColor = My.DefaultAccent
+                    BackColorPick.BackColor = My.DefaultBackColorLight
 
                 Case "AMOLED".ToLower
                     appearance_dark.Checked = True
                     RoundedCorners.Checked = (My.W11 Or My.W7)
-                    AccentColor.BackColor = DefaultAccent
+                    AccentColor.BackColor = My.DefaultAccent
                     BackColorPick.BackColor = Color.Black
 
                 Case "Extreme White".ToLower
                     appearance_dark.Checked = False
                     RoundedCorners.Checked = (My.W11 Or My.W7)
-                    AccentColor.BackColor = DefaultAccent
+                    AccentColor.BackColor = My.DefaultAccent
                     BackColorPick.BackColor = Color.White
 
                 Case "GitHub Dark".ToLower

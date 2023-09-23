@@ -1,6 +1,4 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class ComplexSave
+﻿Public Class ComplexSave
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
         Me.DialogResult = DialogResult.Yes
         Me.Close()
@@ -27,7 +25,7 @@ Public Class ComplexSave
 
     Private Sub ComplexSave_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         Dim c As Color = PictureBox1.Image.AverageColor
 

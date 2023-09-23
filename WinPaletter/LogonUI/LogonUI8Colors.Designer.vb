@@ -25,33 +25,33 @@ Partial Class LogonUI8Colors
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LogonUI8Colors))
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.color24 = New WinPaletter.XenonRadioImage()
-        Me.color23 = New WinPaletter.XenonRadioImage()
-        Me.color22 = New WinPaletter.XenonRadioImage()
-        Me.color21 = New WinPaletter.XenonRadioImage()
-        Me.color20 = New WinPaletter.XenonRadioImage()
-        Me.color19 = New WinPaletter.XenonRadioImage()
-        Me.color18 = New WinPaletter.XenonRadioImage()
-        Me.color17 = New WinPaletter.XenonRadioImage()
-        Me.color16 = New WinPaletter.XenonRadioImage()
-        Me.color15 = New WinPaletter.XenonRadioImage()
-        Me.color14 = New WinPaletter.XenonRadioImage()
-        Me.color13 = New WinPaletter.XenonRadioImage()
-        Me.color12 = New WinPaletter.XenonRadioImage()
-        Me.color11 = New WinPaletter.XenonRadioImage()
-        Me.color10 = New WinPaletter.XenonRadioImage()
-        Me.color9 = New WinPaletter.XenonRadioImage()
-        Me.color8 = New WinPaletter.XenonRadioImage()
-        Me.color7 = New WinPaletter.XenonRadioImage()
-        Me.color6 = New WinPaletter.XenonRadioImage()
-        Me.color5 = New WinPaletter.XenonRadioImage()
-        Me.color4 = New WinPaletter.XenonRadioImage()
-        Me.color3 = New WinPaletter.XenonRadioImage()
-        Me.color2 = New WinPaletter.XenonRadioImage()
-        Me.color1 = New WinPaletter.XenonRadioImage()
-        Me.color0 = New WinPaletter.XenonRadioImage()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.color24 = New WinPaletter.UI.WP.RadioImage()
+        Me.color23 = New WinPaletter.UI.WP.RadioImage()
+        Me.color22 = New WinPaletter.UI.WP.RadioImage()
+        Me.color21 = New WinPaletter.UI.WP.RadioImage()
+        Me.color20 = New WinPaletter.UI.WP.RadioImage()
+        Me.color19 = New WinPaletter.UI.WP.RadioImage()
+        Me.color18 = New WinPaletter.UI.WP.RadioImage()
+        Me.color17 = New WinPaletter.UI.WP.RadioImage()
+        Me.color16 = New WinPaletter.UI.WP.RadioImage()
+        Me.color15 = New WinPaletter.UI.WP.RadioImage()
+        Me.color14 = New WinPaletter.UI.WP.RadioImage()
+        Me.color13 = New WinPaletter.UI.WP.RadioImage()
+        Me.color12 = New WinPaletter.UI.WP.RadioImage()
+        Me.color11 = New WinPaletter.UI.WP.RadioImage()
+        Me.color10 = New WinPaletter.UI.WP.RadioImage()
+        Me.color9 = New WinPaletter.UI.WP.RadioImage()
+        Me.color8 = New WinPaletter.UI.WP.RadioImage()
+        Me.color7 = New WinPaletter.UI.WP.RadioImage()
+        Me.color6 = New WinPaletter.UI.WP.RadioImage()
+        Me.color5 = New WinPaletter.UI.WP.RadioImage()
+        Me.color4 = New WinPaletter.UI.WP.RadioImage()
+        Me.color3 = New WinPaletter.UI.WP.RadioImage()
+        Me.color2 = New WinPaletter.UI.WP.RadioImage()
+        Me.color1 = New WinPaletter.UI.WP.RadioImage()
+        Me.color0 = New WinPaletter.UI.WP.RadioImage()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -462,31 +462,31 @@ Partial Class LogonUI8Colors
     End Sub
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents color0 As XenonRadioImage
-    Friend WithEvents color1 As XenonRadioImage
-    Friend WithEvents color3 As XenonRadioImage
-    Friend WithEvents color2 As XenonRadioImage
-    Friend WithEvents color4 As XenonRadioImage
-    Friend WithEvents color9 As XenonRadioImage
-    Friend WithEvents color8 As XenonRadioImage
-    Friend WithEvents color7 As XenonRadioImage
-    Friend WithEvents color6 As XenonRadioImage
-    Friend WithEvents color5 As XenonRadioImage
-    Friend WithEvents color19 As XenonRadioImage
-    Friend WithEvents color18 As XenonRadioImage
-    Friend WithEvents color17 As XenonRadioImage
-    Friend WithEvents color16 As XenonRadioImage
-    Friend WithEvents color15 As XenonRadioImage
-    Friend WithEvents color14 As XenonRadioImage
-    Friend WithEvents color13 As XenonRadioImage
-    Friend WithEvents color12 As XenonRadioImage
-    Friend WithEvents color11 As XenonRadioImage
-    Friend WithEvents color10 As XenonRadioImage
-    Friend WithEvents color24 As XenonRadioImage
-    Friend WithEvents color23 As XenonRadioImage
-    Friend WithEvents color22 As XenonRadioImage
-    Friend WithEvents color21 As XenonRadioImage
-    Friend WithEvents color20 As XenonRadioImage
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents color0 As UI.WP.RadioImage
+    Friend WithEvents color1 As UI.WP.RadioImage
+    Friend WithEvents color3 As UI.WP.RadioImage
+    Friend WithEvents color2 As UI.WP.RadioImage
+    Friend WithEvents color4 As UI.WP.RadioImage
+    Friend WithEvents color9 As UI.WP.RadioImage
+    Friend WithEvents color8 As UI.WP.RadioImage
+    Friend WithEvents color7 As UI.WP.RadioImage
+    Friend WithEvents color6 As UI.WP.RadioImage
+    Friend WithEvents color5 As UI.WP.RadioImage
+    Friend WithEvents color19 As UI.WP.RadioImage
+    Friend WithEvents color18 As UI.WP.RadioImage
+    Friend WithEvents color17 As UI.WP.RadioImage
+    Friend WithEvents color16 As UI.WP.RadioImage
+    Friend WithEvents color15 As UI.WP.RadioImage
+    Friend WithEvents color14 As UI.WP.RadioImage
+    Friend WithEvents color13 As UI.WP.RadioImage
+    Friend WithEvents color12 As UI.WP.RadioImage
+    Friend WithEvents color11 As UI.WP.RadioImage
+    Friend WithEvents color10 As UI.WP.RadioImage
+    Friend WithEvents color24 As UI.WP.RadioImage
+    Friend WithEvents color23 As UI.WP.RadioImage
+    Friend WithEvents color22 As UI.WP.RadioImage
+    Friend WithEvents color21 As UI.WP.RadioImage
+    Friend WithEvents color20 As UI.WP.RadioImage
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
 End Class

@@ -1,48 +1,28 @@
-﻿Imports System.ComponentModel
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports System.Threading
 Imports Newtonsoft.Json.Linq
-Imports WinPaletter.XenonCore
 Public Class Lang_JSON_GUI
 
+#Region "Variables and events"
     Public Event ControlSelection(sender As Object, e As EventArgs)
     Private _SelectedItem As Control
     Private FormsList As New List(Of Form)
 
     Private LangFile As String
     Private Lang As New Localizer
-    Private TempFile As String = IO.Path.GetTempPath
 
     Private EditingTag As Boolean = True
     Private AllowEditing As Boolean = False
     Private _Form As Form
-    Private ITypes As IEnumerable(Of Type) = Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
+    Private ITypes As IEnumerable(Of Type) = Assembly.GetCallingAssembly().GetTypes().Where(Function(t) GetType(Form).IsAssignableFrom(t))
 
-    Dim NotTranslatedColor As Color = If(GetDarkMode(), Color.Red.Dark, Color.Red.Light)
+    Private Th As Thread
 
-    Private Sub Lang_JSON_GUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Icon = Lang_JSON_Manage.Icon
-        LoadLanguage
-        ApplyDarkMode(Me)
+    Private SearchText As String
+#End Region
 
-        SplitContainer1.Panel2Collapsed = True
-        XenonGroupBox4.Visible = True
-        Label4.Font = My.Application.ConsoleFontMedium
-        Label9.Font = Label4.Font
-        Label5.Text = "Choose a form then open it. When you finish translation, close the child form below."
-        data.DoubleBuffer
-
-        Refresh()
-    End Sub
-
-    Private Sub Lang_JSON_GUI_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If BackgroundWorker1.IsBusy Then BackgroundWorker1.CancelAsync()
-        FormsList.Clear()
-        _SelectedItem = Nothing
-        Lang.Dispose()
-        ITypes = Nothing
-    End Sub
-
-    Sub OpenFile(Optional IgnoreLoadingMiniForms As Boolean = False)
+#Region "Helpers subs/functions"
+    Sub OpenFile()
         Lang = New Localizer
         Lang.LoadLanguageFromJSON(LangFile)
 
@@ -57,25 +37,7 @@ Public Class Lang_JSON_GUI
 
         LoadGlobalStrings()
 
-        If Not IgnoreLoadingMiniForms Then
-            FormsList.Clear()
-            XenonComboBox1.Items.Clear()
-            LoadAllMiniFormsIntoList()
-        End If
-    End Sub
-
-    Sub LoadAllMiniFormsIntoList()
-        ProgressBar2.Value = 0
-        ProgressBar2.Maximum = ITypes.Count * ProgressBar2.Step * 2
-        ProgressBar2.Visible = True
-
-        ProgressBar1.Value = 0
-        ProgressBar1.Maximum = ITypes.Count * ProgressBar2.Step * 2
-        ProgressBar1.Visible = True
-
-        XenonComboBox1.Visible = False
-        XenonButton1.Visible = False
-        BackgroundWorker1.RunWorkerAsync()
+        LoadAllMiniFormsIntoList()
     End Sub
 
     Sub LoadGlobalStrings()
@@ -119,11 +81,11 @@ Public Class Lang_JSON_GUI
                     row.Cells(1).ReadOnly = False
 
                     If row.Cells(2).Value.ToString.ToLower.Trim = row.Cells(1).Value.ToString.ToLower.Trim Then
-                        row.Cells(1).Style.BackColor = NotTranslatedColor
+                        row.Cells(1).Style.BackColor = My.Style.Colors.NotTranslatedColor
                     End If
 
                 Else
-                    row.Cells(1).Style.BackColor = NotTranslatedColor
+                    row.Cells(1).Style.BackColor = My.Style.Colors.NotTranslatedColor
                     row.Cells(1).Value = ""
                     row.Cells(1).ReadOnly = False
                 End If
@@ -137,32 +99,55 @@ Public Class Lang_JSON_GUI
         data.Rows.AddRange(rows.ToArray)
     End Sub
 
-    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+    Sub LoadAllMiniFormsIntoList()
+        ProgressBar2.Value = 0
+        ProgressBar2.Maximum = ITypes.Count * ProgressBar2.Step * 2
+        ProgressBar2.Visible = True
+
+        ProgressBar1.Value = 0
+        ProgressBar1.Maximum = ITypes.Count * ProgressBar2.Step * 2
+        ProgressBar1.Visible = True
+
+        XenonComboBox1.Visible = False
+        XenonButton1.Visible = False
+
+        FormsList.Clear()
+        XenonComboBox1.Items.Clear()
+
+        If Th IsNot Nothing AndAlso Th.IsAlive Then Th.Abort()
+        Th = New Thread(AddressOf LoadAllMiniFormsIntoList_Thread) With {.Priority = ThreadPriority.Highest, .IsBackground = True}
+        Th.Start()
+    End Sub
+
+    Sub LoadAllMiniFormsIntoList_Thread()
         Dim i As Integer = 0
         For Each f In ITypes
-            Dim ins, ins_nonmodified As New Form
-            ins_nonmodified = DirectCast(Activator.CreateInstance(f), Form)
-            ins = DirectCast(Activator.CreateInstance(f), Form)
-            If ins.Controls.Count > 0 Then
-                ins.LoadLanguage(Lang)
-                BackgroundWorker1.ReportProgress(i)
-                FormsList.Add(CreateMiniForm(ins, ins_nonmodified))
-                BackgroundWorker1.ReportProgress(i)
-            Else
-                BackgroundWorker1.ReportProgress(i)
-                BackgroundWorker1.ReportProgress(i)
-            End If
-            i += 1
-            Label5.SetText(String.Format("Loading GUI of all WinPaletter forms into your memory ({0}%). This will extensively increase WinPaletter memory usage and WinPaletter might be not stable during this loading process.", Math.Round((i / ITypes.Count) * 100)))
+
+            Using ins As Form = DirectCast(Activator.CreateInstance(f), Form), ins_nonmodified As Form = DirectCast(Activator.CreateInstance(f), Form)
+                If ins.Controls.Count > 0 Then
+                    ins.LoadLanguage(Lang)
+
+                    ProgressBar1.PerformStepMethod2
+                    ProgressBar2.PerformStepMethod2
+
+                    FormsList.Add(CreateMiniForm(ins, ins_nonmodified))
+
+                    ProgressBar1.PerformStepMethod2
+                    ProgressBar2.PerformStepMethod2
+
+                Else
+                    ProgressBar1.PerformStepMethod2
+                    ProgressBar2.PerformStepMethod2
+                    ProgressBar1.PerformStepMethod2
+                    ProgressBar2.PerformStepMethod2
+                End If
+
+                i += 1
+                Label5.SetText(String.Format(My.Lang.Lang_LoadingChildrenForms, Math.Round((i / ITypes.Count) * 100)))
+            End Using
         Next
-    End Sub
 
-    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        ProgressBar2.PerformStep()
-        ProgressBar1.PerformStep()
-    End Sub
-
-    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        FormsList = FormsList.OrderBy(Function(o) o.Name).ToList()
         XenonComboBox1.Items.Clear()
         For Each f In FormsList
             XenonComboBox1.Items.Add(f.Name)
@@ -175,20 +160,7 @@ Public Class Lang_JSON_GUI
         ProgressBar1.Visible = False
         ProgressBar1.Value = 0
 
-        Label5.Text = "Choose a form then open it. When you finish translation, close the child form below."
-
-    End Sub
-
-    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
-
-        If XenonComboBox1.SelectedItem IsNot Nothing AndAlso XenonComboBox1.Items.Count > 0 Then
-            _Form = FormsList(XenonComboBox1.SelectedIndex)
-            _Form.Show()
-            SplitContainer1.Panel2Collapsed = False
-            SplitContainer1.Panel1.Controls.Add(_Form)
-        End If
-
-        XenonGroupBox4.Visible = False
+        Label5.SetText(My.Lang.Lang_ChooseAForm)
     End Sub
 
     Function CreateMiniForm(Form As Form, OriginalForm As Form) As Form
@@ -211,13 +183,11 @@ Public Class Lang_JSON_GUI
            .TopLevel = False
        }
 
-        If Form.FormBorderStyle = FormBorderStyle.None Then
-            '4 = Border Width
-            '24 = Caption Height
-            Child.Size += New Size(4 * 4 + 2, 24 * 2 - 6)
-        End If
+        If Form.FormBorderStyle = FormBorderStyle.None Then Child.Size += New Size(4 * 4 + 2, 24 * 2 - 6)
 
         PopulateSubControls(Form, Child, OriginalForm)
+
+        AddHandler Child.Load, AddressOf Child_Load
 
         AddHandler Child.Click, AddressOf TextControlSelected
 
@@ -225,14 +195,6 @@ Public Class Lang_JSON_GUI
 
         Return Child
     End Function
-
-    Sub Child_Closing(sender As Object, e As FormClosingEventArgs)
-        FormsList(XenonComboBox1.SelectedIndex) = _Form
-        SplitContainer1.Panel2Collapsed = True
-        XenonGroupBox4.Visible = True
-        _Form.Hide()
-        e.Cancel = True
-    End Sub
 
     Sub PopulateSubControls(From As Control, [To] As Control, OriginalForm As Form)
 
@@ -278,8 +240,8 @@ Public Class Lang_JSON_GUI
 
                     [To].Controls.Add(tabs)
 
-                ElseIf TypeOf ctrl Is XenonWindow Then
-                    Dim c As New XenonItemSelection With {
+                ElseIf TypeOf ctrl Is UI.Simulation.Window Then
+                    Dim c As New UI.Controllers.TextTranslationItem With {
                     .Name = ctrl.Name,
                     .Text = ctrl.Text,
                     .Text_English = ctrl.Text,
@@ -324,13 +286,13 @@ Public Class Lang_JSON_GUI
 
                 Dim Condition0 As Boolean = Not IsNumeric(ctrl.Text) AndAlso Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso ctrl.Text.Count > 1
                 Dim Condition1 As Boolean = Not IsNumeric(ctrl.Tag) AndAlso Not String.IsNullOrWhiteSpace(ctrl.Tag) AndAlso ctrl.Tag.ToString.Count > 1
-                Dim Condition2 As Boolean = TypeOf ctrl IsNot TextBox AndAlso TypeOf ctrl IsNot XenonTextBox AndAlso TypeOf ctrl IsNot XenonSeparator _
-                                            AndAlso TypeOf ctrl IsNot XenonSeparatorVertical AndAlso TypeOf ctrl IsNot XenonNumericUpDown AndAlso TypeOf ctrl IsNot XenonTrackbar
+                Dim Condition2 As Boolean = TypeOf ctrl IsNot TextBox AndAlso TypeOf ctrl IsNot UI.WP.TextBox AndAlso TypeOf ctrl IsNot UI.WP.SeparatorH _
+                                            AndAlso TypeOf ctrl IsNot UI.WP.SeparatorV AndAlso TypeOf ctrl IsNot UI.WP.NumericUpDown AndAlso TypeOf ctrl IsNot UI.WP.Trackbar
                 Dim Condition3 As Boolean = TypeOf ctrl Is PictureBox AndAlso CType(ctrl, PictureBox).Image IsNot Nothing
 
                 If (Condition0 Or Condition1) AndAlso Condition2 Then
 
-                    Dim c As New XenonItemSelection With {
+                    Dim c As New UI.Controllers.TextTranslationItem With {
                     .Name = ctrl.Name,
                     .Text = ctrl.Text,
                     .Text_English = OriginalForm.Controls.Find(ctrl.Name, True).First.Text,
@@ -351,8 +313,8 @@ Public Class Lang_JSON_GUI
                             c.ImageAlign = .ImageAlign
                         End With
 
-                    ElseIf TypeOf ctrl Is XenonButton Then
-                        With CType(ctrl, XenonButton)
+                    ElseIf TypeOf ctrl Is UI.WP.Button Then
+                        With CType(ctrl, UI.WP.Button)
                             c.TextAlign = .TextAlign
                             c.ImageAlign = .ImageAlign
                             c.Image = .Image
@@ -365,17 +327,17 @@ Public Class Lang_JSON_GUI
                             c.Image = .Image
                         End With
 
-                    ElseIf TypeOf ctrl Is XenonRadioImage Then
-                        With CType(ctrl, XenonRadioImage)
+                    ElseIf TypeOf ctrl Is UI.WP.RadioImage Then
+                        With CType(ctrl, UI.WP.RadioImage)
                             c.Text = If(.ShowText, .Text, "")
                             c.Image = .Image
                         End With
 
-                    ElseIf TypeOf ctrl Is XenonCheckBox OrElse TypeOf ctrl Is XenonRadioButton Then
+                    ElseIf TypeOf ctrl Is UI.WP.CheckBox OrElse TypeOf ctrl Is UI.WP.RadioButton Then
                         c.TextAlign = ContentAlignment.MiddleLeft
 
-                    ElseIf TypeOf ctrl Is XenonAlertBox Then
-                        With CType(ctrl, XenonAlertBox)
+                    ElseIf TypeOf ctrl Is UI.WP.AlertBox Then
+                        With CType(ctrl, UI.WP.AlertBox)
                             c.Image = Nothing
                             c.TextAlign = ContentAlignment.MiddleLeft
                         End With
@@ -411,10 +373,26 @@ Public Class Lang_JSON_GUI
         Next
 
     End Sub
+#End Region
 
+#Region "Child form events"
+    Sub Child_Load(sender As Object, e As EventArgs)
+        ApplyStyle(CType(sender, Form))
+    End Sub
+
+    Sub Child_Closing(sender As Object, e As FormClosingEventArgs)
+        FormsList(XenonComboBox1.SelectedIndex) = _Form
+        SplitContainer1.Panel2Collapsed = True
+        XenonGroupBox4.Visible = True
+        _Form.Hide()
+        e.Cancel = True
+    End Sub
+#End Region
+
+#Region "Language item control events"
     Sub TextControlSelected(sender As Object, e As EventArgs)
-        If TypeOf _SelectedItem Is XenonItemSelection Then
-            With CType(_SelectedItem, XenonItemSelection)
+        If TypeOf _SelectedItem Is UI.Controllers.TextTranslationItem Then
+            With CType(_SelectedItem, UI.Controllers.TextTranslationItem)
                 .Pressed = False
                 .Invalidate()
             End With
@@ -426,8 +404,8 @@ Public Class Lang_JSON_GUI
     End Sub
 
     Sub TabControlSelected(sender As Object, e As TabControlEventArgs)
-        If TypeOf _SelectedItem Is XenonItemSelection Then
-            With CType(_SelectedItem, XenonItemSelection)
+        If TypeOf _SelectedItem Is UI.Controllers.TextTranslationItem Then
+            With CType(_SelectedItem, UI.Controllers.TextTranslationItem)
                 .Pressed = False
                 .Invalidate()
             End With
@@ -439,8 +417,8 @@ Public Class Lang_JSON_GUI
     End Sub
 
     Sub TabPageClicked(sender As Object, e As EventArgs)
-        If TypeOf _SelectedItem Is XenonItemSelection Then
-            With CType(_SelectedItem, XenonItemSelection)
+        If TypeOf _SelectedItem Is UI.Controllers.TextTranslationItem Then
+            With CType(_SelectedItem, UI.Controllers.TextTranslationItem)
                 .Pressed = False
                 .Invalidate()
             End With
@@ -452,8 +430,8 @@ Public Class Lang_JSON_GUI
     End Sub
 
     Sub ParentTabPageClicked(sender As Object, e As EventArgs)
-        If TypeOf _SelectedItem Is XenonItemSelection Then
-            With CType(_SelectedItem, XenonItemSelection)
+        If TypeOf _SelectedItem Is UI.Controllers.TextTranslationItem Then
+            With CType(_SelectedItem, UI.Controllers.TextTranslationItem)
                 .Pressed = False
                 .Invalidate()
             End With
@@ -483,9 +461,9 @@ Public Class Lang_JSON_GUI
 
         End If
 
-        If TypeOf sender Is XenonItemSelection Then
+        If TypeOf sender Is UI.Controllers.TextTranslationItem Then
 
-            With CType(sender, XenonItemSelection)
+            With CType(sender, UI.Controllers.TextTranslationItem)
 
                 If Not String.IsNullOrWhiteSpace(.Text_English) Then
                     XenonTextBox2.Text = .Text_English
@@ -506,6 +484,137 @@ Public Class Lang_JSON_GUI
         End If
 
         AllowEditing = True
+    End Sub
+#End Region
+
+#Region "Search and replace"
+    Private Sub data_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles data.CellPainting
+        If e.Value Is Nothing OrElse SearchText Is Nothing OrElse String.IsNullOrWhiteSpace(SearchText) OrElse e.RowIndex < 0 Then Return
+
+        If e.ColumnIndex = 2 And Not XenonCheckBox1.Checked Then Return
+        If e.ColumnIndex = 0 And Not XenonCheckBox2.Checked Then Return
+
+        Dim sf As StringFormat = StringFormat.GenericTypographic
+        sf.FormatFlags = sf.FormatFlags Or StringFormatFlags.MeasureTrailingSpaces Or StringFormatFlags.DisplayFormatControl
+
+        Dim text As String = e.Value.ToString()
+        Dim textSize As SizeF = e.Graphics.MeasureString(text, Font, e.CellBounds.Width, sf)
+        Dim keyPos = text.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase)
+
+        If keyPos >= 0 Then
+            e.PaintBackground(e.CellBounds, True)
+
+            Dim br As New SolidBrush(e.CellStyle.ForeColor)
+
+            Dim textMetricSize As New SizeF(0, 0)
+            If keyPos >= 1 Then
+                Dim textMetric = text.Substring(0, keyPos)
+                textMetricSize = e.Graphics.MeasureString(textMetric, Font, e.CellBounds.Width, sf)
+            End If
+
+            Dim keySize As SizeF = e.Graphics.MeasureString(text.Substring(keyPos, SearchText.Length), Font, e.CellBounds.Width, sf)
+            Dim left As Single = e.CellBounds.Left + If(keyPos <= 0, 0, textMetricSize.Width) '+ 2
+            Dim keyRect As New RectangleF(left, e.CellBounds.Top + 1, keySize.Width, keySize.Height)
+
+            Dim fillBrush = New SolidBrush(My.Style.Colors.SearchColor)
+            e.Graphics.FillRectangle(fillBrush, keyRect)
+            fillBrush.Dispose()
+
+            e.Graphics.DrawString(text, Font, br, e.CellBounds, sf)
+            e.Handled = True
+
+            br.Dispose()
+
+        Else
+            Return
+        End If
+
+    End Sub
+
+    Private Sub XenonTextBox8_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox8.TextChanged
+        SearchText = XenonTextBox8.Text.ToLower.Trim
+
+        data.ClearSelection()
+
+        If String.IsNullOrWhiteSpace(SearchText) Then
+            data.Refresh()
+            Exit Sub
+        End If
+
+        For r = 0 To data.Rows.Count - 1
+            data.Item(1, r).Selected = data.Item(1, r).Value.ToString.ToLower.Trim.Contains(SearchText)
+            If XenonCheckBox1.Checked Then data.Item(2, r).Selected = data.Item(2, r).Value.ToString.ToLower.Trim.Contains(SearchText)
+            If XenonCheckBox2.Checked Then data.Item(0, r).Selected = data.Item(0, r).Value.ToString.ToLower.Trim.Contains(SearchText)
+        Next
+
+        If data.SelectedCells IsNot Nothing AndAlso data.SelectedCells.Count > 0 Then data.FirstDisplayedScrollingRowIndex = data.SelectedCells(0).RowIndex
+
+        data.Refresh()
+    End Sub
+
+    Private Sub XenonButton12_Click(sender As Object, e As EventArgs) Handles XenonButton12.Click
+        XenonTextBox8.Text = Lang_ReplaceText.Replace(data, 1, XenonTextBox8.Text)
+    End Sub
+
+    Private Sub XenonButton13_Click(sender As Object, e As EventArgs) Handles XenonButton13.Click
+        XenonTextBox9.Text = Lang_ReplaceText.Replace(_Form, XenonTextBox9.Text)
+    End Sub
+
+    Private Sub XenonTextBox9_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox9.TextChanged
+        For Each ctrl In _Form.GetAllControls
+            If TypeOf ctrl Is UI.Controllers.TextTranslationItem Then
+                With DirectCast(ctrl, UI.Controllers.TextTranslationItem)
+                    .SearchHilight = XenonTextBox9.Text
+                End With
+            End If
+        Next
+    End Sub
+#End Region
+
+    Private Sub Lang_JSON_GUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
+
+        Icon = Lang_JSON_Manage.Icon
+        LangFile = ""
+        XenonAlertBox1.Visible = True
+        XenonGroupBox8.Visible = False
+        XenonTabControl1.Visible = False
+        SplitContainer1.Panel2Collapsed = True
+        XenonGroupBox4.Visible = True
+
+        LoadLanguage
+        ApplyStyle(Me)
+
+        Label4.Font = My.Application.ConsoleFontMedium
+        Label9.Font = Label4.Font
+        Label5.Text = My.Lang.Lang_ChooseAForm
+        data.DoubleBuffer
+
+        Refresh()
+    End Sub
+
+    Private Sub Lang_JSON_GUI_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If Th IsNot Nothing AndAlso Th.IsAlive Then Th.Abort()
+        For Each f In FormsList
+            f.Dispose()
+        Next
+        FormsList.Clear()
+        _Form = Nothing
+        _SelectedItem = Nothing
+        Lang.Dispose()
+    End Sub
+
+    Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
+
+        If XenonComboBox1.SelectedItem IsNot Nothing AndAlso XenonComboBox1.Items.Count > 0 Then
+            _Form = FormsList(XenonComboBox1.SelectedIndex)
+            _Form.Show()
+            SplitContainer1.Panel2Collapsed = False
+            SplitContainer1.Panel1.Controls.Add(_Form)
+        End If
+
+        XenonGroupBox4.Visible = False
     End Sub
 
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
@@ -533,16 +642,13 @@ Public Class Lang_JSON_GUI
     Private Sub XenonButton8_Click(sender As Object, e As EventArgs) Handles XenonButton8.Click
         If OpenJSONDlg.ShowDialog = DialogResult.OK Then
             XenonAlertBox1.Visible = False
-            PictureBox4.Visible = True
-            Label8.Visible = True
-            Label9.Visible = True
+            XenonGroupBox8.Visible = True
             XenonTabControl1.Visible = False
             Cursor = Cursors.WaitCursor
             LangFile = OpenJSONDlg.FileName
             OpenFile()
             Cursor = Cursors.Default
             XenonTabControl1.Visible = True
-
         End If
     End Sub
 
@@ -627,10 +733,10 @@ Public Class Lang_JSON_GUI
     End Sub
 
     Private Sub data_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles data.CellEndEdit
-        If data.Item(1, e.RowIndex).Value.ToString.ToLower.Trim <> data.Item(2, e.RowIndex).Value.ToString.ToLower.Trim Then
+        If data.Item(1, e.RowIndex).Value.ToString.ToLower.Trim <> data.Item(2, e.RowIndex).Value.ToString.ToLower.Trim AndAlso Not String.IsNullOrWhiteSpace(data.Item(1, e.RowIndex).Value.ToString.ToLower.Trim) Then
             data.Item(1, e.RowIndex).Style.BackColor = data.Item(2, e.RowIndex).Style.BackColor
         Else
-            data.Item(1, e.RowIndex).Style.BackColor = NotTranslatedColor
+            data.Item(1, e.RowIndex).Style.BackColor = My.Style.Colors.NotTranslatedColor
         End If
     End Sub
 
@@ -640,5 +746,9 @@ Public Class Lang_JSON_GUI
         Else
             ProgressBar2.Visible = False
         End If
+    End Sub
+
+    Private Sub XenonCheckBox1_CheckedChanged(sender As Object) Handles XenonCheckBox1.CheckedChanged, XenonCheckBox2.CheckedChanged
+        data.Refresh()
     End Sub
 End Class

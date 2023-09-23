@@ -2,7 +2,6 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Newtonsoft.Json.Linq
-Imports WinPaletter.XenonCore
 
 Public Class Localizer : Implements IDisposable
 
@@ -250,8 +249,12 @@ Public Class Localizer : Implements IDisposable
     Property CP_UpdateDLL_AsAdmin_Error1 As String = "This process is required for changing Windows startup sound"
     Property CP_Wallpaper_NonBMP0 As String = "Due to odd reason, Windows XP, Vista & 7 can't set an image that is not a bitmap format directly as a wallpaper."
     Property CP_Wallpaper_NonBMP1 As String = "Do you want to convert the current image to have internal bitmap format? (It will still have the same file extension)"
+
     Property Lang_HasLeftToRight As String = "It has left to right layout"
     Property Lang_HasRightToLeft As String = "It has right to left layout"
+    Property Lang_ChooseAForm As String = "Choose a form then open it. When you finish translation, close the child form below."
+    Property Lang_LoadingChildrenForms As String = "Loading GUI of all WinPaletter forms into your memory ({0}%). Be cautious as this will extensively increase WinPaletter memory usage."
+
     Property CommandPrompt As String = "Command Prompt"
     Property PowerShellx86 As String = "PowerShell x86"
     Property PowerShellx64 As String = "PowerShell x64"
@@ -537,7 +540,7 @@ Public Class Localizer : Implements IDisposable
                         Try : If member.Item3.ToLower = "text" Then [Form].SetText(member.Item4)
                         Catch : End Try
 
-                        Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, [Form])
+                        Try : If member.Item3.ToLower = "tag" Then [Form].SetTag(member.Item4.ToString)
                         Catch : End Try
                     Else
                         '# Control
@@ -557,7 +560,7 @@ Public Class Localizer : Implements IDisposable
                                     End If
                                 Catch : End Try
 
-                                Try : If member.Item3.ToLower = "tag" Then SetCtrlTag(member.Item4.ToString, ctrl)
+                                Try : If member.Item3.ToLower = "tag" Then ctrl.SetTag(member.Item4.ToString)
                                 Catch : End Try
 
                             Next
@@ -622,7 +625,7 @@ Public Class Localizer : Implements IDisposable
 
                     j_ctrl.Add("Text", ins.Text)
 
-                    For Each ctrl In GetAllControls(ins)
+                    For Each ctrl In ins.GetAllControls
 
                         If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
 
@@ -630,7 +633,7 @@ Public Class Localizer : Implements IDisposable
                                 j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                             Else
                                 Try
-                                    If Not ins.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                    If Not ins.Controls.OfType(Of UI.WP.TabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
                                                     And TypeOf ctrl IsNot TabPage Then
                                         j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                                     End If
@@ -671,7 +674,7 @@ Public Class Localizer : Implements IDisposable
 
                     j_ctrl.Add("Text", f.Text)
 
-                    For Each ctrl In GetAllControls(f)
+                    For Each ctrl In f.GetAllControls
 
                         If Not String.IsNullOrWhiteSpace(ctrl.Text) AndAlso Not IsNumeric(ctrl.Text) AndAlso Not ctrl.Text.Count = 1 AndAlso Not ctrl.Text = ctrl.Name Then
 
@@ -679,7 +682,7 @@ Public Class Localizer : Implements IDisposable
                                 j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                             Else
                                 Try
-                                    If Not f.Controls.OfType(Of XenonTabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
+                                    If Not f.Controls.OfType(Of UI.WP.TabControl).ElementAt(0).TabPages().Cast(Of TabPage).SelectMany(Function(tp) tp.Controls.OfType(Of Control)()).Contains(ctrl) _
                                                     And TypeOf ctrl IsNot TabPage Then
                                         j_child.Add(ctrl.Name & ".Text", ctrl.Text)
                                     End If
@@ -714,11 +717,6 @@ Public Class Localizer : Implements IDisposable
 
         IO.File.WriteAllText(File, JSON_Overall.ToString())
     End Sub
-
-    Private Function GetAllControls(parent As Control) As IEnumerable(Of Control)
-        Dim cs = parent.Controls.OfType(Of Control)
-        Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
-    End Function
 
 End Class
 

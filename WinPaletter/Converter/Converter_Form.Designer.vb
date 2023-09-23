@@ -32,12 +32,12 @@ Partial Class Converter_Form
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -266,15 +266,15 @@ Partial Class Converter_Form
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonButton1 As UI.WP.Button
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox3 As PictureBox
 End Class

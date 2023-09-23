@@ -1,14 +1,12 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class WindowsTerminalDecide
+﻿Public Class WindowsTerminalDecide
 
     Private Sub WindowsTerminalDecide_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = WindowsTerminal.Icon
         Dim c As Color = PictureBox1.Image.AverageColor
-        Dim c1 As Color = c.CB(If(GetDarkMode(), -0.35, 0.35))
-        Dim c2 As Color = c.CB(If(GetDarkMode(), -0.75, 0.75))
+        Dim c1 As Color = c.CB(If(My.Style.DarkMode, -0.35, 0.35))
+        Dim c2 As Color = c.CB(If(My.Style.DarkMode, -0.75, 0.75))
         Panel1.BackColor = c1
         BackColor = c2
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)

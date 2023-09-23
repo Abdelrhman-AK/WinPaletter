@@ -23,17 +23,17 @@ Partial Class Whatsnew
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Whatsnew))
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.XenonTabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
@@ -72,9 +72,9 @@ Partial Class Whatsnew
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonTabControl1.SuspendLayout()
@@ -106,7 +106,7 @@ Partial Class Whatsnew
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(825, 73)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 26
         '
         'Label2
@@ -812,13 +812,13 @@ Partial Class Whatsnew
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonTabControl1 As XenonTabControl
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonTabControl1 As UI.WP.TabControl
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
     Friend WithEvents TabPage10 As TabPage
     Friend WithEvents Label21 As Label
     Friend WithEvents Label22 As Label
@@ -827,7 +827,7 @@ Partial Class Whatsnew
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage1 As TabPage
@@ -856,12 +856,12 @@ Partial Class Whatsnew
     Friend WithEvents TabPage12 As TabPage
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents TabPage13 As TabPage
     Friend WithEvents Label5 As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents TabPage14 As TabPage
     Friend WithEvents Label27 As Label
     Friend WithEvents Label28 As Label
-    Friend WithEvents XenonButton6 As XenonButton
+    Friend WithEvents XenonButton6 As UI.WP.Button
 End Class

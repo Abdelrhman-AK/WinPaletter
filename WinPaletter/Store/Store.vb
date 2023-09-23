@@ -18,8 +18,8 @@ Public Class Store
 
     Private apply_elapsedSecs As Integer = 0
 
-    Private hoveredItem As StoreItem
-    Public selectedItem As StoreItem
+    Private hoveredItem As UI.Controllers.StoreItem
+    Public selectedItem As UI.Controllers.StoreItem
 
     Private _Shown As Boolean = False
     Private ReadOnly AnimateList As New List(Of CursorControl)
@@ -114,7 +114,7 @@ Public Class Store
         Dim iT As Integer = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Windows.Forms.Padding(iP, iT, iP, iP)
 
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             If Not RW.UseItAsMenu Then
                 RW.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
                 RW.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
@@ -192,52 +192,52 @@ Public Class Store
         RetroWindow1.ColorBorder = c
 
         c = [CP].Win32.WindowFrame
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.WindowFrame = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.WindowFrame = c
         Next
 
         c = [CP].Win32.ButtonFace
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             If RW IsNot Menu Then RW.BackColor = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.BackColor = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.BackColor = c
         Next
         RetroPanel2.BackColor = c
         Menu_Window.ButtonFace = c
 
         c = [CP].Win32.ButtonDkShadow
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.ButtonDkShadow = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.ButtonDkShadow = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonDkShadow = c
         Next
         RetroTextBox1.ButtonDkShadow = c
         Menu_Window.ButtonDkShadow = c
 
         c = [CP].Win32.ButtonHilight
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.ButtonHilight = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.ButtonHilight = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonHilight = c
         Next
-        For Each RB As RetroPanelRaised In ClassicColorsPreview.Controls.OfType(Of RetroPanelRaised)
+        For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
             RB.ButtonHilight = c
         Next
         RetroTextBox1.ButtonHilight = c
@@ -246,29 +246,29 @@ Public Class Store
         Menu_Window.ButtonHilight = c
 
         c = [CP].Win32.ButtonLight
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.ButtonLight = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.ButtonLight = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonLight = c
         Next
         RetroTextBox1.ButtonLight = c
         Menu_Window.ButtonLight = c
 
         c = [CP].Win32.ButtonShadow
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.ButtonShadow = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.ButtonShadow = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonShadow = c
         Next
-        For Each RB As RetroPanelRaised In ClassicColorsPreview.Controls.OfType(Of RetroPanelRaised)
+        For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
             RB.ButtonShadow = c
         Next
         RetroTextBox1.ButtonShadow = c
@@ -277,13 +277,13 @@ Public Class Store
         Menu_Window.ButtonShadow = c
 
         c = [CP].Win32.ButtonText
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.ButtonText = c
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.ForeColor = c
             Next
         Next
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ForeColor = c
         Next
 
@@ -331,14 +331,14 @@ Public Class Store
         c = [CP].Win32.InfoText
         RetroLabel13.ForeColor = c
 
-        For Each RW As RetroWindow In ClassicColorsPreview.Controls.OfType(Of RetroWindow)
+        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.Invalidate()
-            For Each RB As RetroButton In RW.Controls.OfType(Of RetroButton)
+            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
                 RB.Invalidate()
             Next
         Next
 
-        For Each RB As RetroButton In RetroPanel2.Controls.OfType(Of RetroButton)
+        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.Invalidate()
         Next
 
@@ -381,7 +381,7 @@ Public Class Store
 
     End Sub
 
-    Sub ApplyCMDPreview(XenonCMD As XenonCMD, [Console] As CP.Structures.Console, PS As Boolean)
+    Sub ApplyCMDPreview(XenonCMD As UI.Simulation.WinCMD, [Console] As CP.Structures.Console, PS As Boolean)
         XenonCMD.CMD_ColorTable00 = [Console].ColorTable00
         XenonCMD.CMD_ColorTable01 = [Console].ColorTable01
         XenonCMD.CMD_ColorTable02 = [Console].ColorTable02
@@ -413,38 +413,38 @@ Public Class Store
         XenonCMD.Raster = [Console].FontRaster
         Select Case [Console].FontSize
             Case 393220
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._4x6
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
 
             Case 524294
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._6x8
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
 
             Case 524296
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x8
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case 524304
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._16x8
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
 
             Case 786437
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._5x12
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
 
             Case 786439
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._7x12
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
 
             Case 0
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x12
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
             Case 786448
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._16x12
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
 
             Case 1048588
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._12x16
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
 
             Case 1179658
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._10x18
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
 
             Case Else
-                XenonCMD.RasterSize = XenonCMD.Raster_Sizes._8x12
+                XenonCMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
         End Select
 
@@ -524,7 +524,7 @@ Public Class Store
         _Shown = False
 
         LoadLanguage
-        ApplyDarkMode(Me, True)
+        ApplyStyle(Me, True)
 
         store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
@@ -569,7 +569,7 @@ Public Class Store
         My.Settings = New XeSettings(XeSettings.Mode.Registry)
         My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         Status_pnl.Visible = True
         Status_lbl.SetText(My.Lang.Store_CleaningFromMemory)
@@ -698,7 +698,7 @@ Public Class Store
 
                         Using CP As New CP(CP_Type.File, Dir & "\" & FileName, True)
 
-                            Dim ctrl As New StoreItem With {
+                            Dim ctrl As New UI.Controllers.StoreItem With {
                                            .FileName = Dir & "\" & FileName,
                                            .CP = CP,
                                            .MD5_ThemeFile = MD5_ThemeFile,
@@ -795,7 +795,7 @@ Public Class Store
         For Each StoreItem In CPList
             Status_lbl.SetText("Loading theme """ & StoreItem.Value.Info.ThemeName & """")
 
-            Dim ctrl As New StoreItem With {
+            Dim ctrl As New UI.Controllers.StoreItem With {
                         .FileName = StoreItem.Key,
                         .CP = StoreItem.Value,
                         .MD5_ThemeFile = CalculateMD5(StoreItem.Key),
@@ -879,10 +879,10 @@ Public Class Store
 
         Select Case e.Button
             Case MouseButtons.Right
-                With DirectCast(sender, StoreItem)
+                With DirectCast(sender, UI.Controllers.StoreItem)
                     Store_Hover.Close()
 
-                    selectedItem = DirectCast(sender, StoreItem)
+                    selectedItem = DirectCast(sender, UI.Controllers.StoreItem)
 
                     Store_Hover.Show()
 
@@ -896,7 +896,7 @@ Public Class Store
                 End With
 
             Case Else
-                selectedItem = DirectCast(sender, StoreItem)
+                selectedItem = DirectCast(sender, UI.Controllers.StoreItem)
                 Cursor = Cursors.AppStarting
                 StoreItem1.CP = selectedItem.CP
                 StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter
@@ -919,13 +919,13 @@ Public Class Store
                         My.Settings.Appearance.RoundedCorners = .CP.AppTheme.RoundCorners
                         My.Settings.Appearance.BackColor = .CP.AppTheme.BackColor
                         My.Settings.Appearance.AccentColor = .CP.AppTheme.AccentColor
-                        ApplyDarkMode(Me, True)
+                        ApplyStyle(Me, True)
                     End If
 
                     If .CP.AppTheme.Enabled Then
                         Label14.ForeColor = If(.CP.AppTheme.DarkMode, Color.White.CB(-0.3), Color.Black.CB(0.3))
                     Else
-                        Label14.ForeColor = If(GetDarkMode(), Color.White.CB(-0.3), Color.Black.CB(0.3))
+                        Label14.ForeColor = If(My.Style.DarkMode, Color.White.CB(-0.3), Color.Black.CB(0.3))
                     End If
                     Label6.ForeColor = Label14.ForeColor
                     Theme_MD5_lbl.ForeColor = Label14.ForeColor
@@ -999,7 +999,7 @@ Public Class Store
                     If .CP.AppTheme.Enabled Then
                         desc_txt.ForeColor = If(.CP.AppTheme.DarkMode, Color.White, Color.Black)
                     Else
-                        desc_txt.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+                        desc_txt.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
                     End If
 
                     XenonCMD1.Visible = .CP.CommandPrompt.Enabled
@@ -1022,7 +1022,7 @@ Public Class Store
     End Sub
 
     Public Sub StoreItem_MouseEnter(sender As Object, e As EventArgs)
-        hoveredItem = DirectCast(sender, StoreItem)
+        hoveredItem = DirectCast(sender, UI.Controllers.StoreItem)
 
     End Sub
 
@@ -1032,7 +1032,7 @@ Public Class Store
 
     Public Sub StoreItem_CPChanged(sender As Object, e As EventArgs)
         If FinishedLoadingInitialCPs Then
-            With DirectCast(sender, StoreItem)
+            With DirectCast(sender, UI.Controllers.StoreItem)
                 Adjust_Preview(.CP)
                 .Refresh()
             End With
@@ -1065,7 +1065,7 @@ Public Class Store
             .CustomTheme = selectedItem.CP.AppTheme.DarkMode
             .RoundedCorners = selectedItem.CP.AppTheme.RoundCorners
         End With
-        ApplyDarkMode(Nothing, True)
+        ApplyStyle(Nothing, True)
 
         Using CPx As New CP(CP_Type.File, selectedItem.FileName)
             If selectedItem.DoneByWinPaletter Then CPx.Info.Author = My.Application.Info.CompanyName
@@ -1138,11 +1138,11 @@ Public Class Store
     Sub RemoveAllStoreItems(Container As FlowLayoutPanel)
         For x = 0 To Container.Controls.Count - 1
 
-            If TypeOf Container.Controls(0) Is StoreItem Then
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).Click, AddressOf StoreItem_Clicked
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).CPChanged, AddressOf StoreItem_CPChanged
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
-                RemoveHandler DirectCast(Container.Controls(0), StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
+            If TypeOf Container.Controls(0) Is UI.Controllers.StoreItem Then
+                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).CPChanged, AddressOf StoreItem_CPChanged
+                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
+                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
             End If
 
             Container.Controls(0).Dispose()
@@ -1155,9 +1155,9 @@ Public Class Store
 
         If String.IsNullOrWhiteSpace(search_text) Then Exit Sub
 
-        Dim lst As New Dictionary(Of String, StoreItem) : lst.Clear()
+        Dim lst As New Dictionary(Of String, UI.Controllers.StoreItem) : lst.Clear()
 
-        For Each st_itm In store_container.Controls.OfType(Of StoreItem)
+        For Each st_itm In store_container.Controls.OfType(Of UI.Controllers.StoreItem)
             lst.Add(st_itm.FileName, st_itm)
         Next
 
@@ -1172,7 +1172,7 @@ Public Class Store
 
                 found_sum += 1
 
-                Dim ctrl As New StoreItem With {
+                Dim ctrl As New UI.Controllers.StoreItem With {
                .FileName = st_item.Key,
                .CP = st_item.Value.CP,
                .MD5_ThemeFile = CalculateMD5(st_item.Key),
@@ -1260,7 +1260,7 @@ Public Class Store
 
             ElseIf My.W10 OrElse My.W81 OrElse My.W8 OrElse My.W7 OrElse My.WVista Then
                 DrawAero(Pd)
-                If My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
+                If My.W10 Then DLLFunc.DarkTitlebar(Handle, My.Style.DarkMode)
 
             Else
                 DrawMica(Pd)
@@ -1291,14 +1291,14 @@ Public Class Store
                 Titlebar_lbl.DrawOnGlass = False
 
                 If My.CP.WindowsXP.Theme <> Structures.WindowsXP.Themes.Classic Then
-                    Titlebar_panel.BackColor = Style.Colors.Back
+                    Titlebar_panel.BackColor = My.Style.Colors.Back
                 Else
                     Titlebar_panel.BackColor = My.CP.Win32.ButtonFace
                 End If
 
             Else
                 Titlebar_lbl.DrawOnGlass = True
-                If My.W11 OrElse My.W10 Then DLLFunc.DarkTitlebar(Handle, GetDarkMode)
+                If My.W11 OrElse My.W10 Then DLLFunc.DarkTitlebar(Handle, My.Style.DarkMode)
                 DrawAero(Pd)
 
             End If
@@ -1315,9 +1315,9 @@ Public Class Store
     End Sub
 
     Sub UpdateTitlebarColors()
-        Titlebar_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
-        search_box.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
-        back_btn.Image = If(GetDarkMode(), My.Resources.Store_BackBtn, My.Resources.Store_BackBtn.Invert)
+        Titlebar_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
+        search_box.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
+        back_btn.Image = If(My.Style.DarkMode, My.Resources.Store_BackBtn, My.Resources.Store_BackBtn.Invert)
     End Sub
 #End Region
 
@@ -1370,7 +1370,7 @@ Public Class Store
 
         If selectedItem IsNot Nothing AndAlso selectedItem.CP.AppTheme.Enabled Then
             My.Settings = New XeSettings(XeSettings.Mode.Registry)
-            ApplyDarkMode(Me, True)
+            ApplyStyle(Me, True)
         End If
 
         RemoveAllStoreItems(search_results)
@@ -1382,7 +1382,7 @@ Public Class Store
         Titlebar_lbl.Text = Text
         My.Animator.ShowSync(Tabs)
 
-        '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, Style.Colors.Back, 10, 15)
+        '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, My.Style.Colors.Back, 10, 15)
     End Sub
 
 

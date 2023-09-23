@@ -23,10 +23,10 @@ Partial Class LicenseForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LicenseForm))
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         Me.SuspendLayout()
         '
         'XenonButton2
@@ -120,8 +120,8 @@ Partial Class LicenseForm
 
     End Sub
 
-    Friend WithEvents XenonTextBox1 As XenonTextBox
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
 End Class

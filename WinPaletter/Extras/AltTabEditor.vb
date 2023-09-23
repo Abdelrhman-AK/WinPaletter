@@ -1,11 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class AltTabEditor
     Private Sub AltTabEditor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
 
@@ -42,22 +41,22 @@ Public Class AltTabEditor
 
         Select Case My.PreviewStyle
             Case WindowStyle.W11
-                XenonWinElement1.Style = XenonWinElement.Styles.AltTab11
+                XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11
                 XenonWinElement1.DarkMode = Not My.CP.Windows11.WinMode_Light
 
             Case WindowStyle.W10
-                XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
+                XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10
                 XenonWinElement1.DarkMode = Not My.CP.Windows10.WinMode_Light
 
             Case WindowStyle.W81
                 Select Case My.CP.Windows81.Theme
                     Case CP.Structures.Windows7.Themes.Aero
-                        XenonWinElement1.Style = XenonWinElement.Styles.AltTab8Aero
+                        XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero
                         XenonWinElement1.BackColor = My.CP.Windows81.PersonalColors_Background
                         XenonWinElement1.Background2 = My.CP.Windows81.PersonalColors_Background
 
                     Case CP.Structures.Windows7.Themes.AeroLite
-                        XenonWinElement1.Style = XenonWinElement.Styles.AltTab8AeroLite
+                        XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite
                         XenonWinElement1.BackColor = My.CP.Win32.Window
                         XenonWinElement1.Background2 = My.CP.Win32.Hilight
                         XenonWinElement1.LinkColor = My.CP.Win32.ButtonText
@@ -68,13 +67,13 @@ Public Class AltTabEditor
             Case WindowStyle.W7
                 Select Case My.CP.Windows7.Theme
                     Case CP.Structures.Windows7.Themes.Aero
-                        XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Aero
+                        XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Aero
 
                     Case CP.Structures.Windows7.Themes.AeroOpaque
-                        XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Opaque
+                        XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Opaque
 
                     Case CP.Structures.Windows7.Themes.Basic
-                        XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Basic
+                        XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Basic
 
                 End Select
 
@@ -90,13 +89,13 @@ Public Class AltTabEditor
         Panel2.BackColor = RetroPanelRaised1.BackColor
         RetroLabel1.Font = My.CP.MetricsFonts.CaptionFont
 
-        XenonGroupBox4.Enabled = (XenonWinElement1.Style = XenonWinElement.Styles.AltTab10) Or ExplorerPatcher.IsAllowed
+        XenonGroupBox4.Enabled = (XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10) Or ExplorerPatcher.IsAllowed
         XenonAlertBox1.Visible = (My.PreviewStyle = WindowStyle.W7)
 
         If ExplorerPatcher.IsAllowed Then
             Try
                 If My.Computer.Registry.CurrentUser.GetValue("Software\Microsoft\Windows\CurrentVersion\Explorer\AltTabSettings", 0) = 3 Then
-                    XenonWinElement1.Style = XenonWinElement.Styles.AltTab10
+                    XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10
                     XenonWinElement1.DarkMode = Not My.CP.Windows11.WinMode_Light
                 End If
             Finally
@@ -104,7 +103,7 @@ Public Class AltTabEditor
             End Try
         End If
 
-        If XenonWinElement1.Style = XenonWinElement.Styles.AltTab7Basic Then
+        If XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Basic Then
             XenonWinElement1.Size = New Size(360, 100)
         Else
             XenonWinElement1.Size = New Size(450, 150)
@@ -129,7 +128,7 @@ Public Class AltTabEditor
         With CP.AltTab
             .Enabled = AltTabEnabled.Checked
             .Style = If(XenonRadioImage1.Checked, CP.Structures.AltTab.Styles.Default, CP.Structures.AltTab.Styles.ClassicNT)
-            If ExplorerPatcher.IsAllowed And XenonWinElement1.Style = XenonWinElement.Styles.AltTab10 Then .Style = CP.Structures.AltTab.Styles.EP_Win10
+            If ExplorerPatcher.IsAllowed And XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10 Then .Style = CP.Structures.AltTab.Styles.EP_Win10
             .Win10Opacity = XenonTrackbar1.Value
         End With
     End Sub
@@ -184,7 +183,7 @@ Public Class AltTabEditor
 
     Private Sub XenonTrackbar1_Scroll(sender As Object) Handles XenonTrackbar1.Scroll
         opacity_btn.Text = sender.Value.ToString
-        If XenonWinElement1.Style = XenonWinElement.Styles.AltTab10 Then XenonWinElement1.BackColorAlpha = XenonTrackbar1.Value
+        If XenonWinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10 Then XenonWinElement1.BackColorAlpha = XenonTrackbar1.Value
     End Sub
 
     Private Sub XenonRadioImage2_CheckedChanged(sender As Object) Handles XenonRadioImage2.CheckedChanged

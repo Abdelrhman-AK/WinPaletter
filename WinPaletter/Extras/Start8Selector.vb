@@ -1,10 +1,9 @@
-﻿Imports WinPaletter.XenonCore
-Public Class Start8Selector
+﻿Public Class Start8Selector
     Private Sub Start8Selector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = MainFrm.Icon
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         LoadImagesFromDLL()
 
         Select Case My.CP.Windows81.Start

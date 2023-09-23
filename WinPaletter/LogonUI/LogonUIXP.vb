@@ -1,17 +1,16 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class LogonUIXP
     Private Sub LogonUIXP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = LogonUI.Icon
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else

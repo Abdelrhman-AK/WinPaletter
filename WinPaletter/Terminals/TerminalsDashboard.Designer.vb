@@ -28,15 +28,15 @@ Partial Class TerminalsDashboard
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonSeparatorVertical1 = New WinPaletter.XenonSeparatorVertical()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator3 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonSeparatorVertical1 = New WinPaletter.UI.WP.SeparatorV()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -238,16 +238,16 @@ Partial Class TerminalsDashboard
     End Sub
 
     Friend WithEvents Label49 As Label
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonSeparator3 As XenonSeparator
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonSeparator3 As UI.WP.SeparatorH
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents XenonSeparatorVertical1 As XenonSeparatorVertical
+    Friend WithEvents XenonSeparatorVertical1 As UI.WP.SeparatorV
 End Class

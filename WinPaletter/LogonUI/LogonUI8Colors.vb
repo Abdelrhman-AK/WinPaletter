@@ -1,8 +1,7 @@
-﻿Imports WinPaletter.XenonCore
-Public Class LogonUI8Colors
+﻿Public Class LogonUI8Colors
     Private Sub LogonUI8Colors_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         Icon = Start8Selector.Icon
 
@@ -32,7 +31,7 @@ Public Class LogonUI8Colors
         color23.Image = Color.FromArgb(154, 154, 154).ToBitmap(New Size(32, 32))
         color24.Image = Color.FromArgb(88, 88, 88).ToBitmap(New Size(32, 32))
 
-        For Each ri As XenonRadioImage In Controls.OfType(Of XenonRadioImage)
+        For Each ri As UI.WP.RadioImage In Controls.OfType(Of UI.WP.RadioImage)
             If My.CP.Windows81.LogonUI = ri.Name.Replace("color", "") Then ri.Checked = True Else ri.Checked = False
         Next
 
@@ -45,7 +44,7 @@ Public Class LogonUI8Colors
 
     Private Sub XenonButton1_Click(sender As Object, e As EventArgs) Handles XenonButton1.Click
 
-        For Each ri As XenonRadioImage In Controls.OfType(Of XenonRadioImage)
+        For Each ri As UI.WP.RadioImage In Controls.OfType(Of UI.WP.RadioImage)
             If ri.Checked Then
                 My.CP.Windows81.LogonUI = ri.Name.Replace("color", "")
                 Exit For

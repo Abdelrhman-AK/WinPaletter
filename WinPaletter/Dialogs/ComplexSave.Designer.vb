@@ -25,31 +25,31 @@ Partial Class ComplexSave
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ComplexSave))
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage3 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage3 = New WinPaletter.UI.WP.RadioImage()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage1 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage7 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage7 = New WinPaletter.UI.WP.RadioImage()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage4 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage4 = New WinPaletter.UI.WP.RadioImage()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage5 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage5 = New WinPaletter.UI.WP.RadioImage()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.XenonRadioImage6 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage6 = New WinPaletter.UI.WP.RadioImage()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -417,7 +417,7 @@ Partial Class ComplexSave
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(434, 59)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 10
         Me.XenonAnimatedBox1.Text = "XenonAnimatedBox1"
         '
@@ -458,29 +458,29 @@ Partial Class ComplexSave
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonRadioImage1 As XenonRadioImage
+    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonRadioImage3 As XenonRadioImage
+    Friend WithEvents XenonRadioImage3 As UI.WP.RadioImage
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonRadioImage2 As XenonRadioImage
+    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
     Friend WithEvents Label9 As Label
-    Friend WithEvents XenonRadioImage7 As XenonRadioImage
+    Friend WithEvents XenonRadioImage7 As UI.WP.RadioImage
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonRadioImage4 As XenonRadioImage
+    Friend WithEvents XenonRadioImage4 As UI.WP.RadioImage
     Friend WithEvents Label7 As Label
-    Friend WithEvents XenonRadioImage5 As XenonRadioImage
+    Friend WithEvents XenonRadioImage5 As UI.WP.RadioImage
     Friend WithEvents Label8 As Label
-    Friend WithEvents XenonRadioImage6 As XenonRadioImage
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
+    Friend WithEvents XenonRadioImage6 As UI.WP.RadioImage
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
 End Class

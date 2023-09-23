@@ -37,6 +37,15 @@ Namespace My
         Public VS As String = PATH_appData & "\VisualStyles\Luna\luna.theme"
         Public resVS As VisualStylesRes
 
+        Public ReadOnly DefaultAccent As Color = Color.FromArgb(0, 81, 210)
+        Public ReadOnly DefaultBackColorDark As Color = Color.FromArgb(25, 25, 25)
+        Public ReadOnly DefaultBackColorLight As Color = Color.FromArgb(230, 230, 230)
+
+        ''' <summary>
+        ''' Class represents colors for WinPaletter Controls (Styles)
+        ''' </summary>
+        Public Style As New WPStyle(DefaultAccent, DefaultBackColorDark, True)
+
         ''' <summary>
         ''' A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
         ''' </summary>
@@ -210,7 +219,8 @@ Namespace My
 #Region "   Variables"
         Private WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4 As ManagementEventWatcher
         ReadOnly UpdateDarkModeInvoker As MethodInvoker = CType(Sub()
-                                                                    If [Settings].Appearance.AutoDarkMode Then ApplyDarkMode()
+                                                                    FetchDarkMode()
+                                                                    If [Settings].Appearance.AutoDarkMode Then ApplyStyle()
                                                                 End Sub, MethodInvoker)
         Public ReadOnly UpdateWallpaperInvoker As MethodInvoker = CType(Sub()
                                                                             Dim Wall As Bitmap = FetchSuitableWallpaper(CP, PreviewStyle)
@@ -698,7 +708,8 @@ Namespace My
                 Next
             End If
 
-            ApplyDarkMode()
+            FetchDarkMode()
+            ApplyStyle()
 
             For Each arg As String In ArgsList
                 If arg.ToLower = "/exportlanguage" Then

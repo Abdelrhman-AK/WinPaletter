@@ -23,16 +23,16 @@ Partial Class VS2Metrics
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VS2Metrics))
-        Me.XenonButton16 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonButton16 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label102 = New System.Windows.Forms.Label()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -202,14 +202,14 @@ Partial Class VS2Metrics
 
     End Sub
 
-    Friend WithEvents XenonButton16 As XenonButton
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents XenonButton16 As UI.WP.Button
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents Label102 As Label
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
     Friend WithEvents OpenFileDialog2 As OpenFileDialog
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
 End Class

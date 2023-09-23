@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports Newtonsoft.Json.Linq
-Imports WinPaletter.XenonCore
 
 Public Class SettingsX
     Public _External As Boolean = False
@@ -181,7 +180,10 @@ Public Class SettingsX
 
         Write(My.Settings, XeSettings.Mode.Registry)
 
-        If ch_appearance Then ApplyDarkMode()
+        If ch_appearance Then
+            FetchDarkMode()
+            ApplyStyle()
+        End If
 
         If ch_nerd Then
             For ix As Integer = Application.OpenForms.Count - 1 To 0 Step -1
@@ -460,7 +462,7 @@ Public Class SettingsX
         XenonComboBox2.Items.Add(My.Lang.Stable)
         XenonComboBox2.Items.Add(My.Lang.Beta)
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         LoadSettings()
 
         Dim w As Integer = 19
@@ -469,7 +471,7 @@ Public Class SettingsX
         EP_Taskbar_11.Image = EP_Start_11.Image
         EP_Taskbar_10.Image = EP_Start_10.Image
 
-        If GetDarkMode() Then
+        If My.Style.DarkMode Then
             EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Resize(w, w)
             EP_ORB_10.Image = My.Resources.StartBtn_10Dark.Resize(w, w)
         Else

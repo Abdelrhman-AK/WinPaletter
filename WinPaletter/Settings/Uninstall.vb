@@ -4,7 +4,7 @@ Imports WinPaletter.XenonCore
 Public Class Uninstall
     Private Sub Uninstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = My.Resources.Icon_Uninstall
     End Sub
 

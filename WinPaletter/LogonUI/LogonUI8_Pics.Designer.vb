@@ -23,16 +23,16 @@ Partial Class LogonUI8_Pics
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LogonUI8_Pics))
-        Me.img4 = New WinPaletter.XenonRadioImage()
-        Me.img2 = New WinPaletter.XenonRadioImage()
-        Me.img3 = New WinPaletter.XenonRadioImage()
-        Me.img1 = New WinPaletter.XenonRadioImage()
-        Me.img0 = New WinPaletter.XenonRadioImage()
+        Me.img4 = New WinPaletter.UI.WP.RadioImage()
+        Me.img2 = New WinPaletter.UI.WP.RadioImage()
+        Me.img3 = New WinPaletter.UI.WP.RadioImage()
+        Me.img1 = New WinPaletter.UI.WP.RadioImage()
+        Me.img0 = New WinPaletter.UI.WP.RadioImage()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.img5 = New WinPaletter.XenonRadioImage()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.img5 = New WinPaletter.UI.WP.RadioImage()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -196,14 +196,14 @@ Partial Class LogonUI8_Pics
 
     End Sub
 
-    Friend WithEvents img4 As XenonRadioImage
-    Friend WithEvents img2 As XenonRadioImage
-    Friend WithEvents img3 As XenonRadioImage
-    Friend WithEvents img1 As XenonRadioImage
-    Friend WithEvents img0 As XenonRadioImage
+    Friend WithEvents img4 As UI.WP.RadioImage
+    Friend WithEvents img2 As UI.WP.RadioImage
+    Friend WithEvents img3 As UI.WP.RadioImage
+    Friend WithEvents img1 As UI.WP.RadioImage
+    Friend WithEvents img0 As UI.WP.RadioImage
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents img5 As XenonRadioImage
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents img5 As UI.WP.RadioImage
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
 End Class

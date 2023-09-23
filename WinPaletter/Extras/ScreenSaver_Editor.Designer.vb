@@ -26,35 +26,35 @@ Partial Class ScreenSaver_Editor
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.XenonTrackbar5 = New WinPaletter.XenonTrackbar()
+        Me.XenonTrackbar5 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
-        Me.previewContainer = New WinPaletter.XenonGroupBox()
-        Me.XenonButton14 = New WinPaletter.XenonButton()
-        Me.XenonButton13 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
+        Me.previewContainer = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton14 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton13 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
         Me.pnl_preview = New System.Windows.Forms.Panel()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton259 = New WinPaletter.XenonButton()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox12 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton259 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.ScrSvrEnabled = New WinPaletter.XenonToggle()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
+        Me.ScrSvrEnabled = New UI.WP.Toggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -560,37 +560,37 @@ Partial Class ScreenSaver_Editor
 
     End Sub
 
-    Friend WithEvents XenonGroupBox12 As XenonGroupBox
-    Friend WithEvents XenonButton9 As XenonButton
+    Friend WithEvents XenonGroupBox12 As UI.WP.GroupBox
+    Friend WithEvents XenonButton9 As UI.WP.Button
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents ScrSvrEnabled As XenonToggle
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents XenonButton12 As UI.WP.Button
+    Friend WithEvents ScrSvrEnabled As UI.WP.Toggle
     Friend WithEvents checker_img As PictureBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents previewContainer As XenonGroupBox
+    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents previewContainer As UI.WP.GroupBox
     Friend WithEvents pnl_preview As Panel
     Friend WithEvents PictureBox41 As PictureBox
     Friend WithEvents Label19 As Label
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox17 As PictureBox
-    Friend WithEvents XenonTrackbar5 As XenonTrackbar
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents XenonTrackbar5 As UI.WP.Trackbar
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonButton14 As XenonButton
-    Friend WithEvents XenonButton13 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonButton14 As UI.WP.Button
+    Friend WithEvents XenonButton13 As UI.WP.Button
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents OpenFileDialog2 As OpenFileDialog
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonButton259 As XenonButton
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents XenonButton259 As UI.WP.Button
     Friend WithEvents OpenThemeDialog As OpenFileDialog
 End Class

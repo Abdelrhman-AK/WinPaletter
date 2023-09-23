@@ -34,27 +34,27 @@ Partial Class SubMenu
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonSeparator4 = New WinPaletter.XenonSeparator()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar4 = New WinPaletter.XenonTrackbar()
-        Me.PreviousColor = New WinPaletter.XenonCP()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar3 = New WinPaletter.XenonTrackbar()
-        Me.XenonTrackbar2 = New WinPaletter.XenonTrackbar()
-        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
-        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
-        Me.InvertedColor = New WinPaletter.XenonCP()
-        Me.DefaultColor = New WinPaletter.XenonCP()
-        Me.MainColor = New WinPaletter.XenonCP()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
+        Me.XenonSeparator4 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar4 = New WinPaletter.UI.WP.Trackbar()
+        Me.PreviousColor = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar3 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonTrackbar2 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonTrackbar1 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonSeparator2 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator3 = New WinPaletter.UI.WP.SeparatorH()
+        Me.InvertedColor = New WinPaletter.UI.Controllers.ColorItem()
+        Me.DefaultColor = New WinPaletter.UI.Controllers.ColorItem()
+        Me.MainColor = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -501,36 +501,36 @@ Partial Class SubMenu
 
     End Sub
 
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents MainColor As XenonCP
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents MainColor As UI.Controllers.ColorItem
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents PictureBox5 As PictureBox
-    Friend WithEvents DefaultColor As XenonCP
-    Friend WithEvents InvertedColor As XenonCP
-    Friend WithEvents XenonSeparator3 As XenonSeparator
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents DefaultColor As UI.Controllers.ColorItem
+    Friend WithEvents InvertedColor As UI.Controllers.ColorItem
+    Friend WithEvents XenonSeparator3 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents PaletteContainer As FlowLayoutPanel
-    Friend WithEvents XenonSeparator2 As XenonSeparator
+    Friend WithEvents XenonSeparator2 As UI.WP.SeparatorH
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonTrackbar1 As XenonTrackbar
-    Friend WithEvents XenonTrackbar2 As XenonTrackbar
-    Friend WithEvents XenonTrackbar3 As XenonTrackbar
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
+    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents XenonTrackbar1 As UI.WP.Trackbar
+    Friend WithEvents XenonTrackbar2 As UI.WP.Trackbar
+    Friend WithEvents XenonTrackbar3 As UI.WP.Trackbar
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonSeparator4 As XenonSeparator
-    Friend WithEvents XenonButton9 As XenonButton
-    Friend WithEvents XenonTrackbar4 As XenonTrackbar
-    Friend WithEvents PreviousColor As XenonCP
+    Friend WithEvents XenonSeparator4 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton9 As UI.WP.Button
+    Friend WithEvents XenonTrackbar4 As UI.WP.Trackbar
+    Friend WithEvents PreviousColor As UI.Controllers.ColorItem
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonButton10 As XenonButton
+    Friend WithEvents XenonButton10 As UI.WP.Button
 End Class

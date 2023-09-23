@@ -2,13 +2,12 @@
 Imports System.Drawing.Text
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class Metrics_Fonts
 
     Private Sub EditFonts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MenuStrip1.Renderer = New StripRenderer  'Removes the inferior white line from menu strip
-        MenuStrip2.Renderer = New StripRenderer
+        MenuStrip1.Renderer = New UI.WP.StripRenderer  'Removes the inferior white line from menu strip
+        MenuStrip2.Renderer = New UI.WP.StripRenderer
 
         pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         pnl_preview2.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
@@ -20,7 +19,7 @@ Public Class Metrics_Fonts
         Classic_Preview4.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         ApplyFromCP(My.CP)
 
         XenonWindow1.CopycatFrom(MainFrm.XenonWindow1, True)
@@ -88,9 +87,9 @@ Public Class Metrics_Fonts
             End If
         End If
 
-        Dim Win7 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Aero Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Opaque Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W7Basic
-        Dim Win8 As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.W8 Or XenonWindow6.Preview = XenonWindow.Preview_Enum.W8Lite
-        Dim WinXP As Boolean = XenonWindow6.Preview = XenonWindow.Preview_Enum.WXP
+        Dim Win7 As Boolean = XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.W7Aero Or XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.W7Opaque Or XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.W7Basic
+        Dim Win8 As Boolean = XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.W8 Or XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.W8Lite
+        Dim WinXP As Boolean = XenonWindow6.Preview = UI.Simulation.Window.Preview_Enum.WXP
 
         If Not Win7 And Not Win8 And Not WinXP Then
             msgLbl.ForeColor = If(XenonWindow6.DarkMode, Color.White, Color.Black)
@@ -245,10 +244,10 @@ Public Class Metrics_Fonts
             theme = CtrlTheme.Default
         End If
 
-        SetTheme(MenuStrip1.Handle, theme)
-        SetTheme(VScrollBar1.Handle, theme)
-        SetTheme(HScrollBar1.Handle, theme)
-        SetTheme(StatusStrip1.Handle, theme)
+        SetControlTheme(MenuStrip1.Handle, theme)
+        SetControlTheme(VScrollBar1.Handle, theme)
+        SetControlTheme(HScrollBar1.Handle, theme)
+        SetControlTheme(StatusStrip1.Handle, theme)
 
         statusLbl.ForeColor = StatusForeColor
         StatusStrip1.BackColor = statusBackColor

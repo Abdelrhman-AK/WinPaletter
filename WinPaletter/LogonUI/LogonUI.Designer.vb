@@ -23,30 +23,30 @@ Partial Class LogonUI
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LogonUI))
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonGroupBox21 = New WinPaletter.XenonGroupBox()
-        Me.LogonUI_Lockscreen_Toggle = New WinPaletter.XenonToggle()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonGroupBox21 = New WinPaletter.UI.WP.GroupBox()
+        Me.LogonUI_Lockscreen_Toggle = New UI.WP.Toggle()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox19 = New WinPaletter.XenonGroupBox()
-        Me.LogonUI_Background_Toggle = New WinPaletter.XenonToggle()
+        Me.XenonGroupBox19 = New WinPaletter.UI.WP.GroupBox()
+        Me.LogonUI_Background_Toggle = New UI.WP.Toggle()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox17 = New WinPaletter.XenonGroupBox()
-        Me.LogonUI_Acrylic_Toggle = New WinPaletter.XenonToggle()
+        Me.XenonGroupBox17 = New WinPaletter.UI.WP.GroupBox()
+        Me.LogonUI_Acrylic_Toggle = New UI.WP.Toggle()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonGroupBox12 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.XenonGroupBox3.SuspendLayout()
         Me.XenonGroupBox21.SuspendLayout()
         CType(Me.PictureBox22, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -406,28 +406,28 @@ Partial Class LogonUI
 
     End Sub
 
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents XenonGroupBox21 As XenonGroupBox
-    Friend WithEvents LogonUI_Lockscreen_Toggle As XenonToggle
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox21 As UI.WP.GroupBox
+    Friend WithEvents LogonUI_Lockscreen_Toggle As UI.WP.Toggle
     Friend WithEvents PictureBox22 As PictureBox
     Friend WithEvents Label20 As Label
-    Friend WithEvents XenonGroupBox19 As XenonGroupBox
-    Friend WithEvents LogonUI_Background_Toggle As XenonToggle
+    Friend WithEvents XenonGroupBox19 As UI.WP.GroupBox
+    Friend WithEvents LogonUI_Background_Toggle As UI.WP.Toggle
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label18 As Label
-    Friend WithEvents XenonGroupBox17 As XenonGroupBox
-    Friend WithEvents LogonUI_Acrylic_Toggle As XenonToggle
+    Friend WithEvents XenonGroupBox17 As UI.WP.GroupBox
+    Friend WithEvents LogonUI_Acrylic_Toggle As UI.WP.Toggle
     Friend WithEvents PictureBox15 As PictureBox
     Friend WithEvents Label16 As Label
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents Label13 As Label
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonGroupBox12 As XenonGroupBox
-    Friend WithEvents XenonButton9 As XenonButton
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonGroupBox12 As UI.WP.GroupBox
+    Friend WithEvents XenonButton9 As UI.WP.Button
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents XenonButton12 As XenonButton
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents XenonButton12 As UI.WP.Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonButton1 As UI.WP.Button
 End Class

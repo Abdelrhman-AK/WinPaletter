@@ -24,33 +24,33 @@ Partial Class PaletteGenerateFromColor
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PaletteGenerateFromColor))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonRadioButton6 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton3 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton4 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton7 = New WinPaletter.XenonRadioButton()
-        Me.XenonRadioButton5 = New WinPaletter.XenonRadioButton()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonRadioButton6 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton3 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton4 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton7 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonRadioButton5 = New WinPaletter.UI.WP.RadioButton()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.SelectedColor = New WinPaletter.XenonCP()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.SelectedColor = New WinPaletter.UI.Controllers.ColorItem()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.val1 = New WinPaletter.XenonButton()
+        Me.val1 = New WinPaletter.UI.WP.Button()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
+        Me.XenonTrackbar1 = New WinPaletter.UI.WP.Trackbar()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ImgPaletteContainer = New System.Windows.Forms.FlowLayoutPanel()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.XenonGroupBox4.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonGroupBox2.SuspendLayout()
@@ -352,7 +352,7 @@ Partial Class PaletteGenerateFromColor
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -460,27 +460,27 @@ Partial Class PaletteGenerateFromColor
     Friend WithEvents Label1 As Label
     Friend WithEvents ImgPaletteContainer As FlowLayoutPanel
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents val1 As XenonButton
-    Friend WithEvents XenonTrackbar1 As XenonTrackbar
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents val1 As UI.WP.Button
+    Friend WithEvents XenonTrackbar1 As UI.WP.Trackbar
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
     Friend WithEvents PictureBox5 As PictureBox
-    Friend WithEvents XenonSeparator1 As XenonSeparator
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents XenonRadioButton6 As XenonRadioButton
-    Friend WithEvents XenonRadioButton7 As XenonRadioButton
-    Friend WithEvents XenonRadioButton5 As XenonRadioButton
-    Friend WithEvents XenonRadioButton4 As XenonRadioButton
-    Friend WithEvents XenonRadioButton3 As XenonRadioButton
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
+    Friend WithEvents XenonRadioButton6 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton7 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton5 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton4 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton3 As UI.WP.RadioButton
+    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents SelectedColor As XenonCP
+    Friend WithEvents SelectedColor As UI.Controllers.ColorItem
     Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
 End Class

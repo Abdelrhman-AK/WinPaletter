@@ -26,11 +26,11 @@ Partial Class NewExtTerminal
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label102 = New System.Windows.Forms.Label()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonButton16 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonButton16 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         CType(Me.PictureBox17, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -95,7 +95,7 @@ Partial Class NewExtTerminal
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
@@ -176,10 +176,10 @@ Partial Class NewExtTerminal
 
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents Label102 As Label
-    Friend WithEvents XenonTextBox1 As XenonTextBox
-    Friend WithEvents XenonButton16 As XenonButton
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
+    Friend WithEvents XenonButton16 As UI.WP.Button
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

@@ -1,10 +1,8 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class Whatsnew
+﻿Public Class Whatsnew
     Private Sub Tutorial_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Label2.Text = String.Format(My.Lang.WhatsNewInVersion, My.AppVersion)
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonTabControl1.SelectedIndex = 0
         XenonButton1.Text = My.Lang.Next
     End Sub

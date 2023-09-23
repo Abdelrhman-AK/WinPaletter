@@ -1,6 +1,4 @@
-﻿Imports System.Drawing.Imaging
-Imports System.Runtime.CompilerServices
-Imports Devcorp.Controls.VisualStyles
+﻿Imports Devcorp.Controls.VisualStyles
 
 Public Class VisualStylesRes
     Sub New(themeFile As String)

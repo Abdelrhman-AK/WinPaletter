@@ -25,76 +25,83 @@ Partial Class Lang_JSON_GUI
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Lang_JSON_GUI))
-        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
         Me.SaveJSONDlg = New System.Windows.Forms.SaveFileDialog()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonAlertBox3 = New WinPaletter.UI.WP.AlertBox()
         Me.ProgressBar2 = New System.Windows.Forms.ProgressBar()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonTabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox5 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonRadioButton2 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton2 = New WinPaletter.UI.WP.RadioButton()
         Me.PictureBox23 = New System.Windows.Forms.PictureBox()
-        Me.XenonRadioButton1 = New WinPaletter.XenonRadioButton()
+        Me.XenonRadioButton1 = New WinPaletter.UI.WP.RadioButton()
         Me.PictureBox26 = New System.Windows.Forms.PictureBox()
-        Me.XenonTextBox7 = New WinPaletter.XenonTextBox()
+        Me.XenonTextBox7 = New WinPaletter.UI.WP.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.XenonTextBox6 = New WinPaletter.XenonTextBox()
+        Me.XenonTextBox6 = New WinPaletter.UI.WP.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.XenonTextBox5 = New WinPaletter.XenonTextBox()
-        Me.XenonTextBox3 = New WinPaletter.XenonTextBox()
-        Me.XenonTextBox4 = New WinPaletter.XenonTextBox()
+        Me.XenonTextBox5 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonTextBox3 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonTextBox4 = New WinPaletter.UI.WP.TextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox6 = New WinPaletter.UI.WP.GroupBox()
         Me.data = New System.Windows.Forms.DataGridView()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XenonGroupBox9 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonTextBox8 = New WinPaletter.UI.WP.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonGroupBox7 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonTextBox9 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonButton13 = New WinPaletter.UI.WP.Button()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonTextBox2 = New WinPaletter.XenonTextBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XenonTextBox2 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonGroupBox8 = New WinPaletter.UI.WP.GroupBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.XenonGroupBox3.SuspendLayout()
         Me.XenonTabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -108,6 +115,7 @@ Partial Class Lang_JSON_GUI
         Me.TabPage2.SuspendLayout()
         Me.XenonGroupBox6.SuspendLayout()
         CType(Me.data, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XenonGroupBox9.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.XenonGroupBox1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,9 +124,12 @@ Partial Class Lang_JSON_GUI
         Me.SplitContainer1.SuspendLayout()
         Me.XenonGroupBox4.SuspendLayout()
         Me.XenonGroupBox2.SuspendLayout()
+        Me.XenonGroupBox7.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XenonGroupBox8.SuspendLayout()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenJSONDlg
@@ -128,47 +139,6 @@ Partial Class Lang_JSON_GUI
         'SaveJSONDlg
         '
         Me.SaveJSONDlg.Filter = "JSON File (*.json)|*.json|All Files (*.*)|*.*"
-        '
-        'BackgroundWorker1
-        '
-        Me.BackgroundWorker1.WorkerReportsProgress = True
-        Me.BackgroundWorker1.WorkerSupportsCancellation = True
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(10, 676)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox4.TabIndex = 68
-        Me.PictureBox4.TabStop = False
-        Me.PictureBox4.Visible = False
-        '
-        'Label9
-        '
-        Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(167, 676)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(581, 24)
-        Me.Label9.TabIndex = 71
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label9.Visible = False
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(40, 676)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(121, 24)
-        Me.Label8.TabIndex = 69
-        Me.Label8.Text = "Current open file:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Label8.Visible = False
         '
         'XenonButton7
         '
@@ -223,7 +193,7 @@ Partial Class Lang_JSON_GUI
         '
         'XenonAlertBox3
         '
-        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(67, Byte), Integer), CType(CType(91, Byte), Integer))
@@ -632,12 +602,10 @@ Partial Class Lang_JSON_GUI
         '
         'Label22
         '
-        Me.Label22.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label22.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.Location = New System.Drawing.Point(33, 153)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(182, 24)
+        Me.Label22.Size = New System.Drawing.Size(143, 24)
         Me.Label22.TabIndex = 60
         Me.Label22.Text = "Layout"
         Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -723,7 +691,7 @@ Partial Class Lang_JSON_GUI
         '
         Me.XenonGroupBox6.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
         Me.XenonGroupBox6.Controls.Add(Me.data)
-        Me.XenonGroupBox6.Controls.Add(Me.Panel1)
+        Me.XenonGroupBox6.Controls.Add(Me.XenonGroupBox9)
         Me.XenonGroupBox6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.XenonGroupBox6.Location = New System.Drawing.Point(5, 3)
         Me.XenonGroupBox6.Name = "XenonGroupBox6"
@@ -745,14 +713,14 @@ Partial Class Lang_JSON_GUI
         Me.data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.data.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3})
         Me.data.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.data.Location = New System.Drawing.Point(3, 41)
+        Me.data.Location = New System.Drawing.Point(3, 33)
         Me.data.Name = "data"
         Me.data.RowHeadersVisible = False
         Me.data.ShowCellErrors = False
         Me.data.ShowCellToolTips = False
         Me.data.ShowEditingIcon = False
         Me.data.ShowRowErrors = False
-        Me.data.Size = New System.Drawing.Size(806, 479)
+        Me.data.Size = New System.Drawing.Size(806, 487)
         Me.data.TabIndex = 0
         '
         'Column1
@@ -775,13 +743,90 @@ Partial Class Lang_JSON_GUI
         Me.Column3.ReadOnly = True
         Me.Column3.Width = 255
         '
-        'Panel1
+        'XenonGroupBox9
         '
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(3, 3)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(806, 38)
-        Me.Panel1.TabIndex = 207
+        Me.XenonGroupBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox9.Controls.Add(Me.XenonButton12)
+        Me.XenonGroupBox9.Controls.Add(Me.XenonCheckBox2)
+        Me.XenonGroupBox9.Controls.Add(Me.XenonTextBox8)
+        Me.XenonGroupBox9.Controls.Add(Me.Label6)
+        Me.XenonGroupBox9.Controls.Add(Me.XenonCheckBox1)
+        Me.XenonGroupBox9.Dock = System.Windows.Forms.DockStyle.Top
+        Me.XenonGroupBox9.Location = New System.Drawing.Point(3, 3)
+        Me.XenonGroupBox9.Name = "XenonGroupBox9"
+        Me.XenonGroupBox9.Size = New System.Drawing.Size(806, 30)
+        Me.XenonGroupBox9.TabIndex = 117
+        '
+        'XenonButton12
+        '
+        Me.XenonButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton12.DrawOnGlass = False
+        Me.XenonButton12.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton12.ForeColor = System.Drawing.Color.White
+        Me.XenonButton12.Image = CType(resources.GetObject("XenonButton12.Image"), System.Drawing.Image)
+        Me.XenonButton12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton12.LineColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(101, Byte), Integer))
+        Me.XenonButton12.LineSize = 1
+        Me.XenonButton12.Location = New System.Drawing.Point(3, 3)
+        Me.XenonButton12.Name = "XenonButton12"
+        Me.XenonButton12.Size = New System.Drawing.Size(24, 24)
+        Me.XenonButton12.TabIndex = 111
+        Me.ToolTip.SetToolTip(Me.XenonButton12, "Replace")
+        Me.XenonButton12.UseVisualStyleBackColor = False
+        '
+        'XenonCheckBox2
+        '
+        Me.XenonCheckBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonCheckBox2.Checked = False
+        Me.XenonCheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox2.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox2.Location = New System.Drawing.Point(487, 3)
+        Me.XenonCheckBox2.Name = "XenonCheckBox2"
+        Me.XenonCheckBox2.Size = New System.Drawing.Size(117, 24)
+        Me.XenonCheckBox2.TabIndex = 116
+        Me.XenonCheckBox2.Text = "Variables"
+        '
+        'XenonTextBox8
+        '
+        Me.XenonTextBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox8.DrawOnGlass = False
+        Me.XenonTextBox8.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox8.Location = New System.Drawing.Point(33, 3)
+        Me.XenonTextBox8.MaxLength = 32767
+        Me.XenonTextBox8.Multiline = False
+        Me.XenonTextBox8.Name = "XenonTextBox8"
+        Me.XenonTextBox8.ReadOnly = False
+        Me.XenonTextBox8.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox8.SelectedText = ""
+        Me.XenonTextBox8.SelectionLength = 0
+        Me.XenonTextBox8.SelectionStart = 0
+        Me.XenonTextBox8.Size = New System.Drawing.Size(213, 24)
+        Me.XenonTextBox8.TabIndex = 112
+        Me.XenonTextBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox8.UseSystemPasswordChar = False
+        Me.XenonTextBox8.WordWrap = True
+        '
+        'Label6
+        '
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(252, 3)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(106, 24)
+        Me.Label6.TabIndex = 115
+        Me.Label6.Text = "Search also in:"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'XenonCheckBox1
+        '
+        Me.XenonCheckBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonCheckBox1.Checked = False
+        Me.XenonCheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonCheckBox1.ForeColor = System.Drawing.Color.White
+        Me.XenonCheckBox1.Location = New System.Drawing.Point(364, 3)
+        Me.XenonCheckBox1.Name = "XenonCheckBox1"
+        Me.XenonCheckBox1.Size = New System.Drawing.Size(117, 24)
+        Me.XenonCheckBox1.TabIndex = 114
+        Me.XenonCheckBox1.Text = "English values"
         '
         'TabPage3
         '
@@ -874,7 +919,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonComboBox1.CustomFont = False
         Me.XenonComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.XenonComboBox1.DropDownHeight = 250
+        Me.XenonComboBox1.DropDownHeight = 242
         Me.XenonComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.XenonComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.XenonComboBox1.ForeColor = System.Drawing.Color.White
@@ -890,15 +935,16 @@ Partial Class Lang_JSON_GUI
         '
         Me.ProgressBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ProgressBar1.Location = New System.Drawing.Point(11, 37)
+        Me.ProgressBar1.Location = New System.Drawing.Point(10, 38)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(458, 26)
+        Me.ProgressBar1.Size = New System.Drawing.Size(456, 24)
         Me.ProgressBar1.TabIndex = 209
         Me.ProgressBar1.Visible = False
         '
         'XenonGroupBox2
         '
         Me.XenonGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonGroupBox2.Controls.Add(Me.XenonGroupBox7)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox3)
         Me.XenonGroupBox2.Controls.Add(Me.PictureBox1)
         Me.XenonGroupBox2.Controls.Add(Me.Label2)
@@ -915,10 +961,62 @@ Partial Class Lang_JSON_GUI
         Me.XenonGroupBox2.TabIndex = 0
         Me.XenonGroupBox2.Text = "XenonGroupBox2"
         '
+        'XenonGroupBox7
+        '
+        Me.XenonGroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.XenonGroupBox7.Controls.Add(Me.XenonTextBox9)
+        Me.XenonGroupBox7.Controls.Add(Me.XenonButton13)
+        Me.XenonGroupBox7.Location = New System.Drawing.Point(3, 3)
+        Me.XenonGroupBox7.Name = "XenonGroupBox7"
+        Me.XenonGroupBox7.Size = New System.Drawing.Size(323, 30)
+        Me.XenonGroupBox7.TabIndex = 25
+        Me.XenonGroupBox7.Text = "XenonGroupBox7"
+        '
+        'XenonTextBox9
+        '
+        Me.XenonTextBox9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonTextBox9.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.XenonTextBox9.DrawOnGlass = False
+        Me.XenonTextBox9.ForeColor = System.Drawing.Color.White
+        Me.XenonTextBox9.Location = New System.Drawing.Point(33, 3)
+        Me.XenonTextBox9.MaxLength = 32767
+        Me.XenonTextBox9.Multiline = False
+        Me.XenonTextBox9.Name = "XenonTextBox9"
+        Me.XenonTextBox9.ReadOnly = False
+        Me.XenonTextBox9.Scrollbars = System.Windows.Forms.ScrollBars.None
+        Me.XenonTextBox9.SelectedText = ""
+        Me.XenonTextBox9.SelectionLength = 0
+        Me.XenonTextBox9.SelectionStart = 0
+        Me.XenonTextBox9.Size = New System.Drawing.Size(286, 24)
+        Me.XenonTextBox9.TabIndex = 112
+        Me.XenonTextBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.XenonTextBox9.UseSystemPasswordChar = False
+        Me.XenonTextBox9.WordWrap = True
+        '
+        'XenonButton13
+        '
+        Me.XenonButton13.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
+        Me.XenonButton13.DrawOnGlass = False
+        Me.XenonButton13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.XenonButton13.ForeColor = System.Drawing.Color.White
+        Me.XenonButton13.Image = CType(resources.GetObject("XenonButton13.Image"), System.Drawing.Image)
+        Me.XenonButton13.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.XenonButton13.LineColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(101, Byte), Integer))
+        Me.XenonButton13.LineSize = 1
+        Me.XenonButton13.Location = New System.Drawing.Point(3, 3)
+        Me.XenonButton13.Name = "XenonButton13"
+        Me.XenonButton13.Size = New System.Drawing.Size(24, 24)
+        Me.XenonButton13.TabIndex = 112
+        Me.ToolTip.SetToolTip(Me.XenonButton13, "Replace")
+        Me.XenonButton13.UseVisualStyleBackColor = False
+        '
         'PictureBox3
         '
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(3, 33)
+        Me.PictureBox3.Location = New System.Drawing.Point(6, 69)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -928,7 +1026,7 @@ Partial Class Lang_JSON_GUI
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox1.Location = New System.Drawing.Point(6, 39)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -938,9 +1036,9 @@ Partial Class Lang_JSON_GUI
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(34, 266)
+        Me.Label2.Location = New System.Drawing.Point(36, 300)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(94, 24)
+        Me.Label2.Size = New System.Drawing.Size(285, 24)
         Me.Label2.TabIndex = 17
         Me.Label2.Text = "Current value:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -948,9 +1046,9 @@ Partial Class Lang_JSON_GUI
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(33, 33)
+        Me.Label3.Location = New System.Drawing.Point(36, 69)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(95, 24)
+        Me.Label3.Size = New System.Drawing.Size(285, 24)
         Me.Label3.TabIndex = 22
         Me.Label3.Text = "English value:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -963,7 +1061,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox1.DrawOnGlass = False
         Me.XenonTextBox1.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox1.Location = New System.Drawing.Point(37, 293)
+        Me.XenonTextBox1.Location = New System.Drawing.Point(39, 327)
         Me.XenonTextBox1.MaxLength = 32767
         Me.XenonTextBox1.Multiline = True
         Me.XenonTextBox1.Name = "XenonTextBox1"
@@ -972,7 +1070,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonTextBox1.SelectedText = ""
         Me.XenonTextBox1.SelectionLength = 0
         Me.XenonTextBox1.SelectionStart = 0
-        Me.XenonTextBox1.Size = New System.Drawing.Size(285, 227)
+        Me.XenonTextBox1.Size = New System.Drawing.Size(282, 193)
         Me.XenonTextBox1.TabIndex = 19
         Me.XenonTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox1.UseSystemPasswordChar = False
@@ -983,16 +1081,16 @@ Partial Class Lang_JSON_GUI
         Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(135, 4)
+        Me.Label4.Location = New System.Drawing.Point(138, 40)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(187, 24)
+        Me.Label4.Size = New System.Drawing.Size(184, 24)
         Me.Label4.TabIndex = 18
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(33, 3)
+        Me.Label1.Location = New System.Drawing.Point(36, 39)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(95, 24)
         Me.Label1.TabIndex = 16
@@ -1002,7 +1100,7 @@ Partial Class Lang_JSON_GUI
         'PictureBox2
         '
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(3, 265)
+        Me.PictureBox2.Location = New System.Drawing.Point(5, 299)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
@@ -1016,7 +1114,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.XenonTextBox2.DrawOnGlass = False
         Me.XenonTextBox2.ForeColor = System.Drawing.Color.White
-        Me.XenonTextBox2.Location = New System.Drawing.Point(37, 61)
+        Me.XenonTextBox2.Location = New System.Drawing.Point(40, 97)
         Me.XenonTextBox2.MaxLength = 32767
         Me.XenonTextBox2.Multiline = True
         Me.XenonTextBox2.Name = "XenonTextBox2"
@@ -1025,7 +1123,7 @@ Partial Class Lang_JSON_GUI
         Me.XenonTextBox2.SelectedText = ""
         Me.XenonTextBox2.SelectionLength = 0
         Me.XenonTextBox2.SelectionStart = 0
-        Me.XenonTextBox2.Size = New System.Drawing.Size(285, 200)
+        Me.XenonTextBox2.Size = New System.Drawing.Size(282, 200)
         Me.XenonTextBox2.TabIndex = 23
         Me.XenonTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.XenonTextBox2.UseSystemPasswordChar = False
@@ -1033,7 +1131,7 @@ Partial Class Lang_JSON_GUI
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.XenonAlertBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.XenonAlertBox1.CenterText = True
@@ -1047,20 +1145,68 @@ Partial Class Lang_JSON_GUI
         Me.XenonAlertBox1.TabStop = False
         Me.XenonAlertBox1.Text = "There is no open file, please open a file to show GUI editor"
         '
+        'XenonGroupBox8
+        '
+        Me.XenonGroupBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonGroupBox8.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
+        Me.XenonGroupBox8.Controls.Add(Me.PictureBox4)
+        Me.XenonGroupBox8.Controls.Add(Me.Label9)
+        Me.XenonGroupBox8.Controls.Add(Me.Label8)
+        Me.XenonGroupBox8.Location = New System.Drawing.Point(12, 672)
+        Me.XenonGroupBox8.Name = "XenonGroupBox8"
+        Me.XenonGroupBox8.Size = New System.Drawing.Size(734, 32)
+        Me.XenonGroupBox8.TabIndex = 210
+        Me.XenonGroupBox8.Visible = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
+        Me.PictureBox4.Location = New System.Drawing.Point(4, 4)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox4.TabIndex = 68
+        Me.PictureBox4.TabStop = False
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(158, 5)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(573, 22)
+        Me.Label9.TabIndex = 71
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(34, 5)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(118, 22)
+        Me.Label8.TabIndex = 69
+        Me.Label8.Text = "Current open file:"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'Lang_JSON_GUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1002, 717)
-        Me.Controls.Add(Me.PictureBox4)
         Me.Controls.Add(Me.XenonButton7)
         Me.Controls.Add(Me.XenonButton2)
         Me.Controls.Add(Me.XenonGroupBox3)
         Me.Controls.Add(Me.XenonTabControl1)
         Me.Controls.Add(Me.XenonAlertBox1)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.XenonGroupBox8)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -1068,7 +1214,6 @@ Partial Class Lang_JSON_GUI
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "GUI language editor"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonGroupBox3.ResumeLayout(False)
         Me.XenonTabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
@@ -1082,6 +1227,7 @@ Partial Class Lang_JSON_GUI
         Me.TabPage2.ResumeLayout(False)
         Me.XenonGroupBox6.ResumeLayout(False)
         CType(Me.data, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XenonGroupBox9.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.XenonGroupBox1.ResumeLayout(False)
         Me.SplitContainer1.Panel1.ResumeLayout(False)
@@ -1090,46 +1236,47 @@ Partial Class Lang_JSON_GUI
         Me.SplitContainer1.ResumeLayout(False)
         Me.XenonGroupBox4.ResumeLayout(False)
         Me.XenonGroupBox2.ResumeLayout(False)
+        Me.XenonGroupBox7.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XenonGroupBox8.ResumeLayout(False)
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonComboBox1 As XenonComboBox
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
+    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents XenonTextBox2 As XenonTextBox
+    Friend WithEvents XenonTextBox2 As UI.WP.TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents XenonButton6 As XenonButton
+    Friend WithEvents XenonButton6 As UI.WP.Button
     Friend WithEvents FontDialog1 As FontDialog
     Friend WithEvents OpenJSONDlg As OpenFileDialog
     Friend WithEvents SaveJSONDlg As SaveFileDialog
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
     Friend WithEvents ProgressBar2 As ProgressBar
-    Friend WithEvents XenonTabControl1 As XenonTabControl
+    Friend WithEvents XenonTabControl1 As UI.WP.TabControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents XenonTextBox3 As XenonTextBox
+    Friend WithEvents XenonTextBox3 As UI.WP.TextBox
     Friend WithEvents Label22 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents PictureBox26 As PictureBox
@@ -1142,27 +1289,37 @@ Partial Class Lang_JSON_GUI
     Friend WithEvents Label10 As Label
     Friend WithEvents PictureBox25 As PictureBox
     Friend WithEvents PictureBox21 As PictureBox
-    Friend WithEvents XenonRadioButton2 As XenonRadioButton
-    Friend WithEvents XenonRadioButton1 As XenonRadioButton
-    Friend WithEvents XenonTextBox7 As XenonTextBox
-    Friend WithEvents XenonTextBox6 As XenonTextBox
-    Friend WithEvents XenonTextBox5 As XenonTextBox
-    Friend WithEvents XenonTextBox4 As XenonTextBox
+    Friend WithEvents XenonRadioButton2 As UI.WP.RadioButton
+    Friend WithEvents XenonRadioButton1 As UI.WP.RadioButton
+    Friend WithEvents XenonTextBox7 As UI.WP.TextBox
+    Friend WithEvents XenonTextBox6 As UI.WP.TextBox
+    Friend WithEvents XenonTextBox5 As UI.WP.TextBox
+    Friend WithEvents XenonTextBox4 As UI.WP.TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonButton9 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonButton11 As XenonButton
+    Friend WithEvents XenonButton9 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents XenonButton11 As UI.WP.Button
     Friend WithEvents data As DataGridView
-    Friend WithEvents XenonGroupBox5 As XenonGroupBox
-    Friend WithEvents XenonGroupBox6 As XenonGroupBox
+    Friend WithEvents XenonGroupBox5 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox6 As UI.WP.GroupBox
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonAlertBox3 As XenonAlertBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents XenonAlertBox3 As UI.WP.AlertBox
     Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents XenonTextBox8 As UI.WP.TextBox
+    Friend WithEvents XenonButton12 As UI.WP.Button
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents XenonButton13 As UI.WP.Button
+    Friend WithEvents XenonTextBox9 As UI.WP.TextBox
+    Friend WithEvents XenonGroupBox7 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox8 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox9 As UI.WP.GroupBox
+    Friend WithEvents ToolTip As ToolTip
 End Class

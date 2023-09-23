@@ -24,7 +24,7 @@ Partial Class BugReport
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BugReport))
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -33,18 +33,18 @@ Partial Class BugReport
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonTreeView1 = New WinPaletter.XenonTreeView()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonTreeView1 = New WinPaletter.UI.WP.TreeView()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         Me.XenonAnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,7 +75,7 @@ Partial Class BugReport
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(794, 110)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.MixedColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors
         Me.XenonAnimatedBox1.TabIndex = 121
         '
         'Label3
@@ -183,7 +183,7 @@ Partial Class BugReport
         Me.XenonButton5.Name = "XenonButton5"
         Me.XenonButton5.Size = New System.Drawing.Size(115, 34)
         Me.XenonButton5.TabIndex = 120
-        Me.XenonButton5.Text = "Github issues"
+        Me.XenonButton5.Text = "GitHub issues"
         Me.XenonButton5.UseVisualStyleBackColor = False
         '
         'XenonButton2
@@ -335,7 +335,7 @@ Partial Class BugReport
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
@@ -390,21 +390,21 @@ Partial Class BugReport
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonTreeView1 As XenonTreeView
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonTreeView1 As UI.WP.TreeView
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
 End Class

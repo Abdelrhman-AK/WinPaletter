@@ -23,25 +23,25 @@ Partial Class TerminalInfo
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TerminalInfo))
-        Me.TerTabTitle = New WinPaletter.XenonTextBox()
+        Me.TerTabTitle = New WinPaletter.UI.WP.TextBox()
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
         Me.Label174 = New System.Windows.Forms.Label()
-        Me.TerName = New WinPaletter.XenonTextBox()
+        Me.TerName = New WinPaletter.UI.WP.TextBox()
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
         Me.Label164 = New System.Windows.Forms.Label()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.Label153 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.TerTabIcon = New WinPaletter.XenonTextBox()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.TerTabIcon = New WinPaletter.UI.WP.TextBox()
         Me.Label166 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.TerTabColor = New WinPaletter.XenonCP()
+        Me.TerTabColor = New WinPaletter.UI.Controllers.ColorItem()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.TerAcrylic = New WinPaletter.XenonCheckBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.TerAcrylic = New UI.WP.CheckBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox28, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -297,7 +297,7 @@ Partial Class TerminalInfo
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(67, Byte), Integer), CType(CType(91, Byte), Integer))
@@ -356,23 +356,23 @@ Partial Class TerminalInfo
 
     End Sub
 
-    Friend WithEvents TerTabTitle As XenonTextBox
+    Friend WithEvents TerTabTitle As UI.WP.TextBox
     Friend WithEvents PictureBox47 As PictureBox
     Friend WithEvents Label174 As Label
-    Friend WithEvents TerName As XenonTextBox
+    Friend WithEvents TerName As UI.WP.TextBox
     Friend WithEvents PictureBox38 As PictureBox
     Friend WithEvents Label164 As Label
     Friend WithEvents PictureBox28 As PictureBox
     Friend WithEvents Label153 As Label
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents TerTabIcon As XenonTextBox
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents TerTabIcon As UI.WP.TextBox
     Friend WithEvents Label166 As Label
     Friend WithEvents PictureBox36 As PictureBox
-    Friend WithEvents TerTabColor As XenonCP
+    Friend WithEvents TerTabColor As UI.Controllers.ColorItem
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents TerAcrylic As XenonCheckBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents TerAcrylic As UI.WP.CheckBox
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
 End Class

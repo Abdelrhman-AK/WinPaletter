@@ -23,19 +23,19 @@ Partial Class Lang_Add_Snippet
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Lang_Add_Snippet))
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonComboBox2 = New WinPaletter.XenonComboBox()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonComboBox2 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox7 = New WinPaletter.UI.WP.AlertBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -168,7 +168,7 @@ Partial Class Lang_Add_Snippet
         '
         'XenonAlertBox7
         '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
@@ -207,7 +207,7 @@ Partial Class Lang_Add_Snippet
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Notice
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(91, Byte), Integer), CType(CType(94, Byte), Integer))
@@ -258,17 +258,17 @@ Partial Class Lang_Add_Snippet
 
     End Sub
 
-    Friend WithEvents XenonComboBox1 As XenonComboBox
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonComboBox2 As XenonComboBox
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonComboBox2 As UI.WP.ComboBox
+    Friend WithEvents XenonButton3 As UI.WP.Button
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonAlertBox7 As XenonAlertBox
+    Friend WithEvents XenonAlertBox7 As UI.WP.AlertBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
 End Class

@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
 
 Public Class ColorInfoDragDrop
 
@@ -59,7 +58,7 @@ Public Class ColorInfoDragDrop
         Location = MousePosition + New Point(15, 15)
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         Label6.Font = My.Application.ConsoleFontMedium
         Label7.Font = My.Application.ConsoleFontMedium
@@ -73,7 +72,7 @@ Public Class ColorInfoDragDrop
 
     Private Sub Color_From_BackColorChanged(sender As Object, e As EventArgs) Handles Color_From.BackColorChanged
         Dim Color As Color = CType(sender, Panel).BackColor
-        BackColor = If(GetDarkMode(), Color.Dark(_dark), Color.LightLight)
+        BackColor = If(My.Style.DarkMode, Color.Dark(_dark), Color.LightLight)
 
         Label6.Text = Color.ReturnFormat(ColorFormat.RGB, True, Color.A < 255).Replace(" ", ", ")
         Label7.Text = Color.ReturnFormat(ColorFormat.HEX, True, Color.A < 255).Replace(" ", ", ")

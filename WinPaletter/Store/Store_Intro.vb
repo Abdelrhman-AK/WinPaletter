@@ -1,11 +1,10 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class Store_Intro
     Private Sub Store_Intro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         XenonCheckBox1.Checked = My.Settings.Store.ShowTips
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = Store.Icon
     End Sub
 

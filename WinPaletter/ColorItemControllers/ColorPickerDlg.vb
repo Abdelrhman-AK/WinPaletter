@@ -5,7 +5,6 @@ Imports Devcorp.Controls.VisualStyles
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class ColorPickerDlg
     Dim InitColor As Color
@@ -86,17 +85,17 @@ Public Class ColorPickerDlg
 
     Private Sub ColorPicker_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonComboBox1.PopulateThemes
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
         Invalidate()
     End Sub
 
-    Sub GetColorsHistory(XenonCP As XenonCP)
+    Sub GetColorsHistory(XenonCP As UI.Controllers.ColorItem)
         FlowLayoutPanel1.SuspendLayout()
 
-        For Each c As XenonCP In FlowLayoutPanel1.Controls.OfType(Of XenonCP)
+        For Each c As UI.Controllers.ColorItem In FlowLayoutPanel1.Controls.OfType(Of UI.Controllers.ColorItem)
             RemoveHandler c.Click, AddressOf MiniColorItem_click
             c.Dispose()
             FlowLayoutPanel1.Controls.Remove(c)
@@ -106,7 +105,7 @@ Public Class ColorPickerDlg
 
         For Each c As Color In XenonCP.ColorsHistory
 
-            Dim MiniColorItem As New XenonCP With {
+            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,
                 .PauseColorsHistory = True,
@@ -123,7 +122,7 @@ Public Class ColorPickerDlg
     Sub GetColorsFromPalette(CP As CP)
         PaletteContainer.SuspendLayout()
 
-        For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
+        For Each c As UI.Controllers.ColorItem In PaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             RemoveHandler c.Click, AddressOf MiniColorItem_click
             c.Dispose()
             PaletteContainer.Controls.Remove(c)
@@ -133,7 +132,7 @@ Public Class ColorPickerDlg
 
         For Each c As Color In CP.ListColors
 
-            Dim MiniColorItem As New XenonCP With {
+            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,
                 .PauseColorsHistory = True,
@@ -191,9 +190,9 @@ Public Class ColorPickerDlg
 
             ColorControls_List = Ctrl
 
-            If TypeOf Ctrl(0) Is XenonCP Then
-                With CType(Ctrl(0), XenonCP)
-                    GetColorsHistory(CType(Ctrl(0), XenonCP))
+            If TypeOf Ctrl(0) Is UI.Controllers.ColorItem Then
+                With CType(Ctrl(0), UI.Controllers.ColorItem)
+                    GetColorsHistory(CType(Ctrl(0), UI.Controllers.ColorItem))
                     .PauseColorsHistory = True
                     .ColorPickerOpened = True
                     .Refresh()
@@ -210,8 +209,8 @@ Public Class ColorPickerDlg
 
             If ShowDialog() = DialogResult.OK Then c = ColorEditorManager1.Color
 
-            If TypeOf Ctrl(0) Is XenonCP Then
-                With CType(Ctrl(0), XenonCP)
+            If TypeOf Ctrl(0) Is UI.Controllers.ColorItem Then
+                With CType(Ctrl(0), UI.Controllers.ColorItem)
                     .Refresh()
                     .PauseColorsHistory = False
                     .ColorPickerOpened = False
@@ -247,8 +246,8 @@ Public Class ColorPickerDlg
 
         For Each ctrl As Control In ColorControls_List
 
-            If TypeOf ctrl Is XenonWindow Then
-                With DirectCast(ctrl, XenonWindow)
+            If TypeOf ctrl Is UI.Simulation.Window Then
+                With DirectCast(ctrl, UI.Simulation.Window)
                     If Not _Conditions.Win7 Then
                         If _Conditions.Window_ActiveTitlebar Then
                             .AccentColor_Active = ColorEditorManager1.Color
@@ -275,26 +274,26 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is XenonWinElement Then
-                With DirectCast(ctrl, XenonWinElement)
+            ElseIf TypeOf ctrl Is UI.Simulation.WinElement Then
+                With DirectCast(ctrl, UI.Simulation.WinElement)
 
-                    If .Style = XenonWinElement.Styles.Taskbar11 Or .Style = XenonWinElement.Styles.Taskbar10 Then
+                    If .Style = UI.Simulation.WinElement.Styles.Taskbar11 Or .Style = UI.Simulation.WinElement.Styles.Taskbar10 Then
                         If _Conditions.AppUnderlineOnly Then
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
                             .Refresh()
 
                         ElseIf _Conditions.AppUnderlineWithTaskbar Then
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "AppUnderline", .AppUnderline, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color).Light, steps, delay)
                             .Refresh()
 
                         ElseIf _Conditions.AppBackgroundOnly Then
 
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "AppBackground", .AppBackground, Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color), steps, delay)
                             .Refresh()
                         ElseIf _Conditions.StartColorOnly Then
 
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "StartColor", .StartColor, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                             .Refresh()
                         Else
                             If _Conditions.BackColor1 Then
@@ -302,17 +301,17 @@ Public Class ColorPickerDlg
                             ElseIf _Conditions.BackColor2 Then
                                 .Background2 = Color.FromArgb(.Background2.A, ColorEditorManager1.Color)
                             Else
-                                Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                                Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                             End If
                             .Refresh()
                         End If
 
-                    ElseIf .Style = XenonWinElement.Styles.ActionCenter11 And _Conditions.ActionCenterBtn Then
-                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
+                    ElseIf .Style = UI.Simulation.WinElement.Styles.ActionCenter11 And _Conditions.ActionCenterBtn Then
+                        Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "ActionCenterButton_Normal", .ActionCenterButton_Normal, Color.FromArgb(255, ColorEditorManager1.Color), steps, delay)
                         .Refresh()
 
-                    ElseIf .Style = XenonWinElement.Styles.ActionCenter10 And _Conditions.ActionCenterLink Then
-                        Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                    ElseIf .Style = UI.Simulation.WinElement.Styles.ActionCenter10 And _Conditions.ActionCenterLink Then
+                        Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "LinkColor", .LinkColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         .Refresh()
 
                     Else
@@ -321,15 +320,15 @@ Public Class ColorPickerDlg
                         ElseIf _Conditions.BackColor2 Then
                             .Background2 = Color.FromArgb(.Background2.A, ColorEditorManager1.Color)
                         Else
-                            Visual.FadeColor(DirectCast(ctrl, XenonWinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
+                            Visual.FadeColor(DirectCast(ctrl, UI.Simulation.WinElement), "BackColor", .BackColor, Color.FromArgb(.BackColor.A, ColorEditorManager1.Color), steps, delay)
                         End If
 
                         .Refresh()
                     End If
                 End With
 
-            ElseIf TypeOf ctrl Is StoreItem Then
-                With DirectCast(ctrl, StoreItem)
+            ElseIf TypeOf ctrl Is UI.Controllers.StoreItem Then
+                With DirectCast(ctrl, UI.Controllers.StoreItem)
                     If _Conditions.BackColor1 Then
                         .CP.Info.Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
                     ElseIf _Conditions.BackColor2 Then
@@ -346,8 +345,8 @@ Public Class ColorPickerDlg
                     Visual.FadeColor(ctrl, "Forecolor", ctrl.ForeColor, Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color), steps, delay)
                 End If
 
-            ElseIf TypeOf ctrl Is RetroWindow Then
-                With DirectCast(ctrl, RetroWindow)
+            ElseIf TypeOf ctrl Is UI.Retro.WindowR Then
+                With DirectCast(ctrl, UI.Retro.WindowR)
                     If _Conditions.RetroWindowColor1 Then .Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowColor2 Then .Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -367,8 +366,8 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is Retro3DPreview Then
-                With DirectCast(ctrl, Retro3DPreview)
+            ElseIf TypeOf ctrl Is UI.Retro.Preview3D Then
+                With DirectCast(ctrl, UI.Retro.Preview3D)
                     If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -379,8 +378,8 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is RetroTextBox Then
-                With DirectCast(ctrl, RetroTextBox)
+            ElseIf TypeOf ctrl Is UI.Retro.TextBoxR Then
+                With DirectCast(ctrl, UI.Retro.TextBoxR)
 
                     If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -393,8 +392,8 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is RetroButton Then
-                With DirectCast(ctrl, RetroButton)
+            ElseIf TypeOf ctrl Is UI.Retro.ButtonR Then
+                With DirectCast(ctrl, UI.Retro.ButtonR)
                     If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -405,21 +404,21 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is RetroScrollBar Then
-                With DirectCast(ctrl, RetroScrollBar)
+            ElseIf TypeOf ctrl Is UI.Retro.ScrollBarR Then
+                With DirectCast(ctrl, UI.Retro.ScrollBarR)
                     If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color) Else .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is Panel Then
-                If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is RetroPanel Then
-                    DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                If _Conditions.RetroHighlight17BitFixer And TypeOf ctrl Is UI.Retro.PanelR Then
+                    DirectCast(ctrl, UI.Retro.PanelR).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                 Else
-                    If TypeOf ctrl IsNot XenonGroupBox And TypeOf ctrl IsNot XenonCP Then
+                    If TypeOf ctrl IsNot UI.WP.GroupBox And TypeOf ctrl IsNot UI.Controllers.ColorItem Then
                         If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                        If TypeOf ctrl Is RetroPanel Then
-                            If _Conditions.RetroButtonHilight Then DirectCast(ctrl, RetroPanel).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                            If _Conditions.RetroButtonShadow Then DirectCast(ctrl, RetroPanel).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                        If TypeOf ctrl Is UI.Retro.PanelR Then
+                            If _Conditions.RetroButtonHilight Then DirectCast(ctrl, UI.Retro.PanelR).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                            If _Conditions.RetroButtonShadow Then DirectCast(ctrl, UI.Retro.PanelR).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                         End If
                         If TypeOf ctrl Is Panel Then
                             ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -427,13 +426,13 @@ Public Class ColorPickerDlg
                     End If
                 End If
 
-                If TypeOf ctrl Is XenonCP Then
+                If TypeOf ctrl Is UI.Controllers.ColorItem Then
                     Visual.FadeColor(ctrl, "BackColor", ctrl.BackColor, ColorEditorManager1.Color, steps, delay)
                 End If
                 ctrl.Refresh()
 
-            ElseIf TypeOf ctrl Is RetroTextBox Then
-                With DirectCast(ctrl, RetroTextBox)
+            ElseIf TypeOf ctrl Is UI.Retro.TextBoxR Then
+                With DirectCast(ctrl, UI.Retro.TextBoxR)
                     If _Conditions.RetroWindowText Then
                         ctrl.ForeColor = Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color)
                     Else
@@ -442,8 +441,8 @@ Public Class ColorPickerDlg
                     ctrl.Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is XenonTerminal Then
-                With DirectCast(ctrl, XenonTerminal)
+            ElseIf TypeOf ctrl Is UI.Simulation.WinTerminal Then
+                With DirectCast(ctrl, UI.Simulation.WinTerminal)
 
                     If _Conditions.Terminal_Back Then
                         .Color_Background = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -476,8 +475,8 @@ Public Class ColorPickerDlg
                     .Refresh()
                 End With
 
-            ElseIf TypeOf ctrl Is XenonCMD Then
-                With DirectCast(ctrl, XenonCMD)
+            ElseIf TypeOf ctrl Is UI.Simulation.WinCMD Then
+                With DirectCast(ctrl, UI.Simulation.WinCMD)
                     If _Conditions.CMD_ColorTable00 Then
                         .CMD_ColorTable00 = Color.FromArgb(255, ColorEditorManager1.Color)
 
@@ -686,7 +685,7 @@ Public Class ColorPickerDlg
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
 
-        For Each ctrl As XenonCP In ImgPaletteContainer.Controls.OfType(Of XenonCP)
+        For Each ctrl As UI.Controllers.ColorItem In ImgPaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             RemoveHandler ctrl.Click, AddressOf MiniColorItem_click
             ctrl.Dispose()
         Next
@@ -696,7 +695,7 @@ Public Class ColorPickerDlg
         Colors_List.Sort(New RGBColorComparer())
 
         For Each C As Color In Colors_List
-            Dim MiniColorItem As New XenonCP With {
+            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,
                 .PauseColorsHistory = True,
@@ -713,7 +712,7 @@ Public Class ColorPickerDlg
     End Sub
 
     Private Sub MiniColorItem_click(sender As Object, e As EventArgs)
-        ColorEditorManager1.Color = CType(sender, XenonCP).BackColor
+        ColorEditorManager1.Color = CType(sender, UI.Controllers.ColorItem).BackColor
     End Sub
 
     Private Sub XenonButton5_Click(sender As Object, e As EventArgs)
@@ -781,7 +780,7 @@ Public Class ColorPickerDlg
         If XenonComboBox1.SelectedItem Is Nothing Then Exit Sub
 
 
-        For Each c As XenonCP In ThemePaletteContainer.Controls.OfType(Of XenonCP)
+        For Each c As UI.Controllers.ColorItem In ThemePaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             RemoveHandler c.Click, AddressOf MiniColorItem_click
             c.Dispose()
             ThemePaletteContainer.Controls.Remove(c)
@@ -792,7 +791,7 @@ Public Class ColorPickerDlg
         Try
             If Not String.IsNullOrWhiteSpace(XenonComboBox1.SelectedItem) Then
                 For Each C As Color In CP.GetPaletteFromString(My.Resources.RetroThemesDB, XenonComboBox1.SelectedItem)
-                    Dim MiniColorItem As New XenonCP With {
+                    Dim MiniColorItem As New UI.Controllers.ColorItem With {
                         .Size = .GetMiniColorItemSize,
                         .AllowDrop = False,
                         .PauseColorsHistory = True,
@@ -828,7 +827,7 @@ Public Class ColorPickerDlg
     Private Sub XenonTextBox1_TextChanged(sender As Object, e As EventArgs) Handles XenonTextBox1.TextChanged
         If IO.File.Exists(XenonTextBox1.Text) Then
 
-            For Each c As XenonCP In ThemePaletteContainer.Controls.OfType(Of XenonCP)
+            For Each c As UI.Controllers.ColorItem In ThemePaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
                 RemoveHandler c.Click, AddressOf MiniColorItem_click
                 c.Dispose()
                 ThemePaletteContainer.Controls.Remove(c)
@@ -839,7 +838,7 @@ Public Class ColorPickerDlg
             If IO.Path.GetExtension(XenonTextBox1.Text).ToLower = ".theme" Then
                 Try
                     For Each C As Color In CP.GetPaletteFromMSTheme(XenonTextBox1.Text)
-                        Dim MiniColorItem As New XenonCP With {
+                        Dim MiniColorItem As New UI.Controllers.ColorItem With {
                             .Size = .GetMiniColorItemSize,
                             .AllowDrop = False,
                             .PauseColorsHistory = True,
@@ -861,7 +860,7 @@ Public Class ColorPickerDlg
                     For Each field In GetType(VisualStyleMetricColors).GetFields(BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public)
                         If field.FieldType.Name.ToLower = "color" Then
 
-                            Dim MiniColorItem As New XenonCP With {
+                            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                                 .Size = .GetMiniColorItemSize,
                                 .AllowDrop = False,
                                 .PauseColorsHistory = True,

@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class ScreenSaver_Editor
 
@@ -7,7 +6,7 @@ Public Class ScreenSaver_Editor
 
     Private Sub ScreenSaver_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         pnl_preview.DoubleBuffer
         ApplyFromCP(My.CP)

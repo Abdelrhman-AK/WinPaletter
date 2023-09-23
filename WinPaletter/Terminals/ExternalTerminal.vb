@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports Microsoft.Win32
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.XenonCore
 
 Public Class ExternalTerminal
     Private _Shown As Boolean = False
@@ -9,7 +8,7 @@ Public Class ExternalTerminal
 
     Private Sub ExternalTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         _Shown = False
         FillTerminals(XenonComboBox1)
         RasterList.BringToFront()
@@ -26,7 +25,7 @@ Public Class ExternalTerminal
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -571,43 +570,43 @@ Public Class ExternalTerminal
 
         Select Case RasterList.SelectedItem
             Case "4x6"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._4x6
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6
 
             Case "6x8"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._6x8
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "6x9"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._6x8
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8
 
             Case "8x8"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x8
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "8x9"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x8
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8
 
             Case "16x8"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._16x8
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8
 
             Case "5x12"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._5x12
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12
 
             Case "7x12"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._7x12
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12
 
             Case "8x12"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x12
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
             Case "16x12"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._16x12
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12
 
             Case "12x16"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._12x16
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16
 
             Case "10x18"
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._10x18
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18
 
             Case Else
-                XenonCMD4.RasterSize = XenonCMD.Raster_Sizes._8x12
+                XenonCMD4.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12
 
         End Select
 

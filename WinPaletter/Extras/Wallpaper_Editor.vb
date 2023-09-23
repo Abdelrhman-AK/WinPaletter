@@ -1,9 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports System.Runtime.ConstrainedExecution
 Imports Microsoft.Win32
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class Wallpaper_Editor
 
@@ -17,7 +15,7 @@ Public Class Wallpaper_Editor
 
     Private Sub Wallpaper_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         index = 0
@@ -42,7 +40,7 @@ Public Class Wallpaper_Editor
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else

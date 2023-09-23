@@ -1,6 +1,4 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class CursorsStudio
+﻿Public Class CursorsStudio
     Private _Shown As Boolean = False
     Private _SelectedControl As CursorControl
     Private _CopiedControl As CursorControl
@@ -136,7 +134,7 @@ Public Class CursorsStudio
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         FlowLayoutPanel1.DoubleBuffer
 
         AnimateList.Clear()
@@ -171,7 +169,7 @@ Public Class CursorsStudio
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -299,7 +297,7 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorBack1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
@@ -307,8 +305,8 @@ Public Class CursorsStudio
         _SelectedControl.Prop_PrimaryColor1 = c
         _SelectedControl.Invalidate()
 
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -331,15 +329,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorBack2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_PrimaryColor2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -362,15 +360,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorLine1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_SecondaryColor1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -393,15 +391,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorLine2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_SecondaryColor2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -424,15 +422,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircle1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleBack1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -551,15 +549,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircle2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleBack2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -582,15 +580,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircleHot1 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleHot1 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -613,15 +611,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorCircleHot2 = True, .Win7 = False, .Win7LivePreview_AfterGlow = False, .Win7LivePreview_Colorization = False}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition, True)
 
         _SelectedControl.Prop_LoadingCircleHot2 = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 
@@ -894,15 +892,15 @@ Public Class CursorsStudio
             Exit Sub
         End If
 
-        Dim CList As New List(Of Control) From {DirectCast(sender, XenonCP), _SelectedControl}
+        Dim CList As New List(Of Control) From {DirectCast(sender, UI.Controllers.ColorItem), _SelectedControl}
 
         Dim _Condition As New Conditions With {.CursorShadow = True}
         Dim c As Color = ColorPickerDlg.Pick(CList, _Condition)
 
         _SelectedControl.Prop_Shadow_Color = c
         _SelectedControl.Invalidate()
-        DirectCast(sender, XenonCP).BackColor = c
-        DirectCast(sender, XenonCP).Invalidate()
+        DirectCast(sender, UI.Controllers.ColorItem).BackColor = c
+        DirectCast(sender, UI.Controllers.ColorItem).Invalidate()
 
         CList.Clear()
 

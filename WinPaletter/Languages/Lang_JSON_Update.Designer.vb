@@ -27,19 +27,19 @@ Partial Class Lang_JSON_Update
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
-        Me.XenonTextBox2 = New WinPaletter.XenonTextBox()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox7 = New WinPaletter.XenonAlertBox()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonTextBox2 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonAlertBox7 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
         Me.SaveJSONDlg = New System.Windows.Forms.SaveFileDialog()
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -180,7 +180,7 @@ Partial Class Lang_JSON_Update
         '
         'XenonAlertBox7
         '
-        Me.XenonAlertBox7.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox7.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -251,7 +251,7 @@ Partial Class Lang_JSON_Update
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -321,17 +321,17 @@ Partial Class Lang_JSON_Update
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonTextBox1 As XenonTextBox
-    Friend WithEvents XenonTextBox2 As XenonTextBox
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonAlertBox7 As XenonAlertBox
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
+    Friend WithEvents XenonTextBox2 As UI.WP.TextBox
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents XenonAlertBox7 As UI.WP.AlertBox
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
     Friend WithEvents SaveJSONDlg As SaveFileDialog
     Friend WithEvents OpenJSONDlg As OpenFileDialog
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
 End Class

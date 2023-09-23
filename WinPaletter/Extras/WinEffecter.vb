@@ -1,11 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class WinEffecter
     Private Sub WinEffecter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         SetClassicButtonColors(My.CP, RetroButton1)

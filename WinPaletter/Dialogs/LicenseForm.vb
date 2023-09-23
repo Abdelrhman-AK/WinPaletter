@@ -1,9 +1,7 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class LicenseForm
+﻿Public Class LicenseForm
     Private Sub LicenseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonTextBox1.Font = My.Application.ConsoleFontLarge
         XenonTextBox1.Text = My.Resources.LICENSE
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)

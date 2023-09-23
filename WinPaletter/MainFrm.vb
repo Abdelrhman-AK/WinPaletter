@@ -1,11 +1,7 @@
 ﻿Imports System.ComponentModel
-Imports System.IO
 Imports System.Net
-Imports System.Runtime.InteropServices
 Imports System.Text
-Imports System.Windows.Documents
 Imports Devcorp.Controls.VisualStyles
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
@@ -72,7 +68,7 @@ Public Class MainFrm
             .CustomTheme = [CP].AppTheme.DarkMode
             .RoundedCorners = [CP].AppTheme.RoundCorners
         End With
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         W11_WinMode_Toggle.Checked = Not [CP].Windows11.WinMode_Light
         W11_AppMode_Toggle.Checked = Not [CP].Windows11.AppMode_Light
@@ -386,7 +382,7 @@ Public Class MainFrm
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -452,7 +448,7 @@ Public Class MainFrm
         End If
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         DoubleBuffer
         UpdateLegends()
         ApplyColorsToElements(My.CP)
@@ -476,21 +472,21 @@ Public Class MainFrm
     Private Sub MainFrm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _Shown = True
 
-        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+        For Each btn As UI.WP.Button In MainToolbar.Controls.OfType(Of UI.WP.Button)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
             AddHandler btn.Enter, AddressOf UpdateHint
             AddHandler btn.MouseLeave, AddressOf EraseHint
             AddHandler btn.Leave, AddressOf EraseHint
         Next
 
-        For Each btn As XenonButton In XenonGroupBox3.Controls.OfType(Of XenonButton)
+        For Each btn As UI.WP.Button In XenonGroupBox3.Controls.OfType(Of UI.WP.Button)
             AddHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
             AddHandler btn.Enter, AddressOf UpdateHint_Dashboard
             AddHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
             AddHandler btn.Leave, AddressOf EraseHint_Dashboard
         Next
 
-        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
+        For Each btn As UI.WP.RadioImage In previewContainer.Controls.OfType(Of UI.WP.RadioImage)
             AddHandler btn.MouseEnter, AddressOf UpdateHint
             AddHandler btn.Enter, AddressOf UpdateHint
             AddHandler btn.MouseLeave, AddressOf EraseHint
@@ -503,21 +499,21 @@ Public Class MainFrm
     End Sub
 
     Private Sub MainFrm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        For Each btn As XenonButton In MainToolbar.Controls.OfType(Of XenonButton)
+        For Each btn As UI.WP.Button In MainToolbar.Controls.OfType(Of UI.WP.Button)
             RemoveHandler btn.MouseEnter, AddressOf UpdateHint
             RemoveHandler btn.Enter, AddressOf UpdateHint
             RemoveHandler btn.MouseLeave, AddressOf EraseHint
             RemoveHandler btn.Leave, AddressOf EraseHint
         Next
 
-        For Each btn As XenonButton In XenonGroupBox3.Controls.OfType(Of XenonButton)
+        For Each btn As UI.WP.Button In XenonGroupBox3.Controls.OfType(Of UI.WP.Button)
             RemoveHandler btn.MouseEnter, AddressOf UpdateHint_Dashboard
             RemoveHandler btn.Enter, AddressOf UpdateHint_Dashboard
             RemoveHandler btn.MouseLeave, AddressOf EraseHint_Dashboard
             RemoveHandler btn.Leave, AddressOf EraseHint_Dashboard
         Next
 
-        For Each btn As XenonRadioImage In previewContainer.Controls.OfType(Of XenonRadioImage)
+        For Each btn As UI.WP.RadioImage In previewContainer.Controls.OfType(Of UI.WP.RadioImage)
             RemoveHandler btn.MouseEnter, AddressOf UpdateHint
             RemoveHandler btn.Enter, AddressOf UpdateHint
             RemoveHandler btn.MouseLeave, AddressOf EraseHint
@@ -613,7 +609,7 @@ Public Class MainFrm
 
 #Region "Windows 11"
     Private Sub W11_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W11_ActiveTitlebar_pick.DragDrop, W11_InactiveTitlebar_pick.DragDrop, W11_TaskbarFrontAndFoldersOnStart_pick.DragDrop, W11_Color_Index0.DragDrop, W11_Color_Index1.DragDrop, W11_Color_Index2.DragDrop, W11_Color_Index3.DragDrop, W11_Color_Index4.DragDrop, W11_Color_Index5.DragDrop, W11_Color_Index6.DragDrop, W11_Color_Index7.DragDrop
-        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W11 Then
+        If CType(sender, UI.Controllers.ColorItem).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W11 Then
             My.CP.Windows11.Titlebar_Active = W11_ActiveTitlebar_pick.BackColor
             My.CP.Windows11.Titlebar_Inactive = W11_InactiveTitlebar_pick.BackColor
             My.CP.Windows11.StartMenu_Accent = W11_Color_Index5.BackColor
@@ -1068,7 +1064,7 @@ Public Class MainFrm
 
 #Region "Windows 10"
     Private Sub W10_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W10_ActiveTitlebar_pick.DragDrop, W10_InactiveTitlebar_pick.DragDrop, W10_TaskbarFrontAndFoldersOnStart_pick.DragDrop, W10_Color_Index0.DragDrop, W10_Color_Index1.DragDrop, W10_Color_Index2.DragDrop, W10_Color_Index3.DragDrop, W10_Color_Index4.DragDrop, W10_Color_Index5.DragDrop, W10_Color_Index6.DragDrop, W10_Color_Index7.DragDrop
-        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W10 Then
+        If CType(sender, UI.Controllers.ColorItem).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W10 Then
             My.CP.Windows10.Titlebar_Active = W10_ActiveTitlebar_pick.BackColor
             My.CP.Windows10.Titlebar_Inactive = W10_InactiveTitlebar_pick.BackColor
             My.CP.Windows10.StartMenu_Accent = W10_Color_Index5.BackColor
@@ -1516,7 +1512,7 @@ Public Class MainFrm
                     ElseIf My.CP.Windows10.ApplyAccentOnTaskbar = CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar Then
                         CList.Add(start)
                         CList.Add(ActionCenter)
-                        CList.Add(taskbar)  'Start Button Hover
+                        CList.Add(taskbar)  'Start ButtonR Hover
                         _Conditions.StartColorOnly = True
                     Else
                         CList.Add(start)
@@ -1583,7 +1579,7 @@ Public Class MainFrm
 
 #Region "Windows 8.1"
     Private Sub W81_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W81_ColorizationColor_pick.DragDrop, W81_start_pick.DragDrop, W81_accent_pick.DragDrop, W81_personalcls_background_pick.DragDrop, W81_personalcolor_accent_pick.DragDrop
-        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W81 Then
+        If CType(sender, UI.Controllers.ColorItem).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W81 Then
             My.CP.Windows81.ColorizationColor = W81_ColorizationColor_pick.BackColor
             My.CP.Windows81.StartColor = W81_start_pick.BackColor
             My.CP.Windows81.AccentColor = W81_accent_pick.BackColor
@@ -1761,7 +1757,7 @@ Public Class MainFrm
 
 #Region "Windows 7"
     Private Sub W7_pick_DragDrop(sender As Object, e As DragEventArgs) Handles W7_ColorizationColor_pick.DragDrop, W7_ColorizationAfterglow_pick.DragDrop
-        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W7 Then
+        If CType(sender, UI.Controllers.ColorItem).AllowDrop AndAlso My.PreviewStyle = WindowStyle.W7 Then
             My.CP.Windows7.ColorizationColor = W7_ColorizationColor_pick.BackColor
             My.CP.Windows7.ColorizationAfterglow = W7_ColorizationAfterglow_pick.BackColor
             ApplyColorsToElements(My.CP)
@@ -1936,7 +1932,7 @@ Public Class MainFrm
 
 #Region "Windows Vista"
     Private Sub WVista_pick_DragDrop(sender As Object, e As DragEventArgs) Handles WVista_ColorizationColor_pick.DragDrop
-        If CType(sender, XenonCP).AllowDrop AndAlso My.PreviewStyle = WindowStyle.WVista Then
+        If CType(sender, UI.Controllers.ColorItem).AllowDrop AndAlso My.PreviewStyle = WindowStyle.WVista Then
             My.CP.WindowsVista.ColorizationColor = WVista_ColorizationColor_pick.BackColor
             ApplyColorsToElements(My.CP)
         End If
@@ -2222,25 +2218,25 @@ Public Class MainFrm
     Private Sub Apply_btn_MouseEnter(sender As Object, e As EventArgs) Handles apply_btn.MouseEnter
         If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
             status_lbl.Text = My.Lang.ThisWillRestartExplorer
-            status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
+            status_lbl.ForeColor = If(My.Style.DarkMode, Color.Gold, Color.Gold.Dark(0.1))
         End If
     End Sub
 
     Private Sub Apply_btn_MouseLeave(sender As Object, e As EventArgs) Handles apply_btn.MouseLeave
         If My.Settings.ThemeApplyingBehavior.AutoRestartExplorer Then
             status_lbl.Text = ""
-            status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+            status_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
         End If
     End Sub
 
     Private Sub XenonButton19_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton19.MouseEnter
         status_lbl.Text = My.Lang.ThisWillRestartExplorer
-        status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
+        status_lbl.ForeColor = If(My.Style.DarkMode, Color.Gold, Color.Gold.Dark(0.1))
     End Sub
 
     Private Sub XenonButton19_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton19.MouseLeave
         status_lbl.Text = ""
-        status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        status_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -2526,6 +2522,7 @@ Public Class MainFrm
     End Sub
 
     Private Sub XenonButton26_Click(sender As Object, e As EventArgs) Handles XenonButton26.Click
+        ApplicationThemer.FixLanguageDarkModeBug = False
         ApplicationThemer.Show()
     End Sub
 
@@ -2549,12 +2546,12 @@ Public Class MainFrm
 
     Private Sub XenonButton28_MouseEnter(sender As Object, e As EventArgs) Handles XenonButton28.MouseEnter
         status_lbl.Text = My.Lang.LogoffNotice
-        status_lbl.ForeColor = If(GetDarkMode(), Color.Gold, Color.Gold.Dark(0.1))
+        status_lbl.ForeColor = If(My.Style.DarkMode, Color.Gold, Color.Gold.Dark(0.1))
     End Sub
 
     Private Sub XenonButton28_MouseLeave(sender As Object, e As EventArgs) Handles XenonButton28.MouseLeave
         status_lbl.Text = ""
-        status_lbl.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        status_lbl.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
     End Sub
 
     Private Sub XenonButton39_Click(sender As Object, e As EventArgs) Handles XenonButton39.Click
@@ -2563,10 +2560,6 @@ Public Class MainFrm
 
     Private Sub XenonButton40_Click(sender As Object, e As EventArgs) Handles XenonButton40.Click
         PaletteGenerateDashboard.ShowDialog()
-    End Sub
-
-    Private Sub XenonButton41_Click(sender As Object, e As EventArgs) Handles XenonButton41.Click
-        Lang_JSON_GUI.Show()
     End Sub
 
     Private Sub XenonButton30_Click_1(sender As Object, e As EventArgs) Handles XenonButton30.Click

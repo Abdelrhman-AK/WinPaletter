@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports ImageProcessor
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class LogonUI7
     Private _Shown As Boolean = False
@@ -11,7 +10,7 @@ Public Class LogonUI7
     Private Sub LogonUI7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ID = 0
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         _Shown = False
         LoadFromCP(My.CP)
         ApplyPreview()
@@ -31,7 +30,7 @@ Public Class LogonUI7
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else

@@ -621,6 +621,33 @@ Public Module StringExtensions
 
         Return Encoding.UTF8.GetString(decompressedBytes)
     End Function
+
+
+    <Extension()>
+    Public Function Replace(s As String, word As String, by As String, stringComparison As StringComparison, WholeWord As Boolean) As String
+        s &= " "
+        Dim wordSt As Integer
+        Dim sb As StringBuilder = New StringBuilder()
+        While s.IndexOf(word, stringComparison) > -1
+            wordSt = s.IndexOf(word, stringComparison)
+            If Not WholeWord OrElse (wordSt = 0 OrElse Not Char.IsLetterOrDigit(Char.Parse(s.Substring(wordSt - 1, 1)))) AndAlso Not Char.IsLetterOrDigit(Char.Parse(s.Substring(wordSt + word.Length, 1))) Then
+                sb.Append(s.Substring(0, wordSt) & by)
+            Else
+                sb.Append(s.Substring(0, wordSt + word.Length))
+            End If
+            s = s.Substring(wordSt + word.Length)
+        End While
+        sb.Append(s)
+        Return sb.ToString().Substring(0, sb.Length - 1)
+    End Function
+
+
+    <Extension()>
+    Public Function Replace(s As String, word As String, by As String, IgnoreCase As Boolean, WholeWord As Boolean) As String
+        Dim stringComparison As StringComparison = StringComparison.Ordinal
+        If IgnoreCase Then stringComparison = StringComparison.OrdinalIgnoreCase
+        Return Replace(s, word, by, stringComparison, WholeWord)
+    End Function
 End Module
 
 Public Module ListOfStringExtensions
@@ -1108,6 +1135,43 @@ Public Module ControlExtensions
         pi.SetValue([Control], setting, Nothing)
     End Sub
 
+    <Extension()>
+    Friend Function GetParentColor(ctrl As Control, Optional Accept_Transparent As Boolean = False) As Color
+
+        If Accept_Transparent Then
+            Return ctrl.Parent.BackColor
+        Else
+            Try
+
+                If ctrl.Parent Is Nothing Then
+                    Exit Function
+                End If
+
+                If ctrl.Parent.BackColor.A = 255 Then
+                    Return Color.FromArgb(255, ctrl.Parent.BackColor)
+                Else
+                    Try
+                        Dim c1 As Color = ctrl.Parent.BackColor
+                        Dim c2 As Color
+                        If TypeOf ctrl.Parent.Parent IsNot Form Then
+                            c2 = ctrl.Parent.Parent.BackColor
+                        Else
+                            c2 = ctrl.Parent.FindForm.BackColor
+                        End If
+                        Dim amount As Double = c1.A / 255
+                        Dim r As Byte = CByte(((c1.R * amount) + c2.R * (1 - amount)))
+                        Dim g As Byte = CByte(((c1.G * amount) + c2.G * (1 - amount)))
+                        Dim b As Byte = CByte(((c1.B * amount) + c2.B * (1 - amount)))
+                        Return Color.FromArgb(r, g, b)
+                    Catch
+                        Return ctrl.Parent.BackColor
+                    End Try
+                End If
+            Catch
+            End Try
+        End If
+
+    End Function
 
     <Extension()>
     Public Sub DoubleBuffer(Parent As Control)
@@ -1123,6 +1187,341 @@ Public Module ControlExtensions
             DoubleBufferedControl(ctrl, True)
         Next
     End Sub
+
+    <Extension()>
+    Public Function GetAllControls(parent As Control) As IEnumerable(Of Control)
+        Dim cs = parent.Controls.OfType(Of Control)
+        Return cs.SelectMany(Function(c) GetAllControls(c)).Concat(cs)
+    End Function
+
+    <Extension()>
+    Public Sub SetText(Ctrl As Control, text As String)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New setCtrlTxtInvoker(AddressOf SetText), Ctrl, text)
+            Else
+                Ctrl.Text = text
+                Ctrl.Refresh()
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, text As String)
+
+    <Extension()>
+    Public Sub SetTag(Ctrl As Control, Tag As Object)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New setCtrlTagInvoker(AddressOf SetTag), Ctrl, Tag)
+            Else
+                Ctrl.Tag = Tag
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub setCtrlTagInvoker(Ctrl As Control, Tag As Object)
+
+    <Extension()>
+    Public Sub AddTreeNode(Ctrl As Windows.Forms.TreeView, text As String, imagekey As String)
+        Try
+            If Ctrl.InvokeRequired Then
+                Ctrl.Invoke(New AddTreeNodeInvoker(AddressOf AddTreeNode), Ctrl, text, imagekey)
+            Else
+                With Ctrl.Nodes.Add(text)
+                    .ImageKey = imagekey : .SelectedImageKey = imagekey
+                End With
+            End If
+        Catch
+
+        End Try
+    End Sub
+    Private Delegate Sub AddTreeNodeInvoker(Ctrl As Windows.Forms.TreeView, text As String, imagekey As String)
+
+    <Extension()>
+    Public Sub PerformStepMethod2(ProgressBar As ProgressBar)
+        If ProgressBar.InvokeRequired Then
+            ProgressBar.Invoke(New PerformStepMethod2Invoker(AddressOf PerformStepMethod2), ProgressBar)
+        Else
+            ProgressBar.PerformStep()
+        End If
+    End Sub
+    Private Delegate Sub PerformStepMethod2Invoker(ProgressBar As ProgressBar)
+End Module
+
+Module GraphicsExtensions
+
+    <Extension()>
+    Public Sub DrawGlowString(G As Graphics, GlowSize As Integer, Text As String, Font As Font, [ForeColor] As Color, GlowColor As Color, ClientRect As Rectangle, Rect As Rectangle, FormatX As StringFormat)
+        Dim w As Integer = Math.Max(8, ClientRect.Width / 5)
+        Dim h As Integer = Math.Max(8, ClientRect.Height / 5)
+        Dim emSize As Single = G.DpiY * Font.SizeInPoints / 72
+
+        Using b As New Bitmap(w, h)
+            Using gp As New GraphicsPath()
+                gp.AddString(Text, Font.FontFamily, Font.Style, emSize, Rect, FormatX)
+
+                Using gx As Graphics = Graphics.FromImage(b)
+                    Using m = New Matrix(1.0F / 5, 0, 0, 1.0F / 5, -(1.0F / 5), -(1.0F / 5))
+                        gx.SmoothingMode = SmoothingMode.AntiAlias
+                        gx.Transform = m
+                        Using pn = New Pen(GlowColor, GlowSize)
+                            gx.DrawPath(pn, gp)
+                            gx.FillPath(pn.Brush, gp)
+                        End Using
+                    End Using
+                End Using
+
+                G.InterpolationMode = InterpolationMode.HighQualityBicubic
+                G.DrawImage(b, ClientRect, 0, 0, b.Width, b.Height, GraphicsUnit.Pixel)
+
+                G.SmoothingMode = SmoothingMode.AntiAlias
+                Using br As New SolidBrush(ForeColor)
+                    G.DrawString(Text, Font, br, Rect, FormatX)
+                End Using
+
+            End Using
+        End Using
+    End Sub
+
+    <Extension()>
+    Public Sub DrawGlow(G As Graphics, R As Rectangle, GlowColor As Color, Optional GlowSize As Integer = 5, Optional GlowFade As Integer = 7)
+        Try
+            If GlowSize <= 0 Then GlowSize = 1
+            If GlowFade <= 0 Then GlowFade = 1
+
+            Dim Rect As Rectangle
+            With R
+                Rect = New Rectangle(.X - GlowSize - 2, .Y - GlowSize - 2, .Width + (GlowSize * 2) + 3, .Height + (GlowSize * 2) + 3)
+            End With
+
+            Using bm As New Bitmap(CInt(Rect.Width / GlowFade), CInt(Rect.Height / GlowFade))
+                Using G2 As Graphics = Graphics.FromImage(bm)
+                    Dim Rect2 As New Rectangle(1, 1, bm.Width, bm.Height)
+
+                    Using br As New SolidBrush(GlowColor)
+                        G2.FillRectangle(br, Rect2)
+                    End Using
+
+                    G.DrawImage(bm, Rect)
+                End Using
+            End Using
+        Catch
+        End Try
+    End Sub
+
+    <Extension()>
+    Public Sub DrawAeroEffect(G As Graphics, Rect As Rectangle, BackgroundBlurred As Bitmap, Color1 As Color, ColorBalance As Single, Color2 As Color, GlowBalance As Single, alpha As Single,
+                       Radius As Integer, RoundedCorners As Boolean)
+
+        If RoundedCorners Then
+            If BackgroundBlurred IsNot Nothing Then G.DrawRoundImage(BackgroundBlurred, Rect, Radius, True)
+
+            Using br As New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)) : G.FillRoundedRect(br, Rect, Radius, True) : End Using
+            Using br As New SolidBrush(Color.FromArgb(alpha * (ColorBalance * 255), Color1)) : G.FillRoundedRect(br, Rect, Radius, True) : End Using
+
+            Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
+            Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
+
+            Using br As New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)) : G.FillRoundedRect(br, Rect, Radius, True) : End Using
+            Using br As New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))) : G.FillRoundedRect(br, Rect, Radius, True) : End Using
+        Else
+            If BackgroundBlurred IsNot Nothing Then G.DrawImage(BackgroundBlurred, Rect)
+
+            Using br As New SolidBrush(Color.FromArgb(alpha * 255, Color.Black)) : G.FillRectangle(br, Rect) : End Using
+            Using br As New SolidBrush(Color.FromArgb(alpha * (ColorBalance * 255), Color1)) : G.FillRectangle(br, Rect) : End Using
+
+            Dim C1 As Color = Color.FromArgb(ColorBalance * 255, Color1)
+            Dim C2 As Color = Color.FromArgb(GlowBalance * 255, Color2)
+
+            Using br As New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 100), Color2)) : G.FillRectangle(br, Rect) : End Using
+            Using br As New SolidBrush(Color.FromArgb(alpha * (GlowBalance * 150), C1.Blend(C2, 100))) : G.FillRectangle(br, Rect) : End Using
+        End If
+    End Sub
+
+    <Extension()>
+    Public Sub FillRoundedRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius] = -1 Then [Radius] = 5
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                Using path As GraphicsPath = Rectangle.Round(Radius)
+                    Graphics.FillPath(Brush, path)
+                End Using
+            Else
+                Graphics.FillRectangle(Brush, [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+
+    <Extension()>
+    Public Sub DrawRoundImage([Graphics] As Graphics, [Image] As Image, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius] = -1 Then [Radius] = 5
+
+            If Graphics Is Nothing Then Throw New ArgumentNullException("graphics")
+
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+                Using path As GraphicsPath = Rectangle.Round(Radius)
+                    Dim reg As New Region(path)
+                    [Graphics].Clip = reg
+                    [Graphics].DrawImage([Image], [Rectangle])
+                    [Graphics].ResetClip()
+                End Using
+            Else
+                Graphics.DrawImage([Image], [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+
+    <Extension()>
+    Public Function Round(r As Rectangle, radius As Integer) As GraphicsPath
+        Try
+            Dim path As New GraphicsPath()
+            Dim d As Integer = radius * 2
+
+            path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top)
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90)
+
+            path.AddLine(r.Right, r.Top + d, r.Right, r.Bottom - d)
+            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Bottom - d, r.Right, r.Bottom), 0, 90)
+
+            path.AddLine(r.Right - d, r.Bottom, r.Left + d, r.Bottom)
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Bottom - d, r.Left + d, r.Bottom), 90, 90)
+
+            path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d)
+            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180, 90)
+
+            path.CloseFigure()
+            Return path
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    <Extension()>
+    Public Sub DrawRoundedRect([Graphics] As Graphics, [Pen] As Pen, [Rectangle] As Rectangle, Optional [Radius_willbe_x2] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
+        Try
+            If [Radius_willbe_x2] = -1 Then [Radius_willbe_x2] = 5
+            [Radius_willbe_x2] *= 2
+
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
+            If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius_willbe_x2] > 0 Then
+                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 180, 90)
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), [Rectangle].Y)
+                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y, [Radius_willbe_x2], [Radius_willbe_x2], 270, 90)
+                [Graphics].DrawLine([Pen], [Rectangle].X, CInt([Rectangle].Y + [Radius_willbe_x2] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Radius_willbe_x2] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2] / 2))
+                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius_willbe_x2] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 90, 90)
+                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius_willbe_x2], [Rectangle].Y + [Rectangle].Height - [Radius_willbe_x2], [Radius_willbe_x2], [Radius_willbe_x2], 0, 90)
+            Else
+                [Graphics].DrawRectangle([Pen], [Rectangle])
+            End If
+        Catch
+        End Try
+    End Sub
+
+    <Extension()>
+    Public Sub DrawRoundedRect_LikeW11([Graphics] As Graphics, [PenX] As Pen, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
+        Try
+            Dim Dark As Boolean = My.Style.DarkMode
+
+            If [Radius] = -1 Then [Radius] = 5
+            [Radius] *= 2
+            [Graphics].SmoothingMode = SmoothingMode.AntiAlias
+
+            Using [Pen] As New Pen([PenX].Color, [PenX].Width) With {.DashStyle = [PenX].DashStyle, .DashOffset = [PenX].DashOffset}
+                Using [Pen2] As New Pen([PenX].Color, [PenX].Width) With {.DashStyle = [PenX].DashStyle, .DashOffset = [PenX].DashOffset}
+                    Dim SidePen As New Pen([PenX].Color, [PenX].Width) With {.DashStyle = [PenX].DashStyle, .DashOffset = [PenX].DashOffset}
+
+                    If Dark Then
+                        [Pen].Color = [PenX].Color.CB(0.1)
+                        [Pen2].Color = [PenX].Color
+                    Else
+                        [Pen].Color = [PenX].Color.CB(-0.02)
+                        [Pen2].Color = [PenX].Color.CB(-0.05)
+                    End If
+
+                    Dim G As LinearGradientBrush
+                    Dim CColor As Color = [Pen2].Color.CB(If(Dark, 0.03, -0.05))
+
+                    If Dark Then
+                        G = New LinearGradientBrush([Rectangle], CColor, [Pen].Color, 180)
+                        Dim cblend As New ColorBlend(3) With {
+                            .Colors = New Color(2) {CColor, [Pen].Color, CColor},
+                            .Positions = New Single(2) {0F, 0.5F, 1.0F}
+                        }
+                        G.InterpolationColors = cblend
+                    Else
+                        G = New LinearGradientBrush([Rectangle], [Pen].Color, CColor, 180)
+                        Dim cblend As New ColorBlend(3) With {
+                            .Colors = New Color(2) {[Pen].Color, CColor, [Pen].Color},
+                            .Positions = New Single(2) {0F, 0.5F, 1.0F}
+                        }
+                        G.InterpolationColors = cblend
+                    End If
+
+                    Using [PenG] As New Pen(G, [PenX].Width) With {.DashStyle = [PenX].DashStyle, .DashOffset = [PenX].DashOffset}
+
+                        If (GetRoundedCorners() Or ForcedRoundCorner) And [Radius] > 0 Then
+
+                            If Dark Then
+                                [Graphics].DrawLine([Pen2], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                                [Graphics].DrawArc([Pen2], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
+                                [Graphics].DrawArc([Pen2], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
+
+                                SidePen = [Pen2]
+
+                                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+                                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+
+                                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
+                                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
+                                [Graphics].DrawLine([PenG], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
+
+                            Else
+                                [Graphics].DrawLine([PenG], CInt([Rectangle].X + [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height), CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), CInt([Rectangle].Y + [Rectangle].Height))
+                                [Graphics].DrawArc([PenG], [Rectangle].X, [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 90, 90)
+                                [Graphics].DrawArc([PenG], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y + [Rectangle].Height - [Radius], [Radius], [Radius], 0, 90)
+
+                                SidePen = [Pen]
+
+                                [Graphics].DrawLine(SidePen, [Rectangle].X, CInt([Rectangle].Y + [Radius] / 2), [Rectangle].X, CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+                                [Graphics].DrawLine(SidePen, [Rectangle].X + [Rectangle].Width, CInt([Rectangle].Y + [Radius] / 2), CInt([Rectangle].X + [Rectangle].Width), CInt([Rectangle].Y + [Rectangle].Height - [Radius] / 2.5))
+
+                                [Graphics].DrawArc([Pen], [Rectangle].X, [Rectangle].Y, [Radius], [Radius], 180, 90)
+                                [Graphics].DrawArc([Pen], [Rectangle].X + [Rectangle].Width - [Radius], [Rectangle].Y, [Radius], [Radius], 270, 90)
+                                [Graphics].DrawLine([Pen], CInt([Rectangle].X + [Radius] / 2), [Rectangle].Y, CInt([Rectangle].X + [Rectangle].Width - [Radius] / 2), [Rectangle].Y)
+                            End If
+
+                        Else
+
+                            If Dark Then
+                                [Pen].Color = [PenX].Color.CB(0.05)
+                            Else
+                                [Pen].Color = [PenX].Color.CB(-0.02)
+                            End If
+
+                            [Graphics].DrawRectangle([Pen], [Rectangle])
+
+                        End If
+
+                        SidePen.Dispose()
+                    End Using
+                End Using
+            End Using
+        Catch
+        End Try
+
+    End Sub
+
 End Module
 
 Public Module ComboBoxExtensions
@@ -1143,7 +1542,7 @@ Public Module TreeViewExtensions
     '''Serialize from a JSON File to TreeView Nodes
     '''</summary>
     <Extension()>
-    Public Sub FromJSON([TreeView] As TreeView, JSON_File As String, rootName As String)
+    Public Sub FromJSON([TreeView] As Windows.Forms.TreeView, JSON_File As String, rootName As String)
         Dim reader = New StreamReader(JSON_File)
         Dim jsonReader = New JsonTextReader(reader)
         Dim root = JToken.Load(jsonReader)
@@ -1254,18 +1653,44 @@ End Module
 
 Public Module Others
     <Extension()>
-    Public Sub SetText(Ctrl As Control, text As String)
-        Try
-            If Ctrl.InvokeRequired Then
-                Ctrl.Invoke(New setCtrlTxtInvoker(AddressOf SetText), Ctrl, text)
-            Else
-                Ctrl.Text = text
-                Ctrl.Refresh()
-            End If
-        Catch
+    Public Function ToStringFormat(TextAlign As ContentAlignment, Optional RightToLeft As Boolean = False) As StringFormat
+        Dim SF As New StringFormat()
+        Select Case TextAlign
+            Case ContentAlignment.TopLeft
+                SF.LineAlignment = StringAlignment.Near
+                SF.Alignment = StringAlignment.Near
+            Case ContentAlignment.TopCenter
+                SF.LineAlignment = StringAlignment.Near
+                SF.Alignment = StringAlignment.Center
+            Case ContentAlignment.TopRight
+                SF.LineAlignment = StringAlignment.Near
+                SF.Alignment = StringAlignment.Far
+            Case ContentAlignment.MiddleLeft
+                SF.LineAlignment = StringAlignment.Center
+                SF.Alignment = StringAlignment.Near
+            Case ContentAlignment.MiddleCenter
+                SF.LineAlignment = StringAlignment.Center
+                SF.Alignment = StringAlignment.Center
+            Case ContentAlignment.MiddleRight
+                SF.LineAlignment = StringAlignment.Center
+                SF.Alignment = StringAlignment.Far
+            Case ContentAlignment.BottomLeft
+                SF.LineAlignment = StringAlignment.Far
+                SF.Alignment = StringAlignment.Near
+            Case ContentAlignment.BottomCenter
+                SF.LineAlignment = StringAlignment.Far
+                SF.Alignment = StringAlignment.Center
+            Case ContentAlignment.BottomRight
+                SF.LineAlignment = StringAlignment.Far
+                SF.Alignment = StringAlignment.Far
+            Case Else
+                SF.LineAlignment = StringAlignment.Center
+                SF.Alignment = StringAlignment.Near
 
-        End Try
-    End Sub
-    Private Delegate Sub setCtrlTxtInvoker(Ctrl As Control, text As String)
+        End Select
 
+        If RightToLeft Then SF.FormatFlags = StringFormatFlags.DirectionRightToLeft
+
+        Return SF
+    End Function
 End Module

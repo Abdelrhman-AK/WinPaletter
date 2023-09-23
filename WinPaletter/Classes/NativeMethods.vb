@@ -900,7 +900,7 @@ Namespace NativeMethods
         End Function
 
         ''' <summary>
-        ''' Set The Window's Theme Attributes
+        ''' Set The WindowR's Theme Attributes
         ''' </summary>
         ''' <returns>If The Call Was Successful or Not</returns>
         <DllImport("UxTheme.dll")>
@@ -1409,7 +1409,7 @@ Namespace NativeMethods
             MOBILEPC = 95
 
             ''' <summary>
-            ''' The User Accounts Control Panel item.
+            ''' The User Accounts Control PanelR item.
             ''' </summary>
             USERS = 96
 
@@ -1449,7 +1449,7 @@ Namespace NativeMethods
             NETWORKCONNECT = 103
 
             ''' <summary>
-            ''' The Network And Internet Control Panel item.
+            ''' The Network And Internet Control PanelR item.
             ''' </summary>
             INTERNET = 104
 
@@ -1459,7 +1459,7 @@ Namespace NativeMethods
             ZIPFILE = 105
 
             ''' <summary>
-            ''' The Additional Options Control Panel item.
+            ''' The Additional Options Control PanelR item.
             ''' </summary>
             SETTINGS = 106
 

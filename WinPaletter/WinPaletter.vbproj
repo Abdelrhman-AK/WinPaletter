@@ -217,6 +217,7 @@
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
     <Import Include="WinPaletter" />
+    <Import Include="WinPaletter.WPStyle" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -319,10 +320,131 @@
     <Compile Include="Extras\Sounds_Editor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\CursorControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Containers\PanelR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Containers\PanelRaisedR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Input\ButtonR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Input\TextBoxR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Others\ScrollBarR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Simulators\Preview3D.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Simulators\WindowR.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\ColorItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\CheckBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\RadioButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\RadioImage.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\Toggle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TablessControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\AlertBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\AnimatedBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\GroupBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TabControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\Button.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\ComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\NumericUpDown.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\TextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\LabelAlt.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\LinkLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\ToolStripStatusLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\StripRenderer.vb" />
+    <Compile Include="GUI\Elements\Others\TransparentPictureBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\ToolStripMenuItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\TreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Separators\SeparatorH.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Separators\SeparatorV.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\TextTranslationItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\Trackbar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinCMD.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinIcon.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinTerminal.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\Window.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinElement.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\ColorBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Languages\Lang_JSON_GUI.Designer.vb">
       <DependentUpon>Lang_JSON_GUI.vb</DependentUpon>
     </Compile>
     <Compile Include="Languages\Lang_JSON_GUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_ReplaceText.Designer.vb">
+      <DependentUpon>Lang_ReplaceText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_ReplaceText.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Application.Designer.vb" />
@@ -378,9 +500,6 @@
     </Compile>
     <Compile Include="CP\CP.vb" />
     <Compile Include="CP\CP_Defaults.vb" />
-    <Compile Include="CursorsStudio\CursorsCustomizer.Designer.vb">
-      <DependentUpon>CursorsCustomizer.vb</DependentUpon>
-    </Compile>
     <Compile Include="CursorsStudio\CursorsCustomizer.vb" />
     <Compile Include="CursorsStudio\CursorsStudio.Designer.vb">
       <DependentUpon>CursorsStudio.vb</DependentUpon>
@@ -394,20 +513,8 @@
     <Compile Include="EditInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\RetroUI.Designer.vb">
-      <DependentUpon>RetroUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\RetroUI.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="GUI\VisualStylesRes.vb" />
-    <Compile Include="GUI\XenonStyle.vb" />
-    <Compile Include="GUI\XenonUI.Designer.vb">
-      <DependentUpon>XenonUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\XenonUI.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="GUI\WPStyle.vb" />
     <Compile Include="Languages\Lang_Add_Snippet.Designer.vb">
       <DependentUpon>Lang_Add_Snippet.vb</DependentUpon>
     </Compile>
@@ -507,10 +614,10 @@
     <Compile Include="Store\Store.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Store\StoreItem.Designer.vb">
+    <Compile Include="GUI\Elements\AdvancedControls\StoreItem.Designer.vb">
       <DependentUpon>StoreItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Store\StoreItem.vb">
+    <Compile Include="GUI\Elements\AdvancedControls\StoreItem.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Store\Store_CPToggles.Designer.vb">
@@ -885,6 +992,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_JSON_GUI.resx">
       <DependentUpon>Lang_JSON_GUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_ReplaceText.resx">
+      <DependentUpon>Lang_ReplaceText.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogonUI\LogonUI.resx">
       <DependentUpon>LogonUI.vb</DependentUpon>

@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>109, 17</value>
   </metadata>
@@ -129,25 +126,7 @@
   <metadata name="SaveJSONDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>356, 17</value>
   </metadata>
-  <metadata name="BackgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>480, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="PictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAhRJREFUSEu9k01r4lAUhv1pMzAwMDCrQqHb+R/FK+JIkOAyiFhJrRQKhdmJ1ZhE
-        jd+fxSK21c5i+uHChe3MqFE4k5Omaa815HYWvfBAeHPPebgnN553X8lkkiQSCSIiokjiSDxOYkgsRqLR
-        qEkkgkSIIEQ/WKVsq9vtwmq1giWy3MTSRDfAvf1+Hwwhu6TT6dgNdP2RBYUOi4UOcwMUTKdT6PV6ILBK
-        2obAbM4omEwmMB6PodVqgyAI7pJ22xI4NV8TZDIZSKfTkEqlQNzfB6uN82q2Wg7N19FhNpvD/cNviwfI
-        F4rugkazuaEZG0WtxCBo0ILzC9EYwUe4HB7aGT6fnHyCi8sDam+hqLkL6o0GVZTNfoHTUw5m8z929nd2
-        b8z/uzH/z9RephHV6q8Fg/M9KkPwZJL0lcoYBXWqSM3vQO8sTGUIZoq6TWVqoeAuqNaeBYPBnjnrm1uN
-        aoT8upbNd7jnKVPzLIJqzS7Aj4gjuhvTp0Ju7yrmiIajIztT1PzbBIimfXMckaxsUZnMIqhUq1SRomw7
-        fmQ83ctMVlR3QbnyWrB+TfEZr+n6LWIUVKiip5/q5Y929fMHqOoOjK6Oqb05RXEXlMq04C1IMpOgvLGY
-        BSknuwu00v8LsmyC0sZiFrJSzl3Ah8OE58MkxPOEC4Ue4UIkyHEkEAya+ANIgPj8iJ94fX6y6/UZeInV
-        5r2Wx/MP42zSDARS93QAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="XenonButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAZhJREFUOE/N
@@ -164,7 +143,7 @@
   <data name="XenonAlertBox3.Text" xml:space="preserve">
     <value>Notes:
 - Red rectangles/colors mean that their associated values aren't translated from English. Double click a rectangle to edit it.
-- Numbers in curly brackets should be left unchanged, for example: "There are {0} files" is translated into Arabic like that: "يوجد {0} ملفات"</value>
+- Numbers in curly brackets should be left unchanged, for example: "There are {0} files" is translated into Arabic like that: "يوجد {0} ملف"</value>
   </data>
   <data name="XenonButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -365,6 +344,44 @@
   <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="XenonButton12.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAbNJREFUOE+1
+        kssuBEEUhjtxi4Ughq6uHkLiPlYiEQ9AIuIZJDbiAUTCxgMgcRu6q3oYFkK8CTYSC3GZrqoZIh6BGOeU
+        syDTs7DwJ5Xu/s7pv/6uPs6/yM8X27oPCy1MxjM80lMs99KOjMrVlYremjLnt/Vc6CwPngfhuutJveGH
+        b/1wf0RtyerKqlZP6GtPmK3OSHPclUo2kSviHie4qvOkWmChmU7vG5/K34IdzsCgzIReJFQhT8RD2OOF
+        5pXl1DBhx3GlHoHCJxSOCSWKSzXrCRVjLw8Kg4TRWa+gMw/iUUKJSm+aRj8qTtjeUC0TtvGPAH445+Ua
+        QlXVu33fgAlYqCNCNkEe1ruzVq4lVF3QgwawJBFrsAqr7EV6DGMSTpQbmHHsZcIsEfp5iKqAw0M4URD9
+        FHt/HSILVQb+/ys686g0QLhC8AdObFJpLgh9C4cCh4NLPY/fmD4wfTCJKSo7HeLJ5blSJyS0m8Aw3f4c
+        tApBU94Pizi+62C6x7OlAYi+0xTcpaB2aU2EvsOJpVd+qzV4bHb3Hzq4UJN4JviMC2u4MxjfkMmVfeGv
+        QhNMwqSa+wK7l+jbD35kmQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="XenonButton13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAbNJREFUOE+1
+        kssuBEEUhjtxi4Ughq6uHkLiPlYiEQ9AIuIZJDbiAUTCxgMgcRu6q3oYFkK8CTYSC3GZrqoZIh6BGOeU
+        syDTs7DwJ5Xu/s7pv/6uPs6/yM8X27oPCy1MxjM80lMs99KOjMrVlYremjLnt/Vc6CwPngfhuutJveGH
+        b/1wf0RtyerKqlZP6GtPmK3OSHPclUo2kSviHie4qvOkWmChmU7vG5/K34IdzsCgzIReJFQhT8RD2OOF
+        5pXl1DBhx3GlHoHCJxSOCSWKSzXrCRVjLw8Kg4TRWa+gMw/iUUKJSm+aRj8qTtjeUC0TtvGPAH445+Ua
+        QlXVu33fgAlYqCNCNkEe1ruzVq4lVF3QgwawJBFrsAqr7EV6DGMSTpQbmHHsZcIsEfp5iKqAw0M4URD9
+        FHt/HSILVQb+/ys686g0QLhC8AdObFJpLgh9C4cCh4NLPY/fmD4wfTCJKSo7HeLJ5blSJyS0m8Aw3f4c
+        tApBU94Pizi+62C6x7OlAYi+0xTcpaB2aU2EvsOJpVd+qzV4bHb3Hzq4UJN4JviMC2u4MxjfkMmVfeGv
+        QhNMwqSa+wK7l+jbD35kmQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="PictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAARNJREFUSEvt
@@ -391,6 +408,24 @@
         RK5CYII=
 </value>
   </data>
+  <data name="PictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAhRJREFUSEu9k01r4lAUhv1pMzAwMDCrQqHb+R/FK+JIkOAyiFhJrRQKhdmJ1ZhE
+        jd+fxSK21c5i+uHChe3MqFE4k5Omaa815HYWvfBAeHPPebgnN553X8lkkiQSCSIiokjiSDxOYkgsRqLR
+        qEkkgkSIIEQ/WKVsq9vtwmq1giWy3MTSRDfAvf1+Hwwhu6TT6dgNdP2RBYUOi4UOcwMUTKdT6PV6ILBK
+        2obAbM4omEwmMB6PodVqgyAI7pJ22xI4NV8TZDIZSKfTkEqlQNzfB6uN82q2Wg7N19FhNpvD/cNviwfI
+        F4rugkazuaEZG0WtxCBo0ILzC9EYwUe4HB7aGT6fnHyCi8sDam+hqLkL6o0GVZTNfoHTUw5m8z929nd2
+        b8z/uzH/z9RephHV6q8Fg/M9KkPwZJL0lcoYBXWqSM3vQO8sTGUIZoq6TWVqoeAuqNaeBYPBnjnrm1uN
+        aoT8upbNd7jnKVPzLIJqzS7Aj4gjuhvTp0Ju7yrmiIajIztT1PzbBIimfXMckaxsUZnMIqhUq1SRomw7
+        fmQ83ctMVlR3QbnyWrB+TfEZr+n6LWIUVKiip5/q5Y929fMHqOoOjK6Oqb05RXEXlMq04C1IMpOgvLGY
+        BSknuwu00v8LsmyC0sZiFrJSzl3Ah8OE58MkxPOEC4Ue4UIkyHEkEAya+ANIgPj8iJ94fX6y6/UZeInV
+        5r2Wx/MP42zSDARS93QAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>51</value>
   </metadata>

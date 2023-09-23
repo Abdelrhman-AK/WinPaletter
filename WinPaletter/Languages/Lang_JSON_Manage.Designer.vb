@@ -27,29 +27,29 @@ Partial Class Lang_JSON_Manage
         Me.OpenJSONDlg = New System.Windows.Forms.OpenFileDialog()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.XenonTextBox3 = New WinPaletter.XenonTextBox()
+        Me.XenonTextBox3 = New WinPaletter.UI.WP.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.XenonSeparatorVertical1 = New WinPaletter.XenonSeparatorVertical()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonTextBox2 = New WinPaletter.XenonTextBox()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonSeparatorVertical1 = New WinPaletter.UI.WP.SeparatorV()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox2 = New WinPaletter.UI.WP.TextBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -531,35 +531,35 @@ Partial Class Lang_JSON_Manage
 
     End Sub
 
-    Friend WithEvents TreeView1 As TreeView
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
+    Friend WithEvents TreeView1 As Windows.Forms.TreeView
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonTextBox1 As XenonTextBox
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
     Friend WithEvents SaveJSONDlg As SaveFileDialog
     Friend WithEvents OpenJSONDlg As OpenFileDialog
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents XenonTextBox2 As XenonTextBox
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonSeparatorVertical1 As XenonSeparatorVertical
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
+    Friend WithEvents XenonTextBox2 As UI.WP.TextBox
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonSeparatorVertical1 As UI.WP.SeparatorV
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents XenonTextBox3 As XenonTextBox
+    Friend WithEvents XenonTextBox3 As UI.WP.TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonButton9 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
+    Friend WithEvents XenonButton9 As UI.WP.Button
+    Friend WithEvents XenonButton6 As UI.WP.Button
     Friend WithEvents FontDialog1 As FontDialog
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents XenonButton10 As XenonButton
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents XenonButton10 As UI.WP.Button
     Friend WithEvents Label5 As Label
 End Class

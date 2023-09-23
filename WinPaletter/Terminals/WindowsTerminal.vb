@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.XenonCore
 
 Public Class WindowsTerminal
     Private _Shown As Boolean = False
@@ -13,7 +12,7 @@ Public Class WindowsTerminal
         XenonCheckBox1.Checked = My.Settings.WindowsTerminals.ListAllFonts
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         _Shown = False
 
         Select Case _Mode
@@ -37,7 +36,7 @@ Public Class WindowsTerminal
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -606,35 +605,35 @@ Public Class WindowsTerminal
 
         If TypeOf e Is DragEventArgs Then
             If sender.Name.ToString.ToLower.Contains(TerBackground.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).Background = CType(sender, XenonCP).BackColor
+                _Terminal.Colors(TerSchemes.SelectedIndex).Background = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerForeground.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = CType(sender, XenonCP).BackColor
+                _Terminal.Colors(TerSchemes.SelectedIndex).Foreground = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerSelection.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = CType(sender, XenonCP).BackColor
+                _Terminal.Colors(TerSchemes.SelectedIndex).SelectionBackground = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerCursor.Name.ToLower) Then
-                _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = CType(sender, XenonCP).BackColor
+                _Terminal.Colors(TerSchemes.SelectedIndex).CursorColor = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerTabActive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = CType(sender, XenonCP).BackColor
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Active = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerTabInactive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = CType(sender, XenonCP).BackColor
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Tab_Inactive = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerTitlebarActive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = CType(sender, XenonCP).BackColor
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Active = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             If sender.Name.ToString.ToLower.Contains(TerTitlebarInactive.Name.ToLower) Then
-                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = CType(sender, XenonCP).BackColor
+                _Terminal.Themes(TerThemes.SelectedIndex - 3).Titlebar_Inactive = CType(sender, UI.Controllers.ColorItem).BackColor
             End If
 
             ApplyPreview(_Terminal)

@@ -1,11 +1,10 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class EditInfo
 
     Private Sub EditInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Load_Info(My.CP)
         XenonTextBox3.Font = My.Application.ConsoleFontMedium
         XenonTextBox6.Font = My.Application.ConsoleFontMedium
@@ -13,7 +12,7 @@ Public Class EditInfo
     End Sub
 
     Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.XenonCP") Is XenonCP Then
+        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else

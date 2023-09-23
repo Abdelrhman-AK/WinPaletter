@@ -23,125 +23,125 @@ Partial Class ExternalTerminal
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ExternalTerminal))
-        Me.XenonGroupBox73 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox73 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox23 = New System.Windows.Forms.PictureBox()
-        Me.XenonCMD4 = New WinPaletter.XenonCMD()
+        Me.XenonCMD4 = New WinPaletter.UI.Simulation.WinCMD()
         Me.Label137 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox51 = New WinPaletter.XenonGroupBox()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
+        Me.XenonGroupBox51 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label102 = New System.Windows.Forms.Label()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonSeparator2 = New WinPaletter.UI.WP.SeparatorH()
         Me.OpenWPTHDlg = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.XenonTabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
-        Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
+        Me.XenonSeparator3 = New WinPaletter.UI.WP.SeparatorH()
         Me.ExtTerminal_AccentBackgroundLbl = New System.Windows.Forms.Label()
         Me.ExtTerminal_PopupForegroundLbl = New System.Windows.Forms.Label()
         Me.Label50 = New System.Windows.Forms.Label()
         Me.ExtTerminal_AccentForegroundLbl = New System.Windows.Forms.Label()
         Me.ExtTerminal_PopupBackgroundLbl = New System.Windows.Forms.Label()
-        Me.ExtTerminal_AccentBackgroundBar = New WinPaletter.XenonTrackbar()
-        Me.ExtTerminal_PopupBackgroundBar = New WinPaletter.XenonTrackbar()
-        Me.ExtTerminal_AccentForegroundBar = New WinPaletter.XenonTrackbar()
+        Me.ExtTerminal_AccentBackgroundBar = New WinPaletter.UI.WP.Trackbar()
+        Me.ExtTerminal_PopupBackgroundBar = New WinPaletter.UI.WP.Trackbar()
+        Me.ExtTerminal_AccentForegroundBar = New WinPaletter.UI.WP.Trackbar()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label49 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_PopupForegroundBar = New WinPaletter.XenonTrackbar()
+        Me.ExtTerminal_PopupForegroundBar = New WinPaletter.UI.WP.Trackbar()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable00 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable00 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable01 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable01 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable02 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable03 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable02 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable03 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable04 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable04 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable05 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable05 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable06 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable06 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable15 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable07 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable15 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable07 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable08 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable14 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable08 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable14 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable09 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable13 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable09 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable13 = New WinPaletter.UI.Controllers.ColorItem()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_ColorTable12 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable10 = New WinPaletter.XenonCP()
-        Me.ExtTerminal_ColorTable11 = New WinPaletter.XenonCP()
+        Me.ExtTerminal_ColorTable12 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable10 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.ExtTerminal_ColorTable11 = New WinPaletter.UI.Controllers.ColorItem()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
         Me.FontName = New System.Windows.Forms.Label()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.ExtTerminal_FontSizeVal = New WinPaletter.XenonButton()
-        Me.ExtTerminal_RasterToggle = New WinPaletter.XenonToggle()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.ExtTerminal_FontSizeVal = New WinPaletter.UI.WP.Button()
+        Me.ExtTerminal_RasterToggle = New UI.WP.Toggle()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label58 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_FontSizeBar = New WinPaletter.XenonTrackbar()
-        Me.ExtTerminal_FontWeightBox = New WinPaletter.XenonComboBox()
+        Me.ExtTerminal_FontSizeBar = New WinPaletter.UI.WP.Trackbar()
+        Me.ExtTerminal_FontWeightBox = New WinPaletter.UI.WP.ComboBox()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.XenonButton25 = New WinPaletter.XenonButton()
+        Me.XenonButton25 = New WinPaletter.UI.WP.Button()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label59 = New System.Windows.Forms.Label()
-        Me.RasterList = New WinPaletter.XenonComboBox()
+        Me.RasterList = New WinPaletter.UI.WP.ComboBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox34 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.ExtTerminal_PreviewCUR_Val = New WinPaletter.XenonButton()
+        Me.ExtTerminal_PreviewCUR_Val = New WinPaletter.UI.WP.Button()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.ExtTerminal_CursorStyle = New WinPaletter.XenonComboBox()
+        Me.ExtTerminal_CursorStyle = New WinPaletter.UI.WP.ComboBox()
         Me.Label60 = New System.Windows.Forms.Label()
-        Me.ExtTerminal_CursorSizeBar = New WinPaletter.XenonTrackbar()
+        Me.ExtTerminal_CursorSizeBar = New WinPaletter.UI.WP.Trackbar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ExtTerminal_PreviewCUR = New System.Windows.Forms.Panel()
         Me.ExtTerminal_PreviewCUR2 = New System.Windows.Forms.Panel()
         Me.ExtTerminal_PreviewCursorInner = New System.Windows.Forms.Panel()
-        Me.ExtTerminal_CursorColor = New WinPaletter.XenonCP()
+        Me.ExtTerminal_CursorColor = New WinPaletter.UI.Controllers.ColorItem()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.ExtTerminal_OpacityVal = New WinPaletter.XenonButton()
+        Me.XenonGroupBox12 = New WinPaletter.UI.WP.GroupBox()
+        Me.ExtTerminal_OpacityVal = New WinPaletter.UI.WP.Button()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.ExtTerminal_LineSelection = New WinPaletter.XenonCheckBox()
-        Me.ExtTerminal_EnhancedTerminal = New WinPaletter.XenonCheckBox()
+        Me.ExtTerminal_LineSelection = New UI.WP.CheckBox()
+        Me.ExtTerminal_EnhancedTerminal = New UI.WP.CheckBox()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.ExtTerminal_TerminalScrolling = New WinPaletter.XenonCheckBox()
-        Me.ExtTerminal_OpacityBar = New WinPaletter.XenonTrackbar()
+        Me.ExtTerminal_TerminalScrolling = New UI.WP.CheckBox()
+        Me.ExtTerminal_OpacityBar = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
@@ -233,7 +233,7 @@ Partial Class ExternalTerminal
         Me.XenonCMD4.Name = "XenonCMD4"
         Me.XenonCMD4.PowerShell = False
         Me.XenonCMD4.Raster = False
-        Me.XenonCMD4.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD4.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12
         Me.XenonCMD4.Size = New System.Drawing.Size(447, 229)
         Me.XenonCMD4.TabIndex = 90
         '
@@ -1862,126 +1862,126 @@ Partial Class ExternalTerminal
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents XenonGroupBox73 As XenonGroupBox
+    Friend WithEvents XenonGroupBox73 As UI.WP.GroupBox
     Friend WithEvents PictureBox23 As PictureBox
-    Friend WithEvents XenonCMD4 As XenonCMD
+    Friend WithEvents XenonCMD4 As UI.Simulation.WinCMD
     Friend WithEvents Label137 As Label
-    Friend WithEvents XenonGroupBox51 As XenonGroupBox
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonComboBox1 As XenonComboBox
+    Friend WithEvents XenonGroupBox51 As UI.WP.GroupBox
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
     Friend WithEvents PictureBox17 As PictureBox
     Friend WithEvents Label102 As Label
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonSeparator2 As XenonSeparator
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonSeparator2 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents Label4 As Label
     Friend WithEvents OpenWPTHDlg As OpenFileDialog
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonTabControl1 As XenonTabControl
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonTabControl1 As UI.WP.TabControl
     Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
     Friend WithEvents PictureBox15 As PictureBox
-    Friend WithEvents XenonSeparator3 As XenonSeparator
+    Friend WithEvents XenonSeparator3 As UI.WP.SeparatorH
     Friend WithEvents ExtTerminal_AccentBackgroundLbl As Label
     Friend WithEvents ExtTerminal_PopupForegroundLbl As Label
     Friend WithEvents Label50 As Label
     Friend WithEvents ExtTerminal_AccentForegroundLbl As Label
     Friend WithEvents ExtTerminal_PopupBackgroundLbl As Label
-    Friend WithEvents ExtTerminal_AccentBackgroundBar As XenonTrackbar
-    Friend WithEvents ExtTerminal_PopupBackgroundBar As XenonTrackbar
-    Friend WithEvents ExtTerminal_AccentForegroundBar As XenonTrackbar
+    Friend WithEvents ExtTerminal_AccentBackgroundBar As UI.WP.Trackbar
+    Friend WithEvents ExtTerminal_PopupBackgroundBar As UI.WP.Trackbar
+    Friend WithEvents ExtTerminal_AccentForegroundBar As UI.WP.Trackbar
     Friend WithEvents Label18 As Label
     Friend WithEvents Label17 As Label
     Friend WithEvents Label49 As Label
-    Friend WithEvents ExtTerminal_PopupForegroundBar As XenonTrackbar
+    Friend WithEvents ExtTerminal_PopupForegroundBar As UI.WP.Trackbar
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
     Friend WithEvents PictureBox14 As PictureBox
     Friend WithEvents Label31 As Label
     Friend WithEvents Label19 As Label
-    Friend WithEvents ExtTerminal_ColorTable00 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable00 As UI.Controllers.ColorItem
     Friend WithEvents Label7 As Label
     Friend WithEvents Label32 As Label
-    Friend WithEvents ExtTerminal_ColorTable01 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable01 As UI.Controllers.ColorItem
     Friend WithEvents Label20 As Label
-    Friend WithEvents ExtTerminal_ColorTable02 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable03 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable02 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable03 As UI.Controllers.ColorItem
     Friend WithEvents Label33 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Label22 As Label
-    Friend WithEvents ExtTerminal_ColorTable04 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable04 As UI.Controllers.ColorItem
     Friend WithEvents Label26 As Label
     Friend WithEvents Label34 As Label
-    Friend WithEvents ExtTerminal_ColorTable05 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable05 As UI.Controllers.ColorItem
     Friend WithEvents Label25 As Label
-    Friend WithEvents ExtTerminal_ColorTable06 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable06 As UI.Controllers.ColorItem
     Friend WithEvents Label24 As Label
     Friend WithEvents Label27 As Label
-    Friend WithEvents ExtTerminal_ColorTable15 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable07 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable15 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable07 As UI.Controllers.ColorItem
     Friend WithEvents Label23 As Label
-    Friend WithEvents ExtTerminal_ColorTable08 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable14 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable08 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable14 As UI.Controllers.ColorItem
     Friend WithEvents Label28 As Label
     Friend WithEvents Label30 As Label
-    Friend WithEvents ExtTerminal_ColorTable09 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable13 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable09 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable13 As UI.Controllers.ColorItem
     Friend WithEvents Label29 As Label
-    Friend WithEvents ExtTerminal_ColorTable12 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable10 As XenonCP
-    Friend WithEvents ExtTerminal_ColorTable11 As XenonCP
+    Friend WithEvents ExtTerminal_ColorTable12 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable10 As UI.Controllers.ColorItem
+    Friend WithEvents ExtTerminal_ColorTable11 As UI.Controllers.ColorItem
     Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
-    Friend WithEvents ExtTerminal_RasterToggle As XenonToggle
+    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
+    Friend WithEvents ExtTerminal_RasterToggle As UI.WP.Toggle
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label58 As Label
-    Friend WithEvents ExtTerminal_FontSizeBar As XenonTrackbar
-    Friend WithEvents ExtTerminal_FontWeightBox As XenonComboBox
+    Friend WithEvents ExtTerminal_FontSizeBar As UI.WP.Trackbar
+    Friend WithEvents ExtTerminal_FontWeightBox As UI.WP.ComboBox
     Friend WithEvents Label61 As Label
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label35 As Label
-    Friend WithEvents XenonButton25 As XenonButton
+    Friend WithEvents XenonButton25 As UI.WP.Button
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents Label59 As Label
-    Friend WithEvents RasterList As XenonComboBox
+    Friend WithEvents RasterList As UI.WP.ComboBox
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonGroupBox34 As XenonGroupBox
+    Friend WithEvents XenonGroupBox34 As UI.WP.GroupBox
     Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents ExtTerminal_CursorStyle As XenonComboBox
+    Friend WithEvents ExtTerminal_CursorStyle As UI.WP.ComboBox
     Friend WithEvents Label60 As Label
-    Friend WithEvents ExtTerminal_CursorSizeBar As XenonTrackbar
+    Friend WithEvents ExtTerminal_CursorSizeBar As UI.WP.Trackbar
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox9 As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents ExtTerminal_PreviewCUR As Panel
     Friend WithEvents ExtTerminal_PreviewCUR2 As Panel
     Friend WithEvents ExtTerminal_PreviewCursorInner As Panel
-    Friend WithEvents ExtTerminal_CursorColor As XenonCP
+    Friend WithEvents ExtTerminal_CursorColor As UI.Controllers.ColorItem
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonGroupBox12 As XenonGroupBox
+    Friend WithEvents XenonGroupBox12 As UI.WP.GroupBox
     Friend WithEvents PictureBox10 As PictureBox
     Friend WithEvents PictureBox13 As PictureBox
-    Friend WithEvents ExtTerminal_LineSelection As XenonCheckBox
-    Friend WithEvents ExtTerminal_EnhancedTerminal As XenonCheckBox
+    Friend WithEvents ExtTerminal_LineSelection As UI.WP.CheckBox
+    Friend WithEvents ExtTerminal_EnhancedTerminal As UI.WP.CheckBox
     Friend WithEvents PictureBox12 As PictureBox
-    Friend WithEvents ExtTerminal_TerminalScrolling As XenonCheckBox
-    Friend WithEvents ExtTerminal_OpacityBar As XenonTrackbar
+    Friend WithEvents ExtTerminal_TerminalScrolling As UI.WP.CheckBox
+    Friend WithEvents ExtTerminal_OpacityBar As UI.WP.Trackbar
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents Label57 As Label
-    Friend WithEvents ExtTerminal_FontSizeVal As XenonButton
-    Friend WithEvents ExtTerminal_PreviewCUR_Val As XenonButton
-    Friend WithEvents ExtTerminal_OpacityVal As XenonButton
+    Friend WithEvents ExtTerminal_FontSizeVal As UI.WP.Button
+    Friend WithEvents ExtTerminal_PreviewCUR_Val As UI.WP.Button
+    Friend WithEvents ExtTerminal_OpacityVal As UI.WP.Button
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents FontName As Label
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents FontDialog1 As FontDialog
 End Class

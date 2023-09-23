@@ -30,37 +30,37 @@ Partial Class About
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel1 = New WinPaletter.XenonLinkLabel()
-        Me.LinkLabel2 = New WinPaletter.XenonLinkLabel()
-        Me.LinkLabel3 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel1 = New WinPaletter.UI.WP.LinkLabel()
+        Me.LinkLabel2 = New WinPaletter.UI.WP.LinkLabel()
+        Me.LinkLabel3 = New WinPaletter.UI.WP.LinkLabel()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.LinkLabel4 = New WinPaletter.XenonLinkLabel()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.LinkLabel4 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.LinkLabel5 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel5 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel6 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel6 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel7 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel7 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel8 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel8 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel10 = New WinPaletter.XenonLinkLabel()
+        Me.LinkLabel10 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
-        Me.XenonLinkLabel2 = New WinPaletter.XenonLinkLabel()
-        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.XenonLinkLabel4 = New WinPaletter.XenonLinkLabel()
-        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.XenonLinkLabel3 = New WinPaletter.XenonLinkLabel()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.XenonLinkLabel1 = New WinPaletter.XenonLinkLabel()
-        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonLinkLabel5 = New WinPaletter.XenonLinkLabel()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.XenonLinkLabel5 = New WinPaletter.UI.WP.LinkLabel()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
+        Me.XenonLinkLabel2 = New WinPaletter.UI.WP.LinkLabel()
+        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
+        Me.XenonLinkLabel4 = New WinPaletter.UI.WP.LinkLabel()
+        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.XenonLinkLabel3 = New WinPaletter.UI.WP.LinkLabel()
+        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.XenonLinkLabel1 = New WinPaletter.UI.WP.LinkLabel()
+        Me.PictureBox10 = New System.Windows.Forms.PictureBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -72,11 +72,11 @@ Partial Class About
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XenonAnimatedBox1.SuspendLayout()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureBox1
@@ -232,7 +232,7 @@ Partial Class About
         Me.XenonButton1.Name = "XenonButton1"
         Me.XenonButton1.Size = New System.Drawing.Size(80, 34)
         Me.XenonButton1.TabIndex = 16
-        Me.XenonButton1.Text = "Github"
+        Me.XenonButton1.Text = "GitHub"
         Me.XenonButton1.UseVisualStyleBackColor = False
         '
         'XenonButton3
@@ -424,9 +424,6 @@ Partial Class About
         '
         'XenonAnimatedBox1
         '
-        Me.XenonAnimatedBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAnimatedBox1.Color = System.Drawing.Color.DodgerBlue
         Me.XenonAnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue
         Me.XenonAnimatedBox1.Color2 = System.Drawing.Color.Crimson
@@ -463,11 +460,39 @@ Partial Class About
         Me.XenonAnimatedBox1.Controls.Add(Me.PictureBox6)
         Me.XenonAnimatedBox1.Controls.Add(Me.PictureBox5)
         Me.XenonAnimatedBox1.Controls.Add(Me.LinkLabel4)
+        Me.XenonAnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(525, 595)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 34
+        '
+        'XenonLinkLabel5
+        '
+        Me.XenonLinkLabel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.XenonLinkLabel5.BackColor = System.Drawing.Color.Transparent
+        Me.XenonLinkLabel5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XenonLinkLabel5.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.XenonLinkLabel5.LinkColor = System.Drawing.Color.White
+        Me.XenonLinkLabel5.Location = New System.Drawing.Point(42, 488)
+        Me.XenonLinkLabel5.Name = "XenonLinkLabel5"
+        Me.XenonLinkLabel5.Size = New System.Drawing.Size(471, 24)
+        Me.XenonLinkLabel5.TabIndex = 45
+        Me.XenonLinkLabel5.TabStop = True
+        Me.XenonLinkLabel5.Text = "Patching PE files by Tyrrrz/Ressy"
+        Me.XenonLinkLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'PictureBox15
+        '
+        Me.PictureBox15.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
+        Me.PictureBox15.Location = New System.Drawing.Point(12, 488)
+        Me.PictureBox15.Name = "PictureBox15"
+        Me.PictureBox15.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox15.TabIndex = 44
+        Me.PictureBox15.TabStop = False
         '
         'XenonLinkLabel2
         '
@@ -595,33 +620,6 @@ Partial Class About
         Me.XenonButton2.Text = "Reddit"
         Me.XenonButton2.UseVisualStyleBackColor = False
         '
-        'XenonLinkLabel5
-        '
-        Me.XenonLinkLabel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.XenonLinkLabel5.BackColor = System.Drawing.Color.Transparent
-        Me.XenonLinkLabel5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XenonLinkLabel5.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.XenonLinkLabel5.LinkColor = System.Drawing.Color.White
-        Me.XenonLinkLabel5.Location = New System.Drawing.Point(42, 488)
-        Me.XenonLinkLabel5.Name = "XenonLinkLabel5"
-        Me.XenonLinkLabel5.Size = New System.Drawing.Size(471, 24)
-        Me.XenonLinkLabel5.TabIndex = 45
-        Me.XenonLinkLabel5.TabStop = True
-        Me.XenonLinkLabel5.Text = "Patching PE files by Tyrrrz/Ressy"
-        Me.XenonLinkLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox15
-        '
-        Me.PictureBox15.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
-        Me.PictureBox15.Location = New System.Drawing.Point(12, 488)
-        Me.PictureBox15.Name = "PictureBox15"
-        Me.PictureBox15.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox15.TabIndex = 44
-        Me.PictureBox15.TabStop = False
-        '
         'About
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -656,11 +654,11 @@ Partial Class About
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XenonAnimatedBox1.ResumeLayout(False)
         Me.XenonAnimatedBox1.PerformLayout()
+        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -673,35 +671,35 @@ Partial Class About
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents LinkLabel1 As XenonLinkLabel
-    Friend WithEvents LinkLabel2 As XenonLinkLabel
-    Friend WithEvents LinkLabel3 As XenonLinkLabel
+    Friend WithEvents LinkLabel1 As UI.WP.LinkLabel
+    Friend WithEvents LinkLabel2 As UI.WP.LinkLabel
+    Friend WithEvents LinkLabel3 As UI.WP.LinkLabel
     Friend WithEvents Label3 As Label
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents LinkLabel4 As XenonLinkLabel
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents LinkLabel4 As UI.WP.LinkLabel
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents LinkLabel5 As XenonLinkLabel
+    Friend WithEvents LinkLabel5 As UI.WP.LinkLabel
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents LinkLabel6 As XenonLinkLabel
+    Friend WithEvents LinkLabel6 As UI.WP.LinkLabel
     Friend WithEvents PictureBox7 As PictureBox
-    Friend WithEvents LinkLabel7 As XenonLinkLabel
+    Friend WithEvents LinkLabel7 As UI.WP.LinkLabel
     Friend WithEvents PictureBox8 As PictureBox
-    Friend WithEvents LinkLabel8 As XenonLinkLabel
+    Friend WithEvents LinkLabel8 As UI.WP.LinkLabel
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents LinkLabel10 As XenonLinkLabel
+    Friend WithEvents LinkLabel10 As UI.WP.LinkLabel
     Friend WithEvents PictureBox11 As PictureBox
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
-    Friend WithEvents XenonLinkLabel1 As XenonLinkLabel
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents XenonLinkLabel1 As UI.WP.LinkLabel
     Friend WithEvents PictureBox10 As PictureBox
-    Friend WithEvents XenonLinkLabel3 As XenonLinkLabel
+    Friend WithEvents XenonLinkLabel3 As UI.WP.LinkLabel
     Friend WithEvents PictureBox13 As PictureBox
-    Friend WithEvents XenonLinkLabel4 As XenonLinkLabel
+    Friend WithEvents XenonLinkLabel4 As UI.WP.LinkLabel
     Friend WithEvents PictureBox14 As PictureBox
-    Friend WithEvents XenonLinkLabel2 As XenonLinkLabel
+    Friend WithEvents XenonLinkLabel2 As UI.WP.LinkLabel
     Friend WithEvents PictureBox12 As PictureBox
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonLinkLabel5 As XenonLinkLabel
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonLinkLabel5 As UI.WP.LinkLabel
     Friend WithEvents PictureBox15 As PictureBox
 End Class

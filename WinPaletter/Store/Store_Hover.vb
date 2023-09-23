@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
 
 Public Class Store_Hover
 
@@ -74,7 +73,7 @@ Public Class Store_Hover
     Private Sub Store_Hover_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = Store.Icon
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         DoubleBuffer
 
         Dim p As Point

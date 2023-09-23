@@ -24,12 +24,12 @@ Partial Class Store_Intro
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store_Intro))
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.TablessControl1 = New WinPaletter.TablessControl()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.TablessControl1 = New WinPaletter.UI.WP.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -38,22 +38,22 @@ Partial Class Store_Intro
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.XenonAnimatedBox2 = New WinPaletter.XenonAnimatedBox()
+        Me.XenonAnimatedBox2 = New WinPaletter.UI.WP.AnimatedBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -170,7 +170,7 @@ Partial Class Store_Intro
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(652, 302)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox1.TabIndex = 0
         Me.XenonAnimatedBox1.Text = "XenonAnimatedBox1"
         '
@@ -480,7 +480,7 @@ Partial Class Store_Intro
         Me.XenonAnimatedBox2.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox2.Name = "XenonAnimatedBox2"
         Me.XenonAnimatedBox2.Size = New System.Drawing.Size(652, 302)
-        Me.XenonAnimatedBox2.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.SwapColors
+        Me.XenonAnimatedBox2.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors
         Me.XenonAnimatedBox2.TabIndex = 1
         Me.XenonAnimatedBox2.Text = "XenonAnimatedBox2"
         '
@@ -557,20 +557,20 @@ Partial Class Store_Intro
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents TablessControl1 As TablessControl
+    Friend WithEvents TablessControl1 As UI.WP.TablessControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonButton3 As UI.WP.Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents PictureBox3 As PictureBox
@@ -578,16 +578,16 @@ Partial Class Store_Intro
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents TabPage6 As TabPage
-    Friend WithEvents XenonAnimatedBox2 As XenonAnimatedBox
+    Friend WithEvents XenonAnimatedBox2 As UI.WP.AnimatedBox
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
     Friend WithEvents TabPage7 As TabPage
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
 End Class

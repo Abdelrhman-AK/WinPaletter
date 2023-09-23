@@ -27,98 +27,98 @@ Partial Class Store
         Me.FilesFetcher = New System.ComponentModel.BackgroundWorker()
         Me.Titlebar_panel = New System.Windows.Forms.Panel()
         Me.search_panel = New System.Windows.Forms.Panel()
-        Me.search_btn = New WinPaletter.XenonButton()
-        Me.search_box = New WinPaletter.XenonTextBox()
-        Me.search_filter_btn = New WinPaletter.XenonButton()
-        Me.Titlebar_lbl = New WinPaletter.XenonLabel()
-        Me.back_btn = New WinPaletter.XenonButton()
+        Me.search_btn = New WinPaletter.UI.WP.Button()
+        Me.search_box = New WinPaletter.UI.WP.TextBox()
+        Me.search_filter_btn = New WinPaletter.UI.WP.Button()
+        Me.Titlebar_lbl = New WinPaletter.UI.WP.LabelAlt()
+        Me.back_btn = New WinPaletter.UI.WP.Button()
         Me.Titlebar_img = New System.Windows.Forms.PictureBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Log_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Cursor_Timer = New System.Windows.Forms.Timer(Me.components)
         Me.Status_pnl = New System.Windows.Forms.Panel()
         Me.Status_lbl = New System.Windows.Forms.Label()
-        Me.Tabs = New WinPaletter.TablessControl()
+        Me.Tabs = New WinPaletter.UI.WP.TablessControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.store_container = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.VersionAlert_lbl = New WinPaletter.XenonAlertBox()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
+        Me.VersionAlert_lbl = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
         Me.SupportedOS_lbl = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.Theme_MD5_lbl = New System.Windows.Forms.Label()
-        Me.desc_txt = New WinPaletter.XenonTextBox()
-        Me.author_url_button = New WinPaletter.XenonButton()
-        Me.RestartExplorer = New WinPaletter.XenonButton()
-        Me.XenonSeparatorVertical1 = New WinPaletter.XenonSeparatorVertical()
-        Me.StoreItem1 = New WinPaletter.StoreItem()
+        Me.desc_txt = New WinPaletter.UI.WP.TextBox()
+        Me.author_url_button = New WinPaletter.UI.WP.Button()
+        Me.RestartExplorer = New WinPaletter.UI.WP.Button()
+        Me.XenonSeparatorVertical1 = New WinPaletter.UI.WP.SeparatorV()
+        Me.StoreItem1 = New WinPaletter.UI.Controllers.StoreItem()
         Me.themeSize_lbl = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.Apply_btn = New WinPaletter.XenonButton()
+        Me.Apply_btn = New WinPaletter.UI.WP.Button()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Edit_btn = New WinPaletter.XenonButton()
+        Me.Edit_btn = New WinPaletter.UI.WP.Button()
         Me.respacksize_lbl = New System.Windows.Forms.Label()
-        Me.previewContainer = New WinPaletter.XenonGroupBox()
+        Me.previewContainer = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.tabs_preview = New WinPaletter.TablessControl()
+        Me.tabs_preview = New WinPaletter.UI.WP.TablessControl()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.pnl_preview = New System.Windows.Forms.Panel()
-        Me.WXP_Alert2 = New WinPaletter.XenonAlertBox()
-        Me.ActionCenter = New WinPaletter.XenonWinElement()
-        Me.start = New WinPaletter.XenonWinElement()
-        Me.taskbar = New WinPaletter.XenonWinElement()
-        Me.XenonWindow2 = New WinPaletter.XenonWindow()
-        Me.XenonWindow1 = New WinPaletter.XenonWindow()
+        Me.WXP_Alert2 = New WinPaletter.UI.WP.AlertBox()
+        Me.ActionCenter = New WinPaletter.UI.Simulation.WinElement()
+        Me.start = New WinPaletter.UI.Simulation.WinElement()
+        Me.taskbar = New WinPaletter.UI.Simulation.WinElement()
+        Me.XenonWindow2 = New WinPaletter.UI.Simulation.Window()
+        Me.XenonWindow1 = New WinPaletter.UI.Simulation.Window()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Label8 = New WinPaletter.XenonLabel()
-        Me.setting_icon_preview = New WinPaletter.XenonLabel()
-        Me.lnk_preview = New WinPaletter.XenonLabel()
+        Me.Label8 = New WinPaletter.UI.WP.LabelAlt()
+        Me.setting_icon_preview = New WinPaletter.UI.WP.LabelAlt()
+        Me.lnk_preview = New WinPaletter.UI.WP.LabelAlt()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.pnl_preview_classic = New System.Windows.Forms.Panel()
-        Me.ClassicWindow1 = New WinPaletter.RetroWindow()
-        Me.ClassicWindow2 = New WinPaletter.RetroWindow()
-        Me.ClassicTaskbar = New WinPaletter.RetroPanelRaised()
-        Me.RetroButton4 = New WinPaletter.RetroButton()
-        Me.RetroButton3 = New WinPaletter.RetroButton()
-        Me.RetroButton2 = New WinPaletter.RetroButton()
+        Me.ClassicWindow1 = New WinPaletter.UI.Retro.WindowR()
+        Me.ClassicWindow2 = New WinPaletter.UI.Retro.WindowR()
+        Me.ClassicTaskbar = New WinPaletter.UI.Retro.PanelRaisedR()
+        Me.RetroButton4 = New WinPaletter.UI.Retro.ButtonR()
+        Me.RetroButton3 = New WinPaletter.UI.Retro.ButtonR()
+        Me.RetroButton2 = New WinPaletter.UI.Retro.ButtonR()
         Me.ClassicColorsPreview = New System.Windows.Forms.Panel()
-        Me.RetroShadow1 = New WinPaletter.TransparentPictureBox()
-        Me.Menu_Window = New WinPaletter.RetroWindow()
+        Me.RetroShadow1 = New WinPaletter.UI.WP.TransparentPictureBox()
+        Me.Menu_Window = New WinPaletter.UI.Retro.WindowR()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
-        Me.RetroLabel9 = New WinPaletter.XenonLabel()
+        Me.RetroLabel9 = New WinPaletter.UI.WP.LabelAlt()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
-        Me.RetroLabel5 = New WinPaletter.XenonLabel()
+        Me.RetroLabel5 = New WinPaletter.UI.WP.LabelAlt()
         Me.menucontainer1 = New System.Windows.Forms.Panel()
-        Me.RetroLabel6 = New WinPaletter.XenonLabel()
-        Me.RetroWindow3 = New WinPaletter.RetroWindow()
-        Me.RetroButton5 = New WinPaletter.RetroButton()
-        Me.RetroLabel4 = New WinPaletter.XenonLabel()
-        Me.RetroLabel13 = New WinPaletter.XenonLabel()
-        Me.RetroWindow2 = New WinPaletter.RetroWindow()
-        Me.RetroTextBox1 = New WinPaletter.RetroTextBox()
+        Me.RetroLabel6 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroWindow3 = New WinPaletter.UI.Retro.WindowR()
+        Me.RetroButton5 = New WinPaletter.UI.Retro.ButtonR()
+        Me.RetroLabel4 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroLabel13 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroWindow2 = New WinPaletter.UI.Retro.WindowR()
+        Me.RetroTextBox1 = New WinPaletter.UI.Retro.TextBoxR()
         Me.menucontainer0 = New System.Windows.Forms.Panel()
-        Me.RetroPanel1 = New WinPaletter.RetroPanel()
-        Me.RetroLabel3 = New WinPaletter.XenonLabel()
-        Me.RetroLabel2 = New WinPaletter.XenonLabel()
-        Me.RetroLabel1 = New WinPaletter.XenonLabel()
-        Me.RetroWindow1 = New WinPaletter.RetroWindow()
-        Me.RetroWindow4 = New WinPaletter.RetroWindow()
+        Me.RetroPanel1 = New WinPaletter.UI.Retro.PanelR()
+        Me.RetroLabel3 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroLabel2 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroLabel1 = New WinPaletter.UI.WP.LabelAlt()
+        Me.RetroWindow1 = New WinPaletter.UI.Retro.WindowR()
+        Me.RetroWindow4 = New WinPaletter.UI.Retro.WindowR()
         Me.programcontainer = New System.Windows.Forms.Panel()
-        Me.RetroPanel2 = New WinPaletter.RetroScrollBar()
-        Me.RetroButton12 = New WinPaletter.RetroButton()
-        Me.RetroButton11 = New WinPaletter.RetroButton()
-        Me.RetroButton10 = New WinPaletter.RetroButton()
-        Me.XenonCMD1 = New WinPaletter.XenonCMD()
-        Me.XenonCMD2 = New WinPaletter.XenonCMD()
-        Me.XenonCMD3 = New WinPaletter.XenonCMD()
+        Me.RetroPanel2 = New WinPaletter.UI.Retro.ScrollBarR()
+        Me.RetroButton12 = New WinPaletter.UI.Retro.ButtonR()
+        Me.RetroButton11 = New WinPaletter.UI.Retro.ButtonR()
+        Me.RetroButton10 = New WinPaletter.UI.Retro.ButtonR()
+        Me.XenonCMD1 = New WinPaletter.UI.Simulation.WinCMD()
+        Me.XenonCMD2 = New WinPaletter.UI.Simulation.WinCMD()
+        Me.XenonCMD3 = New WinPaletter.UI.Simulation.WinCMD()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.cur_anim_btn = New WinPaletter.XenonButton()
+        Me.cur_anim_btn = New WinPaletter.UI.WP.Button()
         Me.Cursors_Container = New System.Windows.Forms.FlowLayoutPanel()
         Me.Arrow = New WinPaletter.CursorControl()
         Me.Help = New WinPaletter.CursorControl()
@@ -137,20 +137,20 @@ Partial Class Store
         Me.Person = New WinPaletter.CursorControl()
         Me.IBeam = New WinPaletter.CursorControl()
         Me.Cross = New WinPaletter.CursorControl()
-        Me.cur_tip_btn = New WinPaletter.XenonButton()
+        Me.cur_tip_btn = New WinPaletter.UI.WP.Button()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.CursorsSize_Bar = New WinPaletter.XenonTrackbar()
+        Me.CursorsSize_Bar = New WinPaletter.UI.WP.Trackbar()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.search_results = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.StopTimer_btn = New WinPaletter.XenonButton()
-        Me.ExportDetails_btn = New WinPaletter.XenonButton()
+        Me.StopTimer_btn = New WinPaletter.UI.WP.Button()
+        Me.ExportDetails_btn = New WinPaletter.UI.WP.Button()
         Me.log_lbl = New System.Windows.Forms.Label()
-        Me.ShowErrors_btn = New WinPaletter.XenonButton()
-        Me.ok_btn = New WinPaletter.XenonButton()
+        Me.ShowErrors_btn = New WinPaletter.UI.WP.Button()
+        Me.ok_btn = New WinPaletter.UI.WP.Button()
         Me.log = New System.Windows.Forms.TreeView()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
         Me.log_header = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.Titlebar_panel.SuspendLayout()
@@ -410,7 +410,7 @@ Partial Class Store
         '
         'VersionAlert_lbl
         '
-        Me.VersionAlert_lbl.AlertStyle = WinPaletter.XenonAlertBox.Style.Adaptive
+        Me.VersionAlert_lbl.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.VersionAlert_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.VersionAlert_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(96, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(6, Byte), Integer))
@@ -797,7 +797,7 @@ Partial Class Store
         '
         'WXP_Alert2
         '
-        Me.WXP_Alert2.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.WXP_Alert2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
@@ -834,7 +834,7 @@ Partial Class Store
         Me.ActionCenter.Shadow = True
         Me.ActionCenter.Size = New System.Drawing.Size(120, 85)
         Me.ActionCenter.StartColor = System.Drawing.Color.Empty
-        Me.ActionCenter.Style = WinPaletter.XenonWinElement.Styles.ActionCenter11
+        Me.ActionCenter.Style = WinPaletter.UI.Simulation.WinElement.Styles.ActionCenter11
         Me.ActionCenter.SuspendRefresh = False
         Me.ActionCenter.TabIndex = 5
         Me.ActionCenter.Transparency = True
@@ -865,7 +865,7 @@ Partial Class Store
         Me.start.Shadow = True
         Me.start.Size = New System.Drawing.Size(135, 200)
         Me.start.StartColor = System.Drawing.Color.Empty
-        Me.start.Style = WinPaletter.XenonWinElement.Styles.Start11
+        Me.start.Style = WinPaletter.UI.Simulation.WinElement.Styles.Start11
         Me.start.SuspendRefresh = False
         Me.start.TabIndex = 1
         Me.start.Transparency = True
@@ -896,7 +896,7 @@ Partial Class Store
         Me.taskbar.Shadow = True
         Me.taskbar.Size = New System.Drawing.Size(526, 42)
         Me.taskbar.StartColor = System.Drawing.Color.Empty
-        Me.taskbar.Style = WinPaletter.XenonWinElement.Styles.Taskbar11
+        Me.taskbar.Style = WinPaletter.UI.Simulation.WinElement.Styles.Taskbar11
         Me.taskbar.SuspendRefresh = False
         Me.taskbar.TabIndex = 0
         Me.taskbar.Transparency = True
@@ -923,7 +923,7 @@ Partial Class Store
         Me.XenonWindow2.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow2.Name = "XenonWindow2"
         Me.XenonWindow2.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
-        Me.XenonWindow2.Preview = WinPaletter.XenonWindow.Preview_Enum.W11
+        Me.XenonWindow2.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11
         Me.XenonWindow2.Radius = 5
         Me.XenonWindow2.Shadow = True
         Me.XenonWindow2.Size = New System.Drawing.Size(189, 85)
@@ -956,7 +956,7 @@ Partial Class Store
         Me.XenonWindow1.Metrics_PaddedBorderWidth = 4
         Me.XenonWindow1.Name = "XenonWindow1"
         Me.XenonWindow1.Padding = New System.Windows.Forms.Padding(4, 40, 4, 4)
-        Me.XenonWindow1.Preview = WinPaletter.XenonWindow.Preview_Enum.W11
+        Me.XenonWindow1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11
         Me.XenonWindow1.Radius = 5
         Me.XenonWindow1.Shadow = True
         Me.XenonWindow1.Size = New System.Drawing.Size(189, 147)
@@ -1490,7 +1490,7 @@ Partial Class Store
         Me.RetroTextBox1.Name = "RetroTextBox1"
         Me.RetroTextBox1.ReadOnly = True
         Me.RetroTextBox1.Size = New System.Drawing.Size(188, 76)
-        Me.RetroTextBox1.Style = WinPaletter.RetroTextBox.RoundingStyle.Normal
+        Me.RetroTextBox1.Style = WinPaletter.UI.Retro.TextBoxR.RoundingStyle.Normal
         Me.RetroTextBox1.TabIndex = 3
         Me.RetroTextBox1.Text = "Window text"
         Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -1762,7 +1762,7 @@ Partial Class Store
         Me.XenonCMD1.Name = "XenonCMD1"
         Me.XenonCMD1.PowerShell = False
         Me.XenonCMD1.Raster = True
-        Me.XenonCMD1.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD1.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12
         Me.XenonCMD1.Size = New System.Drawing.Size(528, 297)
         Me.XenonCMD1.TabIndex = 1
         '
@@ -1793,7 +1793,7 @@ Partial Class Store
         Me.XenonCMD2.Name = "XenonCMD2"
         Me.XenonCMD2.PowerShell = False
         Me.XenonCMD2.Raster = True
-        Me.XenonCMD2.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD2.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12
         Me.XenonCMD2.Size = New System.Drawing.Size(528, 297)
         Me.XenonCMD2.TabIndex = 2
         '
@@ -1824,7 +1824,7 @@ Partial Class Store
         Me.XenonCMD3.Name = "XenonCMD3"
         Me.XenonCMD3.PowerShell = False
         Me.XenonCMD3.Raster = True
-        Me.XenonCMD3.RasterSize = WinPaletter.XenonCMD.Raster_Sizes._8x12
+        Me.XenonCMD3.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12
         Me.XenonCMD3.Size = New System.Drawing.Size(528, 297)
         Me.XenonCMD3.TabIndex = 2
         '
@@ -2870,93 +2870,93 @@ Partial Class Store
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Tabs As TablessControl
+    Friend WithEvents Tabs As UI.WP.TablessControl
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents pnl_preview As Panel
-    Friend WithEvents WXP_Alert2 As XenonAlertBox
-    Friend WithEvents ActionCenter As XenonWinElement
-    Friend WithEvents start As XenonWinElement
-    Friend WithEvents taskbar As XenonWinElement
-    Friend WithEvents XenonWindow2 As XenonWindow
-    Friend WithEvents XenonWindow1 As XenonWindow
+    Friend WithEvents WXP_Alert2 As UI.WP.AlertBox
+    Friend WithEvents ActionCenter As UI.Simulation.WinElement
+    Friend WithEvents start As UI.Simulation.WinElement
+    Friend WithEvents taskbar As UI.Simulation.WinElement
+    Friend WithEvents XenonWindow2 As UI.Simulation.Window
+    Friend WithEvents XenonWindow1 As UI.Simulation.Window
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents Label8 As XenonLabel
-    Friend WithEvents setting_icon_preview As XenonLabel
-    Friend WithEvents lnk_preview As XenonLabel
+    Friend WithEvents Label8 As UI.WP.LabelAlt
+    Friend WithEvents setting_icon_preview As UI.WP.LabelAlt
+    Friend WithEvents lnk_preview As UI.WP.LabelAlt
     Friend WithEvents pnl_preview_classic As Panel
-    Friend WithEvents ClassicWindow1 As RetroWindow
-    Friend WithEvents ClassicWindow2 As RetroWindow
-    Friend WithEvents ClassicTaskbar As RetroPanelRaised
-    Friend WithEvents RetroButton4 As RetroButton
-    Friend WithEvents RetroButton3 As RetroButton
-    Friend WithEvents RetroButton2 As RetroButton
+    Friend WithEvents ClassicWindow1 As UI.Retro.WindowR
+    Friend WithEvents ClassicWindow2 As UI.Retro.WindowR
+    Friend WithEvents ClassicTaskbar As UI.Retro.PanelRaisedR
+    Friend WithEvents RetroButton4 As UI.Retro.ButtonR
+    Friend WithEvents RetroButton3 As UI.Retro.ButtonR
+    Friend WithEvents RetroButton2 As UI.Retro.ButtonR
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents store_container As FlowLayoutPanel
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents back_btn As XenonButton
+    Friend WithEvents back_btn As UI.WP.Button
     Friend WithEvents FilesFetcher As System.ComponentModel.BackgroundWorker
     Friend WithEvents Titlebar_panel As Panel
-    Friend WithEvents Titlebar_lbl As XenonLabel
+    Friend WithEvents Titlebar_lbl As UI.WP.LabelAlt
     Friend WithEvents Titlebar_img As PictureBox
     Friend WithEvents themeSize_lbl As Label
     Friend WithEvents Label14 As Label
-    Friend WithEvents previewContainer As XenonGroupBox
+    Friend WithEvents previewContainer As UI.WP.GroupBox
     Friend WithEvents PictureBox41 As PictureBox
     Friend WithEvents Label19 As Label
     Friend WithEvents SupportedOS_lbl As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox14 As PictureBox
-    Friend WithEvents Apply_btn As XenonButton
+    Friend WithEvents Apply_btn As UI.WP.Button
     Friend WithEvents ClassicColorsPreview As Panel
-    Friend WithEvents RetroShadow1 As TransparentPictureBox
-    Friend WithEvents Menu_Window As RetroWindow
+    Friend WithEvents RetroShadow1 As UI.WP.TransparentPictureBox
+    Friend WithEvents Menu_Window As UI.Retro.WindowR
     Friend WithEvents menucontainer3 As Panel
-    Friend WithEvents RetroLabel9 As XenonLabel
+    Friend WithEvents RetroLabel9 As UI.WP.LabelAlt
     Friend WithEvents highlight As Panel
     Friend WithEvents menuhilight As Panel
-    Friend WithEvents RetroLabel5 As XenonLabel
+    Friend WithEvents RetroLabel5 As UI.WP.LabelAlt
     Friend WithEvents menucontainer1 As Panel
-    Friend WithEvents RetroLabel6 As XenonLabel
-    Friend WithEvents RetroWindow3 As RetroWindow
-    Friend WithEvents RetroButton5 As RetroButton
-    Friend WithEvents RetroLabel4 As XenonLabel
-    Friend WithEvents RetroLabel13 As XenonLabel
-    Friend WithEvents RetroWindow2 As RetroWindow
-    Friend WithEvents RetroTextBox1 As RetroTextBox
+    Friend WithEvents RetroLabel6 As UI.WP.LabelAlt
+    Friend WithEvents RetroWindow3 As UI.Retro.WindowR
+    Friend WithEvents RetroButton5 As UI.Retro.ButtonR
+    Friend WithEvents RetroLabel4 As UI.WP.LabelAlt
+    Friend WithEvents RetroLabel13 As UI.WP.LabelAlt
+    Friend WithEvents RetroWindow2 As UI.Retro.WindowR
+    Friend WithEvents RetroTextBox1 As UI.Retro.TextBoxR
     Friend WithEvents menucontainer0 As Panel
-    Friend WithEvents RetroPanel1 As RetroPanel
-    Friend WithEvents RetroLabel3 As XenonLabel
-    Friend WithEvents RetroLabel2 As XenonLabel
-    Friend WithEvents RetroLabel1 As XenonLabel
-    Friend WithEvents RetroWindow1 As RetroWindow
-    Friend WithEvents RetroWindow4 As RetroWindow
+    Friend WithEvents RetroPanel1 As UI.Retro.PanelR
+    Friend WithEvents RetroLabel3 As UI.WP.LabelAlt
+    Friend WithEvents RetroLabel2 As UI.WP.LabelAlt
+    Friend WithEvents RetroLabel1 As UI.WP.LabelAlt
+    Friend WithEvents RetroWindow1 As UI.Retro.WindowR
+    Friend WithEvents RetroWindow4 As UI.Retro.WindowR
     Friend WithEvents programcontainer As Panel
-    Friend WithEvents RetroPanel2 As RetroScrollBar
-    Friend WithEvents RetroButton12 As RetroButton
-    Friend WithEvents RetroButton11 As RetroButton
-    Friend WithEvents RetroButton10 As RetroButton
-    Friend WithEvents StopTimer_btn As XenonButton
-    Friend WithEvents ExportDetails_btn As XenonButton
+    Friend WithEvents RetroPanel2 As UI.Retro.ScrollBarR
+    Friend WithEvents RetroButton12 As UI.Retro.ButtonR
+    Friend WithEvents RetroButton11 As UI.Retro.ButtonR
+    Friend WithEvents RetroButton10 As UI.Retro.ButtonR
+    Friend WithEvents StopTimer_btn As UI.WP.Button
+    Friend WithEvents ExportDetails_btn As UI.WP.Button
     Friend WithEvents log_lbl As Label
-    Friend WithEvents ShowErrors_btn As XenonButton
-    Friend WithEvents ok_btn As XenonButton
-    Friend WithEvents log As TreeView
-    Friend WithEvents XenonSeparator1 As XenonSeparator
+    Friend WithEvents ShowErrors_btn As UI.WP.Button
+    Friend WithEvents ok_btn As UI.WP.Button
+    Friend WithEvents log As Windows.Forms.TreeView
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
     Friend WithEvents log_header As Label
     Friend WithEvents PictureBox36 As PictureBox
     Friend WithEvents Log_Timer As Timer
-    Friend WithEvents Edit_btn As XenonButton
-    Friend WithEvents RestartExplorer As XenonButton
-    Friend WithEvents search_box As XenonTextBox
+    Friend WithEvents Edit_btn As UI.WP.Button
+    Friend WithEvents RestartExplorer As UI.WP.Button
+    Friend WithEvents search_box As UI.WP.TextBox
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents search_results As FlowLayoutPanel
-    Friend WithEvents search_btn As XenonButton
-    Friend WithEvents search_filter_btn As XenonButton
-    Friend WithEvents XenonCMD1 As XenonCMD
-    Friend WithEvents XenonCMD2 As XenonCMD
-    Friend WithEvents XenonCMD3 As XenonCMD
-    Friend WithEvents cur_anim_btn As XenonButton
-    Friend WithEvents cur_tip_btn As XenonButton
+    Friend WithEvents search_btn As UI.WP.Button
+    Friend WithEvents search_filter_btn As UI.WP.Button
+    Friend WithEvents XenonCMD1 As UI.Simulation.WinCMD
+    Friend WithEvents XenonCMD2 As UI.Simulation.WinCMD
+    Friend WithEvents XenonCMD3 As UI.Simulation.WinCMD
+    Friend WithEvents cur_anim_btn As UI.WP.Button
+    Friend WithEvents cur_tip_btn As UI.WP.Button
     Friend WithEvents Cursors_Container As FlowLayoutPanel
     Friend WithEvents Arrow As CursorControl
     Friend WithEvents Help As CursorControl
@@ -2977,7 +2977,7 @@ Partial Class Store
     Friend WithEvents Cross As CursorControl
     Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents CursorsSize_Bar As XenonTrackbar
+    Friend WithEvents CursorsSize_Bar As UI.WP.Trackbar
     Friend WithEvents Cursor_Timer As Timer
     Friend WithEvents search_panel As Panel
     Friend WithEvents ProgressBar1 As ProgressBar
@@ -2985,18 +2985,18 @@ Partial Class Store
     Friend WithEvents Status_lbl As Label
     Friend WithEvents respacksize_lbl As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents StoreItem1 As StoreItem
-    Friend WithEvents XenonSeparatorVertical1 As XenonSeparatorVertical
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
+    Friend WithEvents StoreItem1 As UI.Controllers.StoreItem
+    Friend WithEvents XenonSeparatorVertical1 As UI.WP.SeparatorV
     Friend WithEvents Panel1 As Panel
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-    Friend WithEvents tabs_preview As TablessControl
+    Friend WithEvents tabs_preview As UI.WP.TablessControl
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TabPage6 As TabPage
-    Friend WithEvents desc_txt As XenonTextBox
-    Friend WithEvents VersionAlert_lbl As XenonAlertBox
-    Friend WithEvents author_url_button As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
+    Friend WithEvents desc_txt As UI.WP.TextBox
+    Friend WithEvents VersionAlert_lbl As UI.WP.AlertBox
+    Friend WithEvents author_url_button As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
     Friend WithEvents Theme_MD5_lbl As Label
 End Class

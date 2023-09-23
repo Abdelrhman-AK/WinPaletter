@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Media
-Imports WinPaletter.XenonCore
 
 Public Class Sounds_Editor
     Private snd As String
@@ -10,7 +9,7 @@ Public Class Sounds_Editor
 
     Private Sub XenonButton20_Click(sender As Object, e As EventArgs) Handles XenonButton20.Click 'imageres.dll player
         AltPlayingMethod = False
-        snd = DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0).Text
+        snd = DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0).Text
 
 
         If XenonTextBox2.Text.ToUpper.Trim = "CURRENT" Then
@@ -49,7 +48,7 @@ Public Class Sounds_Editor
 
             End If
 
-        ElseIf snd = DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0).Text Then
+        ElseIf snd = DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0).Text Then
 
             If IO.File.Exists(snd) Then
 
@@ -85,7 +84,7 @@ Public Class Sounds_Editor
 
     Sub PressPlay(sender As Object, e As EventArgs)
         AltPlayingMethod = False
-        snd = DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0).Text
+        snd = DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0).Text
 
         If IO.File.Exists(snd) Then
 
@@ -125,7 +124,7 @@ Public Class Sounds_Editor
     End Sub
 
     Sub BrowseForWAV(sender As Object, e As EventArgs)
-        With DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0)
+        With DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0)
             If IO.File.Exists(.Text) Then
                 OpenFileDialog2.FileName = New FileInfo(.Text).Name
                 OpenFileDialog2.InitialDirectory = New FileInfo(.Text).DirectoryName
@@ -135,7 +134,7 @@ Public Class Sounds_Editor
         If OpenFileDialog2.ShowDialog = DialogResult.OK Then
             snd = OpenFileDialog2.FileName
 
-            DirectCast(sender, XenonButton).Parent.Controls.OfType(Of XenonTextBox).ElementAt(0).Text = snd
+            DirectCast(sender, UI.WP.Button).Parent.Controls.OfType(Of UI.WP.TextBox).ElementAt(0).Text = snd
             Try
                 Using FS As New IO.FileStream(snd, IO.FileMode.Open, IO.FileAccess.Read)
                     SP = New SoundPlayer(FS)
@@ -152,15 +151,15 @@ Public Class Sounds_Editor
 
     Private Sub Sounds_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonButton12.Image = MainFrm.XenonButton20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
         XenonCheckBox35_SFC.Checked = My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound
 
         'Remove handler to avoid doubling/tripling events
         For Each page As TabPage In XenonTabControl1.TabPages
-            For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
-                For Each btn As XenonButton In pnl.Controls.OfType(Of XenonButton)
+            For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
+                For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     Try
                         If btn.Tag = "1" Then RemoveHandler btn.Click, AddressOf PressPlay
                         If btn.Tag = "2" Then RemoveHandler btn.Click, AddressOf StopPlayer
@@ -172,8 +171,8 @@ Public Class Sounds_Editor
         Next
 
         For Each page As TabPage In XenonTabControl1.TabPages
-            For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
-                For Each btn As XenonButton In pnl.Controls.OfType(Of XenonButton)
+            For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
+                For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     If btn.Tag = "1" Then AddHandler btn.Click, AddressOf PressPlay
                     If btn.Tag = "2" Then AddHandler btn.Click, AddressOf StopPlayer
                     If btn.Tag = "3" Then AddHandler btn.Click, AddressOf BrowseForWAV
@@ -184,8 +183,8 @@ Public Class Sounds_Editor
 
     Private Sub Sounds_Editor_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         For Each page As TabPage In XenonTabControl1.TabPages
-            For Each pnl As XenonGroupBox In page.Controls.OfType(Of XenonGroupBox)
-                For Each btn As XenonButton In pnl.Controls.OfType(Of XenonButton)
+            For Each pnl As UI.WP.GroupBox In page.Controls.OfType(Of UI.WP.GroupBox)
+                For Each btn As UI.WP.Button In pnl.Controls.OfType(Of UI.WP.Button)
                     If btn.Tag = "1" Then RemoveHandler btn.Click, AddressOf PressPlay
                     If btn.Tag = "2" Then RemoveHandler btn.Click, AddressOf StopPlayer
                     If btn.Tag = "3" Then RemoveHandler btn.Click, AddressOf BrowseForWAV

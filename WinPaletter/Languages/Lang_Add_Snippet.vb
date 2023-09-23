@@ -1,10 +1,9 @@
 ﻿Imports System.Globalization
-Imports WinPaletter.XenonCore
 
 Public Class Lang_Add_Snippet
     Private Sub Lang_Add_Snippet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         DialogResult = DialogResult.None
 

@@ -28,24 +28,24 @@ Partial Class Uninstall
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.XenonRadioImage1 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage2 = New WinPaletter.XenonRadioImage()
-        Me.XenonRadioImage3 = New WinPaletter.XenonRadioImage()
+        Me.XenonRadioImage1 = New WinPaletter.UI.WP.RadioImage()
+        Me.XenonRadioImage2 = New WinPaletter.UI.WP.RadioImage()
+        Me.XenonRadioImage3 = New WinPaletter.UI.WP.RadioImage()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox4 = New WinPaletter.XenonAlertBox()
-        Me.XenonCheckBox3 = New WinPaletter.XenonCheckBox()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonAlertBox4 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonCheckBox3 = New UI.WP.CheckBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonAnimatedBox1 = New WinPaletter.XenonAnimatedBox()
-        Me.XenonAlertBox2 = New WinPaletter.XenonAlertBox()
+        Me.XenonAnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
+        Me.XenonAlertBox2 = New WinPaletter.UI.WP.AlertBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -254,7 +254,7 @@ Partial Class Uninstall
         '
         'XenonAlertBox4
         '
-        Me.XenonAlertBox4.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox4.CenterText = False
         Me.XenonAlertBox4.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -292,7 +292,7 @@ Partial Class Uninstall
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Warning
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.XenonAlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
@@ -325,12 +325,12 @@ Partial Class Uninstall
         Me.XenonAnimatedBox1.Location = New System.Drawing.Point(0, 0)
         Me.XenonAnimatedBox1.Name = "XenonAnimatedBox1"
         Me.XenonAnimatedBox1.Size = New System.Drawing.Size(695, 86)
-        Me.XenonAnimatedBox1.Style = WinPaletter.XenonAnimatedBox.ColorsStyle.MixedColors
+        Me.XenonAnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors
         Me.XenonAnimatedBox1.TabIndex = 27
         '
         'XenonAlertBox2
         '
-        Me.XenonAlertBox2.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox2.CenterText = False
         Me.XenonAlertBox2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -394,22 +394,22 @@ Partial Class Uninstall
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents XenonRadioImage1 As XenonRadioImage
-    Friend WithEvents XenonRadioImage2 As XenonRadioImage
-    Friend WithEvents XenonRadioImage3 As XenonRadioImage
+    Friend WithEvents XenonRadioImage1 As UI.WP.RadioImage
+    Friend WithEvents XenonRadioImage2 As UI.WP.RadioImage
+    Friend WithEvents XenonRadioImage3 As UI.WP.RadioImage
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonAlertBox4 As XenonAlertBox
-    Friend WithEvents XenonCheckBox3 As XenonCheckBox
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonAlertBox4 As UI.WP.AlertBox
+    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonAnimatedBox1 As XenonAnimatedBox
-    Friend WithEvents XenonAlertBox2 As XenonAlertBox
+    Friend WithEvents XenonAnimatedBox1 As UI.WP.AnimatedBox
+    Friend WithEvents XenonAlertBox2 As UI.WP.AlertBox
 End Class

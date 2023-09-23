@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
 Public Class PaletteGenerateDashboard
     ReadOnly _Speed As Integer = 20
     Private _shown As Boolean
@@ -62,7 +61,7 @@ Public Class PaletteGenerateDashboard
 
     Private Sub TerminalsDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = PaletteGenerateFromImage.Icon
         _shown = False
 

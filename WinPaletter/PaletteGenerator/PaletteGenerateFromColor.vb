@@ -1,6 +1,4 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class PaletteGenerateFromColor
+﻿Public Class PaletteGenerateFromColor
 
     Private Colors_List As New List(Of Color)
     Private CP_Backup As CP
@@ -9,7 +7,7 @@ Public Class PaletteGenerateFromColor
 
     Private Sub PaletteGenerateFromImage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = PaletteGenerateFromImage.Icon
         CP_Backup = New CP(CP.CP_Type.Registry)
     End Sub
@@ -57,12 +55,12 @@ Public Class PaletteGenerateFromColor
     End Sub
 
     Private Sub XenonRadioButton3_CheckedChanged(sender As Object) Handles XenonRadioButton3.CheckedChanged, XenonRadioButton5.CheckedChanged, XenonRadioButton4.CheckedChanged, XenonRadioButton6.CheckedChanged, XenonRadioButton7.CheckedChanged
-        If CType(sender, XenonRadioButton).Checked Then GetColors()
+        If CType(sender, UI.WP.RadioButton).Checked Then GetColors()
     End Sub
 
     Sub GetColors()
 
-        For Each ctrl As XenonCP In ImgPaletteContainer.Controls.OfType(Of XenonCP)
+        For Each ctrl As UI.Controllers.ColorItem In ImgPaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             ctrl.Dispose()
         Next
         ImgPaletteContainer.Controls.Clear()
@@ -106,7 +104,7 @@ Public Class PaletteGenerateFromColor
         Colors_List.Sort(New RGBColorComparer())
 
         For Each C As Color In Colors_List
-            Dim MiniColorItem As New XenonCP With {
+            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,
                 .PauseColorsHistory = True,

@@ -22,8 +22,8 @@ Partial Class Saving_ex_list
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.SuspendLayout()
         '
@@ -98,7 +98,7 @@ Partial Class Saving_ex_list
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents TreeView1 As TreeView
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents TreeView1 As Windows.Forms.TreeView
 End Class

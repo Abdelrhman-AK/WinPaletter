@@ -26,115 +26,115 @@ Partial Class CursorsStudio
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CursorsStudio))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
-        Me.XenonCheckBox11 = New WinPaletter.XenonCheckBox()
+        Me.XenonGroupBox10 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonCheckBox11 = New UI.WP.CheckBox()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton19 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar10 = New WinPaletter.XenonTrackbar()
-        Me.XenonButton18 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar9 = New WinPaletter.XenonTrackbar()
+        Me.XenonButton19 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar10 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonButton18 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar9 = New WinPaletter.UI.WP.Trackbar()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.PictureBox20 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton17 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar8 = New WinPaletter.XenonTrackbar()
+        Me.XenonButton17 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar8 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
-        Me.XenonButton16 = New WinPaletter.XenonButton()
-        Me.XenonCP1 = New WinPaletter.XenonCP()
-        Me.XenonTrackbar7 = New WinPaletter.XenonTrackbar()
+        Me.XenonButton16 = New WinPaletter.UI.WP.Button()
+        Me.XenonCP1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonTrackbar7 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox9 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.trails_btn = New WinPaletter.XenonButton()
+        Me.trails_btn = New WinPaletter.UI.WP.Button()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.XenonCheckBox9 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox9 = New UI.WP.CheckBox()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.XenonTrackbar2 = New WinPaletter.XenonTrackbar()
-        Me.XenonCheckBox10 = New WinPaletter.XenonCheckBox()
-        Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
+        Me.XenonTrackbar2 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonCheckBox10 = New UI.WP.CheckBox()
+        Me.XenonGroupBox6 = New WinPaletter.UI.WP.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.XenonComboBox5 = New WinPaletter.XenonComboBox()
-        Me.XenonComboBox6 = New WinPaletter.XenonComboBox()
-        Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
+        Me.XenonComboBox5 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonComboBox6 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonGroupBox5 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton14 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar5 = New WinPaletter.XenonTrackbar()
-        Me.CircleColor1 = New WinPaletter.XenonCP()
-        Me.XenonCheckBox7 = New WinPaletter.XenonCheckBox()
-        Me.CircleColor2 = New WinPaletter.XenonCP()
-        Me.XenonComboBox4 = New WinPaletter.XenonComboBox()
-        Me.XenonCheckBox8 = New WinPaletter.XenonCheckBox()
+        Me.XenonGroupBox7 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton14 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar5 = New WinPaletter.UI.WP.Trackbar()
+        Me.CircleColor1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonCheckBox7 = New UI.WP.CheckBox()
+        Me.CircleColor2 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonComboBox4 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonCheckBox8 = New UI.WP.CheckBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton15 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar6 = New WinPaletter.XenonTrackbar()
-        Me.LoadingColor1 = New WinPaletter.XenonCP()
-        Me.XenonComboBox3 = New WinPaletter.XenonComboBox()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
-        Me.LoadingColor2 = New WinPaletter.XenonCP()
-        Me.XenonCheckBox6 = New WinPaletter.XenonCheckBox()
+        Me.XenonGroupBox8 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton15 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar6 = New WinPaletter.UI.WP.Trackbar()
+        Me.LoadingColor1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonComboBox3 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.LoadingColor2 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonCheckBox6 = New UI.WP.CheckBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox13 = New WinPaletter.UI.WP.GroupBox()
         Me.checker_img = New System.Windows.Forms.PictureBox()
-        Me.XenonToggle1 = New WinPaletter.XenonToggle()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonToggle1 = New UI.WP.Toggle()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton13 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar4 = New WinPaletter.XenonTrackbar()
-        Me.XenonCheckBox4 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox3 = New WinPaletter.XenonCheckBox()
-        Me.SecondaryColor1 = New WinPaletter.XenonCP()
-        Me.SecondaryColor2 = New WinPaletter.XenonCP()
-        Me.XenonComboBox2 = New WinPaletter.XenonComboBox()
+        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton13 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar4 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonCheckBox4 = New UI.WP.CheckBox()
+        Me.XenonCheckBox3 = New UI.WP.CheckBox()
+        Me.SecondaryColor1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.SecondaryColor2 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonComboBox2 = New WinPaletter.UI.WP.ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.XenonTrackbar3 = New WinPaletter.XenonTrackbar()
-        Me.PrimaryColor2 = New WinPaletter.XenonCP()
-        Me.PrimaryColor1 = New WinPaletter.XenonCP()
-        Me.XenonComboBox1 = New WinPaletter.XenonComboBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox5 = New WinPaletter.XenonCheckBox()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
+        Me.XenonTrackbar3 = New WinPaletter.UI.WP.Trackbar()
+        Me.PrimaryColor2 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.PrimaryColor1 = New WinPaletter.UI.Controllers.ColorItem()
+        Me.XenonComboBox1 = New WinPaletter.UI.WP.ComboBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonCheckBox5 = New UI.WP.CheckBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Arrow = New WinPaletter.CursorControl()
@@ -156,11 +156,11 @@ Partial Class CursorsStudio
         Me.Cross = New WinPaletter.CursorControl()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.XenonTrackbar1 = New WinPaletter.XenonTrackbar()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonAlertBox1 = New WinPaletter.XenonAlertBox()
+        Me.XenonTrackbar1 = New WinPaletter.UI.WP.Trackbar()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonAlertBox1 = New WinPaletter.UI.WP.AlertBox()
         Me.XenonGroupBox10.SuspendLayout()
         CType(Me.PictureBox24, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox20, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2450,7 +2450,7 @@ Partial Class CursorsStudio
         '
         'XenonAlertBox1
         '
-        Me.XenonAlertBox1.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.XenonAlertBox1.CenterText = False
@@ -2551,82 +2551,82 @@ Partial Class CursorsStudio
     Friend WithEvents Person As CursorControl
     Friend WithEvents IBeam As CursorControl
     Friend WithEvents Cross As CursorControl
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents PrimaryColor2 As XenonCP
+    Friend WithEvents PrimaryColor2 As UI.Controllers.ColorItem
     Friend WithEvents Label3 As Label
-    Friend WithEvents PrimaryColor1 As XenonCP
-    Friend WithEvents XenonComboBox1 As XenonComboBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonCheckBox5 As XenonCheckBox
-    Friend WithEvents XenonComboBox2 As XenonComboBox
-    Friend WithEvents SecondaryColor2 As XenonCP
-    Friend WithEvents SecondaryColor1 As XenonCP
-    Friend WithEvents XenonCheckBox3 As XenonCheckBox
+    Friend WithEvents PrimaryColor1 As UI.Controllers.ColorItem
+    Friend WithEvents XenonComboBox1 As UI.WP.ComboBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox5 As UI.WP.CheckBox
+    Friend WithEvents XenonComboBox2 As UI.WP.ComboBox
+    Friend WithEvents SecondaryColor2 As UI.Controllers.ColorItem
+    Friend WithEvents SecondaryColor1 As UI.Controllers.ColorItem
+    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonCheckBox4 As XenonCheckBox
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
-    Friend WithEvents XenonCheckBox6 As XenonCheckBox
-    Friend WithEvents XenonCheckBox7 As XenonCheckBox
-    Friend WithEvents XenonComboBox3 As XenonComboBox
-    Friend WithEvents LoadingColor2 As XenonCP
-    Friend WithEvents LoadingColor1 As XenonCP
-    Friend WithEvents XenonComboBox4 As XenonComboBox
-    Friend WithEvents XenonCheckBox8 As XenonCheckBox
-    Friend WithEvents CircleColor2 As XenonCP
-    Friend WithEvents CircleColor1 As XenonCP
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonTrackbar1 As XenonTrackbar
+    Friend WithEvents XenonCheckBox4 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox6 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox7 As UI.WP.CheckBox
+    Friend WithEvents XenonComboBox3 As UI.WP.ComboBox
+    Friend WithEvents LoadingColor2 As UI.Controllers.ColorItem
+    Friend WithEvents LoadingColor1 As UI.Controllers.ColorItem
+    Friend WithEvents XenonComboBox4 As UI.WP.ComboBox
+    Friend WithEvents XenonCheckBox8 As UI.WP.CheckBox
+    Friend WithEvents CircleColor2 As UI.Controllers.ColorItem
+    Friend WithEvents CircleColor1 As UI.Controllers.ColorItem
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonTrackbar1 As UI.WP.Trackbar
     Friend WithEvents PictureBox12 As PictureBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents XenonButton5 As XenonButton
+    Friend WithEvents XenonButton5 As UI.WP.Button
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonToggle1 As XenonToggle
-    Friend WithEvents XenonGroupBox13 As XenonGroupBox
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonButton9 As XenonButton
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonToggle1 As UI.WP.Toggle
+    Friend WithEvents XenonGroupBox13 As UI.WP.GroupBox
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonButton9 As UI.WP.Button
     Friend WithEvents Label12 As Label
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonButton10 As XenonButton
+    Friend WithEvents XenonButton10 As UI.WP.Button
     Friend WithEvents checker_img As PictureBox
-    Friend WithEvents XenonButton11 As XenonButton
+    Friend WithEvents XenonButton11 As UI.WP.Button
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents XenonCheckBox9 As XenonCheckBox
-    Friend WithEvents XenonTrackbar2 As XenonTrackbar
+    Friend WithEvents XenonCheckBox9 As UI.WP.CheckBox
+    Friend WithEvents XenonTrackbar2 As UI.WP.Trackbar
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox21 As PictureBox
-    Friend WithEvents trails_btn As XenonButton
+    Friend WithEvents trails_btn As UI.WP.Button
     Friend WithEvents PictureBox22 As PictureBox
-    Friend WithEvents XenonCheckBox10 As XenonCheckBox
-    Friend WithEvents XenonComboBox5 As XenonComboBox
-    Friend WithEvents XenonComboBox6 As XenonComboBox
+    Friend WithEvents XenonCheckBox10 As UI.WP.CheckBox
+    Friend WithEvents XenonComboBox5 As UI.WP.ComboBox
+    Friend WithEvents XenonComboBox6 As UI.WP.ComboBox
     Friend WithEvents Label18 As Label
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
+    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
     Friend WithEvents Label16 As Label
     Friend WithEvents Label15 As Label
-    Friend WithEvents XenonGroupBox5 As XenonGroupBox
+    Friend WithEvents XenonGroupBox5 As UI.WP.GroupBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents XenonGroupBox7 As XenonGroupBox
+    Friend WithEvents XenonGroupBox7 As UI.WP.GroupBox
     Friend WithEvents Label9 As Label
-    Friend WithEvents XenonGroupBox8 As XenonGroupBox
+    Friend WithEvents XenonGroupBox8 As UI.WP.GroupBox
     Friend WithEvents Label19 As Label
     Friend WithEvents Label20 As Label
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents Label21 As Label
     Friend WithEvents PictureBox10 As PictureBox
-    Friend WithEvents XenonGroupBox6 As XenonGroupBox
-    Friend WithEvents XenonGroupBox9 As XenonGroupBox
+    Friend WithEvents XenonGroupBox6 As UI.WP.GroupBox
+    Friend WithEvents XenonGroupBox9 As UI.WP.GroupBox
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox3 As PictureBox
@@ -2639,16 +2639,16 @@ Partial Class CursorsStudio
     Friend WithEvents Label7 As Label
     Friend WithEvents PictureBox13 As PictureBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents XenonTrackbar3 As XenonTrackbar
-    Friend WithEvents XenonButton13 As XenonButton
-    Friend WithEvents XenonTrackbar4 As XenonTrackbar
-    Friend WithEvents XenonButton14 As XenonButton
-    Friend WithEvents XenonTrackbar5 As XenonTrackbar
-    Friend WithEvents XenonButton15 As XenonButton
-    Friend WithEvents XenonTrackbar6 As XenonTrackbar
-    Friend WithEvents XenonGroupBox10 As XenonGroupBox
-    Friend WithEvents XenonCP1 As XenonCP
+    Friend WithEvents XenonButton12 As UI.WP.Button
+    Friend WithEvents XenonTrackbar3 As UI.WP.Trackbar
+    Friend WithEvents XenonButton13 As UI.WP.Button
+    Friend WithEvents XenonTrackbar4 As UI.WP.Trackbar
+    Friend WithEvents XenonButton14 As UI.WP.Button
+    Friend WithEvents XenonTrackbar5 As UI.WP.Trackbar
+    Friend WithEvents XenonButton15 As UI.WP.Button
+    Friend WithEvents XenonTrackbar6 As UI.WP.Trackbar
+    Friend WithEvents XenonGroupBox10 As UI.WP.GroupBox
+    Friend WithEvents XenonCP1 As UI.Controllers.ColorItem
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents Label14 As Label
     Friend WithEvents Label24 As Label
@@ -2657,17 +2657,17 @@ Partial Class CursorsStudio
     Friend WithEvents PictureBox18 As PictureBox
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox19 As PictureBox
-    Friend WithEvents XenonCheckBox11 As XenonCheckBox
+    Friend WithEvents XenonCheckBox11 As UI.WP.CheckBox
     Friend WithEvents PictureBox24 As PictureBox
-    Friend WithEvents XenonButton19 As XenonButton
-    Friend WithEvents XenonTrackbar10 As XenonTrackbar
-    Friend WithEvents XenonButton18 As XenonButton
-    Friend WithEvents XenonTrackbar9 As XenonTrackbar
+    Friend WithEvents XenonButton19 As UI.WP.Button
+    Friend WithEvents XenonTrackbar10 As UI.WP.Trackbar
+    Friend WithEvents XenonButton18 As UI.WP.Button
+    Friend WithEvents XenonTrackbar9 As UI.WP.Trackbar
     Friend WithEvents Label22 As Label
     Friend WithEvents PictureBox20 As PictureBox
-    Friend WithEvents XenonButton17 As XenonButton
-    Friend WithEvents XenonTrackbar8 As XenonTrackbar
-    Friend WithEvents XenonButton16 As XenonButton
-    Friend WithEvents XenonTrackbar7 As XenonTrackbar
-    Friend WithEvents XenonAlertBox1 As XenonAlertBox
+    Friend WithEvents XenonButton17 As UI.WP.Button
+    Friend WithEvents XenonTrackbar8 As UI.WP.Trackbar
+    Friend WithEvents XenonButton16 As UI.WP.Button
+    Friend WithEvents XenonTrackbar7 As UI.WP.Trackbar
+    Friend WithEvents XenonAlertBox1 As UI.WP.AlertBox
 End Class

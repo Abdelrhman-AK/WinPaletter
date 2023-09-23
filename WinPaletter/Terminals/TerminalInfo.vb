@@ -1,10 +1,9 @@
-﻿Imports WinPaletter.XenonCore
-Public Class TerminalInfo
+﻿Public Class TerminalInfo
     Public Profile As New ProfilesList
 
     Private Sub TerminalInfo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = WindowsTerminal.Icon
     End Sub
 

@@ -1,11 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports WinPaletter.XenonCore
 
 Public Class Lang_JSON_Manage
     Private Sub LangJSON_Manage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         Label6.Font = My.Application.ConsoleFontMedium
         TreeView1.ImageList = My.Lang_IL

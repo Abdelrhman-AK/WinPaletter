@@ -23,13 +23,13 @@ Partial Class Store_SearchFilter
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store_SearchFilter))
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
-        Me.XenonCheckBox3 = New WinPaletter.XenonCheckBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonCheckBox3 = New UI.WP.CheckBox()
         CType(Me.PictureBox16, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -158,11 +158,11 @@ Partial Class Store_SearchFilter
 
     End Sub
 
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton7 As XenonButton
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton7 As UI.WP.Button
     Friend WithEvents Label6 As Label
     Friend WithEvents PictureBox16 As PictureBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
-    Friend WithEvents XenonCheckBox3 As XenonCheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
 End Class

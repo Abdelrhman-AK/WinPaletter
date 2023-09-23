@@ -156,7 +156,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     .RoundedCorners = RoundCorners
                 End With
 
-                ApplyDarkMode()
+                ApplyStyle()
             End Sub
 
             Shared Operator =(First As AppTheme, Second As AppTheme) As Boolean
@@ -4454,7 +4454,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return installed
     End Function
-    Public Shared Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
+    Public Shared Sub AddNode([TreeView] As Windows.Forms.TreeView, [Text] As String, [ImageKey] As String)
         If [TreeView] IsNot Nothing Then
             If [TreeView].InvokeRequired Then
 
@@ -4487,7 +4487,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
     Private Sub AddException([Label] As String, [Exception] As Exception)
         My.Saving_Exceptions.Add(New Tuple(Of String, Exception)([Label], [Exception]))
     End Sub
-    Sub Execute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
+    Sub Execute(ByVal [Sub] As MethodInvoker, Optional [TreeView] As Windows.Forms.TreeView = Nothing, Optional StartStr As String = "", Optional ErrorStr As String = "",
                Optional TimeStr As String = "", Optional overallStopwatch As Stopwatch = Nothing, Optional Skip As Boolean = False, Optional SkipStr As String = "", Optional ExecuteEvenIfSkip As Boolean = False)
 
         Dim ReportProgress As Boolean = [TreeView] IsNot Nothing
@@ -4752,7 +4752,7 @@ Start:
         End Select
     End Sub
 
-    Sub Save([SaveTo] As CP_Type, Optional File As String = "", Optional [TreeView] As TreeView = Nothing, Optional ResetToDefault As Boolean = False)
+    Sub Save([SaveTo] As CP_Type, Optional File As String = "", Optional [TreeView] As Windows.Forms.TreeView = Nothing, Optional ResetToDefault As Boolean = False)
 
         Select Case [SaveTo]
             Case CP_Type.Registry
@@ -6031,7 +6031,7 @@ Start:
 #End Region
 
 #Region "Applying Subs"
-    Public Sub Apply_LogonUI7([LogonElement] As Structures.LogonUI7, Optional RegEntryHint As String = "LogonUI", Optional ByVal [TreeView] As TreeView = Nothing)
+    Public Sub Apply_LogonUI7([LogonElement] As Structures.LogonUI7, Optional RegEntryHint As String = "LogonUI", Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", [LogonElement].Enabled.ToInteger)
@@ -6116,7 +6116,7 @@ Start:
         End If
     End Sub
 
-    Public Sub Apply_LogonUI_8(Optional ByVal [TreeView] As TreeView = Nothing)
+    Public Sub Apply_LogonUI_8(Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
 
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
@@ -6239,7 +6239,7 @@ Start:
         End If
     End Sub
 
-    Public Sub Apply_Cursors(Optional ByVal [TreeView] As TreeView = Nothing)
+    Public Sub Apply_Cursors(Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
         Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
 
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled)

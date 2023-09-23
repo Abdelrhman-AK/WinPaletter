@@ -1,9 +1,7 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class WindowsTerminalCopycat
+﻿Public Class WindowsTerminalCopycat
     Private Sub WindowsTerminalCopycat_Load(sender As Object, e As EventArgs) Handles Me.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = WindowsTerminal.Icon
 
         Try

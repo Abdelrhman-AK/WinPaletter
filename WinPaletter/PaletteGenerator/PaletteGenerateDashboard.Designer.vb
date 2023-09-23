@@ -25,8 +25,8 @@ Partial Class PaletteGenerateDashboard
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PaletteGenerateDashboard))
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
         Me.SuspendLayout()
         '
         'ToolTip1
@@ -93,7 +93,7 @@ Partial Class PaletteGenerateDashboard
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
     Friend WithEvents ToolTip1 As ToolTip
 End Class

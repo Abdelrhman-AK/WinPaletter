@@ -25,633 +25,633 @@ Partial Class Sounds_Editor
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Sounds_Editor))
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.XenonButton10 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
-        Me.XenonButton8 = New WinPaletter.XenonButton()
-        Me.XenonTabControl1 = New WinPaletter.XenonTabControl()
+        Me.XenonButton10 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton8 = New WinPaletter.UI.WP.Button()
+        Me.XenonTabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.XenonSeparator1 = New WinPaletter.XenonSeparator()
-        Me.XenonSeparator3 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox85 = New WinPaletter.XenonGroupBox()
+        Me.XenonSeparator1 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonSeparator3 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonGroupBox85 = New WinPaletter.UI.WP.GroupBox()
         Me.Label85 = New System.Windows.Forms.Label()
         Me.PictureBox84 = New System.Windows.Forms.PictureBox()
-        Me.XenonCheckBox35_SFC = New WinPaletter.XenonCheckBox()
-        Me.XenonGroupBox65 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton199 = New WinPaletter.XenonButton()
-        Me.XenonButton200 = New WinPaletter.XenonButton()
-        Me.XenonButton201 = New WinPaletter.XenonButton()
-        Me.XenonTextBox64 = New WinPaletter.XenonTextBox()
+        Me.XenonCheckBox35_SFC = New UI.WP.CheckBox()
+        Me.XenonGroupBox65 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton199 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton200 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton201 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox64 = New WinPaletter.UI.WP.TextBox()
         Me.Label65 = New System.Windows.Forms.Label()
         Me.PictureBox64 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox5 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton24 = New WinPaletter.XenonButton()
-        Me.XenonButton23 = New WinPaletter.XenonButton()
-        Me.XenonButton22 = New WinPaletter.XenonButton()
-        Me.XenonButton19 = New WinPaletter.XenonButton()
-        Me.XenonButton20 = New WinPaletter.XenonButton()
-        Me.XenonButton21 = New WinPaletter.XenonButton()
-        Me.XenonTextBox2 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox5 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton24 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton23 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton22 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton19 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton20 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton21 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox2 = New WinPaletter.UI.WP.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox3 = New WinPaletter.XenonGroupBox()
-        Me.XenonCheckBox3 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton15 = New WinPaletter.XenonButton()
-        Me.XenonButton5 = New WinPaletter.XenonButton()
-        Me.XenonButton6 = New WinPaletter.XenonButton()
-        Me.XenonTextBox5 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox3 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonCheckBox3 = New UI.WP.CheckBox()
+        Me.XenonButton15 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton5 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton6 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox5 = New WinPaletter.UI.WP.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox6 = New WinPaletter.XenonGroupBox()
-        Me.XenonCheckBox4 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton25 = New WinPaletter.XenonButton()
-        Me.XenonButton26 = New WinPaletter.XenonButton()
-        Me.XenonButton27 = New WinPaletter.XenonButton()
-        Me.XenonTextBox6 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox6 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonCheckBox4 = New UI.WP.CheckBox()
+        Me.XenonButton25 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton26 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton27 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox6 = New WinPaletter.UI.WP.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox4 = New WinPaletter.XenonGroupBox()
-        Me.XenonCheckBox2 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton16 = New WinPaletter.XenonButton()
-        Me.XenonButton13 = New WinPaletter.XenonButton()
-        Me.XenonButton14 = New WinPaletter.XenonButton()
-        Me.XenonTextBox4 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox4 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonCheckBox2 = New UI.WP.CheckBox()
+        Me.XenonButton16 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton13 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton14 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox4 = New WinPaletter.UI.WP.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox2 = New WinPaletter.XenonGroupBox()
-        Me.XenonCheckBox1 = New WinPaletter.XenonCheckBox()
-        Me.XenonButton17 = New WinPaletter.XenonButton()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
-        Me.XenonButton4 = New WinPaletter.XenonButton()
-        Me.XenonTextBox3 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox2 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonCheckBox1 = New UI.WP.CheckBox()
+        Me.XenonButton17 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton4 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox3 = New WinPaletter.UI.WP.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton18 = New WinPaletter.XenonButton()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonTextBox1 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton18 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox1 = New WinPaletter.UI.WP.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox67 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton205 = New WinPaletter.XenonButton()
-        Me.XenonButton206 = New WinPaletter.XenonButton()
-        Me.XenonButton207 = New WinPaletter.XenonButton()
-        Me.XenonTextBox66 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox67 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton205 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton206 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton207 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox66 = New WinPaletter.UI.WP.TextBox()
         Me.Label67 = New System.Windows.Forms.Label()
         Me.PictureBox66 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox69 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton211 = New WinPaletter.XenonButton()
-        Me.XenonButton212 = New WinPaletter.XenonButton()
-        Me.XenonButton213 = New WinPaletter.XenonButton()
-        Me.XenonTextBox68 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox69 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton211 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton212 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton213 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox68 = New WinPaletter.UI.WP.TextBox()
         Me.Label69 = New System.Windows.Forms.Label()
         Me.PictureBox68 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox11 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton40 = New WinPaletter.XenonButton()
-        Me.XenonButton41 = New WinPaletter.XenonButton()
-        Me.XenonButton42 = New WinPaletter.XenonButton()
-        Me.XenonTextBox11 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox11 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton40 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton41 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton42 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox11 = New WinPaletter.UI.WP.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox10 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton37 = New WinPaletter.XenonButton()
-        Me.XenonButton38 = New WinPaletter.XenonButton()
-        Me.XenonButton39 = New WinPaletter.XenonButton()
-        Me.XenonTextBox10 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox10 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton37 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton38 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton39 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox10 = New WinPaletter.UI.WP.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox9 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton34 = New WinPaletter.XenonButton()
-        Me.XenonButton35 = New WinPaletter.XenonButton()
-        Me.XenonButton36 = New WinPaletter.XenonButton()
-        Me.XenonTextBox9 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox9 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton34 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton35 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton36 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox9 = New WinPaletter.UI.WP.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox8 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton31 = New WinPaletter.XenonButton()
-        Me.XenonButton32 = New WinPaletter.XenonButton()
-        Me.XenonButton33 = New WinPaletter.XenonButton()
-        Me.XenonTextBox8 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox8 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton31 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton32 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton33 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox8 = New WinPaletter.UI.WP.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox7 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton28 = New WinPaletter.XenonButton()
-        Me.XenonButton29 = New WinPaletter.XenonButton()
-        Me.XenonButton30 = New WinPaletter.XenonButton()
-        Me.XenonTextBox7 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox7 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton28 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton29 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton30 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox7 = New WinPaletter.UI.WP.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox55 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton169 = New WinPaletter.XenonButton()
-        Me.XenonButton170 = New WinPaletter.XenonButton()
-        Me.XenonButton171 = New WinPaletter.XenonButton()
-        Me.XenonTextBox54 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox55 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton169 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton170 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton171 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox54 = New WinPaletter.UI.WP.TextBox()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.PictureBox54 = New System.Windows.Forms.PictureBox()
-        Me.XenonSeparator2 = New WinPaletter.XenonSeparator()
-        Me.XenonGroupBox54 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton166 = New WinPaletter.XenonButton()
-        Me.XenonButton167 = New WinPaletter.XenonButton()
-        Me.XenonButton168 = New WinPaletter.XenonButton()
-        Me.XenonTextBox53 = New WinPaletter.XenonTextBox()
+        Me.XenonSeparator2 = New WinPaletter.UI.WP.SeparatorH()
+        Me.XenonGroupBox54 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton166 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton167 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton168 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox53 = New WinPaletter.UI.WP.TextBox()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.PictureBox53 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox18 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton58 = New WinPaletter.XenonButton()
-        Me.XenonButton59 = New WinPaletter.XenonButton()
-        Me.XenonButton60 = New WinPaletter.XenonButton()
-        Me.XenonTextBox17 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox18 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton58 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton59 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton60 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox17 = New WinPaletter.UI.WP.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox13 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton43 = New WinPaletter.XenonButton()
-        Me.XenonButton44 = New WinPaletter.XenonButton()
-        Me.XenonButton45 = New WinPaletter.XenonButton()
-        Me.XenonTextBox12 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox13 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton43 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton44 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton45 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox12 = New WinPaletter.UI.WP.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox14 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton46 = New WinPaletter.XenonButton()
-        Me.XenonButton47 = New WinPaletter.XenonButton()
-        Me.XenonButton48 = New WinPaletter.XenonButton()
-        Me.XenonTextBox13 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox14 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton46 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton47 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton48 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox13 = New WinPaletter.UI.WP.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox15 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton49 = New WinPaletter.XenonButton()
-        Me.XenonButton50 = New WinPaletter.XenonButton()
-        Me.XenonButton51 = New WinPaletter.XenonButton()
-        Me.XenonTextBox14 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox15 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton49 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton50 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton51 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox14 = New WinPaletter.UI.WP.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox16 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton52 = New WinPaletter.XenonButton()
-        Me.XenonButton53 = New WinPaletter.XenonButton()
-        Me.XenonButton54 = New WinPaletter.XenonButton()
-        Me.XenonTextBox15 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox16 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton52 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton53 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton54 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox15 = New WinPaletter.UI.WP.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox17 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton55 = New WinPaletter.XenonButton()
-        Me.XenonButton56 = New WinPaletter.XenonButton()
-        Me.XenonButton57 = New WinPaletter.XenonButton()
-        Me.XenonTextBox16 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox17 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton55 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton56 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton57 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox16 = New WinPaletter.UI.WP.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox86 = New WinPaletter.XenonGroupBox()
+        Me.XenonGroupBox86 = New WinPaletter.UI.WP.GroupBox()
         Me.Label87 = New System.Windows.Forms.Label()
-        Me.XenonButton260 = New WinPaletter.XenonButton()
-        Me.XenonButton261 = New WinPaletter.XenonButton()
-        Me.XenonButton262 = New WinPaletter.XenonButton()
-        Me.XenonTextBox84 = New WinPaletter.XenonTextBox()
+        Me.XenonButton260 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton261 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton262 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox84 = New WinPaletter.UI.WP.TextBox()
         Me.Label86 = New System.Windows.Forms.Label()
         Me.PictureBox85 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox53 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton163 = New WinPaletter.XenonButton()
-        Me.XenonButton164 = New WinPaletter.XenonButton()
-        Me.XenonButton165 = New WinPaletter.XenonButton()
-        Me.XenonTextBox52 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox53 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton163 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton164 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton165 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox52 = New WinPaletter.UI.WP.TextBox()
         Me.Label53 = New System.Windows.Forms.Label()
         Me.PictureBox52 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox51 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton157 = New WinPaletter.XenonButton()
-        Me.XenonButton158 = New WinPaletter.XenonButton()
-        Me.XenonButton159 = New WinPaletter.XenonButton()
-        Me.XenonTextBox50 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox51 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton157 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton158 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton159 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox50 = New WinPaletter.UI.WP.TextBox()
         Me.Label51 = New System.Windows.Forms.Label()
         Me.PictureBox50 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox50 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton154 = New WinPaletter.XenonButton()
-        Me.XenonButton155 = New WinPaletter.XenonButton()
-        Me.XenonButton156 = New WinPaletter.XenonButton()
-        Me.XenonTextBox49 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox50 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton154 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton155 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton156 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox49 = New WinPaletter.UI.WP.TextBox()
         Me.Label50 = New System.Windows.Forms.Label()
         Me.PictureBox49 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox49 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton151 = New WinPaletter.XenonButton()
-        Me.XenonButton152 = New WinPaletter.XenonButton()
-        Me.XenonButton153 = New WinPaletter.XenonButton()
-        Me.XenonTextBox48 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox49 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton151 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton152 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton153 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox48 = New WinPaletter.UI.WP.TextBox()
         Me.Label49 = New System.Windows.Forms.Label()
         Me.PictureBox48 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox48 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton148 = New WinPaletter.XenonButton()
-        Me.XenonButton149 = New WinPaletter.XenonButton()
-        Me.XenonButton150 = New WinPaletter.XenonButton()
-        Me.XenonTextBox47 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox48 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton148 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton149 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton150 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox47 = New WinPaletter.UI.WP.TextBox()
         Me.Label48 = New System.Windows.Forms.Label()
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox47 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton145 = New WinPaletter.XenonButton()
-        Me.XenonButton146 = New WinPaletter.XenonButton()
-        Me.XenonButton147 = New WinPaletter.XenonButton()
-        Me.XenonTextBox46 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox47 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton145 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton146 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton147 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox46 = New WinPaletter.UI.WP.TextBox()
         Me.Label47 = New System.Windows.Forms.Label()
         Me.PictureBox46 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox46 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton142 = New WinPaletter.XenonButton()
-        Me.XenonButton143 = New WinPaletter.XenonButton()
-        Me.XenonButton144 = New WinPaletter.XenonButton()
-        Me.XenonTextBox45 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox46 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton142 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton143 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton144 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox45 = New WinPaletter.UI.WP.TextBox()
         Me.Label46 = New System.Windows.Forms.Label()
         Me.PictureBox45 = New System.Windows.Forms.PictureBox()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox79 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton241 = New WinPaletter.XenonButton()
-        Me.XenonButton242 = New WinPaletter.XenonButton()
-        Me.XenonButton243 = New WinPaletter.XenonButton()
-        Me.XenonTextBox78 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox79 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton241 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton242 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton243 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox78 = New WinPaletter.UI.WP.TextBox()
         Me.Label79 = New System.Windows.Forms.Label()
         Me.PictureBox78 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox80 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton244 = New WinPaletter.XenonButton()
-        Me.XenonButton245 = New WinPaletter.XenonButton()
-        Me.XenonButton246 = New WinPaletter.XenonButton()
-        Me.XenonTextBox79 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox80 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton244 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton245 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton246 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox79 = New WinPaletter.UI.WP.TextBox()
         Me.Label80 = New System.Windows.Forms.Label()
         Me.PictureBox79 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox78 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton238 = New WinPaletter.XenonButton()
-        Me.XenonButton239 = New WinPaletter.XenonButton()
-        Me.XenonButton240 = New WinPaletter.XenonButton()
-        Me.XenonTextBox77 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox78 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton238 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton239 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton240 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox77 = New WinPaletter.UI.WP.TextBox()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.PictureBox77 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox77 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton235 = New WinPaletter.XenonButton()
-        Me.XenonButton236 = New WinPaletter.XenonButton()
-        Me.XenonButton237 = New WinPaletter.XenonButton()
-        Me.XenonTextBox76 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox77 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton235 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton236 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton237 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox76 = New WinPaletter.UI.WP.TextBox()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.PictureBox76 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox52 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton160 = New WinPaletter.XenonButton()
-        Me.XenonButton161 = New WinPaletter.XenonButton()
-        Me.XenonButton162 = New WinPaletter.XenonButton()
-        Me.XenonTextBox51 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox52 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton160 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton161 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton162 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox51 = New WinPaletter.UI.WP.TextBox()
         Me.Label52 = New System.Windows.Forms.Label()
         Me.PictureBox51 = New System.Windows.Forms.PictureBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox76 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton232 = New WinPaletter.XenonButton()
-        Me.XenonButton233 = New WinPaletter.XenonButton()
-        Me.XenonButton234 = New WinPaletter.XenonButton()
-        Me.XenonTextBox75 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox76 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton232 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton233 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton234 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox75 = New WinPaletter.UI.WP.TextBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.PictureBox75 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox64 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton196 = New WinPaletter.XenonButton()
-        Me.XenonButton197 = New WinPaletter.XenonButton()
-        Me.XenonButton198 = New WinPaletter.XenonButton()
-        Me.XenonTextBox63 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox64 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton196 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton197 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton198 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox63 = New WinPaletter.UI.WP.TextBox()
         Me.Label64 = New System.Windows.Forms.Label()
         Me.PictureBox63 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox57 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton175 = New WinPaletter.XenonButton()
-        Me.XenonButton176 = New WinPaletter.XenonButton()
-        Me.XenonButton177 = New WinPaletter.XenonButton()
-        Me.XenonTextBox56 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox57 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton175 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton176 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton177 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox56 = New WinPaletter.UI.WP.TextBox()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.PictureBox56 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox58 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton178 = New WinPaletter.XenonButton()
-        Me.XenonButton179 = New WinPaletter.XenonButton()
-        Me.XenonButton180 = New WinPaletter.XenonButton()
-        Me.XenonTextBox57 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox58 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton178 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton179 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton180 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox57 = New WinPaletter.UI.WP.TextBox()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.PictureBox57 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox59 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton181 = New WinPaletter.XenonButton()
-        Me.XenonButton182 = New WinPaletter.XenonButton()
-        Me.XenonButton183 = New WinPaletter.XenonButton()
-        Me.XenonTextBox58 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox59 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton181 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton182 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton183 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox58 = New WinPaletter.UI.WP.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.PictureBox58 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox60 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton184 = New WinPaletter.XenonButton()
-        Me.XenonButton185 = New WinPaletter.XenonButton()
-        Me.XenonButton186 = New WinPaletter.XenonButton()
-        Me.XenonTextBox59 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox60 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton184 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton185 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton186 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox59 = New WinPaletter.UI.WP.TextBox()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.PictureBox59 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox61 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton187 = New WinPaletter.XenonButton()
-        Me.XenonButton188 = New WinPaletter.XenonButton()
-        Me.XenonButton189 = New WinPaletter.XenonButton()
-        Me.XenonTextBox60 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox61 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton187 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton188 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton189 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox60 = New WinPaletter.UI.WP.TextBox()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.PictureBox60 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox62 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton190 = New WinPaletter.XenonButton()
-        Me.XenonButton191 = New WinPaletter.XenonButton()
-        Me.XenonButton192 = New WinPaletter.XenonButton()
-        Me.XenonTextBox61 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox62 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton190 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton191 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton192 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox61 = New WinPaletter.UI.WP.TextBox()
         Me.Label62 = New System.Windows.Forms.Label()
         Me.PictureBox61 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox63 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton193 = New WinPaletter.XenonButton()
-        Me.XenonButton194 = New WinPaletter.XenonButton()
-        Me.XenonButton195 = New WinPaletter.XenonButton()
-        Me.XenonTextBox62 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox63 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton193 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton194 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton195 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox62 = New WinPaletter.UI.WP.TextBox()
         Me.Label63 = New System.Windows.Forms.Label()
         Me.PictureBox62 = New System.Windows.Forms.PictureBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox66 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton202 = New WinPaletter.XenonButton()
-        Me.XenonButton203 = New WinPaletter.XenonButton()
-        Me.XenonButton204 = New WinPaletter.XenonButton()
-        Me.XenonTextBox65 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox66 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton202 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton203 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton204 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox65 = New WinPaletter.UI.WP.TextBox()
         Me.Label66 = New System.Windows.Forms.Label()
         Me.PictureBox65 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox56 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton172 = New WinPaletter.XenonButton()
-        Me.XenonButton173 = New WinPaletter.XenonButton()
-        Me.XenonButton174 = New WinPaletter.XenonButton()
-        Me.XenonTextBox55 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox56 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton172 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton173 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton174 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox55 = New WinPaletter.UI.WP.TextBox()
         Me.Label56 = New System.Windows.Forms.Label()
         Me.PictureBox55 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox25 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton79 = New WinPaletter.XenonButton()
-        Me.XenonButton80 = New WinPaletter.XenonButton()
-        Me.XenonButton81 = New WinPaletter.XenonButton()
-        Me.XenonTextBox24 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox25 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton79 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton80 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton81 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox24 = New WinPaletter.UI.WP.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox19 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton61 = New WinPaletter.XenonButton()
-        Me.XenonButton62 = New WinPaletter.XenonButton()
-        Me.XenonButton63 = New WinPaletter.XenonButton()
-        Me.XenonTextBox18 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox19 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton61 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton62 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton63 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox18 = New WinPaletter.UI.WP.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox20 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton64 = New WinPaletter.XenonButton()
-        Me.XenonButton65 = New WinPaletter.XenonButton()
-        Me.XenonButton66 = New WinPaletter.XenonButton()
-        Me.XenonTextBox19 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox20 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton64 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton65 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton66 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox19 = New WinPaletter.UI.WP.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox21 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton67 = New WinPaletter.XenonButton()
-        Me.XenonButton68 = New WinPaletter.XenonButton()
-        Me.XenonButton69 = New WinPaletter.XenonButton()
-        Me.XenonTextBox20 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox21 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton67 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton68 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton69 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox20 = New WinPaletter.UI.WP.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PictureBox20 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox22 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton70 = New WinPaletter.XenonButton()
-        Me.XenonButton71 = New WinPaletter.XenonButton()
-        Me.XenonButton72 = New WinPaletter.XenonButton()
-        Me.XenonTextBox21 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox22 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton70 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton71 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton72 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox21 = New WinPaletter.UI.WP.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox23 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton73 = New WinPaletter.XenonButton()
-        Me.XenonButton74 = New WinPaletter.XenonButton()
-        Me.XenonButton75 = New WinPaletter.XenonButton()
-        Me.XenonTextBox22 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox23 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton73 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton74 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton75 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox22 = New WinPaletter.UI.WP.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox24 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton76 = New WinPaletter.XenonButton()
-        Me.XenonButton77 = New WinPaletter.XenonButton()
-        Me.XenonButton78 = New WinPaletter.XenonButton()
-        Me.XenonTextBox23 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox24 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton76 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton77 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton78 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox23 = New WinPaletter.UI.WP.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.PictureBox23 = New System.Windows.Forms.PictureBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox33 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton103 = New WinPaletter.XenonButton()
-        Me.XenonButton104 = New WinPaletter.XenonButton()
-        Me.XenonButton105 = New WinPaletter.XenonButton()
-        Me.XenonTextBox32 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox33 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton103 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton104 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton105 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox32 = New WinPaletter.UI.WP.TextBox()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox34 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton106 = New WinPaletter.XenonButton()
-        Me.XenonButton107 = New WinPaletter.XenonButton()
-        Me.XenonButton108 = New WinPaletter.XenonButton()
-        Me.XenonTextBox33 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox34 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton106 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton107 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton108 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox33 = New WinPaletter.UI.WP.TextBox()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox35 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton109 = New WinPaletter.XenonButton()
-        Me.XenonButton110 = New WinPaletter.XenonButton()
-        Me.XenonButton111 = New WinPaletter.XenonButton()
-        Me.XenonTextBox34 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox35 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton109 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton110 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton111 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox34 = New WinPaletter.UI.WP.TextBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox26 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton82 = New WinPaletter.XenonButton()
-        Me.XenonButton83 = New WinPaletter.XenonButton()
-        Me.XenonButton84 = New WinPaletter.XenonButton()
-        Me.XenonTextBox25 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox26 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton82 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton83 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton84 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox25 = New WinPaletter.UI.WP.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox27 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton85 = New WinPaletter.XenonButton()
-        Me.XenonButton86 = New WinPaletter.XenonButton()
-        Me.XenonButton87 = New WinPaletter.XenonButton()
-        Me.XenonTextBox26 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox27 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton85 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton86 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton87 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox26 = New WinPaletter.UI.WP.TextBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.PictureBox26 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox28 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton88 = New WinPaletter.XenonButton()
-        Me.XenonButton89 = New WinPaletter.XenonButton()
-        Me.XenonButton90 = New WinPaletter.XenonButton()
-        Me.XenonTextBox27 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox28 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton88 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton89 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton90 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox27 = New WinPaletter.UI.WP.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.PictureBox27 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox29 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton91 = New WinPaletter.XenonButton()
-        Me.XenonButton92 = New WinPaletter.XenonButton()
-        Me.XenonButton93 = New WinPaletter.XenonButton()
-        Me.XenonTextBox28 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox29 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton91 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton92 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton93 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox28 = New WinPaletter.UI.WP.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox30 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton94 = New WinPaletter.XenonButton()
-        Me.XenonButton95 = New WinPaletter.XenonButton()
-        Me.XenonButton96 = New WinPaletter.XenonButton()
-        Me.XenonTextBox29 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox30 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton94 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton95 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton96 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox29 = New WinPaletter.UI.WP.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.PictureBox29 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox31 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton97 = New WinPaletter.XenonButton()
-        Me.XenonButton98 = New WinPaletter.XenonButton()
-        Me.XenonButton99 = New WinPaletter.XenonButton()
-        Me.XenonTextBox30 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox31 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton97 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton98 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton99 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox30 = New WinPaletter.UI.WP.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox32 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton100 = New WinPaletter.XenonButton()
-        Me.XenonButton101 = New WinPaletter.XenonButton()
-        Me.XenonButton102 = New WinPaletter.XenonButton()
-        Me.XenonTextBox31 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox32 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton100 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton101 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton102 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox31 = New WinPaletter.UI.WP.TextBox()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.PictureBox31 = New System.Windows.Forms.PictureBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox36 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton112 = New WinPaletter.XenonButton()
-        Me.XenonButton113 = New WinPaletter.XenonButton()
-        Me.XenonButton114 = New WinPaletter.XenonButton()
-        Me.XenonTextBox35 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox36 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton112 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton113 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton114 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox35 = New WinPaletter.UI.WP.TextBox()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox37 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton115 = New WinPaletter.XenonButton()
-        Me.XenonButton116 = New WinPaletter.XenonButton()
-        Me.XenonButton117 = New WinPaletter.XenonButton()
-        Me.XenonTextBox36 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox37 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton115 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton116 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton117 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox36 = New WinPaletter.UI.WP.TextBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox38 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton118 = New WinPaletter.XenonButton()
-        Me.XenonButton119 = New WinPaletter.XenonButton()
-        Me.XenonButton120 = New WinPaletter.XenonButton()
-        Me.XenonTextBox37 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox38 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton118 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton119 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton120 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox37 = New WinPaletter.UI.WP.TextBox()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.PictureBox37 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox39 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton121 = New WinPaletter.XenonButton()
-        Me.XenonButton122 = New WinPaletter.XenonButton()
-        Me.XenonButton123 = New WinPaletter.XenonButton()
-        Me.XenonTextBox38 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox39 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton121 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton122 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton123 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox38 = New WinPaletter.UI.WP.TextBox()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox40 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton124 = New WinPaletter.XenonButton()
-        Me.XenonButton125 = New WinPaletter.XenonButton()
-        Me.XenonButton126 = New WinPaletter.XenonButton()
-        Me.XenonTextBox39 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox40 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton124 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton125 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton126 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox39 = New WinPaletter.UI.WP.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.PictureBox39 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox41 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton127 = New WinPaletter.XenonButton()
-        Me.XenonButton128 = New WinPaletter.XenonButton()
-        Me.XenonButton129 = New WinPaletter.XenonButton()
-        Me.XenonTextBox40 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox41 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton127 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton128 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton129 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox40 = New WinPaletter.UI.WP.TextBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox42 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton130 = New WinPaletter.XenonButton()
-        Me.XenonButton131 = New WinPaletter.XenonButton()
-        Me.XenonButton132 = New WinPaletter.XenonButton()
-        Me.XenonTextBox41 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox42 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton130 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton131 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton132 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox41 = New WinPaletter.UI.WP.TextBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox43 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton133 = New WinPaletter.XenonButton()
-        Me.XenonButton134 = New WinPaletter.XenonButton()
-        Me.XenonButton135 = New WinPaletter.XenonButton()
-        Me.XenonTextBox42 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox43 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton133 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton134 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton135 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox42 = New WinPaletter.UI.WP.TextBox()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.PictureBox42 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox44 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton136 = New WinPaletter.XenonButton()
-        Me.XenonButton137 = New WinPaletter.XenonButton()
-        Me.XenonButton138 = New WinPaletter.XenonButton()
-        Me.XenonTextBox43 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox44 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton136 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton137 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton138 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox43 = New WinPaletter.UI.WP.TextBox()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.PictureBox43 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox45 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton139 = New WinPaletter.XenonButton()
-        Me.XenonButton140 = New WinPaletter.XenonButton()
-        Me.XenonButton141 = New WinPaletter.XenonButton()
-        Me.XenonTextBox44 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox45 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton139 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton140 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton141 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox44 = New WinPaletter.UI.WP.TextBox()
         Me.Label45 = New System.Windows.Forms.Label()
         Me.PictureBox44 = New System.Windows.Forms.PictureBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox70 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton214 = New WinPaletter.XenonButton()
-        Me.XenonButton215 = New WinPaletter.XenonButton()
-        Me.XenonButton216 = New WinPaletter.XenonButton()
-        Me.XenonTextBox69 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox70 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton214 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton215 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton216 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox69 = New WinPaletter.UI.WP.TextBox()
         Me.Label70 = New System.Windows.Forms.Label()
         Me.PictureBox69 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox71 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton217 = New WinPaletter.XenonButton()
-        Me.XenonButton218 = New WinPaletter.XenonButton()
-        Me.XenonButton219 = New WinPaletter.XenonButton()
-        Me.XenonTextBox70 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox71 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton217 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton218 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton219 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox70 = New WinPaletter.UI.WP.TextBox()
         Me.Label71 = New System.Windows.Forms.Label()
         Me.PictureBox70 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox72 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton220 = New WinPaletter.XenonButton()
-        Me.XenonButton221 = New WinPaletter.XenonButton()
-        Me.XenonButton222 = New WinPaletter.XenonButton()
-        Me.XenonTextBox71 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox72 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton220 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton221 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton222 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox71 = New WinPaletter.UI.WP.TextBox()
         Me.Label72 = New System.Windows.Forms.Label()
         Me.PictureBox71 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox73 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton223 = New WinPaletter.XenonButton()
-        Me.XenonButton224 = New WinPaletter.XenonButton()
-        Me.XenonButton225 = New WinPaletter.XenonButton()
-        Me.XenonTextBox72 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox73 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton223 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton224 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton225 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox72 = New WinPaletter.UI.WP.TextBox()
         Me.Label73 = New System.Windows.Forms.Label()
         Me.PictureBox72 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox74 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton226 = New WinPaletter.XenonButton()
-        Me.XenonButton227 = New WinPaletter.XenonButton()
-        Me.XenonButton228 = New WinPaletter.XenonButton()
-        Me.XenonTextBox73 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox74 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton226 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton227 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton228 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox73 = New WinPaletter.UI.WP.TextBox()
         Me.Label74 = New System.Windows.Forms.Label()
         Me.PictureBox73 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox75 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton229 = New WinPaletter.XenonButton()
-        Me.XenonButton230 = New WinPaletter.XenonButton()
-        Me.XenonButton231 = New WinPaletter.XenonButton()
-        Me.XenonTextBox74 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox75 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton229 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton230 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton231 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox74 = New WinPaletter.UI.WP.TextBox()
         Me.Label75 = New System.Windows.Forms.Label()
         Me.PictureBox74 = New System.Windows.Forms.PictureBox()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
-        Me.XenonAlertBox3 = New WinPaletter.XenonAlertBox()
-        Me.XenonGroupBox81 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton247 = New WinPaletter.XenonButton()
-        Me.XenonButton248 = New WinPaletter.XenonButton()
-        Me.XenonButton249 = New WinPaletter.XenonButton()
-        Me.XenonTextBox80 = New WinPaletter.XenonTextBox()
+        Me.XenonAlertBox3 = New WinPaletter.UI.WP.AlertBox()
+        Me.XenonGroupBox81 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton247 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton248 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton249 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox80 = New WinPaletter.UI.WP.TextBox()
         Me.Label81 = New System.Windows.Forms.Label()
         Me.PictureBox80 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox82 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton250 = New WinPaletter.XenonButton()
-        Me.XenonButton251 = New WinPaletter.XenonButton()
-        Me.XenonButton252 = New WinPaletter.XenonButton()
-        Me.XenonTextBox81 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox82 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton250 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton251 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton252 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox81 = New WinPaletter.UI.WP.TextBox()
         Me.Label82 = New System.Windows.Forms.Label()
         Me.PictureBox81 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox83 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton253 = New WinPaletter.XenonButton()
-        Me.XenonButton254 = New WinPaletter.XenonButton()
-        Me.XenonButton255 = New WinPaletter.XenonButton()
-        Me.XenonTextBox82 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox83 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton253 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton254 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton255 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox82 = New WinPaletter.UI.WP.TextBox()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.PictureBox82 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox84 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton256 = New WinPaletter.XenonButton()
-        Me.XenonButton257 = New WinPaletter.XenonButton()
-        Me.XenonButton258 = New WinPaletter.XenonButton()
-        Me.XenonTextBox83 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox84 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton256 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton257 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton258 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox83 = New WinPaletter.UI.WP.TextBox()
         Me.Label84 = New System.Windows.Forms.Label()
         Me.PictureBox83 = New System.Windows.Forms.PictureBox()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.XenonGroupBox68 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton208 = New WinPaletter.XenonButton()
-        Me.XenonButton209 = New WinPaletter.XenonButton()
-        Me.XenonButton210 = New WinPaletter.XenonButton()
-        Me.XenonTextBox67 = New WinPaletter.XenonTextBox()
+        Me.XenonGroupBox68 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton208 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton209 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton210 = New WinPaletter.UI.WP.Button()
+        Me.XenonTextBox67 = New WinPaletter.UI.WP.TextBox()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.PictureBox67 = New System.Windows.Forms.PictureBox()
-        Me.XenonGroupBox12 = New WinPaletter.XenonGroupBox()
-        Me.XenonButton259 = New WinPaletter.XenonButton()
-        Me.XenonButton9 = New WinPaletter.XenonButton()
+        Me.XenonGroupBox12 = New WinPaletter.UI.WP.GroupBox()
+        Me.XenonButton259 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton9 = New WinPaletter.UI.WP.Button()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.XenonButton11 = New WinPaletter.XenonButton()
-        Me.XenonButton12 = New WinPaletter.XenonButton()
-        Me.SoundsEnabled = New WinPaletter.XenonToggle()
+        Me.XenonButton11 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton12 = New WinPaletter.UI.WP.Button()
+        Me.SoundsEnabled = New UI.WP.Toggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.OpenThemeDialog = New System.Windows.Forms.OpenFileDialog()
@@ -10325,7 +10325,7 @@ Partial Class Sounds_Editor
         '
         'XenonAlertBox3
         '
-        Me.XenonAlertBox3.AlertStyle = WinPaletter.XenonAlertBox.Style.Simple
+        Me.XenonAlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple
         Me.XenonAlertBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.XenonAlertBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -11260,634 +11260,634 @@ Partial Class Sounds_Editor
 
     Friend WithEvents OpenFileDialog2 As OpenFileDialog
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents XenonGroupBox12 As XenonGroupBox
-    Friend WithEvents XenonButton9 As XenonButton
+    Friend WithEvents XenonGroupBox12 As UI.WP.GroupBox
+    Friend WithEvents XenonButton9 As UI.WP.Button
     Friend WithEvents Label12 As Label
-    Friend WithEvents XenonButton11 As XenonButton
-    Friend WithEvents XenonButton12 As XenonButton
-    Friend WithEvents SoundsEnabled As XenonToggle
+    Friend WithEvents XenonButton11 As UI.WP.Button
+    Friend WithEvents XenonButton12 As UI.WP.Button
+    Friend WithEvents SoundsEnabled As UI.WP.Toggle
     Friend WithEvents checker_img As PictureBox
-    Friend WithEvents XenonTabControl1 As XenonTabControl
+    Friend WithEvents XenonTabControl1 As UI.WP.TabControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents XenonButton10 As XenonButton
-    Friend WithEvents XenonButton7 As XenonButton
-    Friend WithEvents XenonButton8 As XenonButton
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
-    Friend WithEvents XenonTextBox1 As XenonTextBox
+    Friend WithEvents XenonButton10 As UI.WP.Button
+    Friend WithEvents XenonButton7 As UI.WP.Button
+    Friend WithEvents XenonButton8 As UI.WP.Button
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
+    Friend WithEvents XenonTextBox1 As UI.WP.TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonGroupBox3 As XenonGroupBox
-    Friend WithEvents XenonButton5 As XenonButton
-    Friend WithEvents XenonButton6 As XenonButton
-    Friend WithEvents XenonTextBox5 As XenonTextBox
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonGroupBox3 As UI.WP.GroupBox
+    Friend WithEvents XenonButton5 As UI.WP.Button
+    Friend WithEvents XenonButton6 As UI.WP.Button
+    Friend WithEvents XenonTextBox5 As UI.WP.TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents XenonGroupBox4 As XenonGroupBox
-    Friend WithEvents XenonButton13 As XenonButton
-    Friend WithEvents XenonButton14 As XenonButton
-    Friend WithEvents XenonTextBox4 As XenonTextBox
+    Friend WithEvents XenonGroupBox4 As UI.WP.GroupBox
+    Friend WithEvents XenonButton13 As UI.WP.Button
+    Friend WithEvents XenonButton14 As UI.WP.Button
+    Friend WithEvents XenonTextBox4 As UI.WP.TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents XenonGroupBox2 As XenonGroupBox
-    Friend WithEvents XenonButton3 As XenonButton
-    Friend WithEvents XenonButton4 As XenonButton
-    Friend WithEvents XenonTextBox3 As XenonTextBox
+    Friend WithEvents XenonGroupBox2 As UI.WP.GroupBox
+    Friend WithEvents XenonButton3 As UI.WP.Button
+    Friend WithEvents XenonButton4 As UI.WP.Button
+    Friend WithEvents XenonTextBox3 As UI.WP.TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents XenonButton2 As XenonButton
+    Friend WithEvents XenonButton2 As UI.WP.Button
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents XenonButton15 As XenonButton
-    Friend WithEvents XenonButton16 As XenonButton
-    Friend WithEvents XenonButton17 As XenonButton
-    Friend WithEvents XenonButton18 As XenonButton
-    Friend WithEvents XenonGroupBox5 As XenonGroupBox
-    Friend WithEvents XenonButton19 As XenonButton
-    Friend WithEvents XenonButton20 As XenonButton
-    Friend WithEvents XenonButton21 As XenonButton
-    Friend WithEvents XenonTextBox2 As XenonTextBox
+    Friend WithEvents XenonButton15 As UI.WP.Button
+    Friend WithEvents XenonButton16 As UI.WP.Button
+    Friend WithEvents XenonButton17 As UI.WP.Button
+    Friend WithEvents XenonButton18 As UI.WP.Button
+    Friend WithEvents XenonGroupBox5 As UI.WP.GroupBox
+    Friend WithEvents XenonButton19 As UI.WP.Button
+    Friend WithEvents XenonButton20 As UI.WP.Button
+    Friend WithEvents XenonButton21 As UI.WP.Button
+    Friend WithEvents XenonTextBox2 As UI.WP.TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents PictureBox5 As PictureBox
-    Friend WithEvents XenonButton23 As XenonButton
-    Friend WithEvents XenonButton22 As XenonButton
-    Friend WithEvents XenonButton24 As XenonButton
-    Friend WithEvents XenonGroupBox6 As XenonGroupBox
-    Friend WithEvents XenonButton25 As XenonButton
-    Friend WithEvents XenonButton26 As XenonButton
-    Friend WithEvents XenonButton27 As XenonButton
-    Friend WithEvents XenonTextBox6 As XenonTextBox
+    Friend WithEvents XenonButton23 As UI.WP.Button
+    Friend WithEvents XenonButton22 As UI.WP.Button
+    Friend WithEvents XenonButton24 As UI.WP.Button
+    Friend WithEvents XenonGroupBox6 As UI.WP.GroupBox
+    Friend WithEvents XenonButton25 As UI.WP.Button
+    Friend WithEvents XenonButton26 As UI.WP.Button
+    Friend WithEvents XenonButton27 As UI.WP.Button
+    Friend WithEvents XenonTextBox6 As UI.WP.TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonGroupBox11 As XenonGroupBox
-    Friend WithEvents XenonButton40 As XenonButton
-    Friend WithEvents XenonButton41 As XenonButton
-    Friend WithEvents XenonButton42 As XenonButton
-    Friend WithEvents XenonTextBox11 As XenonTextBox
+    Friend WithEvents XenonGroupBox11 As UI.WP.GroupBox
+    Friend WithEvents XenonButton40 As UI.WP.Button
+    Friend WithEvents XenonButton41 As UI.WP.Button
+    Friend WithEvents XenonButton42 As UI.WP.Button
+    Friend WithEvents XenonTextBox11 As UI.WP.TextBox
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox11 As PictureBox
-    Friend WithEvents XenonGroupBox10 As XenonGroupBox
-    Friend WithEvents XenonButton37 As XenonButton
-    Friend WithEvents XenonButton38 As XenonButton
-    Friend WithEvents XenonButton39 As XenonButton
-    Friend WithEvents XenonTextBox10 As XenonTextBox
+    Friend WithEvents XenonGroupBox10 As UI.WP.GroupBox
+    Friend WithEvents XenonButton37 As UI.WP.Button
+    Friend WithEvents XenonButton38 As UI.WP.Button
+    Friend WithEvents XenonButton39 As UI.WP.Button
+    Friend WithEvents XenonTextBox10 As UI.WP.TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents PictureBox10 As PictureBox
-    Friend WithEvents XenonGroupBox9 As XenonGroupBox
-    Friend WithEvents XenonButton34 As XenonButton
-    Friend WithEvents XenonButton35 As XenonButton
-    Friend WithEvents XenonButton36 As XenonButton
-    Friend WithEvents XenonTextBox9 As XenonTextBox
+    Friend WithEvents XenonGroupBox9 As UI.WP.GroupBox
+    Friend WithEvents XenonButton34 As UI.WP.Button
+    Friend WithEvents XenonButton35 As UI.WP.Button
+    Friend WithEvents XenonButton36 As UI.WP.Button
+    Friend WithEvents XenonTextBox9 As UI.WP.TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents XenonGroupBox8 As XenonGroupBox
-    Friend WithEvents XenonButton31 As XenonButton
-    Friend WithEvents XenonButton32 As XenonButton
-    Friend WithEvents XenonButton33 As XenonButton
-    Friend WithEvents XenonTextBox8 As XenonTextBox
+    Friend WithEvents XenonGroupBox8 As UI.WP.GroupBox
+    Friend WithEvents XenonButton31 As UI.WP.Button
+    Friend WithEvents XenonButton32 As UI.WP.Button
+    Friend WithEvents XenonButton33 As UI.WP.Button
+    Friend WithEvents XenonTextBox8 As UI.WP.TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents PictureBox8 As PictureBox
-    Friend WithEvents XenonGroupBox7 As XenonGroupBox
-    Friend WithEvents XenonButton28 As XenonButton
-    Friend WithEvents XenonButton29 As XenonButton
-    Friend WithEvents XenonButton30 As XenonButton
-    Friend WithEvents XenonTextBox7 As XenonTextBox
+    Friend WithEvents XenonGroupBox7 As UI.WP.GroupBox
+    Friend WithEvents XenonButton28 As UI.WP.Button
+    Friend WithEvents XenonButton29 As UI.WP.Button
+    Friend WithEvents XenonButton30 As UI.WP.Button
+    Friend WithEvents XenonTextBox7 As UI.WP.TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents XenonGroupBox18 As XenonGroupBox
-    Friend WithEvents XenonButton58 As XenonButton
-    Friend WithEvents XenonButton59 As XenonButton
-    Friend WithEvents XenonButton60 As XenonButton
-    Friend WithEvents XenonTextBox17 As XenonTextBox
+    Friend WithEvents XenonGroupBox18 As UI.WP.GroupBox
+    Friend WithEvents XenonButton58 As UI.WP.Button
+    Friend WithEvents XenonButton59 As UI.WP.Button
+    Friend WithEvents XenonButton60 As UI.WP.Button
+    Friend WithEvents XenonTextBox17 As UI.WP.TextBox
     Friend WithEvents Label18 As Label
     Friend WithEvents PictureBox17 As PictureBox
-    Friend WithEvents XenonGroupBox13 As XenonGroupBox
-    Friend WithEvents XenonButton43 As XenonButton
-    Friend WithEvents XenonButton44 As XenonButton
-    Friend WithEvents XenonButton45 As XenonButton
-    Friend WithEvents XenonTextBox12 As XenonTextBox
+    Friend WithEvents XenonGroupBox13 As UI.WP.GroupBox
+    Friend WithEvents XenonButton43 As UI.WP.Button
+    Friend WithEvents XenonButton44 As UI.WP.Button
+    Friend WithEvents XenonButton45 As UI.WP.Button
+    Friend WithEvents XenonTextBox12 As UI.WP.TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents PictureBox12 As PictureBox
-    Friend WithEvents XenonGroupBox14 As XenonGroupBox
-    Friend WithEvents XenonButton46 As XenonButton
-    Friend WithEvents XenonButton47 As XenonButton
-    Friend WithEvents XenonButton48 As XenonButton
-    Friend WithEvents XenonTextBox13 As XenonTextBox
+    Friend WithEvents XenonGroupBox14 As UI.WP.GroupBox
+    Friend WithEvents XenonButton46 As UI.WP.Button
+    Friend WithEvents XenonButton47 As UI.WP.Button
+    Friend WithEvents XenonButton48 As UI.WP.Button
+    Friend WithEvents XenonTextBox13 As UI.WP.TextBox
     Friend WithEvents Label14 As Label
     Friend WithEvents PictureBox13 As PictureBox
-    Friend WithEvents XenonGroupBox15 As XenonGroupBox
-    Friend WithEvents XenonButton49 As XenonButton
-    Friend WithEvents XenonButton50 As XenonButton
-    Friend WithEvents XenonButton51 As XenonButton
-    Friend WithEvents XenonTextBox14 As XenonTextBox
+    Friend WithEvents XenonGroupBox15 As UI.WP.GroupBox
+    Friend WithEvents XenonButton49 As UI.WP.Button
+    Friend WithEvents XenonButton50 As UI.WP.Button
+    Friend WithEvents XenonButton51 As UI.WP.Button
+    Friend WithEvents XenonTextBox14 As UI.WP.TextBox
     Friend WithEvents Label15 As Label
     Friend WithEvents PictureBox14 As PictureBox
-    Friend WithEvents XenonGroupBox16 As XenonGroupBox
-    Friend WithEvents XenonButton52 As XenonButton
-    Friend WithEvents XenonButton53 As XenonButton
-    Friend WithEvents XenonButton54 As XenonButton
-    Friend WithEvents XenonTextBox15 As XenonTextBox
+    Friend WithEvents XenonGroupBox16 As UI.WP.GroupBox
+    Friend WithEvents XenonButton52 As UI.WP.Button
+    Friend WithEvents XenonButton53 As UI.WP.Button
+    Friend WithEvents XenonButton54 As UI.WP.Button
+    Friend WithEvents XenonTextBox15 As UI.WP.TextBox
     Friend WithEvents Label16 As Label
     Friend WithEvents PictureBox15 As PictureBox
-    Friend WithEvents XenonGroupBox17 As XenonGroupBox
-    Friend WithEvents XenonButton55 As XenonButton
-    Friend WithEvents XenonButton56 As XenonButton
-    Friend WithEvents XenonButton57 As XenonButton
-    Friend WithEvents XenonTextBox16 As XenonTextBox
+    Friend WithEvents XenonGroupBox17 As UI.WP.GroupBox
+    Friend WithEvents XenonButton55 As UI.WP.Button
+    Friend WithEvents XenonButton56 As UI.WP.Button
+    Friend WithEvents XenonButton57 As UI.WP.Button
+    Friend WithEvents XenonTextBox16 As UI.WP.TextBox
     Friend WithEvents Label17 As Label
     Friend WithEvents PictureBox16 As PictureBox
     Friend WithEvents TabPage4 As TabPage
-    Friend WithEvents XenonGroupBox25 As XenonGroupBox
-    Friend WithEvents XenonButton79 As XenonButton
-    Friend WithEvents XenonButton80 As XenonButton
-    Friend WithEvents XenonButton81 As XenonButton
-    Friend WithEvents XenonTextBox24 As XenonTextBox
+    Friend WithEvents XenonGroupBox25 As UI.WP.GroupBox
+    Friend WithEvents XenonButton79 As UI.WP.Button
+    Friend WithEvents XenonButton80 As UI.WP.Button
+    Friend WithEvents XenonButton81 As UI.WP.Button
+    Friend WithEvents XenonTextBox24 As UI.WP.TextBox
     Friend WithEvents Label25 As Label
     Friend WithEvents PictureBox24 As PictureBox
-    Friend WithEvents XenonGroupBox19 As XenonGroupBox
-    Friend WithEvents XenonButton61 As XenonButton
-    Friend WithEvents XenonButton62 As XenonButton
-    Friend WithEvents XenonButton63 As XenonButton
-    Friend WithEvents XenonTextBox18 As XenonTextBox
+    Friend WithEvents XenonGroupBox19 As UI.WP.GroupBox
+    Friend WithEvents XenonButton61 As UI.WP.Button
+    Friend WithEvents XenonButton62 As UI.WP.Button
+    Friend WithEvents XenonButton63 As UI.WP.Button
+    Friend WithEvents XenonTextBox18 As UI.WP.TextBox
     Friend WithEvents Label19 As Label
     Friend WithEvents PictureBox18 As PictureBox
-    Friend WithEvents XenonGroupBox20 As XenonGroupBox
-    Friend WithEvents XenonButton64 As XenonButton
-    Friend WithEvents XenonButton65 As XenonButton
-    Friend WithEvents XenonButton66 As XenonButton
-    Friend WithEvents XenonTextBox19 As XenonTextBox
+    Friend WithEvents XenonGroupBox20 As UI.WP.GroupBox
+    Friend WithEvents XenonButton64 As UI.WP.Button
+    Friend WithEvents XenonButton65 As UI.WP.Button
+    Friend WithEvents XenonButton66 As UI.WP.Button
+    Friend WithEvents XenonTextBox19 As UI.WP.TextBox
     Friend WithEvents Label20 As Label
     Friend WithEvents PictureBox19 As PictureBox
-    Friend WithEvents XenonGroupBox21 As XenonGroupBox
-    Friend WithEvents XenonButton67 As XenonButton
-    Friend WithEvents XenonButton68 As XenonButton
-    Friend WithEvents XenonButton69 As XenonButton
-    Friend WithEvents XenonTextBox20 As XenonTextBox
+    Friend WithEvents XenonGroupBox21 As UI.WP.GroupBox
+    Friend WithEvents XenonButton67 As UI.WP.Button
+    Friend WithEvents XenonButton68 As UI.WP.Button
+    Friend WithEvents XenonButton69 As UI.WP.Button
+    Friend WithEvents XenonTextBox20 As UI.WP.TextBox
     Friend WithEvents Label21 As Label
     Friend WithEvents PictureBox20 As PictureBox
-    Friend WithEvents XenonGroupBox22 As XenonGroupBox
-    Friend WithEvents XenonButton70 As XenonButton
-    Friend WithEvents XenonButton71 As XenonButton
-    Friend WithEvents XenonButton72 As XenonButton
-    Friend WithEvents XenonTextBox21 As XenonTextBox
+    Friend WithEvents XenonGroupBox22 As UI.WP.GroupBox
+    Friend WithEvents XenonButton70 As UI.WP.Button
+    Friend WithEvents XenonButton71 As UI.WP.Button
+    Friend WithEvents XenonButton72 As UI.WP.Button
+    Friend WithEvents XenonTextBox21 As UI.WP.TextBox
     Friend WithEvents Label22 As Label
     Friend WithEvents PictureBox21 As PictureBox
-    Friend WithEvents XenonGroupBox23 As XenonGroupBox
-    Friend WithEvents XenonButton73 As XenonButton
-    Friend WithEvents XenonButton74 As XenonButton
-    Friend WithEvents XenonButton75 As XenonButton
-    Friend WithEvents XenonTextBox22 As XenonTextBox
+    Friend WithEvents XenonGroupBox23 As UI.WP.GroupBox
+    Friend WithEvents XenonButton73 As UI.WP.Button
+    Friend WithEvents XenonButton74 As UI.WP.Button
+    Friend WithEvents XenonButton75 As UI.WP.Button
+    Friend WithEvents XenonTextBox22 As UI.WP.TextBox
     Friend WithEvents Label23 As Label
     Friend WithEvents PictureBox22 As PictureBox
-    Friend WithEvents XenonGroupBox24 As XenonGroupBox
-    Friend WithEvents XenonButton76 As XenonButton
-    Friend WithEvents XenonButton77 As XenonButton
-    Friend WithEvents XenonButton78 As XenonButton
-    Friend WithEvents XenonTextBox23 As XenonTextBox
+    Friend WithEvents XenonGroupBox24 As UI.WP.GroupBox
+    Friend WithEvents XenonButton76 As UI.WP.Button
+    Friend WithEvents XenonButton77 As UI.WP.Button
+    Friend WithEvents XenonButton78 As UI.WP.Button
+    Friend WithEvents XenonTextBox23 As UI.WP.TextBox
     Friend WithEvents Label24 As Label
     Friend WithEvents PictureBox23 As PictureBox
     Friend WithEvents TabPage5 As TabPage
-    Friend WithEvents XenonGroupBox33 As XenonGroupBox
-    Friend WithEvents XenonButton103 As XenonButton
-    Friend WithEvents XenonButton104 As XenonButton
-    Friend WithEvents XenonButton105 As XenonButton
-    Friend WithEvents XenonTextBox32 As XenonTextBox
+    Friend WithEvents XenonGroupBox33 As UI.WP.GroupBox
+    Friend WithEvents XenonButton103 As UI.WP.Button
+    Friend WithEvents XenonButton104 As UI.WP.Button
+    Friend WithEvents XenonButton105 As UI.WP.Button
+    Friend WithEvents XenonTextBox32 As UI.WP.TextBox
     Friend WithEvents Label33 As Label
     Friend WithEvents PictureBox32 As PictureBox
-    Friend WithEvents XenonGroupBox34 As XenonGroupBox
-    Friend WithEvents XenonButton106 As XenonButton
-    Friend WithEvents XenonButton107 As XenonButton
-    Friend WithEvents XenonButton108 As XenonButton
-    Friend WithEvents XenonTextBox33 As XenonTextBox
+    Friend WithEvents XenonGroupBox34 As UI.WP.GroupBox
+    Friend WithEvents XenonButton106 As UI.WP.Button
+    Friend WithEvents XenonButton107 As UI.WP.Button
+    Friend WithEvents XenonButton108 As UI.WP.Button
+    Friend WithEvents XenonTextBox33 As UI.WP.TextBox
     Friend WithEvents Label34 As Label
     Friend WithEvents PictureBox33 As PictureBox
-    Friend WithEvents XenonGroupBox35 As XenonGroupBox
-    Friend WithEvents XenonButton109 As XenonButton
-    Friend WithEvents XenonButton110 As XenonButton
-    Friend WithEvents XenonButton111 As XenonButton
-    Friend WithEvents XenonTextBox34 As XenonTextBox
+    Friend WithEvents XenonGroupBox35 As UI.WP.GroupBox
+    Friend WithEvents XenonButton109 As UI.WP.Button
+    Friend WithEvents XenonButton110 As UI.WP.Button
+    Friend WithEvents XenonButton111 As UI.WP.Button
+    Friend WithEvents XenonTextBox34 As UI.WP.TextBox
     Friend WithEvents Label35 As Label
     Friend WithEvents PictureBox34 As PictureBox
-    Friend WithEvents XenonGroupBox26 As XenonGroupBox
-    Friend WithEvents XenonButton82 As XenonButton
-    Friend WithEvents XenonButton83 As XenonButton
-    Friend WithEvents XenonButton84 As XenonButton
-    Friend WithEvents XenonTextBox25 As XenonTextBox
+    Friend WithEvents XenonGroupBox26 As UI.WP.GroupBox
+    Friend WithEvents XenonButton82 As UI.WP.Button
+    Friend WithEvents XenonButton83 As UI.WP.Button
+    Friend WithEvents XenonButton84 As UI.WP.Button
+    Friend WithEvents XenonTextBox25 As UI.WP.TextBox
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox25 As PictureBox
-    Friend WithEvents XenonGroupBox27 As XenonGroupBox
-    Friend WithEvents XenonButton85 As XenonButton
-    Friend WithEvents XenonButton86 As XenonButton
-    Friend WithEvents XenonButton87 As XenonButton
-    Friend WithEvents XenonTextBox26 As XenonTextBox
+    Friend WithEvents XenonGroupBox27 As UI.WP.GroupBox
+    Friend WithEvents XenonButton85 As UI.WP.Button
+    Friend WithEvents XenonButton86 As UI.WP.Button
+    Friend WithEvents XenonButton87 As UI.WP.Button
+    Friend WithEvents XenonTextBox26 As UI.WP.TextBox
     Friend WithEvents Label27 As Label
     Friend WithEvents PictureBox26 As PictureBox
-    Friend WithEvents XenonGroupBox28 As XenonGroupBox
-    Friend WithEvents XenonButton88 As XenonButton
-    Friend WithEvents XenonButton89 As XenonButton
-    Friend WithEvents XenonButton90 As XenonButton
-    Friend WithEvents XenonTextBox27 As XenonTextBox
+    Friend WithEvents XenonGroupBox28 As UI.WP.GroupBox
+    Friend WithEvents XenonButton88 As UI.WP.Button
+    Friend WithEvents XenonButton89 As UI.WP.Button
+    Friend WithEvents XenonButton90 As UI.WP.Button
+    Friend WithEvents XenonTextBox27 As UI.WP.TextBox
     Friend WithEvents Label28 As Label
     Friend WithEvents PictureBox27 As PictureBox
-    Friend WithEvents XenonGroupBox29 As XenonGroupBox
-    Friend WithEvents XenonButton91 As XenonButton
-    Friend WithEvents XenonButton92 As XenonButton
-    Friend WithEvents XenonButton93 As XenonButton
-    Friend WithEvents XenonTextBox28 As XenonTextBox
+    Friend WithEvents XenonGroupBox29 As UI.WP.GroupBox
+    Friend WithEvents XenonButton91 As UI.WP.Button
+    Friend WithEvents XenonButton92 As UI.WP.Button
+    Friend WithEvents XenonButton93 As UI.WP.Button
+    Friend WithEvents XenonTextBox28 As UI.WP.TextBox
     Friend WithEvents Label29 As Label
     Friend WithEvents PictureBox28 As PictureBox
-    Friend WithEvents XenonGroupBox30 As XenonGroupBox
-    Friend WithEvents XenonButton94 As XenonButton
-    Friend WithEvents XenonButton95 As XenonButton
-    Friend WithEvents XenonButton96 As XenonButton
-    Friend WithEvents XenonTextBox29 As XenonTextBox
+    Friend WithEvents XenonGroupBox30 As UI.WP.GroupBox
+    Friend WithEvents XenonButton94 As UI.WP.Button
+    Friend WithEvents XenonButton95 As UI.WP.Button
+    Friend WithEvents XenonButton96 As UI.WP.Button
+    Friend WithEvents XenonTextBox29 As UI.WP.TextBox
     Friend WithEvents Label30 As Label
     Friend WithEvents PictureBox29 As PictureBox
-    Friend WithEvents XenonGroupBox31 As XenonGroupBox
-    Friend WithEvents XenonButton97 As XenonButton
-    Friend WithEvents XenonButton98 As XenonButton
-    Friend WithEvents XenonButton99 As XenonButton
-    Friend WithEvents XenonTextBox30 As XenonTextBox
+    Friend WithEvents XenonGroupBox31 As UI.WP.GroupBox
+    Friend WithEvents XenonButton97 As UI.WP.Button
+    Friend WithEvents XenonButton98 As UI.WP.Button
+    Friend WithEvents XenonButton99 As UI.WP.Button
+    Friend WithEvents XenonTextBox30 As UI.WP.TextBox
     Friend WithEvents Label31 As Label
     Friend WithEvents PictureBox30 As PictureBox
-    Friend WithEvents XenonGroupBox32 As XenonGroupBox
-    Friend WithEvents XenonButton100 As XenonButton
-    Friend WithEvents XenonButton101 As XenonButton
-    Friend WithEvents XenonButton102 As XenonButton
-    Friend WithEvents XenonTextBox31 As XenonTextBox
+    Friend WithEvents XenonGroupBox32 As UI.WP.GroupBox
+    Friend WithEvents XenonButton100 As UI.WP.Button
+    Friend WithEvents XenonButton101 As UI.WP.Button
+    Friend WithEvents XenonButton102 As UI.WP.Button
+    Friend WithEvents XenonTextBox31 As UI.WP.TextBox
     Friend WithEvents Label32 As Label
     Friend WithEvents PictureBox31 As PictureBox
     Friend WithEvents TabPage6 As TabPage
-    Friend WithEvents XenonGroupBox36 As XenonGroupBox
-    Friend WithEvents XenonButton112 As XenonButton
-    Friend WithEvents XenonButton113 As XenonButton
-    Friend WithEvents XenonButton114 As XenonButton
-    Friend WithEvents XenonTextBox35 As XenonTextBox
+    Friend WithEvents XenonGroupBox36 As UI.WP.GroupBox
+    Friend WithEvents XenonButton112 As UI.WP.Button
+    Friend WithEvents XenonButton113 As UI.WP.Button
+    Friend WithEvents XenonButton114 As UI.WP.Button
+    Friend WithEvents XenonTextBox35 As UI.WP.TextBox
     Friend WithEvents Label36 As Label
     Friend WithEvents PictureBox35 As PictureBox
-    Friend WithEvents XenonGroupBox37 As XenonGroupBox
-    Friend WithEvents XenonButton115 As XenonButton
-    Friend WithEvents XenonButton116 As XenonButton
-    Friend WithEvents XenonButton117 As XenonButton
-    Friend WithEvents XenonTextBox36 As XenonTextBox
+    Friend WithEvents XenonGroupBox37 As UI.WP.GroupBox
+    Friend WithEvents XenonButton115 As UI.WP.Button
+    Friend WithEvents XenonButton116 As UI.WP.Button
+    Friend WithEvents XenonButton117 As UI.WP.Button
+    Friend WithEvents XenonTextBox36 As UI.WP.TextBox
     Friend WithEvents Label37 As Label
     Friend WithEvents PictureBox36 As PictureBox
-    Friend WithEvents XenonGroupBox38 As XenonGroupBox
-    Friend WithEvents XenonButton118 As XenonButton
-    Friend WithEvents XenonButton119 As XenonButton
-    Friend WithEvents XenonButton120 As XenonButton
-    Friend WithEvents XenonTextBox37 As XenonTextBox
+    Friend WithEvents XenonGroupBox38 As UI.WP.GroupBox
+    Friend WithEvents XenonButton118 As UI.WP.Button
+    Friend WithEvents XenonButton119 As UI.WP.Button
+    Friend WithEvents XenonButton120 As UI.WP.Button
+    Friend WithEvents XenonTextBox37 As UI.WP.TextBox
     Friend WithEvents Label38 As Label
     Friend WithEvents PictureBox37 As PictureBox
-    Friend WithEvents XenonGroupBox39 As XenonGroupBox
-    Friend WithEvents XenonButton121 As XenonButton
-    Friend WithEvents XenonButton122 As XenonButton
-    Friend WithEvents XenonButton123 As XenonButton
-    Friend WithEvents XenonTextBox38 As XenonTextBox
+    Friend WithEvents XenonGroupBox39 As UI.WP.GroupBox
+    Friend WithEvents XenonButton121 As UI.WP.Button
+    Friend WithEvents XenonButton122 As UI.WP.Button
+    Friend WithEvents XenonButton123 As UI.WP.Button
+    Friend WithEvents XenonTextBox38 As UI.WP.TextBox
     Friend WithEvents Label39 As Label
     Friend WithEvents PictureBox38 As PictureBox
-    Friend WithEvents XenonGroupBox40 As XenonGroupBox
-    Friend WithEvents XenonButton124 As XenonButton
-    Friend WithEvents XenonButton125 As XenonButton
-    Friend WithEvents XenonButton126 As XenonButton
-    Friend WithEvents XenonTextBox39 As XenonTextBox
+    Friend WithEvents XenonGroupBox40 As UI.WP.GroupBox
+    Friend WithEvents XenonButton124 As UI.WP.Button
+    Friend WithEvents XenonButton125 As UI.WP.Button
+    Friend WithEvents XenonButton126 As UI.WP.Button
+    Friend WithEvents XenonTextBox39 As UI.WP.TextBox
     Friend WithEvents Label40 As Label
     Friend WithEvents PictureBox39 As PictureBox
-    Friend WithEvents XenonGroupBox41 As XenonGroupBox
-    Friend WithEvents XenonButton127 As XenonButton
-    Friend WithEvents XenonButton128 As XenonButton
-    Friend WithEvents XenonButton129 As XenonButton
-    Friend WithEvents XenonTextBox40 As XenonTextBox
+    Friend WithEvents XenonGroupBox41 As UI.WP.GroupBox
+    Friend WithEvents XenonButton127 As UI.WP.Button
+    Friend WithEvents XenonButton128 As UI.WP.Button
+    Friend WithEvents XenonButton129 As UI.WP.Button
+    Friend WithEvents XenonTextBox40 As UI.WP.TextBox
     Friend WithEvents Label41 As Label
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents XenonGroupBox42 As XenonGroupBox
-    Friend WithEvents XenonButton130 As XenonButton
-    Friend WithEvents XenonButton131 As XenonButton
-    Friend WithEvents XenonButton132 As XenonButton
-    Friend WithEvents XenonTextBox41 As XenonTextBox
+    Friend WithEvents XenonGroupBox42 As UI.WP.GroupBox
+    Friend WithEvents XenonButton130 As UI.WP.Button
+    Friend WithEvents XenonButton131 As UI.WP.Button
+    Friend WithEvents XenonButton132 As UI.WP.Button
+    Friend WithEvents XenonTextBox41 As UI.WP.TextBox
     Friend WithEvents Label42 As Label
     Friend WithEvents PictureBox41 As PictureBox
-    Friend WithEvents XenonGroupBox43 As XenonGroupBox
-    Friend WithEvents XenonButton133 As XenonButton
-    Friend WithEvents XenonButton134 As XenonButton
-    Friend WithEvents XenonButton135 As XenonButton
-    Friend WithEvents XenonTextBox42 As XenonTextBox
+    Friend WithEvents XenonGroupBox43 As UI.WP.GroupBox
+    Friend WithEvents XenonButton133 As UI.WP.Button
+    Friend WithEvents XenonButton134 As UI.WP.Button
+    Friend WithEvents XenonButton135 As UI.WP.Button
+    Friend WithEvents XenonTextBox42 As UI.WP.TextBox
     Friend WithEvents Label43 As Label
     Friend WithEvents PictureBox42 As PictureBox
-    Friend WithEvents XenonGroupBox44 As XenonGroupBox
-    Friend WithEvents XenonButton136 As XenonButton
-    Friend WithEvents XenonButton137 As XenonButton
-    Friend WithEvents XenonButton138 As XenonButton
-    Friend WithEvents XenonTextBox43 As XenonTextBox
+    Friend WithEvents XenonGroupBox44 As UI.WP.GroupBox
+    Friend WithEvents XenonButton136 As UI.WP.Button
+    Friend WithEvents XenonButton137 As UI.WP.Button
+    Friend WithEvents XenonButton138 As UI.WP.Button
+    Friend WithEvents XenonTextBox43 As UI.WP.TextBox
     Friend WithEvents Label44 As Label
     Friend WithEvents PictureBox43 As PictureBox
-    Friend WithEvents XenonGroupBox45 As XenonGroupBox
-    Friend WithEvents XenonButton139 As XenonButton
-    Friend WithEvents XenonButton140 As XenonButton
-    Friend WithEvents XenonButton141 As XenonButton
-    Friend WithEvents XenonTextBox44 As XenonTextBox
+    Friend WithEvents XenonGroupBox45 As UI.WP.GroupBox
+    Friend WithEvents XenonButton139 As UI.WP.Button
+    Friend WithEvents XenonButton140 As UI.WP.Button
+    Friend WithEvents XenonButton141 As UI.WP.Button
+    Friend WithEvents XenonTextBox44 As UI.WP.TextBox
     Friend WithEvents Label45 As Label
     Friend WithEvents PictureBox44 As PictureBox
     Friend WithEvents TabPage7 As TabPage
-    Friend WithEvents XenonGroupBox48 As XenonGroupBox
-    Friend WithEvents XenonButton148 As XenonButton
-    Friend WithEvents XenonButton149 As XenonButton
-    Friend WithEvents XenonButton150 As XenonButton
-    Friend WithEvents XenonTextBox47 As XenonTextBox
+    Friend WithEvents XenonGroupBox48 As UI.WP.GroupBox
+    Friend WithEvents XenonButton148 As UI.WP.Button
+    Friend WithEvents XenonButton149 As UI.WP.Button
+    Friend WithEvents XenonButton150 As UI.WP.Button
+    Friend WithEvents XenonTextBox47 As UI.WP.TextBox
     Friend WithEvents Label48 As Label
     Friend WithEvents PictureBox47 As PictureBox
-    Friend WithEvents XenonGroupBox47 As XenonGroupBox
-    Friend WithEvents XenonButton145 As XenonButton
-    Friend WithEvents XenonButton146 As XenonButton
-    Friend WithEvents XenonButton147 As XenonButton
-    Friend WithEvents XenonTextBox46 As XenonTextBox
+    Friend WithEvents XenonGroupBox47 As UI.WP.GroupBox
+    Friend WithEvents XenonButton145 As UI.WP.Button
+    Friend WithEvents XenonButton146 As UI.WP.Button
+    Friend WithEvents XenonButton147 As UI.WP.Button
+    Friend WithEvents XenonTextBox46 As UI.WP.TextBox
     Friend WithEvents Label47 As Label
     Friend WithEvents PictureBox46 As PictureBox
-    Friend WithEvents XenonGroupBox46 As XenonGroupBox
-    Friend WithEvents XenonButton142 As XenonButton
-    Friend WithEvents XenonButton143 As XenonButton
-    Friend WithEvents XenonButton144 As XenonButton
-    Friend WithEvents XenonTextBox45 As XenonTextBox
+    Friend WithEvents XenonGroupBox46 As UI.WP.GroupBox
+    Friend WithEvents XenonButton142 As UI.WP.Button
+    Friend WithEvents XenonButton143 As UI.WP.Button
+    Friend WithEvents XenonButton144 As UI.WP.Button
+    Friend WithEvents XenonTextBox45 As UI.WP.TextBox
     Friend WithEvents Label46 As Label
     Friend WithEvents PictureBox45 As PictureBox
-    Friend WithEvents XenonGroupBox53 As XenonGroupBox
-    Friend WithEvents XenonButton163 As XenonButton
-    Friend WithEvents XenonButton164 As XenonButton
-    Friend WithEvents XenonButton165 As XenonButton
-    Friend WithEvents XenonTextBox52 As XenonTextBox
+    Friend WithEvents XenonGroupBox53 As UI.WP.GroupBox
+    Friend WithEvents XenonButton163 As UI.WP.Button
+    Friend WithEvents XenonButton164 As UI.WP.Button
+    Friend WithEvents XenonButton165 As UI.WP.Button
+    Friend WithEvents XenonTextBox52 As UI.WP.TextBox
     Friend WithEvents Label53 As Label
     Friend WithEvents PictureBox52 As PictureBox
-    Friend WithEvents XenonGroupBox52 As XenonGroupBox
-    Friend WithEvents XenonButton160 As XenonButton
-    Friend WithEvents XenonButton161 As XenonButton
-    Friend WithEvents XenonButton162 As XenonButton
-    Friend WithEvents XenonTextBox51 As XenonTextBox
+    Friend WithEvents XenonGroupBox52 As UI.WP.GroupBox
+    Friend WithEvents XenonButton160 As UI.WP.Button
+    Friend WithEvents XenonButton161 As UI.WP.Button
+    Friend WithEvents XenonButton162 As UI.WP.Button
+    Friend WithEvents XenonTextBox51 As UI.WP.TextBox
     Friend WithEvents Label52 As Label
     Friend WithEvents PictureBox51 As PictureBox
-    Friend WithEvents XenonGroupBox51 As XenonGroupBox
-    Friend WithEvents XenonButton157 As XenonButton
-    Friend WithEvents XenonButton158 As XenonButton
-    Friend WithEvents XenonButton159 As XenonButton
-    Friend WithEvents XenonTextBox50 As XenonTextBox
+    Friend WithEvents XenonGroupBox51 As UI.WP.GroupBox
+    Friend WithEvents XenonButton157 As UI.WP.Button
+    Friend WithEvents XenonButton158 As UI.WP.Button
+    Friend WithEvents XenonButton159 As UI.WP.Button
+    Friend WithEvents XenonTextBox50 As UI.WP.TextBox
     Friend WithEvents Label51 As Label
     Friend WithEvents PictureBox50 As PictureBox
-    Friend WithEvents XenonGroupBox50 As XenonGroupBox
-    Friend WithEvents XenonButton154 As XenonButton
-    Friend WithEvents XenonButton155 As XenonButton
-    Friend WithEvents XenonButton156 As XenonButton
-    Friend WithEvents XenonTextBox49 As XenonTextBox
+    Friend WithEvents XenonGroupBox50 As UI.WP.GroupBox
+    Friend WithEvents XenonButton154 As UI.WP.Button
+    Friend WithEvents XenonButton155 As UI.WP.Button
+    Friend WithEvents XenonButton156 As UI.WP.Button
+    Friend WithEvents XenonTextBox49 As UI.WP.TextBox
     Friend WithEvents Label50 As Label
     Friend WithEvents PictureBox49 As PictureBox
-    Friend WithEvents XenonGroupBox49 As XenonGroupBox
-    Friend WithEvents XenonButton151 As XenonButton
-    Friend WithEvents XenonButton152 As XenonButton
-    Friend WithEvents XenonButton153 As XenonButton
-    Friend WithEvents XenonTextBox48 As XenonTextBox
+    Friend WithEvents XenonGroupBox49 As UI.WP.GroupBox
+    Friend WithEvents XenonButton151 As UI.WP.Button
+    Friend WithEvents XenonButton152 As UI.WP.Button
+    Friend WithEvents XenonButton153 As UI.WP.Button
+    Friend WithEvents XenonTextBox48 As UI.WP.TextBox
     Friend WithEvents Label49 As Label
     Friend WithEvents PictureBox48 As PictureBox
-    Friend WithEvents XenonGroupBox55 As XenonGroupBox
-    Friend WithEvents XenonButton169 As XenonButton
-    Friend WithEvents XenonButton170 As XenonButton
-    Friend WithEvents XenonButton171 As XenonButton
-    Friend WithEvents XenonTextBox54 As XenonTextBox
+    Friend WithEvents XenonGroupBox55 As UI.WP.GroupBox
+    Friend WithEvents XenonButton169 As UI.WP.Button
+    Friend WithEvents XenonButton170 As UI.WP.Button
+    Friend WithEvents XenonButton171 As UI.WP.Button
+    Friend WithEvents XenonTextBox54 As UI.WP.TextBox
     Friend WithEvents Label55 As Label
     Friend WithEvents PictureBox54 As PictureBox
-    Friend WithEvents XenonSeparator2 As XenonSeparator
-    Friend WithEvents XenonGroupBox54 As XenonGroupBox
-    Friend WithEvents XenonButton166 As XenonButton
-    Friend WithEvents XenonButton167 As XenonButton
-    Friend WithEvents XenonButton168 As XenonButton
-    Friend WithEvents XenonTextBox53 As XenonTextBox
+    Friend WithEvents XenonSeparator2 As UI.WP.SeparatorH
+    Friend WithEvents XenonGroupBox54 As UI.WP.GroupBox
+    Friend WithEvents XenonButton166 As UI.WP.Button
+    Friend WithEvents XenonButton167 As UI.WP.Button
+    Friend WithEvents XenonButton168 As UI.WP.Button
+    Friend WithEvents XenonTextBox53 As UI.WP.TextBox
     Friend WithEvents Label54 As Label
     Friend WithEvents PictureBox53 As PictureBox
-    Friend WithEvents XenonGroupBox56 As XenonGroupBox
-    Friend WithEvents XenonButton172 As XenonButton
-    Friend WithEvents XenonButton173 As XenonButton
-    Friend WithEvents XenonButton174 As XenonButton
-    Friend WithEvents XenonTextBox55 As XenonTextBox
+    Friend WithEvents XenonGroupBox56 As UI.WP.GroupBox
+    Friend WithEvents XenonButton172 As UI.WP.Button
+    Friend WithEvents XenonButton173 As UI.WP.Button
+    Friend WithEvents XenonButton174 As UI.WP.Button
+    Friend WithEvents XenonTextBox55 As UI.WP.TextBox
     Friend WithEvents Label56 As Label
     Friend WithEvents PictureBox55 As PictureBox
     Friend WithEvents TabPage8 As TabPage
-    Friend WithEvents XenonGroupBox58 As XenonGroupBox
-    Friend WithEvents XenonButton178 As XenonButton
-    Friend WithEvents XenonButton179 As XenonButton
-    Friend WithEvents XenonButton180 As XenonButton
-    Friend WithEvents XenonTextBox57 As XenonTextBox
+    Friend WithEvents XenonGroupBox58 As UI.WP.GroupBox
+    Friend WithEvents XenonButton178 As UI.WP.Button
+    Friend WithEvents XenonButton179 As UI.WP.Button
+    Friend WithEvents XenonButton180 As UI.WP.Button
+    Friend WithEvents XenonTextBox57 As UI.WP.TextBox
     Friend WithEvents Label58 As Label
     Friend WithEvents PictureBox57 As PictureBox
-    Friend WithEvents XenonGroupBox59 As XenonGroupBox
-    Friend WithEvents XenonButton181 As XenonButton
-    Friend WithEvents XenonButton182 As XenonButton
-    Friend WithEvents XenonButton183 As XenonButton
-    Friend WithEvents XenonTextBox58 As XenonTextBox
+    Friend WithEvents XenonGroupBox59 As UI.WP.GroupBox
+    Friend WithEvents XenonButton181 As UI.WP.Button
+    Friend WithEvents XenonButton182 As UI.WP.Button
+    Friend WithEvents XenonButton183 As UI.WP.Button
+    Friend WithEvents XenonTextBox58 As UI.WP.TextBox
     Friend WithEvents Label59 As Label
     Friend WithEvents PictureBox58 As PictureBox
-    Friend WithEvents XenonGroupBox60 As XenonGroupBox
-    Friend WithEvents XenonButton184 As XenonButton
-    Friend WithEvents XenonButton185 As XenonButton
-    Friend WithEvents XenonButton186 As XenonButton
-    Friend WithEvents XenonTextBox59 As XenonTextBox
+    Friend WithEvents XenonGroupBox60 As UI.WP.GroupBox
+    Friend WithEvents XenonButton184 As UI.WP.Button
+    Friend WithEvents XenonButton185 As UI.WP.Button
+    Friend WithEvents XenonButton186 As UI.WP.Button
+    Friend WithEvents XenonTextBox59 As UI.WP.TextBox
     Friend WithEvents Label60 As Label
     Friend WithEvents PictureBox59 As PictureBox
-    Friend WithEvents XenonGroupBox61 As XenonGroupBox
-    Friend WithEvents XenonButton187 As XenonButton
-    Friend WithEvents XenonButton188 As XenonButton
-    Friend WithEvents XenonButton189 As XenonButton
-    Friend WithEvents XenonTextBox60 As XenonTextBox
+    Friend WithEvents XenonGroupBox61 As UI.WP.GroupBox
+    Friend WithEvents XenonButton187 As UI.WP.Button
+    Friend WithEvents XenonButton188 As UI.WP.Button
+    Friend WithEvents XenonButton189 As UI.WP.Button
+    Friend WithEvents XenonTextBox60 As UI.WP.TextBox
     Friend WithEvents Label61 As Label
     Friend WithEvents PictureBox60 As PictureBox
-    Friend WithEvents XenonGroupBox62 As XenonGroupBox
-    Friend WithEvents XenonButton190 As XenonButton
-    Friend WithEvents XenonButton191 As XenonButton
-    Friend WithEvents XenonButton192 As XenonButton
-    Friend WithEvents XenonTextBox61 As XenonTextBox
+    Friend WithEvents XenonGroupBox62 As UI.WP.GroupBox
+    Friend WithEvents XenonButton190 As UI.WP.Button
+    Friend WithEvents XenonButton191 As UI.WP.Button
+    Friend WithEvents XenonButton192 As UI.WP.Button
+    Friend WithEvents XenonTextBox61 As UI.WP.TextBox
     Friend WithEvents Label62 As Label
     Friend WithEvents PictureBox61 As PictureBox
-    Friend WithEvents XenonGroupBox63 As XenonGroupBox
-    Friend WithEvents XenonButton193 As XenonButton
-    Friend WithEvents XenonButton194 As XenonButton
-    Friend WithEvents XenonButton195 As XenonButton
-    Friend WithEvents XenonTextBox62 As XenonTextBox
+    Friend WithEvents XenonGroupBox63 As UI.WP.GroupBox
+    Friend WithEvents XenonButton193 As UI.WP.Button
+    Friend WithEvents XenonButton194 As UI.WP.Button
+    Friend WithEvents XenonButton195 As UI.WP.Button
+    Friend WithEvents XenonTextBox62 As UI.WP.TextBox
     Friend WithEvents Label63 As Label
     Friend WithEvents PictureBox62 As PictureBox
-    Friend WithEvents XenonGroupBox57 As XenonGroupBox
-    Friend WithEvents XenonButton175 As XenonButton
-    Friend WithEvents XenonButton176 As XenonButton
-    Friend WithEvents XenonButton177 As XenonButton
-    Friend WithEvents XenonTextBox56 As XenonTextBox
+    Friend WithEvents XenonGroupBox57 As UI.WP.GroupBox
+    Friend WithEvents XenonButton175 As UI.WP.Button
+    Friend WithEvents XenonButton176 As UI.WP.Button
+    Friend WithEvents XenonButton177 As UI.WP.Button
+    Friend WithEvents XenonTextBox56 As UI.WP.TextBox
     Friend WithEvents Label57 As Label
     Friend WithEvents PictureBox56 As PictureBox
-    Friend WithEvents XenonGroupBox65 As XenonGroupBox
-    Friend WithEvents XenonButton199 As XenonButton
-    Friend WithEvents XenonButton200 As XenonButton
-    Friend WithEvents XenonButton201 As XenonButton
-    Friend WithEvents XenonTextBox64 As XenonTextBox
+    Friend WithEvents XenonGroupBox65 As UI.WP.GroupBox
+    Friend WithEvents XenonButton199 As UI.WP.Button
+    Friend WithEvents XenonButton200 As UI.WP.Button
+    Friend WithEvents XenonButton201 As UI.WP.Button
+    Friend WithEvents XenonTextBox64 As UI.WP.TextBox
     Friend WithEvents Label65 As Label
     Friend WithEvents PictureBox64 As PictureBox
-    Friend WithEvents XenonGroupBox64 As XenonGroupBox
-    Friend WithEvents XenonButton196 As XenonButton
-    Friend WithEvents XenonButton197 As XenonButton
-    Friend WithEvents XenonButton198 As XenonButton
-    Friend WithEvents XenonTextBox63 As XenonTextBox
+    Friend WithEvents XenonGroupBox64 As UI.WP.GroupBox
+    Friend WithEvents XenonButton196 As UI.WP.Button
+    Friend WithEvents XenonButton197 As UI.WP.Button
+    Friend WithEvents XenonButton198 As UI.WP.Button
+    Friend WithEvents XenonTextBox63 As UI.WP.TextBox
     Friend WithEvents Label64 As Label
     Friend WithEvents PictureBox63 As PictureBox
     Friend WithEvents TabPage9 As TabPage
-    Friend WithEvents XenonGroupBox66 As XenonGroupBox
-    Friend WithEvents XenonButton202 As XenonButton
-    Friend WithEvents XenonButton203 As XenonButton
-    Friend WithEvents XenonButton204 As XenonButton
-    Friend WithEvents XenonTextBox65 As XenonTextBox
+    Friend WithEvents XenonGroupBox66 As UI.WP.GroupBox
+    Friend WithEvents XenonButton202 As UI.WP.Button
+    Friend WithEvents XenonButton203 As UI.WP.Button
+    Friend WithEvents XenonButton204 As UI.WP.Button
+    Friend WithEvents XenonTextBox65 As UI.WP.TextBox
     Friend WithEvents Label66 As Label
     Friend WithEvents PictureBox65 As PictureBox
-    Friend WithEvents XenonGroupBox67 As XenonGroupBox
-    Friend WithEvents XenonButton205 As XenonButton
-    Friend WithEvents XenonButton206 As XenonButton
-    Friend WithEvents XenonButton207 As XenonButton
-    Friend WithEvents XenonTextBox66 As XenonTextBox
+    Friend WithEvents XenonGroupBox67 As UI.WP.GroupBox
+    Friend WithEvents XenonButton205 As UI.WP.Button
+    Friend WithEvents XenonButton206 As UI.WP.Button
+    Friend WithEvents XenonButton207 As UI.WP.Button
+    Friend WithEvents XenonTextBox66 As UI.WP.TextBox
     Friend WithEvents Label67 As Label
     Friend WithEvents PictureBox66 As PictureBox
-    Friend WithEvents XenonGroupBox68 As XenonGroupBox
-    Friend WithEvents XenonButton208 As XenonButton
-    Friend WithEvents XenonButton209 As XenonButton
-    Friend WithEvents XenonButton210 As XenonButton
-    Friend WithEvents XenonTextBox67 As XenonTextBox
+    Friend WithEvents XenonGroupBox68 As UI.WP.GroupBox
+    Friend WithEvents XenonButton208 As UI.WP.Button
+    Friend WithEvents XenonButton209 As UI.WP.Button
+    Friend WithEvents XenonButton210 As UI.WP.Button
+    Friend WithEvents XenonTextBox67 As UI.WP.TextBox
     Friend WithEvents Label68 As Label
     Friend WithEvents PictureBox67 As PictureBox
-    Friend WithEvents XenonGroupBox69 As XenonGroupBox
-    Friend WithEvents XenonButton211 As XenonButton
-    Friend WithEvents XenonButton212 As XenonButton
-    Friend WithEvents XenonButton213 As XenonButton
-    Friend WithEvents XenonTextBox68 As XenonTextBox
+    Friend WithEvents XenonGroupBox69 As UI.WP.GroupBox
+    Friend WithEvents XenonButton211 As UI.WP.Button
+    Friend WithEvents XenonButton212 As UI.WP.Button
+    Friend WithEvents XenonButton213 As UI.WP.Button
+    Friend WithEvents XenonTextBox68 As UI.WP.TextBox
     Friend WithEvents Label69 As Label
     Friend WithEvents PictureBox68 As PictureBox
     Friend WithEvents TabPage10 As TabPage
-    Friend WithEvents XenonGroupBox70 As XenonGroupBox
-    Friend WithEvents XenonButton214 As XenonButton
-    Friend WithEvents XenonButton215 As XenonButton
-    Friend WithEvents XenonButton216 As XenonButton
-    Friend WithEvents XenonTextBox69 As XenonTextBox
+    Friend WithEvents XenonGroupBox70 As UI.WP.GroupBox
+    Friend WithEvents XenonButton214 As UI.WP.Button
+    Friend WithEvents XenonButton215 As UI.WP.Button
+    Friend WithEvents XenonButton216 As UI.WP.Button
+    Friend WithEvents XenonTextBox69 As UI.WP.TextBox
     Friend WithEvents Label70 As Label
     Friend WithEvents PictureBox69 As PictureBox
-    Friend WithEvents XenonGroupBox71 As XenonGroupBox
-    Friend WithEvents XenonButton217 As XenonButton
-    Friend WithEvents XenonButton218 As XenonButton
-    Friend WithEvents XenonButton219 As XenonButton
-    Friend WithEvents XenonTextBox70 As XenonTextBox
+    Friend WithEvents XenonGroupBox71 As UI.WP.GroupBox
+    Friend WithEvents XenonButton217 As UI.WP.Button
+    Friend WithEvents XenonButton218 As UI.WP.Button
+    Friend WithEvents XenonButton219 As UI.WP.Button
+    Friend WithEvents XenonTextBox70 As UI.WP.TextBox
     Friend WithEvents Label71 As Label
     Friend WithEvents PictureBox70 As PictureBox
-    Friend WithEvents XenonGroupBox72 As XenonGroupBox
-    Friend WithEvents XenonButton220 As XenonButton
-    Friend WithEvents XenonButton221 As XenonButton
-    Friend WithEvents XenonButton222 As XenonButton
-    Friend WithEvents XenonTextBox71 As XenonTextBox
+    Friend WithEvents XenonGroupBox72 As UI.WP.GroupBox
+    Friend WithEvents XenonButton220 As UI.WP.Button
+    Friend WithEvents XenonButton221 As UI.WP.Button
+    Friend WithEvents XenonButton222 As UI.WP.Button
+    Friend WithEvents XenonTextBox71 As UI.WP.TextBox
     Friend WithEvents Label72 As Label
     Friend WithEvents PictureBox71 As PictureBox
-    Friend WithEvents XenonGroupBox73 As XenonGroupBox
-    Friend WithEvents XenonButton223 As XenonButton
-    Friend WithEvents XenonButton224 As XenonButton
-    Friend WithEvents XenonButton225 As XenonButton
-    Friend WithEvents XenonTextBox72 As XenonTextBox
+    Friend WithEvents XenonGroupBox73 As UI.WP.GroupBox
+    Friend WithEvents XenonButton223 As UI.WP.Button
+    Friend WithEvents XenonButton224 As UI.WP.Button
+    Friend WithEvents XenonButton225 As UI.WP.Button
+    Friend WithEvents XenonTextBox72 As UI.WP.TextBox
     Friend WithEvents Label73 As Label
     Friend WithEvents PictureBox72 As PictureBox
-    Friend WithEvents XenonGroupBox74 As XenonGroupBox
-    Friend WithEvents XenonButton226 As XenonButton
-    Friend WithEvents XenonButton227 As XenonButton
-    Friend WithEvents XenonButton228 As XenonButton
-    Friend WithEvents XenonTextBox73 As XenonTextBox
+    Friend WithEvents XenonGroupBox74 As UI.WP.GroupBox
+    Friend WithEvents XenonButton226 As UI.WP.Button
+    Friend WithEvents XenonButton227 As UI.WP.Button
+    Friend WithEvents XenonButton228 As UI.WP.Button
+    Friend WithEvents XenonTextBox73 As UI.WP.TextBox
     Friend WithEvents Label74 As Label
     Friend WithEvents PictureBox73 As PictureBox
-    Friend WithEvents XenonGroupBox75 As XenonGroupBox
-    Friend WithEvents XenonButton229 As XenonButton
-    Friend WithEvents XenonButton230 As XenonButton
-    Friend WithEvents XenonButton231 As XenonButton
-    Friend WithEvents XenonTextBox74 As XenonTextBox
+    Friend WithEvents XenonGroupBox75 As UI.WP.GroupBox
+    Friend WithEvents XenonButton229 As UI.WP.Button
+    Friend WithEvents XenonButton230 As UI.WP.Button
+    Friend WithEvents XenonButton231 As UI.WP.Button
+    Friend WithEvents XenonTextBox74 As UI.WP.TextBox
     Friend WithEvents Label75 As Label
     Friend WithEvents PictureBox74 As PictureBox
-    Friend WithEvents XenonGroupBox76 As XenonGroupBox
-    Friend WithEvents XenonButton232 As XenonButton
-    Friend WithEvents XenonButton233 As XenonButton
-    Friend WithEvents XenonButton234 As XenonButton
-    Friend WithEvents XenonTextBox75 As XenonTextBox
+    Friend WithEvents XenonGroupBox76 As UI.WP.GroupBox
+    Friend WithEvents XenonButton232 As UI.WP.Button
+    Friend WithEvents XenonButton233 As UI.WP.Button
+    Friend WithEvents XenonButton234 As UI.WP.Button
+    Friend WithEvents XenonTextBox75 As UI.WP.TextBox
     Friend WithEvents Label76 As Label
     Friend WithEvents PictureBox75 As PictureBox
     Friend WithEvents TabPage11 As TabPage
-    Friend WithEvents XenonGroupBox79 As XenonGroupBox
-    Friend WithEvents XenonButton241 As XenonButton
-    Friend WithEvents XenonButton242 As XenonButton
-    Friend WithEvents XenonButton243 As XenonButton
-    Friend WithEvents XenonTextBox78 As XenonTextBox
+    Friend WithEvents XenonGroupBox79 As UI.WP.GroupBox
+    Friend WithEvents XenonButton241 As UI.WP.Button
+    Friend WithEvents XenonButton242 As UI.WP.Button
+    Friend WithEvents XenonButton243 As UI.WP.Button
+    Friend WithEvents XenonTextBox78 As UI.WP.TextBox
     Friend WithEvents Label79 As Label
     Friend WithEvents PictureBox78 As PictureBox
-    Friend WithEvents XenonGroupBox80 As XenonGroupBox
-    Friend WithEvents XenonButton244 As XenonButton
-    Friend WithEvents XenonButton245 As XenonButton
-    Friend WithEvents XenonButton246 As XenonButton
-    Friend WithEvents XenonTextBox79 As XenonTextBox
+    Friend WithEvents XenonGroupBox80 As UI.WP.GroupBox
+    Friend WithEvents XenonButton244 As UI.WP.Button
+    Friend WithEvents XenonButton245 As UI.WP.Button
+    Friend WithEvents XenonButton246 As UI.WP.Button
+    Friend WithEvents XenonTextBox79 As UI.WP.TextBox
     Friend WithEvents Label80 As Label
     Friend WithEvents PictureBox79 As PictureBox
-    Friend WithEvents XenonGroupBox78 As XenonGroupBox
-    Friend WithEvents XenonButton238 As XenonButton
-    Friend WithEvents XenonButton239 As XenonButton
-    Friend WithEvents XenonButton240 As XenonButton
-    Friend WithEvents XenonTextBox77 As XenonTextBox
+    Friend WithEvents XenonGroupBox78 As UI.WP.GroupBox
+    Friend WithEvents XenonButton238 As UI.WP.Button
+    Friend WithEvents XenonButton239 As UI.WP.Button
+    Friend WithEvents XenonButton240 As UI.WP.Button
+    Friend WithEvents XenonTextBox77 As UI.WP.TextBox
     Friend WithEvents Label78 As Label
     Friend WithEvents PictureBox77 As PictureBox
-    Friend WithEvents XenonGroupBox77 As XenonGroupBox
-    Friend WithEvents XenonButton235 As XenonButton
-    Friend WithEvents XenonButton236 As XenonButton
-    Friend WithEvents XenonButton237 As XenonButton
-    Friend WithEvents XenonTextBox76 As XenonTextBox
+    Friend WithEvents XenonGroupBox77 As UI.WP.GroupBox
+    Friend WithEvents XenonButton235 As UI.WP.Button
+    Friend WithEvents XenonButton236 As UI.WP.Button
+    Friend WithEvents XenonButton237 As UI.WP.Button
+    Friend WithEvents XenonTextBox76 As UI.WP.TextBox
     Friend WithEvents Label77 As Label
     Friend WithEvents PictureBox76 As PictureBox
     Friend WithEvents TabPage12 As TabPage
-    Friend WithEvents XenonGroupBox81 As XenonGroupBox
-    Friend WithEvents XenonButton247 As XenonButton
-    Friend WithEvents XenonButton248 As XenonButton
-    Friend WithEvents XenonButton249 As XenonButton
-    Friend WithEvents XenonTextBox80 As XenonTextBox
+    Friend WithEvents XenonGroupBox81 As UI.WP.GroupBox
+    Friend WithEvents XenonButton247 As UI.WP.Button
+    Friend WithEvents XenonButton248 As UI.WP.Button
+    Friend WithEvents XenonButton249 As UI.WP.Button
+    Friend WithEvents XenonTextBox80 As UI.WP.TextBox
     Friend WithEvents Label81 As Label
     Friend WithEvents PictureBox80 As PictureBox
-    Friend WithEvents XenonGroupBox82 As XenonGroupBox
-    Friend WithEvents XenonButton250 As XenonButton
-    Friend WithEvents XenonButton251 As XenonButton
-    Friend WithEvents XenonButton252 As XenonButton
-    Friend WithEvents XenonTextBox81 As XenonTextBox
+    Friend WithEvents XenonGroupBox82 As UI.WP.GroupBox
+    Friend WithEvents XenonButton250 As UI.WP.Button
+    Friend WithEvents XenonButton251 As UI.WP.Button
+    Friend WithEvents XenonButton252 As UI.WP.Button
+    Friend WithEvents XenonTextBox81 As UI.WP.TextBox
     Friend WithEvents Label82 As Label
     Friend WithEvents PictureBox81 As PictureBox
-    Friend WithEvents XenonGroupBox83 As XenonGroupBox
-    Friend WithEvents XenonButton253 As XenonButton
-    Friend WithEvents XenonButton254 As XenonButton
-    Friend WithEvents XenonButton255 As XenonButton
-    Friend WithEvents XenonTextBox82 As XenonTextBox
+    Friend WithEvents XenonGroupBox83 As UI.WP.GroupBox
+    Friend WithEvents XenonButton253 As UI.WP.Button
+    Friend WithEvents XenonButton254 As UI.WP.Button
+    Friend WithEvents XenonButton255 As UI.WP.Button
+    Friend WithEvents XenonTextBox82 As UI.WP.TextBox
     Friend WithEvents Label83 As Label
     Friend WithEvents PictureBox82 As PictureBox
-    Friend WithEvents XenonGroupBox84 As XenonGroupBox
-    Friend WithEvents XenonButton256 As XenonButton
-    Friend WithEvents XenonButton257 As XenonButton
-    Friend WithEvents XenonButton258 As XenonButton
-    Friend WithEvents XenonTextBox83 As XenonTextBox
+    Friend WithEvents XenonGroupBox84 As UI.WP.GroupBox
+    Friend WithEvents XenonButton256 As UI.WP.Button
+    Friend WithEvents XenonButton257 As UI.WP.Button
+    Friend WithEvents XenonButton258 As UI.WP.Button
+    Friend WithEvents XenonTextBox83 As UI.WP.TextBox
     Friend WithEvents Label84 As Label
     Friend WithEvents PictureBox83 As PictureBox
-    Friend WithEvents XenonAlertBox3 As XenonAlertBox
-    Friend WithEvents XenonButton259 As XenonButton
+    Friend WithEvents XenonAlertBox3 As UI.WP.AlertBox
+    Friend WithEvents XenonButton259 As UI.WP.Button
     Friend WithEvents OpenThemeDialog As OpenFileDialog
-    Friend WithEvents XenonGroupBox85 As XenonGroupBox
+    Friend WithEvents XenonGroupBox85 As UI.WP.GroupBox
     Friend WithEvents Label85 As Label
     Friend WithEvents PictureBox84 As PictureBox
-    Friend WithEvents XenonCheckBox35_SFC As XenonCheckBox
-    Friend WithEvents XenonSeparator3 As XenonSeparator
-    Friend WithEvents XenonSeparator1 As XenonSeparator
-    Friend WithEvents XenonCheckBox2 As XenonCheckBox
-    Friend WithEvents XenonCheckBox1 As XenonCheckBox
-    Friend WithEvents XenonCheckBox3 As XenonCheckBox
-    Friend WithEvents XenonGroupBox86 As XenonGroupBox
-    Friend WithEvents XenonButton260 As XenonButton
-    Friend WithEvents XenonButton261 As XenonButton
-    Friend WithEvents XenonButton262 As XenonButton
-    Friend WithEvents XenonTextBox84 As XenonTextBox
+    Friend WithEvents XenonCheckBox35_SFC As UI.WP.CheckBox
+    Friend WithEvents XenonSeparator3 As UI.WP.SeparatorH
+    Friend WithEvents XenonSeparator1 As UI.WP.SeparatorH
+    Friend WithEvents XenonCheckBox2 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox1 As UI.WP.CheckBox
+    Friend WithEvents XenonCheckBox3 As UI.WP.CheckBox
+    Friend WithEvents XenonGroupBox86 As UI.WP.GroupBox
+    Friend WithEvents XenonButton260 As UI.WP.Button
+    Friend WithEvents XenonButton261 As UI.WP.Button
+    Friend WithEvents XenonButton262 As UI.WP.Button
+    Friend WithEvents XenonTextBox84 As UI.WP.TextBox
     Friend WithEvents Label86 As Label
     Friend WithEvents PictureBox85 As PictureBox
-    Friend WithEvents XenonCheckBox4 As XenonCheckBox
+    Friend WithEvents XenonCheckBox4 As UI.WP.CheckBox
     Friend WithEvents Label87 As Label
 End Class

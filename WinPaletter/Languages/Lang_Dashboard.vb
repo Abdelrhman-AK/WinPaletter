@@ -1,10 +1,9 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 Public Class Lang_Dashboard
     Private Sub Lang_Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = Lang_JSON_Manage.Icon
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
     End Sub
 
     Private Sub XenonButton7_Click(sender As Object, e As EventArgs) Handles XenonButton7.Click
@@ -21,5 +20,9 @@ Public Class Lang_Dashboard
 
     Private Sub Form_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked
         Process.Start(My.Resources.Link_Wiki & "/Language-creation")
+    End Sub
+
+    Private Sub XenonButton3_Click(sender As Object, e As EventArgs) Handles XenonButton3.Click
+        Lang_JSON_GUI.ShowDialog()
     End Sub
 End Class

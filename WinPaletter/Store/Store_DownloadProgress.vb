@@ -1,5 +1,4 @@
 ﻿Imports System.Net
-Imports WinPaletter.XenonCore
 
 Public Class Store_DownloadProgress
     Public URL As String
@@ -12,7 +11,7 @@ Public Class Store_DownloadProgress
 
     Private Sub Store_DownloadProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = Store.Icon
 
         Label1.Text = String.Format(My.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion)

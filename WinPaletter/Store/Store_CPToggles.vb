@@ -1,10 +1,9 @@
-﻿Imports WinPaletter.XenonCore
-Public Class Store_CPToggles
+﻿Public Class Store_CPToggles
     Public CP As CP
 
     Private Sub Store_CPToggles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Opacity = 0
         Icon = Store.Icon
 
@@ -29,7 +28,7 @@ Public Class Store_CPToggles
         If CheckedListBox1.Items.Count = 0 Then Close()
         Opacity = 1
 
-        CheckedListBox1.ForeColor = If(GetDarkMode(), Color.White, Color.Black)
+        CheckedListBox1.ForeColor = If(My.Style.DarkMode, Color.White, Color.Black)
 
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub

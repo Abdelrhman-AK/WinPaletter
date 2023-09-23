@@ -59,14 +59,14 @@ Public Class Updates
                         My.Animator.Show(Panel1, True)
                         XenonButton1.Text = My.Lang.DoAction_Update
                         XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
-                        XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
+                        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
                     Else
                         Label7.Text = ""
                         Label9.Text = ""
                         url = Nothing
                         XenonButton1.Text = My.Lang.CheckForUpdates
                         XenonAlertBox2.Text = String.Format(My.Lang.NoUpdateAvailable)
-                        XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Success
+                        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success
                     End If
 
                     Label17.SetText(Text)
@@ -76,7 +76,7 @@ Public Class Updates
                     url = Nothing
                     XenonButton1.Text = My.Lang.CheckForUpdates
                     XenonAlertBox2.Text = String.Format(My.Lang.NetworkError)
-                    XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+                    XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
                 End If
             Catch ex As Exception
                 Label7.Text = ""
@@ -84,7 +84,7 @@ Public Class Updates
                 url = Nothing
                 XenonButton1.Text = My.Lang.CheckForUpdates
                 XenonAlertBox2.Text = String.Format(My.Lang.ServerError)
-                XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+                XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
                 BugReport.ThrowError(ex)
             End Try
 
@@ -133,14 +133,14 @@ Public Class Updates
 
     Private Sub Updates_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         UC = New WebClient
         LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
         Label3.Text = String.Format(F, If(My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
         XenonCheckBox1.Checked = My.Settings.Updates.AutoCheck
         _Shown = False
-        XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+        XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
         XenonAlertBox2.Visible = False
         Panel1.Visible = False
         Label7.Text = ""
@@ -178,19 +178,19 @@ Public Class Updates
             My.Animator.Show(Panel1, True)
             XenonButton1.Text = My.Lang.DoAction_Update
             XenonAlertBox2.Text = String.Format("{0}. {1} {2}", My.Lang.NewUpdate, My.Lang.Version, ver)
-            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Indigo
+            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo
 
             My.Animator.Show(XenonAlertBox2, True)
             My.Animator.ShowSync(XenonButton1, True)
         End If
 
         If My.WXP Then
-            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
             XenonAlertBox2.Visible = True
             XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinXP)
 
         ElseIf My.WVista Then
-            XenonAlertBox2.AlertStyle = XenonAlertBox.Style.Warning
+            XenonAlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
             XenonAlertBox2.Visible = True
             XenonAlertBox2.Text = String.Format(My.Lang.UpdatesOSNoTLS12, My.Lang.OS_WinVista)
         End If

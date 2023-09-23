@@ -1,5 +1,4 @@
 ﻿Imports WinPaletter.NativeMethods
-Imports WinPaletter.XenonCore
 
 Public Class SubMenu
 
@@ -67,7 +66,7 @@ Public Class SubMenu
 #End Region
 
 
-    Public Function ShowMenu(ColorItem As XenonCP, Optional EnableDelete As Boolean = False) As Color
+    Public Function ShowMenu(ColorItem As UI.Controllers.ColorItem, Optional EnableDelete As Boolean = False) As Color
         XenonButton5.Visible = EnableDelete
 
         MainColor.BackColor = ColorItem.BackColor.CB((XenonTrackbar1.Value - 100) / 100)
@@ -205,7 +204,7 @@ Public Class SubMenu
         XenonButton4.Text = ">"
 
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
 
         If My.Application.CopiedColor = Nothing Then
 
@@ -243,7 +242,7 @@ Public Class SubMenu
             XenonButton3.Enabled = True
         End If
 
-        BackColor = If(GetDarkMode(), MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
+        BackColor = If(My.Style.DarkMode, MainColor.BackColor.Dark(_dark), MainColor.BackColor.LightLight)
 
         User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE Or User32.AnimateWindowFlags.AW_BLEND)
 
@@ -260,10 +259,10 @@ Public Class SubMenu
         Collapse_Expand()
     End Sub
 
-    Sub GetHistoryColors(XenonCP As XenonCP)
+    Sub GetHistoryColors(XenonCP As UI.Controllers.ColorItem)
         PaletteContainer.SuspendLayout()
 
-        For Each c As XenonCP In PaletteContainer.Controls.OfType(Of XenonCP)
+        For Each c As UI.Controllers.ColorItem In PaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             RemoveHandler c.Click, AddressOf MiniColorItem_Clicked
             c.Dispose()
             PaletteContainer.Controls.Remove(c)
@@ -272,7 +271,7 @@ Public Class SubMenu
         PaletteContainer.Controls.Clear()
 
         For Each c As Color In XenonCP.ColorsHistory
-            Dim MiniColorItem As New XenonCP With {
+            Dim MiniColorItem As New UI.Controllers.ColorItem With {
                 .Size = .GetMiniColorItemSize,
                 .AllowDrop = False,
                 .PauseColorsHistory = True,

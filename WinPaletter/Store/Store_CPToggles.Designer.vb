@@ -24,11 +24,11 @@ Partial Class Store_CPToggles
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Store_CPToggles))
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonButton7 = New WinPaletter.XenonButton()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton7 = New WinPaletter.UI.WP.Button()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.XenonButton3 = New WinPaletter.XenonButton()
+        Me.XenonButton3 = New WinPaletter.UI.WP.Button()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -147,9 +147,9 @@ Partial Class Store_CPToggles
     End Sub
 
     Friend WithEvents CheckedListBox1 As CheckedListBox
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonButton7 As XenonButton
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonButton7 As UI.WP.Button
     Friend WithEvents Label17 As Label
     Friend WithEvents PictureBox6 As PictureBox
-    Friend WithEvents XenonButton3 As XenonButton
+    Friend WithEvents XenonButton3 As UI.WP.Button
 End Class

@@ -23,29 +23,29 @@ Partial Class Start8Selector
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Start8Selector))
-        Me.img1 = New WinPaletter.XenonRadioImage()
-        Me.img2 = New WinPaletter.XenonRadioImage()
-        Me.img3 = New WinPaletter.XenonRadioImage()
-        Me.img7 = New WinPaletter.XenonRadioImage()
-        Me.img4 = New WinPaletter.XenonRadioImage()
-        Me.img5 = New WinPaletter.XenonRadioImage()
-        Me.img6 = New WinPaletter.XenonRadioImage()
-        Me.img8 = New WinPaletter.XenonRadioImage()
-        Me.img9 = New WinPaletter.XenonRadioImage()
-        Me.img15 = New WinPaletter.XenonRadioImage()
-        Me.img14 = New WinPaletter.XenonRadioImage()
-        Me.img12 = New WinPaletter.XenonRadioImage()
-        Me.img11 = New WinPaletter.XenonRadioImage()
-        Me.img10 = New WinPaletter.XenonRadioImage()
-        Me.img13 = New WinPaletter.XenonRadioImage()
-        Me.img18 = New WinPaletter.XenonRadioImage()
-        Me.img17 = New WinPaletter.XenonRadioImage()
-        Me.img16 = New WinPaletter.XenonRadioImage()
-        Me.img20 = New WinPaletter.XenonRadioImage()
-        Me.img19 = New WinPaletter.XenonRadioImage()
-        Me.XenonButton2 = New WinPaletter.XenonButton()
-        Me.XenonButton1 = New WinPaletter.XenonButton()
-        Me.XenonGroupBox1 = New WinPaletter.XenonGroupBox()
+        Me.img1 = New WinPaletter.UI.WP.RadioImage()
+        Me.img2 = New WinPaletter.UI.WP.RadioImage()
+        Me.img3 = New WinPaletter.UI.WP.RadioImage()
+        Me.img7 = New WinPaletter.UI.WP.RadioImage()
+        Me.img4 = New WinPaletter.UI.WP.RadioImage()
+        Me.img5 = New WinPaletter.UI.WP.RadioImage()
+        Me.img6 = New WinPaletter.UI.WP.RadioImage()
+        Me.img8 = New WinPaletter.UI.WP.RadioImage()
+        Me.img9 = New WinPaletter.UI.WP.RadioImage()
+        Me.img15 = New WinPaletter.UI.WP.RadioImage()
+        Me.img14 = New WinPaletter.UI.WP.RadioImage()
+        Me.img12 = New WinPaletter.UI.WP.RadioImage()
+        Me.img11 = New WinPaletter.UI.WP.RadioImage()
+        Me.img10 = New WinPaletter.UI.WP.RadioImage()
+        Me.img13 = New WinPaletter.UI.WP.RadioImage()
+        Me.img18 = New WinPaletter.UI.WP.RadioImage()
+        Me.img17 = New WinPaletter.UI.WP.RadioImage()
+        Me.img16 = New WinPaletter.UI.WP.RadioImage()
+        Me.img20 = New WinPaletter.UI.WP.RadioImage()
+        Me.img19 = New WinPaletter.UI.WP.RadioImage()
+        Me.XenonButton2 = New WinPaletter.UI.WP.Button()
+        Me.XenonButton1 = New WinPaletter.UI.WP.Button()
+        Me.XenonGroupBox1 = New WinPaletter.UI.WP.GroupBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.XenonGroupBox1.SuspendLayout()
@@ -402,29 +402,29 @@ Partial Class Start8Selector
 
     End Sub
 
-    Friend WithEvents img1 As XenonRadioImage
-    Friend WithEvents img2 As XenonRadioImage
-    Friend WithEvents img3 As XenonRadioImage
-    Friend WithEvents img7 As XenonRadioImage
-    Friend WithEvents img4 As XenonRadioImage
-    Friend WithEvents img5 As XenonRadioImage
-    Friend WithEvents img6 As XenonRadioImage
-    Friend WithEvents img8 As XenonRadioImage
-    Friend WithEvents img9 As XenonRadioImage
-    Friend WithEvents img15 As XenonRadioImage
-    Friend WithEvents img14 As XenonRadioImage
-    Friend WithEvents img12 As XenonRadioImage
-    Friend WithEvents img11 As XenonRadioImage
-    Friend WithEvents img10 As XenonRadioImage
-    Friend WithEvents img13 As XenonRadioImage
-    Friend WithEvents img18 As XenonRadioImage
-    Friend WithEvents img17 As XenonRadioImage
-    Friend WithEvents img16 As XenonRadioImage
-    Friend WithEvents img20 As XenonRadioImage
-    Friend WithEvents img19 As XenonRadioImage
-    Friend WithEvents XenonButton2 As XenonButton
-    Friend WithEvents XenonButton1 As XenonButton
-    Friend WithEvents XenonGroupBox1 As XenonGroupBox
+    Friend WithEvents img1 As UI.WP.RadioImage
+    Friend WithEvents img2 As UI.WP.RadioImage
+    Friend WithEvents img3 As UI.WP.RadioImage
+    Friend WithEvents img7 As UI.WP.RadioImage
+    Friend WithEvents img4 As UI.WP.RadioImage
+    Friend WithEvents img5 As UI.WP.RadioImage
+    Friend WithEvents img6 As UI.WP.RadioImage
+    Friend WithEvents img8 As UI.WP.RadioImage
+    Friend WithEvents img9 As UI.WP.RadioImage
+    Friend WithEvents img15 As UI.WP.RadioImage
+    Friend WithEvents img14 As UI.WP.RadioImage
+    Friend WithEvents img12 As UI.WP.RadioImage
+    Friend WithEvents img11 As UI.WP.RadioImage
+    Friend WithEvents img10 As UI.WP.RadioImage
+    Friend WithEvents img13 As UI.WP.RadioImage
+    Friend WithEvents img18 As UI.WP.RadioImage
+    Friend WithEvents img17 As UI.WP.RadioImage
+    Friend WithEvents img16 As UI.WP.RadioImage
+    Friend WithEvents img20 As UI.WP.RadioImage
+    Friend WithEvents img19 As UI.WP.RadioImage
+    Friend WithEvents XenonButton2 As UI.WP.Button
+    Friend WithEvents XenonButton1 As UI.WP.Button
+    Friend WithEvents XenonGroupBox1 As UI.WP.GroupBox
     Friend WithEvents PictureBox32 As PictureBox
     Friend WithEvents Label41 As Label
 End Class

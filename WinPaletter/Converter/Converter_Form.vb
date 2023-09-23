@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports WinPaletter.XenonCore
 
 Public Class Converter_Form
 
@@ -7,7 +6,7 @@ Public Class Converter_Form
 
     Private Sub Converter_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         XenonCheckBox1.Checked = My.Settings.FileTypeManagement.CompressThemeFile
         Label3.Font = My.Application.ConsoleFontMedium
 

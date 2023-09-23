@@ -1,11 +1,10 @@
 ﻿Imports System.Text
-Imports WinPaletter.XenonCore
 
 Public Class BugReport
     Private Sub BugReport_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
-        Dim c As Color = PictureBox1.Image.AverageColor.CB(If(GetDarkMode(), -0.35, 0.35))
+        ApplyStyle(Me)
+        Dim c As Color = PictureBox1.Image.AverageColor.CB(If(My.Style.DarkMode, -0.35, 0.35))
         XenonAnimatedBox1.BackColor = c
         DrawCustomTitlebar(c)
 
@@ -23,7 +22,7 @@ Public Class BugReport
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
     End Sub
 
-    Sub AddData(str As String, Exception As Exception, [Treeview] As TreeView)
+    Sub AddData(str As String, Exception As Exception, [Treeview] As Windows.Forms.TreeView)
 
         Try
             With [Treeview].Nodes.Add(str & " data").Nodes
@@ -40,7 +39,7 @@ Public Class BugReport
         End Try
     End Sub
 
-    Sub AddException(str As String, Exception As Exception, [TreeView] As TreeView)
+    Sub AddException(str As String, Exception As Exception, [TreeView] As Windows.Forms.TreeView)
         If Exception IsNot Nothing Then
             Try
                 If Not String.IsNullOrWhiteSpace(Exception.Message) Then

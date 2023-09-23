@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Win32
-Imports WinPaletter.XenonCore
 
 Public Class NewExtTerminal
     Private Sub XenonButton16_Click(sender As Object, e As EventArgs) Handles XenonButton16.Click
@@ -47,7 +46,7 @@ Public Class NewExtTerminal
 
     Private Sub NewExtTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         Icon = ExternalTerminal.Icon
     End Sub
 End Class

@@ -1,23 +1,21 @@
-﻿Imports WinPaletter.XenonCore
-
-Public Class PaletteGenerateFromImage
+﻿Public Class PaletteGenerateFromImage
 
     Private Colors_List As New List(Of Color)
     Private CP_Backup As CP
 
     Private Sub PaletteGenerateFromImage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
-        ApplyDarkMode(Me)
+        ApplyStyle(Me)
         CP_Backup = New CP(CP.CP_Type.Registry)
         TextBox1.Text = My.CP.Wallpaper.ImageFile
     End Sub
 
     Private Sub XenonRadioButton1_CheckedChanged(sender As Object) Handles XenonRadioButton1.CheckedChanged
-        If CType(sender, XenonRadioImage).Checked Then GetColors(My.Wallpaper)
+        If CType(sender, UI.WP.RadioImage).Checked Then GetColors(My.Wallpaper)
     End Sub
 
     Private Sub XenonRadioButton2_CheckedChanged(sender As Object) Handles XenonRadioButton2.CheckedChanged
-        If CType(sender, XenonRadioImage).Checked Then GetColors(Bitmap_Mgr.Load(TextBox1.Text))
+        If CType(sender, UI.WP.RadioImage).Checked Then GetColors(Bitmap_Mgr.Load(TextBox1.Text))
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
@@ -37,7 +35,7 @@ Public Class PaletteGenerateFromImage
     End Sub
 
     Private Sub XenonRadioButton3_CheckedChanged(sender As Object) Handles XenonRadioButton3.CheckedChanged, XenonRadioButton5.CheckedChanged, XenonRadioButton4.CheckedChanged, XenonRadioButton6.CheckedChanged, XenonRadioButton7.CheckedChanged
-        If CType(sender, XenonRadioButton).Checked Then
+        If CType(sender, UI.WP.RadioButton).Checked Then
             If XenonRadioButton1.Checked Then
                 GetColors(My.Wallpaper)
             Else
@@ -78,7 +76,7 @@ Public Class PaletteGenerateFromImage
 
     Sub GetColors(Source As Bitmap)
 
-        For Each ctrl As XenonCP In ImgPaletteContainer.Controls.OfType(Of XenonCP)
+        For Each ctrl As UI.Controllers.ColorItem In ImgPaletteContainer.Controls.OfType(Of UI.Controllers.ColorItem)
             ctrl.Dispose()
         Next
         ImgPaletteContainer.Controls.Clear()
@@ -114,7 +112,7 @@ Public Class PaletteGenerateFromImage
             Colors_List.Sort(New RGBColorComparer())
 
             For Each C As Color In Colors_List
-                Dim MiniColorItem As New XenonCP With {
+                Dim MiniColorItem As New UI.Controllers.ColorItem With {
                     .Size = .GetMiniColorItemSize,
                     .AllowDrop = False,
                     .PauseColorsHistory = True,
