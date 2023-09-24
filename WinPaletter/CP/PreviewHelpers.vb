@@ -979,7 +979,7 @@ Public Class PreviewHelpers
         SetClassicButtonColors([CP], ClassicStartButton)
         SetClassicButtonColors([CP], ClassicAppButton1)
         SetClassicButtonColors([CP], ClassicAppButton2)
-        SetClassicRaisedPanelColors([CP], ClassicTaskbar)
+        SetClassicPanelRaisedRColors([CP], ClassicTaskbar)
 
         If [Style] <> WindowStyle.WVista And [Style] <> WindowStyle.WXP Then
             ClassicTaskbar.Height = 44
@@ -1466,7 +1466,7 @@ Public Class PreviewHelpers
             [Window].ColorGradient = [CP].Win32.EnableGradient
         End If
     End Sub
-    Public Shared Sub SetClassicRaisedPanelColors([CP] As CP, [Panel] As UI.Retro.PanelRaisedR)
+    Public Shared Sub SetClassicPanelRaisedRColors([CP] As CP, [Panel] As UI.Retro.PanelRaisedR)
         [Panel].BackColor = [CP].Win32.ButtonFace
         [Panel].ButtonHilight = [CP].Win32.ButtonHilight
         [Panel].ButtonLight = [CP].Win32.ButtonLight

@@ -347,15 +347,15 @@ Public Class ColorPickerDlg
 
             ElseIf TypeOf ctrl Is UI.Retro.WindowR Then
                 With DirectCast(ctrl, UI.Retro.WindowR)
-                    If _Conditions.RetroWindowColor1 Then .Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroWindowColor2 Then .Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroWindowBorder Then .ColorBorder = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonFace Then
+                    If _Conditions.WindowRColor1 Then .Color1 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRColor2 Then .Color2 = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRBorder Then .ColorBorder = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRFace Then
                         If ctrl IsNot Win32UI.Menu Then
                             .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                         Else
@@ -368,25 +368,25 @@ Public Class ColorPickerDlg
 
             ElseIf TypeOf ctrl Is UI.Retro.Preview3D Then
                 With DirectCast(ctrl, UI.Retro.Preview3D)
-                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is UI.Retro.TextBoxR Then
                 With DirectCast(ctrl, UI.Retro.TextBoxR)
 
-                    If _Conditions.RetroWindowForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRForeColor Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     If _Conditions.RetroBackground Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
 
                     .Refresh()
@@ -394,19 +394,19 @@ Public Class ColorPickerDlg
 
             ElseIf TypeOf ctrl Is UI.Retro.ButtonR Then
                 With DirectCast(ctrl, UI.Retro.ButtonR)
-                    If _Conditions.RetroButtonFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroWindowFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                    If _Conditions.RetroButtonLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRFace Then .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.WindowRFrame Then .WindowFrame = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRText Then .ForeColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRShadow Then .ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRDkShadow Then .ButtonDkShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRLight Then .ButtonLight = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Refresh()
                 End With
 
             ElseIf TypeOf ctrl Is UI.Retro.ScrollBarR Then
                 With DirectCast(ctrl, UI.Retro.ScrollBarR)
-                    If _Conditions.RetroButtonHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color) Else .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
+                    If _Conditions.ButtonRHilight Then .ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color) Else .BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                     .Refresh()
                 End With
 
@@ -417,8 +417,8 @@ Public Class ColorPickerDlg
                     If TypeOf ctrl IsNot UI.WP.GroupBox And TypeOf ctrl IsNot UI.Controllers.ColorItem Then
                         If _Conditions.RetroAppWorkspace Or _Conditions.RetroBackground Then ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
                         If TypeOf ctrl Is UI.Retro.PanelR Then
-                            If _Conditions.RetroButtonHilight Then DirectCast(ctrl, UI.Retro.PanelR).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
-                            If _Conditions.RetroButtonShadow Then DirectCast(ctrl, UI.Retro.PanelR).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
+                            If _Conditions.ButtonRHilight Then DirectCast(ctrl, UI.Retro.PanelR).ButtonHilight = Color.FromArgb(255, ColorEditorManager1.Color)
+                            If _Conditions.ButtonRShadow Then DirectCast(ctrl, UI.Retro.PanelR).ButtonShadow = Color.FromArgb(255, ColorEditorManager1.Color)
                         End If
                         If TypeOf ctrl Is Panel Then
                             ctrl.BackColor = Color.FromArgb(255, ColorEditorManager1.Color)
@@ -433,7 +433,7 @@ Public Class ColorPickerDlg
 
             ElseIf TypeOf ctrl Is UI.Retro.TextBoxR Then
                 With DirectCast(ctrl, UI.Retro.TextBoxR)
-                    If _Conditions.RetroWindowText Then
+                    If _Conditions.WindowRText Then
                         ctrl.ForeColor = Color.FromArgb(ctrl.ForeColor.A, ColorEditorManager1.Color)
                     Else
                         ctrl.BackColor = Color.FromArgb(ctrl.BackColor.A, ColorEditorManager1.Color)
@@ -929,20 +929,20 @@ Public Class Conditions
     Public Property StartColorOnly As Boolean = False
     Public Property ActionCenterBtn As Boolean = False
     Public Property ActionCenterLink As Boolean = False
-    Public Property RetroWindowColor1 As Boolean = False
-    Public Property RetroWindowColor2 As Boolean = False
-    Public Property RetroWindowForeColor As Boolean = False
-    Public Property RetroWindowBorder As Boolean = False
-    Public Property RetroWindowFrame As Boolean = False
-    Public Property RetroButtonFace As Boolean = False
-    Public Property RetroButtonDkShadow As Boolean = False
-    Public Property RetroButtonShadow As Boolean = False
-    Public Property RetroButtonHilight As Boolean = False
-    Public Property RetroButtonLight As Boolean = False
-    Public Property RetroButtonText As Boolean = False
+    Public Property WindowRColor1 As Boolean = False
+    Public Property WindowRColor2 As Boolean = False
+    Public Property WindowRForeColor As Boolean = False
+    Public Property WindowRBorder As Boolean = False
+    Public Property WindowRFrame As Boolean = False
+    Public Property ButtonRFace As Boolean = False
+    Public Property ButtonRDkShadow As Boolean = False
+    Public Property ButtonRShadow As Boolean = False
+    Public Property ButtonRHilight As Boolean = False
+    Public Property ButtonRLight As Boolean = False
+    Public Property ButtonRText As Boolean = False
     Public Property RetroAppWorkspace As Boolean = False
     Public Property RetroBackground As Boolean = False
-    Public Property RetroWindowText As Boolean = False
+    Public Property WindowRText As Boolean = False
     Public Property RetroHighlight17BitFixer As Boolean = False
     Public Property CursorBack1 As Boolean = False
     Public Property CursorBack2 As Boolean = False

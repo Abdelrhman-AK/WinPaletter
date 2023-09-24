@@ -7,7 +7,7 @@ Public Class WinEffecter
         ApplyStyle(Me)
         Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
         ApplyFromCP(My.CP)
-        SetClassicButtonColors(My.CP, RetroButton1)
+        SetClassicButtonColors(My.CP, ButtonR1)
 
     End Sub
 
@@ -258,12 +258,12 @@ Public Class WinEffecter
 
     Private Sub Trackbar2_Scroll(sender As Object) Handles Trackbar2.Scroll
         Button1.Text = sender.Value
-        RetroButton1.FocusRectWidth = sender.Value : RetroButton1.Refresh()
+        ButtonR1.FocusRectWidth = sender.Value : ButtonR1.Refresh()
     End Sub
 
     Private Sub Trackbar3_Scroll(sender As Object) Handles Trackbar3.Scroll
         Button2.Text = sender.Value
-        RetroButton1.FocusRectHeight = sender.Value : RetroButton1.Refresh()
+        ButtonR1.FocusRectHeight = sender.Value : ButtonR1.Refresh()
     End Sub
 
     Private Sub Trackbar4_Scroll(sender As Object) Handles Trackbar4.Scroll

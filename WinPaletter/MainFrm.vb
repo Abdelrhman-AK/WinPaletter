@@ -40,7 +40,7 @@ Public Class MainFrm
 
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
                            Window1, Window2, Panel3, lnk_preview,
-                           ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
+                           ClassicTaskbar, ButtonR2, ButtonR3, ButtonR4, ClassicWindow1, ClassicWindow2,
                            WXP_VS_ReplaceColors.Checked, WXP_VS_ReplaceMetrics.Checked, WXP_VS_ReplaceFonts.Checked)
 
         Button23.Visible = (My.PreviewStyle = WindowStyle.W7)

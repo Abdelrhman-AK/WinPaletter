@@ -27,23 +27,23 @@ Public Class Metrics_Fonts
         Window4.CopycatFrom(MainFrm.Window1, True)
         Window6.CopycatFrom(MainFrm.Window1, True)
 
-        SetClassicWindowColors(My.CP, RetroWindow1)
-        SetClassicWindowColors(My.CP, RetroWindow2, False)
-        SetClassicWindowColors(My.CP, RetroWindow3)
-        SetClassicWindowColors(My.CP, RetroWindow5)
-        SetClassicPanelColors(My.CP, RetroPanel1)
-        SetClassicPanelColors(My.CP, RetroPanel2)
-        SetClassicButtonColors(My.CP, RetroButton1)
-        SetClassicButtonColors(My.CP, RetroButton2)
-        SetClassicButtonColors(My.CP, RetroButton3)
-        SetClassicButtonColors(My.CP, RetroButton10)
-        SetClassicButtonColors(My.CP, RetroButton11)
-        SetClassicButtonColors(My.CP, RetroButton12)
+        SetClassicWindowColors(My.CP, WindowR1)
+        SetClassicWindowColors(My.CP, WindowR2, False)
+        SetClassicWindowColors(My.CP, WindowR3)
+        SetClassicWindowColors(My.CP, WindowR5)
+        SetClassicPanelColors(My.CP, PanelR1)
+        SetClassicPanelColors(My.CP, PanelR2)
+        SetClassicButtonColors(My.CP, ButtonR1)
+        SetClassicButtonColors(My.CP, ButtonR2)
+        SetClassicButtonColors(My.CP, ButtonR3)
+        SetClassicButtonColors(My.CP, ButtonR10)
+        SetClassicButtonColors(My.CP, ButtonR11)
+        SetClassicButtonColors(My.CP, ButtonR12)
 
-        RetroScrollBar2.ButtonHilight = My.CP.Win32.ButtonHilight
-        RetroScrollBar2.BackColor = My.CP.Win32.ButtonFace
-        RetroScrollBar1.ButtonHilight = My.CP.Win32.ButtonHilight
-        RetroScrollBar1.BackColor = My.CP.Win32.ButtonFace
+        ScrollBarR2.ButtonHilight = My.CP.Win32.ButtonHilight
+        ScrollBarR2.BackColor = My.CP.Win32.ButtonFace
+        ScrollBarR1.ButtonHilight = My.CP.Win32.ButtonHilight
+        ScrollBarR1.BackColor = My.CP.Win32.ButtonFace
 
         Label13.ForeColor = My.CP.Win32.ButtonText
         Label14.ForeColor = My.CP.Win32.ButtonText
@@ -140,9 +140,9 @@ Public Class Metrics_Fonts
 
         Label1.Font = CP.MetricsFonts.CaptionFont
         Window1.Font = CP.MetricsFonts.CaptionFont
-        RetroWindow1.Font = CP.MetricsFonts.CaptionFont
-        RetroWindow3.Font = CP.MetricsFonts.CaptionFont
-        RetroWindow5.Font = CP.MetricsFonts.CaptionFont
+        WindowR1.Font = CP.MetricsFonts.CaptionFont
+        WindowR3.Font = CP.MetricsFonts.CaptionFont
+        WindowR5.Font = CP.MetricsFonts.CaptionFont
 
         Label1.Text = CP.MetricsFonts.CaptionFont.Name
 
@@ -159,7 +159,7 @@ Public Class Metrics_Fonts
 
         Label5.Font = CP.MetricsFonts.SmCaptionFont
         Window2.Font = CP.MetricsFonts.SmCaptionFont
-        RetroWindow2.Font = CP.MetricsFonts.SmCaptionFont
+        WindowR2.Font = CP.MetricsFonts.SmCaptionFont
         Label5.Text = CP.MetricsFonts.SmCaptionFont.Name
 
         Label4.Font = CP.MetricsFonts.MessageFont
@@ -171,7 +171,7 @@ Public Class Metrics_Fonts
         statusLbl.Font = CP.MetricsFonts.StatusFont
         Label14.Font = CP.MetricsFonts.StatusFont
         Label6.Text = CP.MetricsFonts.StatusFont.Name
-        RetroPanel1.Height = Math.Max(GetTitleTextHeight(CP.MetricsFonts.StatusFont), 20)
+        PanelR1.Height = Math.Max(GetTitleTextHeight(CP.MetricsFonts.StatusFont), 20)
 
         TextBox1.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg
         TextBox2.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg2
@@ -195,9 +195,9 @@ Public Class Metrics_Fonts
         Trackbar5.Value = CP.MetricsFonts.ShellIconSize
         Trackbar15.Value = CP.MetricsFonts.ShellSmallIconSize
 
-        RetroWindow1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-        RetroWindow3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-        RetroWindow5.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        WindowR1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        WindowR3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
+        WindowR5.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
 
         If CP.WindowsEffects.IconsShadow Then
             FakeIcon1.ColorGlow = Color.FromArgb(75, 0, 0, 0)
@@ -207,10 +207,10 @@ Public Class Metrics_Fonts
         FakeIcon2.ColorGlow = FakeIcon1.ColorGlow
         FakeIcon3.ColorGlow = FakeIcon1.ColorGlow
 
-        RetroWindow1.Refresh()
-        RetroWindow2.Refresh()
-        RetroWindow3.Refresh()
-        RetroWindow5.Refresh()
+        WindowR1.Refresh()
+        WindowR2.Refresh()
+        WindowR3.Refresh()
+        WindowR5.Refresh()
 
         Dim theme As CtrlTheme, statusBackColor, StatusForeColor As Color
 
@@ -290,18 +290,18 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label1.Font = FontDialog1.Font
             Window1.Font = FontDialog1.Font
-            RetroWindow1.Font = FontDialog1.Font
+            WindowR1.Font = FontDialog1.Font
             Window4.Font = FontDialog1.Font
-            RetroWindow3.Font = FontDialog1.Font
+            WindowR3.Font = FontDialog1.Font
             Window6.Font = FontDialog1.Font
-            RetroWindow5.Font = FontDialog1.Font
+            WindowR5.Font = FontDialog1.Font
             Label1.Text = FontDialog1.Font.Name
             Window1.Refresh()
-            RetroWindow1.Refresh()
+            WindowR1.Refresh()
             Window4.Refresh()
-            RetroWindow3.Refresh()
+            WindowR3.Refresh()
             Window6.Refresh()
-            RetroWindow5.Refresh()
+            WindowR5.Refresh()
         End If
     End Sub
 
@@ -343,7 +343,7 @@ Public Class Metrics_Fonts
         If FontDialog1.ShowDialog = DialogResult.OK Then
             Label5.Font = FontDialog1.Font
             Window2.Font = FontDialog1.Font
-            RetroWindow2.Font = FontDialog1.Font
+            WindowR2.Font = FontDialog1.Font
             Label5.Text = FontDialog1.Font.Name
         End If
     End Sub
@@ -355,7 +355,7 @@ Public Class Metrics_Fonts
             Label14.Font = FontDialog1.Font
             statusLbl.Font = FontDialog1.Font
             Label6.Text = FontDialog1.Font.Name
-            RetroPanel1.Height = Math.Max(GetTitleTextHeight(FontDialog1.Font), 20)
+            PanelR1.Height = Math.Max(GetTitleTextHeight(FontDialog1.Font), 20)
         End If
     End Sub
 
@@ -391,23 +391,23 @@ Public Class Metrics_Fonts
         ttl_h.Text = sender.Value.ToString
 
         Window1.Metrics_CaptionHeight = sender.Value
-        RetroWindow1.Metrics_CaptionHeight = sender.Value
-        RetroWindow3.Metrics_CaptionHeight = sender.Value
-        RetroWindow5.Metrics_CaptionHeight = sender.Value
+        WindowR1.Metrics_CaptionHeight = sender.Value
+        WindowR3.Metrics_CaptionHeight = sender.Value
+        WindowR5.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub Trackbar3_Scroll(sender As Object) Handles Trackbar3.Scroll
         ttl_w.Text = sender.Value
-        RetroWindow1.Metrics_CaptionWidth = sender.Value
-        RetroWindow3.Metrics_CaptionWidth = sender.Value
-        RetroWindow5.Metrics_CaptionWidth = sender.Value
+        WindowR1.Metrics_CaptionWidth = sender.Value
+        WindowR3.Metrics_CaptionWidth = sender.Value
+        WindowR5.Metrics_CaptionWidth = sender.Value
     End Sub
 
     Private Sub Trackbar9_Scroll(sender As Object) Handles Trackbar9.Scroll
         m_h.Text = sender.Value
         MenuStrip1.Height = Math.Max(sender.Value, GetTitleTextHeight(MenuStrip1.Font))
         MenuStrip2.Height = MenuStrip1.Height
-        RetroPanel2.Refresh()
+        PanelR2.Refresh()
     End Sub
 
     Private Sub Trackbar8_Scroll(sender As Object) Handles Trackbar8.Scroll
@@ -417,46 +417,46 @@ Public Class Metrics_Fonts
     Private Sub Trackbar1_Scroll(sender As Object) Handles Trackbar1.Scroll
         ttl_b.Text = sender.Value
         Window1.Metrics_BorderWidth = sender.Value
-        RetroWindow1.Metrics_BorderWidth = sender.Value
-        RetroWindow2.Metrics_BorderWidth = sender.Value
-        RetroWindow3.Metrics_BorderWidth = sender.Value
-        RetroWindow5.Metrics_BorderWidth = sender.Value
+        WindowR1.Metrics_BorderWidth = sender.Value
+        WindowR2.Metrics_BorderWidth = sender.Value
+        WindowR3.Metrics_BorderWidth = sender.Value
+        WindowR5.Metrics_BorderWidth = sender.Value
     End Sub
 
     Private Sub Trackbar12_Scroll(sender As Object) Handles Trackbar12.Scroll
         ttl_p.Text = sender.Value
         Window1.Metrics_PaddedBorderWidth = sender.Value
-        RetroWindow1.Metrics_PaddedBorderWidth = sender.Value
-        RetroWindow2.Metrics_PaddedBorderWidth = sender.Value
-        RetroWindow3.Metrics_PaddedBorderWidth = sender.Value
-        RetroWindow5.Metrics_PaddedBorderWidth = sender.Value
+        WindowR1.Metrics_PaddedBorderWidth = sender.Value
+        WindowR2.Metrics_PaddedBorderWidth = sender.Value
+        WindowR3.Metrics_PaddedBorderWidth = sender.Value
+        WindowR5.Metrics_PaddedBorderWidth = sender.Value
     End Sub
 
     Private Sub Trackbar11_Scroll(sender As Object) Handles Trackbar11.Scroll
         s_h.Text = sender.Value
         HScrollBar1.Height = sender.Value
-        RetroScrollBar1.Height = sender.Value
-        RetroButton1.Height = sender.Value
-        RetroScrollBar1.Refresh()
+        ScrollBarR1.Height = sender.Value
+        ButtonR1.Height = sender.Value
+        ScrollBarR1.Refresh()
     End Sub
 
     Private Sub Trackbar10_Scroll(sender As Object) Handles Trackbar10.Scroll
         s_w.Text = sender.Value
         VScrollBar1.Width = sender.Value
-        RetroScrollBar2.Width = sender.Value
-        RetroButton12.Width = sender.Value
-        RetroScrollBar2.Refresh()
+        ScrollBarR2.Width = sender.Value
+        ButtonR12.Width = sender.Value
+        ScrollBarR2.Refresh()
     End Sub
 
     Private Sub Trackbar14_Scroll(sender As Object) Handles Trackbar14.Scroll
         tw_h.Text = sender.Value
         Window2.Metrics_CaptionHeight = sender.Value
-        RetroWindow2.Metrics_CaptionHeight = sender.Value
+        WindowR2.Metrics_CaptionHeight = sender.Value
     End Sub
 
     Private Sub Trackbar13_Scroll(sender As Object) Handles Trackbar13.Scroll
         tw_w.Text = sender.Value
-        RetroWindow2.Metrics_CaptionWidth = sender.Value
+        WindowR2.Metrics_CaptionWidth = sender.Value
     End Sub
 
     Private Sub Trackbar7_Scroll(sender As Object) Handles Trackbar7.Scroll
@@ -733,10 +733,10 @@ Public Class Metrics_Fonts
         Window2.Refresh()
         Window4.Refresh()
         Window6.Refresh()
-        RetroWindow1.Refresh()
-        RetroWindow2.Refresh()
-        RetroWindow3.Refresh()
-        RetroWindow5.Refresh()
+        WindowR1.Refresh()
+        WindowR2.Refresh()
+        WindowR3.Refresh()
+        WindowR5.Refresh()
     End Sub
 
     Private Sub Metrics_Fonts_HelpButtonClicked(sender As Object, e As CancelEventArgs) Handles Me.HelpButtonClicked

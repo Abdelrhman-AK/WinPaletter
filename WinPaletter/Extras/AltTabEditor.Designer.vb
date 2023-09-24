@@ -46,14 +46,14 @@ Partial Class AltTabEditor
         Me.WinElement1 = New WinPaletter.UI.Simulation.WinElement()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.Classic_Preview1 = New System.Windows.Forms.Panel()
-        Me.RetroPanelRaised1 = New WinPaletter.UI.Retro.PanelRaisedR()
+        Me.PanelRRaised1 = New WinPaletter.UI.Retro.PanelRaisedR()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.RetroPanel1 = New WinPaletter.UI.Retro.PanelR()
-        Me.RetroLabel1 = New WinPaletter.UI.WP.LabelAlt()
+        Me.PanelR1 = New WinPaletter.UI.Retro.PanelR()
+        Me.LabelR1 = New WinPaletter.UI.WP.LabelAlt()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Button10 = New WinPaletter.UI.WP.Button()
@@ -76,13 +76,13 @@ Partial Class AltTabEditor
         Me.pnl_preview1.SuspendLayout()
         Me.TabPage7.SuspendLayout()
         Me.Classic_Preview1.SuspendLayout()
-        Me.RetroPanelRaised1.SuspendLayout()
+        Me.PanelRRaised1.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.RetroPanel1.SuspendLayout()
+        Me.PanelR1.SuspendLayout()
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -393,32 +393,32 @@ Partial Class AltTabEditor
         '
         Me.Classic_Preview1.BackColor = System.Drawing.Color.Black
         Me.Classic_Preview1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Classic_Preview1.Controls.Add(Me.RetroPanelRaised1)
+        Me.Classic_Preview1.Controls.Add(Me.PanelRRaised1)
         Me.Classic_Preview1.Location = New System.Drawing.Point(0, 0)
         Me.Classic_Preview1.Name = "Classic_Preview1"
         Me.Classic_Preview1.Size = New System.Drawing.Size(528, 297)
         Me.Classic_Preview1.TabIndex = 3
         '
-        'RetroPanelRaised1
+        'PanelRRaised1
         '
-        Me.RetroPanelRaised1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanelRaised1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
-        Me.RetroPanelRaised1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanelRaised1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
-        Me.RetroPanelRaised1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroPanelRaised1.Controls.Add(Me.PictureBox3)
-        Me.RetroPanelRaised1.Controls.Add(Me.Panel1)
-        Me.RetroPanelRaised1.Controls.Add(Me.PictureBox2)
-        Me.RetroPanelRaised1.Controls.Add(Me.RetroPanel1)
-        Me.RetroPanelRaised1.Flat = False
-        Me.RetroPanelRaised1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanelRaised1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanelRaised1.Location = New System.Drawing.Point(99, 92)
-        Me.RetroPanelRaised1.Name = "RetroPanelRaised1"
-        Me.RetroPanelRaised1.Size = New System.Drawing.Size(330, 112)
-        Me.RetroPanelRaised1.Style2 = True
-        Me.RetroPanelRaised1.TabIndex = 2
-        Me.RetroPanelRaised1.UseItAsWin7Taskbar = False
+        Me.PanelRRaised1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.PanelRRaised1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.PanelRRaised1.ButtonHilight = System.Drawing.Color.White
+        Me.PanelRRaised1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
+        Me.PanelRRaised1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.PanelRRaised1.Controls.Add(Me.PictureBox3)
+        Me.PanelRRaised1.Controls.Add(Me.Panel1)
+        Me.PanelRRaised1.Controls.Add(Me.PictureBox2)
+        Me.PanelRRaised1.Controls.Add(Me.PanelR1)
+        Me.PanelRRaised1.Flat = False
+        Me.PanelRRaised1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.PanelRRaised1.ForeColor = System.Drawing.Color.Black
+        Me.PanelRRaised1.Location = New System.Drawing.Point(99, 92)
+        Me.PanelRRaised1.Name = "PanelRRaised1"
+        Me.PanelRRaised1.Size = New System.Drawing.Size(330, 112)
+        Me.PanelRRaised1.Style2 = True
+        Me.PanelRRaised1.TabIndex = 2
+        Me.PanelRRaised1.UseItAsWin7Taskbar = False
         '
         'PictureBox3
         '
@@ -471,36 +471,36 @@ Partial Class AltTabEditor
         Me.PictureBox2.TabIndex = 3
         Me.PictureBox2.TabStop = False
         '
-        'RetroPanel1
+        'PanelR1
         '
-        Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanel1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
-        Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanel1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
-        Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroPanel1.Controls.Add(Me.RetroLabel1)
-        Me.RetroPanel1.Flat = False
-        Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanel1.Location = New System.Drawing.Point(14, 72)
-        Me.RetroPanel1.Name = "RetroPanel1"
-        Me.RetroPanel1.Size = New System.Drawing.Size(302, 29)
-        Me.RetroPanel1.Style2 = True
-        Me.RetroPanel1.TabIndex = 0
+        Me.PanelR1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.PanelR1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.PanelR1.ButtonHilight = System.Drawing.Color.White
+        Me.PanelR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
+        Me.PanelR1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.PanelR1.Controls.Add(Me.LabelR1)
+        Me.PanelR1.Flat = False
+        Me.PanelR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.PanelR1.ForeColor = System.Drawing.Color.Black
+        Me.PanelR1.Location = New System.Drawing.Point(14, 72)
+        Me.PanelR1.Name = "PanelR1"
+        Me.PanelR1.Size = New System.Drawing.Size(302, 29)
+        Me.PanelR1.Style2 = True
+        Me.PanelR1.TabIndex = 0
         '
-        'RetroLabel1
+        'LabelR1
         '
-        Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel1.DrawOnGlass = False
-        Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
-        Me.RetroLabel1.Name = "RetroLabel1"
-        Me.RetroLabel1.Size = New System.Drawing.Size(302, 29)
-        Me.RetroLabel1.TabIndex = 0
-        Me.RetroLabel1.Text = "Application"
-        Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR1.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelR1.DrawOnGlass = False
+        Me.LabelR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR1.ForeColor = System.Drawing.Color.Black
+        Me.LabelR1.Location = New System.Drawing.Point(0, 0)
+        Me.LabelR1.Name = "LabelR1"
+        Me.LabelR1.Size = New System.Drawing.Size(302, 29)
+        Me.LabelR1.TabIndex = 0
+        Me.LabelR1.Text = "Application"
+        Me.LabelR1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'PictureBox41
         '
@@ -721,13 +721,13 @@ Partial Class AltTabEditor
         Me.pnl_preview1.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
         Me.Classic_Preview1.ResumeLayout(False)
-        Me.RetroPanelRaised1.ResumeLayout(False)
+        Me.PanelRRaised1.ResumeLayout(False)
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.RetroPanel1.ResumeLayout(False)
+        Me.PanelR1.ResumeLayout(False)
         CType(Me.PictureBox41, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox12.ResumeLayout(False)
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
@@ -771,9 +771,9 @@ Partial Class AltTabEditor
     Friend WithEvents Panel2 As Panel
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents RetroPanel1 As UI.Retro.PanelR
-    Friend WithEvents RetroLabel1 As UI.WP.LabelAlt
-    Friend WithEvents RetroPanelRaised1 As UI.Retro.PanelRaisedR
+    Friend WithEvents PanelR1 As UI.Retro.PanelR
+    Friend WithEvents LabelR1 As UI.WP.LabelAlt
+    Friend WithEvents PanelRRaised1 As UI.Retro.PanelRaisedR
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents EP_Alert As UI.WP.AlertBox
     Friend WithEvents AlertBox1 As UI.WP.AlertBox

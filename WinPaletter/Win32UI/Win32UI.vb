@@ -164,10 +164,10 @@ Public Class Win32UI
         ApplyToCP(My.CP)
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow1)
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow2, False)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton2)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton3)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton4)
-        SetClassicRaisedPanelColors(My.CP, MainFrm.ClassicTaskbar)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR2)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR3)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR4)
+        SetClassicPanelRaisedRColors(My.CP, MainFrm.ClassicTaskbar)
         Me.Close()
     End Sub
 
@@ -200,72 +200,72 @@ Public Class Win32UI
 
         Select Case sender.Name
             Case "activetitle_pick"
-                CList.Add(RetroWindow2)
-                CList.Add(RetroWindow3)
-                CList.Add(RetroWindow4)
+                CList.Add(WindowR2)
+                CList.Add(WindowR3)
+                CList.Add(WindowR4)
 
-                Dim _Conditions As New Conditions With {.RetroWindowColor1 = True}
+                Dim _Conditions As New Conditions With {.WindowRColor1 = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow2.Color1 = C
-                RetroWindow3.Color1 = C
-                RetroWindow4.Color1 = C
+                WindowR2.Color1 = C
+                WindowR3.Color1 = C
+                WindowR4.Color1 = C
 
             Case "GActivetitle_pick"
-                CList.Add(RetroWindow2)
-                CList.Add(RetroWindow3)
-                CList.Add(RetroWindow4)
+                CList.Add(WindowR2)
+                CList.Add(WindowR3)
+                CList.Add(WindowR4)
 
-                Dim _Conditions As New Conditions With {.RetroWindowColor2 = True}
+                Dim _Conditions As New Conditions With {.WindowRColor2 = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow2.Color2 = C
-                RetroWindow3.Color2 = C
-                RetroWindow4.Color2 = C
+                WindowR2.Color2 = C
+                WindowR3.Color2 = C
+                WindowR4.Color2 = C
 
             Case "TitleText_pick"
-                CList.Add(RetroWindow2)
-                CList.Add(RetroWindow3)
-                CList.Add(RetroWindow4)
+                CList.Add(WindowR2)
+                CList.Add(WindowR3)
+                CList.Add(WindowR4)
 
-                Dim _Conditions As New Conditions With {.RetroWindowForeColor = True}
+                Dim _Conditions As New Conditions With {.WindowRForeColor = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow2.ForeColor = C
-                RetroWindow3.ForeColor = C
-                RetroWindow4.ForeColor = C
+                WindowR2.ForeColor = C
+                WindowR3.ForeColor = C
+                WindowR4.ForeColor = C
 
             Case "InactiveTitle_pick"
-                CList.Add(RetroWindow1)
-                Dim _Conditions As New Conditions With {.RetroWindowColor1 = True}
+                CList.Add(WindowR1)
+                Dim _Conditions As New Conditions With {.WindowRColor1 = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow1.Color1 = C
+                WindowR1.Color1 = C
 
             Case "GInactivetitle_pick"
-                CList.Add(RetroWindow1)
-                Dim _Conditions As New Conditions With {.RetroWindowColor2 = True}
+                CList.Add(WindowR1)
+                Dim _Conditions As New Conditions With {.WindowRColor2 = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow1.Color2 = C
+                WindowR1.Color2 = C
 
             Case "InactivetitleText_pick"
-                CList.Add(RetroWindow1)
-                Dim _Conditions As New Conditions With {.RetroWindowForeColor = True}
+                CList.Add(WindowR1)
+                Dim _Conditions As New Conditions With {.WindowRForeColor = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow1.ForeColor = C
+                WindowR1.ForeColor = C
 
             Case "ActiveBorder_pick"
-                CList.Add(RetroWindow2)
-                CList.Add(RetroWindow3)
-                CList.Add(RetroWindow4)
+                CList.Add(WindowR2)
+                CList.Add(WindowR3)
+                CList.Add(WindowR4)
 
-                Dim _Conditions As New Conditions With {.RetroWindowBorder = True}
+                Dim _Conditions As New Conditions With {.WindowRBorder = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow2.ColorBorder = C
-                RetroWindow3.ColorBorder = C
-                RetroWindow4.ColorBorder = C
+                WindowR2.ColorBorder = C
+                WindowR3.ColorBorder = C
+                WindowR4.ColorBorder = C
 
             Case "InactiveBorder_pick"
-                CList.Add(RetroWindow1)
-                Dim _Conditions As New Conditions With {.RetroWindowBorder = True}
+                CList.Add(WindowR1)
+                Dim _Conditions As New Conditions With {.WindowRBorder = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroWindow1.ColorBorder = C
+                WindowR1.ColorBorder = C
 
             Case "Frame_pick"
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -274,12 +274,12 @@ Public Class Win32UI
                     Next
                 Next
 
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
 
-                Dim _Conditions As New Conditions With {.RetroWindowFrame = True}
+                Dim _Conditions As New Conditions With {.WindowRFrame = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -287,7 +287,7 @@ Public Class Win32UI
                         RB.WindowFrame = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.WindowFrame = C
                 Next
                 Retro3DPreview1.WindowFrame = C
@@ -299,12 +299,12 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                CList.Add(RetroPanel2)
-                Dim _Conditions As New Conditions With {.RetroButtonFace = True}
+                CList.Add(PanelR2)
+                Dim _Conditions As New Conditions With {.ButtonRFace = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -313,11 +313,11 @@ Public Class Win32UI
                         RB.BackColor = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.BackColor = C
                 Next
                 Retro3DPreview1.BackColor = C
-                RetroPanel2.BackColor = C
+                PanelR2.BackColor = C
 
             Case "btndkshadow_pick"
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -326,13 +326,13 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                CList.Add(RetroTextBox1)
+                CList.Add(TextBoxR1)
 
-                Dim _Conditions As New Conditions With {.RetroButtonDkShadow = True}
+                Dim _Conditions As New Conditions With {.ButtonRDkShadow = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -341,11 +341,11 @@ Public Class Win32UI
                         RB.ButtonDkShadow = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.ButtonDkShadow = C
                 Next
                 Retro3DPreview1.ButtonDkShadow = C
-                RetroTextBox1.ButtonDkShadow = C
+                TextBoxR1.ButtonDkShadow = C
 
             Case "btnhilight_pick"
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -354,18 +354,18 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 For Each RB As UI.Retro.PanelRaisedR In pnl_preview.Controls.OfType(Of UI.Retro.PanelRaisedR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                CList.Add(RetroTextBox1)
-                CList.Add(RetroPanel1)
-                CList.Add(RetroPanel2)
+                CList.Add(TextBoxR1)
+                CList.Add(PanelR1)
+                CList.Add(PanelR2)
 
-                Dim _Conditions As New Conditions With {.RetroButtonHilight = True}
+                Dim _Conditions As New Conditions With {.ButtonRHilight = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -374,15 +374,15 @@ Public Class Win32UI
                         RB.ButtonHilight = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.ButtonHilight = C
                 Next
                 For Each RB As UI.Retro.PanelRaisedR In pnl_preview.Controls.OfType(Of UI.Retro.PanelRaisedR)
                     RB.ButtonHilight = C
                 Next
-                RetroTextBox1.ButtonHilight = C
-                RetroPanel1.ButtonHilight = C
-                RetroPanel2.ButtonHilight = C
+                TextBoxR1.ButtonHilight = C
+                PanelR1.ButtonHilight = C
+                PanelR2.ButtonHilight = C
                 Retro3DPreview1.ButtonHilight = C
 
             Case "btnlight_pick"
@@ -392,13 +392,13 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                CList.Add(RetroTextBox1)
+                CList.Add(TextBoxR1)
 
-                Dim _Conditions As New Conditions With {.RetroButtonLight = True}
+                Dim _Conditions As New Conditions With {.ButtonRLight = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -407,10 +407,10 @@ Public Class Win32UI
                         RB.ButtonLight = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.ButtonLight = C
                 Next
-                RetroTextBox1.ButtonLight = C
+                TextBoxR1.ButtonLight = C
                 Retro3DPreview1.ButtonLight = C
 
             Case "btnshadow_pick"
@@ -420,17 +420,17 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 For Each RB As UI.Retro.PanelRaisedR In pnl_preview.Controls.OfType(Of UI.Retro.PanelRaisedR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                CList.Add(RetroTextBox1)
-                CList.Add(RetroPanel1)
+                CList.Add(TextBoxR1)
+                CList.Add(PanelR1)
 
-                Dim _Conditions As New Conditions With {.RetroButtonShadow = True}
+                Dim _Conditions As New Conditions With {.ButtonRShadow = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -439,15 +439,15 @@ Public Class Win32UI
                         RB.ButtonShadow = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.ButtonShadow = C
                 Next
                 For Each RB As UI.Retro.PanelRaisedR In pnl_preview.Controls.OfType(Of UI.Retro.PanelRaisedR)
                     RB.ButtonShadow = C
                 Next
                 Retro3DPreview1.ButtonShadow = C
-                RetroTextBox1.ButtonShadow = C
-                RetroPanel1.ButtonShadow = C
+                TextBoxR1.ButtonShadow = C
+                PanelR1.ButtonShadow = C
 
             Case "btntext_pick"
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -456,11 +456,11 @@ Public Class Win32UI
                         CList.Add(RB)
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     CList.Add(RB)
                 Next
                 CList.Add(Retro3DPreview1)
-                Dim _Conditions As New Conditions With {.RetroButtonText = True}
+                Dim _Conditions As New Conditions With {.ButtonRText = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
 
                 For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
@@ -469,7 +469,7 @@ Public Class Win32UI
                         RB.ForeColor = C
                     Next
                 Next
-                For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+                For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
                     RB.ForeColor = C
                 Next
                 Retro3DPreview1.ForeColor = C
@@ -489,7 +489,7 @@ Public Class Win32UI
             Case "menu_pick"
                 CList.Add(Menu_Window)
 
-                If Not Toggle1.Checked Then CList.Add(RetroPanel1)
+                If Not Toggle1.Checked Then CList.Add(PanelR1)
                 If Not Toggle1.Checked Then CList.Add(menucontainer0)
 
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
@@ -497,7 +497,7 @@ Public Class Win32UI
                 Menu_Window.BackColor = C
                 Menu_Window.Invalidate()
 
-                If Not Toggle1.Checked Then RetroPanel1.BackColor = C
+                If Not Toggle1.Checked Then PanelR1.BackColor = C
                 If Not Toggle1.Checked Then menucontainer0.BackColor = C
 
             Case "menubar_pick"
@@ -515,11 +515,11 @@ Public Class Win32UI
 
                 If Toggle1.Checked Then
                     CList.Add(highlight)
-                    CList.Add(RetroPanel1)
-                    Dim _Conditions As New Conditions With {.RetroButtonShadow = True, .RetroBackground = True, .RetroHighlight17BitFixer = True}
+                    CList.Add(PanelR1)
+                    Dim _Conditions As New Conditions With {.ButtonRShadow = True, .RetroBackground = True, .RetroHighlight17BitFixer = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
                     highlight.BackColor = C
-                    RetroPanel1.ButtonShadow = C
+                    PanelR1.ButtonShadow = C
                 Else
                     CList.Add(highlight)
                     CList.Add(menuhilight)
@@ -534,11 +534,11 @@ Public Class Win32UI
 
                 If Toggle1.Checked Then
                     CList.Add(menuhilight)
-                    CList.Add(RetroPanel1)
+                    CList.Add(PanelR1)
                     Dim _Conditions As New Conditions With {.RetroBackground = True}
                     C = ColorPickerDlg.Pick(CList, _Conditions)
                     menuhilight.BackColor = C
-                    RetroPanel1.BackColor = C
+                    PanelR1.BackColor = C
 
                 Else
                     C = ColorPickerDlg.Pick(CList)
@@ -546,65 +546,65 @@ Public Class Win32UI
                 End If
 
             Case "menutext_pick"
-                CList.Add(RetroLabel1)
-                CList.Add(RetroLabel2)
-                If Not Toggle1.Checked Then CList.Add(RetroLabel3)
-                CList.Add(RetroLabel6)
+                CList.Add(LabelR1)
+                CList.Add(LabelR2)
+                If Not Toggle1.Checked Then CList.Add(LabelR3)
+                CList.Add(LabelR6)
 
                 C = ColorPickerDlg.Pick(CList)
 
-                RetroLabel1.ForeColor = C
-                RetroLabel2.ForeColor = C
-                If Not Toggle1.Checked Then RetroLabel3.ForeColor = C
-                RetroLabel6.ForeColor = C
+                LabelR1.ForeColor = C
+                LabelR2.ForeColor = C
+                If Not Toggle1.Checked Then LabelR3.ForeColor = C
+                LabelR6.ForeColor = C
 
             Case "hilighttext_pick"
-                CList.Add(RetroLabel5)
-                If Toggle1.Checked Then CList.Add(RetroLabel3)
+                CList.Add(LabelR5)
+                If Toggle1.Checked Then CList.Add(LabelR3)
 
                 C = ColorPickerDlg.Pick(CList)
-                RetroLabel5.ForeColor = C
-                If Toggle1.Checked Then RetroLabel3.ForeColor = C
+                LabelR5.ForeColor = C
+                If Toggle1.Checked Then LabelR3.ForeColor = C
 
             Case "GrayText_pick"
-                CList.Add(RetroLabel2)
-                CList.Add(RetroLabel9)
+                CList.Add(LabelR2)
+                CList.Add(LabelR9)
 
                 C = ColorPickerDlg.Pick(CList)
-                RetroLabel2.ForeColor = C
-                RetroLabel9.ForeColor = C
+                LabelR2.ForeColor = C
+                LabelR9.ForeColor = C
 
             Case "Window_pick"
-                CList.Add(RetroTextBox1)
+                CList.Add(TextBoxR1)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroTextBox1.BackColor = C
+                TextBoxR1.BackColor = C
 
             Case "WindowText_pick"
-                CList.Add(RetroTextBox1)
-                CList.Add(RetroLabel4)
+                CList.Add(TextBoxR1)
+                CList.Add(LabelR4)
 
-                Dim _Conditions As New Conditions With {.RetroWindowText = True, .RetroWindowForeColor = True}
+                Dim _Conditions As New Conditions With {.WindowRText = True, .WindowRForeColor = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroTextBox1.ForeColor = C
-                RetroLabel4.ForeColor = C
+                TextBoxR1.ForeColor = C
+                LabelR4.ForeColor = C
 
             Case "InfoWindow_pick"
-                CList.Add(RetroLabel13)
+                CList.Add(LabelR13)
                 Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList, _Conditions)
-                RetroLabel13.BackColor = C
+                LabelR13.BackColor = C
 
             Case "InfoText_pick"
-                CList.Add(RetroLabel13)
+                CList.Add(LabelR13)
                 C = ColorPickerDlg.Pick(CList)
-                RetroLabel13.ForeColor = C
+                LabelR13.ForeColor = C
 
             Case "Scrollbar_pick"
-                'ColorControls_List.Add(RetroPanel2)
+                'ColorControls_List.Add(PanelR2)
                 'Dim _Conditions As New Conditions With {.RetroBackground = True}
                 C = ColorPickerDlg.Pick(CList) ', _Conditions)
-                'RetroPanel2.BackColor = C
+                'PanelR2.BackColor = C
 
             Case Else
                 C = ColorPickerDlg.Pick(CList)
@@ -618,9 +618,9 @@ Public Class Win32UI
 
         CList.Clear()
 
-        RetroWindow1.Invalidate()
-        RetroWindow2.Invalidate()
-        RetroWindow3.Invalidate()
+        WindowR1.Invalidate()
+        WindowR2.Invalidate()
+        WindowR3.Invalidate()
 
         Refresh17BitPreference()
     End Sub
@@ -631,38 +631,38 @@ Public Class Win32UI
         InfoText_pick.DragDrop, InfoWindow_pick.DragDrop, menu_pick.DragDrop, menubar_pick.DragDrop, menutext_pick.DragDrop, Scrollbar_pick.DragDrop, TitleText_pick.DragDrop, Window_pick.DragDrop, Frame_pick.DragDrop,
         WindowText_pick.DragDrop, hilight_pick.DragDrop, menuhilight_pick.DragDrop, desktop_pick.DragDrop
 
-        RetroWindow2.Color1 = activetitle_pick.BackColor
-        RetroWindow3.Color1 = activetitle_pick.BackColor
-        RetroWindow4.Color1 = activetitle_pick.BackColor
-        RetroWindow2.Color2 = GActivetitle_pick.BackColor
-        RetroWindow3.Color2 = GActivetitle_pick.BackColor
-        RetroWindow4.Color2 = GActivetitle_pick.BackColor
-        RetroWindow2.ForeColor = TitleText_pick.BackColor
-        RetroWindow3.ForeColor = TitleText_pick.BackColor
-        RetroWindow4.ForeColor = TitleText_pick.BackColor
-        RetroWindow2.ColorBorder = ActiveBorder_pick.BackColor
-        RetroWindow3.ColorBorder = ActiveBorder_pick.BackColor
-        RetroWindow4.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR2.Color1 = activetitle_pick.BackColor
+        WindowR3.Color1 = activetitle_pick.BackColor
+        WindowR4.Color1 = activetitle_pick.BackColor
+        WindowR2.Color2 = GActivetitle_pick.BackColor
+        WindowR3.Color2 = GActivetitle_pick.BackColor
+        WindowR4.Color2 = GActivetitle_pick.BackColor
+        WindowR2.ForeColor = TitleText_pick.BackColor
+        WindowR3.ForeColor = TitleText_pick.BackColor
+        WindowR4.ForeColor = TitleText_pick.BackColor
+        WindowR2.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR3.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR4.ColorBorder = ActiveBorder_pick.BackColor
 
-        RetroWindow1.Color1 = InactiveTitle_pick.BackColor
-        RetroWindow1.Color2 = GInactivetitle_pick.BackColor
-        RetroWindow1.ForeColor = InactivetitleText_pick.BackColor
-        RetroWindow1.ColorBorder = InactiveBorder_pick.BackColor
+        WindowR1.Color1 = InactiveTitle_pick.BackColor
+        WindowR1.Color2 = GInactivetitle_pick.BackColor
+        WindowR1.ForeColor = InactivetitleText_pick.BackColor
+        WindowR1.ColorBorder = InactiveBorder_pick.BackColor
 
         Retro3DPreview1.WindowFrame = Frame_pick.BackColor
         Retro3DPreview1.BackColor = btnface_pick.BackColor
-        RetroPanel2.BackColor = btnface_pick.BackColor
+        PanelR2.BackColor = btnface_pick.BackColor
         Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor
-        RetroTextBox1.ButtonDkShadow = btndkshadow_pick.BackColor
-        RetroTextBox1.ButtonHilight = btnhilight_pick.BackColor
-        RetroPanel1.ButtonHilight = btnhilight_pick.BackColor
-        RetroPanel2.ButtonHilight = btnhilight_pick.BackColor
+        TextBoxR1.ButtonDkShadow = btndkshadow_pick.BackColor
+        TextBoxR1.ButtonHilight = btnhilight_pick.BackColor
+        PanelR1.ButtonHilight = btnhilight_pick.BackColor
+        PanelR2.ButtonHilight = btnhilight_pick.BackColor
         Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor
-        RetroTextBox1.ButtonLight = btnlight_pick.BackColor
+        TextBoxR1.ButtonLight = btnlight_pick.BackColor
         Retro3DPreview1.ButtonLight = btnlight_pick.BackColor
         Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor
-        RetroTextBox1.ButtonShadow = btnshadow_pick.BackColor
-        RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
+        TextBoxR1.ButtonShadow = btnshadow_pick.BackColor
+        PanelR1.ButtonShadow = btnshadow_pick.BackColor
         Retro3DPreview1.ForeColor = btntext_pick.BackColor
         programcontainer.BackColor = AppWorkspace_pick.BackColor
         pnl_preview.BackColor = background_pick.BackColor
@@ -672,30 +672,30 @@ Public Class Win32UI
         If Toggle1.Checked Then
             highlight.BackColor = hilight_pick.BackColor
             menuhilight.BackColor = menuhilight_pick.BackColor
-            RetroLabel3.ForeColor = hilighttext_pick.BackColor
-            RetroPanel1.ButtonShadow = hilight_pick.BackColor
-            RetroPanel1.BackColor = menuhilight_pick.BackColor
+            LabelR3.ForeColor = hilighttext_pick.BackColor
+            PanelR1.ButtonShadow = hilight_pick.BackColor
+            PanelR1.BackColor = menuhilight_pick.BackColor
             menucontainer0.BackColor = menubar_pick.BackColor
         Else
             highlight.BackColor = hilight_pick.BackColor
             menuhilight.BackColor = hilight_pick.BackColor
-            RetroLabel3.ForeColor = menutext_pick.BackColor
-            RetroPanel1.BackColor = menu_pick.BackColor
+            LabelR3.ForeColor = menutext_pick.BackColor
+            PanelR1.BackColor = menu_pick.BackColor
             menucontainer0.BackColor = menu_pick.BackColor
         End If
 
-        RetroLabel1.ForeColor = menutext_pick.BackColor
-        RetroLabel2.ForeColor = menutext_pick.BackColor
-        RetroLabel6.ForeColor = menutext_pick.BackColor
-        RetroLabel5.ForeColor = hilighttext_pick.BackColor
+        LabelR1.ForeColor = menutext_pick.BackColor
+        LabelR2.ForeColor = menutext_pick.BackColor
+        LabelR6.ForeColor = menutext_pick.BackColor
+        LabelR5.ForeColor = hilighttext_pick.BackColor
 
-        RetroLabel2.ForeColor = GrayText_pick.BackColor
-        RetroLabel9.ForeColor = GrayText_pick.BackColor
-        RetroTextBox1.BackColor = Window_pick.BackColor
-        RetroTextBox1.ForeColor = WindowText_pick.BackColor
-        RetroLabel4.ForeColor = WindowText_pick.BackColor
-        RetroLabel13.BackColor = InfoWindow_pick.BackColor
-        RetroLabel13.ForeColor = InfoText_pick.BackColor
+        LabelR2.ForeColor = GrayText_pick.BackColor
+        LabelR9.ForeColor = GrayText_pick.BackColor
+        TextBoxR1.BackColor = Window_pick.BackColor
+        TextBoxR1.ForeColor = WindowText_pick.BackColor
+        LabelR4.ForeColor = WindowText_pick.BackColor
+        LabelR13.BackColor = InfoWindow_pick.BackColor
+        LabelR13.ForeColor = InfoText_pick.BackColor
 
         For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
             If RW IsNot Menu Then RW.BackColor = btnface_pick.BackColor Else RW.ButtonFace = btnface_pick.BackColor
@@ -721,7 +721,7 @@ Public Class Win32UI
             RB.ButtonShadow = btnshadow_pick.BackColor
         Next
 
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.WindowFrame = Frame_pick.BackColor
             RB.BackColor = btnface_pick.BackColor
             RB.ButtonDkShadow = btndkshadow_pick.BackColor
@@ -731,9 +731,9 @@ Public Class Win32UI
             RB.ForeColor = btntext_pick.BackColor
         Next
 
-        RetroWindow1.Invalidate()
-        RetroWindow2.Invalidate()
-        RetroWindow3.Invalidate()
+        WindowR1.Invalidate()
+        WindowR2.Invalidate()
+        WindowR3.Invalidate()
 
         Refresh17BitPreference()
     End Sub
@@ -904,29 +904,29 @@ Public Class Win32UI
     End Sub
 
     Sub SetMetics(CP As CP)
-        RetroPanel2.Width = CP.MetricsFonts.ScrollWidth
+        PanelR2.Width = CP.MetricsFonts.ScrollWidth
         menucontainer0.Height = CP.MetricsFonts.MenuHeight
 
         menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont))
 
-        RetroLabel1.Font = CP.MetricsFonts.MenuFont
-        RetroLabel2.Font = CP.MetricsFonts.MenuFont
-        RetroLabel3.Font = CP.MetricsFonts.MenuFont
+        LabelR1.Font = CP.MetricsFonts.MenuFont
+        LabelR2.Font = CP.MetricsFonts.MenuFont
+        LabelR3.Font = CP.MetricsFonts.MenuFont
 
-        RetroLabel9.Font = CP.MetricsFonts.MenuFont
-        RetroLabel5.Font = CP.MetricsFonts.MenuFont
-        RetroLabel6.Font = CP.MetricsFonts.MenuFont
+        LabelR9.Font = CP.MetricsFonts.MenuFont
+        LabelR5.Font = CP.MetricsFonts.MenuFont
+        LabelR6.Font = CP.MetricsFonts.MenuFont
 
         menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
         Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
 
-        RetroLabel4.Font = CP.MetricsFonts.MessageFont
+        LabelR4.Font = CP.MetricsFonts.MessageFont
 
-        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
-        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
-        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        LabelR1.Width = LabelR1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        LabelR2.Width = LabelR2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        PanelR1.Width = LabelR3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + PanelR1.Padding.Left + PanelR1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
         TitleTextH = "ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height
@@ -944,53 +944,53 @@ Public Class Win32UI
             End If
         Next
 
-        RetroWindow3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow3.GetTitleTextHeight
-        RetroWindow2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
+        WindowR3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight
+        WindowR2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
 
 
-        Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu_Window.Left = Math.Min(RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3, RetroWindow2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
+        Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + +3, WindowR2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
 
-        RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
-        RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
+        WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10
+        WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15
 
-        RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
-        RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
+        LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2
+        LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2
 
         RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
 
-        RetroButton1.FocusRectWidth = CP.WindowsEffects.FocusRectWidth
-        RetroButton1.FocusRectHeight = CP.WindowsEffects.FocusRectHeight
-        RetroButton1.Refresh()
+        ButtonR1.FocusRectWidth = CP.WindowsEffects.FocusRectWidth
+        ButtonR1.FocusRectHeight = CP.WindowsEffects.FocusRectHeight
+        ButtonR1.Refresh()
     End Sub
 
     Sub ApplyRetroPreview()
-        RetroWindow1.ColorGradient = Toggle2.Checked
-        RetroWindow2.ColorGradient = Toggle2.Checked
-        RetroWindow3.ColorGradient = Toggle2.Checked
-        RetroWindow4.ColorGradient = Toggle2.Checked
+        WindowR1.ColorGradient = Toggle2.Checked
+        WindowR2.ColorGradient = Toggle2.Checked
+        WindowR3.ColorGradient = Toggle2.Checked
+        WindowR4.ColorGradient = Toggle2.Checked
 
-        RetroWindow2.Color1 = activetitle_pick.BackColor
-        RetroWindow3.Color1 = activetitle_pick.BackColor
-        RetroWindow4.Color1 = activetitle_pick.BackColor
+        WindowR2.Color1 = activetitle_pick.BackColor
+        WindowR3.Color1 = activetitle_pick.BackColor
+        WindowR4.Color1 = activetitle_pick.BackColor
 
-        RetroWindow2.Color2 = GActivetitle_pick.BackColor
-        RetroWindow3.Color2 = GActivetitle_pick.BackColor
-        RetroWindow4.Color2 = GActivetitle_pick.BackColor
+        WindowR2.Color2 = GActivetitle_pick.BackColor
+        WindowR3.Color2 = GActivetitle_pick.BackColor
+        WindowR4.Color2 = GActivetitle_pick.BackColor
 
-        RetroWindow2.ForeColor = TitleText_pick.BackColor
-        RetroWindow3.ForeColor = TitleText_pick.BackColor
-        RetroWindow4.ForeColor = TitleText_pick.BackColor
+        WindowR2.ForeColor = TitleText_pick.BackColor
+        WindowR3.ForeColor = TitleText_pick.BackColor
+        WindowR4.ForeColor = TitleText_pick.BackColor
 
-        RetroWindow1.Color1 = InactiveTitle_pick.BackColor
-        RetroWindow1.Color2 = GInactivetitle_pick.BackColor
-        RetroWindow1.ForeColor = InactivetitleText_pick.BackColor
+        WindowR1.Color1 = InactiveTitle_pick.BackColor
+        WindowR1.Color2 = GInactivetitle_pick.BackColor
+        WindowR1.ForeColor = InactivetitleText_pick.BackColor
 
-        RetroWindow2.ColorBorder = ActiveBorder_pick.BackColor
-        RetroWindow3.ColorBorder = ActiveBorder_pick.BackColor
-        RetroWindow4.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR2.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR3.ColorBorder = ActiveBorder_pick.BackColor
+        WindowR4.ColorBorder = ActiveBorder_pick.BackColor
 
-        RetroWindow1.ColorBorder = InactiveBorder_pick.BackColor
+        WindowR1.ColorBorder = InactiveBorder_pick.BackColor
 
         Retro3DPreview1.WindowFrame = Frame_pick.BackColor
 
@@ -1013,7 +1013,7 @@ Public Class Win32UI
             Next
         Next
 
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.BackColor = btnface_pick.BackColor
             RB.WindowFrame = Frame_pick.BackColor
             RB.ButtonDkShadow = btndkshadow_pick.BackColor
@@ -1028,27 +1028,27 @@ Public Class Win32UI
             RB.ButtonShadow = btnshadow_pick.BackColor
         Next
 
-        RetroPanel2.BackColor = btnface_pick.BackColor
+        PanelR2.BackColor = btnface_pick.BackColor
         Menu_Window.ButtonFace = btnface_pick.BackColor
         Retro3DPreview1.BackColor = btnface_pick.BackColor
 
-        RetroTextBox1.ButtonDkShadow = btndkshadow_pick.BackColor
+        TextBoxR1.ButtonDkShadow = btndkshadow_pick.BackColor
         Menu_Window.ButtonDkShadow = btndkshadow_pick.BackColor
         Retro3DPreview1.ButtonDkShadow = btndkshadow_pick.BackColor
 
-        RetroTextBox1.ButtonHilight = btnhilight_pick.BackColor
-        RetroPanel1.ButtonHilight = btnhilight_pick.BackColor
-        RetroPanel2.ButtonHilight = btnhilight_pick.BackColor
+        TextBoxR1.ButtonHilight = btnhilight_pick.BackColor
+        PanelR1.ButtonHilight = btnhilight_pick.BackColor
+        PanelR2.ButtonHilight = btnhilight_pick.BackColor
         Menu_Window.ButtonHilight = btnhilight_pick.BackColor
         Retro3DPreview1.ButtonHilight = btnhilight_pick.BackColor
 
-        RetroTextBox1.ButtonLight = btnlight_pick.BackColor
+        TextBoxR1.ButtonLight = btnlight_pick.BackColor
         Menu_Window.ButtonLight = btnlight_pick.BackColor
         Retro3DPreview1.ButtonLight = btnlight_pick.BackColor
 
-        RetroTextBox1.ButtonShadow = btnshadow_pick.BackColor
-        RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
-        RetroTextBox1.Refresh()
+        TextBoxR1.ButtonShadow = btnshadow_pick.BackColor
+        PanelR1.ButtonShadow = btnshadow_pick.BackColor
+        TextBoxR1.Refresh()
         Menu_Window.ButtonShadow = btnshadow_pick.BackColor
         Retro3DPreview1.ButtonShadow = btnshadow_pick.BackColor
 
@@ -1059,7 +1059,7 @@ Public Class Win32UI
         pnl_preview.BackColor = background_pick.BackColor
 
         Menu_Window.BackColor = menu_pick.BackColor
-        RetroPanel1.BackColor = menu_pick.BackColor
+        PanelR1.BackColor = menu_pick.BackColor
         Menu_Window.Refresh()
 
         menucontainer0.BackColor = menubar_pick.BackColor
@@ -1068,22 +1068,22 @@ Public Class Win32UI
 
         menuhilight.BackColor = menuhilight_pick.BackColor
 
-        RetroLabel6.ForeColor = menutext_pick.BackColor
-        RetroLabel1.ForeColor = menutext_pick.BackColor
+        LabelR6.ForeColor = menutext_pick.BackColor
+        LabelR1.ForeColor = menutext_pick.BackColor
 
-        RetroLabel5.ForeColor = hilighttext_pick.BackColor
+        LabelR5.ForeColor = hilighttext_pick.BackColor
 
-        RetroLabel2.ForeColor = GrayText_pick.BackColor
-        RetroLabel9.ForeColor = GrayText_pick.BackColor
+        LabelR2.ForeColor = GrayText_pick.BackColor
+        LabelR9.ForeColor = GrayText_pick.BackColor
 
-        RetroTextBox1.BackColor = Window_pick.BackColor
+        TextBoxR1.BackColor = Window_pick.BackColor
 
-        RetroTextBox1.ForeColor = WindowText_pick.BackColor
-        RetroLabel4.ForeColor = WindowText_pick.BackColor
+        TextBoxR1.ForeColor = WindowText_pick.BackColor
+        LabelR4.ForeColor = WindowText_pick.BackColor
 
-        RetroLabel13.BackColor = InfoWindow_pick.BackColor
+        LabelR13.BackColor = InfoWindow_pick.BackColor
 
-        RetroLabel13.ForeColor = InfoText_pick.BackColor
+        LabelR13.ForeColor = InfoText_pick.BackColor
 
         For Each RW As UI.Retro.WindowR In pnl_preview.Controls.OfType(Of UI.Retro.WindowR)
             RW.Refresh()
@@ -1092,7 +1092,7 @@ Public Class Win32UI
             Next
         Next
 
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.Refresh()
         Next
 
@@ -1111,30 +1111,30 @@ Public Class Win32UI
         If Toggle1.Checked Then
             'Theming Enabled (Menus Has colors and borders)
             Menu_Window.Flat = True
-            RetroPanel1.Flat = True
+            PanelR1.Flat = True
             menuhilight.BackColor = menuhilight_pick.BackColor  'Filling of selected item
             highlight.BackColor = hilight_pick.BackColor        'Outer Border of selected item
 
-            RetroPanel1.BackColor = menuhilight_pick.BackColor
-            RetroPanel1.ButtonShadow = hilight_pick.BackColor
+            PanelR1.BackColor = menuhilight_pick.BackColor
+            PanelR1.ButtonShadow = hilight_pick.BackColor
 
             menucontainer0.BackColor = menubar_pick.BackColor
-            RetroLabel3.ForeColor = hilighttext_pick.BackColor
+            LabelR3.ForeColor = hilighttext_pick.BackColor
         Else
             'Theming Disabled (Menus are retro 3D)
             Menu_Window.Flat = False
-            RetroPanel1.Flat = False
+            PanelR1.Flat = False
             menuhilight.BackColor = hilight_pick.BackColor      'Both will have same color
             highlight.BackColor = hilight_pick.BackColor        'Both will have same color
-            RetroPanel1.BackColor = menu_pick.BackColor
-            RetroPanel1.ButtonShadow = btnshadow_pick.BackColor
+            PanelR1.BackColor = menu_pick.BackColor
+            PanelR1.ButtonShadow = btnshadow_pick.BackColor
             menucontainer0.BackColor = menu_pick.BackColor
-            RetroLabel3.ForeColor = menutext_pick.BackColor
+            LabelR3.ForeColor = menutext_pick.BackColor
 
         End If
 
         Menu_Window.Refresh()
-        RetroPanel1.Refresh()
+        PanelR1.Refresh()
         menuhilight.Refresh()
         highlight.Refresh()
 
@@ -1156,15 +1156,15 @@ Public Class Win32UI
 
 
     Private Sub Toggle2_CheckedChanged(sender As Object, e As EventArgs) Handles Toggle2.CheckedChanged
-        RetroWindow1.ColorGradient = Toggle2.Checked
-        RetroWindow2.ColorGradient = Toggle2.Checked
-        RetroWindow3.ColorGradient = Toggle2.Checked
-        RetroWindow4.ColorGradient = Toggle2.Checked
+        WindowR1.ColorGradient = Toggle2.Checked
+        WindowR2.ColorGradient = Toggle2.Checked
+        WindowR3.ColorGradient = Toggle2.Checked
+        WindowR4.ColorGradient = Toggle2.Checked
 
-        RetroWindow1.Invalidate()
-        RetroWindow2.Invalidate()
-        RetroWindow3.Invalidate()
-        RetroWindow4.Invalidate()
+        WindowR1.Invalidate()
+        WindowR2.Invalidate()
+        WindowR3.Invalidate()
+        WindowR4.Invalidate()
     End Sub
 
 
@@ -1184,10 +1184,10 @@ Public Class Win32UI
 
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow1)
         SetClassicWindowColors(My.CP, MainFrm.ClassicWindow2, False)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton2)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton3)
-        SetClassicButtonColors(My.CP, MainFrm.RetroButton4)
-        SetClassicRaisedPanelColors(My.CP, MainFrm.ClassicTaskbar)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR2)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR3)
+        SetClassicButtonColors(My.CP, MainFrm.ButtonR4)
+        SetClassicPanelRaisedRColors(My.CP, MainFrm.ClassicTaskbar)
 
         Try
             CPx.Win32.Apply()

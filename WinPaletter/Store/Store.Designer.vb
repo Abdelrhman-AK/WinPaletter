@@ -83,37 +83,37 @@ Partial Class Store
         Me.ClassicWindow1 = New WinPaletter.UI.Retro.WindowR()
         Me.ClassicWindow2 = New WinPaletter.UI.Retro.WindowR()
         Me.ClassicTaskbar = New WinPaletter.UI.Retro.PanelRaisedR()
-        Me.RetroButton4 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton3 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton2 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR4 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR3 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR2 = New WinPaletter.UI.Retro.ButtonR()
         Me.ClassicColorsPreview = New System.Windows.Forms.Panel()
         Me.RetroShadow1 = New WinPaletter.UI.WP.TransparentPictureBox()
         Me.Menu_Window = New WinPaletter.UI.Retro.WindowR()
         Me.menucontainer3 = New System.Windows.Forms.Panel()
-        Me.RetroLabel9 = New WinPaletter.UI.WP.LabelAlt()
+        Me.LabelR9 = New WinPaletter.UI.WP.LabelAlt()
         Me.highlight = New System.Windows.Forms.Panel()
         Me.menuhilight = New System.Windows.Forms.Panel()
-        Me.RetroLabel5 = New WinPaletter.UI.WP.LabelAlt()
+        Me.LabelR5 = New WinPaletter.UI.WP.LabelAlt()
         Me.menucontainer1 = New System.Windows.Forms.Panel()
-        Me.RetroLabel6 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroWindow3 = New WinPaletter.UI.Retro.WindowR()
-        Me.RetroButton5 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroLabel4 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroLabel13 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroWindow2 = New WinPaletter.UI.Retro.WindowR()
-        Me.RetroTextBox1 = New WinPaletter.UI.Retro.TextBoxR()
+        Me.LabelR6 = New WinPaletter.UI.WP.LabelAlt()
+        Me.WindowR3 = New WinPaletter.UI.Retro.WindowR()
+        Me.ButtonR5 = New WinPaletter.UI.Retro.ButtonR()
+        Me.LabelR4 = New WinPaletter.UI.WP.LabelAlt()
+        Me.LabelR13 = New WinPaletter.UI.WP.LabelAlt()
+        Me.WindowR2 = New WinPaletter.UI.Retro.WindowR()
+        Me.TextBoxR1 = New WinPaletter.UI.Retro.TextBoxR()
         Me.menucontainer0 = New System.Windows.Forms.Panel()
-        Me.RetroPanel1 = New WinPaletter.UI.Retro.PanelR()
-        Me.RetroLabel3 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroLabel2 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroLabel1 = New WinPaletter.UI.WP.LabelAlt()
-        Me.RetroWindow1 = New WinPaletter.UI.Retro.WindowR()
-        Me.RetroWindow4 = New WinPaletter.UI.Retro.WindowR()
+        Me.PanelR1 = New WinPaletter.UI.Retro.PanelR()
+        Me.LabelR3 = New WinPaletter.UI.WP.LabelAlt()
+        Me.LabelR2 = New WinPaletter.UI.WP.LabelAlt()
+        Me.LabelR1 = New WinPaletter.UI.WP.LabelAlt()
+        Me.WindowR1 = New WinPaletter.UI.Retro.WindowR()
+        Me.WindowR4 = New WinPaletter.UI.Retro.WindowR()
         Me.programcontainer = New System.Windows.Forms.Panel()
-        Me.RetroPanel2 = New WinPaletter.UI.Retro.ScrollBarR()
-        Me.RetroButton12 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton11 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton10 = New WinPaletter.UI.Retro.ButtonR()
+        Me.PanelR2 = New WinPaletter.UI.Retro.ScrollBarR()
+        Me.ButtonR12 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR11 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR10 = New WinPaletter.UI.Retro.ButtonR()
         Me.CMD1 = New WinPaletter.UI.Simulation.WinCMD()
         Me.CMD2 = New WinPaletter.UI.Simulation.WinCMD()
         Me.CMD3 = New WinPaletter.UI.Simulation.WinCMD()
@@ -181,13 +181,13 @@ Partial Class Store
         Me.highlight.SuspendLayout()
         Me.menuhilight.SuspendLayout()
         Me.menucontainer1.SuspendLayout()
-        Me.RetroWindow3.SuspendLayout()
-        Me.RetroWindow2.SuspendLayout()
+        Me.WindowR3.SuspendLayout()
+        Me.WindowR2.SuspendLayout()
         Me.menucontainer0.SuspendLayout()
-        Me.RetroPanel1.SuspendLayout()
-        Me.RetroWindow4.SuspendLayout()
+        Me.PanelR1.SuspendLayout()
+        Me.WindowR4.SuspendLayout()
         Me.programcontainer.SuspendLayout()
-        Me.RetroPanel2.SuspendLayout()
+        Me.PanelR2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Cursors_Container.SuspendLayout()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1115,9 +1115,9 @@ Partial Class Store
         Me.ClassicTaskbar.ButtonHilight = System.Drawing.Color.White
         Me.ClassicTaskbar.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
         Me.ClassicTaskbar.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton4)
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton3)
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton2)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR4)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR3)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR2)
         Me.ClassicTaskbar.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.ClassicTaskbar.Flat = False
         Me.ClassicTaskbar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
@@ -1129,79 +1129,79 @@ Partial Class Store
         Me.ClassicTaskbar.TabIndex = 0
         Me.ClassicTaskbar.UseItAsWin7Taskbar = True
         '
-        'RetroButton4
+        'ButtonR4
         '
-        Me.RetroButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton4.AppearsAsPressed = False
-        Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton4.FocusRectHeight = 1
-        Me.RetroButton4.FocusRectWidth = 1
-        Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton4.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton4.HatchBrush = False
-        Me.RetroButton4.Image = Nothing
-        Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
-        Me.RetroButton4.Name = "RetroButton4"
-        Me.RetroButton4.Size = New System.Drawing.Size(48, 38)
-        Me.RetroButton4.TabIndex = 2
-        Me.RetroButton4.UseItAsScrollbar = False
-        Me.RetroButton4.UseVisualStyleBackColor = False
-        Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR4.AppearsAsPressed = False
+        Me.ButtonR4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR4.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR4.FocusRectHeight = 1
+        Me.ButtonR4.FocusRectWidth = 1
+        Me.ButtonR4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR4.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR4.HatchBrush = False
+        Me.ButtonR4.Image = Nothing
+        Me.ButtonR4.Location = New System.Drawing.Point(113, 4)
+        Me.ButtonR4.Name = "ButtonR4"
+        Me.ButtonR4.Size = New System.Drawing.Size(48, 38)
+        Me.ButtonR4.TabIndex = 2
+        Me.ButtonR4.UseItAsScrollbar = False
+        Me.ButtonR4.UseVisualStyleBackColor = False
+        Me.ButtonR4.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton3
+        'ButtonR3
         '
-        Me.RetroButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton3.AppearsAsPressed = True
-        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton3.FocusRectHeight = 1
-        Me.RetroButton3.FocusRectWidth = 1
-        Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton3.HatchBrush = False
-        Me.RetroButton3.Image = Nothing
-        Me.RetroButton3.Location = New System.Drawing.Point(63, 4)
-        Me.RetroButton3.Name = "RetroButton3"
-        Me.RetroButton3.Size = New System.Drawing.Size(48, 38)
-        Me.RetroButton3.TabIndex = 1
-        Me.RetroButton3.UseItAsScrollbar = False
-        Me.RetroButton3.UseVisualStyleBackColor = False
-        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR3.AppearsAsPressed = True
+        Me.ButtonR3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR3.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR3.FocusRectHeight = 1
+        Me.ButtonR3.FocusRectWidth = 1
+        Me.ButtonR3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR3.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR3.HatchBrush = False
+        Me.ButtonR3.Image = Nothing
+        Me.ButtonR3.Location = New System.Drawing.Point(63, 4)
+        Me.ButtonR3.Name = "ButtonR3"
+        Me.ButtonR3.Size = New System.Drawing.Size(48, 38)
+        Me.ButtonR3.TabIndex = 1
+        Me.ButtonR3.UseItAsScrollbar = False
+        Me.ButtonR3.UseVisualStyleBackColor = False
+        Me.ButtonR3.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton2
+        'ButtonR2
         '
-        Me.RetroButton2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton2.AppearsAsPressed = False
-        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton2.FocusRectHeight = 1
-        Me.RetroButton2.FocusRectWidth = 1
-        Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton2.HatchBrush = False
-        Me.RetroButton2.Image = Nothing
-        Me.RetroButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.RetroButton2.Location = New System.Drawing.Point(2, 4)
-        Me.RetroButton2.Name = "RetroButton2"
-        Me.RetroButton2.Size = New System.Drawing.Size(52, 38)
-        Me.RetroButton2.TabIndex = 0
-        Me.RetroButton2.Text = "Start"
-        Me.RetroButton2.UseItAsScrollbar = False
-        Me.RetroButton2.UseVisualStyleBackColor = False
-        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR2.AppearsAsPressed = False
+        Me.ButtonR2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR2.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR2.FocusRectHeight = 1
+        Me.ButtonR2.FocusRectWidth = 1
+        Me.ButtonR2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR2.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR2.HatchBrush = False
+        Me.ButtonR2.Image = Nothing
+        Me.ButtonR2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ButtonR2.Location = New System.Drawing.Point(2, 4)
+        Me.ButtonR2.Name = "ButtonR2"
+        Me.ButtonR2.Size = New System.Drawing.Size(52, 38)
+        Me.ButtonR2.TabIndex = 0
+        Me.ButtonR2.Text = "Start"
+        Me.ButtonR2.UseItAsScrollbar = False
+        Me.ButtonR2.UseVisualStyleBackColor = False
+        Me.ButtonR2.WindowFrame = System.Drawing.Color.Black
         '
         'ClassicColorsPreview
         '
@@ -1210,11 +1210,11 @@ Partial Class Store
         Me.ClassicColorsPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ClassicColorsPreview.Controls.Add(Me.RetroShadow1)
         Me.ClassicColorsPreview.Controls.Add(Me.Menu_Window)
-        Me.ClassicColorsPreview.Controls.Add(Me.RetroWindow3)
-        Me.ClassicColorsPreview.Controls.Add(Me.RetroLabel13)
-        Me.ClassicColorsPreview.Controls.Add(Me.RetroWindow2)
-        Me.ClassicColorsPreview.Controls.Add(Me.RetroWindow1)
-        Me.ClassicColorsPreview.Controls.Add(Me.RetroWindow4)
+        Me.ClassicColorsPreview.Controls.Add(Me.WindowR3)
+        Me.ClassicColorsPreview.Controls.Add(Me.LabelR13)
+        Me.ClassicColorsPreview.Controls.Add(Me.WindowR2)
+        Me.ClassicColorsPreview.Controls.Add(Me.WindowR1)
+        Me.ClassicColorsPreview.Controls.Add(Me.WindowR4)
         Me.ClassicColorsPreview.Location = New System.Drawing.Point(537, 3)
         Me.ClassicColorsPreview.Name = "ClassicColorsPreview"
         Me.ClassicColorsPreview.Size = New System.Drawing.Size(528, 297)
@@ -1267,7 +1267,7 @@ Partial Class Store
         'menucontainer3
         '
         Me.menucontainer3.BackColor = System.Drawing.Color.Transparent
-        Me.menucontainer3.Controls.Add(Me.RetroLabel9)
+        Me.menucontainer3.Controls.Add(Me.LabelR9)
         Me.menucontainer3.Dock = System.Windows.Forms.DockStyle.Top
         Me.menucontainer3.Location = New System.Drawing.Point(3, 43)
         Me.menucontainer3.Name = "menucontainer3"
@@ -1275,20 +1275,20 @@ Partial Class Store
         Me.menucontainer3.Size = New System.Drawing.Size(107, 20)
         Me.menucontainer3.TabIndex = 12
         '
-        'RetroLabel9
+        'LabelR9
         '
-        Me.RetroLabel9.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel9.DrawOnGlass = False
-        Me.RetroLabel9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel9.ForeColor = System.Drawing.Color.DimGray
-        Me.RetroLabel9.Location = New System.Drawing.Point(21, 0)
-        Me.RetroLabel9.Name = "RetroLabel9"
-        Me.RetroLabel9.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel9.Size = New System.Drawing.Size(86, 20)
-        Me.RetroLabel9.TabIndex = 3
-        Me.RetroLabel9.Text = "Disabled item"
-        Me.RetroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR9.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelR9.DrawOnGlass = False
+        Me.LabelR9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR9.ForeColor = System.Drawing.Color.DimGray
+        Me.LabelR9.Location = New System.Drawing.Point(21, 0)
+        Me.LabelR9.Name = "LabelR9"
+        Me.LabelR9.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
+        Me.LabelR9.Size = New System.Drawing.Size(86, 20)
+        Me.LabelR9.TabIndex = 3
+        Me.LabelR9.Text = "Disabled item"
+        Me.LabelR9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'highlight
         '
@@ -1303,7 +1303,7 @@ Partial Class Store
         'menuhilight
         '
         Me.menuhilight.BackColor = System.Drawing.Color.Navy
-        Me.menuhilight.Controls.Add(Me.RetroLabel5)
+        Me.menuhilight.Controls.Add(Me.LabelR5)
         Me.menuhilight.Dock = System.Windows.Forms.DockStyle.Fill
         Me.menuhilight.Location = New System.Drawing.Point(0, 0)
         Me.menuhilight.Name = "menuhilight"
@@ -1311,25 +1311,25 @@ Partial Class Store
         Me.menuhilight.Size = New System.Drawing.Size(107, 20)
         Me.menuhilight.TabIndex = 11
         '
-        'RetroLabel5
+        'LabelR5
         '
-        Me.RetroLabel5.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel5.DrawOnGlass = False
-        Me.RetroLabel5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel5.ForeColor = System.Drawing.Color.White
-        Me.RetroLabel5.Location = New System.Drawing.Point(21, 0)
-        Me.RetroLabel5.Name = "RetroLabel5"
-        Me.RetroLabel5.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel5.Size = New System.Drawing.Size(85, 20)
-        Me.RetroLabel5.TabIndex = 3
-        Me.RetroLabel5.Text = "Hovered item"
-        Me.RetroLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR5.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelR5.DrawOnGlass = False
+        Me.LabelR5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR5.ForeColor = System.Drawing.Color.White
+        Me.LabelR5.Location = New System.Drawing.Point(21, 0)
+        Me.LabelR5.Name = "LabelR5"
+        Me.LabelR5.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
+        Me.LabelR5.Size = New System.Drawing.Size(85, 20)
+        Me.LabelR5.TabIndex = 3
+        Me.LabelR5.Text = "Hovered item"
+        Me.LabelR5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'menucontainer1
         '
         Me.menucontainer1.BackColor = System.Drawing.Color.Transparent
-        Me.menucontainer1.Controls.Add(Me.RetroLabel6)
+        Me.menucontainer1.Controls.Add(Me.LabelR6)
         Me.menucontainer1.Dock = System.Windows.Forms.DockStyle.Top
         Me.menucontainer1.Location = New System.Drawing.Point(3, 3)
         Me.menucontainer1.Name = "menucontainer1"
@@ -1337,307 +1337,307 @@ Partial Class Store
         Me.menucontainer1.Size = New System.Drawing.Size(107, 20)
         Me.menucontainer1.TabIndex = 6
         '
-        'RetroLabel6
+        'LabelR6
         '
-        Me.RetroLabel6.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel6.DrawOnGlass = False
-        Me.RetroLabel6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel6.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel6.Location = New System.Drawing.Point(21, 0)
-        Me.RetroLabel6.Name = "RetroLabel6"
-        Me.RetroLabel6.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.RetroLabel6.Size = New System.Drawing.Size(86, 20)
-        Me.RetroLabel6.TabIndex = 3
-        Me.RetroLabel6.Text = "Menu item"
-        Me.RetroLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR6.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelR6.DrawOnGlass = False
+        Me.LabelR6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR6.ForeColor = System.Drawing.Color.Black
+        Me.LabelR6.Location = New System.Drawing.Point(21, 0)
+        Me.LabelR6.Name = "LabelR6"
+        Me.LabelR6.Padding = New System.Windows.Forms.Padding(0, 0, 0, 2)
+        Me.LabelR6.Size = New System.Drawing.Size(86, 20)
+        Me.LabelR6.TabIndex = 3
+        Me.LabelR6.Text = "Menu item"
+        Me.LabelR6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroWindow3
+        'WindowR3
         '
-        Me.RetroWindow3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow3.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroWindow3.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow3.ButtonHilight = System.Drawing.Color.White
-        Me.RetroWindow3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow3.ButtonText = System.Drawing.Color.Black
-        Me.RetroWindow3.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow3.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.RetroWindow3.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow3.ColorGradient = True
-        Me.RetroWindow3.ControlBox = False
-        Me.RetroWindow3.Controls.Add(Me.RetroButton5)
-        Me.RetroWindow3.Controls.Add(Me.RetroLabel4)
-        Me.RetroWindow3.Flat = False
-        Me.RetroWindow3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroWindow3.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow3.Location = New System.Drawing.Point(215, 185)
-        Me.RetroWindow3.MaximizeBox = True
-        Me.RetroWindow3.Metrics_BorderWidth = 0
-        Me.RetroWindow3.Metrics_CaptionHeight = 18
-        Me.RetroWindow3.Metrics_CaptionWidth = 18
-        Me.RetroWindow3.Metrics_PaddedBorderWidth = 0
-        Me.RetroWindow3.MinimizeBox = True
-        Me.RetroWindow3.Name = "RetroWindow3"
-        Me.RetroWindow3.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
-        Me.RetroWindow3.Size = New System.Drawing.Size(147, 80)
-        Me.RetroWindow3.TabIndex = 2
-        Me.RetroWindow3.Text = "Message box"
-        Me.RetroWindow3.UseItAsMenu = False
+        Me.WindowR3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.WindowR3.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR3.ButtonHilight = System.Drawing.Color.White
+        Me.WindowR3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR3.ButtonText = System.Drawing.Color.Black
+        Me.WindowR3.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR3.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.WindowR3.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR3.ColorGradient = True
+        Me.WindowR3.ControlBox = False
+        Me.WindowR3.Controls.Add(Me.ButtonR5)
+        Me.WindowR3.Controls.Add(Me.LabelR4)
+        Me.WindowR3.Flat = False
+        Me.WindowR3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.WindowR3.ForeColor = System.Drawing.Color.White
+        Me.WindowR3.Location = New System.Drawing.Point(215, 185)
+        Me.WindowR3.MaximizeBox = True
+        Me.WindowR3.Metrics_BorderWidth = 0
+        Me.WindowR3.Metrics_CaptionHeight = 18
+        Me.WindowR3.Metrics_CaptionWidth = 18
+        Me.WindowR3.Metrics_PaddedBorderWidth = 0
+        Me.WindowR3.MinimizeBox = True
+        Me.WindowR3.Name = "WindowR3"
+        Me.WindowR3.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
+        Me.WindowR3.Size = New System.Drawing.Size(147, 80)
+        Me.WindowR3.TabIndex = 2
+        Me.WindowR3.Text = "Message box"
+        Me.WindowR3.UseItAsMenu = False
         '
-        'RetroButton5
+        'ButtonR5
         '
-        Me.RetroButton5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton5.AppearsAsPressed = False
-        Me.RetroButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton5.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton5.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton5.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton5.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton5.FocusRectHeight = 1
-        Me.RetroButton5.FocusRectWidth = 1
-        Me.RetroButton5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton5.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton5.HatchBrush = False
-        Me.RetroButton5.Image = Nothing
-        Me.RetroButton5.Location = New System.Drawing.Point(37, 49)
-        Me.RetroButton5.Name = "RetroButton5"
-        Me.RetroButton5.Size = New System.Drawing.Size(75, 23)
-        Me.RetroButton5.TabIndex = 2
-        Me.RetroButton5.Text = "OK"
-        Me.RetroButton5.UseItAsScrollbar = False
-        Me.RetroButton5.UseVisualStyleBackColor = False
-        Me.RetroButton5.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ButtonR5.AppearsAsPressed = False
+        Me.ButtonR5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR5.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR5.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR5.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR5.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR5.FocusRectHeight = 1
+        Me.ButtonR5.FocusRectWidth = 1
+        Me.ButtonR5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR5.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR5.HatchBrush = False
+        Me.ButtonR5.Image = Nothing
+        Me.ButtonR5.Location = New System.Drawing.Point(37, 49)
+        Me.ButtonR5.Name = "ButtonR5"
+        Me.ButtonR5.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonR5.TabIndex = 2
+        Me.ButtonR5.Text = "OK"
+        Me.ButtonR5.UseItAsScrollbar = False
+        Me.ButtonR5.UseVisualStyleBackColor = False
+        Me.ButtonR5.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroLabel4
+        'LabelR4
         '
-        Me.RetroLabel4.AutoSize = True
-        Me.RetroLabel4.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel4.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RetroLabel4.DrawOnGlass = False
-        Me.RetroLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel4.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel4.Location = New System.Drawing.Point(4, 22)
-        Me.RetroLabel4.Name = "RetroLabel4"
-        Me.RetroLabel4.Padding = New System.Windows.Forms.Padding(4)
-        Me.RetroLabel4.Size = New System.Drawing.Size(78, 21)
-        Me.RetroLabel4.TabIndex = 1
-        Me.RetroLabel4.Text = "Message text"
-        Me.RetroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR4.AutoSize = True
+        Me.LabelR4.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LabelR4.DrawOnGlass = False
+        Me.LabelR4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR4.ForeColor = System.Drawing.Color.Black
+        Me.LabelR4.Location = New System.Drawing.Point(4, 22)
+        Me.LabelR4.Name = "LabelR4"
+        Me.LabelR4.Padding = New System.Windows.Forms.Padding(4)
+        Me.LabelR4.Size = New System.Drawing.Size(78, 21)
+        Me.LabelR4.TabIndex = 1
+        Me.LabelR4.Text = "Message text"
+        Me.LabelR4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroLabel13
+        'LabelR13
         '
-        Me.RetroLabel13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RetroLabel13.AutoSize = True
-        Me.RetroLabel13.BackColor = System.Drawing.Color.White
-        Me.RetroLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.RetroLabel13.DrawOnGlass = False
-        Me.RetroLabel13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel13.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel13.Location = New System.Drawing.Point(287, 47)
-        Me.RetroLabel13.Name = "RetroLabel13"
-        Me.RetroLabel13.Size = New System.Drawing.Size(79, 15)
-        Me.RetroLabel13.TabIndex = 5
-        Me.RetroLabel13.Text = "This is a tooltip"
+        Me.LabelR13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelR13.AutoSize = True
+        Me.LabelR13.BackColor = System.Drawing.Color.White
+        Me.LabelR13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LabelR13.DrawOnGlass = False
+        Me.LabelR13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR13.ForeColor = System.Drawing.Color.Black
+        Me.LabelR13.Location = New System.Drawing.Point(287, 47)
+        Me.LabelR13.Name = "LabelR13"
+        Me.LabelR13.Size = New System.Drawing.Size(79, 15)
+        Me.LabelR13.TabIndex = 5
+        Me.LabelR13.Text = "This is a tooltip"
         '
-        'RetroWindow2
+        'WindowR2
         '
-        Me.RetroWindow2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow2.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroWindow2.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroWindow2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow2.ButtonText = System.Drawing.Color.Black
-        Me.RetroWindow2.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow2.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.RetroWindow2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow2.ColorGradient = True
-        Me.RetroWindow2.ControlBox = True
-        Me.RetroWindow2.Controls.Add(Me.RetroTextBox1)
-        Me.RetroWindow2.Controls.Add(Me.menucontainer0)
-        Me.RetroWindow2.Flat = False
-        Me.RetroWindow2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroWindow2.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow2.Location = New System.Drawing.Point(195, 110)
-        Me.RetroWindow2.MaximizeBox = True
-        Me.RetroWindow2.Metrics_BorderWidth = 0
-        Me.RetroWindow2.Metrics_CaptionHeight = 18
-        Me.RetroWindow2.Metrics_CaptionWidth = 18
-        Me.RetroWindow2.Metrics_PaddedBorderWidth = 0
-        Me.RetroWindow2.MinimizeBox = True
-        Me.RetroWindow2.Name = "RetroWindow2"
-        Me.RetroWindow2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
-        Me.RetroWindow2.Size = New System.Drawing.Size(196, 120)
-        Me.RetroWindow2.TabIndex = 1
-        Me.RetroWindow2.Text = "Active window"
-        Me.RetroWindow2.UseItAsMenu = False
+        Me.WindowR2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.WindowR2.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR2.ButtonHilight = System.Drawing.Color.White
+        Me.WindowR2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR2.ButtonText = System.Drawing.Color.Black
+        Me.WindowR2.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR2.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.WindowR2.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR2.ColorGradient = True
+        Me.WindowR2.ControlBox = True
+        Me.WindowR2.Controls.Add(Me.TextBoxR1)
+        Me.WindowR2.Controls.Add(Me.menucontainer0)
+        Me.WindowR2.Flat = False
+        Me.WindowR2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.WindowR2.ForeColor = System.Drawing.Color.White
+        Me.WindowR2.Location = New System.Drawing.Point(195, 110)
+        Me.WindowR2.MaximizeBox = True
+        Me.WindowR2.Metrics_BorderWidth = 0
+        Me.WindowR2.Metrics_CaptionHeight = 18
+        Me.WindowR2.Metrics_CaptionWidth = 18
+        Me.WindowR2.Metrics_PaddedBorderWidth = 0
+        Me.WindowR2.MinimizeBox = True
+        Me.WindowR2.Name = "WindowR2"
+        Me.WindowR2.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
+        Me.WindowR2.Size = New System.Drawing.Size(196, 120)
+        Me.WindowR2.TabIndex = 1
+        Me.WindowR2.Text = "Active window"
+        Me.WindowR2.UseItAsMenu = False
         '
-        'RetroTextBox1
+        'TextBoxR1
         '
-        Me.RetroTextBox1.BackColor = System.Drawing.Color.White
-        Me.RetroTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RetroTextBox1.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroTextBox1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroTextBox1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroTextBox1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroTextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RetroTextBox1.Location = New System.Drawing.Point(4, 40)
-        Me.RetroTextBox1.MaxLength = 32767
-        Me.RetroTextBox1.Multiline = True
-        Me.RetroTextBox1.Name = "RetroTextBox1"
-        Me.RetroTextBox1.ReadOnly = True
-        Me.RetroTextBox1.Size = New System.Drawing.Size(188, 76)
-        Me.RetroTextBox1.Style = WinPaletter.UI.Retro.TextBoxR.RoundingStyle.Normal
-        Me.RetroTextBox1.TabIndex = 3
-        Me.RetroTextBox1.Text = "Window text"
-        Me.RetroTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.RetroTextBox1.UseSystemPasswordChar = False
+        Me.TextBoxR1.BackColor = System.Drawing.Color.White
+        Me.TextBoxR1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBoxR1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.TextBoxR1.ButtonHilight = System.Drawing.Color.White
+        Me.TextBoxR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.TextBoxR1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.TextBoxR1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBoxR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.TextBoxR1.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxR1.Location = New System.Drawing.Point(4, 40)
+        Me.TextBoxR1.MaxLength = 32767
+        Me.TextBoxR1.Multiline = True
+        Me.TextBoxR1.Name = "TextBoxR1"
+        Me.TextBoxR1.ReadOnly = True
+        Me.TextBoxR1.Size = New System.Drawing.Size(188, 76)
+        Me.TextBoxR1.Style = WinPaletter.UI.Retro.TextBoxR.RoundingStyle.Normal
+        Me.TextBoxR1.TabIndex = 3
+        Me.TextBoxR1.Text = "Window text"
+        Me.TextBoxR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.TextBoxR1.UseSystemPasswordChar = False
         '
         'menucontainer0
         '
         Me.menucontainer0.BackColor = System.Drawing.Color.Silver
-        Me.menucontainer0.Controls.Add(Me.RetroPanel1)
-        Me.menucontainer0.Controls.Add(Me.RetroLabel2)
-        Me.menucontainer0.Controls.Add(Me.RetroLabel1)
+        Me.menucontainer0.Controls.Add(Me.PanelR1)
+        Me.menucontainer0.Controls.Add(Me.LabelR2)
+        Me.menucontainer0.Controls.Add(Me.LabelR1)
         Me.menucontainer0.Dock = System.Windows.Forms.DockStyle.Top
         Me.menucontainer0.Location = New System.Drawing.Point(4, 22)
         Me.menucontainer0.Name = "menucontainer0"
         Me.menucontainer0.Size = New System.Drawing.Size(188, 18)
         Me.menucontainer0.TabIndex = 5
         '
-        'RetroPanel1
+        'PanelR1
         '
-        Me.RetroPanel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanel1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
-        Me.RetroPanel1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanel1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
-        Me.RetroPanel1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroPanel1.Controls.Add(Me.RetroLabel3)
-        Me.RetroPanel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroPanel1.Flat = False
-        Me.RetroPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanel1.Location = New System.Drawing.Point(88, 0)
-        Me.RetroPanel1.Name = "RetroPanel1"
-        Me.RetroPanel1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 3)
-        Me.RetroPanel1.Size = New System.Drawing.Size(53, 18)
-        Me.RetroPanel1.Style2 = False
-        Me.RetroPanel1.TabIndex = 2
+        Me.PanelR1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.PanelR1.ButtonDkShadow = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.PanelR1.ButtonHilight = System.Drawing.Color.White
+        Me.PanelR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
+        Me.PanelR1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.PanelR1.Controls.Add(Me.LabelR3)
+        Me.PanelR1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PanelR1.Flat = False
+        Me.PanelR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.PanelR1.ForeColor = System.Drawing.Color.Black
+        Me.PanelR1.Location = New System.Drawing.Point(88, 0)
+        Me.PanelR1.Name = "PanelR1"
+        Me.PanelR1.Padding = New System.Windows.Forms.Padding(1, 3, 1, 3)
+        Me.PanelR1.Size = New System.Drawing.Size(53, 18)
+        Me.PanelR1.Style2 = False
+        Me.PanelR1.TabIndex = 2
         '
-        'RetroLabel3
+        'LabelR3
         '
-        Me.RetroLabel3.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RetroLabel3.DrawOnGlass = False
-        Me.RetroLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel3.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel3.Location = New System.Drawing.Point(1, 3)
-        Me.RetroLabel3.Name = "RetroLabel3"
-        Me.RetroLabel3.Size = New System.Drawing.Size(51, 12)
-        Me.RetroLabel3.TabIndex = 1
-        Me.RetroLabel3.Text = "Selected"
-        Me.RetroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR3.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelR3.DrawOnGlass = False
+        Me.LabelR3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR3.ForeColor = System.Drawing.Color.Black
+        Me.LabelR3.Location = New System.Drawing.Point(1, 3)
+        Me.LabelR3.Name = "LabelR3"
+        Me.LabelR3.Size = New System.Drawing.Size(51, 12)
+        Me.LabelR3.TabIndex = 1
+        Me.LabelR3.Text = "Selected"
+        Me.LabelR3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroLabel2
+        'LabelR2
         '
-        Me.RetroLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroLabel2.DrawOnGlass = False
-        Me.RetroLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.RetroLabel2.Location = New System.Drawing.Point(40, 0)
-        Me.RetroLabel2.Name = "RetroLabel2"
-        Me.RetroLabel2.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
-        Me.RetroLabel2.Size = New System.Drawing.Size(48, 18)
-        Me.RetroLabel2.TabIndex = 1
-        Me.RetroLabel2.Text = "Disabled"
-        Me.RetroLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR2.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LabelR2.DrawOnGlass = False
+        Me.LabelR2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelR2.Location = New System.Drawing.Point(40, 0)
+        Me.LabelR2.Name = "LabelR2"
+        Me.LabelR2.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.LabelR2.Size = New System.Drawing.Size(48, 18)
+        Me.LabelR2.TabIndex = 1
+        Me.LabelR2.Text = "Disabled"
+        Me.LabelR2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroLabel1
+        'LabelR1
         '
-        Me.RetroLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.RetroLabel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroLabel1.DrawOnGlass = False
-        Me.RetroLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroLabel1.ForeColor = System.Drawing.Color.Black
-        Me.RetroLabel1.Location = New System.Drawing.Point(0, 0)
-        Me.RetroLabel1.Name = "RetroLabel1"
-        Me.RetroLabel1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
-        Me.RetroLabel1.Size = New System.Drawing.Size(40, 18)
-        Me.RetroLabel1.TabIndex = 0
-        Me.RetroLabel1.Text = "Normal"
-        Me.RetroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LabelR1.BackColor = System.Drawing.Color.Transparent
+        Me.LabelR1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LabelR1.DrawOnGlass = False
+        Me.LabelR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.LabelR1.ForeColor = System.Drawing.Color.Black
+        Me.LabelR1.Location = New System.Drawing.Point(0, 0)
+        Me.LabelR1.Name = "LabelR1"
+        Me.LabelR1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.LabelR1.Size = New System.Drawing.Size(40, 18)
+        Me.LabelR1.TabIndex = 0
+        Me.LabelR1.Text = "Normal"
+        Me.LabelR1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'RetroWindow1
+        'WindowR1
         '
-        Me.RetroWindow1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow1.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroWindow1.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroWindow1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow1.ButtonText = System.Drawing.Color.Black
-        Me.RetroWindow1.Color1 = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.RetroWindow1.Color2 = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer))
-        Me.RetroWindow1.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow1.ColorGradient = True
-        Me.RetroWindow1.ControlBox = True
-        Me.RetroWindow1.Flat = False
-        Me.RetroWindow1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroWindow1.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow1.Location = New System.Drawing.Point(179, 77)
-        Me.RetroWindow1.MaximizeBox = True
-        Me.RetroWindow1.Metrics_BorderWidth = 0
-        Me.RetroWindow1.Metrics_CaptionHeight = 18
-        Me.RetroWindow1.Metrics_CaptionWidth = 18
-        Me.RetroWindow1.Metrics_PaddedBorderWidth = 0
-        Me.RetroWindow1.MinimizeBox = True
-        Me.RetroWindow1.Name = "RetroWindow1"
-        Me.RetroWindow1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
-        Me.RetroWindow1.Size = New System.Drawing.Size(180, 112)
-        Me.RetroWindow1.TabIndex = 0
-        Me.RetroWindow1.Text = "Inactive window"
-        Me.RetroWindow1.UseItAsMenu = False
+        Me.WindowR1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.WindowR1.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR1.ButtonHilight = System.Drawing.Color.White
+        Me.WindowR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR1.ButtonText = System.Drawing.Color.Black
+        Me.WindowR1.Color1 = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.WindowR1.Color2 = System.Drawing.Color.FromArgb(CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(181, Byte), Integer))
+        Me.WindowR1.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR1.ColorGradient = True
+        Me.WindowR1.ControlBox = True
+        Me.WindowR1.Flat = False
+        Me.WindowR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.WindowR1.ForeColor = System.Drawing.Color.White
+        Me.WindowR1.Location = New System.Drawing.Point(179, 77)
+        Me.WindowR1.MaximizeBox = True
+        Me.WindowR1.Metrics_BorderWidth = 0
+        Me.WindowR1.Metrics_CaptionHeight = 18
+        Me.WindowR1.Metrics_CaptionWidth = 18
+        Me.WindowR1.Metrics_PaddedBorderWidth = 0
+        Me.WindowR1.MinimizeBox = True
+        Me.WindowR1.Name = "WindowR1"
+        Me.WindowR1.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
+        Me.WindowR1.Size = New System.Drawing.Size(180, 112)
+        Me.WindowR1.TabIndex = 0
+        Me.WindowR1.Text = "Inactive window"
+        Me.WindowR1.UseItAsMenu = False
         '
-        'RetroWindow4
+        'WindowR4
         '
-        Me.RetroWindow4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow4.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroWindow4.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow4.ButtonHilight = System.Drawing.Color.White
-        Me.RetroWindow4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow4.ButtonText = System.Drawing.Color.Black
-        Me.RetroWindow4.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroWindow4.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.RetroWindow4.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroWindow4.ColorGradient = True
-        Me.RetroWindow4.ControlBox = True
-        Me.RetroWindow4.Controls.Add(Me.programcontainer)
-        Me.RetroWindow4.Flat = False
-        Me.RetroWindow4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroWindow4.ForeColor = System.Drawing.Color.White
-        Me.RetroWindow4.Location = New System.Drawing.Point(139, 30)
-        Me.RetroWindow4.MaximizeBox = False
-        Me.RetroWindow4.Metrics_BorderWidth = 0
-        Me.RetroWindow4.Metrics_CaptionHeight = 18
-        Me.RetroWindow4.Metrics_CaptionWidth = 18
-        Me.RetroWindow4.Metrics_PaddedBorderWidth = 0
-        Me.RetroWindow4.MinimizeBox = False
-        Me.RetroWindow4.Name = "RetroWindow4"
-        Me.RetroWindow4.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
-        Me.RetroWindow4.Size = New System.Drawing.Size(156, 132)
-        Me.RetroWindow4.TabIndex = 3
-        Me.RetroWindow4.Text = "Program container"
-        Me.RetroWindow4.UseItAsMenu = False
+        Me.WindowR4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.WindowR4.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR4.ButtonHilight = System.Drawing.Color.White
+        Me.WindowR4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR4.ButtonText = System.Drawing.Color.Black
+        Me.WindowR4.Color1 = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.WindowR4.Color2 = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(132, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.WindowR4.ColorBorder = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.WindowR4.ColorGradient = True
+        Me.WindowR4.ControlBox = True
+        Me.WindowR4.Controls.Add(Me.programcontainer)
+        Me.WindowR4.Flat = False
+        Me.WindowR4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.WindowR4.ForeColor = System.Drawing.Color.White
+        Me.WindowR4.Location = New System.Drawing.Point(139, 30)
+        Me.WindowR4.MaximizeBox = False
+        Me.WindowR4.Metrics_BorderWidth = 0
+        Me.WindowR4.Metrics_CaptionHeight = 18
+        Me.WindowR4.Metrics_CaptionWidth = 18
+        Me.WindowR4.Metrics_PaddedBorderWidth = 0
+        Me.WindowR4.MinimizeBox = False
+        Me.WindowR4.Name = "WindowR4"
+        Me.WindowR4.Padding = New System.Windows.Forms.Padding(4, 22, 4, 4)
+        Me.WindowR4.Size = New System.Drawing.Size(156, 132)
+        Me.WindowR4.TabIndex = 3
+        Me.WindowR4.Text = "Program container"
+        Me.WindowR4.UseItAsMenu = False
         '
         'programcontainer
         '
         Me.programcontainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.programcontainer.Controls.Add(Me.RetroPanel2)
+        Me.programcontainer.Controls.Add(Me.PanelR2)
         Me.programcontainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.programcontainer.Location = New System.Drawing.Point(4, 22)
         Me.programcontainer.Name = "programcontainer"
@@ -1645,95 +1645,95 @@ Partial Class Store
         Me.programcontainer.Size = New System.Drawing.Size(148, 106)
         Me.programcontainer.TabIndex = 4
         '
-        'RetroPanel2
+        'PanelR2
         '
-        Me.RetroPanel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroPanel2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroPanel2.Controls.Add(Me.RetroButton12)
-        Me.RetroPanel2.Controls.Add(Me.RetroButton11)
-        Me.RetroPanel2.Controls.Add(Me.RetroButton10)
-        Me.RetroPanel2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.RetroPanel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroPanel2.ForeColor = System.Drawing.Color.Black
-        Me.RetroPanel2.Location = New System.Drawing.Point(0, 0)
-        Me.RetroPanel2.Name = "RetroPanel2"
-        Me.RetroPanel2.Size = New System.Drawing.Size(16, 106)
-        Me.RetroPanel2.TabIndex = 0
+        Me.PanelR2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.PanelR2.ButtonHilight = System.Drawing.Color.White
+        Me.PanelR2.Controls.Add(Me.ButtonR12)
+        Me.PanelR2.Controls.Add(Me.ButtonR11)
+        Me.PanelR2.Controls.Add(Me.ButtonR10)
+        Me.PanelR2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PanelR2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.PanelR2.ForeColor = System.Drawing.Color.Black
+        Me.PanelR2.Location = New System.Drawing.Point(0, 0)
+        Me.PanelR2.Name = "PanelR2"
+        Me.PanelR2.Size = New System.Drawing.Size(16, 106)
+        Me.PanelR2.TabIndex = 0
         '
-        'RetroButton12
+        'ButtonR12
         '
-        Me.RetroButton12.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR12.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton12.AppearsAsPressed = False
-        Me.RetroButton12.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton12.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton12.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton12.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton12.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton12.FocusRectHeight = 1
-        Me.RetroButton12.FocusRectWidth = 1
-        Me.RetroButton12.Font = New System.Drawing.Font("Marlett", 6.0!)
-        Me.RetroButton12.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton12.HatchBrush = False
-        Me.RetroButton12.Image = Nothing
-        Me.RetroButton12.Location = New System.Drawing.Point(0, 29)
-        Me.RetroButton12.Name = "RetroButton12"
-        Me.RetroButton12.Size = New System.Drawing.Size(16, 31)
-        Me.RetroButton12.TabIndex = 7
-        Me.RetroButton12.UseItAsScrollbar = True
-        Me.RetroButton12.UseVisualStyleBackColor = False
-        Me.RetroButton12.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR12.AppearsAsPressed = False
+        Me.ButtonR12.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR12.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR12.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR12.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR12.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR12.FocusRectHeight = 1
+        Me.ButtonR12.FocusRectWidth = 1
+        Me.ButtonR12.Font = New System.Drawing.Font("Marlett", 6.0!)
+        Me.ButtonR12.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR12.HatchBrush = False
+        Me.ButtonR12.Image = Nothing
+        Me.ButtonR12.Location = New System.Drawing.Point(0, 29)
+        Me.ButtonR12.Name = "ButtonR12"
+        Me.ButtonR12.Size = New System.Drawing.Size(16, 31)
+        Me.ButtonR12.TabIndex = 7
+        Me.ButtonR12.UseItAsScrollbar = True
+        Me.ButtonR12.UseVisualStyleBackColor = False
+        Me.ButtonR12.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton11
+        'ButtonR11
         '
-        Me.RetroButton11.AppearsAsPressed = False
-        Me.RetroButton11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton11.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton11.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton11.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton11.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton11.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RetroButton11.FocusRectHeight = 1
-        Me.RetroButton11.FocusRectWidth = 1
-        Me.RetroButton11.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
-        Me.RetroButton11.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton11.HatchBrush = False
-        Me.RetroButton11.Image = Nothing
-        Me.RetroButton11.Location = New System.Drawing.Point(0, 92)
-        Me.RetroButton11.Name = "RetroButton11"
-        Me.RetroButton11.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton11.TabIndex = 6
-        Me.RetroButton11.Text = "u"
-        Me.RetroButton11.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.RetroButton11.UseItAsScrollbar = False
-        Me.RetroButton11.UseVisualStyleBackColor = False
-        Me.RetroButton11.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR11.AppearsAsPressed = False
+        Me.ButtonR11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR11.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR11.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR11.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR11.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR11.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.ButtonR11.FocusRectHeight = 1
+        Me.ButtonR11.FocusRectWidth = 1
+        Me.ButtonR11.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.ButtonR11.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR11.HatchBrush = False
+        Me.ButtonR11.Image = Nothing
+        Me.ButtonR11.Location = New System.Drawing.Point(0, 92)
+        Me.ButtonR11.Name = "ButtonR11"
+        Me.ButtonR11.Size = New System.Drawing.Size(16, 14)
+        Me.ButtonR11.TabIndex = 6
+        Me.ButtonR11.Text = "u"
+        Me.ButtonR11.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.ButtonR11.UseItAsScrollbar = False
+        Me.ButtonR11.UseVisualStyleBackColor = False
+        Me.ButtonR11.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton10
+        'ButtonR10
         '
-        Me.RetroButton10.AppearsAsPressed = False
-        Me.RetroButton10.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton10.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton10.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton10.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton10.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton10.Dock = System.Windows.Forms.DockStyle.Top
-        Me.RetroButton10.FocusRectHeight = 1
-        Me.RetroButton10.FocusRectWidth = 1
-        Me.RetroButton10.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
-        Me.RetroButton10.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton10.HatchBrush = False
-        Me.RetroButton10.Image = Nothing
-        Me.RetroButton10.Location = New System.Drawing.Point(0, 0)
-        Me.RetroButton10.Name = "RetroButton10"
-        Me.RetroButton10.Size = New System.Drawing.Size(16, 14)
-        Me.RetroButton10.TabIndex = 5
-        Me.RetroButton10.Text = "t"
-        Me.RetroButton10.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.RetroButton10.UseItAsScrollbar = False
-        Me.RetroButton10.UseVisualStyleBackColor = False
-        Me.RetroButton10.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR10.AppearsAsPressed = False
+        Me.ButtonR10.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR10.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR10.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR10.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR10.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR10.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ButtonR10.FocusRectHeight = 1
+        Me.ButtonR10.FocusRectWidth = 1
+        Me.ButtonR10.Font = New System.Drawing.Font("Marlett", 8.7!, System.Drawing.FontStyle.Bold)
+        Me.ButtonR10.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR10.HatchBrush = False
+        Me.ButtonR10.Image = Nothing
+        Me.ButtonR10.Location = New System.Drawing.Point(0, 0)
+        Me.ButtonR10.Name = "ButtonR10"
+        Me.ButtonR10.Size = New System.Drawing.Size(16, 14)
+        Me.ButtonR10.TabIndex = 5
+        Me.ButtonR10.Text = "t"
+        Me.ButtonR10.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.ButtonR10.UseItAsScrollbar = False
+        Me.ButtonR10.UseVisualStyleBackColor = False
+        Me.ButtonR10.WindowFrame = System.Drawing.Color.Black
         '
         'CMD1
         '
@@ -2853,14 +2853,14 @@ Partial Class Store
         Me.highlight.ResumeLayout(False)
         Me.menuhilight.ResumeLayout(False)
         Me.menucontainer1.ResumeLayout(False)
-        Me.RetroWindow3.ResumeLayout(False)
-        Me.RetroWindow3.PerformLayout()
-        Me.RetroWindow2.ResumeLayout(False)
+        Me.WindowR3.ResumeLayout(False)
+        Me.WindowR3.PerformLayout()
+        Me.WindowR2.ResumeLayout(False)
         Me.menucontainer0.ResumeLayout(False)
-        Me.RetroPanel1.ResumeLayout(False)
-        Me.RetroWindow4.ResumeLayout(False)
+        Me.PanelR1.ResumeLayout(False)
+        Me.WindowR4.ResumeLayout(False)
         Me.programcontainer.ResumeLayout(False)
-        Me.RetroPanel2.ResumeLayout(False)
+        Me.PanelR2.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Cursors_Container.ResumeLayout(False)
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2887,9 +2887,9 @@ Partial Class Store
     Friend WithEvents ClassicWindow1 As UI.Retro.WindowR
     Friend WithEvents ClassicWindow2 As UI.Retro.WindowR
     Friend WithEvents ClassicTaskbar As UI.Retro.PanelRaisedR
-    Friend WithEvents RetroButton4 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton3 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton2 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR4 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR3 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR2 As UI.Retro.ButtonR
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents store_container As FlowLayoutPanel
     Friend WithEvents TabPage3 As TabPage
@@ -2911,30 +2911,30 @@ Partial Class Store
     Friend WithEvents RetroShadow1 As UI.WP.TransparentPictureBox
     Friend WithEvents Menu_Window As UI.Retro.WindowR
     Friend WithEvents menucontainer3 As Panel
-    Friend WithEvents RetroLabel9 As UI.WP.LabelAlt
+    Friend WithEvents LabelR9 As UI.WP.LabelAlt
     Friend WithEvents highlight As Panel
     Friend WithEvents menuhilight As Panel
-    Friend WithEvents RetroLabel5 As UI.WP.LabelAlt
+    Friend WithEvents LabelR5 As UI.WP.LabelAlt
     Friend WithEvents menucontainer1 As Panel
-    Friend WithEvents RetroLabel6 As UI.WP.LabelAlt
-    Friend WithEvents RetroWindow3 As UI.Retro.WindowR
-    Friend WithEvents RetroButton5 As UI.Retro.ButtonR
-    Friend WithEvents RetroLabel4 As UI.WP.LabelAlt
-    Friend WithEvents RetroLabel13 As UI.WP.LabelAlt
-    Friend WithEvents RetroWindow2 As UI.Retro.WindowR
-    Friend WithEvents RetroTextBox1 As UI.Retro.TextBoxR
+    Friend WithEvents LabelR6 As UI.WP.LabelAlt
+    Friend WithEvents WindowR3 As UI.Retro.WindowR
+    Friend WithEvents ButtonR5 As UI.Retro.ButtonR
+    Friend WithEvents LabelR4 As UI.WP.LabelAlt
+    Friend WithEvents LabelR13 As UI.WP.LabelAlt
+    Friend WithEvents WindowR2 As UI.Retro.WindowR
+    Friend WithEvents TextBoxR1 As UI.Retro.TextBoxR
     Friend WithEvents menucontainer0 As Panel
-    Friend WithEvents RetroPanel1 As UI.Retro.PanelR
-    Friend WithEvents RetroLabel3 As UI.WP.LabelAlt
-    Friend WithEvents RetroLabel2 As UI.WP.LabelAlt
-    Friend WithEvents RetroLabel1 As UI.WP.LabelAlt
-    Friend WithEvents RetroWindow1 As UI.Retro.WindowR
-    Friend WithEvents RetroWindow4 As UI.Retro.WindowR
+    Friend WithEvents PanelR1 As UI.Retro.PanelR
+    Friend WithEvents LabelR3 As UI.WP.LabelAlt
+    Friend WithEvents LabelR2 As UI.WP.LabelAlt
+    Friend WithEvents LabelR1 As UI.WP.LabelAlt
+    Friend WithEvents WindowR1 As UI.Retro.WindowR
+    Friend WithEvents WindowR4 As UI.Retro.WindowR
     Friend WithEvents programcontainer As Panel
-    Friend WithEvents RetroPanel2 As UI.Retro.ScrollBarR
-    Friend WithEvents RetroButton12 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton11 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton10 As UI.Retro.ButtonR
+    Friend WithEvents PanelR2 As UI.Retro.ScrollBarR
+    Friend WithEvents ButtonR12 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR11 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR10 As UI.Retro.ButtonR
     Friend WithEvents StopTimer_btn As UI.WP.Button
     Friend WithEvents ExportDetails_btn As UI.WP.Button
     Friend WithEvents log_lbl As Label

@@ -55,9 +55,9 @@ Partial Class MainFrm
         Me.ClassicWindow1 = New WinPaletter.UI.Retro.WindowR()
         Me.ClassicWindow2 = New WinPaletter.UI.Retro.WindowR()
         Me.ClassicTaskbar = New WinPaletter.UI.Retro.PanelRaisedR()
-        Me.RetroButton4 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton3 = New WinPaletter.UI.Retro.ButtonR()
-        Me.RetroButton2 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR4 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR3 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR2 = New WinPaletter.UI.Retro.ButtonR()
         Me.Select_W7 = New WinPaletter.UI.WP.RadioImage()
         Me.Button23 = New WinPaletter.UI.WP.Button()
         Me.Select_W81 = New WinPaletter.UI.WP.RadioImage()
@@ -1036,9 +1036,9 @@ Partial Class MainFrm
         Me.ClassicTaskbar.ButtonHilight = System.Drawing.Color.White
         Me.ClassicTaskbar.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(227, Byte), Integer))
         Me.ClassicTaskbar.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton4)
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton3)
-        Me.ClassicTaskbar.Controls.Add(Me.RetroButton2)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR4)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR3)
+        Me.ClassicTaskbar.Controls.Add(Me.ButtonR2)
         Me.ClassicTaskbar.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.ClassicTaskbar.Flat = False
         Me.ClassicTaskbar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
@@ -1050,79 +1050,79 @@ Partial Class MainFrm
         Me.ClassicTaskbar.TabIndex = 0
         Me.ClassicTaskbar.UseItAsWin7Taskbar = True
         '
-        'RetroButton4
+        'ButtonR4
         '
-        Me.RetroButton4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton4.AppearsAsPressed = False
-        Me.RetroButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton4.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton4.FocusRectHeight = 1
-        Me.RetroButton4.FocusRectWidth = 1
-        Me.RetroButton4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton4.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton4.HatchBrush = False
-        Me.RetroButton4.Image = Nothing
-        Me.RetroButton4.Location = New System.Drawing.Point(113, 4)
-        Me.RetroButton4.Name = "RetroButton4"
-        Me.RetroButton4.Size = New System.Drawing.Size(48, 38)
-        Me.RetroButton4.TabIndex = 2
-        Me.RetroButton4.UseItAsScrollbar = False
-        Me.RetroButton4.UseVisualStyleBackColor = False
-        Me.RetroButton4.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR4.AppearsAsPressed = False
+        Me.ButtonR4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR4.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR4.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR4.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR4.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR4.FocusRectHeight = 1
+        Me.ButtonR4.FocusRectWidth = 1
+        Me.ButtonR4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR4.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR4.HatchBrush = False
+        Me.ButtonR4.Image = Nothing
+        Me.ButtonR4.Location = New System.Drawing.Point(113, 4)
+        Me.ButtonR4.Name = "ButtonR4"
+        Me.ButtonR4.Size = New System.Drawing.Size(48, 38)
+        Me.ButtonR4.TabIndex = 2
+        Me.ButtonR4.UseItAsScrollbar = False
+        Me.ButtonR4.UseVisualStyleBackColor = False
+        Me.ButtonR4.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton3
+        'ButtonR3
         '
-        Me.RetroButton3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton3.AppearsAsPressed = True
-        Me.RetroButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton3.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton3.FocusRectHeight = 1
-        Me.RetroButton3.FocusRectWidth = 1
-        Me.RetroButton3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton3.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton3.HatchBrush = False
-        Me.RetroButton3.Image = Nothing
-        Me.RetroButton3.Location = New System.Drawing.Point(63, 4)
-        Me.RetroButton3.Name = "RetroButton3"
-        Me.RetroButton3.Size = New System.Drawing.Size(48, 38)
-        Me.RetroButton3.TabIndex = 1
-        Me.RetroButton3.UseItAsScrollbar = False
-        Me.RetroButton3.UseVisualStyleBackColor = False
-        Me.RetroButton3.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR3.AppearsAsPressed = True
+        Me.ButtonR3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR3.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR3.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR3.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR3.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR3.FocusRectHeight = 1
+        Me.ButtonR3.FocusRectWidth = 1
+        Me.ButtonR3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR3.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR3.HatchBrush = False
+        Me.ButtonR3.Image = Nothing
+        Me.ButtonR3.Location = New System.Drawing.Point(63, 4)
+        Me.ButtonR3.Name = "ButtonR3"
+        Me.ButtonR3.Size = New System.Drawing.Size(48, 38)
+        Me.ButtonR3.TabIndex = 1
+        Me.ButtonR3.UseItAsScrollbar = False
+        Me.ButtonR3.UseVisualStyleBackColor = False
+        Me.ButtonR3.WindowFrame = System.Drawing.Color.Black
         '
-        'RetroButton2
+        'ButtonR2
         '
-        Me.RetroButton2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ButtonR2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.RetroButton2.AppearsAsPressed = False
-        Me.RetroButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton2.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton2.FocusRectHeight = 1
-        Me.RetroButton2.FocusRectWidth = 1
-        Me.RetroButton2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RetroButton2.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton2.HatchBrush = False
-        Me.RetroButton2.Image = Nothing
-        Me.RetroButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.RetroButton2.Location = New System.Drawing.Point(2, 4)
-        Me.RetroButton2.Name = "RetroButton2"
-        Me.RetroButton2.Size = New System.Drawing.Size(52, 38)
-        Me.RetroButton2.TabIndex = 0
-        Me.RetroButton2.Text = "Start"
-        Me.RetroButton2.UseItAsScrollbar = False
-        Me.RetroButton2.UseVisualStyleBackColor = False
-        Me.RetroButton2.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR2.AppearsAsPressed = False
+        Me.ButtonR2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR2.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR2.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR2.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR2.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR2.FocusRectHeight = 1
+        Me.ButtonR2.FocusRectWidth = 1
+        Me.ButtonR2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonR2.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR2.HatchBrush = False
+        Me.ButtonR2.Image = Nothing
+        Me.ButtonR2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ButtonR2.Location = New System.Drawing.Point(2, 4)
+        Me.ButtonR2.Name = "ButtonR2"
+        Me.ButtonR2.Size = New System.Drawing.Size(52, 38)
+        Me.ButtonR2.TabIndex = 0
+        Me.ButtonR2.Text = "Start"
+        Me.ButtonR2.UseItAsScrollbar = False
+        Me.ButtonR2.UseVisualStyleBackColor = False
+        Me.ButtonR2.WindowFrame = System.Drawing.Color.Black
         '
         'Select_W7
         '
@@ -6763,9 +6763,9 @@ Partial Class MainFrm
     Friend WithEvents ClassicTaskbar As UI.Retro.PanelRaisedR
     Friend WithEvents ClassicWindow2 As UI.Retro.WindowR
     Friend WithEvents ClassicWindow1 As UI.Retro.WindowR
-    Friend WithEvents RetroButton2 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton4 As UI.Retro.ButtonR
-    Friend WithEvents RetroButton3 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR2 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR4 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR3 As UI.Retro.ButtonR
     Friend WithEvents pnl_preview_classic As Panel
     Friend WithEvents tabs_preview As UI.WP.TablessControl
     Friend WithEvents TabPage6 As TabPage

@@ -34,8 +34,8 @@ Public Class AltTabEditor
         pnl_preview1.BackgroundImage = MainFrm.pnl_preview.BackgroundImage
         Classic_Preview1.BackgroundImage = MainFrm.pnl_preview_classic.BackgroundImage
 
-        SetClassicRaisedPanelColors(My.CP, RetroPanelRaised1)
-        SetClassicPanelColors(My.CP, RetroPanel1)
+        SetClassicPanelRaisedRColors(My.CP, PanelRRaised1)
+        SetClassicPanelColors(My.CP, PanelR1)
 
         Panel1.BackColor = My.CP.Win32.Hilight
 
@@ -86,8 +86,8 @@ Public Class AltTabEditor
                 WinElement1.Shadow = My.CP.WindowsEffects.WindowShadow
         End Select
 
-        Panel2.BackColor = RetroPanelRaised1.BackColor
-        RetroLabel1.Font = My.CP.MetricsFonts.CaptionFont
+        Panel2.BackColor = PanelRRaised1.BackColor
+        LabelR1.Font = My.CP.MetricsFonts.CaptionFont
 
         GroupBox4.Enabled = (WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10) Or ExplorerPatcher.IsAllowed
         AlertBox1.Visible = (My.PreviewStyle = WindowStyle.W7)

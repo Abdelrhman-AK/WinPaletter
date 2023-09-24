@@ -316,7 +316,7 @@ Namespace UI.Retro
             State = MouseState.None : Invalidate()
         End Sub
 
-        Private Sub RetroTextBox_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+        Private Sub TextBoxR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
             Try : If TB IsNot Nothing Then TB.BackColor = BackColor
             Catch : End Try
         End Sub

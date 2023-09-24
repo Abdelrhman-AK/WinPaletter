@@ -110,7 +110,7 @@ Namespace UI.Retro
             End Set
         End Property
 
-        Private Sub RetroWindow_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+        Private Sub WindowR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
             _CloseBtn.BackColor = BackColor
             _MinBtn.BackColor = BackColor
             _MaxBtn.BackColor = BackColor
@@ -183,7 +183,7 @@ Namespace UI.Retro
         Private BtnHeight As Integer = Metrics_CaptionHeight + GetTitleTextHeight() - 4
         Private BtnWidth As Integer = Metrics_CaptionWidth - 2
 
-        Private Sub RetroWindow_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+        Private Sub WindowR_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             If Not UseItAsMenu Then
                 Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
                 _CloseBtn.Visible = _ControlBox
@@ -196,7 +196,7 @@ Namespace UI.Retro
             End If
         End Sub
 
-        Private Sub RetroWindow_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        Private Sub WindowR_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
             AdjustLocations()
         End Sub
 
@@ -273,7 +273,7 @@ Namespace UI.Retro
 
         End Sub
 
-        Private Sub RetroWindow_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
+        Private Sub WindowR_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
             AdjustControlBoxFontsSizes()
             AdjustButtonSizes()
             AdjustLocations()

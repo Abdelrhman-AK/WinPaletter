@@ -48,9 +48,9 @@ Public Class VS2Metrics
         If CheckBox2.Checked Then
             Metrics_Fonts.Label1.Font = vs.Fonts.CaptionFont
             Metrics_Fonts.Window1.Font = vs.Fonts.CaptionFont
-            Metrics_Fonts.RetroWindow1.Font = vs.Fonts.CaptionFont
-            Metrics_Fonts.RetroWindow3.Font = vs.Fonts.CaptionFont
-            Metrics_Fonts.RetroWindow5.Font = vs.Fonts.CaptionFont
+            Metrics_Fonts.WindowR1.Font = vs.Fonts.CaptionFont
+            Metrics_Fonts.WindowR3.Font = vs.Fonts.CaptionFont
+            Metrics_Fonts.WindowR5.Font = vs.Fonts.CaptionFont
 
             Metrics_Fonts.Label2.Font = vs.Fonts.IconTitleFont
             Metrics_Fonts.FakeIcon1.Font = vs.Fonts.IconTitleFont
@@ -65,7 +65,7 @@ Public Class VS2Metrics
 
             Metrics_Fonts.Label5.Font = vs.Fonts.SmallCaptionFont
             Metrics_Fonts.Window2.Font = vs.Fonts.SmallCaptionFont
-            Metrics_Fonts.RetroWindow2.Font = vs.Fonts.SmallCaptionFont
+            Metrics_Fonts.WindowR2.Font = vs.Fonts.SmallCaptionFont
             Metrics_Fonts.Label5.Text = vs.Fonts.SmallCaptionFont.Name
 
             Metrics_Fonts.Label4.Font = vs.Fonts.MsgBoxFont
@@ -77,7 +77,7 @@ Public Class VS2Metrics
             Metrics_Fonts.statusLbl.Font = vs.Fonts.StatusFont
             Metrics_Fonts.Label14.Font = vs.Fonts.StatusFont
             Metrics_Fonts.Label6.Text = vs.Fonts.StatusFont.Name
-            Metrics_Fonts.RetroPanel1.Height = Math.Max(Metrics_Fonts.GetTitleTextHeight(vs.Fonts.StatusFont), 20)
+            Metrics_Fonts.PanelR1.Height = Math.Max(Metrics_Fonts.GetTitleTextHeight(vs.Fonts.StatusFont), 20)
         End If
     End Sub
 

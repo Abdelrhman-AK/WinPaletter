@@ -44,7 +44,7 @@ Public Class Store
         ApplyWindowStyles([CP], My.PreviewStyle, Window1, Window2)
         ApplyWinElementsStyle([CP], My.PreviewStyle, taskbar, start, ActionCenter,
                            Window1, Window2, Panel3, lnk_preview,
-                           ClassicTaskbar, RetroButton2, RetroButton3, RetroButton4, ClassicWindow1, ClassicWindow2,
+                           ClassicTaskbar, ButtonR2, ButtonR3, ButtonR4, ClassicWindow1, ClassicWindow2,
                            MainFrm.WXP_VS_ReplaceColors.Checked, MainFrm.WXP_VS_ReplaceMetrics.Checked, MainFrm.WXP_VS_ReplaceFonts.Checked)
 
         AdjustPreview_ModernOrClassic([CP], My.PreviewStyle, tabs_preview, WXP_Alert2)
@@ -81,29 +81,29 @@ Public Class Store
         Catch
         End Try
 
-        RetroPanel2.Width = CP.MetricsFonts.ScrollWidth
+        PanelR2.Width = CP.MetricsFonts.ScrollWidth
         menucontainer0.Height = CP.MetricsFonts.MenuHeight
 
         menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont))
 
-        RetroLabel1.Font = CP.MetricsFonts.MenuFont
-        RetroLabel2.Font = CP.MetricsFonts.MenuFont
-        RetroLabel3.Font = CP.MetricsFonts.MenuFont
+        LabelR1.Font = CP.MetricsFonts.MenuFont
+        LabelR2.Font = CP.MetricsFonts.MenuFont
+        LabelR3.Font = CP.MetricsFonts.MenuFont
 
-        RetroLabel9.Font = CP.MetricsFonts.MenuFont
-        RetroLabel5.Font = CP.MetricsFonts.MenuFont
-        RetroLabel6.Font = CP.MetricsFonts.MenuFont
+        LabelR9.Font = CP.MetricsFonts.MenuFont
+        LabelR5.Font = CP.MetricsFonts.MenuFont
+        LabelR6.Font = CP.MetricsFonts.MenuFont
 
         menucontainer1.Height = Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3
         highlight.Height = menucontainer1.Height + 1
         menucontainer3.Height = menucontainer1.Height + 1
         Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom
 
-        RetroLabel4.Font = CP.MetricsFonts.MessageFont
+        LabelR4.Font = CP.MetricsFonts.MessageFont
 
-        RetroLabel1.Width = RetroLabel1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
-        RetroLabel2.Width = RetroLabel2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
-        RetroPanel1.Width = RetroLabel3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + RetroPanel1.Padding.Left + RetroPanel1.Padding.Right
+        LabelR1.Width = LabelR1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        LabelR2.Width = LabelR2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5
+        PanelR1.Width = LabelR3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5 + PanelR1.Padding.Left + PanelR1.Padding.Right
 
         Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
         TitleTextH = "ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height
@@ -126,18 +126,18 @@ Public Class Store
             End If
         Next
 
-        RetroWindow3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow3.GetTitleTextHeight
-        RetroWindow2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + RetroWindow2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
+        WindowR3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight
+        WindowR2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight + CP.MetricsFonts.MenuHeight
 
 
-        Menu_Window.Top = RetroWindow2.Top + menucontainer0.Top + menucontainer0.Height
-        Menu_Window.Left = Math.Min(RetroWindow2.Left + menucontainer0.Left + RetroPanel1.Left + +3, RetroWindow2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
+        Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height
+        Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + +3, WindowR2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth)
 
-        RetroWindow3.Top = RetroWindow2.Top + RetroTextBox1.Top + RetroTextBox1.Font.Height + 10
-        RetroWindow3.Left = RetroWindow2.Left + RetroTextBox1.Left + 15
+        WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10
+        WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15
 
-        RetroLabel13.Top = RetroWindow4.Top + RetroWindow4.Metrics_CaptionHeight + 2
-        RetroLabel13.Left = RetroWindow4.Right - RetroWindow4.Metrics_CaptionWidth - 2
+        LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2
+        LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2
 
         RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
     End Sub
@@ -153,43 +153,43 @@ Public Class Store
         Catch
         End Try
 
-        RetroWindow1.ColorGradient = [CP].Win32.EnableGradient
-        RetroWindow2.ColorGradient = [CP].Win32.EnableGradient
-        RetroWindow3.ColorGradient = [CP].Win32.EnableGradient
-        RetroWindow4.ColorGradient = [CP].Win32.EnableGradient
+        WindowR1.ColorGradient = [CP].Win32.EnableGradient
+        WindowR2.ColorGradient = [CP].Win32.EnableGradient
+        WindowR3.ColorGradient = [CP].Win32.EnableGradient
+        WindowR4.ColorGradient = [CP].Win32.EnableGradient
 
         Dim c As Color
         c = [CP].Win32.ActiveTitle
-        RetroWindow2.Color1 = c
-        RetroWindow3.Color1 = c
-        RetroWindow4.Color1 = c
+        WindowR2.Color1 = c
+        WindowR3.Color1 = c
+        WindowR4.Color1 = c
 
         c = [CP].Win32.GradientActiveTitle
-        RetroWindow2.Color2 = c
-        RetroWindow3.Color2 = c
-        RetroWindow4.Color2 = c
+        WindowR2.Color2 = c
+        WindowR3.Color2 = c
+        WindowR4.Color2 = c
 
         c = [CP].Win32.TitleText
-        RetroWindow2.ForeColor = c
-        RetroWindow3.ForeColor = c
-        RetroWindow4.ForeColor = c
+        WindowR2.ForeColor = c
+        WindowR3.ForeColor = c
+        WindowR4.ForeColor = c
 
         c = [CP].Win32.InactiveTitle
-        RetroWindow1.Color1 = c
+        WindowR1.Color1 = c
 
         c = [CP].Win32.GradientInactiveTitle
-        RetroWindow1.Color2 = c
+        WindowR1.Color2 = c
 
         c = [CP].Win32.InactiveTitleText
-        RetroWindow1.ForeColor = c
+        WindowR1.ForeColor = c
 
         c = [CP].Win32.ActiveBorder
-        RetroWindow2.ColorBorder = c
-        RetroWindow3.ColorBorder = c
-        RetroWindow4.ColorBorder = c
+        WindowR2.ColorBorder = c
+        WindowR3.ColorBorder = c
+        WindowR4.ColorBorder = c
 
         c = [CP].Win32.InactiveBorder
-        RetroWindow1.ColorBorder = c
+        WindowR1.ColorBorder = c
 
         c = [CP].Win32.WindowFrame
         For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
@@ -197,7 +197,7 @@ Public Class Store
                 RB.WindowFrame = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.WindowFrame = c
         Next
 
@@ -208,10 +208,10 @@ Public Class Store
                 RB.BackColor = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.BackColor = c
         Next
-        RetroPanel2.BackColor = c
+        PanelR2.BackColor = c
         Menu_Window.ButtonFace = c
 
         c = [CP].Win32.ButtonDkShadow
@@ -221,10 +221,10 @@ Public Class Store
                 RB.ButtonDkShadow = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonDkShadow = c
         Next
-        RetroTextBox1.ButtonDkShadow = c
+        TextBoxR1.ButtonDkShadow = c
         Menu_Window.ButtonDkShadow = c
 
         c = [CP].Win32.ButtonHilight
@@ -234,15 +234,15 @@ Public Class Store
                 RB.ButtonHilight = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonHilight = c
         Next
         For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
             RB.ButtonHilight = c
         Next
-        RetroTextBox1.ButtonHilight = c
-        RetroPanel1.ButtonHilight = c
-        RetroPanel2.ButtonHilight = c
+        TextBoxR1.ButtonHilight = c
+        PanelR1.ButtonHilight = c
+        PanelR2.ButtonHilight = c
         Menu_Window.ButtonHilight = c
 
         c = [CP].Win32.ButtonLight
@@ -252,10 +252,10 @@ Public Class Store
                 RB.ButtonLight = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonLight = c
         Next
-        RetroTextBox1.ButtonLight = c
+        TextBoxR1.ButtonLight = c
         Menu_Window.ButtonLight = c
 
         c = [CP].Win32.ButtonShadow
@@ -265,15 +265,15 @@ Public Class Store
                 RB.ButtonShadow = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ButtonShadow = c
         Next
         For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
             RB.ButtonShadow = c
         Next
-        RetroTextBox1.ButtonShadow = c
-        RetroPanel1.ButtonShadow = c
-        RetroTextBox1.Invalidate()
+        TextBoxR1.ButtonShadow = c
+        PanelR1.ButtonShadow = c
+        TextBoxR1.Invalidate()
         Menu_Window.ButtonShadow = c
 
         c = [CP].Win32.ButtonText
@@ -283,7 +283,7 @@ Public Class Store
                 RB.ForeColor = c
             Next
         Next
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.ForeColor = c
         Next
 
@@ -295,7 +295,7 @@ Public Class Store
 
         c = [CP].Win32.Menu
         Menu_Window.BackColor = c
-        RetroPanel1.BackColor = c
+        PanelR1.BackColor = c
         Menu_Window.Invalidate()
 
         c = [CP].Win32.MenuBar
@@ -308,28 +308,28 @@ Public Class Store
         menuhilight.BackColor = c
 
         c = [CP].Win32.MenuText
-        RetroLabel6.ForeColor = c
-        RetroLabel1.ForeColor = c
+        LabelR6.ForeColor = c
+        LabelR1.ForeColor = c
 
         c = [CP].Win32.HilightText
-        RetroLabel5.ForeColor = c
+        LabelR5.ForeColor = c
 
         c = [CP].Win32.GrayText
-        RetroLabel2.ForeColor = c
-        RetroLabel9.ForeColor = c
+        LabelR2.ForeColor = c
+        LabelR9.ForeColor = c
 
         c = [CP].Win32.Window
-        RetroTextBox1.BackColor = c
+        TextBoxR1.BackColor = c
 
         c = [CP].Win32.WindowText
-        RetroTextBox1.ForeColor = c
-        RetroLabel4.ForeColor = c
+        TextBoxR1.ForeColor = c
+        LabelR4.ForeColor = c
 
         c = [CP].Win32.InfoWindow
-        RetroLabel13.BackColor = c
+        LabelR13.BackColor = c
 
         c = [CP].Win32.InfoText
-        RetroLabel13.ForeColor = c
+        LabelR13.ForeColor = c
 
         For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
             RW.Invalidate()
@@ -338,7 +338,7 @@ Public Class Store
             Next
         Next
 
-        For Each RB As UI.Retro.ButtonR In RetroPanel2.Controls.OfType(Of UI.Retro.ButtonR)
+        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
             RB.Invalidate()
         Next
 
@@ -352,30 +352,30 @@ Public Class Store
         If [CP].Win32.EnableTheming Then
             'Theming Enabled (Menus Has colors and borders)
             Menu_Window.Flat = True
-            RetroPanel1.Flat = True
+            PanelR1.Flat = True
             menuhilight.BackColor = [CP].Win32.MenuHilight  'Filling of selected item
             highlight.BackColor = [CP].Win32.Hilight 'Outer Border of selected item
 
-            RetroPanel1.BackColor = [CP].Win32.MenuHilight
-            RetroPanel1.ButtonShadow = [CP].Win32.Hilight
+            PanelR1.BackColor = [CP].Win32.MenuHilight
+            PanelR1.ButtonShadow = [CP].Win32.Hilight
 
             menucontainer0.BackColor = [CP].Win32.MenuBar
-            RetroLabel3.ForeColor = [CP].Win32.HilightText
+            LabelR3.ForeColor = [CP].Win32.HilightText
         Else
             'Theming Disabled (Menus are retro 3d)
             Menu_Window.Flat = False
-            RetroPanel1.Flat = False
+            PanelR1.Flat = False
             menuhilight.BackColor = [CP].Win32.Hilight 'Both will have same color
             highlight.BackColor = [CP].Win32.Hilight 'Both will have same color
-            RetroPanel1.BackColor = [CP].Win32.Menu
-            RetroPanel1.ButtonShadow = [CP].Win32.ButtonShadow
+            PanelR1.BackColor = [CP].Win32.Menu
+            PanelR1.ButtonShadow = [CP].Win32.ButtonShadow
             menucontainer0.BackColor = [CP].Win32.Menu
-            RetroLabel3.ForeColor = [CP].Win32.MenuText
+            LabelR3.ForeColor = [CP].Win32.MenuText
 
         End If
 
         Menu_Window.Invalidate()
-        RetroPanel1.Invalidate()
+        PanelR1.Invalidate()
         menuhilight.Invalidate()
         highlight.Invalidate()
 

@@ -71,7 +71,7 @@ Partial Class WinEffecter
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.CheckBox9 = New UI.WP.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.RetroButton1 = New WinPaletter.UI.Retro.ButtonR()
+        Me.ButtonR1 = New WinPaletter.UI.Retro.ButtonR()
         Me.Button2 = New WinPaletter.UI.WP.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
@@ -858,7 +858,7 @@ Partial Class WinEffecter
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.TabPage6.Controls.Add(Me.RetroButton1)
+        Me.TabPage6.Controls.Add(Me.ButtonR1)
         Me.TabPage6.Controls.Add(Me.Button2)
         Me.TabPage6.Controls.Add(Me.Label2)
         Me.TabPage6.Controls.Add(Me.PictureBox11)
@@ -874,28 +874,28 @@ Partial Class WinEffecter
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Focus rectangle"
         '
-        'RetroButton1
+        'ButtonR1
         '
-        Me.RetroButton1.AppearsAsPressed = False
-        Me.RetroButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton1.ButtonDkShadow = System.Drawing.Color.Black
-        Me.RetroButton1.ButtonHilight = System.Drawing.Color.White
-        Me.RetroButton1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.RetroButton1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.RetroButton1.FocusRectHeight = 1
-        Me.RetroButton1.FocusRectWidth = 1
-        Me.RetroButton1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Me.RetroButton1.ForeColor = System.Drawing.Color.Black
-        Me.RetroButton1.HatchBrush = False
-        Me.RetroButton1.Image = Nothing
-        Me.RetroButton1.Location = New System.Drawing.Point(225, 79)
-        Me.RetroButton1.Name = "RetroButton1"
-        Me.RetroButton1.Size = New System.Drawing.Size(140, 45)
-        Me.RetroButton1.TabIndex = 140
-        Me.RetroButton1.Text = "Click to test"
-        Me.RetroButton1.UseItAsScrollbar = False
-        Me.RetroButton1.UseVisualStyleBackColor = False
-        Me.RetroButton1.WindowFrame = System.Drawing.Color.Black
+        Me.ButtonR1.AppearsAsPressed = False
+        Me.ButtonR1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR1.ButtonDkShadow = System.Drawing.Color.Black
+        Me.ButtonR1.ButtonHilight = System.Drawing.Color.White
+        Me.ButtonR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ButtonR1.ButtonShadow = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ButtonR1.FocusRectHeight = 1
+        Me.ButtonR1.FocusRectWidth = 1
+        Me.ButtonR1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Me.ButtonR1.ForeColor = System.Drawing.Color.Black
+        Me.ButtonR1.HatchBrush = False
+        Me.ButtonR1.Image = Nothing
+        Me.ButtonR1.Location = New System.Drawing.Point(225, 79)
+        Me.ButtonR1.Name = "ButtonR1"
+        Me.ButtonR1.Size = New System.Drawing.Size(140, 45)
+        Me.ButtonR1.TabIndex = 140
+        Me.ButtonR1.Text = "Click to test"
+        Me.ButtonR1.UseItAsScrollbar = False
+        Me.ButtonR1.UseVisualStyleBackColor = False
+        Me.ButtonR1.WindowFrame = System.Drawing.Color.Black
         '
         'Button2
         '
@@ -2496,7 +2496,7 @@ Partial Class WinEffecter
     Friend WithEvents CheckBox19 As UI.WP.CheckBox
     Friend WithEvents PictureBox26 As PictureBox
     Friend WithEvents CheckBox20 As UI.WP.CheckBox
-    Friend WithEvents RetroButton1 As UI.Retro.ButtonR
+    Friend WithEvents ButtonR1 As UI.Retro.ButtonR
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label7 As Label
