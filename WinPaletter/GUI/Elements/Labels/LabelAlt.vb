@@ -5,9 +5,20 @@ Namespace UI.WP
 
     <Description("Label can be drawn on glass (Aero/Acrylic/Mica) for WinPaletter UI")> Public Class LabelAlt : Inherits Label
 
-        Public Property DrawOnGlass As Boolean = False
+#Region "Variables"
+
         Private _textHdc As IntPtr = IntPtr.Zero
         Private _dibSectionRef As IntPtr
+
+#End Region
+
+#Region "Properties"
+
+        Public Property DrawOnGlass As Boolean = False
+
+#End Region
+
+#Region "Subs/Functions"
 
         Protected Function ReturnFormatFlags(Optional Text As String = "") As TextFormatFlags
             Dim format As TextFormatFlags = TextFormatFlags.Default
@@ -56,27 +67,6 @@ Namespace UI.WP
             Return format
         End Function
 
-        Protected Overrides Sub OnPaint(e As PaintEventArgs)
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality
-            e.Graphics.TextRenderingHint = My.RenderingHint
-            Using br As New SolidBrush(BackColor) : e.Graphics.FillRectangle(br, New Rectangle(0, 0, Width, Height)) : End Using
-
-            Try
-                If DesignMode OrElse Not DrawOnGlass Then
-                    Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(Text, Font, br, New Rectangle(0, 0, Width, Height), TextAlign.ToStringFormat) : End Using
-
-                ElseIf Not DesignMode And DrawOnGlass Then
-                    Dim outputHdc = e.Graphics.GetHdc()
-                    Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
-                    NativeMethods.GDI32.BitBlt(outputHdc, 0, 0, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
-                    e.Graphics.ReleaseHdc(outputHdc)
-
-                End If
-            Catch
-                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(Text, Font, br, New Rectangle(0, 0, Width, Height), TextAlign.ToStringFormat) : End Using
-            End Try
-        End Sub
-
         Private Function PrepareHdc(outputHdc As IntPtr, width As Integer, height As Integer) As IntPtr
             If _textHdc <> IntPtr.Zero Then
                 NativeMethods.GDI32.DeleteObject(_dibSectionRef)
@@ -119,6 +109,30 @@ Namespace UI.WP
 
             Return _textHdc
         End Function
+
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality
+            e.Graphics.TextRenderingHint = My.RenderingHint
+            Using br As New SolidBrush(BackColor) : e.Graphics.FillRectangle(br, New Rectangle(0, 0, Width, Height)) : End Using
+
+            Try
+                If DesignMode OrElse Not DrawOnGlass Then
+                    Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(Text, Font, br, New Rectangle(0, 0, Width, Height), TextAlign.ToStringFormat) : End Using
+
+                ElseIf Not DesignMode And DrawOnGlass Then
+                    Dim outputHdc = e.Graphics.GetHdc()
+                    Dim sourceHdc = PrepareHdc(outputHdc, Width, Height)
+                    NativeMethods.GDI32.BitBlt(outputHdc, 0, 0, Width, Height, sourceHdc, 0, 0, NativeMethods.GDI32.BitBltOp.SRCCOPY)
+                    e.Graphics.ReleaseHdc(outputHdc)
+
+                End If
+            Catch
+                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(Text, Font, br, New Rectangle(0, 0, Width, Height), TextAlign.ToStringFormat) : End Using
+            End Try
+        End Sub
+
     End Class
 
 End Namespace

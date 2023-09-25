@@ -13,6 +13,8 @@ Namespace UI.Retro
             BorderStyle = BorderStyle.None
         End Sub
 
+#Region "Properties"
+
         Public Property Flat As Boolean = False
         Public Property ButtonHilight As Color = Color.White
         Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
@@ -21,15 +23,15 @@ Namespace UI.Retro
         Public Property UseItAsWin7Taskbar As Boolean = False
         Public Property Style2 As Boolean = False
 
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.HighSpeed
             G.TextRenderingHint = My.RenderingHint
             DoubleBuffered = True
-
-            '################################################################################# Customizer
             Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-            '#################################################################################
+
             G.Clear(BackColor)
 
             If Not UseItAsWin7Taskbar Then
@@ -67,5 +69,7 @@ Namespace UI.Retro
             End If
 
         End Sub
+
     End Class
+
 End Namespace

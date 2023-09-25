@@ -987,7 +987,6 @@ Partial Class EditInfo
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Nothing
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(586, 411)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 34)
@@ -1005,7 +1004,6 @@ Partial Class EditInfo
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(14, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(94, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(672, 411)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(180, 34)

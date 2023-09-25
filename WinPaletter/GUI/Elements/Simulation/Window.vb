@@ -4,8 +4,8 @@ Imports System.Drawing.Imaging
 
 Namespace UI.Simulation
 
-    <Description("A simulated window")>
-    Public Class Window : Inherits Panel
+    <Description("A simulated window")> Public Class Window : Inherits Panel
+
         Sub New()
             AdjustPadding()
             Font = New Font("Segoe UI", 9)
@@ -14,15 +14,27 @@ Namespace UI.Simulation
             BackColor = Color.Transparent
         End Sub
 
-        Protected Overrides ReadOnly Property CreateParams As CreateParams
-            Get
-                Dim cp As CreateParams = MyBase.CreateParams
-                cp.ExStyle = cp.ExStyle Or &H20
-                Return cp
-            End Get
-        End Property
+#Region "Variables"
+
+        Dim AdaptedBackBlurred As Bitmap
+        Dim Noise7 As Bitmap = My.Resources.AeroGlass
+        ReadOnly FreeMargin As Integer = 8
+
+        Enum Preview_Enum
+            W11
+            W10
+            W8
+            W8Lite
+            W7Aero
+            W7Opaque
+            W7Basic
+            WXP
+        End Enum
+
+#End Region
 
 #Region "Properties"
+
         Public Property Shadow As Boolean = True
         Public Property Radius As Integer = 5
         Public Property AccentColor_Active As Color = Color.FromArgb(0, 120, 212)
@@ -38,7 +50,6 @@ Namespace UI.Simulation
         Public Property WinVista As Boolean = False
         Public Property SuspendRefresh As Boolean = False
 
-        Public Event MetricsChanged()
         Private _DarkMode As Boolean = True
         Public Property DarkMode() As Boolean
             Get
@@ -120,12 +131,80 @@ Namespace UI.Simulation
         <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
         <Bindable(True)>
         Public Overrides Property Text As String
+
+        Protected Overrides ReadOnly Property CreateParams As CreateParams
+            Get
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.ExStyle = cp.ExStyle Or &H20
+                Return cp
+            End Get
+        End Property
+
 #End Region
 
-#Region "Helpers"
-        Dim AdaptedBackBlurred As Bitmap
-        Dim Noise7 As Bitmap = My.Resources.AeroGlass
-        ReadOnly FreeMargin As Integer = 8
+#Region "Events"
+
+        Public Event MetricsChanged()
+
+        Private Sub Window_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            If Not DesignMode Then
+                Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+                Try : AddHandler FontChanged, AddressOf AdjustPadding_EventHandler : Catch : End Try
+            End If
+
+            ProcessBack()
+        End Sub
+
+        Private Sub Window_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+                Try : RemoveHandler FontChanged, AddressOf AdjustPadding_EventHandler : Catch : End Try
+            End If
+        End Sub
+
+        Sub ProcessBack_EventHandler(sender As Object, e As EventArgs)
+            ProcessBack()
+        End Sub
+
+        Sub AdjustPadding_EventHandler(sender As Object, e As EventArgs)
+            AdjustPadding()
+        End Sub
+
+        Sub ProcessBack()
+            Try
+                If Preview = Preview_Enum.W11 Then
+                    If My.Wallpaper IsNot Nothing Then
+                        Dim b As Bitmap = New Bitmap(My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)).Blur(15)
+                        If DarkMode Then
+                            If b IsNot Nothing Then
+                                Using ImgF As New ImageProcessor.ImageFactory
+                                    ImgF.Load(b)
+                                    ImgF.Saturation(15)
+                                    ImgF.Brightness(-10)
+                                    AdaptedBackBlurred = ImgF.Image.Clone
+                                End Using
+                            End If
+
+                        Else
+                            AdaptedBackBlurred = b
+                        End If
+                    End If
+
+                ElseIf Preview = Preview_Enum.W7Aero Then
+                    If My.Wallpaper IsNot Nothing Then AdaptedBackBlurred = New Bitmap(My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)).Blur(1)
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
+
+                ElseIf Preview = Preview_Enum.W7Opaque Then
+                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
+
+                End If
+            Catch
+            End Try
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
 
         Public Sub CopycatFrom(Window As Window, Optional IgnoreLocationSizesAndText As Boolean = False)
             Shadow = Window.Shadow
@@ -155,12 +234,14 @@ Namespace UI.Simulation
             ProcessBack()
             Refresh()
         End Sub
+
         Public Sub SetMetrics([Window] As Window)
             [Window].Metrics_BorderWidth = Metrics_BorderWidth
             [Window].Metrics_CaptionHeight = Metrics_CaptionHeight
             [Window].Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth
             [Window].Refresh()
         End Sub
+
         Sub AdjustPadding()
             Dim i, iTop As Integer
 
@@ -186,16 +267,7 @@ Namespace UI.Simulation
 
             Padding = New Padding(i, iTop, i, i)
         End Sub
-        Enum Preview_Enum
-            W11
-            W10
-            W8
-            W8Lite
-            W7Aero
-            W7Opaque
-            W7Basic
-            WXP
-        End Enum
+
         Public Sub FillSemiRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1)
             Try
                 If [Radius] = -1 Then [Radius] = 6
@@ -210,6 +282,7 @@ Namespace UI.Simulation
             Catch
             End Try
         End Sub
+
         Public Function RoundedSemiRectangle(r As Rectangle, radius As Integer) As GraphicsPath
             Try
                 Dim path As New GraphicsPath()
@@ -231,6 +304,7 @@ Namespace UI.Simulation
                 Return Nothing
             End Try
         End Function
+
 #End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
@@ -937,54 +1011,6 @@ Namespace UI.Simulation
 
         End Sub
 
-        Private Sub Window_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            If Not DesignMode Then
-                Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-                Try : AddHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
-            End If
-
-            ProcessBack()
-        End Sub
-
-        Private Sub Window_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-                Try : RemoveHandler FontChanged, AddressOf AdjustPadding : Catch : End Try
-            End If
-        End Sub
-
-        Sub ProcessBack()
-            Try
-                If Preview = Preview_Enum.W11 Then
-                    If My.Wallpaper IsNot Nothing Then
-                        Dim b As Bitmap = New Bitmap(My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)).Blur(15)
-                        If DarkMode Then
-                            If b IsNot Nothing Then
-                                Using ImgF As New ImageProcessor.ImageFactory
-                                    ImgF.Load(b)
-                                    ImgF.Saturation(15)
-                                    ImgF.Brightness(-10)
-                                    AdaptedBackBlurred = ImgF.Image.Clone
-                                End Using
-                            End If
-
-                        Else
-                            AdaptedBackBlurred = b
-                        End If
-                    End If
-
-                ElseIf Preview = Preview_Enum.W7Aero Then
-                    If My.Wallpaper IsNot Nothing Then AdaptedBackBlurred = New Bitmap(My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat)).Blur(1)
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
-
-                ElseIf Preview = Preview_Enum.W7Opaque Then
-                    Try : Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100) : Catch : End Try
-
-                End If
-            Catch
-            End Try
-
-        End Sub
     End Class
 
 End Namespace

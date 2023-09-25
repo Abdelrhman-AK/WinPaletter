@@ -7,46 +7,44 @@ Namespace UI.WP
     <Description("Themed TextBox for WinPaletter UI")> <DefaultEvent("TextChanged")> Public Class TextBox : Inherits Control
 
         Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or
-                 ControlStyles.ResizeRedraw Or ControlStyles.SupportsTransparentBackColor, True)
-        DoubleBuffered = True
+            SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.SupportsTransparentBackColor, True)
+            DoubleBuffered = True
 
-        ForeColor = Color.White
+            ForeColor = Color.White
 
-        TB = New Windows.Forms.TextBox
-        If My.Style.DarkMode Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
-        If My.Style.DarkMode Then TB.BackColor = Color.FromArgb(55, 55, 55) Else TB.BackColor = Color.FromArgb(225, 225, 225)
-        TB.Font = New Font("Segoe UI", 9)
-        TB.Text = Text
-        TB.ForeColor = Color.White
-        TB.MaxLength = _MaxLength
-        TB.Multiline = _Multiline
-        TB.ReadOnly = _ReadOnly
-        TB.UseSystemPasswordChar = _UseSystemPasswordChar
-        TB.BorderStyle = BorderStyle.None
-        TB.Location = New Point(1, 0)
-        TB.Width = Width - 3
-        TB.Cursor = Cursors.IBeam
+            TB = New Windows.Forms.TextBox With {
+                .Font = New Font("Segoe UI", 9),
+                .Text = Text,
+                .ForeColor = Color.White,
+                .MaxLength = _MaxLength,
+                .Multiline = _Multiline,
+                .ReadOnly = _ReadOnly,
+                .UseSystemPasswordChar = _UseSystemPasswordChar,
+                .BorderStyle = BorderStyle.None,
+                .Location = New Point(1, 0),
+                .Width = Width - 3,
+                .Cursor = Cursors.IBeam,
+                .ScrollBars = Scrollbars,
+                .WordWrap = WordWrap
+            }
 
-        TB.ScrollBars = Scrollbars
-        TB.WordWrap = WordWrap
+            If _Multiline Then
+                TB.Height = Height - 8
+            Else
+                Height = TB.Height + 8
+            End If
 
-        If _Multiline Then
-            TB.Height = Height - 8
-        Else
-            Height = TB.Height + 8
-        End If
-
-        AddHandler TB.TextChanged, AddressOf OnBaseTextChanged
-        AddHandler TB.KeyDown, AddressOf OnBaseKeyDown
-        AddHandler TB.KeyPress, AddressOf OnKeyPress
-
-    End Sub
+            If My.Style.DarkMode Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
+            If My.Style.DarkMode Then TB.BackColor = Color.FromArgb(55, 55, 55) Else TB.BackColor = Color.FromArgb(225, 225, 225)
+        End Sub
 
 #Region "Variables"
 
-    Private State As MouseState = MouseState.None
         Private WithEvents TB As Windows.Forms.TextBox
+        Private _Shown As Boolean = False
+        Private ActiveTTLColor As Color
+
+        Private State As MouseState = MouseState.None
 
         Enum MouseState As Byte
             None = 0
@@ -59,7 +57,8 @@ Namespace UI.WP
 
 #Region "Properties"
 
-#Region "TextBox Properties"
+        Public Property DrawOnGlass As Boolean = False
+
         Private _TextAlign As HorizontalAlignment = HorizontalAlignment.Left
 
         <Category("Options")>
@@ -179,49 +178,6 @@ Namespace UI.WP
             End Set
         End Property
 
-        Protected Overrides Sub OnCreateControl()
-            MyBase.OnCreateControl()
-            If Not Controls.Contains(TB) Then
-                Controls.Add(TB)
-            End If
-        End Sub
-
-        Private Sub OnBaseTextChanged(s As Object, e As EventArgs)
-            Text = TB.Text
-        End Sub
-
-        Private Sub OnBaseKeyDown(s As Object, e As KeyEventArgs)
-            If e.Control AndAlso e.KeyCode = Keys.A Then
-                TB.SelectAll()
-                e.SuppressKeyPress = True
-            End If
-            If e.Control AndAlso e.KeyCode = Keys.C Then
-                TB.Copy()
-                e.SuppressKeyPress = True
-            End If
-        End Sub
-
-        Public Event KeyboardPress(s As Object, e As KeyPressEventArgs)
-
-        Public Overloads Sub OnKeyPress(s As Object, e As KeyPressEventArgs)
-            RaiseEvent KeyboardPress(s, e)
-        End Sub
-
-        Protected Overrides Sub OnResize(e As EventArgs)
-            TB.Location = New Point(4, 4)
-            TB.Width = Width - 14
-
-            If _Multiline Then
-                TB.Height = Height - 8
-            Else
-                Height = TB.Height + 8
-            End If
-
-            MyBase.OnResize(e)
-        End Sub
-#End Region
-
-#Region "Other Properties"
         Private _Scrollbars As Windows.Forms.ScrollBars = ScrollBars.None
         Public Property Scrollbars As Windows.Forms.ScrollBars
             Get
@@ -270,127 +226,6 @@ Namespace UI.WP
                 TB.SelectedText = CStr(value)
             End Set
         End Property
-#End Region
-
-#End Region
-
-#Region "Events"
-        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-            MyBase.OnMouseDown(e)
-            State = MouseState.Down
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-            MyBase.OnMouseUp(e)
-            State = MouseState.Over
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            TB.Focus() : Invalidate()
-        End Sub
-
-        Protected Overrides Sub OnMouseEnter(e As EventArgs)
-            MyBase.OnMouseEnter(e)
-            State = MouseState.Over
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Protected Overrides Sub OnMouseLeave(e As EventArgs)
-            MyBase.OnMouseLeave(e)
-            State = MouseState.None
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
-            State = MouseState.Down
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
-            State = MouseState.Over
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
-            State = MouseState.None
-            _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
-            State = MouseState.None
-            Invalidate()
-        End Sub
-#End Region
-
-#Region "Animator"
-        Dim alpha As Integer
-        ReadOnly Factor As Integer = 20
-        Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
-
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
-            If Not DesignMode Then
-
-                If State = MouseState.Over Then
-                    If alpha + Factor <= 255 Then
-                        alpha += Factor
-                    ElseIf alpha + Factor > 255 Then
-                        alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
-                    End If
-
-                    If _Shown Then
-                        Threading.Thread.Sleep(1)
-                        Invalidate()
-                    End If
-                End If
-
-                If Not State = MouseState.Over Then
-                    If alpha - Factor >= 0 Then
-                        alpha -= Factor
-                    ElseIf alpha - Factor < 0 Then
-                        alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
-                    End If
-
-                    If _Shown Then
-                        Threading.Thread.Sleep(1)
-                        Invalidate()
-                    End If
-                End If
-            End If
-        End Sub
-#End Region
-
-        Protected Overrides Sub OnHandleCreated(e As EventArgs)
-            Try
-                If Not DesignMode Then
-                    MyBase.OnHandleCreated(e)
-                    alpha = 0
-                End If
-            Catch
-            End Try
-        End Sub
 
         Protected Overrides ReadOnly Property CreateParams() As CreateParams
             Get
@@ -404,9 +239,205 @@ Namespace UI.WP
             End Get
         End Property
 
-        Public Property DrawOnGlass As Boolean = False
+#End Region
 
-        Private ActiveTTLColor As Color
+#Region "Events"
+
+        Public Event KeyboardPress(s As Object, e As KeyPressEventArgs)
+
+        Protected Overrides Sub OnCreateControl()
+            MyBase.OnCreateControl()
+            If Not Controls.Contains(TB) Then
+                Controls.Add(TB)
+            End If
+        End Sub
+
+        Private Sub OnBaseTextChanged(s As Object, e As EventArgs)
+            Text = TB.Text
+        End Sub
+
+        Private Sub OnBaseKeyDown(s As Object, e As KeyEventArgs)
+            If e.Control AndAlso e.KeyCode = Keys.A Then
+                TB.SelectAll()
+                e.SuppressKeyPress = True
+            End If
+            If e.Control AndAlso e.KeyCode = Keys.C Then
+                TB.Copy()
+                e.SuppressKeyPress = True
+            End If
+        End Sub
+
+        Public Overloads Sub OnKeyPress(s As Object, e As KeyPressEventArgs)
+            RaiseEvent KeyboardPress(s, e)
+        End Sub
+
+        Protected Overrides Sub OnResize(e As EventArgs)
+            TB.Location = New Point(4, 4)
+            TB.Width = Width - 14
+
+            If _Multiline Then
+                TB.Height = Height - 8
+            Else
+                Height = TB.Height + 8
+            End If
+
+            MyBase.OnResize(e)
+        End Sub
+
+        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+            MyBase.OnMouseDown(e)
+            State = MouseState.Down
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+            MyBase.OnMouseUp(e)
+            State = MouseState.Over
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            TB.Focus() : Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnMouseEnter(e As EventArgs)
+            MyBase.OnMouseEnter(e)
+            State = MouseState.Over
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnMouseLeave(e As EventArgs)
+            MyBase.OnMouseLeave(e)
+            State = MouseState.None
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
+            State = MouseState.Down
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter, TB.MouseUp
+            State = MouseState.Over
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
+            State = MouseState.None
+            _Shown = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
+            State = MouseState.None
+            Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnHandleCreated(e As EventArgs)
+            Try
+                If Not DesignMode Then
+                    MyBase.OnHandleCreated(e)
+                    alpha = 0
+                End If
+            Catch
+            End Try
+        End Sub
+
+        Private Sub TextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            alpha = 0
+            If Not DesignMode Then
+                Try
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
+                    AddHandler TB.TextChanged, AddressOf OnBaseTextChanged
+                    AddHandler TB.KeyDown, AddressOf OnBaseKeyDown
+                    AddHandler TB.KeyPress, AddressOf OnKeyPress
+                Catch
+                End Try
+            End If
+        End Sub
+
+        Private Sub TextBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try
+                    RemoveHandler FindForm.Load, AddressOf Loaded
+                    RemoveHandler FindForm.Shown, AddressOf Showed
+                    RemoveHandler TB.TextChanged, AddressOf OnBaseTextChanged
+                    RemoveHandler TB.KeyDown, AddressOf OnBaseKeyDown
+                    RemoveHandler TB.KeyPress, AddressOf OnKeyPress
+                Catch
+                End Try
+            End If
+        End Sub
+
+        Sub Loaded(sender As Object, e As EventArgs)
+            _Shown = False
+        End Sub
+
+        Sub Showed(sender As Object, e As EventArgs)
+            _Shown = True
+        End Sub
+
+#End Region
+
+#Region "Animator"
+
+        Dim alpha As Integer
+        ReadOnly Factor As Integer = 20
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
+
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
+            If Not DesignMode Then
+
+                If State = MouseState.Over Then
+                    If alpha + Factor <= 255 Then
+                        alpha += Factor
+                    ElseIf alpha + Factor > 255 Then
+                        alpha = 255
+                        Timer.Enabled = False
+                        Timer.Stop()
+                    End If
+
+                    If _Shown Then
+                        Threading.Thread.Sleep(1)
+                        Invalidate()
+                    End If
+                End If
+
+                If Not State = MouseState.Over Then
+                    If alpha - Factor >= 0 Then
+                        alpha -= Factor
+                    ElseIf alpha - Factor < 0 Then
+                        alpha = 0
+                        Timer.Enabled = False
+                        Timer.Stop()
+                    End If
+
+                    If _Shown Then
+                        Threading.Thread.Sleep(1)
+                        Invalidate()
+                    End If
+                End If
+            End If
+        End Sub
+
+#End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
@@ -488,40 +519,7 @@ Namespace UI.WP
                 End If
             End If
 
-
         End Sub
-
-        Private Sub TextBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            alpha = 0
-            If Not DesignMode Then
-                Try
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
-                Catch
-                End Try
-            End If
-        End Sub
-
-        Private Sub TextBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try
-                    RemoveHandler FindForm.Load, AddressOf Loaded
-                    RemoveHandler FindForm.Shown, AddressOf Showed
-                Catch
-                End Try
-            End If
-        End Sub
-
-        Private _Shown As Boolean = False
-
-        Sub Loaded()
-            _Shown = False
-        End Sub
-
-        Sub Showed()
-            _Shown = True
-        End Sub
-
 
     End Class
 

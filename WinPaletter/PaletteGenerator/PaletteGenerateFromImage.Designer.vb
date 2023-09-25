@@ -213,7 +213,6 @@ Partial Class PaletteGenerateFromImage
         Me.val1.ForeColor = System.Drawing.Color.White
         Me.val1.Image = Nothing
         Me.val1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.val1.LineSize = 1
         Me.val1.Location = New System.Drawing.Point(572, 3)
         Me.val1.Name = "val1"
         Me.val1.Size = New System.Drawing.Size(34, 24)
@@ -297,7 +296,6 @@ Partial Class PaletteGenerateFromImage
         Me.val2.ForeColor = System.Drawing.Color.White
         Me.val2.Image = Nothing
         Me.val2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.val2.LineSize = 1
         Me.val2.Location = New System.Drawing.Point(572, 33)
         Me.val2.Name = "val2"
         Me.val2.Size = New System.Drawing.Size(34, 24)
@@ -374,7 +372,6 @@ Partial Class PaletteGenerateFromImage
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(68, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(572, 3)
         Me.Button4.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Button4.Name = "Button4"
@@ -505,7 +502,6 @@ Partial Class PaletteGenerateFromImage
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = Nothing
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(215, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(245, 506)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(100, 32)
@@ -522,7 +518,6 @@ Partial Class PaletteGenerateFromImage
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Nothing
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(351, 506)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(100, 32)
@@ -540,7 +535,6 @@ Partial Class PaletteGenerateFromImage
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(57, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(457, 506)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(165, 32)

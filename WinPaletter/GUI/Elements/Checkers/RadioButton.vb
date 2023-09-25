@@ -6,28 +6,32 @@ Namespace UI.WP
 
     <Description("Themed RadioButton for WinPaletter UI")> <DefaultEvent("CheckedChanged")> Public Class RadioButton : Inherits Control
 
-        Event CheckedChanged(sender As Object)
-
         Sub New()
             SetStyle(DirectCast(139286, ControlStyles), True)
             SetStyle(ControlStyles.Selectable, False)
             DoubleBuffered = True
             Font = New Font("Segoe UI", 9)
             ForeColor = Color.White
-
         End Sub
+
+#Region "Variables"
+
+        Private AnimateOnClick As Boolean = False
+        Private SZ1 As SizeF
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
 
 #Region "Properties"
-        Private Sub InvalidateParent()
-            If Parent Is Nothing Then Return
 
-            For Each C As Control In Parent.Controls
-                If Not (C Is Me) AndAlso (TypeOf C Is RadioButton) Then
-                    DirectCast(C, RadioButton).Checked = False
-                End If
-            Next
-        End Sub
-
+        Private _Checked As Boolean
         Public Property Checked() As Boolean
             Get
                 Return _Checked
@@ -37,14 +41,14 @@ Namespace UI.WP
                     _Checked = value
 
                     If _Checked Then
-                        InvalidateParent()
+                        UncheckOthersOnChecked()
                     End If
 
                     RaiseEvent CheckedChanged(Me)
 
                     If AnimateOnClick Then
-                        Tmr2.Enabled = True
-                        Tmr2.Start()
+                        Timer2.Enabled = True
+                        Timer2.Start()
                     Else
                         alpha2 = If(Checked, 255, 0)
                     End If
@@ -56,7 +60,6 @@ Namespace UI.WP
             End Set
         End Property
 
-        Private _Checked As Boolean
 
         <Browsable(True)>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
@@ -64,23 +67,18 @@ Namespace UI.WP
         <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
         <Bindable(True)>
         Public Overrides Property Text As String
+
 #End Region
 
 #Region "Events"
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
 
-        Public State As MouseState = MouseState.None
-        Private AnimateOnClick As Boolean = False
+        Event CheckedChanged(sender As Object)
 
         Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
             Checked = True
             State = MouseState.Down
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
             MyBase.OnMouseDown(e)
         End Sub
@@ -89,30 +87,30 @@ Namespace UI.WP
             AnimateOnClick = True
             Checked = True
             State = MouseState.Down
-            Tmr2.Enabled = True
-            Tmr2.Start()
+            Timer2.Enabled = True
+            Timer2.Start()
             Invalidate()
             MyBase.OnMouseClick(e)
         End Sub
 
         Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
         Private Sub RadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
-        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub RadioButton_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
@@ -151,21 +149,37 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Sub Showed()
+        Sub Showed(sender As Object, e As EventArgs)
             Invalidate()
         End Sub
 
-        Public Sub RefreshColorPalette()
+        Public Sub RefreshColorPalette(sender As Object, e As EventArgs)
             Invalidate()
         End Sub
+
+#End Region
+
+#Region "Subs/Functions"
+
+        Private Sub UncheckOthersOnChecked()
+            If Parent Is Nothing Then Return
+
+            For Each C As Control In Parent.Controls
+                If Not (C Is Me) AndAlso (TypeOf C Is RadioButton) Then
+                    DirectCast(C, RadioButton).Checked = False
+                End If
+            Next
+        End Sub
+
 #End Region
 
 #Region "Animator"
+
         Dim alpha, alpha2 As Integer
         ReadOnly Factor As Integer = 25
-        Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer1, Timer2 As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over Then
@@ -173,8 +187,8 @@ Namespace UI.WP
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
                     Threading.Thread.Sleep(1)
@@ -186,8 +200,8 @@ Namespace UI.WP
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
                     Threading.Thread.Sleep(1)
@@ -196,7 +210,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
+        Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
             If Not DesignMode Then
 
                 If Checked Then
@@ -204,8 +218,8 @@ Namespace UI.WP
                         alpha2 += Factor
                     ElseIf alpha2 + Factor > 255 Then
                         alpha2 = 255
-                        Tmr2.Enabled = False
-                        Tmr2.Stop()
+                        Timer2.Enabled = False
+                        Timer2.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -218,8 +232,8 @@ Namespace UI.WP
                         alpha2 -= Factor
                     ElseIf alpha2 - Factor < 0 Then
                         alpha2 = 0
-                        Tmr2.Enabled = False
-                        Tmr2.Stop()
+                        Timer2.Enabled = False
+                        Timer2.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -228,9 +242,8 @@ Namespace UI.WP
                 End If
             End If
         End Sub
-#End Region
 
-        Private SZ1 As SizeF
+#End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Try

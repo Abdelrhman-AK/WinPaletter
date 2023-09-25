@@ -234,7 +234,6 @@ Partial Class Store
         Me.search_btn.ForeColor = System.Drawing.Color.White
         Me.search_btn.Image = CType(resources.GetObject("search_btn.Image"), System.Drawing.Image)
         Me.search_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(59, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
-        Me.search_btn.LineSize = 1
         Me.search_btn.Location = New System.Drawing.Point(308, 3)
         Me.search_btn.Name = "search_btn"
         Me.search_btn.Size = New System.Drawing.Size(32, 24)
@@ -272,7 +271,6 @@ Partial Class Store
         Me.search_filter_btn.ForeColor = System.Drawing.Color.White
         Me.search_filter_btn.Image = CType(resources.GetObject("search_filter_btn.Image"), System.Drawing.Image)
         Me.search_filter_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.search_filter_btn.LineSize = 1
         Me.search_filter_btn.Location = New System.Drawing.Point(270, 3)
         Me.search_filter_btn.Name = "search_filter_btn"
         Me.search_filter_btn.Size = New System.Drawing.Size(32, 24)
@@ -302,7 +300,6 @@ Partial Class Store
         Me.back_btn.ForeColor = System.Drawing.Color.White
         Me.back_btn.Image = Nothing
         Me.back_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
-        Me.back_btn.LineSize = 1
         Me.back_btn.Location = New System.Drawing.Point(8, 0)
         Me.back_btn.Name = "back_btn"
         Me.back_btn.Size = New System.Drawing.Size(64, 64)
@@ -510,7 +507,6 @@ Partial Class Store
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(122, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(193, 234)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(156, 34)
@@ -563,7 +559,6 @@ Partial Class Store
         Me.author_url_button.ForeColor = System.Drawing.Color.White
         Me.author_url_button.Image = Nothing
         Me.author_url_button.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.author_url_button.LineSize = 1
         Me.author_url_button.Location = New System.Drawing.Point(342, 537)
         Me.author_url_button.Name = "author_url_button"
         Me.author_url_button.Size = New System.Drawing.Size(24, 24)
@@ -581,7 +576,6 @@ Partial Class Store
         Me.RestartExplorer.Image = Nothing
         Me.RestartExplorer.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.RestartExplorer.LineColor = System.Drawing.Color.FromArgb(CType(CType(112, Byte), Integer), CType(CType(127, Byte), Integer), CType(CType(79, Byte), Integer))
-        Me.RestartExplorer.LineSize = 1
         Me.RestartExplorer.Location = New System.Drawing.Point(31, 274)
         Me.RestartExplorer.Name = "RestartExplorer"
         Me.RestartExplorer.Size = New System.Drawing.Size(318, 34)
@@ -652,7 +646,6 @@ Partial Class Store
         Me.Apply_btn.Image = Nothing
         Me.Apply_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Apply_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(95, Byte), Integer), CType(CType(96, Byte), Integer), CType(CType(96, Byte), Integer))
-        Me.Apply_btn.LineSize = 1
         Me.Apply_btn.Location = New System.Drawing.Point(31, 194)
         Me.Apply_btn.Name = "Apply_btn"
         Me.Apply_btn.Size = New System.Drawing.Size(318, 34)
@@ -683,7 +676,6 @@ Partial Class Store
         Me.Edit_btn.Image = CType(resources.GetObject("Edit_btn.Image"), System.Drawing.Image)
         Me.Edit_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Edit_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(12, Byte), Integer))
-        Me.Edit_btn.LineSize = 1
         Me.Edit_btn.Location = New System.Drawing.Point(31, 234)
         Me.Edit_btn.Name = "Edit_btn"
         Me.Edit_btn.Size = New System.Drawing.Size(156, 34)
@@ -1476,7 +1468,6 @@ Partial Class Store
         'TextBoxR1
         '
         Me.TextBoxR1.BackColor = System.Drawing.Color.White
-        Me.TextBoxR1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBoxR1.ButtonDkShadow = System.Drawing.Color.Black
         Me.TextBoxR1.ButtonHilight = System.Drawing.Color.White
         Me.TextBoxR1.ButtonLight = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -1490,7 +1481,6 @@ Partial Class Store
         Me.TextBoxR1.Name = "TextBoxR1"
         Me.TextBoxR1.ReadOnly = True
         Me.TextBoxR1.Size = New System.Drawing.Size(188, 76)
-        Me.TextBoxR1.Style = WinPaletter.UI.Retro.TextBoxR.RoundingStyle.Normal
         Me.TextBoxR1.TabIndex = 3
         Me.TextBoxR1.Text = "Window text"
         Me.TextBoxR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
@@ -1852,7 +1842,6 @@ Partial Class Store
         Me.cur_anim_btn.Image = CType(resources.GetObject("cur_anim_btn.Image"), System.Drawing.Image)
         Me.cur_anim_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cur_anim_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(126, Byte), Integer))
-        Me.cur_anim_btn.LineSize = 1
         Me.cur_anim_btn.Location = New System.Drawing.Point(356, 267)
         Me.cur_anim_btn.Name = "cur_anim_btn"
         Me.cur_anim_btn.Size = New System.Drawing.Size(141, 21)
@@ -2592,7 +2581,6 @@ Partial Class Store
         Me.cur_tip_btn.ForeColor = System.Drawing.Color.White
         Me.cur_tip_btn.Image = Nothing
         Me.cur_tip_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.cur_tip_btn.LineSize = 1
         Me.cur_tip_btn.Location = New System.Drawing.Point(500, 267)
         Me.cur_tip_btn.Name = "cur_tip_btn"
         Me.cur_tip_btn.Size = New System.Drawing.Size(20, 21)
@@ -2679,7 +2667,6 @@ Partial Class Store
         Me.StopTimer_btn.ForeColor = System.Drawing.Color.White
         Me.StopTimer_btn.Image = Nothing
         Me.StopTimer_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.StopTimer_btn.LineSize = 1
         Me.StopTimer_btn.Location = New System.Drawing.Point(1080, 552)
         Me.StopTimer_btn.Name = "StopTimer_btn"
         Me.StopTimer_btn.Size = New System.Drawing.Size(80, 34)
@@ -2697,7 +2684,6 @@ Partial Class Store
         Me.ExportDetails_btn.ForeColor = System.Drawing.Color.White
         Me.ExportDetails_btn.Image = Nothing
         Me.ExportDetails_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ExportDetails_btn.LineSize = 1
         Me.ExportDetails_btn.Location = New System.Drawing.Point(1162, 552)
         Me.ExportDetails_btn.Name = "ExportDetails_btn"
         Me.ExportDetails_btn.Size = New System.Drawing.Size(85, 34)
@@ -2730,7 +2716,6 @@ Partial Class Store
         Me.ShowErrors_btn.ForeColor = System.Drawing.Color.White
         Me.ShowErrors_btn.Image = Nothing
         Me.ShowErrors_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ShowErrors_btn.LineSize = 1
         Me.ShowErrors_btn.Location = New System.Drawing.Point(996, 552)
         Me.ShowErrors_btn.Name = "ShowErrors_btn"
         Me.ShowErrors_btn.Size = New System.Drawing.Size(82, 34)
@@ -2748,7 +2733,6 @@ Partial Class Store
         Me.ok_btn.ForeColor = System.Drawing.Color.White
         Me.ok_btn.Image = Nothing
         Me.ok_btn.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ok_btn.LineSize = 1
         Me.ok_btn.Location = New System.Drawing.Point(1249, 552)
         Me.ok_btn.Name = "ok_btn"
         Me.ok_btn.Size = New System.Drawing.Size(59, 34)

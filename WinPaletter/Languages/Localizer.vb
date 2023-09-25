@@ -255,6 +255,10 @@ Public Class Localizer : Implements IDisposable
     Property Lang_ChooseAForm As String = "Choose a form then open it. When you finish translation, close the child form below."
     Property Lang_LoadingChildrenForms As String = "Loading GUI of all WinPaletter forms into your memory ({0}%). Be cautious as this will extensively increase WinPaletter memory usage."
 
+    Property CMDSimulator_Alert0 As String = "This is just an preview to your custom terminal."
+    Property CMDSimulator_Alert1 As String = "*Note: Raster Font will look different from the preview."
+    Property CMDSimulator_ThisIsAPopUp As String = "This is a pop-up"
+
     Property CommandPrompt As String = "Command Prompt"
     Property PowerShellx86 As String = "PowerShell x86"
     Property PowerShellx64 As String = "PowerShell x64"

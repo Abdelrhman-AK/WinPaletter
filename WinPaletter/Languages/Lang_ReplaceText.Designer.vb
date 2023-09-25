@@ -130,7 +130,6 @@ Partial Class Lang_ReplaceText
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(266, 175)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)
@@ -148,7 +147,6 @@ Partial Class Lang_ReplaceText
         Me.Button2.Image = Nothing
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(352, 175)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 34)

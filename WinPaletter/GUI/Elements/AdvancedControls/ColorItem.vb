@@ -13,6 +13,27 @@ Namespace UI.Controllers
             ColorsHistory.Clear()
         End Sub
 
+#Region "Variables"
+
+        Public ColorPickerOpened As Boolean = False
+        Public ColorsHistory As New List(Of Color)
+        Private LineColor As Color
+        Public PauseColorsHistory As Boolean = False
+
+        Private Rect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Private RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+        Private Rect_DefColor As New Rectangle(0, 0, Height, Height)
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
+
 #Region "Properties"
         Public Property DefaultColor As Color = Color.Black
         Public Property DontShowInfo As Boolean = False
@@ -25,32 +46,6 @@ Namespace UI.Controllers
         <DefaultValue("")>
         Public Overrides Property Text As String = ""
 
-#End Region
-
-#Region "Rectangles"
-        Private Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-        Private RectInner As New Rectangle(1, 1, Width - 3, Height - 3)
-        Private Rect_DefColor As New Rectangle(0, 0, Height, Height)
-        Protected Overrides Sub OnSizeChanged(e As EventArgs)
-            Rect = New Rectangle(0, 0, Width - 1, Height - 1)
-            RectInner = New Rectangle(1, 1, Width - 3, Height - 3)
-            Rect_DefColor = New Rectangle(0, 0, Height, Height)
-            MyBase.OnSizeChanged(e)
-        End Sub
-#End Region
-
-#Region "Variables"
-        Public ColorPickerOpened As Boolean = False
-        Public ColorsHistory As New List(Of Color)
-        Private LineColor As Color
-        Public State As MouseState = MouseState.None
-        Public PauseColorsHistory As Boolean = False
-
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
 #End Region
 
 #Region "Drag and drop"
@@ -95,22 +90,22 @@ Namespace UI.Controllers
 
                 BeforeDropColor = BackColor
                 BeforeDropMousePosition = PointToClient(MousePosition)
-                Tmr2_factor = 0
+                Timer2_factor = 0
                 MakeAfterDropEffect = True
-                Tmr2.Enabled = True
-                Tmr2.Start()
+                Timer2.Enabled = True
+                Timer2.Start()
 
                 If Not SwapNotCopy Then
                     e.Effect = DragDropEffects.Copy
-                    If Not CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).DragDefaultColor Then
-                        BackColor = CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).BackColor
+                    If Not CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).DragDefaultColor Then
+                        BackColor = CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).BackColor
                     Else
-                        BackColor = CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).DefaultColor
+                        BackColor = CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).DefaultColor
                     End If
 
                 Else
                     e.Effect = DragDropEffects.Link
-                    Dim Color_From As Color = CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).BackColor
+                    Dim Color_From As Color = CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).BackColor
 
                     Dim Color_To As Color
                     Select Case AfterDropEffect
@@ -129,7 +124,7 @@ Namespace UI.Controllers
                     End Select
 
                     BackColor = Color_From
-                    CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).BackColor = Color_To
+                    CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).BackColor = Color_To
 
                 End If
 
@@ -241,10 +236,10 @@ Namespace UI.Controllers
 
                 End If
 
-                If Not CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).DragDefaultColor Then
-                    DraggedColor = CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).BackColor
+                If Not CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).DragDefaultColor Then
+                    DraggedColor = CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).BackColor
                 Else
-                    DraggedColor = CType(e.Data.GetData("WinPaletter.UI.Controllers.ColorItem"), UI.Controllers.ColorItem).DefaultColor
+                    DraggedColor = CType(e.Data.GetData(Me.GetType.FullName), UI.Controllers.ColorItem).DefaultColor
                 End If
 
                 Select Case AfterDropEffect
@@ -325,6 +320,7 @@ Namespace UI.Controllers
 #End Region
 
 #Region "Subs/Functions"
+
         Public Sub UpdateColorsHistory()
             If Not PauseColorsHistory Then
                 If ColorsHistory.Count > 0 Then
@@ -342,9 +338,11 @@ Namespace UI.Controllers
         Public Function CanRaiseEventsForDefColorDot() As Boolean
             Return My.Settings.NerdStats.DotDefaultChangedIndicator AndAlso Rect_DefColor.Contains(PointToClient(MousePosition)) AndAlso BackColor <> DefaultColor
         End Function
+
 #End Region
 
 #Region "Events"
+
         Protected Overrides Sub OnBackColorChanged(e As EventArgs)
             UpdateColorsHistory()
             MyBase.OnBackColorChanged(e)
@@ -353,8 +351,8 @@ Namespace UI.Controllers
         Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
             InitializeDrag = My.Settings.NerdStats.DragAndDrop
             State = MouseState.Down
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
             MyBase.OnMouseDown(e)
         End Sub
@@ -362,8 +360,8 @@ Namespace UI.Controllers
         Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
             InitializeDrag = False
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
 
             MyBase.OnMouseUp(e)
@@ -371,8 +369,8 @@ Namespace UI.Controllers
 
         Private Sub ColorItem_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
@@ -380,24 +378,32 @@ Namespace UI.Controllers
             InitializeDrag = False
             HoverOverDefColorDot = False
             State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
         Private Sub ColorItem_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
-            Tmr2_factor = 0
+            Timer2_factor = 0
         End Sub
+
+        Protected Overrides Sub OnSizeChanged(e As EventArgs)
+            Rect = New Rectangle(0, 0, Width - 1, Height - 1)
+            RectInner = New Rectangle(1, 1, Width - 3, Height - 3)
+            Rect_DefColor = New Rectangle(0, 0, Height, Height)
+            MyBase.OnSizeChanged(e)
+        End Sub
+
 #End Region
 
 #Region "Animators"
         Private alpha As Integer
         ReadOnly Factor As Integer = 15
-        Private WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
-        Private Tmr2_factor As Integer = 0
+        Private WithEvents Timer1, Timer2 As New Timer With {.Enabled = False, .Interval = 1}
+        Private Timer2_factor As Integer = 0
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over Then
@@ -405,11 +411,11 @@ Namespace UI.Controllers
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
-                    If Not Tmr2.Enabled Then
+                    If Not Timer2.Enabled Then
                         Threading.Thread.Sleep(1)
                         Refresh()
                     End If
@@ -420,11 +426,11 @@ Namespace UI.Controllers
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
-                    If Not Tmr2.Enabled Then
+                    If Not Timer2.Enabled Then
                         Threading.Thread.Sleep(1)
                         Refresh()
                     End If
@@ -432,17 +438,17 @@ Namespace UI.Controllers
             End If
         End Sub
 
-        Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
+        Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
             If Not DesignMode AndAlso MakeAfterDropEffect Then
-                Tmr2_factor += Math.Min(Width, Height) * 3.5
+                Timer2_factor += Math.Min(Width, Height) * 3.5
                 Threading.Thread.Sleep(1)
                 Refresh()
             Else
-                Tmr2_factor = 0
+                Timer2_factor = 0
                 MakeAfterDropEffect = False
                 Refresh()
-                Tmr2.Enabled = False
-                Tmr2.Stop()
+                Timer2.Enabled = False
+                Timer2.Stop()
             End If
         End Sub
 #End Region
@@ -484,7 +490,7 @@ Namespace UI.Controllers
                 Using path As GraphicsPath = RectInner.Round(R)
                     Dim reg As New Region(path)
                     G.Clip = reg
-                    Dim i As Integer = Math.Max(Width, Height) + Tmr2_factor
+                    Dim i As Integer = Math.Max(Width, Height) + Timer2_factor
                     Dim px As Point = BeforeDropMousePosition
                     Dim MouseCircle As New Rectangle(px.X - 0.5 * i, px.Y - 0.5 * i, i, i)
                     Dim gp As GraphicsPath = New GraphicsPath()
@@ -499,9 +505,9 @@ Namespace UI.Controllers
                     G.ResetClip()
 
                     If i / 2 > (Width * Height) Then
-                        Tmr2.Enabled = False
-                        Tmr2.Stop()
-                        Tmr2_factor = 0
+                        Timer2.Enabled = False
+                        Timer2.Stop()
+                        Timer2_factor = 0
                         MakeAfterDropEffect = False
                         Invalidate()
                     End If
@@ -605,6 +611,7 @@ Namespace UI.Controllers
             End If
 
         End Sub
+
     End Class
 
 End Namespace

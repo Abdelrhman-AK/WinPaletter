@@ -11,11 +11,26 @@ Namespace UI.WP
             Text = ""
         End Sub
 
+#Region "Variables"
+
+        Private LineColor As Color
+        Private _Angle As Single = 0
+        Dim C1, C2 As Color
+        Private _Focused As Boolean = True
+        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.7))
+
+        Enum Styles
+            SwapColors
+            MixedColors
+        End Enum
+
+#End Region
+
 #Region "Properties"
         Public Property Color1 As Color = Color.DodgerBlue
         Public Property Color2 As Color = Color.Crimson
         Public Property [Color] As Color = Color1
-        Property Style As Styles = Styles.SwapColors
+        Public Property Style As Styles = Styles.SwapColors
 
         <Browsable(True)>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
@@ -24,18 +39,13 @@ Namespace UI.WP
         <Bindable(True)>
         Public Overrides Property Text As String = ""
 
-        Enum Styles
-            SwapColors
-            MixedColors
-        End Enum
 #End Region
 
+#Region "Animator"
 
-        Private LineColor As Color
-        Private WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
-        Private _Angle As Single = 0
+        Private WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             If Not DesignMode Then
 
                 If _Angle + 1.5 > 360 Then
@@ -66,16 +76,53 @@ Namespace UI.WP
 
                 Refresh()
             Else
-                Tmr.Enabled = False
-                Tmr.Stop()
+                Timer.Enabled = False
+                Timer.Stop()
             End If
         End Sub
 
-        Dim C1, C2 As Color
+#End Region
 
-        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.7))
+#Region "Events"
 
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Private Sub AnimatedBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            If Not DesignMode Then
+                Timer.Enabled = True
+                Timer.Start()
+
+                Try : AddHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
+                Try : AddHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try
+
+            Else
+                Timer.Enabled = False
+                Timer.Stop()
+            End If
+        End Sub
+
+        Private Sub AnimatedBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try : RemoveHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
+                Try : RemoveHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try
+            End If
+        End Sub
+
+        Sub Form_GotFocus(sender As Object, e As EventArgs)
+            _Focused = True
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Sub Form_LostFocus(sender As Object, e As EventArgs)
+            _Focused = False
+            Timer.Enabled = False
+            Timer.Stop()
+            Invalidate()
+        End Sub
+
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             MyBase.OnPaint(e)
             Dim G As Graphics = e.Graphics
             DoubleBuffered = True
@@ -126,42 +173,6 @@ Namespace UI.WP
 
         End Sub
 
-        Private Sub AnimatedBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            If Not DesignMode Then
-                Tmr.Enabled = True
-                Tmr.Start()
-
-                Try : AddHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
-                Try : AddHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try
-
-            Else
-                Tmr.Enabled = False
-                Tmr.Stop()
-            End If
-        End Sub
-
-        Private Sub AnimatedBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try : RemoveHandler FindForm.Activated, AddressOf Form_GotFocus : Catch : End Try
-                Try : RemoveHandler FindForm.Deactivate, AddressOf Form_LostFocus : Catch : End Try
-            End If
-        End Sub
-
-        Private _Focused As Boolean = True
-
-        Sub Form_GotFocus()
-            _Focused = True
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Sub Form_LostFocus()
-            _Focused = False
-            Tmr.Enabled = False
-            Tmr.Stop()
-            Invalidate()
-        End Sub
     End Class
 
 End Namespace

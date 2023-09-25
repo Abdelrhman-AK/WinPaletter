@@ -12,8 +12,24 @@ Namespace UI.Controllers
             DoubleBuffered = True
         End Sub
 
+#Region "Variables"
+
+        Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.65))
+        Private DesignedFor_Badges As New List(Of Bitmap)
+        Private pattern As New TextureBrush(New Bitmap(Width, Height))
+        Private AnimateOnClick As Boolean = False
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
+
 #Region "Properties"
-        Public Event CPChanged(sender As Object, e As EventArgs)
         Private _CP As CP
         Public Property CP As CP
             Get
@@ -35,7 +51,45 @@ Namespace UI.Controllers
         Public Property URL_PackFile As String
         Public Property FileName As String
         Public Property DoneByWinPaletter As Boolean = False
+#End Region
 
+#Region "Events"
+
+        Public Event CPChanged(sender As Object, e As EventArgs)
+
+        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+            AnimateOnClick = True
+            State = MouseState.Down
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+            MyBase.OnMouseDown(e)
+        End Sub
+
+        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+            State = MouseState.Over
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub StoreItem_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+            State = MouseState.Over
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub StoreItem_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+            State = MouseState.None
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
         Public Sub UpdateBadges()
             DesignedFor_Badges.Clear()
             If _CP IsNot Nothing Then
@@ -96,55 +150,15 @@ Namespace UI.Controllers
 
             Refresh()
         End Sub
-#End Region
 
-#Region "Events"
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
-
-        Public State As MouseState = MouseState.None
-        Private AnimateOnClick As Boolean = False
-
-        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-            AnimateOnClick = True
-            State = MouseState.Down
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-            MyBase.OnMouseDown(e)
-        End Sub
-
-        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-            State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub RadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-            State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-            State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
 #End Region
 
 #Region "Animator"
         Dim alpha As Integer
         ReadOnly Factor As Integer = 40
-        Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over Then
@@ -152,8 +166,8 @@ Namespace UI.Controllers
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -166,8 +180,8 @@ Namespace UI.Controllers
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -177,10 +191,6 @@ Namespace UI.Controllers
             End If
         End Sub
 #End Region
-
-        Private Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.65))
-        Private DesignedFor_Badges As New List(Of Bitmap)
-        Private pattern As New TextureBrush(New Bitmap(Width, Height))
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics

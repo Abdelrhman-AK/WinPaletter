@@ -41,7 +41,6 @@ Partial Class Store_SearchFilter
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = Nothing
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(269, 245)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(90, 34)
@@ -57,7 +56,6 @@ Partial Class Store_SearchFilter
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(183, 245)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)

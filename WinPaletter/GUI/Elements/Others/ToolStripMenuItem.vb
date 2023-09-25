@@ -4,7 +4,7 @@ Namespace UI.WP
 
     <Description("ToolStripMenuItem fixed To respect dark/light mode")>
     Public Class ToolStripMenuItem : Inherits System.Windows.Forms.ToolStripMenuItem
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             MyBase.OnPaint(e)
             e.Graphics.TextRenderingHint = My.RenderingHint
             e.Graphics.Clear(BackColor)

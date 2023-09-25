@@ -82,7 +82,6 @@ Partial Class TerminalsDashboard
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
         Me.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(79, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(173, 68)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(149, 27)
@@ -99,7 +98,6 @@ Partial Class TerminalsDashboard
         Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
         Me.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(173, 37)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(149, 27)
@@ -126,7 +124,6 @@ Partial Class TerminalsDashboard
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
         Me.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(147, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(7, 98)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(149, 27)
@@ -143,7 +140,6 @@ Partial Class TerminalsDashboard
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(147, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(7, 67)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(149, 27)
@@ -160,7 +156,6 @@ Partial Class TerminalsDashboard
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(73, Byte), Integer), CType(CType(76, Byte), Integer), CType(CType(78, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(7, 129)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(149, 27)
@@ -177,7 +172,6 @@ Partial Class TerminalsDashboard
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(7, 36)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(149, 27)

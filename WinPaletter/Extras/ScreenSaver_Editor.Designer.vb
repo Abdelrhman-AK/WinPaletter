@@ -180,7 +180,6 @@ Partial Class ScreenSaver_Editor
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = Nothing
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(670, 33)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(76, 24)
@@ -196,7 +195,6 @@ Partial Class ScreenSaver_Editor
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(68, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(712, 3)
         Me.Button1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Button1.Name = "Button1"
@@ -264,7 +262,6 @@ Partial Class ScreenSaver_Editor
         Me.Button14.Image = Nothing
         Me.Button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button14.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button14.LineSize = 1
         Me.Button14.Location = New System.Drawing.Point(425, 8)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(150, 24)
@@ -282,7 +279,6 @@ Partial Class ScreenSaver_Editor
         Me.Button13.Image = CType(resources.GetObject("Button13.Image"), System.Drawing.Image)
         Me.Button13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button13.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button13.LineSize = 1
         Me.Button13.Location = New System.Drawing.Point(651, 8)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(90, 24)
@@ -299,7 +295,6 @@ Partial Class ScreenSaver_Editor
         Me.Button6.ForeColor = System.Drawing.Color.White
         Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(581, 8)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(29, 24)
@@ -315,7 +310,6 @@ Partial Class ScreenSaver_Editor
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(616, 8)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(29, 24)
@@ -364,7 +358,6 @@ Partial Class ScreenSaver_Editor
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(461, 510)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(115, 34)
@@ -381,7 +374,6 @@ Partial Class ScreenSaver_Editor
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(375, 510)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)
@@ -399,7 +391,6 @@ Partial Class ScreenSaver_Editor
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(582, 510)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(180, 34)
@@ -433,7 +424,6 @@ Partial Class ScreenSaver_Editor
         Me.Button259.Image = CType(resources.GetObject("Button259.Image"), System.Drawing.Image)
         Me.Button259.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button259.LineColor = System.Drawing.Color.FromArgb(CType(CType(151, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(91, Byte), Integer))
-        Me.Button259.LineSize = 1
         Me.Button259.Location = New System.Drawing.Point(223, 5)
         Me.Button259.Name = "Button259"
         Me.Button259.Size = New System.Drawing.Size(144, 29)
@@ -450,7 +440,6 @@ Partial Class ScreenSaver_Editor
         Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
         Me.Button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.Button9.LineSize = 1
         Me.Button9.Location = New System.Drawing.Point(370, 5)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(126, 29)
@@ -478,7 +467,6 @@ Partial Class ScreenSaver_Editor
         Me.Button11.Image = CType(resources.GetObject("Button11.Image"), System.Drawing.Image)
         Me.Button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button11.LineSize = 1
         Me.Button11.Location = New System.Drawing.Point(85, 5)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(135, 29)
@@ -495,7 +483,6 @@ Partial Class ScreenSaver_Editor
         Me.Button12.Image = Nothing
         Me.Button12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button12.LineSize = 1
         Me.Button12.Location = New System.Drawing.Point(499, 5)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(135, 29)

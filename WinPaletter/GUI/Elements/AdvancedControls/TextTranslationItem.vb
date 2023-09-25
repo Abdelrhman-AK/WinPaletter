@@ -11,14 +11,6 @@ Namespace UI.Controllers
             BackColor = Color.Transparent
         End Sub
 
-        Protected Overrides ReadOnly Property CreateParams As CreateParams
-            Get
-                Dim cp As CreateParams = MyBase.CreateParams
-                cp.ExStyle = cp.ExStyle Or &H20
-                Return cp
-            End Get
-        End Property
-
 #Region "Properties"
         Public Property Image As Image
 
@@ -64,20 +56,28 @@ Namespace UI.Controllers
         Public Property Text_English As String
         Public Property Tag_English As String
 
-        Private _SearchHilight As String
-        Public Property SearchHilight As String
+        Private _SearchHighlight As String
+        Public Property SearchHighlight As String
             Get
-                Return _SearchHilight
+                Return _SearchHighlight
             End Get
             Set(value As String)
-                _SearchHilight = value
+                _SearchHighlight = value
                 Refresh()
             End Set
         End Property
 
+        Protected Overrides ReadOnly Property CreateParams As CreateParams
+            Get
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.ExStyle = cp.ExStyle Or &H20
+                Return cp
+            End Get
+        End Property
 #End Region
 
 #Region "Events"
+
         Protected Overrides Sub OnMouseDown(ByVal e As MouseEventArgs)
             MyBase.OnMouseDown(e)
             Pressed = True
@@ -86,19 +86,19 @@ Namespace UI.Controllers
             Invalidate()
         End Sub
 
-        Private Sub Button_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+        Private Sub TextTranslationItem_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
             Pressed = False : Invalidate()
         End Sub
 
-        Private Sub ItemSelection_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
+        Private Sub TextTranslationItem_GotFocus(sender As Object, e As EventArgs) Handles Me.GotFocus
             Pressed = True
             BringToFront()
             Focus()
             Invalidate()
         End Sub
 
-
 #End Region
+
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.HighQuality
@@ -107,7 +107,7 @@ Namespace UI.Controllers
             Dim rect As New Rectangle(0, 0, Width - 1, Height - 1)
             Dim NotTranslatedColor As Color = My.Style.Colors.NotTranslatedColor
 
-            If _SearchHilight IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(_SearchHilight) AndAlso Text.ToLower.Trim.Contains(_SearchHilight.ToLower.Trim) Then
+            If _SearchHighlight IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(_SearchHighlight) AndAlso Text.ToLower.Trim.Contains(_SearchHighlight.ToLower.Trim) Then
                 Using br As New SolidBrush(My.Style.Colors.SearchColor) : G.FillRectangle(br, rect) : End Using
 
             ElseIf Not String.IsNullOrWhiteSpace(Text) AndAlso Text.Trim = Text_English.Trim Then

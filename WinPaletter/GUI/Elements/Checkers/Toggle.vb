@@ -5,23 +5,24 @@ Namespace UI.WP
 
     <Description("Themed toggle for WinPaletter UI")> <DefaultEvent("CheckedChanged")> Public Class Toggle : Inherits UserControl
 
-        Dim CheckC As New Rectangle(4, 4, 11, 11)
-        Dim MouseState As Integer = 0
-        Dim WasMoving As Boolean = False
-
         Sub New()
             DoubleBuffered = True
             Size = New Size(40, 20)
             Text = ""
         End Sub
 
-        Public Property DarkLight_Toggler As Boolean = False
-
+#Region "Variables"
+        Dim CheckC As New Rectangle(4, 4, 11, 11)
+        Dim CheckedC As Rectangle
+        Dim MouseState As Integer = 0
+        Dim WasMoving As Boolean = False
         ReadOnly DarkLight_TogglerSize As Integer = 13
-
-        Private _checked As Boolean
-
         Private _Shown As Boolean = False
+        Private AnimateOnClick As Boolean = False
+#End Region
+
+#Region "Properties"
+        Public Property DarkLight_Toggler As Boolean = False
 
         <Browsable(True)>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
@@ -30,6 +31,7 @@ Namespace UI.WP
         <Bindable(True)>
         Public Overrides Property Text As String = ""
 
+        Private _checked As Boolean
         Public Property Checked As Boolean
             Get
                 Return _checked
@@ -41,6 +43,10 @@ Namespace UI.WP
                 End If
             End Set
         End Property
+#End Region
+
+#Region "Events"
+        Public Event CheckedChanged(sender As Object, e As EventArgs)
 
         Protected Overridable Sub OnCheckedChanged()
             RaiseEvent CheckedChanged(Me, EventArgs.Empty)
@@ -89,11 +95,7 @@ Namespace UI.WP
 
             Invalidate()
         End Sub
-        Public Event CheckedChanged(sender As Object, e As EventArgs)
 
-        Dim CheckedC As Rectangle
-
-        Private AnimateOnClick As Boolean = False
         Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
             AnimateOnClick = True
             Me.Checked = Not Me.Checked
@@ -101,6 +103,112 @@ Namespace UI.WP
             Me.Invalidate()
             MyBase.OnMouseClick(e)
         End Sub
+
+        Private Sub Toggle_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+            Me.Height = 20
+            If Width < 40 Then Width = 40
+
+            If DarkLight_Toggler Then
+                CheckC.Width = DarkLight_TogglerSize
+                CheckC.Height = DarkLight_TogglerSize
+            End If
+
+            Refresh()
+        End Sub
+
+        Private Sub Toggle_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+            If Checked Then
+                CheckC = New Rectangle(Width - 17, 4, 11, 11)
+            Else
+                CheckC = New Rectangle(4, 4, 11, 11)
+            End If
+
+            If DarkLight_Toggler Then
+                CheckC.Width = DarkLight_TogglerSize
+                CheckC.Height = DarkLight_TogglerSize
+            End If
+
+            If Not DesignMode Then
+                Try
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
+                    AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                Catch
+                End Try
+            End If
+        End Sub
+
+        Private Sub Toggle_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try
+                    RemoveHandler FindForm.Load, AddressOf Loaded
+                    RemoveHandler FindForm.Shown, AddressOf Showed
+                    RemoveHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
+                Catch
+                End Try
+            End If
+        End Sub
+
+        Sub Loaded(sender As Object, e As EventArgs)
+            _Shown = False
+        End Sub
+
+        Sub Showed(sender As Object, e As EventArgs)
+            _Shown = True
+            Invalidate()
+        End Sub
+
+        Public Sub RefreshColorPalette(sender As Object, e As EventArgs)
+            If _Shown Then
+                Invalidate()
+            End If
+        End Sub
+
+        Private Sub Toggle_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+            If e.Button = MouseButtons.Left Then
+
+                Dim i As Integer = e.X - 0.5 * CheckC.Width
+                WasMoving = True
+                MouseState = 1
+
+                If i <= 4 Then
+                    CheckC.X = 4
+                ElseIf i >= Width - 17 Then
+                    CheckC.X = Width - 17
+                Else
+                    CheckC.X = i
+                End If
+
+                CheckC.Y = 4
+                Refresh()
+            End If
+        End Sub
+
+        Private Sub Toggle_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+            MouseState = 0
+            CheckC.Width = 11
+
+            If DarkLight_Toggler Then
+                CheckC.Width = DarkLight_TogglerSize
+                CheckC.Height = DarkLight_TogglerSize
+            End If
+
+            If WasMoving Then
+                If e.X < Width * 0.5 Then Checked = False
+                If e.X >= Width * 0.5 Then Checked = True
+                WasMoving = False
+            End If
+            Refresh()
+        End Sub
+
+        Private Sub Toggle_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+            MouseState = 1
+            CheckC.Width = 13
+
+            Refresh()
+        End Sub
+#End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Me.OnPaintBackground(e)
@@ -170,111 +278,6 @@ Namespace UI.WP
                 Using P As New Pen(lgborderChecked) : e.Graphics.DrawRoundedRect(P, MainRect, 9, True) : End Using
                 Using P As New Pen(lgborderNonChecked) : e.Graphics.DrawRoundedRect(P, MainRect, 9, True) : End Using
             End If
-        End Sub
-
-        Private Sub Toggle_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-            Me.Height = 20
-            If Width < 40 Then Width = 40
-
-            If DarkLight_Toggler Then
-                CheckC.Width = DarkLight_TogglerSize
-                CheckC.Height = DarkLight_TogglerSize
-            End If
-
-            Refresh()
-        End Sub
-
-        Private Sub Toggle_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-
-            If Checked Then
-                CheckC = New Rectangle(Width - 17, 4, 11, 11)
-            Else
-                CheckC = New Rectangle(4, 4, 11, 11)
-            End If
-
-            If DarkLight_Toggler Then
-                CheckC.Width = DarkLight_TogglerSize
-                CheckC.Height = DarkLight_TogglerSize
-            End If
-
-            If Not DesignMode Then
-                Try
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
-                    AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                Catch
-                End Try
-            End If
-        End Sub
-
-        Private Sub Toggle_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try
-                    RemoveHandler FindForm.Load, AddressOf Loaded
-                    RemoveHandler FindForm.Shown, AddressOf Showed
-                    RemoveHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-                Catch
-                End Try
-            End If
-        End Sub
-
-        Sub Loaded()
-            _Shown = False
-        End Sub
-
-        Sub Showed()
-            _Shown = True
-            Invalidate()
-        End Sub
-
-        Public Sub RefreshColorPalette()
-            If _Shown Then
-                Invalidate()
-            End If
-        End Sub
-
-        Private Sub Toggle_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
-            If e.Button = MouseButtons.Left Then
-
-                Dim i As Integer = e.X - 0.5 * CheckC.Width
-                WasMoving = True
-                MouseState = 1
-
-                If i <= 4 Then
-                    CheckC.X = 4
-                ElseIf i >= Width - 17 Then
-                    CheckC.X = Width - 17
-                Else
-                    CheckC.X = i
-                End If
-
-                CheckC.Y = 4
-                Refresh()
-            End If
-        End Sub
-
-        Private Sub Toggle_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-            MouseState = 0
-            CheckC.Width = 11
-
-            If DarkLight_Toggler Then
-                CheckC.Width = DarkLight_TogglerSize
-                CheckC.Height = DarkLight_TogglerSize
-            End If
-
-            If WasMoving Then
-                If e.X < Width * 0.5 Then Checked = False
-                If e.X >= Width * 0.5 Then Checked = True
-                WasMoving = False
-            End If
-            Refresh()
-        End Sub
-
-        Private Sub Toggle_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-            MouseState = 1
-            CheckC.Width = 13
-
-            Refresh()
         End Sub
 
     End Class

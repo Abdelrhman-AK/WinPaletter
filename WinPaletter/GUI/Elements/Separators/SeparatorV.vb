@@ -3,13 +3,15 @@ Imports System.Drawing.Drawing2D
 
 Namespace UI.WP
 
-    <Description("Vertical separator for WinPaletter UI")>
-    Public Class SeparatorV : Inherits Control
+    <Description("Vertical separator for WinPaletter UI")> Public Class SeparatorV : Inherits Control
+
         Sub New()
             TabStop = False
             DoubleBuffered = True
             Text = ""
         End Sub
+
+#Region "Properties"
 
         <Browsable(True)>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
@@ -19,19 +21,22 @@ Namespace UI.WP
         Public Overrides Property Text As String = ""
         Public Property AlternativeLook As Boolean = False
 
+#End Region
+
+#Region "Events"
+
         Protected Overrides Sub OnResize(e As EventArgs)
             MyBase.OnResize(e)
             Size = New Size(If(Not AlternativeLook, 1, 2), Height)
         End Sub
+
+#End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
             DoubleBuffered = True
             MyBase.OnPaint(e)
-
-            Dim clr As Color
-            clr = Color.FromArgb(75, 75, 75)
 
             '################################################################################# Customizer
             Dim IdleLine As Color
@@ -53,7 +58,6 @@ Namespace UI.WP
             Else
                 If My.Style.DarkMode Then IdleLine = Color.FromArgb(60, 60, 60) Else IdleLine = Color.FromArgb(210, 210, 210)
             End If
-
             '################################################################################# Customizer
 
             Using C As New Pen(IdleLine, If(Not AlternativeLook, 1, 2))

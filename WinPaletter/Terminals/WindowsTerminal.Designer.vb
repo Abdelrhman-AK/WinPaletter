@@ -259,7 +259,6 @@ Partial Class WindowsTerminal
         Me.Button11.ForeColor = System.Drawing.Color.White
         Me.Button11.Image = Nothing
         Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.Button11.LineSize = 1
         Me.Button11.Location = New System.Drawing.Point(609, 46)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(210, 30)
@@ -276,7 +275,6 @@ Partial Class WindowsTerminal
         Me.Button9.ForeColor = System.Drawing.Color.White
         Me.Button9.Image = Nothing
         Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(221, Byte), Integer))
-        Me.Button9.LineSize = 1
         Me.Button9.Location = New System.Drawing.Point(823, 46)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(154, 30)
@@ -293,7 +291,6 @@ Partial Class WindowsTerminal
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(85, 6)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(136, 29)
@@ -328,7 +325,6 @@ Partial Class WindowsTerminal
         Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
         Me.Button7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(159, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(153, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(371, 6)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(85, 29)
@@ -357,7 +353,6 @@ Partial Class WindowsTerminal
         Me.Button21.Image = CType(resources.GetObject("Button21.Image"), System.Drawing.Image)
         Me.Button21.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button21.LineColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Button21.LineSize = 1
         Me.Button21.Location = New System.Drawing.Point(108, 6)
         Me.Button21.Name = "Button21"
         Me.Button21.Size = New System.Drawing.Size(87, 24)
@@ -375,7 +370,6 @@ Partial Class WindowsTerminal
         Me.Button19.Image = CType(resources.GetObject("Button19.Image"), System.Drawing.Image)
         Me.Button19.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button19.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
-        Me.Button19.LineSize = 1
         Me.Button19.Location = New System.Drawing.Point(197, 6)
         Me.Button19.Name = "Button19"
         Me.Button19.Size = New System.Drawing.Size(76, 24)
@@ -392,7 +386,6 @@ Partial Class WindowsTerminal
         Me.TerEditThemeName.ForeColor = System.Drawing.Color.White
         Me.TerEditThemeName.Image = CType(resources.GetObject("TerEditThemeName.Image"), System.Drawing.Image)
         Me.TerEditThemeName.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.TerEditThemeName.LineSize = 1
         Me.TerEditThemeName.Location = New System.Drawing.Point(275, 6)
         Me.TerEditThemeName.Name = "TerEditThemeName"
         Me.TerEditThemeName.Size = New System.Drawing.Size(35, 24)
@@ -408,7 +401,6 @@ Partial Class WindowsTerminal
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(312, 6)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(35, 24)
@@ -420,7 +412,6 @@ Partial Class WindowsTerminal
         Me.TerThemes.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerThemes.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerThemes.CustomFont = False
         Me.TerThemes.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.TerThemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TerThemes.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -645,7 +636,6 @@ Partial Class WindowsTerminal
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Nothing
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(700, 600)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 34)
@@ -711,7 +701,6 @@ Partial Class WindowsTerminal
         Me.Button15.ForeColor = System.Drawing.Color.White
         Me.Button15.Image = Nothing
         Me.Button15.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button15.LineSize = 1
         Me.Button15.Location = New System.Drawing.Point(356, 7)
         Me.Button15.Name = "Button15"
         Me.Button15.Size = New System.Drawing.Size(154, 30)
@@ -781,7 +770,6 @@ Partial Class WindowsTerminal
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(916, 600)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(80, 34)
@@ -822,7 +810,6 @@ Partial Class WindowsTerminal
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = Nothing
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(188, 33)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(116, 25)
@@ -851,7 +838,6 @@ Partial Class WindowsTerminal
         Me.Button16.ForeColor = System.Drawing.Color.White
         Me.Button16.Image = CType(resources.GetObject("Button16.Image"), System.Drawing.Image)
         Me.Button16.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button16.LineSize = 1
         Me.Button16.Location = New System.Drawing.Point(306, 33)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(39, 25)
@@ -928,7 +914,6 @@ Partial Class WindowsTerminal
         Me.Button20.Image = CType(resources.GetObject("Button20.Image"), System.Drawing.Image)
         Me.Button20.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button20.LineColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Button20.LineSize = 1
         Me.Button20.Location = New System.Drawing.Point(108, 6)
         Me.Button20.Name = "Button20"
         Me.Button20.Size = New System.Drawing.Size(87, 24)
@@ -946,7 +931,6 @@ Partial Class WindowsTerminal
         Me.Button17.Image = CType(resources.GetObject("Button17.Image"), System.Drawing.Image)
         Me.Button17.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button17.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
-        Me.Button17.LineSize = 1
         Me.Button17.Location = New System.Drawing.Point(197, 6)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(76, 24)
@@ -963,7 +947,6 @@ Partial Class WindowsTerminal
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(275, 6)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(35, 24)
@@ -979,7 +962,6 @@ Partial Class WindowsTerminal
         Me.Button12.ForeColor = System.Drawing.Color.White
         Me.Button12.Image = CType(resources.GetObject("Button12.Image"), System.Drawing.Image)
         Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button12.LineSize = 1
         Me.Button12.Location = New System.Drawing.Point(312, 6)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(35, 24)
@@ -991,7 +973,6 @@ Partial Class WindowsTerminal
         Me.TerSchemes.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerSchemes.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerSchemes.CustomFont = False
         Me.TerSchemes.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.TerSchemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TerSchemes.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1438,7 +1419,6 @@ Partial Class WindowsTerminal
         Me.TerCursorStyle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerCursorStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.TerCursorStyle.CustomFont = False
         Me.TerCursorStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.TerCursorStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TerCursorStyle.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1461,7 +1441,6 @@ Partial Class WindowsTerminal
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(786, 600)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(124, 34)
@@ -1495,7 +1474,6 @@ Partial Class WindowsTerminal
         Me.Button6.ForeColor = System.Drawing.Color.White
         Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(328, 5)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(30, 30)
@@ -1511,7 +1489,6 @@ Partial Class WindowsTerminal
         Me.Button18.ForeColor = System.Drawing.Color.White
         Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
         Me.Button18.LineColor = System.Drawing.Color.FromArgb(CType(CType(37, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(145, Byte), Integer))
-        Me.Button18.LineSize = 1
         Me.Button18.Location = New System.Drawing.Point(360, 5)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(30, 30)
@@ -1527,7 +1504,6 @@ Partial Class WindowsTerminal
         Me.Button14.ForeColor = System.Drawing.Color.White
         Me.Button14.Image = CType(resources.GetObject("Button14.Image"), System.Drawing.Image)
         Me.Button14.LineColor = System.Drawing.Color.FromArgb(CType(CType(56, Byte), Integer), CType(CType(46, Byte), Integer), CType(CType(14, Byte), Integer))
-        Me.Button14.LineSize = 1
         Me.Button14.Location = New System.Drawing.Point(392, 5)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(30, 30)
@@ -1560,7 +1536,6 @@ Partial Class WindowsTerminal
         Me.TerProfiles.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerProfiles.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.TerProfiles.CustomFont = False
         Me.TerProfiles.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.TerProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TerProfiles.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1581,7 +1556,6 @@ Partial Class WindowsTerminal
         Me.Button13.ForeColor = System.Drawing.Color.White
         Me.Button13.Image = CType(resources.GetObject("Button13.Image"), System.Drawing.Image)
         Me.Button13.LineColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button13.LineSize = 1
         Me.Button13.Location = New System.Drawing.Point(424, 5)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(30, 30)
@@ -1607,7 +1581,6 @@ Partial Class WindowsTerminal
         Me.TerFontWeight.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TerFontWeight.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.TerFontWeight.CustomFont = False
         Me.TerFontWeight.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.TerFontWeight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TerFontWeight.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1649,7 +1622,6 @@ Partial Class WindowsTerminal
         Me.Button22.Image = CType(resources.GetObject("Button22.Image"), System.Drawing.Image)
         Me.Button22.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button22.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.Button22.LineSize = 1
         Me.Button22.Location = New System.Drawing.Point(223, 6)
         Me.Button22.Name = "Button22"
         Me.Button22.Size = New System.Drawing.Size(146, 29)
@@ -2041,7 +2013,6 @@ Partial Class WindowsTerminal
         Me.Button23.ForeColor = System.Drawing.Color.White
         Me.Button23.Image = Nothing
         Me.Button23.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button23.LineSize = 1
         Me.Button23.Location = New System.Drawing.Point(316, 6)
         Me.Button23.Name = "Button23"
         Me.Button23.Size = New System.Drawing.Size(30, 24)
@@ -2058,7 +2029,6 @@ Partial Class WindowsTerminal
         Me.TerFontSizeVal.ForeColor = System.Drawing.Color.White
         Me.TerFontSizeVal.Image = Nothing
         Me.TerFontSizeVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerFontSizeVal.LineSize = 1
         Me.TerFontSizeVal.Location = New System.Drawing.Point(312, 66)
         Me.TerFontSizeVal.Name = "TerFontSizeVal"
         Me.TerFontSizeVal.Size = New System.Drawing.Size(34, 24)
@@ -2175,7 +2145,6 @@ Partial Class WindowsTerminal
         Me.TerCursorHeightVal.ForeColor = System.Drawing.Color.White
         Me.TerCursorHeightVal.Image = Nothing
         Me.TerCursorHeightVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerCursorHeightVal.LineSize = 1
         Me.TerCursorHeightVal.Location = New System.Drawing.Point(312, 36)
         Me.TerCursorHeightVal.Name = "TerCursorHeightVal"
         Me.TerCursorHeightVal.Size = New System.Drawing.Size(34, 24)
@@ -2257,7 +2226,6 @@ Partial Class WindowsTerminal
         Me.TerOpacityVal.ForeColor = System.Drawing.Color.White
         Me.TerOpacityVal.Image = Nothing
         Me.TerOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerOpacityVal.LineSize = 1
         Me.TerOpacityVal.Location = New System.Drawing.Point(311, 91)
         Me.TerOpacityVal.Name = "TerOpacityVal"
         Me.TerOpacityVal.Size = New System.Drawing.Size(34, 24)
@@ -2273,7 +2241,6 @@ Partial Class WindowsTerminal
         Me.TerImageOpacityVal.ForeColor = System.Drawing.Color.White
         Me.TerImageOpacityVal.Image = Nothing
         Me.TerImageOpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.TerImageOpacityVal.LineSize = 1
         Me.TerImageOpacityVal.Location = New System.Drawing.Point(311, 62)
         Me.TerImageOpacityVal.Name = "TerImageOpacityVal"
         Me.TerImageOpacityVal.Size = New System.Drawing.Size(34, 24)

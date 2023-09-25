@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing.Text
-Imports WinPaletter.CP
 Imports WinPaletter.Core
+Imports WinPaletter.CP
 
 Public Class PreviewHelpers
     Private Shared ReadOnly Steps As Integer = 15

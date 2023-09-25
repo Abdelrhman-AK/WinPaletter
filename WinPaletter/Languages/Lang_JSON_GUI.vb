@@ -564,7 +564,7 @@ Public Class Lang_JSON_GUI
         For Each ctrl In _Form.GetAllControls
             If TypeOf ctrl Is UI.Controllers.TextTranslationItem Then
                 With DirectCast(ctrl, UI.Controllers.TextTranslationItem)
-                    .SearchHilight = TextBox9.Text
+                    .SearchHighlight = TextBox9.Text
                 End With
             End If
         Next

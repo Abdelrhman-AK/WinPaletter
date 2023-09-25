@@ -150,7 +150,6 @@ Partial Class Lang_JSON_GUI
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(668, 671)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)
@@ -168,7 +167,6 @@ Partial Class Lang_JSON_GUI
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(69, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(129, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(840, 671)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(150, 34)
@@ -228,7 +226,6 @@ Partial Class Lang_JSON_GUI
         Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
         Me.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(67, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(540, 6)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(146, 29)
@@ -245,7 +242,6 @@ Partial Class Lang_JSON_GUI
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
         Me.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(344, 6)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(190, 29)
@@ -262,7 +258,6 @@ Partial Class Lang_JSON_GUI
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(7, 6)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(102, 29)
@@ -279,7 +274,6 @@ Partial Class Lang_JSON_GUI
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(108, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(115, 6)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(223, 29)
@@ -362,7 +356,6 @@ Partial Class Lang_JSON_GUI
         Me.Button11.ForeColor = System.Drawing.Color.White
         Me.Button11.Image = Nothing
         Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(79, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button11.LineSize = 1
         Me.Button11.Location = New System.Drawing.Point(669, 63)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(140, 24)
@@ -390,7 +383,6 @@ Partial Class Lang_JSON_GUI
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(79, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(669, 33)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(140, 24)
@@ -417,7 +409,6 @@ Partial Class Lang_JSON_GUI
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = Nothing
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(79, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(669, 123)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(140, 24)
@@ -445,7 +436,6 @@ Partial Class Lang_JSON_GUI
         Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
         Me.Button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(79, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button9.LineSize = 1
         Me.Button9.Location = New System.Drawing.Point(669, 3)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(140, 24)
@@ -767,7 +757,6 @@ Partial Class Lang_JSON_GUI
         Me.Button12.Image = CType(resources.GetObject("Button12.Image"), System.Drawing.Image)
         Me.Button12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(101, Byte), Integer))
-        Me.Button12.LineSize = 1
         Me.Button12.Location = New System.Drawing.Point(3, 3)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(24, 24)
@@ -905,7 +894,6 @@ Partial Class Lang_JSON_GUI
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = Nothing
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(393, 37)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(76, 26)
@@ -918,7 +906,6 @@ Partial Class Lang_JSON_GUI
         Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.ComboBox1.CustomFont = False
         Me.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.ComboBox1.DropDownHeight = 242
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -1006,7 +993,6 @@ Partial Class Lang_JSON_GUI
         Me.Button13.Image = CType(resources.GetObject("Button13.Image"), System.Drawing.Image)
         Me.Button13.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button13.LineColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(101, Byte), Integer))
-        Me.Button13.LineSize = 1
         Me.Button13.Location = New System.Drawing.Point(3, 3)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(24, 24)
@@ -1206,7 +1192,6 @@ Partial Class Lang_JSON_GUI
         Me.Button14.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button14.LineColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(146, Byte), Integer))
-        Me.Button14.LineSize = 1
         Me.Button14.Location = New System.Drawing.Point(754, 671)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(80, 34)

@@ -5,19 +5,35 @@ Imports System.Drawing.Text
 
 Namespace UI.Simulation
 
-    <Description("Simulated Windows Terminals")>
-    <DefaultEvent("Click")> Public Class WinTerminal : Inherits ContainerControl
+    <Description("Simulated Windows Terminals")> <DefaultEvent("Click")> Public Class WinTerminal : Inherits ContainerControl
+
+        Sub New()
+            Text = ""
+            DoubleBuffered = True
+        End Sub
+
+#Region "Variables"
 
         Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.15))
         Dim adaptedBack As Bitmap
         Dim adaptedBackBlurred As Bitmap
+        Private tick As Boolean = False
+        Dim img As Image
+
+        Enum CursorShape_Enum
+            bar
+            doubleUnderscore
+            emptyBox
+            filledBox
+            underscore
+            vintage
+        End Enum
+
+#End Region
+
+#Region "Properties"
 
         Private _Opacity As Single = 1
-        Public Event OpacityChanged As PropertyChangedEventHandler
-        Private Sub NotifyOpacityChanged(info As Single)
-            Invalidate()
-            RaiseEvent OpacityChanged(Me, New PropertyChangedEventArgs(info))
-        End Sub
         Public Property Opacity() As Single
             Get
                 Return _Opacity
@@ -25,18 +41,13 @@ Namespace UI.Simulation
 
             Set(value As Single)
                 If Not (value = _Opacity) Then
-                    Me._Opacity = value
-                    NotifyOpacityChanged(_Opacity)
+                    _Opacity = value
+                    Invalidate()
                 End If
             End Set
         End Property
 
         Private _OpacityBackImage As Single = 100
-        Public Event OpacityBackImageChanged As PropertyChangedEventHandler
-        Private Sub NotifyOpacityBackImageChanged(info As Single)
-            Invalidate()
-            RaiseEvent OpacityBackImageChanged(Me, New PropertyChangedEventArgs(info))
-        End Sub
         Public Property OpacityBackImage() As Single
             Get
                 Return _OpacityBackImage
@@ -44,19 +55,13 @@ Namespace UI.Simulation
 
             Set(value As Single)
                 If Not (value = _OpacityBackImage) Then
-                    Me._OpacityBackImage = value
-                    NotifyOpacityBackImageChanged(_OpacityBackImage)
+                    _OpacityBackImage = value
+                    Invalidate()
                 End If
             End Set
         End Property
 
         Private _BackImage As Image
-        Public Event BackImageChanged As PropertyChangedEventHandler
-        Private Sub NotifyBackImageChanged(info As Object)
-            Invalidate()
-            UpdateOpacityBackImageChanged()
-            RaiseEvent BackImageChanged(Me, New PropertyChangedEventArgs(info))
-        End Sub
         Public Property BackImage() As Image
             Get
                 Return _BackImage
@@ -64,8 +69,9 @@ Namespace UI.Simulation
 
             Set(value As Image)
                 If Not (value Is _BackImage) Then
-                    Me._BackImage = value
-                    NotifyBackImageChanged(_BackImage)
+                    _BackImage = value
+                    Invalidate()
+                    UpdateOpacityBackImageChanged()
                 End If
             End Set
         End Property
@@ -86,18 +92,52 @@ Namespace UI.Simulation
         Public Property TabTitle As String = ""
         Public Property TabIcon As Image
         Public Property TabColor As Color = Color.FromArgb(0, 0, 0, 0)
-
         Public Property PreviewVersion As Boolean = True
         Public Property TabIconButItIsString As String = ""
         Public Property IsFocused As Boolean = True
-        Enum CursorShape_Enum
-            bar
-            doubleUnderscore
-            emptyBox
-            filledBox
-            underscore
-            vintage
-        End Enum
+
+#End Region
+
+#Region "Events"
+
+        Private Sub WinTerminal_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            If Not DesignMode Then
+                Timer.Enabled = True
+                Timer.Start()
+
+                Try : AddHandler SizeChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+                ProcessBack()
+            Else
+                Timer.Enabled = False
+                Timer.Stop()
+            End If
+        End Sub
+
+        Private Sub WinTerminal_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try : RemoveHandler SizeChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+            End If
+        End Sub
+
+        Sub UpdateOpacityBackImageChanged()
+            If BackImage IsNot Nothing Then
+                img = BackImage.Fade(OpacityBackImage / 100)
+                Refresh()
+            End If
+        End Sub
+
+        Private Sub ProcessBack_EventHandler(sender As Object, e As EventArgs)
+            ProcessBack()
+        End Sub
+
+        Sub ProcessBack()
+            GetBack()
+            NoiseBack()
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
 
         Public Function RR(r As Rectangle, radius As Integer) As GraphicsPath
             Try
@@ -125,6 +165,7 @@ Namespace UI.Simulation
                 Return Nothing
             End Try
         End Function
+
         Public Function RRNoLine(r As Rectangle, radius As Integer) As GraphicsPath
             Try
                 Dim path As New GraphicsPath()
@@ -151,6 +192,7 @@ Namespace UI.Simulation
                 Return Nothing
             End Try
         End Function
+
         Public Sub FillSemiRect([Graphics] As Graphics, [Brush] As Brush, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1)
             Try
                 If [Radius] = -1 Then [Radius] = 6
@@ -164,6 +206,7 @@ Namespace UI.Simulation
             Catch
             End Try
         End Sub
+
         Public Function RoundedSemiRectangle(r As Rectangle, radius As Integer) As GraphicsPath
             Try
                 Dim path As New GraphicsPath()
@@ -185,6 +228,7 @@ Namespace UI.Simulation
                 Return Nothing
             End Try
         End Function
+
         Public Sub FillSemiImg([Graphics] As Graphics, [Image] As Image, [Rectangle] As Rectangle, Optional [Radius] As Integer = -1, Optional ForcedRoundCorner As Boolean = False)
             Try
                 If [Radius] = -1 Then [Radius] = 6
@@ -205,14 +249,35 @@ Namespace UI.Simulation
             End Try
         End Sub
 
-        Dim WithEvents Tm As New Timer With {.Enabled = False, .Interval = 500}
-
-        Sub New()
-            Text = ""
-            DoubleBuffered = True
+        Sub GetBack()
+            adaptedBack = My.Wallpaper
+            adaptedBackBlurred = New Bitmap(adaptedBack).Blur(13)
         End Sub
 
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Sub NoiseBack()
+            Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
+        End Sub
+
+#End Region
+
+#Region "Animator"
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 500}
+
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
+            If IsFocused Then
+                If tick Then
+                    tick = False
+                Else
+                    tick = True
+                End If
+
+                Refresh()
+            End If
+        End Sub
+
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
             G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
@@ -394,7 +459,7 @@ Namespace UI.Simulation
 
             Using br As New SolidBrush(Color_Foreground) : G.DrawString(s3, Font, br, Rect_ConsoleText2, ContentAlignment.TopLeft.ToStringFormat) : End Using
 
-            If tk And IsFocused Then
+            If tick And IsFocused Then
                 G.SmoothingMode = SmoothingMode.HighSpeed
 
                 Using br As New SolidBrush(Color_Cursor)
@@ -431,65 +496,6 @@ Namespace UI.Simulation
             Using P As New Pen(Color.FromArgb(45, 45, 45)) : G.DrawRoundedRect(P, Rect) : End Using
         End Sub
 
-        Dim tk As Boolean = False
-
-        Private Sub Tm_Tick(sender As Object, e As EventArgs) Handles Tm.Tick
-            If IsFocused Then
-                If tk Then
-                    tk = False
-                Else
-                    tk = True
-                End If
-
-                Refresh()
-            End If
-        End Sub
-
-        Private Sub Taskbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            If Not DesignMode Then
-                Tm.Enabled = True
-                Tm.Start()
-
-                Try : AddHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
-                Try : AddHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try
-
-                ProcessBack()
-                'UpdateOpacityBackImageChanged()
-            Else
-                Tm.Enabled = False
-                Tm.Stop()
-            End If
-        End Sub
-
-        Dim img As Image
-
-        Sub UpdateOpacityBackImageChanged()
-            If BackImage IsNot Nothing Then
-                img = BackImage.Fade(OpacityBackImage / 100)
-                Refresh()
-            End If
-        End Sub
-
-        Sub ProcessBack()
-            GetBack()
-            NoiseBack()
-        End Sub
-
-        Sub GetBack()
-            adaptedBack = My.Wallpaper
-            adaptedBackBlurred = New Bitmap(adaptedBack).Blur(13)
-        End Sub
-
-        Sub NoiseBack()
-            Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(0.5))
-        End Sub
-
-        Private Sub Terminal_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try : RemoveHandler SizeChanged, AddressOf ProcessBack : Catch : End Try
-                Try : RemoveHandler OpacityBackImageChanged, AddressOf UpdateOpacityBackImageChanged : Catch : End Try
-            End If
-        End Sub
     End Class
 
 End Namespace

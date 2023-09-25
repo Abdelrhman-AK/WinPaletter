@@ -256,7 +256,6 @@ Partial Class LogonUIXP
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(294, 429)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(115, 34)
@@ -273,7 +272,6 @@ Partial Class LogonUIXP
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(208, 429)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)
@@ -291,7 +289,6 @@ Partial Class LogonUIXP
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(415, 429)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(180, 34)
@@ -336,7 +333,6 @@ Partial Class LogonUIXP
         Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
         Me.Button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.Button9.LineSize = 1
         Me.Button9.Location = New System.Drawing.Point(222, 5)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(126, 29)
@@ -364,7 +360,6 @@ Partial Class LogonUIXP
         Me.Button11.Image = CType(resources.GetObject("Button11.Image"), System.Drawing.Image)
         Me.Button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button11.LineSize = 1
         Me.Button11.Location = New System.Drawing.Point(85, 5)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(135, 29)
@@ -381,7 +376,6 @@ Partial Class LogonUIXP
         Me.Button12.Image = Nothing
         Me.Button12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button12.LineSize = 1
         Me.Button12.Location = New System.Drawing.Point(351, 5)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(135, 29)

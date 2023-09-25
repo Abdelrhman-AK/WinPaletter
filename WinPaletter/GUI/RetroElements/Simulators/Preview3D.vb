@@ -5,13 +5,16 @@ Namespace UI.Retro
 
     <Description("Retro 3D Panel Preview with Windows 9x style")> Public Class Preview3D : Inherits Control
 
+#Region "Properties"
+
         Public Property WindowFrame As Color = Color.Black
         Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
         Public Property ButtonDkShadow As Color = Color.Black
         Public Property ButtonHilight As Color = Color.White
         Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-
         Public Property LineSize As Integer = 6
+
+#End Region
 
         Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
             Dim B As New Bitmap(Width, Height)

@@ -301,7 +301,6 @@ Partial Class ExternalTerminal
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
         Me.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(224, 78)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(133, 25)
@@ -319,7 +318,6 @@ Partial Class ExternalTerminal
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(84, 78)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(138, 25)
@@ -337,7 +335,6 @@ Partial Class ExternalTerminal
         Me.Button4.Image = Nothing
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(359, 78)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(145, 25)
@@ -355,7 +352,6 @@ Partial Class ExternalTerminal
         Me.Button1.Image = Nothing
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(678, 43)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(64, 24)
@@ -373,7 +369,6 @@ Partial Class ExternalTerminal
         Me.Button7.Image = Nothing
         Me.Button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(811, 43)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(64, 24)
@@ -391,7 +386,6 @@ Partial Class ExternalTerminal
         Me.Button6.Image = Nothing
         Me.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(745, 43)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(64, 24)
@@ -404,7 +398,6 @@ Partial Class ExternalTerminal
         Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.ComboBox1.CustomFont = False
         Me.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -451,7 +444,6 @@ Partial Class ExternalTerminal
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(774, 685)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(115, 34)
@@ -468,7 +460,6 @@ Partial Class ExternalTerminal
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Nothing
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(688, 685)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 34)
@@ -1248,7 +1239,6 @@ Partial Class ExternalTerminal
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = Nothing
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(274, 6)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(21, 24)
@@ -1265,7 +1255,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontSizeVal.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_FontSizeVal.Image = Nothing
         Me.ExtTerminal_FontSizeVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ExtTerminal_FontSizeVal.LineSize = 1
         Me.ExtTerminal_FontSizeVal.Location = New System.Drawing.Point(261, 66)
         Me.ExtTerminal_FontSizeVal.Name = "ExtTerminal_FontSizeVal"
         Me.ExtTerminal_FontSizeVal.Size = New System.Drawing.Size(34, 24)
@@ -1323,7 +1312,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_FontWeightBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_FontWeightBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.ExtTerminal_FontWeightBox.CustomFont = False
         Me.ExtTerminal_FontWeightBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.ExtTerminal_FontWeightBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ExtTerminal_FontWeightBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1387,7 +1375,6 @@ Partial Class ExternalTerminal
         Me.Button25.ForeColor = System.Drawing.Color.White
         Me.Button25.Image = Nothing
         Me.Button25.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button25.LineSize = 1
         Me.Button25.Location = New System.Drawing.Point(274, 36)
         Me.Button25.Name = "Button25"
         Me.Button25.Size = New System.Drawing.Size(21, 24)
@@ -1421,7 +1408,6 @@ Partial Class ExternalTerminal
         Me.RasterList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RasterList.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.RasterList.CustomFont = False
         Me.RasterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
         Me.RasterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.RasterList.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1501,7 +1487,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_PreviewCUR_Val.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_PreviewCUR_Val.Image = Nothing
         Me.ExtTerminal_PreviewCUR_Val.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ExtTerminal_PreviewCUR_Val.LineSize = 1
         Me.ExtTerminal_PreviewCUR_Val.Location = New System.Drawing.Point(262, 66)
         Me.ExtTerminal_PreviewCUR_Val.Name = "ExtTerminal_PreviewCUR_Val"
         Me.ExtTerminal_PreviewCUR_Val.Size = New System.Drawing.Size(34, 24)
@@ -1523,7 +1508,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_CursorStyle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ExtTerminal_CursorStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.ExtTerminal_CursorStyle.CustomFont = False
         Me.ExtTerminal_CursorStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.ExtTerminal_CursorStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ExtTerminal_CursorStyle.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1692,7 +1676,6 @@ Partial Class ExternalTerminal
         Me.ExtTerminal_OpacityVal.ForeColor = System.Drawing.Color.White
         Me.ExtTerminal_OpacityVal.Image = Nothing
         Me.ExtTerminal_OpacityVal.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.ExtTerminal_OpacityVal.LineSize = 1
         Me.ExtTerminal_OpacityVal.Location = New System.Drawing.Point(261, 120)
         Me.ExtTerminal_OpacityVal.Name = "ExtTerminal_OpacityVal"
         Me.ExtTerminal_OpacityVal.Size = New System.Drawing.Size(34, 24)

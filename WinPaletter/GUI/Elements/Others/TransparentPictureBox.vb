@@ -4,7 +4,7 @@ Namespace UI.WP
 
     <Description("PictureBox that supports transparent background")>
     Public Class TransparentPictureBox : Inherits PictureBox
-        Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
             MyBase.OnPaintBackground(e)
 
             DoubleBuffered = True

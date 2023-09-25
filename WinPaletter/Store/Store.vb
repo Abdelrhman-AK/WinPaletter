@@ -2,10 +2,10 @@
 Imports System.Security.Cryptography
 Imports System.Text
 Imports Devcorp.Controls.VisualStyles
+Imports WinPaletter.Core
 Imports WinPaletter.CP
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.PreviewHelpers
-Imports WinPaletter.Core
 
 Public Class Store
 

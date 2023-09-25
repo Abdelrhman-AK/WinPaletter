@@ -6,13 +6,13 @@ Imports Devcorp.Controls.VisualStyles
 Imports Microsoft.Win32
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
+Imports WinPaletter.Core
 Imports WinPaletter.CP.Structures
 Imports WinPaletter.Metrics
 Imports WinPaletter.NativeMethods
 Imports WinPaletter.NativeMethods.User32
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.Core
 
 Public Class CP : Implements IDisposable : Implements ICloneable
 

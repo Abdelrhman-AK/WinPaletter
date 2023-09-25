@@ -13,21 +13,22 @@ Namespace UI.Retro
             BorderStyle = BorderStyle.None
         End Sub
 
+#Region "Properties"
         Public Property Flat As Boolean = False
         Public Property ButtonHilight As Color = Color.White
         Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
         Public Property ButtonDkShadow As Color = Color.FromArgb(105, 105, 105)
         Public Property ButtonLight As Color = Color.FromArgb(227, 227, 227)
         Public Property Style2 As Boolean = False
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.HighSpeed
             G.TextRenderingHint = My.RenderingHint
             DoubleBuffered = True
-
-            '################################################################################# Customizer
             Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
-            '#################################################################################
+
             G.Clear(BackColor)
 
             If Not Flat Then
@@ -55,6 +56,8 @@ Namespace UI.Retro
                 G.DrawRectangle(New Pen(ButtonShadow), Rect)
             End If
         End Sub
+
     End Class
+
 End Namespace
 

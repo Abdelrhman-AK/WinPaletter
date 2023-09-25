@@ -11,15 +11,15 @@ Public Class EditInfo
 
     End Sub
 
-    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+    Protected Overrides Sub OnDragOver(e As DragEventArgs)
+        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
             Exit Sub
         End If
 
-        MyBase.OnDragOver(drgevent)
+        MyBase.OnDragOver(e)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

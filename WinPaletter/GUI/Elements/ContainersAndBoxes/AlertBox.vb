@@ -6,8 +6,6 @@ Namespace UI.WP
 
     <Description("AlertBox for WinPaletter UI")> Public Class AlertBox : Inherits ContainerControl
 
-        Private borderColor, innerColor, textColor As Color
-
         Sub New()
             TabStop = False
             SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.ResizeRedraw, True)
@@ -18,7 +16,10 @@ Namespace UI.WP
             CustomColor = Color.FromArgb(0, 81, 210)
         End Sub
 
-#Region "Properties"
+#Region "Variables"
+
+        Private borderColor, innerColor, textColor As Color
+
         Enum Style
             Adaptive
             Simple
@@ -35,6 +36,11 @@ Namespace UI.WP
             No
         End Enum
 
+#End Region
+
+#Region "Properties"
+
+        Private _alertStyle As Style
         Public Property AlertStyle As Style
             Get
                 Return _alertStyle
@@ -44,8 +50,6 @@ Namespace UI.WP
                 Invalidate()
             End Set
         End Property
-
-        Private _alertStyle As Style
 
         Public Property Image As Image
         Public Property CustomColor As Color
@@ -57,9 +61,10 @@ Namespace UI.WP
         <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
         <Bindable(True)>
         Public Overrides Property Text As String
+
 #End Region
 
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             MyBase.OnPaint(e)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias

@@ -39,15 +39,15 @@ Public Class Wallpaper_Editor
         End Select
     End Sub
 
-    Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-        If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+    Protected Overrides Sub OnDragOver(e As DragEventArgs)
+        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
             Exit Sub
         End If
 
-        MyBase.OnDragOver(drgevent)
+        MyBase.OnDragOver(e)
     End Sub
 
     Sub ApplyFromCP(CP As CP)
@@ -536,11 +536,11 @@ Public Class Wallpaper_Editor
                 If IO.Directory.Exists(TextBox2.Text) Then
                     ImgLs1.Clear()
                     ImgLs1.AddRange(Directory.EnumerateFiles(TextBox2.Text, "*.*", SearchOption.TopDirectoryOnly).Where(Function(s)
-                                                                                                                                 Return s.EndsWith(".bmp") _
-                                                                                                                                OrElse s.EndsWith(".jpg") _
-                                                                                                                                OrElse s.EndsWith(".png") _
-                                                                                                                                OrElse s.EndsWith(".gif")
-                                                                                                                             End Function))
+                                                                                                                            Return s.EndsWith(".bmp") _
+                                                                                                                           OrElse s.EndsWith(".jpg") _
+                                                                                                                           OrElse s.EndsWith(".png") _
+                                                                                                                           OrElse s.EndsWith(".gif")
+                                                                                                                        End Function))
                     If index > ImgLs1.Count - 1 Then index = 0
 
                     img = GetWall(ImgLs1(index))

@@ -11,18 +11,22 @@ Namespace UI.Retro
             DoubleBuffered = True
             ForeColor = Color.Black
             BackColor = Color.White
-            TB = New Windows.Forms.TextBox With {.Visible = True}
             Font = New Font("Microsoft Sans Serif", 8)
-            TB.Text = Text
-            TB.ForeColor = Color.White
-            TB.MaxLength = _MaxLength
-            TB.Multiline = _Multiline
-            TB.ReadOnly = _ReadOnly
-            TB.UseSystemPasswordChar = _UseSystemPasswordChar
-            TB.BorderStyle = BorderStyle.None
-            TB.Location = New Point(1, 0)
-            TB.Width = Width - 1
-            _Style = RoundingStyle.Normal
+
+            TB = New Windows.Forms.TextBox With {
+                .Visible = True,
+                .Font = New Font("Microsoft Sans Serif", 8),
+                .Text = Text,
+                .ForeColor = Color.White,
+                .MaxLength = _MaxLength,
+                .Multiline = _Multiline,
+                .ReadOnly = _ReadOnly,
+                .UseSystemPasswordChar = _UseSystemPasswordChar,
+                .BorderStyle = BorderStyle.None,
+                .Location = New Point(1, 0),
+                .Width = Width - 1
+            }
+
             TB.Cursor = Cursors.IBeam
 
             If _Multiline Then
@@ -36,8 +40,12 @@ Namespace UI.Retro
         End Sub
 
 #Region "Variables"
+
+        Private ReadOnly _BaseColor As Color = BackColor
+        Private ReadOnly _TextColor As Color = ForeColor
+
         Private State As MouseState = MouseState.None
-        Private WithEvents TB As Windows.Forms.TextBox
+
         Enum MouseState As Byte
             None = 0
             Over = 1
@@ -45,46 +53,12 @@ Namespace UI.Retro
             Block = 3
         End Enum
 
+        Private WithEvents TB As Windows.Forms.TextBox
+
 #End Region
 
 #Region "Properties"
-#Region "TextBox Properties"
-
         Private _TextAlign As HorizontalAlignment = HorizontalAlignment.Left
-
-        Public Enum RoundingStyle
-            Normal
-            Rounded
-        End Enum
-
-        Private _Style As RoundingStyle
-
-        <Category("Options")>
-        Property Style() As RoundingStyle
-            Get
-                Return _Style
-            End Get
-            Set(ByVal value As RoundingStyle)
-                _Style = value
-                If TB IsNot Nothing Then
-                    TB.TextAlign = CType(value, HorizontalAlignment)
-                End If
-            End Set
-        End Property
-
-        Private _BorderStyle As BorderStyle
-
-        <Category("Options")>
-        Public Property BorderStyle() As BorderStyle
-            Get
-                Return _BorderStyle
-            End Get
-            Set(ByVal value As BorderStyle)
-                _BorderStyle = value
-                Invalidate()
-            End Set
-        End Property
-
         <Category("Options")>
         Property TextAlign() As HorizontalAlignment
             Get
@@ -99,7 +73,6 @@ Namespace UI.Retro
         End Property
 
         Private _MaxLength As Integer = 32767
-
         <Category("Options")>
         Property MaxLength() As Integer
             Get
@@ -114,7 +87,6 @@ Namespace UI.Retro
         End Property
 
         Private _ReadOnly As Boolean
-
         <Category("Options")>
         Property [ReadOnly]() As Boolean
             Get
@@ -129,7 +101,6 @@ Namespace UI.Retro
         End Property
 
         Private _UseSystemPasswordChar As Boolean
-
         <Category("Options")>
         Property UseSystemPasswordChar() As Boolean
             Get
@@ -144,7 +115,6 @@ Namespace UI.Retro
         End Property
 
         Private _Multiline As Boolean
-
         <Category("Options")>
         Property Multiline() As Boolean
             Get
@@ -196,6 +166,33 @@ Namespace UI.Retro
             End Set
         End Property
 
+        Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
+        Public Property ButtonDkShadow As Color = Color.Black
+        Public Property ButtonHilight As Color = Color.White
+        Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
+#End Region
+
+#Region "Events"
+        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+            MyBase.OnMouseDown(e)
+            State = MouseState.Down : Invalidate() : TB.Focus()
+        End Sub
+
+        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+            MyBase.OnMouseUp(e)
+            State = MouseState.Over : TB.Focus() : Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
+            MyBase.OnMouseEnter(e)
+            State = MouseState.Over : Invalidate()
+        End Sub
+
+        Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
+            MyBase.OnMouseLeave(e)
+            State = MouseState.None : Invalidate()
+        End Sub
+
         Protected Overrides Sub OnCreateControl()
             MyBase.OnCreateControl()
             If Not Controls.Contains(TB) Then
@@ -232,38 +229,30 @@ Namespace UI.Retro
             MyBase.OnResize(e)
         End Sub
 
-#End Region
-#End Region
-        Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
-        Public Property ButtonDkShadow As Color = Color.Black
-        Public Property ButtonHilight As Color = Color.White
-        Public Property ButtonLight As Color = Color.FromArgb(192, 192, 192)
-#Region "Colors"
-        Private ReadOnly _BaseColor As Color = BackColor
-        Private ReadOnly _TextColor As Color = ForeColor
-#End Region
-
-#Region "Events"
-        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-            MyBase.OnMouseDown(e)
-            State = MouseState.Down : Invalidate() : TB.Focus()
+        Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
+            State = MouseState.Down
+            Invalidate()
         End Sub
 
-        Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-            MyBase.OnMouseUp(e)
-            State = MouseState.Over : TB.Focus() : Invalidate()
-        End Sub
-
-        Protected Overrides Sub OnMouseEnter(ByVal e As EventArgs)
-            MyBase.OnMouseEnter(e)
+        Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter
             State = MouseState.Over : Invalidate()
         End Sub
 
-        Protected Overrides Sub OnMouseLeave(ByVal e As EventArgs)
-            MyBase.OnMouseLeave(e)
+        Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
             State = MouseState.None : Invalidate()
         End Sub
+
+        Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
+            State = MouseState.None : Invalidate()
+        End Sub
+
+        Private Sub TextBoxR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+            Try : If TB IsNot Nothing Then TB.BackColor = BackColor
+            Catch : End Try
+        End Sub
+
 #End Region
+
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim B As New Bitmap(Width, Height)
             Dim G As Graphics = Graphics.FromImage(B)
@@ -299,27 +288,7 @@ Namespace UI.Retro
             B.Dispose()
         End Sub
 
-        Private Sub TB_MouseDown(sender As Object, e As MouseEventArgs) Handles TB.MouseDown
-            State = MouseState.Down
-            Invalidate()
-        End Sub
-
-        Private Sub TB_MouseEnter(sender As Object, e As EventArgs) Handles TB.MouseEnter
-            State = MouseState.Over : Invalidate()
-        End Sub
-
-        Private Sub TB_MouseLeave(sender As Object, e As EventArgs) Handles TB.MouseLeave
-            State = MouseState.None : Invalidate()
-        End Sub
-
-        Private Sub TB_LostFocus(sender As Object, e As EventArgs) Handles TB.LostFocus
-            State = MouseState.None : Invalidate()
-        End Sub
-
-        Private Sub TextBoxR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
-            Try : If TB IsNot Nothing Then TB.BackColor = BackColor
-            Catch : End Try
-        End Sub
     End Class
+
 End Namespace
 

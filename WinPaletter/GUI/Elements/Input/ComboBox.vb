@@ -7,87 +7,54 @@ Namespace UI.WP
     <Description("Themed ComboBox for WinPaletter UI")> Public Class ComboBox : Inherits Windows.Forms.ComboBox
 
         Sub New()
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-        SetStyle(ControlStyles.ResizeRedraw, True)
-        SetStyle(ControlStyles.UserPaint, True)
-        SetStyle(ControlStyles.DoubleBuffer, True)
-        Size = New Size(190, 27)
-        DrawMode = DrawMode.OwnerDrawVariable
-        ItemHeight = 20
+            SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+            SetStyle(ControlStyles.ResizeRedraw, True)
+            SetStyle(ControlStyles.UserPaint, True)
+            SetStyle(ControlStyles.DoubleBuffer, True)
+            Size = New Size(190, 27)
+            DrawMode = DrawMode.OwnerDrawVariable
+            ItemHeight = 20
 
-        If My.Style.DarkMode Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
-        ForeColor = Color.White
-        DropDownStyle = ComboBoxStyle.DropDownList
-        Font = New Font("Segoe UI", 9)
-        DoubleBuffered = True
-    End Sub
+            If My.Style.DarkMode Then BackColor = Color.FromArgb(55, 55, 55) Else BackColor = Color.FromArgb(225, 225, 225)
+            ForeColor = Color.White
+            DropDownStyle = ComboBoxStyle.DropDownList
+            Font = New Font("Segoe UI", 9)
+            DoubleBuffered = True
+        End Sub
 
-#Region "Properties"
-    Public Property CustomFont As Boolean = False
-
-#End Region
+#Region "Variables"
 
         ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.3))
+        Private _Shown As Boolean = False
 
-#Region "Subs"
-        Sub ReplaceItem(sender As System.Object, e As DrawItemEventArgs) Handles Me.DrawItem
-            BackColor = My.Style.Colors.Back
-            e.DrawBackground()
+        Dim State As MouseState = MouseState.None
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
-            e.Graphics.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
-
-            If BackColor.IsDark Then
-                If ForeColor <> Color.White Then ForeColor = Color.White
-            Else
-                If ForeColor <> Color.Black Then ForeColor = Color.Black
-            End If
-
-            Using br As New SolidBrush(BackColor) : e.Graphics.FillRectangle(br, New Rectangle(e.Bounds.X - 2, e.Bounds.Y - 2, e.Bounds.Width + 4, e.Bounds.Height + 4)) : End Using
-
-            If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
-                Using br As New SolidBrush(My.Style.Colors.Border_Checked_Hover) : e.Graphics.FillRectangle(br, e.Bounds) : End Using
-            End If
-
-            Dim f As Font
-            If Not CustomFont Then
-                f = e.Font
-            Else
-                Try
-                    f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
-                Catch
-                    f = e.Font
-                End Try
-            End If
-
-            Dim Rect As Rectangle = e.Bounds
-            Rect.X += 2
-            Rect.Width -= 2
-
-            If e.Index >= 0 Then
-                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, br, Rect, ContentAlignment.MiddleLeft.ToStringFormat) : End Using
-            End If
-        End Sub
-
-        Protected Sub DrawTriangle(Clr As Color, FirstPoint As Point, SecondPoint As Point, ThirdPoint As Point, G As Graphics)
-            Dim points As New List(Of Point) From {FirstPoint, SecondPoint, ThirdPoint}
-            Using br As New SolidBrush(Clr) : G.FillPolygon(br, points.ToArray()) : End Using
-        End Sub
-#End Region
-
-#Region "Events"
         Enum MouseState
             None
             Over
             Down
         End Enum
 
+
+#End Region
+
+#Region "Subs"
+
+        Protected Sub DrawTriangle(Clr As Color, FirstPoint As Point, SecondPoint As Point, ThirdPoint As Point, G As Graphics)
+            Dim points As New List(Of Point) From {FirstPoint, SecondPoint, ThirdPoint}
+            Using br As New SolidBrush(Clr) : G.FillPolygon(br, points.ToArray()) : End Using
+        End Sub
+
+#End Region
+
+#Region "Events"
+
         Protected Overrides Sub OnMouseEnter(e As EventArgs)
             MyBase.OnMouseEnter(e)
             State = MouseState.Over
             _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
@@ -95,8 +62,8 @@ Namespace UI.WP
             MyBase.OnMouseLeave(e)
             State = MouseState.None
             _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
@@ -118,28 +85,26 @@ Namespace UI.WP
         Private Sub ComboBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
             State = MouseState.Down
             _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
 
         Private Sub ComboBox_Click(sender As Object, e As EventArgs) Handles Me.MouseUp
             State = MouseState.Over
             _Shown = True
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer1.Enabled = True
+            Timer1.Start()
             Invalidate()
         End Sub
-
-        Private _Shown As Boolean = False
 
         Private Sub ComboBox_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
             alpha = 0
             alpha2 = 0
             Try
                 If Not DesignMode Then
-                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf Invalidate
-                    AddHandler BackColorChanged, AddressOf Invalidate
+                    If Parent IsNot Nothing Then AddHandler Parent.BackColorChanged, AddressOf Invalidator
+                    AddHandler BackColorChanged, AddressOf Invalidator
                 End If
             Catch
             End Try
@@ -148,35 +113,40 @@ Namespace UI.WP
         Private Sub ComboBox_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
             Try
                 If Not DesignMode Then
-                    If Parent IsNot Nothing Then RemoveHandler Parent.BackColorChanged, AddressOf Invalidate
-                    RemoveHandler BackColorChanged, AddressOf Invalidate
+                    If Parent IsNot Nothing Then RemoveHandler Parent.BackColorChanged, AddressOf Invalidator
+                    RemoveHandler BackColorChanged, AddressOf Invalidator
                 End If
             Catch
             End Try
         End Sub
+
+        Sub Invalidator(sender As Object, e As EventArgs)
+            Invalidate()
+        End Sub
+
         Private Sub ComboBox_DropDown(sender As Object, e As EventArgs) Handles Me.DropDown
             If _Shown Then
-                Tmr2.Enabled = True
-                Tmr2.Start()
+                Timer2.Enabled = True
+                Timer2.Start()
             End If
         End Sub
 
         Private Sub ComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
             If _Shown Then
-                Tmr2.Enabled = True
-                Tmr2.Start()
+                Timer2.Enabled = True
+                Timer2.Start()
             End If
         End Sub
 
-        Dim State As MouseState = MouseState.None
 #End Region
 
 #Region "Animator"
+
         Dim alpha, alpha2 As Integer
         ReadOnly Factor As Integer = 20
-        Dim WithEvents Tmr, Tmr2 As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer1, Timer2 As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over Then
@@ -184,8 +154,8 @@ Namespace UI.WP
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
                     If _Shown Then
@@ -199,8 +169,8 @@ Namespace UI.WP
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer1.Enabled = False
+                        Timer1.Stop()
                     End If
 
                     If _Shown Then
@@ -211,7 +181,7 @@ Namespace UI.WP
             End If
         End Sub
 
-        Private Sub Tmr2_Tick(sender As Object, e As EventArgs) Handles Tmr2.Tick
+        Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
             If Not DesignMode Then
 
                 If DroppedDown Then
@@ -219,8 +189,8 @@ Namespace UI.WP
                         alpha2 += Factor
                     ElseIf alpha2 + Factor > 255 Then
                         alpha2 = 255
-                        Tmr2.Enabled = False
-                        Tmr2.Stop()
+                        Timer2.Enabled = False
+                        Timer2.Stop()
                     End If
 
                     If _Shown Then
@@ -234,8 +204,8 @@ Namespace UI.WP
                         alpha2 -= Factor
                     ElseIf alpha2 - Factor < 0 Then
                         alpha2 = 0
-                        Tmr2.Enabled = False
-                        Tmr2.Stop()
+                        Timer2.Enabled = False
+                        Timer2.Stop()
                     End If
 
                     If _Shown Then
@@ -245,7 +215,43 @@ Namespace UI.WP
                 End If
             End If
         End Sub
+
 #End Region
+
+        Sub ComboBox_DrawItem(sender As System.Object, e As DrawItemEventArgs) Handles Me.DrawItem
+            BackColor = My.Style.Colors.Back
+            e.DrawBackground()
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+            e.Graphics.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
+
+            If BackColor.IsDark Then
+                If ForeColor <> Color.White Then ForeColor = Color.White
+            Else
+                If ForeColor <> Color.Black Then ForeColor = Color.Black
+            End If
+
+            Using br As New SolidBrush(BackColor) : e.Graphics.FillRectangle(br, New Rectangle(e.Bounds.X - 2, e.Bounds.Y - 2, e.Bounds.Width + 4, e.Bounds.Height + 4)) : End Using
+
+            If (e.State And DrawItemState.Selected) = DrawItemState.Selected Then
+                Using br As New SolidBrush(My.Style.Colors.Border_Checked_Hover) : e.Graphics.FillRectangle(br, e.Bounds) : End Using
+            End If
+
+            Dim f As Font
+            Try
+                f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
+            Catch
+                f = e.Font
+            End Try
+
+            Dim Rect As Rectangle = e.Bounds
+            Rect.X += 2
+            Rect.Width -= 2
+
+            If e.Index >= 0 Then
+                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, br, Rect, ContentAlignment.MiddleLeft.ToStringFormat) : End Using
+            End If
+        End Sub
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
@@ -312,18 +318,15 @@ Namespace UI.WP
             End If
 
             Dim f As Font
-            If Not CustomFont Then
+            Try
+                f = New Font(Text, Font.Size, Font.Style)
+            Catch
                 f = Font
-            Else
-                Try
-                    f = New Font(Text, Font.Size, Font.Style)
-                Catch
-                    f = Font
-                End Try
-            End If
+            End Try
 
             Using br As New SolidBrush(ForeColor) : G.DrawString(Text, f, br, TextRect, New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near}) : End Using
         End Sub
+
     End Class
 
 End Namespace

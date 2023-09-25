@@ -4,14 +4,32 @@ Imports System.Drawing.Imaging
 
 Namespace UI.Simulation
 
-    <Description("Simulated Windows elements")>
-    Public Class WinElement : Inherits ContainerControl
+    <Description("Simulated Windows elements")> Public Class WinElement : Inherits ContainerControl
+
+        Sub New()
+            SetStyle(ControlStyles.UserPaint, True)
+            SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+            SetStyle(ControlStyles.ResizeRedraw, True)
+            SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+            BackColor = Color.Transparent
+        End Sub
+
+#Region "Variables"
+
         Dim Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.15))
         Dim Noise7 As Bitmap = My.Resources.AeroGlass
         Dim Noise7Start As Bitmap = My.Resources.Start7Glass
         Dim adaptedBackBlurred As Bitmap
+        Dim Button1 As Rectangle
+        Dim Button2 As Rectangle
 
-#Region "Properties"
+        Private _State_Btn1, _State_Btn2 As MouseState
+        Enum MouseState
+            Normal
+            Hover
+            Pressed
+        End Enum
+
         Enum Styles
             Start11
             Taskbar11
@@ -44,6 +62,10 @@ Namespace UI.Simulation
             StartXP
             TaskbarXP
         End Enum
+
+#End Region
+
+#Region "Properties"
 
         Private _Style As Styles = Styles.Start11
         Public Property Style As Styles
@@ -258,6 +280,147 @@ Namespace UI.Simulation
         Public Property Shadow As Boolean = True
         Public Property SuspendRefresh As Boolean = False
 
+        Protected Overrides ReadOnly Property CreateParams As CreateParams
+            Get
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.ExStyle = cp.ExStyle Or &H20
+                Return cp
+            End Get
+        End Property
+
+#End Region
+
+#Region "Events"
+
+        Private Sub WinElement_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+            If Not BackColor = Color.Transparent Then BackColor = Color.Transparent
+        End Sub
+
+        Private Sub WinElement_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
+            If Style = Styles.ActionCenter11 Then
+
+                If Button1.Contains(PointToClient(MousePosition)) Then
+                    If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
+                    If Not SuspendRefresh Then Refresh()
+                Else
+                    If Not _State_Btn1 = MouseState.Normal Then
+                        _State_Btn1 = MouseState.Normal
+                        If Not SuspendRefresh Then Refresh()
+                    End If
+                End If
+
+                If Button2.Contains(PointToClient(MousePosition)) Then
+                    If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
+                    If Not SuspendRefresh Then Refresh()
+                Else
+                    If Not _State_Btn2 = MouseState.Normal Then
+                        _State_Btn2 = MouseState.Normal
+                        If Not SuspendRefresh Then Refresh()
+                    End If
+                End If
+
+            End If
+        End Sub
+
+        Private Sub WinElement_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+            If Style = Styles.ActionCenter11 Then
+                _State_Btn1 = MouseState.Normal
+                _State_Btn2 = MouseState.Normal
+                If Not SuspendRefresh Then Refresh()
+            End If
+        End Sub
+
+        Private Sub WinElement_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            If Not DesignMode Then
+                Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+                GetBack()
+            End If
+        End Sub
+
+        Private Sub WinElement_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            If Not DesignMode Then
+                Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack_EventHandler : Catch : End Try
+            End If
+        End Sub
+
+        Sub ProcessBack_EventHandler(sender As Object, e As EventArgs)
+            ProcessBack()
+        End Sub
+
+        Sub ProcessBack()
+            GetBack()
+        End Sub
+
+        Sub GetBack()
+            Try
+                If Style = Styles.Taskbar11 Or Style = Styles.Start11 Or Style = Styles.ActionCenter11 Or Style = Styles.AltTab11 Then
+
+                    If Transparency Then
+                        Dim b As Bitmap
+                        If My.Wallpaper IsNot Nothing Then
+                            b = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(BlurPower)
+                        End If
+
+                        If DarkMode Then
+                            If b IsNot Nothing Then
+                                Using ImgF As New ImageProcessor.ImageFactory
+                                    ImgF.Load(b)
+                                    ImgF.Saturation(60)
+                                    adaptedBackBlurred = ImgF.Image.Clone
+                                End Using
+                            End If
+
+                        Else
+                            adaptedBackBlurred = b
+                        End If
+                    Else
+                        adaptedBackBlurred = Nothing
+                    End If
+
+                ElseIf Style = Styles.Taskbar10 Or Style = Styles.Start10 Or Style = Styles.ActionCenter10 Then
+                    If Transparency AndAlso My.Wallpaper IsNot Nothing Then
+                        adaptedBackBlurred = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(BlurPower)
+                    Else
+                        adaptedBackBlurred = Nothing
+                    End If
+
+                ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Or Style = Styles.AltTab7Aero Then
+                    If My.Wallpaper IsNot Nothing Then
+                        adaptedBackBlurred = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(1)
+                    Else
+                        adaptedBackBlurred = Nothing
+                    End If
+
+                Else
+                    adaptedBackBlurred = Nothing
+
+                End If
+
+            Catch
+                adaptedBackBlurred = Nothing
+
+            End Try
+        End Sub
+
+        Sub NoiseBack()
+
+            If Style = Styles.ActionCenter11 Or Style = Styles.Start11 Or Style = Styles.Taskbar11 Or Style = Styles.AltTab11 Then
+                If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
+
+            ElseIf Style = Styles.ActionCenter10 Or Style = Styles.Start10 Or Style = Styles.Taskbar10 Then
+                If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
+
+            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.AltTab7Aero Or Style = Styles.AltTab7Opaque Then
+                Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
+                Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
+
+            End If
+
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
         Public Sub CopycatFrom(element As WinElement)
             Style = element.Style
             _NoisePower = element.NoisePower
@@ -295,67 +458,6 @@ Namespace UI.Simulation
         End Sub
 
 #End Region
-
-        Sub New()
-            SetStyle(ControlStyles.UserPaint, True)
-            SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-            SetStyle(ControlStyles.ResizeRedraw, True)
-            SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-            BackColor = Color.Transparent
-        End Sub
-
-        Protected Overrides ReadOnly Property CreateParams As CreateParams
-            Get
-                Dim cp As CreateParams = MyBase.CreateParams
-                cp.ExStyle = cp.ExStyle Or &H20
-                Return cp
-            End Get
-        End Property
-
-        Enum MouseState
-            Normal
-            Hover
-            Pressed
-        End Enum
-
-        Private _State_Btn1, _State_Btn2 As MouseState
-
-        Dim Button1 As Rectangle
-        Dim Button2 As Rectangle
-
-        Private Sub Acrylic_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove, Me.MouseDown, Me.MouseUp
-            If Style = Styles.ActionCenter11 Then
-
-                If Button1.Contains(PointToClient(MousePosition)) Then
-                    If e.Button = MouseButtons.None Then _State_Btn1 = MouseState.Hover Else _State_Btn1 = MouseState.Pressed
-                    If Not SuspendRefresh Then Refresh()
-                Else
-                    If Not _State_Btn1 = MouseState.Normal Then
-                        _State_Btn1 = MouseState.Normal
-                        If Not SuspendRefresh Then Refresh()
-                    End If
-                End If
-
-                If Button2.Contains(PointToClient(MousePosition)) Then
-                    If e.Button = MouseButtons.None Then _State_Btn2 = MouseState.Hover Else _State_Btn2 = MouseState.Pressed
-                    If Not SuspendRefresh Then Refresh()
-                Else
-                    If Not _State_Btn2 = MouseState.Normal Then
-                        _State_Btn2 = MouseState.Normal
-                        If Not SuspendRefresh Then Refresh()
-                    End If
-                End If
-
-            End If
-        End Sub
-
-        Private Sub Acrylic_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-            If Style = Styles.ActionCenter11 Then
-                _State_Btn1 = MouseState.Normal
-                _State_Btn2 = MouseState.Normal
-                If Not SuspendRefresh Then Refresh()
-            End If
-        End Sub
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
@@ -1291,93 +1393,6 @@ Namespace UI.Simulation
 
         End Sub
 
-        Private Sub WinElement_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            If Not DesignMode Then
-                Try : AddHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-                ProcessBack()
-            End If
-        End Sub
-
-        Private Sub WinElement_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            If Not DesignMode Then
-                Try : RemoveHandler Parent.BackgroundImageChanged, AddressOf ProcessBack : Catch : End Try
-            End If
-        End Sub
-
-        Sub ProcessBack()
-            GetBack()
-        End Sub
-
-        Sub GetBack()
-            Try
-                If Style = Styles.Taskbar11 Or Style = Styles.Start11 Or Style = Styles.ActionCenter11 Or Style = Styles.AltTab11 Then
-
-                    If Transparency Then
-                        Dim b As Bitmap
-                        If My.Wallpaper IsNot Nothing Then
-                            b = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(BlurPower)
-                        End If
-
-                        If DarkMode Then
-                            If b IsNot Nothing Then
-                                Using ImgF As New ImageProcessor.ImageFactory
-                                    ImgF.Load(b)
-                                    ImgF.Saturation(60)
-                                    adaptedBackBlurred = ImgF.Image.Clone
-                                End Using
-                            End If
-
-                        Else
-                            adaptedBackBlurred = b
-                        End If
-                    Else
-                        adaptedBackBlurred = Nothing
-                    End If
-
-                ElseIf Style = Styles.Taskbar10 Or Style = Styles.Start10 Or Style = Styles.ActionCenter10 Then
-                    If Transparency AndAlso My.Wallpaper IsNot Nothing Then
-                        adaptedBackBlurred = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(BlurPower)
-                    Else
-                        adaptedBackBlurred = Nothing
-                    End If
-
-                ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.StartVistaAero Or Style = Styles.TaskbarVistaAero Or Style = Styles.AltTab7Aero Then
-                    If My.Wallpaper IsNot Nothing Then
-                        adaptedBackBlurred = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(1)
-                    Else
-                        adaptedBackBlurred = Nothing
-                    End If
-
-                Else
-                    adaptedBackBlurred = Nothing
-
-                End If
-
-            Catch
-                adaptedBackBlurred = Nothing
-
-            End Try
-        End Sub
-
-        Sub NoiseBack()
-
-            If Style = Styles.ActionCenter11 Or Style = Styles.Start11 Or Style = Styles.Taskbar11 Or Style = Styles.AltTab11 Then
-                If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
-
-            ElseIf Style = Styles.ActionCenter10 Or Style = Styles.Start10 Or Style = Styles.Taskbar10 Then
-                If Transparency Then Noise = New TextureBrush(My.Resources.GaussianBlur.Fade(NoisePower))
-
-            ElseIf Style = Styles.Start7Aero Or Style = Styles.Taskbar7Aero Or Style = Styles.AltTab7Aero Or Style = Styles.AltTab7Opaque Then
-                Try : Noise7 = My.Resources.AeroGlass.Fade(NoisePower / 100) : Catch : End Try
-                Try : Noise7Start = My.Resources.Start7Glass.Fade(NoisePower / 100) : Catch : End Try
-
-            End If
-
-        End Sub
-
-        Private Sub WinElement_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
-            If Not BackColor = Color.Transparent Then BackColor = Color.Transparent
-        End Sub
     End Class
 
 End Namespace

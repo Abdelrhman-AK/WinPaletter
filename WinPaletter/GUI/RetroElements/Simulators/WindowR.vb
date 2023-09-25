@@ -14,6 +14,8 @@ Namespace UI.Retro
             Text = "New Window"
         End Sub
 
+#Region "Properties"
+
         Public Property Color1 As Color = Color.FromArgb(0, 0, 128)
         Public Property Color2 As Color = Color.FromArgb(16, 132, 208)
         Public Property ColorGradient As Boolean = True
@@ -110,12 +112,6 @@ Namespace UI.Retro
             End Set
         End Property
 
-        Private Sub WindowR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
-            _CloseBtn.BackColor = BackColor
-            _MinBtn.BackColor = BackColor
-            _MaxBtn.BackColor = BackColor
-        End Sub
-
         Private _Metrics_CaptionHeight As Integer = 22
         Public Property Metrics_CaptionHeight As Integer
             Get
@@ -131,7 +127,6 @@ Namespace UI.Retro
             End Set
         End Property
 
-
         Private _Metrics_CaptionWidth As Integer = 22
         Public Property Metrics_CaptionWidth As Integer
             Get
@@ -145,7 +140,6 @@ Namespace UI.Retro
                 Refresh()
             End Set
         End Property
-
 
         Private _Metrics_BorderWidth As Integer = 1
         Public Property Metrics_BorderWidth As Integer
@@ -173,33 +167,6 @@ Namespace UI.Retro
                 Refresh()
             End Set
         End Property
-
-
-#Region "ControlBox"
-        Private ReadOnly _CloseBtn As New UI.Retro.ButtonR With {.Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
-        Private ReadOnly _MinBtn As New UI.Retro.ButtonR With {.Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
-        Private ReadOnly _MaxBtn As New UI.Retro.ButtonR With {.Text = "0", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
-
-        Private BtnHeight As Integer = Metrics_CaptionHeight + GetTitleTextHeight() - 4
-        Private BtnWidth As Integer = Metrics_CaptionWidth - 2
-
-        Private Sub WindowR_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            If Not UseItAsMenu Then
-                Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
-                _CloseBtn.Visible = _ControlBox
-                _MinBtn.Visible = _ControlBox And _MinimizeBox
-                _MaxBtn.Visible = _ControlBox And _MaximizeBox
-
-                AdjustControlBoxFontsSizes()
-                AdjustButtonSizes()
-                AdjustLocations()
-            End If
-        End Sub
-
-        Private Sub WindowR_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-            AdjustLocations()
-        End Sub
-
 
         Private _ControlBox As Boolean = True
         Public Property ControlBox As Boolean
@@ -242,6 +209,52 @@ Namespace UI.Retro
             End Set
         End Property
 
+#End Region
+
+#Region "Events"
+
+        Private Sub WindowR_BackColorChanged(sender As Object, e As EventArgs) Handles Me.BackColorChanged
+            _CloseBtn.BackColor = BackColor
+            _MinBtn.BackColor = BackColor
+            _MaxBtn.BackColor = BackColor
+        End Sub
+
+        Private Sub WindowR_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            If Not UseItAsMenu Then
+                Controls.AddRange(New Control() {_CloseBtn, _MaxBtn, _MinBtn})
+                _CloseBtn.Visible = _ControlBox
+                _MinBtn.Visible = _ControlBox And _MinimizeBox
+                _MaxBtn.Visible = _ControlBox And _MaximizeBox
+
+                AdjustControlBoxFontsSizes()
+                AdjustButtonSizes()
+                AdjustLocations()
+            End If
+        End Sub
+
+        Private Sub WindowR_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+            AdjustLocations()
+        End Sub
+
+        Private Sub WindowR_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
+            AdjustControlBoxFontsSizes()
+            AdjustButtonSizes()
+            AdjustLocations()
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
+
+        Public Function GetTitleTextHeight()
+            Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
+            TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
+            TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
+            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+
+            Return TitleTextH_Sum
+        End Function
+
         Private Sub AdjustButtonSizes()
             BtnHeight = Math.Max(_Metrics_CaptionHeight + GetTitleTextHeight() - 4, 5)
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5)
@@ -273,12 +286,6 @@ Namespace UI.Retro
 
         End Sub
 
-        Private Sub WindowR_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
-            AdjustControlBoxFontsSizes()
-            AdjustButtonSizes()
-            AdjustLocations()
-        End Sub
-
         Sub AdjustControlBoxFontsSizes()
             Try
                 Dim i0, iFx As Single
@@ -293,25 +300,27 @@ Namespace UI.Retro
             End Try
         End Sub
 
-
         Sub AdjustPadding()
             Dim iP As Integer = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth
             Dim iT As Integer = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + GetTitleTextHeight()
             Dim _Padding As New Padding(iP, iT, iP, iP)
             Padding = _Padding
         End Sub
+
 #End Region
 
-        Public Function GetTitleTextHeight()
-            Dim TitleTextH, TitleTextH_9, TitleTextH_Sum As Integer
-            TitleTextH = "ABCabc0123xYz.#".Measure(Font).Height
-            TitleTextH_9 = "ABCabc0123xYz.#".Measure(New Font(Font.Name, 9, Font.Style)).Height
-            TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5)
+#Region "ControlBox"
 
-            Return TitleTextH_Sum
-        End Function
+        Private ReadOnly _CloseBtn As New UI.Retro.ButtonR With {.Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+        Private ReadOnly _MinBtn As New UI.Retro.ButtonR With {.Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+        Private ReadOnly _MaxBtn As New UI.Retro.ButtonR With {.Text = "0", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
 
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Private BtnHeight As Integer = Metrics_CaptionHeight + GetTitleTextHeight() - 4
+        Private BtnWidth As Integer = Metrics_CaptionWidth - 2
+
+#End Region
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.HighSpeed
             G.TextRenderingHint = My.RenderingHint
@@ -385,4 +394,5 @@ Namespace UI.Retro
         End Sub
 
     End Class
+
 End Namespace

@@ -7,49 +7,54 @@ Namespace UI.WP
     <Description("Themed Button for WinPaletter UI")> Public Class Button : Inherits Windows.Forms.Button
 
         Sub New()
-        Font = New Font("Segoe UI", 9)
-        ForeColor = Color.White
-        If My.Style.DarkMode Then BackColor = Color.FromArgb(50, 50, 50) Else BackColor = Color.FromArgb(225, 225, 225)
-        LineColor = Color.FromArgb(0, 81, 210)
-        Image = MyBase.Image
-        DoubleBuffered = True
+            Font = New Font("Segoe UI", 9)
+            ForeColor = Color.White
+            If My.Style.DarkMode Then BackColor = Color.FromArgb(50, 50, 50) Else BackColor = Color.FromArgb(225, 225, 225)
+            LineColor = Color.FromArgb(0, 81, 210)
+            Image = MyBase.Image
+            DoubleBuffered = True
 
-        Try
-            If Image IsNot Nothing Then : LineImage = Image.AverageColor
-            Else : LineImage = LineColor : End If
-        Catch : End Try
-
-
-    End Sub
-
-#Region "Properties"
-    Public Property LineSize As Integer = 1
-
-#Region "Line Color Property"
-        Private LineColorValue As Color = Color.FromArgb(0, 81, 210)
-        Public Event LineColorChanged As PropertyChangedEventHandler
-
-        Private Sub LineColorNotifyPropertyChanged(info As String)
-            RaiseEvent LineColorChanged(Me, New PropertyChangedEventArgs(info))
+            Try
+                If Image IsNot Nothing Then : LineImage = Image.AverageColor
+                Else : LineImage = LineColor : End If
+            Catch : End Try
         End Sub
 
+#Region "Variables"
+
+        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
+        Dim LineImage As Color = LineColor
+        Dim BC As Color
+        ReadOnly Steps As Integer = 15
+        ReadOnly Delay As Integer = 1
+        Private _Shown As Boolean = False
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
+
+#Region "Properties"
+        Private _LineColor As Color = Color.FromArgb(0, 81, 210)
         Public Property LineColor() As Color
             Get
-                Return LineColorValue
+                Return _LineColor
             End Get
 
-            Set(LineColor As Color)
-                If Not (LineColor = LineColorValue) Then
-                    LineColorValue = LineColor
-                    LineColorNotifyPropertyChanged("ControlColorChanged")
+            Set(value As Color)
+                If Not (value = _LineColor) Then
+                    _LineColor = value
+                    Refresh()
                 End If
             End Set
         End Property
-#End Region
-
 
         Private _Image As Image
-
         Public Overloads Property Image() As Image
             Get
                 Return _Image
@@ -72,13 +77,22 @@ Namespace UI.WP
             End Set
         End Property
 
-        Dim LineImage As Color = LineColor
+        Public Property DrawOnGlass As Boolean = False
+
+        Protected Overrides ReadOnly Property CreateParams() As CreateParams
+            Get
+                Dim cpar As CreateParams = MyBase.CreateParams
+                If DrawOnGlass And Not DesignMode Then
+                    cpar.ExStyle = cpar.ExStyle Or &H20
+                    Return cpar
+                Else
+                    Return cpar
+                End If
+            End Get
+        End Property
 #End Region
 
 #Region "Events"
-        Dim BC As Color
-        ReadOnly Steps As Integer = 15
-        ReadOnly Delay As Integer = 1
 
 #Region "OnMouse"
         Protected Overrides Sub OnMouseEnter(e As EventArgs)
@@ -97,8 +111,8 @@ Namespace UI.WP
             If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
             If _Shown Then
-                Tmr.Enabled = True
-                Tmr.Start()
+                Timer.Enabled = True
+                Timer.Start()
             End If
 
             Invalidate()
@@ -115,8 +129,8 @@ Namespace UI.WP
             If Not DesignMode Then Visual.FadeColor(Me, "BackColor", C_Before, C_After, Steps, Delay)
 
             If _Shown Then
-                Tmr.Enabled = True
-                Tmr.Start()
+                Timer.Enabled = True
+                Timer.Start()
             End If
 
             Invalidate()
@@ -138,8 +152,8 @@ Namespace UI.WP
             State = MouseState.Down
 
             If _Shown Then
-                Tmr.Enabled = True
-                Tmr.Start()
+                Timer.Enabled = True
+                Timer.Start()
             End If
 
             Invalidate()
@@ -165,8 +179,8 @@ Namespace UI.WP
             State = MouseState.Over
 
             If _Shown Then
-                Tmr.Enabled = True
-                Tmr.Start()
+                Timer.Enabled = True
+                Timer.Start()
             End If
 
             Invalidate()
@@ -215,21 +229,73 @@ Namespace UI.WP
             State = MouseState.None : Invalidate()
         End Sub
 
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
+        Private Sub Button_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+            Try
+                If Not DesignMode Then
+                    Try
+                        AddHandler FindForm.Load, AddressOf Loaded
+                        AddHandler FindForm.Shown, AddressOf Showed
+                        AddHandler FindForm.FormClosed, AddressOf Closed
+                        AddHandler Parent.Invalidated, AddressOf ForceRefresh
+                        AddHandler Parent.BackColorChanged, AddressOf ForceRefresh
+                    Catch
+                    End Try
+                End If
+                alpha = 0
+            Catch
+            End Try
+        End Sub
 
-        Public State As MouseState = MouseState.None
+        Private Sub Button_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            Try
+                If Not DesignMode Then
+                    Try
+                        RemoveHandler FindForm.Load, AddressOf Loaded
+                        RemoveHandler FindForm.Shown, AddressOf Showed
+                        RemoveHandler FindForm.FormClosed, AddressOf Closed
+                        RemoveHandler Parent.Invalidated, AddressOf ForceRefresh
+                        RemoveHandler Parent.BackColorChanged, AddressOf ForceRefresh
+                    Catch
+                    End Try
+                End If
+            Catch
+            End Try
+        End Sub
+
+        Sub Loaded(sender As Object, e As EventArgs)
+            _Shown = False
+            Timer.Enabled = False
+            Timer.Stop()
+        End Sub
+
+        Sub Showed(sender As Object, e As EventArgs)
+            _Shown = True
+        End Sub
+
+        Sub Closed(sender As Object, e As EventArgs)
+            _Shown = False
+            Timer.Enabled = False
+            Timer.Stop()
+        End Sub
+
+        Sub ForceRefresh(sender As Object, e As EventArgs)
+            Try
+                BC = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
+                BackColor = BC
+                Invalidate()
+            Catch
+            End Try
+        End Sub
+
 #End Region
 
 #Region "Animator"
+
         Dim alpha As Integer
         ReadOnly Factor As Integer = 15
-        Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             Try
                 If Not DesignMode Then
 
@@ -238,8 +304,8 @@ Namespace UI.WP
                             alpha += Factor
                         ElseIf alpha + Factor > 255 Then
                             alpha = 255
-                            Tmr.Enabled = False
-                            Tmr.Stop()
+                            Timer.Enabled = False
+                            Timer.Stop()
                         End If
 
                         If _Shown Then
@@ -253,8 +319,8 @@ Namespace UI.WP
                             alpha -= Factor
                         ElseIf alpha - Factor < 0 Then
                             alpha = 0
-                            Tmr.Enabled = False
-                            Tmr.Stop()
+                            Timer.Enabled = False
+                            Timer.Stop()
                         End If
 
                         If _Shown Then
@@ -267,23 +333,8 @@ Namespace UI.WP
             Catch
             End Try
         End Sub
+
 #End Region
-
-        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.6))
-
-        Protected Overrides ReadOnly Property CreateParams() As CreateParams
-            Get
-                Dim cpar As CreateParams = MyBase.CreateParams
-                If DrawOnGlass And Not DesignMode Then
-                    cpar.ExStyle = cpar.ExStyle Or &H20
-                    Return cpar
-                Else
-                    Return cpar
-                End If
-            End Get
-        End Property
-
-        Public Property DrawOnGlass As Boolean = False
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
@@ -422,66 +473,6 @@ Namespace UI.WP
 
 #End Region
 
-        End Sub
-
-        Private Sub Button_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-            Try
-                If Not DesignMode Then
-                    Try
-                        AddHandler FindForm.Load, AddressOf Loaded
-                        AddHandler FindForm.Shown, AddressOf Showed
-                        AddHandler FindForm.FormClosed, AddressOf Closed
-                        AddHandler Parent.Invalidated, AddressOf ForceRefresh
-                        AddHandler Parent.BackColorChanged, AddressOf ForceRefresh
-                    Catch
-                    End Try
-                End If
-                alpha = 0
-            Catch
-            End Try
-        End Sub
-
-        Private Sub Button_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            Try
-                If Not DesignMode Then
-                    Try
-                        RemoveHandler FindForm.Load, AddressOf Loaded
-                        RemoveHandler FindForm.Shown, AddressOf Showed
-                        RemoveHandler FindForm.FormClosed, AddressOf Closed
-                        RemoveHandler Parent.Invalidated, AddressOf ForceRefresh
-                        RemoveHandler Parent.BackColorChanged, AddressOf ForceRefresh
-                    Catch
-                    End Try
-                End If
-            Catch
-            End Try
-        End Sub
-
-        Private _Shown As Boolean = False
-
-        Sub Loaded()
-            _Shown = False
-            Tmr.Enabled = False
-            Tmr.Stop()
-        End Sub
-
-        Sub Showed()
-            _Shown = True
-        End Sub
-
-        Sub Closed()
-            _Shown = False
-            Tmr.Enabled = False
-            Tmr.Stop()
-        End Sub
-
-        Sub ForceRefresh()
-            Try
-                BC = GetParentColor.CB(If(GetParentColor.IsDark, 0.05, -0.03))
-                BackColor = BC
-                Invalidate()
-            Catch
-            End Try
         End Sub
 
     End Class

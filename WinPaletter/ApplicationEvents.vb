@@ -9,9 +9,9 @@ Imports System.Security.Principal
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+Imports WinPaletter.Core
 Imports WinPaletter.PreviewHelpers
 Imports WinPaletter.Reg_IO
-Imports WinPaletter.Core
 
 Namespace My
     Module Env

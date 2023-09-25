@@ -4,8 +4,36 @@ Imports System.Drawing.Text
 
 Namespace UI.Simulation
 
-    <Description("A simulated Windows Command Prompt/PS")>
-    <DefaultEvent("Click")> Public Class WinCMD : Inherits ContainerControl
+    <Description("A simulated Windows Command Prompt/PS")> <DefaultEvent("Click")> Public Class WinCMD : Inherits ContainerControl
+
+        Sub New()
+            Text = ""
+            DoubleBuffered = True
+        End Sub
+
+#Region "Variables"
+
+        ReadOnly S1 As String = "(c) Microsoft Corporation. All rights reserved."
+        ReadOnly S2 As String = My.PATH_System32 & ">"
+        ReadOnly CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+
+        Enum Raster_Sizes
+            _4x6
+            _6x8
+            _8x8
+            _16x8
+            _5x12
+            _7x12
+            _8x12
+            _16x12
+            _12x16
+            _10x18
+        End Enum
+
+#End Region
+
+#Region "Properties"
+
         Public Property CMD_ColorTable00 As Color
         Public Property CMD_ColorTable01 As Color
         Public Property CMD_ColorTable02 As Color
@@ -29,36 +57,14 @@ Namespace UI.Simulation
         Public Property PowerShell As Boolean = False
         Public Property Raster As Boolean = True
         Public Property RasterSize As Raster_Sizes = Raster_Sizes._8x12
-
         Public Property CustomTerminal As Boolean = False
 
-        ReadOnly S1 As String = "(c) Microsoft Corporation. All rights reserved."
-        ReadOnly S2 As String = My.PATH_System32 & ">"
-        ReadOnly CV As String = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+#End Region
 
-        Enum Raster_Sizes
-            _4x6
-            _6x8
-            _8x8
-            _16x8
-            _5x12
-            _7x12
-            _8x12
-            _16x12
-            _12x16
-            _10x18
-        End Enum
-
-        Sub New()
-            Text = ""
-            DoubleBuffered = True
-        End Sub
-
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias
             G.TextRenderingHint = If(DesignMode, TextRenderingHint.ClearTypeGridFit, TextRenderingHint.SystemDefault)
-
             DoubleBuffered = True
 
             Dim Rect As New Rectangle(0, 0, Width - 1, Height - 1)
@@ -247,12 +253,12 @@ Namespace UI.Simulation
                     S = "Windows PowerShell" & vbCrLf & S1 & vbCrLf & vbCrLf & "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows" & vbCrLf & vbCrLf & "PS " & S2
                 End If
             Else
-                S = "This is just an preview to your custom terminal." & vbCrLf & vbCrLf & S2
+                S = My.Lang.CMDSimulator_Alert0 & vbCrLf & vbCrLf & S2
             End If
 
 
             If Raster Then
-                S &= vbCrLf & vbCrLf & "*Note: Raster Font will look different from the preview."
+                S &= vbCrLf & vbCrLf & My.Lang.CMDSimulator_Alert1
             End If
 
             If Not Raster Then
@@ -261,7 +267,7 @@ Namespace UI.Simulation
                 Using br As New SolidBrush(PCB) : G.FillRectangle(br, RectMiddle) : End Using
                 Using P As New Pen(PCF) : G.DrawRectangle(P, RectMiddleBorder) : End Using
 
-                Using br As New SolidBrush(PCF) : G.DrawString("This is a pop-up", F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat) : End Using
+                Using br As New SolidBrush(PCF) : G.DrawString(My.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, ContentAlignment.MiddleCenter.ToStringFormat) : End Using
 
             Else
                 Dim i0, i1 As Bitmap
@@ -371,6 +377,7 @@ Namespace UI.Simulation
 
             End If
         End Sub
+
     End Class
 
 End Namespace

@@ -6,8 +6,6 @@ Namespace UI.WP
 
     <Description("RadioButton, but with image for WinPaletter UI")> <DefaultEvent("CheckedChanged")> Public Class RadioImage : Inherits Control
 
-        Event CheckedChanged(sender As Object)
-
         Sub New()
             SetStyle(DirectCast(139286, ControlStyles), True)
             SetStyle(ControlStyles.Selectable, True)
@@ -17,17 +15,23 @@ Namespace UI.WP
             Text = ""
         End Sub
 
+#Region "Variables"
+
+        Private AnimateOnClick As Boolean = False
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
+
 #Region "Properties"
-        Private Sub InvalidateParent()
-            If Parent Is Nothing Then Return
 
-            For Each C As Control In Parent.Controls
-                If Not (C Is Me) AndAlso (TypeOf C Is RadioImage) Then
-                    DirectCast(C, RadioImage).Checked = False
-                End If
-            Next
-        End Sub
-
+        Private _Checked As Boolean
         Public Property Checked() As Boolean
             Get
                 Return _Checked
@@ -37,7 +41,7 @@ Namespace UI.WP
                     _Checked = value
 
                     If _Checked Then
-                        InvalidateParent()
+                        UncheckOthersOnChecked()
                     End If
 
                     RaiseEvent CheckedChanged(Me)
@@ -50,7 +54,6 @@ Namespace UI.WP
         End Property
 
         Public Property Image As Image
-        Private _Checked As Boolean
         Public Property ShowText As Boolean = False
 
         <Browsable(True)>
@@ -59,60 +62,55 @@ Namespace UI.WP
         <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
         <Bindable(True)>
         Public Overrides Property Text As String = ""
+
 #End Region
 
 #Region "Events"
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
 
-        Public State As MouseState = MouseState.None
-        Private AnimateOnClick As Boolean = False
+        Event CheckedChanged(sender As Object)
 
-        Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-            If Not Checked AndAlso TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
-                drgevent.Effect = DragDropEffects.None
+        Protected Overrides Sub OnDragOver(e As DragEventArgs)
+            If Not Checked AndAlso TypeOf e.Data.GetData(GetType(UI.Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
+                e.Effect = DragDropEffects.None
                 Checked = True
             Else
                 Exit Sub
             End If
-            MyBase.OnDragOver(drgevent)
+            MyBase.OnDragOver(e)
         End Sub
+
         Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
             AnimateOnClick = True
             Checked = True
             State = MouseState.Down
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer.Enabled = True
+            Timer.Start()
             Invalidate()
             MyBase.OnMouseDown(e)
         End Sub
 
         Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer.Enabled = True
+            Timer.Start()
             Invalidate()
         End Sub
 
-        Private Sub RadioButton_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        Private Sub RadioImage_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
             State = MouseState.Over
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer.Enabled = True
+            Timer.Start()
             Invalidate()
         End Sub
 
-        Private Sub CheckBox_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        Private Sub RadioImage_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
             State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
+            Timer.Enabled = True
+            Timer.Start()
             Invalidate()
         End Sub
 
         Private Sub RadioImage_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-
             Try
                 If Not DesignMode Then
                     AddHandler FindForm.Shown, AddressOf Showed
@@ -145,21 +143,36 @@ Namespace UI.WP
             End Try
         End Sub
 
-        Sub Showed()
+        Sub Showed(sender As Object, e As EventArgs)
             Invalidate()
         End Sub
 
-        Public Sub RefreshColorPalette()
+        Public Sub RefreshColorPalette(sender As Object, e As EventArgs)
             Invalidate()
         End Sub
+
+#End Region
+
+#Region "Subs/Functions"
+        Private Sub UncheckOthersOnChecked()
+            If Parent Is Nothing Then Return
+
+            For Each C As Control In Parent.Controls
+                If Not (C Is Me) AndAlso (TypeOf C Is RadioImage) Then
+                    DirectCast(C, RadioImage).Checked = False
+                End If
+            Next
+        End Sub
+
 #End Region
 
 #Region "Animator"
+
         Dim alpha As Integer
         ReadOnly Factor As Integer = 25
-        Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over Then
@@ -167,8 +180,8 @@ Namespace UI.WP
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -181,8 +194,8 @@ Namespace UI.WP
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                         AnimateOnClick = False
                     End If
 
@@ -191,8 +204,10 @@ Namespace UI.WP
                 End If
             End If
         End Sub
+
 #End Region
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Try
                 Dim G As Graphics = e.Graphics
                 If Parent Is Nothing Then Exit Sub

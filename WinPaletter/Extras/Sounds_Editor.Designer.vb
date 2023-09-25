@@ -862,7 +862,6 @@ Partial Class Sounds_Editor
         Me.Button10.Image = CType(resources.GetObject("Button10.Image"), System.Drawing.Image)
         Me.Button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button10.LineColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.Button10.LineSize = 1
         Me.Button10.Location = New System.Drawing.Point(620, 494)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(115, 34)
@@ -879,7 +878,6 @@ Partial Class Sounds_Editor
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Nothing
         Me.Button7.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button7.LineSize = 1
         Me.Button7.Location = New System.Drawing.Point(534, 494)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 34)
@@ -897,7 +895,6 @@ Partial Class Sounds_Editor
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
         Me.Button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button8.LineColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button8.LineSize = 1
         Me.Button8.Location = New System.Drawing.Point(741, 494)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(180, 34)
@@ -1052,7 +1049,6 @@ Partial Class Sounds_Editor
         Me.Button199.ForeColor = System.Drawing.Color.White
         Me.Button199.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button199.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button199.LineSize = 1
         Me.Button199.Location = New System.Drawing.Point(639, 3)
         Me.Button199.Name = "Button199"
         Me.Button199.Size = New System.Drawing.Size(36, 24)
@@ -1070,7 +1066,6 @@ Partial Class Sounds_Editor
         Me.Button200.ForeColor = System.Drawing.Color.White
         Me.Button200.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button200.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button200.LineSize = 1
         Me.Button200.Location = New System.Drawing.Point(677, 3)
         Me.Button200.Name = "Button200"
         Me.Button200.Size = New System.Drawing.Size(36, 24)
@@ -1088,7 +1083,6 @@ Partial Class Sounds_Editor
         Me.Button201.ForeColor = System.Drawing.Color.White
         Me.Button201.Image = CType(resources.GetObject("Button201.Image"), System.Drawing.Image)
         Me.Button201.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button201.LineSize = 1
         Me.Button201.Location = New System.Drawing.Point(715, 3)
         Me.Button201.Name = "Button201"
         Me.Button201.Size = New System.Drawing.Size(36, 24)
@@ -1169,7 +1163,6 @@ Partial Class Sounds_Editor
         Me.Button24.Image = Nothing
         Me.Button24.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button24.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button24.LineSize = 1
         Me.Button24.Location = New System.Drawing.Point(495, 3)
         Me.Button24.Name = "Button24"
         Me.Button24.Size = New System.Drawing.Size(68, 24)
@@ -1188,7 +1181,6 @@ Partial Class Sounds_Editor
         Me.Button23.Image = Nothing
         Me.Button23.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button23.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button23.LineSize = 1
         Me.Button23.Location = New System.Drawing.Point(406, 3)
         Me.Button23.Name = "Button23"
         Me.Button23.Size = New System.Drawing.Size(85, 24)
@@ -1207,7 +1199,6 @@ Partial Class Sounds_Editor
         Me.Button22.Image = Nothing
         Me.Button22.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button22.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button22.LineSize = 1
         Me.Button22.Location = New System.Drawing.Point(567, 3)
         Me.Button22.Name = "Button22"
         Me.Button22.Size = New System.Drawing.Size(68, 24)
@@ -1226,7 +1217,6 @@ Partial Class Sounds_Editor
         Me.Button19.ForeColor = System.Drawing.Color.White
         Me.Button19.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button19.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button19.LineSize = 1
         Me.Button19.Location = New System.Drawing.Point(639, 3)
         Me.Button19.Name = "Button19"
         Me.Button19.Size = New System.Drawing.Size(36, 24)
@@ -1244,7 +1234,6 @@ Partial Class Sounds_Editor
         Me.Button20.ForeColor = System.Drawing.Color.White
         Me.Button20.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button20.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button20.LineSize = 1
         Me.Button20.Location = New System.Drawing.Point(677, 3)
         Me.Button20.Name = "Button20"
         Me.Button20.Size = New System.Drawing.Size(36, 24)
@@ -1262,7 +1251,6 @@ Partial Class Sounds_Editor
         Me.Button21.ForeColor = System.Drawing.Color.White
         Me.Button21.Image = CType(resources.GetObject("Button21.Image"), System.Drawing.Image)
         Me.Button21.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button21.LineSize = 1
         Me.Button21.Location = New System.Drawing.Point(715, 3)
         Me.Button21.Name = "Button21"
         Me.Button21.Size = New System.Drawing.Size(36, 24)
@@ -1355,7 +1343,6 @@ Partial Class Sounds_Editor
         Me.Button15.ForeColor = System.Drawing.Color.White
         Me.Button15.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button15.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button15.LineSize = 1
         Me.Button15.Location = New System.Drawing.Point(639, 3)
         Me.Button15.Name = "Button15"
         Me.Button15.Size = New System.Drawing.Size(36, 24)
@@ -1372,7 +1359,6 @@ Partial Class Sounds_Editor
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(677, 3)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(36, 24)
@@ -1389,7 +1375,6 @@ Partial Class Sounds_Editor
         Me.Button6.ForeColor = System.Drawing.Color.White
         Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
         Me.Button6.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button6.LineSize = 1
         Me.Button6.Location = New System.Drawing.Point(715, 3)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(36, 24)
@@ -1480,7 +1465,6 @@ Partial Class Sounds_Editor
         Me.Button25.ForeColor = System.Drawing.Color.White
         Me.Button25.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button25.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button25.LineSize = 1
         Me.Button25.Location = New System.Drawing.Point(639, 3)
         Me.Button25.Name = "Button25"
         Me.Button25.Size = New System.Drawing.Size(36, 24)
@@ -1497,7 +1481,6 @@ Partial Class Sounds_Editor
         Me.Button26.ForeColor = System.Drawing.Color.White
         Me.Button26.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button26.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button26.LineSize = 1
         Me.Button26.Location = New System.Drawing.Point(677, 3)
         Me.Button26.Name = "Button26"
         Me.Button26.Size = New System.Drawing.Size(36, 24)
@@ -1514,7 +1497,6 @@ Partial Class Sounds_Editor
         Me.Button27.ForeColor = System.Drawing.Color.White
         Me.Button27.Image = CType(resources.GetObject("Button27.Image"), System.Drawing.Image)
         Me.Button27.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button27.LineSize = 1
         Me.Button27.Location = New System.Drawing.Point(715, 3)
         Me.Button27.Name = "Button27"
         Me.Button27.Size = New System.Drawing.Size(36, 24)
@@ -1605,7 +1587,6 @@ Partial Class Sounds_Editor
         Me.Button16.ForeColor = System.Drawing.Color.White
         Me.Button16.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button16.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button16.LineSize = 1
         Me.Button16.Location = New System.Drawing.Point(639, 3)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(36, 24)
@@ -1622,7 +1603,6 @@ Partial Class Sounds_Editor
         Me.Button13.ForeColor = System.Drawing.Color.White
         Me.Button13.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button13.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button13.LineSize = 1
         Me.Button13.Location = New System.Drawing.Point(677, 3)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(36, 24)
@@ -1639,7 +1619,6 @@ Partial Class Sounds_Editor
         Me.Button14.ForeColor = System.Drawing.Color.White
         Me.Button14.Image = CType(resources.GetObject("Button14.Image"), System.Drawing.Image)
         Me.Button14.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button14.LineSize = 1
         Me.Button14.Location = New System.Drawing.Point(715, 3)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(36, 24)
@@ -1730,7 +1709,6 @@ Partial Class Sounds_Editor
         Me.Button17.ForeColor = System.Drawing.Color.White
         Me.Button17.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button17.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button17.LineSize = 1
         Me.Button17.Location = New System.Drawing.Point(639, 3)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(36, 24)
@@ -1747,7 +1725,6 @@ Partial Class Sounds_Editor
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(677, 3)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(36, 24)
@@ -1764,7 +1741,6 @@ Partial Class Sounds_Editor
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(715, 3)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(36, 24)
@@ -1840,7 +1816,6 @@ Partial Class Sounds_Editor
         Me.Button18.ForeColor = System.Drawing.Color.White
         Me.Button18.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button18.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button18.LineSize = 1
         Me.Button18.Location = New System.Drawing.Point(639, 3)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(36, 24)
@@ -1858,7 +1833,6 @@ Partial Class Sounds_Editor
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(677, 3)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(36, 24)
@@ -1876,7 +1850,6 @@ Partial Class Sounds_Editor
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(715, 3)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(36, 24)
@@ -1970,7 +1943,6 @@ Partial Class Sounds_Editor
         Me.Button205.ForeColor = System.Drawing.Color.White
         Me.Button205.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button205.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button205.LineSize = 1
         Me.Button205.Location = New System.Drawing.Point(639, 3)
         Me.Button205.Name = "Button205"
         Me.Button205.Size = New System.Drawing.Size(36, 24)
@@ -1988,7 +1960,6 @@ Partial Class Sounds_Editor
         Me.Button206.ForeColor = System.Drawing.Color.White
         Me.Button206.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button206.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button206.LineSize = 1
         Me.Button206.Location = New System.Drawing.Point(677, 3)
         Me.Button206.Name = "Button206"
         Me.Button206.Size = New System.Drawing.Size(36, 24)
@@ -2006,7 +1977,6 @@ Partial Class Sounds_Editor
         Me.Button207.ForeColor = System.Drawing.Color.White
         Me.Button207.Image = CType(resources.GetObject("Button207.Image"), System.Drawing.Image)
         Me.Button207.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button207.LineSize = 1
         Me.Button207.Location = New System.Drawing.Point(715, 3)
         Me.Button207.Name = "Button207"
         Me.Button207.Size = New System.Drawing.Size(36, 24)
@@ -2084,7 +2054,6 @@ Partial Class Sounds_Editor
         Me.Button211.ForeColor = System.Drawing.Color.White
         Me.Button211.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button211.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button211.LineSize = 1
         Me.Button211.Location = New System.Drawing.Point(639, 3)
         Me.Button211.Name = "Button211"
         Me.Button211.Size = New System.Drawing.Size(36, 24)
@@ -2102,7 +2071,6 @@ Partial Class Sounds_Editor
         Me.Button212.ForeColor = System.Drawing.Color.White
         Me.Button212.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button212.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button212.LineSize = 1
         Me.Button212.Location = New System.Drawing.Point(677, 3)
         Me.Button212.Name = "Button212"
         Me.Button212.Size = New System.Drawing.Size(36, 24)
@@ -2120,7 +2088,6 @@ Partial Class Sounds_Editor
         Me.Button213.ForeColor = System.Drawing.Color.White
         Me.Button213.Image = CType(resources.GetObject("Button213.Image"), System.Drawing.Image)
         Me.Button213.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button213.LineSize = 1
         Me.Button213.Location = New System.Drawing.Point(715, 3)
         Me.Button213.Name = "Button213"
         Me.Button213.Size = New System.Drawing.Size(36, 24)
@@ -2198,7 +2165,6 @@ Partial Class Sounds_Editor
         Me.Button40.ForeColor = System.Drawing.Color.White
         Me.Button40.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button40.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button40.LineSize = 1
         Me.Button40.Location = New System.Drawing.Point(639, 3)
         Me.Button40.Name = "Button40"
         Me.Button40.Size = New System.Drawing.Size(36, 24)
@@ -2216,7 +2182,6 @@ Partial Class Sounds_Editor
         Me.Button41.ForeColor = System.Drawing.Color.White
         Me.Button41.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button41.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button41.LineSize = 1
         Me.Button41.Location = New System.Drawing.Point(677, 3)
         Me.Button41.Name = "Button41"
         Me.Button41.Size = New System.Drawing.Size(36, 24)
@@ -2234,7 +2199,6 @@ Partial Class Sounds_Editor
         Me.Button42.ForeColor = System.Drawing.Color.White
         Me.Button42.Image = CType(resources.GetObject("Button42.Image"), System.Drawing.Image)
         Me.Button42.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button42.LineSize = 1
         Me.Button42.Location = New System.Drawing.Point(715, 3)
         Me.Button42.Name = "Button42"
         Me.Button42.Size = New System.Drawing.Size(36, 24)
@@ -2312,7 +2276,6 @@ Partial Class Sounds_Editor
         Me.Button37.ForeColor = System.Drawing.Color.White
         Me.Button37.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button37.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button37.LineSize = 1
         Me.Button37.Location = New System.Drawing.Point(639, 3)
         Me.Button37.Name = "Button37"
         Me.Button37.Size = New System.Drawing.Size(36, 24)
@@ -2330,7 +2293,6 @@ Partial Class Sounds_Editor
         Me.Button38.ForeColor = System.Drawing.Color.White
         Me.Button38.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button38.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button38.LineSize = 1
         Me.Button38.Location = New System.Drawing.Point(677, 3)
         Me.Button38.Name = "Button38"
         Me.Button38.Size = New System.Drawing.Size(36, 24)
@@ -2348,7 +2310,6 @@ Partial Class Sounds_Editor
         Me.Button39.ForeColor = System.Drawing.Color.White
         Me.Button39.Image = CType(resources.GetObject("Button39.Image"), System.Drawing.Image)
         Me.Button39.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button39.LineSize = 1
         Me.Button39.Location = New System.Drawing.Point(715, 3)
         Me.Button39.Name = "Button39"
         Me.Button39.Size = New System.Drawing.Size(36, 24)
@@ -2426,7 +2387,6 @@ Partial Class Sounds_Editor
         Me.Button34.ForeColor = System.Drawing.Color.White
         Me.Button34.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button34.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button34.LineSize = 1
         Me.Button34.Location = New System.Drawing.Point(639, 3)
         Me.Button34.Name = "Button34"
         Me.Button34.Size = New System.Drawing.Size(36, 24)
@@ -2444,7 +2404,6 @@ Partial Class Sounds_Editor
         Me.Button35.ForeColor = System.Drawing.Color.White
         Me.Button35.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button35.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button35.LineSize = 1
         Me.Button35.Location = New System.Drawing.Point(677, 3)
         Me.Button35.Name = "Button35"
         Me.Button35.Size = New System.Drawing.Size(36, 24)
@@ -2462,7 +2421,6 @@ Partial Class Sounds_Editor
         Me.Button36.ForeColor = System.Drawing.Color.White
         Me.Button36.Image = CType(resources.GetObject("Button36.Image"), System.Drawing.Image)
         Me.Button36.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button36.LineSize = 1
         Me.Button36.Location = New System.Drawing.Point(715, 3)
         Me.Button36.Name = "Button36"
         Me.Button36.Size = New System.Drawing.Size(36, 24)
@@ -2540,7 +2498,6 @@ Partial Class Sounds_Editor
         Me.Button31.ForeColor = System.Drawing.Color.White
         Me.Button31.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button31.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button31.LineSize = 1
         Me.Button31.Location = New System.Drawing.Point(639, 3)
         Me.Button31.Name = "Button31"
         Me.Button31.Size = New System.Drawing.Size(36, 24)
@@ -2558,7 +2515,6 @@ Partial Class Sounds_Editor
         Me.Button32.ForeColor = System.Drawing.Color.White
         Me.Button32.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button32.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button32.LineSize = 1
         Me.Button32.Location = New System.Drawing.Point(677, 3)
         Me.Button32.Name = "Button32"
         Me.Button32.Size = New System.Drawing.Size(36, 24)
@@ -2576,7 +2532,6 @@ Partial Class Sounds_Editor
         Me.Button33.ForeColor = System.Drawing.Color.White
         Me.Button33.Image = CType(resources.GetObject("Button33.Image"), System.Drawing.Image)
         Me.Button33.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button33.LineSize = 1
         Me.Button33.Location = New System.Drawing.Point(715, 3)
         Me.Button33.Name = "Button33"
         Me.Button33.Size = New System.Drawing.Size(36, 24)
@@ -2654,7 +2609,6 @@ Partial Class Sounds_Editor
         Me.Button28.ForeColor = System.Drawing.Color.White
         Me.Button28.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button28.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button28.LineSize = 1
         Me.Button28.Location = New System.Drawing.Point(639, 3)
         Me.Button28.Name = "Button28"
         Me.Button28.Size = New System.Drawing.Size(36, 24)
@@ -2672,7 +2626,6 @@ Partial Class Sounds_Editor
         Me.Button29.ForeColor = System.Drawing.Color.White
         Me.Button29.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button29.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button29.LineSize = 1
         Me.Button29.Location = New System.Drawing.Point(677, 3)
         Me.Button29.Name = "Button29"
         Me.Button29.Size = New System.Drawing.Size(36, 24)
@@ -2690,7 +2643,6 @@ Partial Class Sounds_Editor
         Me.Button30.ForeColor = System.Drawing.Color.White
         Me.Button30.Image = CType(resources.GetObject("Button30.Image"), System.Drawing.Image)
         Me.Button30.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button30.LineSize = 1
         Me.Button30.Location = New System.Drawing.Point(715, 3)
         Me.Button30.Name = "Button30"
         Me.Button30.Size = New System.Drawing.Size(36, 24)
@@ -2786,7 +2738,6 @@ Partial Class Sounds_Editor
         Me.Button169.ForeColor = System.Drawing.Color.White
         Me.Button169.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button169.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button169.LineSize = 1
         Me.Button169.Location = New System.Drawing.Point(639, 3)
         Me.Button169.Name = "Button169"
         Me.Button169.Size = New System.Drawing.Size(36, 24)
@@ -2804,7 +2755,6 @@ Partial Class Sounds_Editor
         Me.Button170.ForeColor = System.Drawing.Color.White
         Me.Button170.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button170.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button170.LineSize = 1
         Me.Button170.Location = New System.Drawing.Point(677, 3)
         Me.Button170.Name = "Button170"
         Me.Button170.Size = New System.Drawing.Size(36, 24)
@@ -2822,7 +2772,6 @@ Partial Class Sounds_Editor
         Me.Button171.ForeColor = System.Drawing.Color.White
         Me.Button171.Image = CType(resources.GetObject("Button171.Image"), System.Drawing.Image)
         Me.Button171.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button171.LineSize = 1
         Me.Button171.Location = New System.Drawing.Point(715, 3)
         Me.Button171.Name = "Button171"
         Me.Button171.Size = New System.Drawing.Size(36, 24)
@@ -2912,7 +2861,6 @@ Partial Class Sounds_Editor
         Me.Button166.ForeColor = System.Drawing.Color.White
         Me.Button166.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button166.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button166.LineSize = 1
         Me.Button166.Location = New System.Drawing.Point(639, 3)
         Me.Button166.Name = "Button166"
         Me.Button166.Size = New System.Drawing.Size(36, 24)
@@ -2930,7 +2878,6 @@ Partial Class Sounds_Editor
         Me.Button167.ForeColor = System.Drawing.Color.White
         Me.Button167.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button167.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button167.LineSize = 1
         Me.Button167.Location = New System.Drawing.Point(677, 3)
         Me.Button167.Name = "Button167"
         Me.Button167.Size = New System.Drawing.Size(36, 24)
@@ -2948,7 +2895,6 @@ Partial Class Sounds_Editor
         Me.Button168.ForeColor = System.Drawing.Color.White
         Me.Button168.Image = CType(resources.GetObject("Button168.Image"), System.Drawing.Image)
         Me.Button168.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button168.LineSize = 1
         Me.Button168.Location = New System.Drawing.Point(715, 3)
         Me.Button168.Name = "Button168"
         Me.Button168.Size = New System.Drawing.Size(36, 24)
@@ -3026,7 +2972,6 @@ Partial Class Sounds_Editor
         Me.Button58.ForeColor = System.Drawing.Color.White
         Me.Button58.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button58.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button58.LineSize = 1
         Me.Button58.Location = New System.Drawing.Point(639, 3)
         Me.Button58.Name = "Button58"
         Me.Button58.Size = New System.Drawing.Size(36, 24)
@@ -3044,7 +2989,6 @@ Partial Class Sounds_Editor
         Me.Button59.ForeColor = System.Drawing.Color.White
         Me.Button59.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button59.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button59.LineSize = 1
         Me.Button59.Location = New System.Drawing.Point(677, 3)
         Me.Button59.Name = "Button59"
         Me.Button59.Size = New System.Drawing.Size(36, 24)
@@ -3062,7 +3006,6 @@ Partial Class Sounds_Editor
         Me.Button60.ForeColor = System.Drawing.Color.White
         Me.Button60.Image = CType(resources.GetObject("Button60.Image"), System.Drawing.Image)
         Me.Button60.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button60.LineSize = 1
         Me.Button60.Location = New System.Drawing.Point(715, 3)
         Me.Button60.Name = "Button60"
         Me.Button60.Size = New System.Drawing.Size(36, 24)
@@ -3140,7 +3083,6 @@ Partial Class Sounds_Editor
         Me.Button43.ForeColor = System.Drawing.Color.White
         Me.Button43.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button43.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button43.LineSize = 1
         Me.Button43.Location = New System.Drawing.Point(639, 3)
         Me.Button43.Name = "Button43"
         Me.Button43.Size = New System.Drawing.Size(36, 24)
@@ -3158,7 +3100,6 @@ Partial Class Sounds_Editor
         Me.Button44.ForeColor = System.Drawing.Color.White
         Me.Button44.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button44.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button44.LineSize = 1
         Me.Button44.Location = New System.Drawing.Point(677, 3)
         Me.Button44.Name = "Button44"
         Me.Button44.Size = New System.Drawing.Size(36, 24)
@@ -3176,7 +3117,6 @@ Partial Class Sounds_Editor
         Me.Button45.ForeColor = System.Drawing.Color.White
         Me.Button45.Image = CType(resources.GetObject("Button45.Image"), System.Drawing.Image)
         Me.Button45.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button45.LineSize = 1
         Me.Button45.Location = New System.Drawing.Point(715, 3)
         Me.Button45.Name = "Button45"
         Me.Button45.Size = New System.Drawing.Size(36, 24)
@@ -3254,7 +3194,6 @@ Partial Class Sounds_Editor
         Me.Button46.ForeColor = System.Drawing.Color.White
         Me.Button46.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button46.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button46.LineSize = 1
         Me.Button46.Location = New System.Drawing.Point(639, 3)
         Me.Button46.Name = "Button46"
         Me.Button46.Size = New System.Drawing.Size(36, 24)
@@ -3272,7 +3211,6 @@ Partial Class Sounds_Editor
         Me.Button47.ForeColor = System.Drawing.Color.White
         Me.Button47.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button47.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button47.LineSize = 1
         Me.Button47.Location = New System.Drawing.Point(677, 3)
         Me.Button47.Name = "Button47"
         Me.Button47.Size = New System.Drawing.Size(36, 24)
@@ -3290,7 +3228,6 @@ Partial Class Sounds_Editor
         Me.Button48.ForeColor = System.Drawing.Color.White
         Me.Button48.Image = CType(resources.GetObject("Button48.Image"), System.Drawing.Image)
         Me.Button48.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button48.LineSize = 1
         Me.Button48.Location = New System.Drawing.Point(715, 3)
         Me.Button48.Name = "Button48"
         Me.Button48.Size = New System.Drawing.Size(36, 24)
@@ -3368,7 +3305,6 @@ Partial Class Sounds_Editor
         Me.Button49.ForeColor = System.Drawing.Color.White
         Me.Button49.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button49.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button49.LineSize = 1
         Me.Button49.Location = New System.Drawing.Point(639, 3)
         Me.Button49.Name = "Button49"
         Me.Button49.Size = New System.Drawing.Size(36, 24)
@@ -3386,7 +3322,6 @@ Partial Class Sounds_Editor
         Me.Button50.ForeColor = System.Drawing.Color.White
         Me.Button50.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button50.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button50.LineSize = 1
         Me.Button50.Location = New System.Drawing.Point(677, 3)
         Me.Button50.Name = "Button50"
         Me.Button50.Size = New System.Drawing.Size(36, 24)
@@ -3404,7 +3339,6 @@ Partial Class Sounds_Editor
         Me.Button51.ForeColor = System.Drawing.Color.White
         Me.Button51.Image = CType(resources.GetObject("Button51.Image"), System.Drawing.Image)
         Me.Button51.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button51.LineSize = 1
         Me.Button51.Location = New System.Drawing.Point(715, 3)
         Me.Button51.Name = "Button51"
         Me.Button51.Size = New System.Drawing.Size(36, 24)
@@ -3482,7 +3416,6 @@ Partial Class Sounds_Editor
         Me.Button52.ForeColor = System.Drawing.Color.White
         Me.Button52.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button52.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button52.LineSize = 1
         Me.Button52.Location = New System.Drawing.Point(639, 3)
         Me.Button52.Name = "Button52"
         Me.Button52.Size = New System.Drawing.Size(36, 24)
@@ -3500,7 +3433,6 @@ Partial Class Sounds_Editor
         Me.Button53.ForeColor = System.Drawing.Color.White
         Me.Button53.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button53.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button53.LineSize = 1
         Me.Button53.Location = New System.Drawing.Point(677, 3)
         Me.Button53.Name = "Button53"
         Me.Button53.Size = New System.Drawing.Size(36, 24)
@@ -3518,7 +3450,6 @@ Partial Class Sounds_Editor
         Me.Button54.ForeColor = System.Drawing.Color.White
         Me.Button54.Image = CType(resources.GetObject("Button54.Image"), System.Drawing.Image)
         Me.Button54.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button54.LineSize = 1
         Me.Button54.Location = New System.Drawing.Point(715, 3)
         Me.Button54.Name = "Button54"
         Me.Button54.Size = New System.Drawing.Size(36, 24)
@@ -3596,7 +3527,6 @@ Partial Class Sounds_Editor
         Me.Button55.ForeColor = System.Drawing.Color.White
         Me.Button55.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button55.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button55.LineSize = 1
         Me.Button55.Location = New System.Drawing.Point(639, 3)
         Me.Button55.Name = "Button55"
         Me.Button55.Size = New System.Drawing.Size(36, 24)
@@ -3614,7 +3544,6 @@ Partial Class Sounds_Editor
         Me.Button56.ForeColor = System.Drawing.Color.White
         Me.Button56.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button56.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button56.LineSize = 1
         Me.Button56.Location = New System.Drawing.Point(677, 3)
         Me.Button56.Name = "Button56"
         Me.Button56.Size = New System.Drawing.Size(36, 24)
@@ -3632,7 +3561,6 @@ Partial Class Sounds_Editor
         Me.Button57.ForeColor = System.Drawing.Color.White
         Me.Button57.Image = CType(resources.GetObject("Button57.Image"), System.Drawing.Image)
         Me.Button57.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button57.LineSize = 1
         Me.Button57.Location = New System.Drawing.Point(715, 3)
         Me.Button57.Name = "Button57"
         Me.Button57.Size = New System.Drawing.Size(36, 24)
@@ -3738,7 +3666,6 @@ Partial Class Sounds_Editor
         Me.Button260.ForeColor = System.Drawing.Color.White
         Me.Button260.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button260.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button260.LineSize = 1
         Me.Button260.Location = New System.Drawing.Point(639, 3)
         Me.Button260.Name = "Button260"
         Me.Button260.Size = New System.Drawing.Size(36, 24)
@@ -3755,7 +3682,6 @@ Partial Class Sounds_Editor
         Me.Button261.ForeColor = System.Drawing.Color.White
         Me.Button261.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button261.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button261.LineSize = 1
         Me.Button261.Location = New System.Drawing.Point(677, 3)
         Me.Button261.Name = "Button261"
         Me.Button261.Size = New System.Drawing.Size(36, 24)
@@ -3772,7 +3698,6 @@ Partial Class Sounds_Editor
         Me.Button262.ForeColor = System.Drawing.Color.White
         Me.Button262.Image = CType(resources.GetObject("Button262.Image"), System.Drawing.Image)
         Me.Button262.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button262.LineSize = 1
         Me.Button262.Location = New System.Drawing.Point(715, 3)
         Me.Button262.Name = "Button262"
         Me.Button262.Size = New System.Drawing.Size(36, 24)
@@ -3848,7 +3773,6 @@ Partial Class Sounds_Editor
         Me.Button163.ForeColor = System.Drawing.Color.White
         Me.Button163.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button163.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button163.LineSize = 1
         Me.Button163.Location = New System.Drawing.Point(639, 3)
         Me.Button163.Name = "Button163"
         Me.Button163.Size = New System.Drawing.Size(36, 24)
@@ -3866,7 +3790,6 @@ Partial Class Sounds_Editor
         Me.Button164.ForeColor = System.Drawing.Color.White
         Me.Button164.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button164.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button164.LineSize = 1
         Me.Button164.Location = New System.Drawing.Point(677, 3)
         Me.Button164.Name = "Button164"
         Me.Button164.Size = New System.Drawing.Size(36, 24)
@@ -3884,7 +3807,6 @@ Partial Class Sounds_Editor
         Me.Button165.ForeColor = System.Drawing.Color.White
         Me.Button165.Image = CType(resources.GetObject("Button165.Image"), System.Drawing.Image)
         Me.Button165.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button165.LineSize = 1
         Me.Button165.Location = New System.Drawing.Point(715, 3)
         Me.Button165.Name = "Button165"
         Me.Button165.Size = New System.Drawing.Size(36, 24)
@@ -3962,7 +3884,6 @@ Partial Class Sounds_Editor
         Me.Button157.ForeColor = System.Drawing.Color.White
         Me.Button157.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button157.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button157.LineSize = 1
         Me.Button157.Location = New System.Drawing.Point(639, 3)
         Me.Button157.Name = "Button157"
         Me.Button157.Size = New System.Drawing.Size(36, 24)
@@ -3980,7 +3901,6 @@ Partial Class Sounds_Editor
         Me.Button158.ForeColor = System.Drawing.Color.White
         Me.Button158.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button158.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button158.LineSize = 1
         Me.Button158.Location = New System.Drawing.Point(677, 3)
         Me.Button158.Name = "Button158"
         Me.Button158.Size = New System.Drawing.Size(36, 24)
@@ -3998,7 +3918,6 @@ Partial Class Sounds_Editor
         Me.Button159.ForeColor = System.Drawing.Color.White
         Me.Button159.Image = CType(resources.GetObject("Button159.Image"), System.Drawing.Image)
         Me.Button159.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button159.LineSize = 1
         Me.Button159.Location = New System.Drawing.Point(715, 3)
         Me.Button159.Name = "Button159"
         Me.Button159.Size = New System.Drawing.Size(36, 24)
@@ -4076,7 +3995,6 @@ Partial Class Sounds_Editor
         Me.Button154.ForeColor = System.Drawing.Color.White
         Me.Button154.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button154.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button154.LineSize = 1
         Me.Button154.Location = New System.Drawing.Point(639, 3)
         Me.Button154.Name = "Button154"
         Me.Button154.Size = New System.Drawing.Size(36, 24)
@@ -4094,7 +4012,6 @@ Partial Class Sounds_Editor
         Me.Button155.ForeColor = System.Drawing.Color.White
         Me.Button155.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button155.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button155.LineSize = 1
         Me.Button155.Location = New System.Drawing.Point(677, 3)
         Me.Button155.Name = "Button155"
         Me.Button155.Size = New System.Drawing.Size(36, 24)
@@ -4112,7 +4029,6 @@ Partial Class Sounds_Editor
         Me.Button156.ForeColor = System.Drawing.Color.White
         Me.Button156.Image = CType(resources.GetObject("Button156.Image"), System.Drawing.Image)
         Me.Button156.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button156.LineSize = 1
         Me.Button156.Location = New System.Drawing.Point(715, 3)
         Me.Button156.Name = "Button156"
         Me.Button156.Size = New System.Drawing.Size(36, 24)
@@ -4190,7 +4106,6 @@ Partial Class Sounds_Editor
         Me.Button151.ForeColor = System.Drawing.Color.White
         Me.Button151.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button151.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button151.LineSize = 1
         Me.Button151.Location = New System.Drawing.Point(639, 3)
         Me.Button151.Name = "Button151"
         Me.Button151.Size = New System.Drawing.Size(36, 24)
@@ -4208,7 +4123,6 @@ Partial Class Sounds_Editor
         Me.Button152.ForeColor = System.Drawing.Color.White
         Me.Button152.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button152.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button152.LineSize = 1
         Me.Button152.Location = New System.Drawing.Point(677, 3)
         Me.Button152.Name = "Button152"
         Me.Button152.Size = New System.Drawing.Size(36, 24)
@@ -4226,7 +4140,6 @@ Partial Class Sounds_Editor
         Me.Button153.ForeColor = System.Drawing.Color.White
         Me.Button153.Image = CType(resources.GetObject("Button153.Image"), System.Drawing.Image)
         Me.Button153.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button153.LineSize = 1
         Me.Button153.Location = New System.Drawing.Point(715, 3)
         Me.Button153.Name = "Button153"
         Me.Button153.Size = New System.Drawing.Size(36, 24)
@@ -4304,7 +4217,6 @@ Partial Class Sounds_Editor
         Me.Button148.ForeColor = System.Drawing.Color.White
         Me.Button148.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button148.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button148.LineSize = 1
         Me.Button148.Location = New System.Drawing.Point(639, 3)
         Me.Button148.Name = "Button148"
         Me.Button148.Size = New System.Drawing.Size(36, 24)
@@ -4322,7 +4234,6 @@ Partial Class Sounds_Editor
         Me.Button149.ForeColor = System.Drawing.Color.White
         Me.Button149.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button149.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button149.LineSize = 1
         Me.Button149.Location = New System.Drawing.Point(677, 3)
         Me.Button149.Name = "Button149"
         Me.Button149.Size = New System.Drawing.Size(36, 24)
@@ -4340,7 +4251,6 @@ Partial Class Sounds_Editor
         Me.Button150.ForeColor = System.Drawing.Color.White
         Me.Button150.Image = CType(resources.GetObject("Button150.Image"), System.Drawing.Image)
         Me.Button150.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button150.LineSize = 1
         Me.Button150.Location = New System.Drawing.Point(715, 3)
         Me.Button150.Name = "Button150"
         Me.Button150.Size = New System.Drawing.Size(36, 24)
@@ -4418,7 +4328,6 @@ Partial Class Sounds_Editor
         Me.Button145.ForeColor = System.Drawing.Color.White
         Me.Button145.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button145.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button145.LineSize = 1
         Me.Button145.Location = New System.Drawing.Point(639, 3)
         Me.Button145.Name = "Button145"
         Me.Button145.Size = New System.Drawing.Size(36, 24)
@@ -4436,7 +4345,6 @@ Partial Class Sounds_Editor
         Me.Button146.ForeColor = System.Drawing.Color.White
         Me.Button146.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button146.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button146.LineSize = 1
         Me.Button146.Location = New System.Drawing.Point(677, 3)
         Me.Button146.Name = "Button146"
         Me.Button146.Size = New System.Drawing.Size(36, 24)
@@ -4454,7 +4362,6 @@ Partial Class Sounds_Editor
         Me.Button147.ForeColor = System.Drawing.Color.White
         Me.Button147.Image = CType(resources.GetObject("Button147.Image"), System.Drawing.Image)
         Me.Button147.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button147.LineSize = 1
         Me.Button147.Location = New System.Drawing.Point(715, 3)
         Me.Button147.Name = "Button147"
         Me.Button147.Size = New System.Drawing.Size(36, 24)
@@ -4532,7 +4439,6 @@ Partial Class Sounds_Editor
         Me.Button142.ForeColor = System.Drawing.Color.White
         Me.Button142.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button142.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button142.LineSize = 1
         Me.Button142.Location = New System.Drawing.Point(639, 3)
         Me.Button142.Name = "Button142"
         Me.Button142.Size = New System.Drawing.Size(36, 24)
@@ -4550,7 +4456,6 @@ Partial Class Sounds_Editor
         Me.Button143.ForeColor = System.Drawing.Color.White
         Me.Button143.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button143.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button143.LineSize = 1
         Me.Button143.Location = New System.Drawing.Point(677, 3)
         Me.Button143.Name = "Button143"
         Me.Button143.Size = New System.Drawing.Size(36, 24)
@@ -4568,7 +4473,6 @@ Partial Class Sounds_Editor
         Me.Button144.ForeColor = System.Drawing.Color.White
         Me.Button144.Image = CType(resources.GetObject("Button144.Image"), System.Drawing.Image)
         Me.Button144.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button144.LineSize = 1
         Me.Button144.Location = New System.Drawing.Point(715, 3)
         Me.Button144.Name = "Button144"
         Me.Button144.Size = New System.Drawing.Size(36, 24)
@@ -4660,7 +4564,6 @@ Partial Class Sounds_Editor
         Me.Button241.ForeColor = System.Drawing.Color.White
         Me.Button241.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button241.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button241.LineSize = 1
         Me.Button241.Location = New System.Drawing.Point(639, 3)
         Me.Button241.Name = "Button241"
         Me.Button241.Size = New System.Drawing.Size(36, 24)
@@ -4678,7 +4581,6 @@ Partial Class Sounds_Editor
         Me.Button242.ForeColor = System.Drawing.Color.White
         Me.Button242.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button242.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button242.LineSize = 1
         Me.Button242.Location = New System.Drawing.Point(677, 3)
         Me.Button242.Name = "Button242"
         Me.Button242.Size = New System.Drawing.Size(36, 24)
@@ -4696,7 +4598,6 @@ Partial Class Sounds_Editor
         Me.Button243.ForeColor = System.Drawing.Color.White
         Me.Button243.Image = CType(resources.GetObject("Button243.Image"), System.Drawing.Image)
         Me.Button243.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button243.LineSize = 1
         Me.Button243.Location = New System.Drawing.Point(715, 3)
         Me.Button243.Name = "Button243"
         Me.Button243.Size = New System.Drawing.Size(36, 24)
@@ -4774,7 +4675,6 @@ Partial Class Sounds_Editor
         Me.Button244.ForeColor = System.Drawing.Color.White
         Me.Button244.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button244.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button244.LineSize = 1
         Me.Button244.Location = New System.Drawing.Point(639, 3)
         Me.Button244.Name = "Button244"
         Me.Button244.Size = New System.Drawing.Size(36, 24)
@@ -4792,7 +4692,6 @@ Partial Class Sounds_Editor
         Me.Button245.ForeColor = System.Drawing.Color.White
         Me.Button245.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button245.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button245.LineSize = 1
         Me.Button245.Location = New System.Drawing.Point(677, 3)
         Me.Button245.Name = "Button245"
         Me.Button245.Size = New System.Drawing.Size(36, 24)
@@ -4810,7 +4709,6 @@ Partial Class Sounds_Editor
         Me.Button246.ForeColor = System.Drawing.Color.White
         Me.Button246.Image = CType(resources.GetObject("Button246.Image"), System.Drawing.Image)
         Me.Button246.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button246.LineSize = 1
         Me.Button246.Location = New System.Drawing.Point(715, 3)
         Me.Button246.Name = "Button246"
         Me.Button246.Size = New System.Drawing.Size(36, 24)
@@ -4888,7 +4786,6 @@ Partial Class Sounds_Editor
         Me.Button238.ForeColor = System.Drawing.Color.White
         Me.Button238.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button238.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button238.LineSize = 1
         Me.Button238.Location = New System.Drawing.Point(639, 3)
         Me.Button238.Name = "Button238"
         Me.Button238.Size = New System.Drawing.Size(36, 24)
@@ -4906,7 +4803,6 @@ Partial Class Sounds_Editor
         Me.Button239.ForeColor = System.Drawing.Color.White
         Me.Button239.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button239.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button239.LineSize = 1
         Me.Button239.Location = New System.Drawing.Point(677, 3)
         Me.Button239.Name = "Button239"
         Me.Button239.Size = New System.Drawing.Size(36, 24)
@@ -4924,7 +4820,6 @@ Partial Class Sounds_Editor
         Me.Button240.ForeColor = System.Drawing.Color.White
         Me.Button240.Image = CType(resources.GetObject("Button240.Image"), System.Drawing.Image)
         Me.Button240.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button240.LineSize = 1
         Me.Button240.Location = New System.Drawing.Point(715, 3)
         Me.Button240.Name = "Button240"
         Me.Button240.Size = New System.Drawing.Size(36, 24)
@@ -5002,7 +4897,6 @@ Partial Class Sounds_Editor
         Me.Button235.ForeColor = System.Drawing.Color.White
         Me.Button235.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button235.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button235.LineSize = 1
         Me.Button235.Location = New System.Drawing.Point(639, 3)
         Me.Button235.Name = "Button235"
         Me.Button235.Size = New System.Drawing.Size(36, 24)
@@ -5020,7 +4914,6 @@ Partial Class Sounds_Editor
         Me.Button236.ForeColor = System.Drawing.Color.White
         Me.Button236.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button236.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button236.LineSize = 1
         Me.Button236.Location = New System.Drawing.Point(677, 3)
         Me.Button236.Name = "Button236"
         Me.Button236.Size = New System.Drawing.Size(36, 24)
@@ -5038,7 +4931,6 @@ Partial Class Sounds_Editor
         Me.Button237.ForeColor = System.Drawing.Color.White
         Me.Button237.Image = CType(resources.GetObject("Button237.Image"), System.Drawing.Image)
         Me.Button237.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button237.LineSize = 1
         Me.Button237.Location = New System.Drawing.Point(715, 3)
         Me.Button237.Name = "Button237"
         Me.Button237.Size = New System.Drawing.Size(36, 24)
@@ -5116,7 +5008,6 @@ Partial Class Sounds_Editor
         Me.Button160.ForeColor = System.Drawing.Color.White
         Me.Button160.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button160.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button160.LineSize = 1
         Me.Button160.Location = New System.Drawing.Point(639, 3)
         Me.Button160.Name = "Button160"
         Me.Button160.Size = New System.Drawing.Size(36, 24)
@@ -5134,7 +5025,6 @@ Partial Class Sounds_Editor
         Me.Button161.ForeColor = System.Drawing.Color.White
         Me.Button161.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button161.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button161.LineSize = 1
         Me.Button161.Location = New System.Drawing.Point(677, 3)
         Me.Button161.Name = "Button161"
         Me.Button161.Size = New System.Drawing.Size(36, 24)
@@ -5152,7 +5042,6 @@ Partial Class Sounds_Editor
         Me.Button162.ForeColor = System.Drawing.Color.White
         Me.Button162.Image = CType(resources.GetObject("Button162.Image"), System.Drawing.Image)
         Me.Button162.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button162.LineSize = 1
         Me.Button162.Location = New System.Drawing.Point(715, 3)
         Me.Button162.Name = "Button162"
         Me.Button162.Size = New System.Drawing.Size(36, 24)
@@ -5248,7 +5137,6 @@ Partial Class Sounds_Editor
         Me.Button232.ForeColor = System.Drawing.Color.White
         Me.Button232.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button232.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button232.LineSize = 1
         Me.Button232.Location = New System.Drawing.Point(639, 3)
         Me.Button232.Name = "Button232"
         Me.Button232.Size = New System.Drawing.Size(36, 24)
@@ -5266,7 +5154,6 @@ Partial Class Sounds_Editor
         Me.Button233.ForeColor = System.Drawing.Color.White
         Me.Button233.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button233.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button233.LineSize = 1
         Me.Button233.Location = New System.Drawing.Point(677, 3)
         Me.Button233.Name = "Button233"
         Me.Button233.Size = New System.Drawing.Size(36, 24)
@@ -5284,7 +5171,6 @@ Partial Class Sounds_Editor
         Me.Button234.ForeColor = System.Drawing.Color.White
         Me.Button234.Image = CType(resources.GetObject("Button234.Image"), System.Drawing.Image)
         Me.Button234.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button234.LineSize = 1
         Me.Button234.Location = New System.Drawing.Point(715, 3)
         Me.Button234.Name = "Button234"
         Me.Button234.Size = New System.Drawing.Size(36, 24)
@@ -5362,7 +5248,6 @@ Partial Class Sounds_Editor
         Me.Button196.ForeColor = System.Drawing.Color.White
         Me.Button196.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button196.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button196.LineSize = 1
         Me.Button196.Location = New System.Drawing.Point(639, 3)
         Me.Button196.Name = "Button196"
         Me.Button196.Size = New System.Drawing.Size(36, 24)
@@ -5380,7 +5265,6 @@ Partial Class Sounds_Editor
         Me.Button197.ForeColor = System.Drawing.Color.White
         Me.Button197.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button197.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button197.LineSize = 1
         Me.Button197.Location = New System.Drawing.Point(677, 3)
         Me.Button197.Name = "Button197"
         Me.Button197.Size = New System.Drawing.Size(36, 24)
@@ -5398,7 +5282,6 @@ Partial Class Sounds_Editor
         Me.Button198.ForeColor = System.Drawing.Color.White
         Me.Button198.Image = CType(resources.GetObject("Button198.Image"), System.Drawing.Image)
         Me.Button198.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button198.LineSize = 1
         Me.Button198.Location = New System.Drawing.Point(715, 3)
         Me.Button198.Name = "Button198"
         Me.Button198.Size = New System.Drawing.Size(36, 24)
@@ -5476,7 +5359,6 @@ Partial Class Sounds_Editor
         Me.Button175.ForeColor = System.Drawing.Color.White
         Me.Button175.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button175.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button175.LineSize = 1
         Me.Button175.Location = New System.Drawing.Point(639, 3)
         Me.Button175.Name = "Button175"
         Me.Button175.Size = New System.Drawing.Size(36, 24)
@@ -5494,7 +5376,6 @@ Partial Class Sounds_Editor
         Me.Button176.ForeColor = System.Drawing.Color.White
         Me.Button176.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button176.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button176.LineSize = 1
         Me.Button176.Location = New System.Drawing.Point(677, 3)
         Me.Button176.Name = "Button176"
         Me.Button176.Size = New System.Drawing.Size(36, 24)
@@ -5512,7 +5393,6 @@ Partial Class Sounds_Editor
         Me.Button177.ForeColor = System.Drawing.Color.White
         Me.Button177.Image = CType(resources.GetObject("Button177.Image"), System.Drawing.Image)
         Me.Button177.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button177.LineSize = 1
         Me.Button177.Location = New System.Drawing.Point(715, 3)
         Me.Button177.Name = "Button177"
         Me.Button177.Size = New System.Drawing.Size(36, 24)
@@ -5590,7 +5470,6 @@ Partial Class Sounds_Editor
         Me.Button178.ForeColor = System.Drawing.Color.White
         Me.Button178.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button178.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button178.LineSize = 1
         Me.Button178.Location = New System.Drawing.Point(639, 3)
         Me.Button178.Name = "Button178"
         Me.Button178.Size = New System.Drawing.Size(36, 24)
@@ -5608,7 +5487,6 @@ Partial Class Sounds_Editor
         Me.Button179.ForeColor = System.Drawing.Color.White
         Me.Button179.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button179.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button179.LineSize = 1
         Me.Button179.Location = New System.Drawing.Point(677, 3)
         Me.Button179.Name = "Button179"
         Me.Button179.Size = New System.Drawing.Size(36, 24)
@@ -5626,7 +5504,6 @@ Partial Class Sounds_Editor
         Me.Button180.ForeColor = System.Drawing.Color.White
         Me.Button180.Image = CType(resources.GetObject("Button180.Image"), System.Drawing.Image)
         Me.Button180.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button180.LineSize = 1
         Me.Button180.Location = New System.Drawing.Point(715, 3)
         Me.Button180.Name = "Button180"
         Me.Button180.Size = New System.Drawing.Size(36, 24)
@@ -5704,7 +5581,6 @@ Partial Class Sounds_Editor
         Me.Button181.ForeColor = System.Drawing.Color.White
         Me.Button181.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button181.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button181.LineSize = 1
         Me.Button181.Location = New System.Drawing.Point(639, 3)
         Me.Button181.Name = "Button181"
         Me.Button181.Size = New System.Drawing.Size(36, 24)
@@ -5722,7 +5598,6 @@ Partial Class Sounds_Editor
         Me.Button182.ForeColor = System.Drawing.Color.White
         Me.Button182.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button182.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button182.LineSize = 1
         Me.Button182.Location = New System.Drawing.Point(677, 3)
         Me.Button182.Name = "Button182"
         Me.Button182.Size = New System.Drawing.Size(36, 24)
@@ -5740,7 +5615,6 @@ Partial Class Sounds_Editor
         Me.Button183.ForeColor = System.Drawing.Color.White
         Me.Button183.Image = CType(resources.GetObject("Button183.Image"), System.Drawing.Image)
         Me.Button183.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button183.LineSize = 1
         Me.Button183.Location = New System.Drawing.Point(715, 3)
         Me.Button183.Name = "Button183"
         Me.Button183.Size = New System.Drawing.Size(36, 24)
@@ -5818,7 +5692,6 @@ Partial Class Sounds_Editor
         Me.Button184.ForeColor = System.Drawing.Color.White
         Me.Button184.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button184.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button184.LineSize = 1
         Me.Button184.Location = New System.Drawing.Point(639, 3)
         Me.Button184.Name = "Button184"
         Me.Button184.Size = New System.Drawing.Size(36, 24)
@@ -5836,7 +5709,6 @@ Partial Class Sounds_Editor
         Me.Button185.ForeColor = System.Drawing.Color.White
         Me.Button185.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button185.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button185.LineSize = 1
         Me.Button185.Location = New System.Drawing.Point(677, 3)
         Me.Button185.Name = "Button185"
         Me.Button185.Size = New System.Drawing.Size(36, 24)
@@ -5854,7 +5726,6 @@ Partial Class Sounds_Editor
         Me.Button186.ForeColor = System.Drawing.Color.White
         Me.Button186.Image = CType(resources.GetObject("Button186.Image"), System.Drawing.Image)
         Me.Button186.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button186.LineSize = 1
         Me.Button186.Location = New System.Drawing.Point(715, 3)
         Me.Button186.Name = "Button186"
         Me.Button186.Size = New System.Drawing.Size(36, 24)
@@ -5932,7 +5803,6 @@ Partial Class Sounds_Editor
         Me.Button187.ForeColor = System.Drawing.Color.White
         Me.Button187.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button187.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button187.LineSize = 1
         Me.Button187.Location = New System.Drawing.Point(639, 3)
         Me.Button187.Name = "Button187"
         Me.Button187.Size = New System.Drawing.Size(36, 24)
@@ -5950,7 +5820,6 @@ Partial Class Sounds_Editor
         Me.Button188.ForeColor = System.Drawing.Color.White
         Me.Button188.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button188.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button188.LineSize = 1
         Me.Button188.Location = New System.Drawing.Point(677, 3)
         Me.Button188.Name = "Button188"
         Me.Button188.Size = New System.Drawing.Size(36, 24)
@@ -5968,7 +5837,6 @@ Partial Class Sounds_Editor
         Me.Button189.ForeColor = System.Drawing.Color.White
         Me.Button189.Image = CType(resources.GetObject("Button189.Image"), System.Drawing.Image)
         Me.Button189.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button189.LineSize = 1
         Me.Button189.Location = New System.Drawing.Point(715, 3)
         Me.Button189.Name = "Button189"
         Me.Button189.Size = New System.Drawing.Size(36, 24)
@@ -6046,7 +5914,6 @@ Partial Class Sounds_Editor
         Me.Button190.ForeColor = System.Drawing.Color.White
         Me.Button190.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button190.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button190.LineSize = 1
         Me.Button190.Location = New System.Drawing.Point(639, 3)
         Me.Button190.Name = "Button190"
         Me.Button190.Size = New System.Drawing.Size(36, 24)
@@ -6064,7 +5931,6 @@ Partial Class Sounds_Editor
         Me.Button191.ForeColor = System.Drawing.Color.White
         Me.Button191.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button191.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button191.LineSize = 1
         Me.Button191.Location = New System.Drawing.Point(677, 3)
         Me.Button191.Name = "Button191"
         Me.Button191.Size = New System.Drawing.Size(36, 24)
@@ -6082,7 +5948,6 @@ Partial Class Sounds_Editor
         Me.Button192.ForeColor = System.Drawing.Color.White
         Me.Button192.Image = CType(resources.GetObject("Button192.Image"), System.Drawing.Image)
         Me.Button192.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button192.LineSize = 1
         Me.Button192.Location = New System.Drawing.Point(715, 3)
         Me.Button192.Name = "Button192"
         Me.Button192.Size = New System.Drawing.Size(36, 24)
@@ -6160,7 +6025,6 @@ Partial Class Sounds_Editor
         Me.Button193.ForeColor = System.Drawing.Color.White
         Me.Button193.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button193.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button193.LineSize = 1
         Me.Button193.Location = New System.Drawing.Point(639, 3)
         Me.Button193.Name = "Button193"
         Me.Button193.Size = New System.Drawing.Size(36, 24)
@@ -6178,7 +6042,6 @@ Partial Class Sounds_Editor
         Me.Button194.ForeColor = System.Drawing.Color.White
         Me.Button194.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button194.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button194.LineSize = 1
         Me.Button194.Location = New System.Drawing.Point(677, 3)
         Me.Button194.Name = "Button194"
         Me.Button194.Size = New System.Drawing.Size(36, 24)
@@ -6196,7 +6059,6 @@ Partial Class Sounds_Editor
         Me.Button195.ForeColor = System.Drawing.Color.White
         Me.Button195.Image = CType(resources.GetObject("Button195.Image"), System.Drawing.Image)
         Me.Button195.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button195.LineSize = 1
         Me.Button195.Location = New System.Drawing.Point(715, 3)
         Me.Button195.Name = "Button195"
         Me.Button195.Size = New System.Drawing.Size(36, 24)
@@ -6292,7 +6154,6 @@ Partial Class Sounds_Editor
         Me.Button202.ForeColor = System.Drawing.Color.White
         Me.Button202.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button202.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button202.LineSize = 1
         Me.Button202.Location = New System.Drawing.Point(639, 3)
         Me.Button202.Name = "Button202"
         Me.Button202.Size = New System.Drawing.Size(36, 24)
@@ -6310,7 +6171,6 @@ Partial Class Sounds_Editor
         Me.Button203.ForeColor = System.Drawing.Color.White
         Me.Button203.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button203.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button203.LineSize = 1
         Me.Button203.Location = New System.Drawing.Point(677, 3)
         Me.Button203.Name = "Button203"
         Me.Button203.Size = New System.Drawing.Size(36, 24)
@@ -6328,7 +6188,6 @@ Partial Class Sounds_Editor
         Me.Button204.ForeColor = System.Drawing.Color.White
         Me.Button204.Image = CType(resources.GetObject("Button204.Image"), System.Drawing.Image)
         Me.Button204.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button204.LineSize = 1
         Me.Button204.Location = New System.Drawing.Point(715, 3)
         Me.Button204.Name = "Button204"
         Me.Button204.Size = New System.Drawing.Size(36, 24)
@@ -6406,7 +6265,6 @@ Partial Class Sounds_Editor
         Me.Button172.ForeColor = System.Drawing.Color.White
         Me.Button172.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button172.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button172.LineSize = 1
         Me.Button172.Location = New System.Drawing.Point(639, 3)
         Me.Button172.Name = "Button172"
         Me.Button172.Size = New System.Drawing.Size(36, 24)
@@ -6424,7 +6282,6 @@ Partial Class Sounds_Editor
         Me.Button173.ForeColor = System.Drawing.Color.White
         Me.Button173.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button173.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button173.LineSize = 1
         Me.Button173.Location = New System.Drawing.Point(677, 3)
         Me.Button173.Name = "Button173"
         Me.Button173.Size = New System.Drawing.Size(36, 24)
@@ -6442,7 +6299,6 @@ Partial Class Sounds_Editor
         Me.Button174.ForeColor = System.Drawing.Color.White
         Me.Button174.Image = CType(resources.GetObject("Button174.Image"), System.Drawing.Image)
         Me.Button174.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button174.LineSize = 1
         Me.Button174.Location = New System.Drawing.Point(715, 3)
         Me.Button174.Name = "Button174"
         Me.Button174.Size = New System.Drawing.Size(36, 24)
@@ -6520,7 +6376,6 @@ Partial Class Sounds_Editor
         Me.Button79.ForeColor = System.Drawing.Color.White
         Me.Button79.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button79.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button79.LineSize = 1
         Me.Button79.Location = New System.Drawing.Point(639, 3)
         Me.Button79.Name = "Button79"
         Me.Button79.Size = New System.Drawing.Size(36, 24)
@@ -6538,7 +6393,6 @@ Partial Class Sounds_Editor
         Me.Button80.ForeColor = System.Drawing.Color.White
         Me.Button80.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button80.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button80.LineSize = 1
         Me.Button80.Location = New System.Drawing.Point(677, 3)
         Me.Button80.Name = "Button80"
         Me.Button80.Size = New System.Drawing.Size(36, 24)
@@ -6556,7 +6410,6 @@ Partial Class Sounds_Editor
         Me.Button81.ForeColor = System.Drawing.Color.White
         Me.Button81.Image = CType(resources.GetObject("Button81.Image"), System.Drawing.Image)
         Me.Button81.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button81.LineSize = 1
         Me.Button81.Location = New System.Drawing.Point(715, 3)
         Me.Button81.Name = "Button81"
         Me.Button81.Size = New System.Drawing.Size(36, 24)
@@ -6634,7 +6487,6 @@ Partial Class Sounds_Editor
         Me.Button61.ForeColor = System.Drawing.Color.White
         Me.Button61.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button61.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button61.LineSize = 1
         Me.Button61.Location = New System.Drawing.Point(639, 3)
         Me.Button61.Name = "Button61"
         Me.Button61.Size = New System.Drawing.Size(36, 24)
@@ -6652,7 +6504,6 @@ Partial Class Sounds_Editor
         Me.Button62.ForeColor = System.Drawing.Color.White
         Me.Button62.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button62.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button62.LineSize = 1
         Me.Button62.Location = New System.Drawing.Point(677, 3)
         Me.Button62.Name = "Button62"
         Me.Button62.Size = New System.Drawing.Size(36, 24)
@@ -6670,7 +6521,6 @@ Partial Class Sounds_Editor
         Me.Button63.ForeColor = System.Drawing.Color.White
         Me.Button63.Image = CType(resources.GetObject("Button63.Image"), System.Drawing.Image)
         Me.Button63.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button63.LineSize = 1
         Me.Button63.Location = New System.Drawing.Point(715, 3)
         Me.Button63.Name = "Button63"
         Me.Button63.Size = New System.Drawing.Size(36, 24)
@@ -6748,7 +6598,6 @@ Partial Class Sounds_Editor
         Me.Button64.ForeColor = System.Drawing.Color.White
         Me.Button64.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button64.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button64.LineSize = 1
         Me.Button64.Location = New System.Drawing.Point(639, 3)
         Me.Button64.Name = "Button64"
         Me.Button64.Size = New System.Drawing.Size(36, 24)
@@ -6766,7 +6615,6 @@ Partial Class Sounds_Editor
         Me.Button65.ForeColor = System.Drawing.Color.White
         Me.Button65.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button65.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button65.LineSize = 1
         Me.Button65.Location = New System.Drawing.Point(677, 3)
         Me.Button65.Name = "Button65"
         Me.Button65.Size = New System.Drawing.Size(36, 24)
@@ -6784,7 +6632,6 @@ Partial Class Sounds_Editor
         Me.Button66.ForeColor = System.Drawing.Color.White
         Me.Button66.Image = CType(resources.GetObject("Button66.Image"), System.Drawing.Image)
         Me.Button66.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button66.LineSize = 1
         Me.Button66.Location = New System.Drawing.Point(715, 3)
         Me.Button66.Name = "Button66"
         Me.Button66.Size = New System.Drawing.Size(36, 24)
@@ -6862,7 +6709,6 @@ Partial Class Sounds_Editor
         Me.Button67.ForeColor = System.Drawing.Color.White
         Me.Button67.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button67.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button67.LineSize = 1
         Me.Button67.Location = New System.Drawing.Point(639, 3)
         Me.Button67.Name = "Button67"
         Me.Button67.Size = New System.Drawing.Size(36, 24)
@@ -6880,7 +6726,6 @@ Partial Class Sounds_Editor
         Me.Button68.ForeColor = System.Drawing.Color.White
         Me.Button68.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button68.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button68.LineSize = 1
         Me.Button68.Location = New System.Drawing.Point(677, 3)
         Me.Button68.Name = "Button68"
         Me.Button68.Size = New System.Drawing.Size(36, 24)
@@ -6898,7 +6743,6 @@ Partial Class Sounds_Editor
         Me.Button69.ForeColor = System.Drawing.Color.White
         Me.Button69.Image = CType(resources.GetObject("Button69.Image"), System.Drawing.Image)
         Me.Button69.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button69.LineSize = 1
         Me.Button69.Location = New System.Drawing.Point(715, 3)
         Me.Button69.Name = "Button69"
         Me.Button69.Size = New System.Drawing.Size(36, 24)
@@ -6976,7 +6820,6 @@ Partial Class Sounds_Editor
         Me.Button70.ForeColor = System.Drawing.Color.White
         Me.Button70.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button70.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button70.LineSize = 1
         Me.Button70.Location = New System.Drawing.Point(639, 3)
         Me.Button70.Name = "Button70"
         Me.Button70.Size = New System.Drawing.Size(36, 24)
@@ -6994,7 +6837,6 @@ Partial Class Sounds_Editor
         Me.Button71.ForeColor = System.Drawing.Color.White
         Me.Button71.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button71.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button71.LineSize = 1
         Me.Button71.Location = New System.Drawing.Point(677, 3)
         Me.Button71.Name = "Button71"
         Me.Button71.Size = New System.Drawing.Size(36, 24)
@@ -7012,7 +6854,6 @@ Partial Class Sounds_Editor
         Me.Button72.ForeColor = System.Drawing.Color.White
         Me.Button72.Image = CType(resources.GetObject("Button72.Image"), System.Drawing.Image)
         Me.Button72.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button72.LineSize = 1
         Me.Button72.Location = New System.Drawing.Point(715, 3)
         Me.Button72.Name = "Button72"
         Me.Button72.Size = New System.Drawing.Size(36, 24)
@@ -7090,7 +6931,6 @@ Partial Class Sounds_Editor
         Me.Button73.ForeColor = System.Drawing.Color.White
         Me.Button73.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button73.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button73.LineSize = 1
         Me.Button73.Location = New System.Drawing.Point(639, 3)
         Me.Button73.Name = "Button73"
         Me.Button73.Size = New System.Drawing.Size(36, 24)
@@ -7108,7 +6948,6 @@ Partial Class Sounds_Editor
         Me.Button74.ForeColor = System.Drawing.Color.White
         Me.Button74.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button74.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button74.LineSize = 1
         Me.Button74.Location = New System.Drawing.Point(677, 3)
         Me.Button74.Name = "Button74"
         Me.Button74.Size = New System.Drawing.Size(36, 24)
@@ -7126,7 +6965,6 @@ Partial Class Sounds_Editor
         Me.Button75.ForeColor = System.Drawing.Color.White
         Me.Button75.Image = CType(resources.GetObject("Button75.Image"), System.Drawing.Image)
         Me.Button75.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button75.LineSize = 1
         Me.Button75.Location = New System.Drawing.Point(715, 3)
         Me.Button75.Name = "Button75"
         Me.Button75.Size = New System.Drawing.Size(36, 24)
@@ -7204,7 +7042,6 @@ Partial Class Sounds_Editor
         Me.Button76.ForeColor = System.Drawing.Color.White
         Me.Button76.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button76.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button76.LineSize = 1
         Me.Button76.Location = New System.Drawing.Point(639, 3)
         Me.Button76.Name = "Button76"
         Me.Button76.Size = New System.Drawing.Size(36, 24)
@@ -7222,7 +7059,6 @@ Partial Class Sounds_Editor
         Me.Button77.ForeColor = System.Drawing.Color.White
         Me.Button77.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button77.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button77.LineSize = 1
         Me.Button77.Location = New System.Drawing.Point(677, 3)
         Me.Button77.Name = "Button77"
         Me.Button77.Size = New System.Drawing.Size(36, 24)
@@ -7240,7 +7076,6 @@ Partial Class Sounds_Editor
         Me.Button78.ForeColor = System.Drawing.Color.White
         Me.Button78.Image = CType(resources.GetObject("Button78.Image"), System.Drawing.Image)
         Me.Button78.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button78.LineSize = 1
         Me.Button78.Location = New System.Drawing.Point(715, 3)
         Me.Button78.Name = "Button78"
         Me.Button78.Size = New System.Drawing.Size(36, 24)
@@ -7337,7 +7172,6 @@ Partial Class Sounds_Editor
         Me.Button103.ForeColor = System.Drawing.Color.White
         Me.Button103.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button103.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button103.LineSize = 1
         Me.Button103.Location = New System.Drawing.Point(639, 3)
         Me.Button103.Name = "Button103"
         Me.Button103.Size = New System.Drawing.Size(36, 24)
@@ -7355,7 +7189,6 @@ Partial Class Sounds_Editor
         Me.Button104.ForeColor = System.Drawing.Color.White
         Me.Button104.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button104.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button104.LineSize = 1
         Me.Button104.Location = New System.Drawing.Point(677, 3)
         Me.Button104.Name = "Button104"
         Me.Button104.Size = New System.Drawing.Size(36, 24)
@@ -7373,7 +7206,6 @@ Partial Class Sounds_Editor
         Me.Button105.ForeColor = System.Drawing.Color.White
         Me.Button105.Image = CType(resources.GetObject("Button105.Image"), System.Drawing.Image)
         Me.Button105.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button105.LineSize = 1
         Me.Button105.Location = New System.Drawing.Point(715, 3)
         Me.Button105.Name = "Button105"
         Me.Button105.Size = New System.Drawing.Size(36, 24)
@@ -7451,7 +7283,6 @@ Partial Class Sounds_Editor
         Me.Button106.ForeColor = System.Drawing.Color.White
         Me.Button106.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button106.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button106.LineSize = 1
         Me.Button106.Location = New System.Drawing.Point(639, 3)
         Me.Button106.Name = "Button106"
         Me.Button106.Size = New System.Drawing.Size(36, 24)
@@ -7469,7 +7300,6 @@ Partial Class Sounds_Editor
         Me.Button107.ForeColor = System.Drawing.Color.White
         Me.Button107.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button107.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button107.LineSize = 1
         Me.Button107.Location = New System.Drawing.Point(677, 3)
         Me.Button107.Name = "Button107"
         Me.Button107.Size = New System.Drawing.Size(36, 24)
@@ -7487,7 +7317,6 @@ Partial Class Sounds_Editor
         Me.Button108.ForeColor = System.Drawing.Color.White
         Me.Button108.Image = CType(resources.GetObject("Button108.Image"), System.Drawing.Image)
         Me.Button108.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button108.LineSize = 1
         Me.Button108.Location = New System.Drawing.Point(715, 3)
         Me.Button108.Name = "Button108"
         Me.Button108.Size = New System.Drawing.Size(36, 24)
@@ -7565,7 +7394,6 @@ Partial Class Sounds_Editor
         Me.Button109.ForeColor = System.Drawing.Color.White
         Me.Button109.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button109.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button109.LineSize = 1
         Me.Button109.Location = New System.Drawing.Point(639, 3)
         Me.Button109.Name = "Button109"
         Me.Button109.Size = New System.Drawing.Size(36, 24)
@@ -7583,7 +7411,6 @@ Partial Class Sounds_Editor
         Me.Button110.ForeColor = System.Drawing.Color.White
         Me.Button110.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button110.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button110.LineSize = 1
         Me.Button110.Location = New System.Drawing.Point(677, 3)
         Me.Button110.Name = "Button110"
         Me.Button110.Size = New System.Drawing.Size(36, 24)
@@ -7601,7 +7428,6 @@ Partial Class Sounds_Editor
         Me.Button111.ForeColor = System.Drawing.Color.White
         Me.Button111.Image = CType(resources.GetObject("Button111.Image"), System.Drawing.Image)
         Me.Button111.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button111.LineSize = 1
         Me.Button111.Location = New System.Drawing.Point(715, 3)
         Me.Button111.Name = "Button111"
         Me.Button111.Size = New System.Drawing.Size(36, 24)
@@ -7679,7 +7505,6 @@ Partial Class Sounds_Editor
         Me.Button82.ForeColor = System.Drawing.Color.White
         Me.Button82.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button82.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button82.LineSize = 1
         Me.Button82.Location = New System.Drawing.Point(639, 3)
         Me.Button82.Name = "Button82"
         Me.Button82.Size = New System.Drawing.Size(36, 24)
@@ -7697,7 +7522,6 @@ Partial Class Sounds_Editor
         Me.Button83.ForeColor = System.Drawing.Color.White
         Me.Button83.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button83.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button83.LineSize = 1
         Me.Button83.Location = New System.Drawing.Point(677, 3)
         Me.Button83.Name = "Button83"
         Me.Button83.Size = New System.Drawing.Size(36, 24)
@@ -7715,7 +7539,6 @@ Partial Class Sounds_Editor
         Me.Button84.ForeColor = System.Drawing.Color.White
         Me.Button84.Image = CType(resources.GetObject("Button84.Image"), System.Drawing.Image)
         Me.Button84.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button84.LineSize = 1
         Me.Button84.Location = New System.Drawing.Point(715, 3)
         Me.Button84.Name = "Button84"
         Me.Button84.Size = New System.Drawing.Size(36, 24)
@@ -7793,7 +7616,6 @@ Partial Class Sounds_Editor
         Me.Button85.ForeColor = System.Drawing.Color.White
         Me.Button85.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button85.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button85.LineSize = 1
         Me.Button85.Location = New System.Drawing.Point(639, 3)
         Me.Button85.Name = "Button85"
         Me.Button85.Size = New System.Drawing.Size(36, 24)
@@ -7811,7 +7633,6 @@ Partial Class Sounds_Editor
         Me.Button86.ForeColor = System.Drawing.Color.White
         Me.Button86.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button86.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button86.LineSize = 1
         Me.Button86.Location = New System.Drawing.Point(677, 3)
         Me.Button86.Name = "Button86"
         Me.Button86.Size = New System.Drawing.Size(36, 24)
@@ -7829,7 +7650,6 @@ Partial Class Sounds_Editor
         Me.Button87.ForeColor = System.Drawing.Color.White
         Me.Button87.Image = CType(resources.GetObject("Button87.Image"), System.Drawing.Image)
         Me.Button87.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button87.LineSize = 1
         Me.Button87.Location = New System.Drawing.Point(715, 3)
         Me.Button87.Name = "Button87"
         Me.Button87.Size = New System.Drawing.Size(36, 24)
@@ -7907,7 +7727,6 @@ Partial Class Sounds_Editor
         Me.Button88.ForeColor = System.Drawing.Color.White
         Me.Button88.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button88.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button88.LineSize = 1
         Me.Button88.Location = New System.Drawing.Point(639, 3)
         Me.Button88.Name = "Button88"
         Me.Button88.Size = New System.Drawing.Size(36, 24)
@@ -7925,7 +7744,6 @@ Partial Class Sounds_Editor
         Me.Button89.ForeColor = System.Drawing.Color.White
         Me.Button89.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button89.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button89.LineSize = 1
         Me.Button89.Location = New System.Drawing.Point(677, 3)
         Me.Button89.Name = "Button89"
         Me.Button89.Size = New System.Drawing.Size(36, 24)
@@ -7943,7 +7761,6 @@ Partial Class Sounds_Editor
         Me.Button90.ForeColor = System.Drawing.Color.White
         Me.Button90.Image = CType(resources.GetObject("Button90.Image"), System.Drawing.Image)
         Me.Button90.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button90.LineSize = 1
         Me.Button90.Location = New System.Drawing.Point(715, 3)
         Me.Button90.Name = "Button90"
         Me.Button90.Size = New System.Drawing.Size(36, 24)
@@ -8021,7 +7838,6 @@ Partial Class Sounds_Editor
         Me.Button91.ForeColor = System.Drawing.Color.White
         Me.Button91.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button91.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button91.LineSize = 1
         Me.Button91.Location = New System.Drawing.Point(639, 3)
         Me.Button91.Name = "Button91"
         Me.Button91.Size = New System.Drawing.Size(36, 24)
@@ -8039,7 +7855,6 @@ Partial Class Sounds_Editor
         Me.Button92.ForeColor = System.Drawing.Color.White
         Me.Button92.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button92.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button92.LineSize = 1
         Me.Button92.Location = New System.Drawing.Point(677, 3)
         Me.Button92.Name = "Button92"
         Me.Button92.Size = New System.Drawing.Size(36, 24)
@@ -8057,7 +7872,6 @@ Partial Class Sounds_Editor
         Me.Button93.ForeColor = System.Drawing.Color.White
         Me.Button93.Image = CType(resources.GetObject("Button93.Image"), System.Drawing.Image)
         Me.Button93.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button93.LineSize = 1
         Me.Button93.Location = New System.Drawing.Point(715, 3)
         Me.Button93.Name = "Button93"
         Me.Button93.Size = New System.Drawing.Size(36, 24)
@@ -8135,7 +7949,6 @@ Partial Class Sounds_Editor
         Me.Button94.ForeColor = System.Drawing.Color.White
         Me.Button94.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button94.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button94.LineSize = 1
         Me.Button94.Location = New System.Drawing.Point(639, 3)
         Me.Button94.Name = "Button94"
         Me.Button94.Size = New System.Drawing.Size(36, 24)
@@ -8153,7 +7966,6 @@ Partial Class Sounds_Editor
         Me.Button95.ForeColor = System.Drawing.Color.White
         Me.Button95.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button95.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button95.LineSize = 1
         Me.Button95.Location = New System.Drawing.Point(677, 3)
         Me.Button95.Name = "Button95"
         Me.Button95.Size = New System.Drawing.Size(36, 24)
@@ -8171,7 +7983,6 @@ Partial Class Sounds_Editor
         Me.Button96.ForeColor = System.Drawing.Color.White
         Me.Button96.Image = CType(resources.GetObject("Button96.Image"), System.Drawing.Image)
         Me.Button96.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button96.LineSize = 1
         Me.Button96.Location = New System.Drawing.Point(715, 3)
         Me.Button96.Name = "Button96"
         Me.Button96.Size = New System.Drawing.Size(36, 24)
@@ -8249,7 +8060,6 @@ Partial Class Sounds_Editor
         Me.Button97.ForeColor = System.Drawing.Color.White
         Me.Button97.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button97.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button97.LineSize = 1
         Me.Button97.Location = New System.Drawing.Point(639, 3)
         Me.Button97.Name = "Button97"
         Me.Button97.Size = New System.Drawing.Size(36, 24)
@@ -8267,7 +8077,6 @@ Partial Class Sounds_Editor
         Me.Button98.ForeColor = System.Drawing.Color.White
         Me.Button98.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button98.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button98.LineSize = 1
         Me.Button98.Location = New System.Drawing.Point(677, 3)
         Me.Button98.Name = "Button98"
         Me.Button98.Size = New System.Drawing.Size(36, 24)
@@ -8285,7 +8094,6 @@ Partial Class Sounds_Editor
         Me.Button99.ForeColor = System.Drawing.Color.White
         Me.Button99.Image = CType(resources.GetObject("Button99.Image"), System.Drawing.Image)
         Me.Button99.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button99.LineSize = 1
         Me.Button99.Location = New System.Drawing.Point(715, 3)
         Me.Button99.Name = "Button99"
         Me.Button99.Size = New System.Drawing.Size(36, 24)
@@ -8363,7 +8171,6 @@ Partial Class Sounds_Editor
         Me.Button100.ForeColor = System.Drawing.Color.White
         Me.Button100.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button100.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button100.LineSize = 1
         Me.Button100.Location = New System.Drawing.Point(639, 3)
         Me.Button100.Name = "Button100"
         Me.Button100.Size = New System.Drawing.Size(36, 24)
@@ -8381,7 +8188,6 @@ Partial Class Sounds_Editor
         Me.Button101.ForeColor = System.Drawing.Color.White
         Me.Button101.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button101.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button101.LineSize = 1
         Me.Button101.Location = New System.Drawing.Point(677, 3)
         Me.Button101.Name = "Button101"
         Me.Button101.Size = New System.Drawing.Size(36, 24)
@@ -8399,7 +8205,6 @@ Partial Class Sounds_Editor
         Me.Button102.ForeColor = System.Drawing.Color.White
         Me.Button102.Image = CType(resources.GetObject("Button102.Image"), System.Drawing.Image)
         Me.Button102.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button102.LineSize = 1
         Me.Button102.Location = New System.Drawing.Point(715, 3)
         Me.Button102.Name = "Button102"
         Me.Button102.Size = New System.Drawing.Size(36, 24)
@@ -8496,7 +8301,6 @@ Partial Class Sounds_Editor
         Me.Button112.ForeColor = System.Drawing.Color.White
         Me.Button112.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button112.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button112.LineSize = 1
         Me.Button112.Location = New System.Drawing.Point(639, 3)
         Me.Button112.Name = "Button112"
         Me.Button112.Size = New System.Drawing.Size(36, 24)
@@ -8514,7 +8318,6 @@ Partial Class Sounds_Editor
         Me.Button113.ForeColor = System.Drawing.Color.White
         Me.Button113.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button113.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button113.LineSize = 1
         Me.Button113.Location = New System.Drawing.Point(677, 3)
         Me.Button113.Name = "Button113"
         Me.Button113.Size = New System.Drawing.Size(36, 24)
@@ -8532,7 +8335,6 @@ Partial Class Sounds_Editor
         Me.Button114.ForeColor = System.Drawing.Color.White
         Me.Button114.Image = CType(resources.GetObject("Button114.Image"), System.Drawing.Image)
         Me.Button114.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button114.LineSize = 1
         Me.Button114.Location = New System.Drawing.Point(715, 3)
         Me.Button114.Name = "Button114"
         Me.Button114.Size = New System.Drawing.Size(36, 24)
@@ -8610,7 +8412,6 @@ Partial Class Sounds_Editor
         Me.Button115.ForeColor = System.Drawing.Color.White
         Me.Button115.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button115.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button115.LineSize = 1
         Me.Button115.Location = New System.Drawing.Point(639, 3)
         Me.Button115.Name = "Button115"
         Me.Button115.Size = New System.Drawing.Size(36, 24)
@@ -8628,7 +8429,6 @@ Partial Class Sounds_Editor
         Me.Button116.ForeColor = System.Drawing.Color.White
         Me.Button116.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button116.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button116.LineSize = 1
         Me.Button116.Location = New System.Drawing.Point(677, 3)
         Me.Button116.Name = "Button116"
         Me.Button116.Size = New System.Drawing.Size(36, 24)
@@ -8646,7 +8446,6 @@ Partial Class Sounds_Editor
         Me.Button117.ForeColor = System.Drawing.Color.White
         Me.Button117.Image = CType(resources.GetObject("Button117.Image"), System.Drawing.Image)
         Me.Button117.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button117.LineSize = 1
         Me.Button117.Location = New System.Drawing.Point(715, 3)
         Me.Button117.Name = "Button117"
         Me.Button117.Size = New System.Drawing.Size(36, 24)
@@ -8724,7 +8523,6 @@ Partial Class Sounds_Editor
         Me.Button118.ForeColor = System.Drawing.Color.White
         Me.Button118.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button118.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button118.LineSize = 1
         Me.Button118.Location = New System.Drawing.Point(639, 3)
         Me.Button118.Name = "Button118"
         Me.Button118.Size = New System.Drawing.Size(36, 24)
@@ -8742,7 +8540,6 @@ Partial Class Sounds_Editor
         Me.Button119.ForeColor = System.Drawing.Color.White
         Me.Button119.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button119.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button119.LineSize = 1
         Me.Button119.Location = New System.Drawing.Point(677, 3)
         Me.Button119.Name = "Button119"
         Me.Button119.Size = New System.Drawing.Size(36, 24)
@@ -8760,7 +8557,6 @@ Partial Class Sounds_Editor
         Me.Button120.ForeColor = System.Drawing.Color.White
         Me.Button120.Image = CType(resources.GetObject("Button120.Image"), System.Drawing.Image)
         Me.Button120.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button120.LineSize = 1
         Me.Button120.Location = New System.Drawing.Point(715, 3)
         Me.Button120.Name = "Button120"
         Me.Button120.Size = New System.Drawing.Size(36, 24)
@@ -8838,7 +8634,6 @@ Partial Class Sounds_Editor
         Me.Button121.ForeColor = System.Drawing.Color.White
         Me.Button121.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button121.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button121.LineSize = 1
         Me.Button121.Location = New System.Drawing.Point(639, 3)
         Me.Button121.Name = "Button121"
         Me.Button121.Size = New System.Drawing.Size(36, 24)
@@ -8856,7 +8651,6 @@ Partial Class Sounds_Editor
         Me.Button122.ForeColor = System.Drawing.Color.White
         Me.Button122.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button122.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button122.LineSize = 1
         Me.Button122.Location = New System.Drawing.Point(677, 3)
         Me.Button122.Name = "Button122"
         Me.Button122.Size = New System.Drawing.Size(36, 24)
@@ -8874,7 +8668,6 @@ Partial Class Sounds_Editor
         Me.Button123.ForeColor = System.Drawing.Color.White
         Me.Button123.Image = CType(resources.GetObject("Button123.Image"), System.Drawing.Image)
         Me.Button123.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button123.LineSize = 1
         Me.Button123.Location = New System.Drawing.Point(715, 3)
         Me.Button123.Name = "Button123"
         Me.Button123.Size = New System.Drawing.Size(36, 24)
@@ -8952,7 +8745,6 @@ Partial Class Sounds_Editor
         Me.Button124.ForeColor = System.Drawing.Color.White
         Me.Button124.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button124.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button124.LineSize = 1
         Me.Button124.Location = New System.Drawing.Point(639, 3)
         Me.Button124.Name = "Button124"
         Me.Button124.Size = New System.Drawing.Size(36, 24)
@@ -8970,7 +8762,6 @@ Partial Class Sounds_Editor
         Me.Button125.ForeColor = System.Drawing.Color.White
         Me.Button125.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button125.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button125.LineSize = 1
         Me.Button125.Location = New System.Drawing.Point(677, 3)
         Me.Button125.Name = "Button125"
         Me.Button125.Size = New System.Drawing.Size(36, 24)
@@ -8988,7 +8779,6 @@ Partial Class Sounds_Editor
         Me.Button126.ForeColor = System.Drawing.Color.White
         Me.Button126.Image = CType(resources.GetObject("Button126.Image"), System.Drawing.Image)
         Me.Button126.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button126.LineSize = 1
         Me.Button126.Location = New System.Drawing.Point(715, 3)
         Me.Button126.Name = "Button126"
         Me.Button126.Size = New System.Drawing.Size(36, 24)
@@ -9066,7 +8856,6 @@ Partial Class Sounds_Editor
         Me.Button127.ForeColor = System.Drawing.Color.White
         Me.Button127.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button127.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button127.LineSize = 1
         Me.Button127.Location = New System.Drawing.Point(639, 3)
         Me.Button127.Name = "Button127"
         Me.Button127.Size = New System.Drawing.Size(36, 24)
@@ -9084,7 +8873,6 @@ Partial Class Sounds_Editor
         Me.Button128.ForeColor = System.Drawing.Color.White
         Me.Button128.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button128.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button128.LineSize = 1
         Me.Button128.Location = New System.Drawing.Point(677, 3)
         Me.Button128.Name = "Button128"
         Me.Button128.Size = New System.Drawing.Size(36, 24)
@@ -9102,7 +8890,6 @@ Partial Class Sounds_Editor
         Me.Button129.ForeColor = System.Drawing.Color.White
         Me.Button129.Image = CType(resources.GetObject("Button129.Image"), System.Drawing.Image)
         Me.Button129.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button129.LineSize = 1
         Me.Button129.Location = New System.Drawing.Point(715, 3)
         Me.Button129.Name = "Button129"
         Me.Button129.Size = New System.Drawing.Size(36, 24)
@@ -9180,7 +8967,6 @@ Partial Class Sounds_Editor
         Me.Button130.ForeColor = System.Drawing.Color.White
         Me.Button130.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button130.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button130.LineSize = 1
         Me.Button130.Location = New System.Drawing.Point(639, 3)
         Me.Button130.Name = "Button130"
         Me.Button130.Size = New System.Drawing.Size(36, 24)
@@ -9198,7 +8984,6 @@ Partial Class Sounds_Editor
         Me.Button131.ForeColor = System.Drawing.Color.White
         Me.Button131.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button131.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button131.LineSize = 1
         Me.Button131.Location = New System.Drawing.Point(677, 3)
         Me.Button131.Name = "Button131"
         Me.Button131.Size = New System.Drawing.Size(36, 24)
@@ -9216,7 +9001,6 @@ Partial Class Sounds_Editor
         Me.Button132.ForeColor = System.Drawing.Color.White
         Me.Button132.Image = CType(resources.GetObject("Button132.Image"), System.Drawing.Image)
         Me.Button132.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button132.LineSize = 1
         Me.Button132.Location = New System.Drawing.Point(715, 3)
         Me.Button132.Name = "Button132"
         Me.Button132.Size = New System.Drawing.Size(36, 24)
@@ -9294,7 +9078,6 @@ Partial Class Sounds_Editor
         Me.Button133.ForeColor = System.Drawing.Color.White
         Me.Button133.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button133.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button133.LineSize = 1
         Me.Button133.Location = New System.Drawing.Point(639, 3)
         Me.Button133.Name = "Button133"
         Me.Button133.Size = New System.Drawing.Size(36, 24)
@@ -9312,7 +9095,6 @@ Partial Class Sounds_Editor
         Me.Button134.ForeColor = System.Drawing.Color.White
         Me.Button134.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button134.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button134.LineSize = 1
         Me.Button134.Location = New System.Drawing.Point(677, 3)
         Me.Button134.Name = "Button134"
         Me.Button134.Size = New System.Drawing.Size(36, 24)
@@ -9330,7 +9112,6 @@ Partial Class Sounds_Editor
         Me.Button135.ForeColor = System.Drawing.Color.White
         Me.Button135.Image = CType(resources.GetObject("Button135.Image"), System.Drawing.Image)
         Me.Button135.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button135.LineSize = 1
         Me.Button135.Location = New System.Drawing.Point(715, 3)
         Me.Button135.Name = "Button135"
         Me.Button135.Size = New System.Drawing.Size(36, 24)
@@ -9408,7 +9189,6 @@ Partial Class Sounds_Editor
         Me.Button136.ForeColor = System.Drawing.Color.White
         Me.Button136.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button136.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button136.LineSize = 1
         Me.Button136.Location = New System.Drawing.Point(639, 3)
         Me.Button136.Name = "Button136"
         Me.Button136.Size = New System.Drawing.Size(36, 24)
@@ -9426,7 +9206,6 @@ Partial Class Sounds_Editor
         Me.Button137.ForeColor = System.Drawing.Color.White
         Me.Button137.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button137.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button137.LineSize = 1
         Me.Button137.Location = New System.Drawing.Point(677, 3)
         Me.Button137.Name = "Button137"
         Me.Button137.Size = New System.Drawing.Size(36, 24)
@@ -9444,7 +9223,6 @@ Partial Class Sounds_Editor
         Me.Button138.ForeColor = System.Drawing.Color.White
         Me.Button138.Image = CType(resources.GetObject("Button138.Image"), System.Drawing.Image)
         Me.Button138.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button138.LineSize = 1
         Me.Button138.Location = New System.Drawing.Point(715, 3)
         Me.Button138.Name = "Button138"
         Me.Button138.Size = New System.Drawing.Size(36, 24)
@@ -9522,7 +9300,6 @@ Partial Class Sounds_Editor
         Me.Button139.ForeColor = System.Drawing.Color.White
         Me.Button139.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button139.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button139.LineSize = 1
         Me.Button139.Location = New System.Drawing.Point(639, 3)
         Me.Button139.Name = "Button139"
         Me.Button139.Size = New System.Drawing.Size(36, 24)
@@ -9540,7 +9317,6 @@ Partial Class Sounds_Editor
         Me.Button140.ForeColor = System.Drawing.Color.White
         Me.Button140.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button140.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button140.LineSize = 1
         Me.Button140.Location = New System.Drawing.Point(677, 3)
         Me.Button140.Name = "Button140"
         Me.Button140.Size = New System.Drawing.Size(36, 24)
@@ -9558,7 +9334,6 @@ Partial Class Sounds_Editor
         Me.Button141.ForeColor = System.Drawing.Color.White
         Me.Button141.Image = CType(resources.GetObject("Button141.Image"), System.Drawing.Image)
         Me.Button141.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button141.LineSize = 1
         Me.Button141.Location = New System.Drawing.Point(715, 3)
         Me.Button141.Name = "Button141"
         Me.Button141.Size = New System.Drawing.Size(36, 24)
@@ -9651,7 +9426,6 @@ Partial Class Sounds_Editor
         Me.Button214.ForeColor = System.Drawing.Color.White
         Me.Button214.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button214.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button214.LineSize = 1
         Me.Button214.Location = New System.Drawing.Point(639, 3)
         Me.Button214.Name = "Button214"
         Me.Button214.Size = New System.Drawing.Size(36, 24)
@@ -9669,7 +9443,6 @@ Partial Class Sounds_Editor
         Me.Button215.ForeColor = System.Drawing.Color.White
         Me.Button215.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button215.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button215.LineSize = 1
         Me.Button215.Location = New System.Drawing.Point(677, 3)
         Me.Button215.Name = "Button215"
         Me.Button215.Size = New System.Drawing.Size(36, 24)
@@ -9687,7 +9460,6 @@ Partial Class Sounds_Editor
         Me.Button216.ForeColor = System.Drawing.Color.White
         Me.Button216.Image = CType(resources.GetObject("Button216.Image"), System.Drawing.Image)
         Me.Button216.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button216.LineSize = 1
         Me.Button216.Location = New System.Drawing.Point(715, 3)
         Me.Button216.Name = "Button216"
         Me.Button216.Size = New System.Drawing.Size(36, 24)
@@ -9765,7 +9537,6 @@ Partial Class Sounds_Editor
         Me.Button217.ForeColor = System.Drawing.Color.White
         Me.Button217.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button217.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button217.LineSize = 1
         Me.Button217.Location = New System.Drawing.Point(639, 3)
         Me.Button217.Name = "Button217"
         Me.Button217.Size = New System.Drawing.Size(36, 24)
@@ -9783,7 +9554,6 @@ Partial Class Sounds_Editor
         Me.Button218.ForeColor = System.Drawing.Color.White
         Me.Button218.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button218.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button218.LineSize = 1
         Me.Button218.Location = New System.Drawing.Point(677, 3)
         Me.Button218.Name = "Button218"
         Me.Button218.Size = New System.Drawing.Size(36, 24)
@@ -9801,7 +9571,6 @@ Partial Class Sounds_Editor
         Me.Button219.ForeColor = System.Drawing.Color.White
         Me.Button219.Image = CType(resources.GetObject("Button219.Image"), System.Drawing.Image)
         Me.Button219.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button219.LineSize = 1
         Me.Button219.Location = New System.Drawing.Point(715, 3)
         Me.Button219.Name = "Button219"
         Me.Button219.Size = New System.Drawing.Size(36, 24)
@@ -9879,7 +9648,6 @@ Partial Class Sounds_Editor
         Me.Button220.ForeColor = System.Drawing.Color.White
         Me.Button220.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button220.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button220.LineSize = 1
         Me.Button220.Location = New System.Drawing.Point(639, 3)
         Me.Button220.Name = "Button220"
         Me.Button220.Size = New System.Drawing.Size(36, 24)
@@ -9897,7 +9665,6 @@ Partial Class Sounds_Editor
         Me.Button221.ForeColor = System.Drawing.Color.White
         Me.Button221.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button221.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button221.LineSize = 1
         Me.Button221.Location = New System.Drawing.Point(677, 3)
         Me.Button221.Name = "Button221"
         Me.Button221.Size = New System.Drawing.Size(36, 24)
@@ -9915,7 +9682,6 @@ Partial Class Sounds_Editor
         Me.Button222.ForeColor = System.Drawing.Color.White
         Me.Button222.Image = CType(resources.GetObject("Button222.Image"), System.Drawing.Image)
         Me.Button222.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button222.LineSize = 1
         Me.Button222.Location = New System.Drawing.Point(715, 3)
         Me.Button222.Name = "Button222"
         Me.Button222.Size = New System.Drawing.Size(36, 24)
@@ -9993,7 +9759,6 @@ Partial Class Sounds_Editor
         Me.Button223.ForeColor = System.Drawing.Color.White
         Me.Button223.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button223.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button223.LineSize = 1
         Me.Button223.Location = New System.Drawing.Point(639, 3)
         Me.Button223.Name = "Button223"
         Me.Button223.Size = New System.Drawing.Size(36, 24)
@@ -10011,7 +9776,6 @@ Partial Class Sounds_Editor
         Me.Button224.ForeColor = System.Drawing.Color.White
         Me.Button224.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button224.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button224.LineSize = 1
         Me.Button224.Location = New System.Drawing.Point(677, 3)
         Me.Button224.Name = "Button224"
         Me.Button224.Size = New System.Drawing.Size(36, 24)
@@ -10029,7 +9793,6 @@ Partial Class Sounds_Editor
         Me.Button225.ForeColor = System.Drawing.Color.White
         Me.Button225.Image = CType(resources.GetObject("Button225.Image"), System.Drawing.Image)
         Me.Button225.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button225.LineSize = 1
         Me.Button225.Location = New System.Drawing.Point(715, 3)
         Me.Button225.Name = "Button225"
         Me.Button225.Size = New System.Drawing.Size(36, 24)
@@ -10107,7 +9870,6 @@ Partial Class Sounds_Editor
         Me.Button226.ForeColor = System.Drawing.Color.White
         Me.Button226.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button226.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button226.LineSize = 1
         Me.Button226.Location = New System.Drawing.Point(639, 3)
         Me.Button226.Name = "Button226"
         Me.Button226.Size = New System.Drawing.Size(36, 24)
@@ -10125,7 +9887,6 @@ Partial Class Sounds_Editor
         Me.Button227.ForeColor = System.Drawing.Color.White
         Me.Button227.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button227.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button227.LineSize = 1
         Me.Button227.Location = New System.Drawing.Point(677, 3)
         Me.Button227.Name = "Button227"
         Me.Button227.Size = New System.Drawing.Size(36, 24)
@@ -10143,7 +9904,6 @@ Partial Class Sounds_Editor
         Me.Button228.ForeColor = System.Drawing.Color.White
         Me.Button228.Image = CType(resources.GetObject("Button228.Image"), System.Drawing.Image)
         Me.Button228.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button228.LineSize = 1
         Me.Button228.Location = New System.Drawing.Point(715, 3)
         Me.Button228.Name = "Button228"
         Me.Button228.Size = New System.Drawing.Size(36, 24)
@@ -10221,7 +9981,6 @@ Partial Class Sounds_Editor
         Me.Button229.ForeColor = System.Drawing.Color.White
         Me.Button229.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button229.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button229.LineSize = 1
         Me.Button229.Location = New System.Drawing.Point(639, 3)
         Me.Button229.Name = "Button229"
         Me.Button229.Size = New System.Drawing.Size(36, 24)
@@ -10239,7 +9998,6 @@ Partial Class Sounds_Editor
         Me.Button230.ForeColor = System.Drawing.Color.White
         Me.Button230.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button230.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button230.LineSize = 1
         Me.Button230.Location = New System.Drawing.Point(677, 3)
         Me.Button230.Name = "Button230"
         Me.Button230.Size = New System.Drawing.Size(36, 24)
@@ -10257,7 +10015,6 @@ Partial Class Sounds_Editor
         Me.Button231.ForeColor = System.Drawing.Color.White
         Me.Button231.Image = CType(resources.GetObject("Button231.Image"), System.Drawing.Image)
         Me.Button231.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button231.LineSize = 1
         Me.Button231.Location = New System.Drawing.Point(715, 3)
         Me.Button231.Name = "Button231"
         Me.Button231.Size = New System.Drawing.Size(36, 24)
@@ -10367,7 +10124,6 @@ Partial Class Sounds_Editor
         Me.Button247.ForeColor = System.Drawing.Color.White
         Me.Button247.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button247.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button247.LineSize = 1
         Me.Button247.Location = New System.Drawing.Point(639, 3)
         Me.Button247.Name = "Button247"
         Me.Button247.Size = New System.Drawing.Size(36, 24)
@@ -10385,7 +10141,6 @@ Partial Class Sounds_Editor
         Me.Button248.ForeColor = System.Drawing.Color.White
         Me.Button248.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button248.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button248.LineSize = 1
         Me.Button248.Location = New System.Drawing.Point(677, 3)
         Me.Button248.Name = "Button248"
         Me.Button248.Size = New System.Drawing.Size(36, 24)
@@ -10403,7 +10158,6 @@ Partial Class Sounds_Editor
         Me.Button249.ForeColor = System.Drawing.Color.White
         Me.Button249.Image = CType(resources.GetObject("Button249.Image"), System.Drawing.Image)
         Me.Button249.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button249.LineSize = 1
         Me.Button249.Location = New System.Drawing.Point(715, 3)
         Me.Button249.Name = "Button249"
         Me.Button249.Size = New System.Drawing.Size(36, 24)
@@ -10481,7 +10235,6 @@ Partial Class Sounds_Editor
         Me.Button250.ForeColor = System.Drawing.Color.White
         Me.Button250.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button250.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button250.LineSize = 1
         Me.Button250.Location = New System.Drawing.Point(639, 3)
         Me.Button250.Name = "Button250"
         Me.Button250.Size = New System.Drawing.Size(36, 24)
@@ -10499,7 +10252,6 @@ Partial Class Sounds_Editor
         Me.Button251.ForeColor = System.Drawing.Color.White
         Me.Button251.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button251.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button251.LineSize = 1
         Me.Button251.Location = New System.Drawing.Point(677, 3)
         Me.Button251.Name = "Button251"
         Me.Button251.Size = New System.Drawing.Size(36, 24)
@@ -10517,7 +10269,6 @@ Partial Class Sounds_Editor
         Me.Button252.ForeColor = System.Drawing.Color.White
         Me.Button252.Image = CType(resources.GetObject("Button252.Image"), System.Drawing.Image)
         Me.Button252.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button252.LineSize = 1
         Me.Button252.Location = New System.Drawing.Point(715, 3)
         Me.Button252.Name = "Button252"
         Me.Button252.Size = New System.Drawing.Size(36, 24)
@@ -10595,7 +10346,6 @@ Partial Class Sounds_Editor
         Me.Button253.ForeColor = System.Drawing.Color.White
         Me.Button253.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button253.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button253.LineSize = 1
         Me.Button253.Location = New System.Drawing.Point(639, 3)
         Me.Button253.Name = "Button253"
         Me.Button253.Size = New System.Drawing.Size(36, 24)
@@ -10613,7 +10363,6 @@ Partial Class Sounds_Editor
         Me.Button254.ForeColor = System.Drawing.Color.White
         Me.Button254.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button254.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button254.LineSize = 1
         Me.Button254.Location = New System.Drawing.Point(677, 3)
         Me.Button254.Name = "Button254"
         Me.Button254.Size = New System.Drawing.Size(36, 24)
@@ -10631,7 +10380,6 @@ Partial Class Sounds_Editor
         Me.Button255.ForeColor = System.Drawing.Color.White
         Me.Button255.Image = CType(resources.GetObject("Button255.Image"), System.Drawing.Image)
         Me.Button255.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button255.LineSize = 1
         Me.Button255.Location = New System.Drawing.Point(715, 3)
         Me.Button255.Name = "Button255"
         Me.Button255.Size = New System.Drawing.Size(36, 24)
@@ -10709,7 +10457,6 @@ Partial Class Sounds_Editor
         Me.Button256.ForeColor = System.Drawing.Color.White
         Me.Button256.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button256.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button256.LineSize = 1
         Me.Button256.Location = New System.Drawing.Point(639, 3)
         Me.Button256.Name = "Button256"
         Me.Button256.Size = New System.Drawing.Size(36, 24)
@@ -10727,7 +10474,6 @@ Partial Class Sounds_Editor
         Me.Button257.ForeColor = System.Drawing.Color.White
         Me.Button257.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button257.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button257.LineSize = 1
         Me.Button257.Location = New System.Drawing.Point(677, 3)
         Me.Button257.Name = "Button257"
         Me.Button257.Size = New System.Drawing.Size(36, 24)
@@ -10745,7 +10491,6 @@ Partial Class Sounds_Editor
         Me.Button258.ForeColor = System.Drawing.Color.White
         Me.Button258.Image = CType(resources.GetObject("Button258.Image"), System.Drawing.Image)
         Me.Button258.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button258.LineSize = 1
         Me.Button258.Location = New System.Drawing.Point(715, 3)
         Me.Button258.Name = "Button258"
         Me.Button258.Size = New System.Drawing.Size(36, 24)
@@ -10833,7 +10578,6 @@ Partial Class Sounds_Editor
         Me.Button208.ForeColor = System.Drawing.Color.White
         Me.Button208.Image = Global.WinPaletter.My.Resources.Resources.Sound_Stop
         Me.Button208.LineColor = System.Drawing.Color.FromArgb(CType(CType(117, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(34, Byte), Integer))
-        Me.Button208.LineSize = 1
         Me.Button208.Location = New System.Drawing.Point(639, 3)
         Me.Button208.Name = "Button208"
         Me.Button208.Size = New System.Drawing.Size(36, 24)
@@ -10851,7 +10595,6 @@ Partial Class Sounds_Editor
         Me.Button209.ForeColor = System.Drawing.Color.White
         Me.Button209.Image = Global.WinPaletter.My.Resources.Resources.Sound_Play
         Me.Button209.LineColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(77, Byte), Integer))
-        Me.Button209.LineSize = 1
         Me.Button209.Location = New System.Drawing.Point(677, 3)
         Me.Button209.Name = "Button209"
         Me.Button209.Size = New System.Drawing.Size(36, 24)
@@ -10869,7 +10612,6 @@ Partial Class Sounds_Editor
         Me.Button210.ForeColor = System.Drawing.Color.White
         Me.Button210.Image = CType(resources.GetObject("Button210.Image"), System.Drawing.Image)
         Me.Button210.LineColor = System.Drawing.Color.FromArgb(CType(CType(164, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.Button210.LineSize = 1
         Me.Button210.Location = New System.Drawing.Point(715, 3)
         Me.Button210.Name = "Button210"
         Me.Button210.Size = New System.Drawing.Size(36, 24)
@@ -10947,7 +10689,6 @@ Partial Class Sounds_Editor
         Me.Button259.Image = CType(resources.GetObject("Button259.Image"), System.Drawing.Image)
         Me.Button259.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button259.LineColor = System.Drawing.Color.FromArgb(CType(CType(151, Byte), Integer), CType(CType(111, Byte), Integer), CType(CType(91, Byte), Integer))
-        Me.Button259.LineSize = 1
         Me.Button259.Location = New System.Drawing.Point(223, 5)
         Me.Button259.Name = "Button259"
         Me.Button259.Size = New System.Drawing.Size(144, 29)
@@ -10964,7 +10705,6 @@ Partial Class Sounds_Editor
         Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
         Me.Button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button9.LineColor = System.Drawing.Color.FromArgb(CType(CType(90, Byte), Integer), CType(CType(134, Byte), Integer), CType(CType(117, Byte), Integer))
-        Me.Button9.LineSize = 1
         Me.Button9.Location = New System.Drawing.Point(370, 5)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(126, 29)
@@ -10992,7 +10732,6 @@ Partial Class Sounds_Editor
         Me.Button11.Image = CType(resources.GetObject("Button11.Image"), System.Drawing.Image)
         Me.Button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button11.LineColor = System.Drawing.Color.FromArgb(CType(CType(113, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(131, Byte), Integer))
-        Me.Button11.LineSize = 1
         Me.Button11.Location = New System.Drawing.Point(85, 5)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(135, 29)
@@ -11009,7 +10748,6 @@ Partial Class Sounds_Editor
         Me.Button12.Image = Nothing
         Me.Button12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button12.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(66, Byte), Integer), CType(CType(119, Byte), Integer))
-        Me.Button12.LineSize = 1
         Me.Button12.Location = New System.Drawing.Point(499, 5)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(135, 29)

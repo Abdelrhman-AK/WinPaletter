@@ -151,7 +151,6 @@ Partial Class Store_DownloadProgress
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = Nothing
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(199, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(61, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(592, 200)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(80, 34)

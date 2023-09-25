@@ -4,12 +4,40 @@ Imports System.Drawing.Text
 
 Namespace UI.WP
 
-    <Description("Themed TrackBar for WinPaletter UI")>
-    <DefaultEvent("Scroll")> Public Class Trackbar : Inherits Control
+    <Description("Themed TrackBar for WinPaletter UI")> <DefaultEvent("Scroll")> Public Class Trackbar : Inherits Control
 
-        Event Scroll(sender As Object)
+        Sub New()
+            SetStyle(DirectCast(139286, ControlStyles), True)
+            SetStyle(ControlStyles.Selectable, False)
+            Height = 19
+            Text = ""
+        End Sub
+
+#Region "Variables"
+
+        ReadOnly ButtonSize As Integer = 0
+        ReadOnly ThumbSize As Integer = 35 ' 14 minimum
+        Private LSA As Rectangle
+        Private RSA As Rectangle
+        Private Shaft As Rectangle
+        Private Thumb As Rectangle
+        Private ThumbDown As Boolean
+        Private Circle As Rectangle
+        Private _Shown As Boolean = False
+        Dim I1 As Integer
+
+        Public State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+#End Region
 
 #Region "Properties"
+
         Private _Minimum As Integer
         Property Minimum() As Integer
             Get
@@ -104,30 +132,164 @@ Namespace UI.WP
         <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
         <Bindable(True)>
         Public Overrides Property Text As String = ""
+
 #End Region
 
-        ReadOnly ButtonSize As Integer = 0
-        ReadOnly ThumbSize As Integer = 35 ' 14 minimum
-        Private LSA As Rectangle
-        Private RSA As Rectangle
-        Private Shaft As Rectangle
-        Private Thumb As Rectangle
-        Private ThumbDown As Boolean
-        Private Circle As Rectangle
-        Private _Shown As Boolean = False
+#Region "Events"
 
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
+        Event Scroll(sender As Object)
+
+        Protected Overrides Sub OnSizeChanged(e As EventArgs)
+            Height = 19
+            InvalidateLayout()
+        End Sub
+
+        Private Sub InvalidateLayout()
+            LSA = New Rectangle(0, 0, ButtonSize, Height)
+            RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
+            Shaft = New Rectangle(LSA.Right + 1 + 0.5 * Height, 0, Width - Height - 1, Height)
+            Thumb = New Rectangle(0, 1, (Value / Maximum) * Shaft.Width, Height - 3)
+            Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
+            RaiseEvent Scroll(Me)
+            InvalidatePosition()
+        End Sub
+
+        Private Sub InvalidatePosition()
+            Thumb.Width = (Value / Maximum) * Width
+            Refresh()
+        End Sub
+
+        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+            If e.Button = Windows.Forms.MouseButtons.Left Then
+                State = MouseState.Down
+                Timer.Enabled = True
+                Timer.Start()
+
+                If Circle.Contains(e.Location) Then
+                    ThumbDown = True
+                    Return
+                Else
+                    If e.X < Circle.X Then
+
+                        I1 = _Value - _LargeChange
+                    Else
+                        I1 = _Value + _LargeChange
+                    End If
+                End If
+
+                Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
+
+                InvalidatePosition()
+            End If
+        End Sub
+
+        Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
+            If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
+                State = MouseState.Over
+            Else
+                If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
+            End If
+
+
+            Invalidate()
+
+            If ThumbDown Then
+                Value = Math.Min(Math.Max((e.X / Width) * Maximum, _Minimum), _Maximum)
+                InvalidatePosition()
+            End If
+
+            Timer.Enabled = True
+            Timer.Start()
+        End Sub
+
+        Private Sub Trackbar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+            ThumbDown = False
+            State = MouseState.None
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub Trackbar_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+            If Thumb.Contains(MousePosition) Then
+                State = MouseState.Over
+                Invalidate()
+                Timer.Enabled = True
+                Timer.Start()
+            End If
+        End Sub
+
+        Private Sub Trackbar_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+            State = MouseState.None
+            Timer.Enabled = True
+            Timer.Start()
+            Invalidate()
+        End Sub
+
+        Private Sub Trackbar_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+            If e.Delta < 0 Then
+                If Value < Maximum Then
+                    If e.Delta <= -240 Then Value += LargeChange Else Value += SmallChange
+                End If
+            Else
+                If Value > Minimum Then
+                    If e.Delta >= 240 Then Value -= LargeChange Else Value -= SmallChange
+                End If
+            End If
+        End Sub
+
+        Private Sub Trackbar_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+            Try
+                If Not DesignMode Then
+                    AddHandler FindForm.Load, AddressOf Loaded
+                    AddHandler FindForm.Shown, AddressOf Showed
+                End If
+            Catch
+            End Try
+
+            Try
+                alpha = 0
+            Catch
+            End Try
+        End Sub
+
+        Private Sub Trackbar_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+            Try
+                If Not DesignMode Then
+                    RemoveHandler FindForm.Load, AddressOf Loaded
+                    RemoveHandler FindForm.Shown, AddressOf Showed
+                End If
+            Catch
+            End Try
+        End Sub
+
+        Sub Loaded(sender As Object, e As EventArgs)
+            _Shown = False
+        End Sub
+
+        Sub Showed(sender As Object, e As EventArgs)
+            _Shown = True
+            Invalidate()
+        End Sub
+
+#End Region
+
+#Region "Subs/Functions"
+
+        Private Function GetProgress() As Double
+            Return (_Value - _Minimum) / (_Maximum - _Minimum)
+        End Function
+
+#End Region
 
 #Region "Animator"
+
         Dim alpha As Integer
         ReadOnly Factor As Integer = 25
-        Dim WithEvents Tmr As New Timer With {.Enabled = False, .Interval = 1}
+        Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
 
-        Private Sub Tmr_Tick(sender As Object, e As EventArgs) Handles Tmr.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             If Not DesignMode Then
 
                 If State = MouseState.Over And _Shown Then
@@ -135,8 +297,8 @@ Namespace UI.WP
                         alpha += Factor
                     ElseIf alpha + Factor > 255 Then
                         alpha = 255
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                     End If
 
                     Threading.Thread.Sleep(1)
@@ -148,8 +310,8 @@ Namespace UI.WP
                         alpha -= Factor
                     ElseIf alpha - Factor < 0 Then
                         alpha = 0
-                        Tmr.Enabled = False
-                        Tmr.Stop()
+                        Timer.Enabled = False
+                        Timer.Stop()
                     End If
 
                     Threading.Thread.Sleep(1)
@@ -157,20 +319,10 @@ Namespace UI.WP
                 End If
             End If
         End Sub
+
 #End Region
 
-        Public State As MouseState = MouseState.None
-
-        Sub New()
-            SetStyle(DirectCast(139286, ControlStyles), True)
-            SetStyle(ControlStyles.Selectable, False)
-            Height = 19
-            Text = ""
-        End Sub
-
-        Dim I1 As Integer
-
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.HighQuality
             G.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
@@ -203,149 +355,6 @@ Namespace UI.WP
 
             Using br As New SolidBrush(C) : G.FillEllipse(br, smallC1) : End Using
             Using br As New SolidBrush(Color.FromArgb(alpha, C)) : G.FillEllipse(br, smallC2) : End Using
-        End Sub
-
-        Protected Overrides Sub OnSizeChanged(e As EventArgs)
-            Height = 19
-            InvalidateLayout()
-        End Sub
-
-        Private Sub InvalidateLayout()
-            LSA = New Rectangle(0, 0, ButtonSize, Height)
-            RSA = New Rectangle(Width - ButtonSize, 0, ButtonSize, Height)
-            Shaft = New Rectangle(LSA.Right + 1 + 0.5 * Height, 0, Width - Height - 1, Height)
-            Thumb = New Rectangle(0, 1, (Value / Maximum) * Shaft.Width, Height - 3)
-            Circle = New Rectangle((Value / Maximum) * Shaft.Width, 0, Height - 1, Height - 1)
-            RaiseEvent Scroll(Me)
-            InvalidatePosition()
-        End Sub
-
-        Private Sub InvalidatePosition()
-            Thumb.Width = (Value / Maximum) * Width
-            Refresh()
-        End Sub
-
-        Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-            If e.Button = Windows.Forms.MouseButtons.Left Then
-                State = MouseState.Down
-                Tmr.Enabled = True
-                Tmr.Start()
-
-                If Circle.Contains(e.Location) Then
-                    ThumbDown = True
-                    Return
-                Else
-                    If e.X < Circle.X Then
-
-                        I1 = _Value - _LargeChange
-                    Else
-                        I1 = _Value + _LargeChange
-                    End If
-                End If
-
-                Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
-
-                InvalidatePosition()
-            End If
-        End Sub
-
-        Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
-            If Circle.Contains(e.Location) And Not e.Button = MouseButtons.Left Then
-                State = MouseState.Over
-            Else
-                If e.Button = MouseButtons.Left Then State = MouseState.Down Else State = MouseState.None
-            End If
-
-
-            Invalidate()
-
-            If ThumbDown Then
-                'Dim ThumbPosition As Integer = e.X '- LSA.Width - (ThumbSize \ 2)
-                'Dim ThumbBounds As Integer = Shaft.Width - ThumbSize
-                'I1 = CInt((ThumbPosition / ThumbBounds) * (_Maximum - _Minimum)) + _Minimum
-                'Value = Math.Min(Math.Max(I1, _Minimum), _Maximum)
-
-                Value = Math.Min(Math.Max((e.X / Width) * Maximum, _Minimum), _Maximum)
-                InvalidatePosition()
-            End If
-
-            Tmr.Enabled = True
-            Tmr.Start()
-        End Sub
-
-        Private Function GetProgress() As Double
-            Return (_Value - _Minimum) / (_Maximum - _Minimum)
-        End Function
-
-        Private Sub NSVScrollBar_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-            ThumbDown = False
-            State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub ScrollBarV_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
-            If Thumb.Contains(MousePosition) Then
-                State = MouseState.Over
-                Invalidate()
-                Tmr.Enabled = True
-                Tmr.Start()
-            End If
-        End Sub
-
-        Private Sub ScrollBarV_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
-            State = MouseState.None
-            Tmr.Enabled = True
-            Tmr.Start()
-            Invalidate()
-        End Sub
-
-        Private Sub ScrollBarV_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
-            If e.Delta < 0 Then
-                If Value < Maximum Then
-                    If e.Delta <= -240 Then Value += LargeChange Else Value += SmallChange
-                End If
-            Else
-                If Value > Minimum Then
-                    If e.Delta >= 240 Then Value -= LargeChange Else Value -= SmallChange
-                End If
-            End If
-        End Sub
-
-        Private Sub RadioButton_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-
-            Try
-                If Not DesignMode Then
-                    AddHandler FindForm.Load, AddressOf Loaded
-                    AddHandler FindForm.Shown, AddressOf Showed
-                End If
-            Catch
-            End Try
-
-            Try
-                alpha = 0
-            Catch
-            End Try
-        End Sub
-
-        Private Sub Trackbar_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-            Try
-                If Not DesignMode Then
-                    RemoveHandler FindForm.Load, AddressOf Loaded
-                    RemoveHandler FindForm.Shown, AddressOf Showed
-                End If
-            Catch
-            End Try
-        End Sub
-
-        Sub Loaded()
-            _Shown = False
-        End Sub
-
-        Sub Showed()
-            _Shown = True
-            Invalidate()
         End Sub
 
     End Class

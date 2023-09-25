@@ -109,7 +109,6 @@ Partial Class Store_Intro
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Nothing
         Me.Button2.LineColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(3, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.Button2.LineSize = 1
         Me.Button2.Location = New System.Drawing.Point(482, 10)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 28)
@@ -125,7 +124,6 @@ Partial Class Store_Intro
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = Nothing
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(568, 10)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(80, 28)
@@ -277,7 +275,6 @@ Partial Class Store_Intro
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = Nothing
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(23, 105)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(157, 33)
@@ -344,7 +341,6 @@ Partial Class Store_Intro
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = Nothing
         Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button5.LineSize = 1
         Me.Button5.Location = New System.Drawing.Point(23, 145)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(157, 33)
@@ -412,7 +408,6 @@ Partial Class Store_Intro
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = Nothing
         Me.Button3.LineColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.Button3.LineSize = 1
         Me.Button3.Location = New System.Drawing.Point(23, 121)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(157, 33)

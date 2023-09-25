@@ -3,8 +3,7 @@ Imports System.Drawing.Drawing2D
 
 Namespace UI.Simulation
 
-    <Description("Simulated Windows desktop icons")>
-    Public Class WinIcon : Inherits Panel
+    <Description("Simulated Windows desktop icons")> Public Class WinIcon : Inherits Panel
 
         Sub New()
             DoubleBuffered = True
@@ -14,13 +13,7 @@ Namespace UI.Simulation
             SetStyle(ControlStyles.UserPaint, True)
         End Sub
 
-        Protected Overrides ReadOnly Property CreateParams As CreateParams
-            Get
-                Dim cp As CreateParams = MyBase.CreateParams
-                cp.ExStyle = cp.ExStyle Or &H20
-                Return cp
-            End Get
-        End Property
+#Region "Properties"
 
         Public Property ColorText As Color = Color.White
         Public Property ColorGlow As Color = Color.FromArgb(50, 0, 0, 0)
@@ -37,6 +30,16 @@ Namespace UI.Simulation
                 Invalidate()
             End Set
         End Property
+
+        Protected Overrides ReadOnly Property CreateParams As CreateParams
+            Get
+                Dim cp As CreateParams = MyBase.CreateParams
+                cp.ExStyle = cp.ExStyle Or &H20
+                Return cp
+            End Get
+        End Property
+
+#End Region
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics

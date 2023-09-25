@@ -5,7 +5,6 @@ Imports System.Drawing.Text
 Namespace UI.WP
 
     <Description("Themed TabControl for WinPaletter UI")> Public Class TabControl : Inherits Windows.Forms.TabControl
-        Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
 
         Sub New()
             SetStyle(ControlStyles.UserPaint Or ControlStyles.ResizeRedraw Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.Opaque, True)
@@ -15,9 +14,23 @@ Namespace UI.WP
             Font = New Font("Segoe UI", 9)
         End Sub
 
-        Protected Overrides Sub OnDragOver(drgevent As DragEventArgs)
-            If TypeOf drgevent.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
-                drgevent.Effect = DragDropEffects.None
+#Region "Variables"
+
+        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.4))
+
+#End Region
+
+#Region "Properties"
+
+        Public Property LineColor As Color = Color.FromArgb(0, 81, 210)
+
+#End Region
+
+#Region "Events"
+
+        Protected Overrides Sub OnDragOver(e As DragEventArgs)
+            If TypeOf e.Data.GetData(GetType(Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
+                e.Effect = DragDropEffects.None
                 For i = 0 To TabCount - 1
                     If Not SelectedIndex = i AndAlso GetTabRect(i).Contains(PointToClient(MousePosition)) Then
                         SelectedIndex = i
@@ -28,8 +41,9 @@ Namespace UI.WP
                 Exit Sub
             End If
 
-            MyBase.OnDragOver(drgevent)
+            MyBase.OnDragOver(e)
         End Sub
+
         Protected Overrides Sub CreateHandle()
             MyBase.CreateHandle()
 
@@ -51,7 +65,8 @@ Namespace UI.WP
             End If
         End Sub
 
-        ReadOnly Noise As New TextureBrush(My.Resources.GaussianBlur.Fade(0.4))
+#End Region
+
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             Dim G As Graphics = e.Graphics
             G.SmoothingMode = SmoothingMode.AntiAlias

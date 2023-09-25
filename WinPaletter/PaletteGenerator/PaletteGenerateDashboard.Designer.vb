@@ -44,7 +44,6 @@ Partial Class PaletteGenerateDashboard
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(104, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.Button4.LineSize = 1
         Me.Button4.Location = New System.Drawing.Point(5, 45)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(253, 32)
@@ -63,7 +62,6 @@ Partial Class PaletteGenerateDashboard
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.LineColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.Button1.LineSize = 1
         Me.Button1.Location = New System.Drawing.Point(5, 7)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(253, 32)

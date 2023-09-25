@@ -1,9 +1,29 @@
 ﻿Imports System.Drawing.Imaging
 
 Public Class CursorControl : Inherits ContainerControl
+
     Sub New()
 
     End Sub
+
+#Region "Variables"
+
+    Public _Focused As Boolean = False
+    Dim bmp As Bitmap
+    Public Angle As Single = 180
+    Private AnimateOnClick As Boolean = False
+
+    Public State As MouseState = MouseState.None
+
+    Enum MouseState
+        None
+        Over
+        Down
+    End Enum
+
+#End Region
+
+#Region "Properties"
 
     Public Property Prop_Cursor As Paths.CursorType = CursorType.Arrow
     Public Property Prop_ArrowStyle As Paths.ArrowStyle = ArrowStyle.Aero
@@ -43,55 +63,97 @@ Public Class CursorControl : Inherits ContainerControl
     Public Property Prop_Shadow_OffsetX As Integer = 2
     Public Property Prop_Shadow_OffsetY As Integer = 2
 
-
     Public Property Prop_Scale As Single = 1
 
-    Private _Shown As Boolean = False
+#End Region
 
-    Public _Focused As Boolean = False
+#Region "Events"
 
-    Dim bmp As Bitmap
-
-    Public Angle As Single = 180
-
-    Private Sub CursorControl_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
-
-        Try
-            If Not DesignMode Then
-                AddHandler FindForm.Load, AddressOf Loaded
-                AddHandler FindForm.Shown, AddressOf Showed
-                AddHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-            End If
-        Catch
-        End Try
-
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+        AnimateOnClick = True
+        _Focused = True
+        State = MouseState.Down
+        Timer.Enabled = True
+        Timer.Start()
+        Invalidate()
+        MyBase.OnMouseDown(e)
     End Sub
 
-    Private Sub CursorControl_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
-        Try
-            If Not DesignMode Then
-                RemoveHandler FindForm.Load, AddressOf Loaded
-                RemoveHandler FindForm.Shown, AddressOf Showed
-                RemoveHandler Parent.BackColorChanged, AddressOf RefreshColorPalette
-            End If
-        Catch
-        End Try
-    End Sub
-
-    Sub Loaded()
-        _Shown = False
-    End Sub
-
-    Sub Showed()
-        _Shown = True
+    Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+        State = MouseState.Over
+        Timer.Enabled = True
+        Timer.Start()
         Invalidate()
     End Sub
 
-    Public Sub RefreshColorPalette()
-        If _Shown Then
-            Invalidate()
+    Private Sub CursorControl_MouseEnter(sender As Object, e As EventArgs) Handles Me.MouseEnter
+        State = MouseState.Over
+        Timer.Enabled = True
+        Timer.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub CursorControl_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+        State = MouseState.None
+        Timer.Enabled = True
+        Timer.Start()
+        Invalidate()
+    End Sub
+
+    Private Sub CursorControl_Click(sender As Object, e As EventArgs) Handles Me.Click
+
+        For Each c As CursorControl In Parent.Controls.OfType(Of CursorControl)
+            If c Is sender Then
+                c._Focused = True
+                c.Invalidate()
+            Else
+                c._Focused = False
+                c.Invalidate()
+            End If
+        Next
+
+    End Sub
+
+#End Region
+
+#Region "Animator"
+    Dim alpha As Integer
+    ReadOnly Factor As Integer = 25
+    Dim WithEvents Timer As New Timer With {.Enabled = False, .Interval = 1}
+
+    Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
+        If Not DesignMode Then
+
+            If State = MouseState.Over Then
+                If alpha + Factor <= 255 Then
+                    alpha += Factor
+                ElseIf alpha + Factor > 255 Then
+                    alpha = 255
+                    Timer.Enabled = False
+                    Timer.Stop()
+                    AnimateOnClick = False
+                End If
+
+                Threading.Thread.Sleep(1)
+                Invalidate()
+            End If
+
+            If Not State = MouseState.Over Then
+                If alpha - Factor >= 0 Then
+                    alpha -= Factor
+                ElseIf alpha - Factor < 0 Then
+                    alpha = 0
+                    Timer.Enabled = False
+                    Timer.Stop()
+                    AnimateOnClick = False
+                End If
+
+                Threading.Thread.Sleep(1)
+                Invalidate()
+            End If
         End If
     End Sub
+#End Region
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
 
@@ -140,29 +202,26 @@ Public Class CursorControl : Inherits ContainerControl
         DoubleBuffered = True
 
         Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
+        Dim MainRectInner As New Rectangle(1, 1, Width - 3, Height - 3)
 
         Dim CenterRect As New Rectangle(MainRect.X + (MainRect.Width - bmp.Width) / 2,
                                         MainRect.Y + (MainRect.Height - bmp.Height) / 2,
                                         bmp.Width, bmp.Height)
 
-        e.Graphics.Clear(GetParentColor)
-        e.Graphics.FillRoundedRect(New SolidBrush(If(_Focused, My.Style.Colors.Back_Checked, My.Style.Colors.Back)), MainRect)
-        e.Graphics.DrawRoundedRect_LikeW11(New Pen(If(_Focused, My.Style.Colors.Border_Checked_Hover, My.Style.Colors.Border)), MainRect)
+
+        Dim bkC As Color = If(_Focused, My.Style.Colors.Back_Checked, My.Style.Colors.Back)
+        Dim bkCC As Color = Color.FromArgb(alpha, My.Style.Colors.Back_Checked)
+
+        Using br As New SolidBrush(bkC) : e.Graphics.FillRoundedRect(br, MainRectInner) : End Using
+        Using br As New SolidBrush(bkCC) : e.Graphics.FillRoundedRect(br, MainRect) : End Using
+
+        Dim lC As Color = Color.FromArgb(255 - alpha, If(_Focused, My.Style.Colors.Border_Checked, My.Style.Colors.Border))
+        Dim lCC As Color = Color.FromArgb(alpha, My.Style.Colors.Border_Checked_Hover)
+
+        Using P As New Pen(lC) : e.Graphics.DrawRoundedRect_LikeW11(P, MainRectInner) : End Using
+        Using P As New Pen(lCC) : e.Graphics.DrawRoundedRect_LikeW11(P, MainRect) : End Using
+
         e.Graphics.DrawImage(bmp, CenterRect)
-
-    End Sub
-
-    Private Sub CursorControl_Click(sender As Object, e As EventArgs) Handles Me.Click
-
-        For Each c As CursorControl In Parent.Controls.OfType(Of CursorControl)
-            If c Is sender Then
-                c._Focused = True
-                c.Invalidate()
-            Else
-                c._Focused = False
-                c.Invalidate()
-            End If
-        Next
 
     End Sub
 

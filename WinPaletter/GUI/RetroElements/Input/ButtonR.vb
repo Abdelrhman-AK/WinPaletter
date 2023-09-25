@@ -13,10 +13,22 @@ Namespace UI.Retro
             DoubleBuffered = True
         End Sub
 
+#Region "Variables"
+
+        Dim State As MouseState = MouseState.None
+
+        Enum MouseState
+            None
+            Over
+            Down
+        End Enum
+
+        Dim Pressed As Boolean
+#End Region
+
 #Region "Properties"
 
         Private _Image As Image
-
         Public Overloads Property Image() As Image
             Get
                 Return _Image
@@ -26,6 +38,7 @@ Namespace UI.Retro
                 Invalidate()
             End Set
         End Property
+
         Public Property WindowFrame As Color = Color.Black
         Public Property ButtonShadow As Color = Color.FromArgb(128, 128, 128)
         Public Property ButtonDkShadow As Color = Color.Black
@@ -40,6 +53,11 @@ Namespace UI.Retro
 #End Region
 
 #Region "Events"
+
+        Private Sub ButtonR_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
+            State = MouseState.None : Pressed = False : Invalidate()
+        End Sub
+
         Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
             MyBase.OnPaintBackground(e)
         End Sub
@@ -71,18 +89,6 @@ Namespace UI.Retro
             State = MouseState.Over : Invalidate()
         End Sub
 
-        Private Sub Button_LostFocus(sender As Object, e As EventArgs) Handles Me.LostFocus
-            State = MouseState.None : Pressed = False : Invalidate()
-        End Sub
-
-        Enum MouseState
-            None
-            Over
-            Down
-        End Enum
-
-        Dim State As MouseState = MouseState.None
-        Dim Pressed As Boolean
 #End Region
 
         Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
