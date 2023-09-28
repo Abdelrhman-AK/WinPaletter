@@ -279,6 +279,7 @@ Public Class Localizer : Implements IDisposable
     Property Verbose_SettingAnimation As String = "Setting animation using User32.dll native method with value ({0})"
     Property Verbose_SettingDropShadow As String = "Setting drop shadow using User32.dll native method with value ({0})"
     Property Verbose_SettingUIEffects As String = "Setting UI effects using User32.dll native method with value ({0})"
+    Property Verbose_SettingAnimateControls As String = "Setting animations for controls inside window using User32.dll native method with value ({0})"
     Property Verbose_SettingShowWinContentDragging As String = "Setting (Show window content while dragging) using User32.dll native method with value ({0})"
     Property Verbose_SettingMenuAnimation As String = "Setting menu animation using User32.dll native method with value ({0})"
     Property Verbose_SettingMenuFade As String = "Setting menu fade using User32.dll native method with value ({0})"

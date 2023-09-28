@@ -29,28 +29,28 @@ Partial Class WinEffecter
         Me.TabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.PictureBox27 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox21 = New UI.WP.CheckBox()
+        Me.CheckBox21 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox11 = New UI.WP.CheckBox()
-        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox11 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox1 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox2 = New UI.WP.CheckBox()
-        Me.CheckBox3 = New UI.WP.CheckBox()
+        Me.CheckBox2 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox3 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox4 = New UI.WP.CheckBox()
-        Me.CheckBox10 = New UI.WP.CheckBox()
+        Me.CheckBox4 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox10 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.CheckBox12 = New UI.WP.CheckBox()
+        Me.CheckBox12 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.MD = New WinPaletter.UI.WP.Button()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox6 = New UI.WP.CheckBox()
+        Me.CheckBox6 = New WinPaletter.UI.WP.CheckBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.CheckBox5 = New UI.WP.CheckBox()
+        Me.CheckBox5 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.ComboBox1 = New WinPaletter.UI.WP.ComboBox()
@@ -58,18 +58,18 @@ Partial Class WinEffecter
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.PictureBox10 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox7 = New UI.WP.CheckBox()
-        Me.CheckBox8 = New UI.WP.CheckBox()
+        Me.CheckBox7 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox8 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.PictureBox23 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox17 = New UI.WP.CheckBox()
+        Me.CheckBox17 = New WinPaletter.UI.WP.CheckBox()
         Me.Button4 = New WinPaletter.UI.WP.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Trackbar5 = New WinPaletter.UI.WP.Trackbar()
         Me.ComboBox2 = New WinPaletter.UI.WP.ComboBox()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox9 = New UI.WP.CheckBox()
+        Me.CheckBox9 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.ButtonR1 = New WinPaletter.UI.Retro.ButtonR()
         Me.Button2 = New WinPaletter.UI.WP.Button()
@@ -94,9 +94,9 @@ Partial Class WinEffecter
         Me.PictureBox20 = New System.Windows.Forms.PictureBox()
         Me.Trackbar6 = New WinPaletter.UI.WP.Trackbar()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox14 = New UI.WP.CheckBox()
+        Me.CheckBox14 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox13 = New UI.WP.CheckBox()
+        Me.CheckBox13 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
         Me.AlertBox3 = New WinPaletter.UI.WP.AlertBox()
         Me.AlertBox2 = New WinPaletter.UI.WP.AlertBox()
@@ -105,16 +105,16 @@ Partial Class WinEffecter
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
         Me.PictureBox26 = New System.Windows.Forms.PictureBox()
         Me.RadioButton2 = New WinPaletter.UI.WP.RadioButton()
-        Me.CheckBox20 = New UI.WP.CheckBox()
-        Me.CheckBox23 = New UI.WP.CheckBox()
+        Me.CheckBox20 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox23 = New WinPaletter.UI.WP.CheckBox()
         Me.RadioButton1 = New WinPaletter.UI.WP.RadioButton()
         Me.PictureBox29 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox22 = New UI.WP.CheckBox()
+        Me.CheckBox22 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox22 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox16 = New UI.WP.CheckBox()
+        Me.CheckBox16 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.AlertBox4 = New WinPaletter.UI.WP.AlertBox()
         Me.RadioImage7 = New WinPaletter.UI.WP.RadioImage()
@@ -159,19 +159,19 @@ Partial Class WinEffecter
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox26 = New UI.WP.CheckBox()
+        Me.CheckBox26 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox25 = New UI.WP.CheckBox()
+        Me.CheckBox25 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox6 = New WinPaletter.UI.WP.AlertBox()
         Me.AlertBox5 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox31 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox24 = New UI.WP.CheckBox()
+        Me.CheckBox24 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox21 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox15 = New UI.WP.CheckBox()
+        Me.CheckBox15 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox24 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox18 = New UI.WP.CheckBox()
+        Me.CheckBox18 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox25 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox19 = New UI.WP.CheckBox()
+        Me.CheckBox19 = New WinPaletter.UI.WP.CheckBox()
         Me.Button10 = New WinPaletter.UI.WP.Button()
         Me.Button7 = New WinPaletter.UI.WP.Button()
         Me.Button8 = New WinPaletter.UI.WP.Button()
@@ -180,8 +180,10 @@ Partial Class WinEffecter
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Button11 = New WinPaletter.UI.WP.Button()
         Me.Button12 = New WinPaletter.UI.WP.Button()
-        Me.EffectsEnabled = New UI.WP.Toggle()
+        Me.EffectsEnabled = New WinPaletter.UI.WP.Toggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
+        Me.CheckBox27 = New WinPaletter.UI.WP.CheckBox()
+        Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox27, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -240,6 +242,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox12.SuspendLayout()
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -285,6 +288,8 @@ Partial Class WinEffecter
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.CheckBox27)
+        Me.TabPage1.Controls.Add(Me.PictureBox36)
         Me.TabPage1.Controls.Add(Me.PictureBox27)
         Me.TabPage1.Controls.Add(Me.CheckBox21)
         Me.TabPage1.Controls.Add(Me.PictureBox15)
@@ -306,7 +311,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox27.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox27.Image = CType(resources.GetObject("PictureBox27.Image"), System.Drawing.Image)
-        Me.PictureBox27.Location = New System.Drawing.Point(6, 126)
+        Me.PictureBox27.Location = New System.Drawing.Point(6, 156)
         Me.PictureBox27.Name = "PictureBox27"
         Me.PictureBox27.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -321,7 +326,7 @@ Partial Class WinEffecter
         Me.CheckBox21.Checked = False
         Me.CheckBox21.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CheckBox21.ForeColor = System.Drawing.Color.White
-        Me.CheckBox21.Location = New System.Drawing.Point(36, 126)
+        Me.CheckBox21.Location = New System.Drawing.Point(36, 156)
         Me.CheckBox21.Name = "CheckBox21"
         Me.CheckBox21.Size = New System.Drawing.Size(549, 24)
         Me.CheckBox21.TabIndex = 227
@@ -331,7 +336,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox15.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox15.Image = CType(resources.GetObject("PictureBox15.Image"), System.Drawing.Image)
-        Me.PictureBox15.Location = New System.Drawing.Point(6, 96)
+        Me.PictureBox15.Location = New System.Drawing.Point(6, 126)
         Me.PictureBox15.Name = "PictureBox15"
         Me.PictureBox15.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -357,7 +362,7 @@ Partial Class WinEffecter
         Me.CheckBox11.Checked = False
         Me.CheckBox11.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CheckBox11.ForeColor = System.Drawing.Color.White
-        Me.CheckBox11.Location = New System.Drawing.Point(36, 96)
+        Me.CheckBox11.Location = New System.Drawing.Point(36, 126)
         Me.CheckBox11.Name = "CheckBox11"
         Me.CheckBox11.Size = New System.Drawing.Size(549, 24)
         Me.CheckBox11.TabIndex = 8
@@ -381,7 +386,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox4.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox4.Image = CType(resources.GetObject("PictureBox4.Image"), System.Drawing.Image)
-        Me.PictureBox4.Location = New System.Drawing.Point(6, 66)
+        Me.PictureBox4.Location = New System.Drawing.Point(6, 96)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -396,7 +401,7 @@ Partial Class WinEffecter
         Me.CheckBox2.Checked = False
         Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CheckBox2.ForeColor = System.Drawing.Color.White
-        Me.CheckBox2.Location = New System.Drawing.Point(36, 36)
+        Me.CheckBox2.Location = New System.Drawing.Point(36, 66)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(549, 24)
         Me.CheckBox2.TabIndex = 4
@@ -410,7 +415,7 @@ Partial Class WinEffecter
         Me.CheckBox3.Checked = False
         Me.CheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CheckBox3.ForeColor = System.Drawing.Color.White
-        Me.CheckBox3.Location = New System.Drawing.Point(36, 66)
+        Me.CheckBox3.Location = New System.Drawing.Point(36, 96)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(549, 24)
         Me.CheckBox3.TabIndex = 6
@@ -420,7 +425,7 @@ Partial Class WinEffecter
         '
         Me.PictureBox3.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), System.Drawing.Image)
-        Me.PictureBox3.Location = New System.Drawing.Point(6, 36)
+        Me.PictureBox3.Location = New System.Drawing.Point(6, 66)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -944,7 +949,7 @@ Partial Class WinEffecter
         Me.Trackbar3.TabIndex = 138
         Me.Trackbar3.Value = 1
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -1515,6 +1520,7 @@ Partial Class WinEffecter
         Me.RadioImage7.Size = New System.Drawing.Size(123, 25)
         Me.RadioImage7.TabIndex = 6
         Me.RadioImage7.Text = "Inverted"
+        Me.RadioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage6
         '
@@ -1528,6 +1534,7 @@ Partial Class WinEffecter
         Me.RadioImage6.Size = New System.Drawing.Size(123, 25)
         Me.RadioImage6.TabIndex = 5
         Me.RadioImage6.Text = "Grayscale inverted"
+        Me.RadioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage5
         '
@@ -1541,6 +1548,7 @@ Partial Class WinEffecter
         Me.RadioImage5.Size = New System.Drawing.Size(123, 25)
         Me.RadioImage5.TabIndex = 4
         Me.RadioImage5.Text = "Grayscale"
+        Me.RadioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage4
         '
@@ -1554,6 +1562,7 @@ Partial Class WinEffecter
         Me.RadioImage4.Size = New System.Drawing.Size(252, 25)
         Me.RadioImage4.TabIndex = 3
         Me.RadioImage4.Text = "Blue-yellow (tritanopia)"
+        Me.RadioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage3
         '
@@ -1567,6 +1576,7 @@ Partial Class WinEffecter
         Me.RadioImage3.Size = New System.Drawing.Size(252, 25)
         Me.RadioImage3.TabIndex = 2
         Me.RadioImage3.Text = "Red-green (red weak, protanopia)"
+        Me.RadioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage2
         '
@@ -1580,6 +1590,7 @@ Partial Class WinEffecter
         Me.RadioImage2.Size = New System.Drawing.Size(252, 25)
         Me.RadioImage2.TabIndex = 1
         Me.RadioImage2.Text = "Red-green (green weak, deuteranopia)"
+        Me.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'RadioImage1
         '
@@ -1593,6 +1604,7 @@ Partial Class WinEffecter
         Me.RadioImage1.Size = New System.Drawing.Size(123, 25)
         Me.RadioImage1.TabIndex = 0
         Me.RadioImage1.Text = "Normal"
+        Me.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel3
         '
@@ -2311,6 +2323,31 @@ Partial Class WinEffecter
         Me.checker_img.TabIndex = 83
         Me.checker_img.TabStop = False
         '
+        'CheckBox27
+        '
+        Me.CheckBox27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox27.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox27.Checked = False
+        Me.CheckBox27.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox27.ForeColor = System.Drawing.Color.White
+        Me.CheckBox27.Location = New System.Drawing.Point(36, 36)
+        Me.CheckBox27.Name = "CheckBox27"
+        Me.CheckBox27.Size = New System.Drawing.Size(549, 24)
+        Me.CheckBox27.TabIndex = 229
+        Me.CheckBox27.Text = "Animate controls and elements inside window"
+        '
+        'PictureBox36
+        '
+        Me.PictureBox36.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox36.Image = CType(resources.GetObject("PictureBox36.Image"), System.Drawing.Image)
+        Me.PictureBox36.Location = New System.Drawing.Point(6, 36)
+        Me.PictureBox36.Name = "PictureBox36"
+        Me.PictureBox36.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox36.TabIndex = 230
+        Me.PictureBox36.TabStop = False
+        '
         'WinEffecter
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -2391,6 +2428,7 @@ Partial Class WinEffecter
         CType(Me.PictureBox25, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox12.ResumeLayout(False)
         CType(Me.checker_img, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox36, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2553,4 +2591,6 @@ Partial Class WinEffecter
     Friend WithEvents CheckBox25 As UI.WP.CheckBox
     Friend WithEvents PictureBox35 As PictureBox
     Friend WithEvents CheckBox26 As UI.WP.CheckBox
+    Friend WithEvents CheckBox27 As UI.WP.CheckBox
+    Friend WithEvents PictureBox36 As PictureBox
 End Class

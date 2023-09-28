@@ -18,6 +18,7 @@ Public Class WinEffecter
             CheckBox2.Checked = .WindowShadow
             CheckBox3.Checked = .WindowUIEffects
             CheckBox6.Checked = .MenuAnimation
+            CheckBox27.Checked = .AnimateControlsInsideWindow
             If .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Then ComboBox1.SelectedIndex = 0 Else ComboBox1.SelectedIndex = 1
             CheckBox5.Checked = .MenuSelectionFade
             Trackbar1.Value = .MenuShowDelay
@@ -93,6 +94,7 @@ Public Class WinEffecter
             .WindowAnimation = CheckBox1.Checked
             .WindowShadow = CheckBox2.Checked
             .WindowUIEffects = CheckBox3.Checked
+            .AnimateControlsInsideWindow = CheckBox27.Checked
             .MenuAnimation = CheckBox6.Checked
             If ComboBox1.SelectedIndex = 0 Then .MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade Else .MenuFade = CP.Structures.WinEffects.MenuAnimType.Scroll
             .MenuSelectionFade = CheckBox5.Checked

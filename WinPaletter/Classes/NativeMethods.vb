@@ -114,6 +114,7 @@ Namespace NativeMethods
         ''' SPI: System-wide parameter - Used in SystemParametersInfo function
         ''' </summary>
         Public Class SPI
+
             Enum Icons
                 ''' <summary>
                 ''' <b>Sets or retrieves the width, in pixels, of an icon cell. The system uses this rectangle to arrange icons in large icon view.</b>
@@ -337,6 +338,22 @@ Namespace NativeMethods
                 ''' <br></br> • Set the cbSize member of this structure and the uiParam parameter to sizeof(ANIMATIONINFO).
                 ''' </summary>
                 SETANIMATION = &H49
+
+                ''' <summary>
+                ''' <b>Retrieves the animation of controls and elements inside window.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if animation is enabled and FALSE if it is disabled.
+                ''' <br></br>
+                ''' </summary>
+                GETCLIENTAREAANIMATION = &H1042
+
+                ''' <summary>
+                ''' <b>Sets the animation of controls and elements inside window.</b>
+                ''' <br></br>
+                ''' <br></br> • The pvParam parameter must point to a BOOL variable that receives TRUE if animation is enabled and FALSE if it is disabled.
+                ''' <br></br>
+                ''' </summary>
+                SETCLIENTAREAANIMATION = &H1043
 
                 ''' <summary>
                 ''' <b>Determines whether the menu animation feature is enabled. This master switch must be on to enable menu animation effects.</b>

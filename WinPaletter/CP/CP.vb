@@ -1860,12 +1860,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 FontSubstitute_SegoeUI = GetReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", _DefMetricsFonts.FontSubstitute_SegoeUI)
 
                 If Core.GetWindowsScreenScalingFactor > 100 Then
-                    CaptionFont = AdjustFont(CaptionFont)
-                    IconFont = AdjustFont(IconFont)
-                    MenuFont = AdjustFont(MenuFont)
-                    MessageFont = AdjustFont(MessageFont)
-                    SmCaptionFont = AdjustFont(SmCaptionFont)
-                    StatusFont = AdjustFont(StatusFont)
+                    CaptionFont = AdjustFont(CaptionFont, False)
+                    IconFont = AdjustFont(IconFont, False)
+                    MenuFont = AdjustFont(MenuFont, False)
+                    MessageFont = AdjustFont(MessageFont, False)
+                    SmCaptionFont = AdjustFont(SmCaptionFont, False)
+                    StatusFont = AdjustFont(StatusFont, False)
                 End If
 
                 Dim temp As Boolean
@@ -1873,10 +1873,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Fonts_SingleBitPP = Not temp OrElse GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(My.WXP, 1, 2)) <> 2
             End Sub
 
-            Private Function AdjustFont([Font] As Font) As Font
+            Private Function AdjustFont([Font] As Font, Reverse As Boolean) As Font
                 Dim DPI As Integer = Core.GetWindowsScreenScalingFactor
                 If DPI > 0 Then
-                    Dim font_size As Single = [Font].Size * (100 / DPI)
+                    Dim font_size As Single = [Font].Size * If(Not Reverse, (100 / DPI), (DPI / 100))
                     If font_size > 0 Then
                         Return New Font([Font].Name, font_size, [Font].Style, GraphicsUnit.Pixel)
                     Else
@@ -1891,14 +1891,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
 
                 If Enabled Then
-                    If Core.GetWindowsScreenScalingFactor > 100 Then
-                        CaptionFont = New Font(CaptionFont.Name, CaptionFont.SizeInPoints, CaptionFont.Style)
-                        IconFont = New Font(IconFont.Name, IconFont.SizeInPoints, IconFont.Style)
-                        MenuFont = New Font(MenuFont.Name, MenuFont.SizeInPoints, MenuFont.Style)
-                        MessageFont = New Font(MessageFont.Name, MessageFont.SizeInPoints, MessageFont.Style)
-                        SmCaptionFont = New Font(SmCaptionFont.Name, SmCaptionFont.SizeInPoints, SmCaptionFont.Style)
-                        StatusFont = New Font(StatusFont.Name, StatusFont.SizeInPoints, StatusFont.Style)
-                    End If
+                    'If Core.GetWindowsScreenScalingFactor > 100 Then
+                    '    CaptionFont = AdjustFont(CaptionFont, True)
+                    '    IconFont = AdjustFont(IconFont, True)
+                    '    MenuFont = AdjustFont(MenuFont, True)
+                    '    MessageFont = AdjustFont(MessageFont, True)
+                    '    SmCaptionFont = AdjustFont(SmCaptionFont, True)
+                    '    StatusFont = AdjustFont(StatusFont, True)
+                    'End If
+
+                    Dim OldDPI As Integer = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Core.GetWindowsScreenScalingFactor)
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100)
 
                     Dim lfCaptionFont As New LogFont : CaptionFont.ToLogFont(lfCaptionFont)
                     Dim lfIconFont As New LogFont : IconFont.ToLogFont(lfIconFont)
@@ -1949,27 +1952,26 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                         If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingIconsMetrics, "dll")
                         SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.UpdateINIFile)
-
-                    Else
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
-                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                     End If
+
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
 
                     If My.WXP Then
                         EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
@@ -2036,6 +2038,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
                     EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String)
 
+                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI)
                 End If
 
             End Sub
@@ -2047,6 +2050,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public WindowShadow As Boolean
             Public WindowUIEffects As Boolean
             Public ShowWinContentDrag As Boolean
+            Public AnimateControlsInsideWindow As Boolean
 
             Public MenuAnimation As Boolean
             Public MenuFade As MenuAnimType
@@ -2115,6 +2119,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If Fixer.SystemParametersInfo(SPI.Effects.GETDROPSHADOW, 0, WindowShadow, SPIF.None) = 0 Then WindowShadow = _DefEffects.WindowShadow
                 If Fixer.SystemParametersInfo(SPI.Effects.GETUIEFFECTS, 0, WindowUIEffects, SPIF.None) = 0 Then WindowUIEffects = _DefEffects.WindowUIEffects
+                If Fixer.SystemParametersInfo(SPI.Effects.GETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.None) = 0 Then AnimateControlsInsideWindow = _DefEffects.AnimateControlsInsideWindow
                 If Fixer.SystemParametersInfo(SPI.Effects.GETMENUANIMATION, 0, MenuAnimation, SPIF.None) = 0 Then MenuAnimation = _DefEffects.MenuAnimation
                 If Fixer.SystemParametersInfo(SPI.Effects.GETSELECTIONFADE, 0, MenuSelectionFade, SPIF.None) = 0 Then MenuSelectionFade = _DefEffects.MenuSelectionFade
                 If Fixer.SystemParametersInfo(SPI.Effects.GETMENUSHOWDELAY, 0, MenuShowDelay, SPIF.None) = 0 Then MenuShowDelay = _DefEffects.MenuShowDelay
@@ -2238,6 +2243,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingUIEffects, WindowUIEffects), "dll")
                     SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.UpdateINIFile)
 
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAnimateControls, WindowUIEffects), "dll")
+                    SystemParametersInfo(SPI.Effects.SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.UpdateINIFile)
+
                     If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingShowWinContentDragging, ShowWinContentDrag), "dll")
                     SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.UpdateINIFile)        'use uiParam not pvParam
 
@@ -2250,7 +2258,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuDelay, MenuShowDelay), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.UpdateINIFile)               'use uiParam not pvParam
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuSelectionFade, MenuSelectionFade), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuSelectionFade, MenuSelectionFade.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.UpdateINIFile)
 
                     If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingComboBoxAnimation, ComboBoxAnimation), "dll")
@@ -3490,6 +3498,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
         .WindowAnimation = True,
         .WindowShadow = True,
         .WindowUIEffects = True,
+        .AnimateControlsInsideWindow = True,
         .MenuAnimation = True,
         .MenuSelectionFade = True,
         .MenuFade = Structures.WinEffects.MenuAnimType.Fade,
@@ -4737,89 +4746,109 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         Catch
                         End Try
                     Next
-                End Using
 
 Start:
 
-                If Not IO.File.Exists(File) Then Exit Sub
+                    If Not IO.File.Exists(File) Then Exit Sub
 
-                'Rough method to get theme name to create its proper resources pack folder
-                For Each line In Decompress(File)
-                    If line.Trim.StartsWith("""ThemeName"":") Then
-                        Info.ThemeName = line.Split(":")(1).ToString.Replace("""", "").Replace(",", "").Trim
-                        Exit For
-                    End If
-                Next
+                    'Rough method to get theme name to create its proper resources pack folder
+                    For Each line In Decompress(File)
+                        If line.Trim.StartsWith("""ThemeName"":", My._ignore) Then
+                            Info.ThemeName = line.Split(":")(1).ToString.Replace("""", "").Replace(",", "").Trim
+                            Exit For
+                        End If
+                    Next
 
-                Dim txt As New List(Of String) : txt.Clear()
-                Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
-                Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = Converter_CP.WP_Format.JSON
-                Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
+                    Dim txt As New List(Of String) : txt.Clear()
+                    Dim Pack As String = New IO.FileInfo(File).DirectoryName & "\" & IO.Path.GetFileNameWithoutExtension(File) & ".wptp"
+                    Dim Pack_IsValid As Boolean = IO.File.Exists(Pack) AndAlso New FileInfo(Pack).Length > 0 AndAlso _Converter.FetchFile(File) = Converter_CP.WP_Format.JSON
+                    Dim cache As String = My.PATH_ThemeResPackCache & "\" & String.Concat(Info.ThemeName.Replace(" ", "").Split(IO.Path.GetInvalidFileNameChars()))
 
-                'Extract theme resources pack
-                Try
-                    If Pack_IsValid And Not IgnoreExtractionThemePack Then
-                        If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
+                    'Extract theme resources pack
+                    Try
+                        If Pack_IsValid And Not IgnoreExtractionThemePack Then
+                            If Not IO.Directory.Exists(cache) Then IO.Directory.CreateDirectory(cache)
 
-                        Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
-                            Using archive As New ZipArchive(s, ZipArchiveMode.Read)
-                                For Each entry As ZipArchiveEntry In archive.Entries
-                                    If entry.FullName.Contains("\") Then
-                                        Dim dest As String = Path.Combine(cache, entry.FullName)
-                                        Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
-                                        If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
-                                    End If
-                                    entry.ExtractToFile(Path.Combine(cache, entry.FullName), True)
-                                Next
+                            Using s As New IO.FileStream(Pack, IO.FileMode.Open, IO.FileAccess.Read)
+                                Using archive As New ZipArchive(s, ZipArchiveMode.Read)
+                                    For Each entry As ZipArchiveEntry In archive.Entries
+                                        If entry.FullName.Contains("\") Then
+                                            Dim dest As String = Path.Combine(cache, entry.FullName)
+                                            Dim dest_dir As String = dest.Replace("\" & dest.Split("\").Last, "")
+                                            If Not IO.Directory.Exists(dest_dir) Then IO.Directory.CreateDirectory(dest_dir)
+                                        End If
+                                        entry.ExtractToFile(Path.Combine(cache, entry.FullName), True)
+                                    Next
+                                End Using
+
+                                s.Close()
+                                s.Dispose()
                             End Using
 
-                            s.Close()
-                            s.Dispose()
-                        End Using
+                        End If
 
-                    End If
+                    Catch ex As Exception
+                        Pack_IsValid = False
+                        BugReport.ThrowError(ex)
+                    End Try
 
-                Catch ex As Exception
-                    Pack_IsValid = False
-                    BugReport.ThrowError(ex)
-                End Try
+                    txt = Decompress(File)
 
-                txt = Decompress(File)
+                    If IsValidJson(String.Join(vbCrLf, txt)) Then
 
-                If IsValidJson(String.Join(vbCrLf, txt)) Then
-
-                    'Replace %WinPaletterAppData% variable with a valid AppData folder path
-                    For x = 0 To txt.Count - 1
-                        If txt(x).Contains(":") Then
-                            Dim arr As String() = txt(x).Split(":")
-                            If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
-                                txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.PATH_appData.Replace("\", "\\"))
+                        'Replace %WinPaletterAppData% variable with a valid AppData folder path
+                        For x = 0 To txt.Count - 1
+                            If txt(x).Contains(":") Then
+                                Dim arr As String() = txt(x).Split(":")
+                                If arr.Count = 2 AndAlso arr(1).Contains("%WinPaletterAppData%") Then
+                                    txt(x) = arr(0) & ":" & arr(1).Replace("%WinPaletterAppData%", My.PATH_appData.Replace("\", "\\"))
+                                End If
                             End If
-                        End If
-                    Next
+                        Next
 
-                    Dim J As JObject = JObject.Parse(String.Join(vbCrLf, txt))
+                        Dim J As JObject = JObject.Parse(String.Join(vbCrLf, txt))
 
-                    For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
-                        Dim type As Type = field.FieldType
-                        Dim JSet As New JsonSerializerSettings
+                        'This will get the new added features to fix bug (null values on opening a theme file)
+                        Try
+                            Dim J_Original As JObject = JObject.Parse(CPx.ToString(True))
+                            For Each item In J_Original
+                                If J(item.Key) Is Nothing AndAlso J_Original(item.Key) IsNot Nothing Then J(item.Key) = J_Original(item.Key)
+                                If TypeOf item.Value IsNot JValue Then
+                                    For Each prop As KeyValuePair(Of String, JToken) In CType(item.Value, JObject)
+                                        Try
+                                            If J(item.Key)(prop.Key) Is Nothing AndAlso J_Original(item.Key) IsNot Nothing AndAlso J_Original(item.Key)(prop.Key) IsNot Nothing Then
+                                                J(item.Key)(prop.Key) = J_Original(item.Key)(prop.Key)
+                                            End If
+                                        Catch
+                                        End Try
+                                    Next
+                                End If
+                            Next
+                        Catch
+                        End Try
 
-                        If J(field.Name) IsNot Nothing Then
-                            field.SetValue(Me, J(field.Name).ToObject(type))
-                        End If
-                    Next
-                Else
+                        For Each field As FieldInfo In Me.GetType.GetFields(bindingFlags)
+                            Dim type As Type = field.FieldType
+                            Dim JSet As New JsonSerializerSettings
 
-                    If _Converter.FetchFile(File) = Converter_CP.WP_Format.WPTH Then
-                        If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
-                            _Converter.Convert(File, File, My.Settings.FileTypeManagement.CompressThemeFile, False)
-                            GoTo Start
-                        End If
+                            If J(field.Name) IsNot Nothing Then
+                                field.SetValue(Me, J(field.Name).ToObject(type))
+                            End If
+                        Next
                     Else
-                        MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical)
-                    End If
 
-                End If
+                        If _Converter.FetchFile(File) = Converter_CP.WP_Format.WPTH Then
+                            If MsgBox(My.Lang.Convert_Detect_Old_OnLoading0, MsgBoxStyle.Question + MsgBoxStyle.YesNo, My.Lang.Convert_Detect_Old_OnLoading1, "", "", "", "", My.Lang.Convert_Detect_Old_OnLoading2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) = MsgBoxResult.Yes Then
+                                _Converter.Convert(File, File, My.Settings.FileTypeManagement.CompressThemeFile, False)
+                                GoTo Start
+                            End If
+                        Else
+                            MsgBox(My.Lang.Convert_Error_Phrasing, MsgBoxStyle.Critical)
+                        End If
+
+                    End If
+                End Using
+
 #End Region
 
         End Select
@@ -5224,7 +5253,7 @@ Start:
         End Select
     End Sub
 
-    Overrides Function ToString() As String
+    Overloads Function ToString(Optional IgnoreCompression As Boolean = False) As String
         Dim JSON_Overall As New JObject()
         JSON_Overall.RemoveAll()
 
@@ -5241,7 +5270,7 @@ Start:
 
         Next
 
-        If My.Settings.FileTypeManagement.CompressThemeFile Then
+        If My.Settings.FileTypeManagement.CompressThemeFile AndAlso Not IgnoreCompression Then
             Return JSON_Overall.ToString.Compress
         Else
             Return JSON_Overall.ToString
