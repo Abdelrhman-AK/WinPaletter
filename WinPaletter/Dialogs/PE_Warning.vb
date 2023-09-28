@@ -84,6 +84,10 @@
         Process.Start(My.Resources.Link_Wiki & "/Antiviruses-or-browsers-download-issue")
     End Sub
 
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Process.Start(My.Resources.Link_Wiki & "/Advanced-options-to-patch-PE-files")
+    End Sub
+
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Cursor = Cursors.WaitCursor
         Reg_IO.SFC(PE_File)

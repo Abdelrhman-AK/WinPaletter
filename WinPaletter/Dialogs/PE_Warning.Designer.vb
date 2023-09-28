@@ -28,7 +28,7 @@ Partial Class PE_Warning
         Me.Separator1 = New WinPaletter.UI.WP.SeparatorH()
         Me.Button3 = New WinPaletter.UI.WP.Button()
         Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
-        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox1 = New WinPaletter.UI.WP.CheckBox()
         Me.AnimatedBox1 = New WinPaletter.UI.WP.AnimatedBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -38,6 +38,7 @@ Partial Class PE_Warning
         Me.TreeView1 = New WinPaletter.UI.WP.TreeView()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.Button5 = New WinPaletter.UI.WP.Button()
         Me.AnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
@@ -57,7 +58,7 @@ Partial Class PE_Warning
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button4.LineColor = System.Drawing.Color.FromArgb(CType(CType(134, Byte), Integer), CType(CType(97, Byte), Integer), CType(CType(68, Byte), Integer))
-        Me.Button4.Location = New System.Drawing.Point(359, 400)
+        Me.Button4.Location = New System.Drawing.Point(495, 400)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(220, 30)
         Me.Button4.TabIndex = 127
@@ -180,7 +181,7 @@ Partial Class PE_Warning
         Me.Button2.Text = "Don't modify"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -246,12 +247,29 @@ Partial Class PE_Warning
         Me.PictureBox4.TabIndex = 1
         Me.PictureBox4.TabStop = False
         '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button5.DrawOnGlass = False
+        Me.Button5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
+        Me.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button5.LineColor = System.Drawing.Color.FromArgb(CType(CType(29, Byte), Integer), CType(CType(107, Byte), Integer), CType(CType(147, Byte), Integer))
+        Me.Button5.Location = New System.Drawing.Point(359, 400)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(130, 30)
+        Me.Button5.TabIndex = 128
+        Me.Button5.Text = "Help (Wiki)"
+        Me.Button5.UseVisualStyleBackColor = False
+        '
         'PE_Warning
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(874, 494)
+        Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Separator1)
         Me.Controls.Add(Me.Button3)
@@ -295,4 +313,5 @@ Partial Class PE_Warning
     Friend WithEvents Button3 As UI.WP.Button
     Friend WithEvents Separator1 As UI.WP.SeparatorH
     Friend WithEvents Button4 As UI.WP.Button
+    Friend WithEvents Button5 As UI.WP.Button
 End Class
