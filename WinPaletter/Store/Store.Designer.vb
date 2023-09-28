@@ -410,7 +410,7 @@ Partial Class Store
         Me.VersionAlert_lbl.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.VersionAlert_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.VersionAlert_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(96, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(6, Byte), Integer))
+        Me.VersionAlert_lbl.BackColor = System.Drawing.Color.FromArgb(CType(CType(91, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(6, Byte), Integer))
         Me.VersionAlert_lbl.CenterText = True
         Me.VersionAlert_lbl.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.VersionAlert_lbl.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -497,7 +497,7 @@ Partial Class Store
         Me.GroupBox1.TabIndex = 139
         Me.GroupBox1.Text = "GroupBox1"
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -792,7 +792,7 @@ Partial Class Store
         Me.WXP_Alert2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning
         Me.WXP_Alert2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(87, Byte), Integer), CType(CType(71, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.WXP_Alert2.BackColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.WXP_Alert2.CenterText = True
         Me.WXP_Alert2.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.WXP_Alert2.Font = New System.Drawing.Font("Segoe UI", 9.0!)

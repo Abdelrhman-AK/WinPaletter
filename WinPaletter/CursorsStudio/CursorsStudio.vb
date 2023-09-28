@@ -169,7 +169,7 @@
     End Sub
 
     Protected Overrides Sub OnDragOver(e As DragEventArgs)
-        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+        If TypeOf e.Data.GetData(GetType(UI.Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -183,7 +183,7 @@
         _Shown = True
     End Sub
 
-    Sub Clicked(sender As Object, e As MouseEventArgs)
+    Sub Clicked(sender As Object, e As EventArgs)
         _SelectedControl = DirectCast(sender, CursorControl)
         ApplyColorsFromCursor(_SelectedControl)
         Button1.Enabled = True

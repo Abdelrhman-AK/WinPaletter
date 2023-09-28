@@ -17,6 +17,7 @@ Public Class MainFrm
     Private LoggingOff As Boolean = False
     Private ReadOnly _Converter As New Converter
     Private elapsedSecs As Integer = 0
+    Private OldWidth As Integer
 
 #Region "Preview Subs"
     Sub ApplyColorsToElements([CP] As CP)
@@ -308,11 +309,11 @@ Public Class MainFrm
 
 #Region "Misc"
 
-    Sub UpdateHint(Sender As Object, e As EventArgs)
-        status_lbl.Text = Sender.Tag
+    Sub UpdateHint(sender As Object, e As EventArgs)
+        status_lbl.Text = sender.Tag
     End Sub
 
-    Sub EraseHint()
+    Sub EraseHint(sender As Object, e As EventArgs)
         status_lbl.Text = ""
     End Sub
 
@@ -320,7 +321,7 @@ Public Class MainFrm
         status_lbl.Text = Sender.Tag
     End Sub
 
-    Sub EraseHint_Dashboard()
+    Sub EraseHint_Dashboard(sender As Object, e As EventArgs)
         status_lbl.Text = ""
     End Sub
 
@@ -330,8 +331,8 @@ Public Class MainFrm
         If My.WXP OrElse My.WVista Then Exit Sub
 
         StableInt = 0 : BetaInt = 0 : UpdateChannel = 0 : ChannelFixer = 0
-        If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable Then ChannelFixer = 0
-        If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Beta Then ChannelFixer = 1
+        If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Stable Then ChannelFixer = 0
+        If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Beta Then ChannelFixer = 1
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -382,7 +383,7 @@ Public Class MainFrm
     End Sub
 
     Protected Overrides Sub OnDragOver(e As DragEventArgs)
-        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+        If TypeOf e.Data.GetData(GetType(UI.Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -531,7 +532,7 @@ Public Class MainFrm
         End If
         My.Settings.General.Save()
 
-        Dim old As New XeSettings(XeSettings.Mode.Registry)
+        Dim old As New WPSettings(WPSettings.Mode.Registry)
         With My.Settings.Appearance
             .CustomColors = old.Appearance.CustomColors
             .BackColor = old.Appearance.BackColor
@@ -2118,6 +2119,7 @@ Public Class MainFrm
         If [CP] Is Nothing Then [CP] = My.CP
 
         Cursor = Cursors.WaitCursor
+        OldWidth = TablessControl1.Width
 
         log_lbl.Visible = False
         log_lbl.Text = ""
@@ -2129,6 +2131,10 @@ Public Class MainFrm
         If My.Settings.ThemeLog.Enabled Then
             TablessControl1.SelectedIndex = TablessControl1.TabCount - 1
             TablessControl1.Refresh()
+            If My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed Then
+                previewContainer.Visible = False
+                TablessControl1.Width = MainToolbar.Width
+            End If
         End If
 
         [CP].Save(CP.CP_Type.Registry, "", If(My.Settings.ThemeLog.Enabled, TreeView1, Nothing))
@@ -2158,7 +2164,7 @@ Public Class MainFrm
             log_lbl.Text = My.Lang.CP_ErrorHappened
             Button14.Visible = True
         Else
-            If My.Settings.ThemeLog.CountDown Then
+            If My.Settings.ThemeLog.CountDown AndAlso Not My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed Then
                 log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds)
                 elapsedSecs = 1
                 Timer1.Enabled = True
@@ -2177,6 +2183,8 @@ Public Class MainFrm
             log_lbl.Text = ""
             Timer1.Enabled = False
             Timer1.Stop()
+            If Not previewContainer.Visible Then previewContainer.Visible = True
+            TablessControl1.Width = OldWidth
             SelectLeftPanelIndex()
         End If
 
@@ -2194,6 +2202,8 @@ Public Class MainFrm
         log_lbl.Text = ""
         Timer1.Enabled = False
         Timer1.Stop()
+        If Not previewContainer.Visible Then previewContainer.Visible = True
+        TablessControl1.Width = OldWidth
         SelectLeftPanelIndex()
     End Sub
 

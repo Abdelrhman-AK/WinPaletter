@@ -40,7 +40,7 @@ Partial Class SettingsX
         Me.Label4 = New System.Windows.Forms.Label()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox5 = New UI.WP.CheckBox()
+        Me.CheckBox5 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox4 = New WinPaletter.UI.WP.AlertBox()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.AlertBox2 = New WinPaletter.UI.WP.AlertBox()
@@ -71,12 +71,12 @@ Partial Class SettingsX
         Me.Label9 = New System.Windows.Forms.Label()
         Me.PictureBox20 = New System.Windows.Forms.PictureBox()
         Me.PictureBox18 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox8 = New UI.WP.CheckBox()
+        Me.CheckBox8 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator8 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.CheckBox30 = New UI.WP.CheckBox()
+        Me.CheckBox30 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox41 = New System.Windows.Forms.PictureBox()
         Me.PictureBox36 = New System.Windows.Forms.PictureBox()
         Me.Separator5 = New WinPaletter.UI.WP.SeparatorH()
@@ -84,18 +84,18 @@ Partial Class SettingsX
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox6 = New UI.WP.CheckBox()
+        Me.CheckBox6 = New WinPaletter.UI.WP.CheckBox()
         Me.RadioButton3 = New WinPaletter.UI.WP.RadioButton()
         Me.RadioButton4 = New WinPaletter.UI.WP.RadioButton()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.AlertBox22 = New WinPaletter.UI.WP.AlertBox()
-        Me.CheckBox33 = New UI.WP.CheckBox()
+        Me.CheckBox33 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox44 = New System.Windows.Forms.PictureBox()
         Me.Separator4 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox17 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox19 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox1 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.RadioButton2 = New WinPaletter.UI.WP.RadioButton()
@@ -113,12 +113,12 @@ Partial Class SettingsX
         Me.Label51 = New System.Windows.Forms.Label()
         Me.AlertBox18 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox61 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox25 = New UI.WP.CheckBox()
-        Me.CheckBox2 = New UI.WP.CheckBox()
+        Me.CheckBox25 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox2 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.AlertBox3 = New WinPaletter.UI.WP.AlertBox()
         Me.AlertBox6 = New WinPaletter.UI.WP.AlertBox()
-        Me.CheckBox17 = New UI.WP.CheckBox()
+        Me.CheckBox17 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox37 = New System.Windows.Forms.PictureBox()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.AlertBox5 = New WinPaletter.UI.WP.AlertBox()
@@ -143,11 +143,11 @@ Partial Class SettingsX
         Me.RadioButton12 = New WinPaletter.UI.WP.RadioButton()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.PictureBox50 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox22 = New UI.WP.CheckBox()
+        Me.CheckBox22 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
         Me.AlertBox15 = New WinPaletter.UI.WP.AlertBox()
-        Me.CheckBox16 = New UI.WP.CheckBox()
+        Me.CheckBox16 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox56 = New System.Windows.Forms.PictureBox()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Panel7 = New System.Windows.Forms.Panel()
@@ -155,10 +155,10 @@ Partial Class SettingsX
         Me.RadioButton14 = New WinPaletter.UI.WP.RadioButton()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.PictureBox14 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox7 = New UI.WP.CheckBox()
+        Me.CheckBox7 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox15 = New UI.WP.CheckBox()
+        Me.CheckBox15 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox16 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox60 = New System.Windows.Forms.PictureBox()
         Me.Label48 = New System.Windows.Forms.Label()
@@ -183,9 +183,9 @@ Partial Class SettingsX
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.RadioButton24 = New WinPaletter.UI.WP.RadioButton()
         Me.RadioButton25 = New WinPaletter.UI.WP.RadioButton()
-        Me.CheckBox36 = New UI.WP.CheckBox()
+        Me.CheckBox36 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox67 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox35_SFC = New UI.WP.CheckBox()
+        Me.CheckBox35_SFC = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox66 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -197,9 +197,9 @@ Partial Class SettingsX
         Me.TabControl3 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage16 = New System.Windows.Forms.TabPage()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox4 = New UI.WP.CheckBox()
+        Me.CheckBox4 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox54 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox29 = New UI.WP.CheckBox()
+        Me.CheckBox29 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator16 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox64 = New System.Windows.Forms.PictureBox()
         Me.Button17 = New WinPaletter.UI.WP.Button()
@@ -224,19 +224,24 @@ Partial Class SettingsX
         Me.PictureBox53 = New System.Windows.Forms.PictureBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.TabPage18 = New System.Windows.Forms.TabPage()
-        Me.CheckBox26 = New UI.WP.CheckBox()
+        Me.CheckBox26 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox65 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox27 = New UI.WP.CheckBox()
+        Me.CheckBox27 = New WinPaletter.UI.WP.CheckBox()
         Me.Label56 = New System.Windows.Forms.Label()
-        Me.CheckBox28 = New UI.WP.CheckBox()
+        Me.CheckBox28 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.PictureBox71 = New System.Windows.Forms.PictureBox()
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose = New WinPaletter.UI.WP.CheckBox()
+        Me.VL2 = New WinPaletter.UI.WP.RadioImage()
+        Me.VL1 = New WinPaletter.UI.WP.RadioImage()
+        Me.VL0 = New WinPaletter.UI.WP.RadioImage()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.AlertBox_Themelog = New WinPaletter.UI.WP.AlertBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.NumericUpDown1 = New WinPaletter.UI.WP.NumericUpDown()
-        Me.CheckBox18 = New UI.WP.CheckBox()
+        Me.CheckBox18 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox39 = New System.Windows.Forms.PictureBox()
         Me.PictureBox40 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox19 = New UI.WP.CheckBox()
         Me.Separator10 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox38 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -251,14 +256,14 @@ Partial Class SettingsX
         Me.PictureBox33 = New System.Windows.Forms.PictureBox()
         Me.PictureBox32 = New System.Windows.Forms.PictureBox()
         Me.PictureBox31 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox14 = New UI.WP.CheckBox()
+        Me.CheckBox14 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox12 = New WinPaletter.UI.WP.AlertBox()
         Me.AlertBox11 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox30 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox13 = New UI.WP.CheckBox()
+        Me.CheckBox13 = New WinPaletter.UI.WP.CheckBox()
         Me.AlertBox8 = New WinPaletter.UI.WP.AlertBox()
         Me.PictureBox29 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox12 = New UI.WP.CheckBox()
+        Me.CheckBox12 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator3 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox28 = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -279,32 +284,38 @@ Partial Class SettingsX
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.PictureBox49 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox21 = New UI.WP.CheckBox()
+        Me.CheckBox21 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox48 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox20 = New UI.WP.CheckBox()
+        Me.CheckBox20 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator9 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox47 = New System.Windows.Forms.PictureBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.TabPage19 = New System.Windows.Forms.TabPage()
+        Me.PictureBox70 = New System.Windows.Forms.PictureBox()
+        Me.CheckBox38 = New WinPaletter.UI.WP.CheckBox()
+        Me.PictureBox69 = New System.Windows.Forms.PictureBox()
+        Me.CheckBox37 = New WinPaletter.UI.WP.CheckBox()
+        Me.PictureBox68 = New System.Windows.Forms.PictureBox()
+        Me.CheckBox35 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox58 = New System.Windows.Forms.PictureBox()
         Me.PictureBox46 = New System.Windows.Forms.PictureBox()
         Me.PictureBox45 = New System.Windows.Forms.PictureBox()
         Me.PictureBox42 = New System.Windows.Forms.PictureBox()
         Me.PictureBox27 = New System.Windows.Forms.PictureBox()
         Me.PictureBox43 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox32 = New UI.WP.CheckBox()
+        Me.CheckBox32 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator1 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.Label21 = New System.Windows.Forms.Label()
-        Me.CheckBox34 = New UI.WP.CheckBox()
-        Me.CheckBox11 = New UI.WP.CheckBox()
-        Me.CheckBox3 = New UI.WP.CheckBox()
-        Me.CheckBox31 = New UI.WP.CheckBox()
+        Me.CheckBox34 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox11 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox3 = New WinPaletter.UI.WP.CheckBox()
+        Me.CheckBox31 = New WinPaletter.UI.WP.CheckBox()
         Me.ComboBox3 = New WinPaletter.UI.WP.ComboBox()
-        Me.CheckBox10 = New UI.WP.CheckBox()
+        Me.CheckBox10 = New WinPaletter.UI.WP.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.PictureBox15 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox9 = New UI.WP.CheckBox()
+        Me.CheckBox9 = New WinPaletter.UI.WP.CheckBox()
         Me.Separator7 = New WinPaletter.UI.WP.SeparatorH()
         Me.PictureBox13 = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -318,12 +329,6 @@ Partial Class SettingsX
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
-        Me.PictureBox68 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox35 = New UI.WP.CheckBox()
-        Me.PictureBox69 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox37 = New UI.WP.CheckBox()
-        Me.PictureBox70 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox38 = New UI.WP.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -398,6 +403,7 @@ Partial Class SettingsX
         Me.TabPage18.SuspendLayout()
         CType(Me.PictureBox65, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
+        CType(Me.PictureBox71, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox39, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -417,6 +423,9 @@ Partial Class SettingsX
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage19.SuspendLayout()
+        CType(Me.PictureBox70, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox69, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox68, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox58, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox46, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox45, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -429,9 +438,6 @@ Partial Class SettingsX
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.AnimatedBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox68, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox69, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox70, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -2797,6 +2803,7 @@ Partial Class SettingsX
         Me.RadioImage1.ShowText = True
         Me.RadioImage1.Size = New System.Drawing.Size(64, 64)
         Me.RadioImage1.TabIndex = 49
+        Me.RadioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ListBox2
         '
@@ -2823,6 +2830,7 @@ Partial Class SettingsX
         Me.RadioImage2.ShowText = True
         Me.RadioImage2.Size = New System.Drawing.Size(64, 64)
         Me.RadioImage2.TabIndex = 50
+        Me.RadioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Button15
         '
@@ -3110,13 +3118,18 @@ Partial Class SettingsX
         'TabPage8
         '
         Me.TabPage8.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.TabPage8.Controls.Add(Me.PictureBox71)
+        Me.TabPage8.Controls.Add(Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose)
+        Me.TabPage8.Controls.Add(Me.VL2)
+        Me.TabPage8.Controls.Add(Me.VL1)
+        Me.TabPage8.Controls.Add(Me.VL0)
+        Me.TabPage8.Controls.Add(Me.Label25)
         Me.TabPage8.Controls.Add(Me.AlertBox_Themelog)
         Me.TabPage8.Controls.Add(Me.Label27)
         Me.TabPage8.Controls.Add(Me.NumericUpDown1)
         Me.TabPage8.Controls.Add(Me.CheckBox18)
         Me.TabPage8.Controls.Add(Me.PictureBox39)
         Me.TabPage8.Controls.Add(Me.PictureBox40)
-        Me.TabPage8.Controls.Add(Me.CheckBox19)
         Me.TabPage8.Controls.Add(Me.Separator10)
         Me.TabPage8.Controls.Add(Me.PictureBox38)
         Me.TabPage8.Controls.Add(Me.Label26)
@@ -3126,6 +3139,84 @@ Partial Class SettingsX
         Me.TabPage8.Size = New System.Drawing.Size(823, 471)
         Me.TabPage8.TabIndex = 8
         Me.TabPage8.Text = "Theme logging"
+        '
+        'PictureBox71
+        '
+        Me.PictureBox71.Image = CType(resources.GetObject("PictureBox71.Image"), System.Drawing.Image)
+        Me.PictureBox71.Location = New System.Drawing.Point(17, 172)
+        Me.PictureBox71.Name = "PictureBox71"
+        Me.PictureBox71.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox71.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox71.TabIndex = 54
+        Me.PictureBox71.TabStop = False
+        '
+        'CheckBox19_ShowSkippedItemsOnDetailedVerbose
+        '
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked = False
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.ForeColor = System.Drawing.Color.White
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Location = New System.Drawing.Point(47, 172)
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Name = "CheckBox19_ShowSkippedItemsOnDetailedVerbose"
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Size = New System.Drawing.Size(770, 24)
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.TabIndex = 53
+        Me.CheckBox19_ShowSkippedItemsOnDetailedVerbose.Text = "Include skipped registry items if advanced details verbose level is selected (app" &
+    "lying operation will take longer time)"
+        '
+        'VL2
+        '
+        Me.VL2.Checked = False
+        Me.VL2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.VL2.ForeColor = System.Drawing.Color.White
+        Me.VL2.Image = Nothing
+        Me.VL2.Location = New System.Drawing.Point(53, 142)
+        Me.VL2.Name = "VL2"
+        Me.VL2.ShowText = True
+        Me.VL2.Size = New System.Drawing.Size(515, 24)
+        Me.VL2.TabIndex = 52
+        Me.VL2.Text = "Advanced details; shows all registry keys modified (applying operation will take " &
+    "longer time)"
+        Me.VL2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'VL1
+        '
+        Me.VL1.Checked = False
+        Me.VL1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.VL1.ForeColor = System.Drawing.Color.White
+        Me.VL1.Image = Nothing
+        Me.VL1.Location = New System.Drawing.Point(53, 112)
+        Me.VL1.Name = "VL1"
+        Me.VL1.ShowText = True
+        Me.VL1.Size = New System.Drawing.Size(515, 24)
+        Me.VL1.TabIndex = 51
+        Me.VL1.Text = "Basic details; shows if applying, skipping Windows aspects or errors happened"
+        Me.VL1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'VL0
+        '
+        Me.VL0.Checked = False
+        Me.VL0.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.VL0.ForeColor = System.Drawing.Color.White
+        Me.VL0.Image = Nothing
+        Me.VL0.Location = New System.Drawing.Point(53, 82)
+        Me.VL0.Name = "VL0"
+        Me.VL0.ShowText = True
+        Me.VL0.Size = New System.Drawing.Size(515, 24)
+        Me.VL0.TabIndex = 50
+        Me.VL0.Text = "None"
+        Me.VL0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label25
+        '
+        Me.Label25.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(47, 54)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(770, 24)
+        Me.Label25.TabIndex = 49
+        Me.Label25.Text = "Verbose level"
+        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'AlertBox_Themelog
         '
@@ -3137,19 +3228,20 @@ Partial Class SettingsX
         Me.AlertBox_Themelog.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.AlertBox_Themelog.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.AlertBox_Themelog.Image = Nothing
-        Me.AlertBox_Themelog.Location = New System.Drawing.Point(53, 148)
+        Me.AlertBox_Themelog.Location = New System.Drawing.Point(53, 264)
         Me.AlertBox_Themelog.Name = "AlertBox_Themelog"
-        Me.AlertBox_Themelog.Size = New System.Drawing.Size(418, 22)
+        Me.AlertBox_Themelog.Size = New System.Drawing.Size(580, 22)
         Me.AlertBox_Themelog.TabIndex = 29
         Me.AlertBox_Themelog.TabStop = False
-        Me.AlertBox_Themelog.Text = "If there is an error, automatic close won't start so you can read the log"
+        Me.AlertBox_Themelog.Text = "If there is an error or using advanced verbose details, automatic close won't sta" &
+    "rt so you can read the log"
         '
         'Label27
         '
         Me.Label27.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label27.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label27.Location = New System.Drawing.Point(134, 116)
+        Me.Label27.Location = New System.Drawing.Point(134, 232)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(79, 26)
         Me.Label27.TabIndex = 28
@@ -3158,7 +3250,8 @@ Partial Class SettingsX
         '
         'NumericUpDown1
         '
-        Me.NumericUpDown1.Location = New System.Drawing.Point(53, 116)
+        Me.NumericUpDown1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.NumericUpDown1.Location = New System.Drawing.Point(53, 232)
         Me.NumericUpDown1.Max = 300
         Me.NumericUpDown1.Min = 5
         Me.NumericUpDown1.Name = "NumericUpDown1"
@@ -3176,11 +3269,11 @@ Partial Class SettingsX
         Me.CheckBox18.Checked = True
         Me.CheckBox18.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.CheckBox18.ForeColor = System.Drawing.Color.White
-        Me.CheckBox18.Location = New System.Drawing.Point(47, 86)
+        Me.CheckBox18.Location = New System.Drawing.Point(47, 202)
         Me.CheckBox18.Name = "CheckBox18"
         Me.CheckBox18.Size = New System.Drawing.Size(770, 24)
         Me.CheckBox18.TabIndex = 26
-        Me.CheckBox18.Text = "Countdown (For automatic closure for the log)"
+        Me.CheckBox18.Text = "Countdown (for automatic closure for the log)"
         '
         'PictureBox39
         '
@@ -3195,26 +3288,12 @@ Partial Class SettingsX
         'PictureBox40
         '
         Me.PictureBox40.Image = CType(resources.GetObject("PictureBox40.Image"), System.Drawing.Image)
-        Me.PictureBox40.Location = New System.Drawing.Point(17, 86)
+        Me.PictureBox40.Location = New System.Drawing.Point(17, 202)
         Me.PictureBox40.Name = "PictureBox40"
         Me.PictureBox40.Size = New System.Drawing.Size(24, 24)
         Me.PictureBox40.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.PictureBox40.TabIndex = 25
         Me.PictureBox40.TabStop = False
-        '
-        'CheckBox19
-        '
-        Me.CheckBox19.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox19.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.CheckBox19.Checked = True
-        Me.CheckBox19.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CheckBox19.ForeColor = System.Drawing.Color.White
-        Me.CheckBox19.Location = New System.Drawing.Point(47, 54)
-        Me.CheckBox19.Name = "CheckBox19"
-        Me.CheckBox19.Size = New System.Drawing.Size(770, 24)
-        Me.CheckBox19.TabIndex = 24
-        Me.CheckBox19.Text = "Show Theme Log during applying a theme"
         '
         'Separator10
         '
@@ -3632,6 +3711,7 @@ Partial Class SettingsX
         Me.EP_ORB_11.ShowText = False
         Me.EP_ORB_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_ORB_11.TabIndex = 45
+        Me.EP_ORB_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'EP_ORB_10
         '
@@ -3644,6 +3724,7 @@ Partial Class SettingsX
         Me.EP_ORB_10.ShowText = False
         Me.EP_ORB_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_ORB_10.TabIndex = 46
+        Me.EP_ORB_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel2
         '
@@ -3666,6 +3747,7 @@ Partial Class SettingsX
         Me.EP_Taskbar_11.ShowText = False
         Me.EP_Taskbar_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_Taskbar_11.TabIndex = 42
+        Me.EP_Taskbar_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'EP_Taskbar_10
         '
@@ -3678,6 +3760,7 @@ Partial Class SettingsX
         Me.EP_Taskbar_10.ShowText = False
         Me.EP_Taskbar_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_Taskbar_10.TabIndex = 43
+        Me.EP_Taskbar_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel1
         '
@@ -3700,6 +3783,7 @@ Partial Class SettingsX
         Me.EP_Start_11.ShowText = False
         Me.EP_Start_11.Size = New System.Drawing.Size(30, 30)
         Me.EP_Start_11.TabIndex = 39
+        Me.EP_Start_11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'EP_Start_10
         '
@@ -3712,6 +3796,7 @@ Partial Class SettingsX
         Me.EP_Start_10.ShowText = False
         Me.EP_Start_10.Size = New System.Drawing.Size(30, 30)
         Me.EP_Start_10.TabIndex = 40
+        Me.EP_Start_10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'EP_Start_10_Type
         '
@@ -3883,6 +3968,78 @@ Partial Class SettingsX
         Me.TabPage19.Size = New System.Drawing.Size(823, 471)
         Me.TabPage19.TabIndex = 11
         Me.TabPage19.Text = "Color item info"
+        '
+        'PictureBox70
+        '
+        Me.PictureBox70.Image = CType(resources.GetObject("PictureBox70.Image"), System.Drawing.Image)
+        Me.PictureBox70.Location = New System.Drawing.Point(47, 296)
+        Me.PictureBox70.Name = "PictureBox70"
+        Me.PictureBox70.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox70.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox70.TabIndex = 46
+        Me.PictureBox70.TabStop = False
+        '
+        'CheckBox38
+        '
+        Me.CheckBox38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox38.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox38.Checked = False
+        Me.CheckBox38.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox38.ForeColor = System.Drawing.Color.White
+        Me.CheckBox38.Location = New System.Drawing.Point(77, 296)
+        Me.CheckBox38.Name = "CheckBox38"
+        Me.CheckBox38.Size = New System.Drawing.Size(740, 24)
+        Me.CheckBox38.TabIndex = 45
+        Me.CheckBox38.Text = "Enable ripple effect on dragging and dropping a color"
+        '
+        'PictureBox69
+        '
+        Me.PictureBox69.Image = CType(resources.GetObject("PictureBox69.Image"), System.Drawing.Image)
+        Me.PictureBox69.Location = New System.Drawing.Point(47, 266)
+        Me.PictureBox69.Name = "PictureBox69"
+        Me.PictureBox69.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox69.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox69.TabIndex = 44
+        Me.PictureBox69.TabStop = False
+        '
+        'CheckBox37
+        '
+        Me.CheckBox37.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox37.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox37.Checked = False
+        Me.CheckBox37.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox37.ForeColor = System.Drawing.Color.White
+        Me.CheckBox37.Location = New System.Drawing.Point(77, 266)
+        Me.CheckBox37.Name = "CheckBox37"
+        Me.CheckBox37.Size = New System.Drawing.Size(740, 24)
+        Me.CheckBox37.TabIndex = 43
+        Me.CheckBox37.Text = "Show guide (colors values) on dragging and dropping a color"
+        '
+        'PictureBox68
+        '
+        Me.PictureBox68.Image = CType(resources.GetObject("PictureBox68.Image"), System.Drawing.Image)
+        Me.PictureBox68.Location = New System.Drawing.Point(17, 236)
+        Me.PictureBox68.Name = "PictureBox68"
+        Me.PictureBox68.Size = New System.Drawing.Size(24, 24)
+        Me.PictureBox68.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox68.TabIndex = 42
+        Me.PictureBox68.TabStop = False
+        '
+        'CheckBox35
+        '
+        Me.CheckBox35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox35.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.CheckBox35.Checked = False
+        Me.CheckBox35.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CheckBox35.ForeColor = System.Drawing.Color.White
+        Me.CheckBox35.Location = New System.Drawing.Point(47, 236)
+        Me.CheckBox35.Name = "CheckBox35"
+        Me.CheckBox35.Size = New System.Drawing.Size(770, 24)
+        Me.CheckBox35.TabIndex = 41
+        Me.CheckBox35.Text = "Enable drag and drop to copy/swap colors items"
         '
         'PictureBox58
         '
@@ -4237,7 +4394,7 @@ Partial Class SettingsX
         Me.Button2.Text = "Cancel"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))
@@ -4291,78 +4448,6 @@ Partial Class SettingsX
         Me.Label17.TabIndex = 9
         Me.Label17.Text = "Settings"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'PictureBox68
-        '
-        Me.PictureBox68.Image = CType(resources.GetObject("PictureBox68.Image"), System.Drawing.Image)
-        Me.PictureBox68.Location = New System.Drawing.Point(17, 236)
-        Me.PictureBox68.Name = "PictureBox68"
-        Me.PictureBox68.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox68.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox68.TabIndex = 42
-        Me.PictureBox68.TabStop = False
-        '
-        'CheckBox35
-        '
-        Me.CheckBox35.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox35.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.CheckBox35.Checked = False
-        Me.CheckBox35.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CheckBox35.ForeColor = System.Drawing.Color.White
-        Me.CheckBox35.Location = New System.Drawing.Point(47, 236)
-        Me.CheckBox35.Name = "CheckBox35"
-        Me.CheckBox35.Size = New System.Drawing.Size(770, 24)
-        Me.CheckBox35.TabIndex = 41
-        Me.CheckBox35.Text = "Enable drag and drop to copy/swap colors items"
-        '
-        'PictureBox69
-        '
-        Me.PictureBox69.Image = CType(resources.GetObject("PictureBox69.Image"), System.Drawing.Image)
-        Me.PictureBox69.Location = New System.Drawing.Point(47, 266)
-        Me.PictureBox69.Name = "PictureBox69"
-        Me.PictureBox69.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox69.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox69.TabIndex = 44
-        Me.PictureBox69.TabStop = False
-        '
-        'CheckBox37
-        '
-        Me.CheckBox37.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox37.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.CheckBox37.Checked = False
-        Me.CheckBox37.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CheckBox37.ForeColor = System.Drawing.Color.White
-        Me.CheckBox37.Location = New System.Drawing.Point(77, 266)
-        Me.CheckBox37.Name = "CheckBox37"
-        Me.CheckBox37.Size = New System.Drawing.Size(740, 24)
-        Me.CheckBox37.TabIndex = 43
-        Me.CheckBox37.Text = "Show guide (colors values) on dragging and dropping a color"
-        '
-        'PictureBox70
-        '
-        Me.PictureBox70.Image = CType(resources.GetObject("PictureBox70.Image"), System.Drawing.Image)
-        Me.PictureBox70.Location = New System.Drawing.Point(47, 296)
-        Me.PictureBox70.Name = "PictureBox70"
-        Me.PictureBox70.Size = New System.Drawing.Size(24, 24)
-        Me.PictureBox70.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox70.TabIndex = 46
-        Me.PictureBox70.TabStop = False
-        '
-        'CheckBox38
-        '
-        Me.CheckBox38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox38.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
-        Me.CheckBox38.Checked = False
-        Me.CheckBox38.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.CheckBox38.ForeColor = System.Drawing.Color.White
-        Me.CheckBox38.Location = New System.Drawing.Point(77, 296)
-        Me.CheckBox38.Name = "CheckBox38"
-        Me.CheckBox38.Size = New System.Drawing.Size(740, 24)
-        Me.CheckBox38.TabIndex = 45
-        Me.CheckBox38.Text = "Enable ripple effect on dragging and dropping a color"
         '
         'SettingsX
         '
@@ -4464,6 +4549,7 @@ Partial Class SettingsX
         Me.TabPage18.ResumeLayout(False)
         CType(Me.PictureBox65, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage8.ResumeLayout(False)
+        CType(Me.PictureBox71, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox39, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox40, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox38, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4483,6 +4569,9 @@ Partial Class SettingsX
         CType(Me.PictureBox48, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox47, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage19.ResumeLayout(False)
+        CType(Me.PictureBox70, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox69, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox68, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox58, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox46, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox45, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4495,9 +4584,6 @@ Partial Class SettingsX
         CType(Me.PictureBox13, System.ComponentModel.ISupportInitialize).EndInit()
         Me.AnimatedBox1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox68, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox69, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox70, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -4622,7 +4708,6 @@ Partial Class SettingsX
     Friend WithEvents CheckBox18 As UI.WP.CheckBox
     Friend WithEvents PictureBox39 As PictureBox
     Friend WithEvents PictureBox40 As PictureBox
-    Friend WithEvents CheckBox19 As UI.WP.CheckBox
     Friend WithEvents Separator10 As UI.WP.SeparatorH
     Friend WithEvents PictureBox38 As PictureBox
     Friend WithEvents Label26 As Label
@@ -4801,4 +4886,10 @@ Partial Class SettingsX
     Friend WithEvents CheckBox37 As UI.WP.CheckBox
     Friend WithEvents PictureBox68 As PictureBox
     Friend WithEvents CheckBox35 As UI.WP.CheckBox
+    Friend WithEvents VL2 As UI.WP.RadioImage
+    Friend WithEvents VL1 As UI.WP.RadioImage
+    Friend WithEvents VL0 As UI.WP.RadioImage
+    Friend WithEvents Label25 As Label
+    Friend WithEvents PictureBox71 As PictureBox
+    Friend WithEvents CheckBox19_ShowSkippedItemsOnDetailedVerbose As UI.WP.CheckBox
 End Class

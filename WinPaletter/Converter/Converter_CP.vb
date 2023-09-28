@@ -4,7 +4,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
 Public Class Converter_CP
-    Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
+    Private ReadOnly bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
 
     Public Class Structures
         Structure Info

@@ -493,7 +493,7 @@ Namespace UI.Controllers
                     Dim i As Integer = Math.Max(Width, Height) + Timer2_factor
                     Dim px As Point = BeforeDropMousePosition
                     Dim MouseCircle As New Rectangle(px.X - 0.5 * i, px.Y - 0.5 * i, i, i)
-                    Dim gp As GraphicsPath = New GraphicsPath()
+                    Dim gp As New GraphicsPath()
                     gp.AddEllipse(MouseCircle)
                     Dim pgb As New PathGradientBrush(gp) With {
                                     .CenterPoint = px,
@@ -527,7 +527,7 @@ Namespace UI.Controllers
                     Dim i As Integer = Math.Max(Width, Height)
                     Dim px As Point = PointToClient(MousePosition)
                     Dim MouseCircle As New Rectangle(px.X - 0.5 * i, px.Y - 0.5 * i, i, i)
-                    Dim gp As GraphicsPath = New GraphicsPath()
+                    Dim gp As New GraphicsPath()
                     gp.AddEllipse(MouseCircle)
                     Dim pgb As New PathGradientBrush(gp) With {
                                             .CenterPoint = px,
@@ -585,10 +585,10 @@ Namespace UI.Controllers
                     RectX.Y += 1
 
                     Dim CF As ColorFormat = ColorFormat.HEX
-                    If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HEX Then CF = ColorFormat.HEX
-                    If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.RGB Then CF = ColorFormat.RGB
-                    If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.HSL Then CF = ColorFormat.HSL
-                    If My.Settings.NerdStats.Type = XeSettings.Structures.NerdStats.Formats.Dec Then CF = ColorFormat.Dec
+                    If My.Settings.NerdStats.Type = WPSettings.Structures.NerdStats.Formats.HEX Then CF = ColorFormat.HEX
+                    If My.Settings.NerdStats.Type = WPSettings.Structures.NerdStats.Formats.RGB Then CF = ColorFormat.RGB
+                    If My.Settings.NerdStats.Type = WPSettings.Structures.NerdStats.Formats.HSL Then CF = ColorFormat.HSL
+                    If My.Settings.NerdStats.Type = WPSettings.Structures.NerdStats.Formats.Dec Then CF = ColorFormat.Dec
 
                     Dim S As String = TargetColor.ReturnFormat(CF, My.Settings.NerdStats.ShowHexHash, Not (TargetColor.A = 255))
                     Dim F As Font

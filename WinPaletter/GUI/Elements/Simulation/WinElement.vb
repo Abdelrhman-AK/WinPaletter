@@ -356,7 +356,7 @@ Namespace UI.Simulation
                 If Style = Styles.Taskbar11 Or Style = Styles.Start11 Or Style = Styles.ActionCenter11 Or Style = Styles.AltTab11 Then
 
                     If Transparency Then
-                        Dim b As Bitmap
+                        Dim b As Bitmap = Nothing
                         If My.Wallpaper IsNot Nothing Then
                             b = My.Wallpaper.Clone(Bounds, My.Wallpaper.PixelFormat).Blur(BlurPower)
                         End If

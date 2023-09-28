@@ -119,11 +119,12 @@ Public Class Core
         Add
         Delete
     End Enum
-    Public Shared Sub TaskMgmt(TaskType As TaskType, Action As Actions, Optional File As String = "")
+    Public Shared Sub TaskMgmt(TaskType As TaskType, Action As Actions, Optional File As String = "", Optional [TreeView] As TreeView = Nothing)
 
         DeleteTask(TaskType)
 
         If Action = Actions.Add Then
+
             Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
                    .FileName = My.PATH_System32 & "\schtasks",
                    .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
@@ -139,26 +140,31 @@ Public Class Core
                 Case TaskType.Shutdown
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_Shutdown, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_CreateTask, "WinPaletter\Shutdown"), "task_add")
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Shutdown /XML """ & tmp & """"
 
                 Case TaskType.Logoff
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_Logoff, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_CreateTask, "WinPaletter\Logoff"), "task_add")
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Logoff /XML """ & tmp & """"
 
                 Case TaskType.Logon
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_Logon, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_CreateTask, "WinPaletter\Logon"), "task_add")
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Logon /XML """ & tmp & """"
 
                 Case TaskType.Unlock
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_Unlock, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_CreateTask, "WinPaletter\Unlock"), "task_add")
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\Unlock /XML """ & tmp & """"
 
                 Case TaskType.ChargerConnected
                     Dim XML_Scheme As String = String.Format(My.Resources.XML_ChargerConnected, File)
                     IO.File.WriteAllText(tmp, XML_Scheme)
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_CreateTask, "WinPaletter\ChargerConnected"), "task_add")
                     process.StartInfo.Arguments = "/Create /TN WinPaletter\ChargerConnected /XML """ & tmp & """"
 
             End Select
@@ -169,7 +175,7 @@ Public Class Core
             If IO.File.Exists(tmp) Then Kill(tmp)
         End If
     End Sub
-    Private Shared Sub DeleteTask(TaskType As TaskType)
+    Private Shared Sub DeleteTask(TaskType As TaskType, Optional [TreeView] As TreeView = Nothing)
         Dim process As New Process With {.StartInfo = New ProcessStartInfo With {
                .FileName = My.PATH_System32 & "\schtasks",
                .Verb = If(My.WXP AndAlso My.isElevated, "", "runas"),
@@ -180,18 +186,23 @@ Public Class Core
 
         Select Case TaskType
             Case TaskType.Shutdown
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_DeleteTask, "WinPaletter\Shutdown"), "task_remove")
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\Shutdown /F"
 
             Case TaskType.Logoff
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_DeleteTask, "WinPaletter\Logoff"), "task_remove")
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\Logoff /F"
 
             Case TaskType.Logon
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_DeleteTask, "WinPaletter\Logon"), "task_remove")
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\Logon /F"
 
             Case TaskType.Unlock
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_DeleteTask, "WinPaletter\Unlock"), "task_remove")
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\Unlock /F"
 
             Case TaskType.ChargerConnected
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_DeleteTask, "WinPaletter\ChargerConnected"), "task_remove")
                 process.StartInfo.Arguments = "/Delete /TN WinPaletter\ChargerConnected /F"
 
         End Select

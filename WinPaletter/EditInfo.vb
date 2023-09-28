@@ -12,7 +12,7 @@ Public Class EditInfo
     End Sub
 
     Protected Overrides Sub OnDragOver(e As DragEventArgs)
-        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+        If TypeOf e.Data.GetData(GetType(UI.Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -100,7 +100,7 @@ Public Class EditInfo
         Me.Close()
     End Sub
 
-    Private Sub color1_2_DragDrop(sender As Object, e As DragEventArgs) Handles color1.DragDrop, color2.DragDrop
+    Private Sub Color1_2_DragDrop(sender As Object, e As DragEventArgs) Handles color1.DragDrop, color2.DragDrop
         StoreItem1.CP.Info.Color1 = color1.BackColor
         StoreItem1.CP.Info.Color2 = color2.BackColor
     End Sub

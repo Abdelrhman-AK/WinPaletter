@@ -2,14 +2,14 @@
 
 Public Class ApplicationThemer
 
-    Private BackupSettings As XeSettings
+    Private BackupSettings As WPSettings
     Private _Shown As Boolean = False
     Private CloseAndApply As Boolean = False
     Public FixLanguageDarkModeBug As Boolean = True
 
     Private Sub ApplicationThemer_Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _Shown = False
-        BackupSettings = New XeSettings(XeSettings.Mode.Registry)
+        BackupSettings = New WPSettings(WPSettings.Mode.Registry)
         LoadLanguage
         ApplyStyle(Me)
         Button12.Image = MainFrm.Button20.Image.Resize(16, 16)
@@ -120,7 +120,7 @@ Public Class ApplicationThemer
         ApplyToCP(My.CP)
         CPx.AppTheme.Apply()
         CloseAndApply = True
-        BackupSettings = New XeSettings(XeSettings.Mode.Registry)
+        BackupSettings = New WPSettings(WPSettings.Mode.Registry)
         CPx.Dispose()
         Cursor = Cursors.Default
     End Sub

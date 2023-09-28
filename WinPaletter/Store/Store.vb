@@ -69,13 +69,15 @@ Public Class Store
         Try
             If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceMetrics.Checked And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                 If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                    Dim vs As New VisualStyleFile(My.VS)
-                    CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
+                    Using vs As New VisualStyleFile(My.VS)
+                        CP.MetricsFonts.Overwrite_Metrics(vs.Metrics)
+                    End Using
                 End If
 
                 If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                    Dim vs As New VisualStyleFile(My.VS)
-                    CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
+                    Using vs As New VisualStyleFile(My.VS)
+                        CP.MetricsFonts.Overwrite_Fonts(vs.Metrics)
+                    End Using
                 End If
             End If
         Catch
@@ -114,15 +116,10 @@ Public Class Store
         Dim iT As Integer = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum
         Dim _Padding As New Windows.Forms.Padding(iP, iT, iP, iP)
 
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            If Not RW.UseItAsMenu Then
-                RW.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth
-                RW.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight
-                RW.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth
-                RW.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth
-                RW.Font = CP.MetricsFonts.CaptionFont
-
-                RW.Padding = _Padding
+        For Each WindowR As UI.Retro.WindowR In ClassicColorsPreview.GetAllControls.OfType(Of UI.Retro.WindowR)
+            If Not WindowR.UseItAsMenu Then
+                SetClassicWindowMetrics(CP, WindowR)
+                WindowR.Padding = _Padding
             End If
         Next
 
@@ -140,14 +137,19 @@ Public Class Store
         LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2
 
         RetroShadow1.Visible = CP.WindowsEffects.WindowShadow
+
+        ButtonR5.FocusRectWidth = CP.WindowsEffects.FocusRectWidth
+        ButtonR5.FocusRectHeight = CP.WindowsEffects.FocusRectHeight
+        ButtonR5.Refresh()
     End Sub
 
     Sub ApplyRetroPreview([CP] As CP)
         Try
             If My.PreviewStyle = WindowStyle.WXP AndAlso MainFrm.WXP_VS_ReplaceColors.Checked And CP.WindowsXP.Theme <> CP.Structures.WindowsXP.Themes.Classic Then
                 If IO.File.Exists(My.VS) And Not String.IsNullOrEmpty(My.VS) Then
-                    Dim vs As New VisualStyleFile(My.VS)
-                    CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
+                    Using vs As New VisualStyleFile(My.VS)
+                        CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics)
+                    End Using
                 End If
             End If
         Catch
@@ -158,189 +160,103 @@ Public Class Store
         WindowR3.ColorGradient = [CP].Win32.EnableGradient
         WindowR4.ColorGradient = [CP].Win32.EnableGradient
 
-        Dim c As Color
-        c = [CP].Win32.ActiveTitle
-        WindowR2.Color1 = c
-        WindowR3.Color1 = c
-        WindowR4.Color1 = c
+        WindowR2.Color1 = [CP].Win32.ActiveTitle
+        WindowR3.Color1 = [CP].Win32.ActiveTitle
+        WindowR4.Color1 = [CP].Win32.ActiveTitle
 
-        c = [CP].Win32.GradientActiveTitle
-        WindowR2.Color2 = c
-        WindowR3.Color2 = c
-        WindowR4.Color2 = c
+        WindowR2.Color2 = [CP].Win32.GradientActiveTitle
+        WindowR3.Color2 = [CP].Win32.GradientActiveTitle
+        WindowR4.Color2 = [CP].Win32.GradientActiveTitle
 
-        c = [CP].Win32.TitleText
-        WindowR2.ForeColor = c
-        WindowR3.ForeColor = c
-        WindowR4.ForeColor = c
+        WindowR2.ForeColor = [CP].Win32.TitleText
+        WindowR3.ForeColor = [CP].Win32.TitleText
+        WindowR4.ForeColor = [CP].Win32.TitleText
 
-        c = [CP].Win32.InactiveTitle
-        WindowR1.Color1 = c
+        WindowR1.Color1 = [CP].Win32.InactiveTitle
 
-        c = [CP].Win32.GradientInactiveTitle
-        WindowR1.Color2 = c
+        WindowR1.Color2 = [CP].Win32.GradientInactiveTitle
 
-        c = [CP].Win32.InactiveTitleText
-        WindowR1.ForeColor = c
+        WindowR1.ForeColor = [CP].Win32.InactiveTitleText
 
-        c = [CP].Win32.ActiveBorder
-        WindowR2.ColorBorder = c
-        WindowR3.ColorBorder = c
-        WindowR4.ColorBorder = c
+        WindowR2.ColorBorder = [CP].Win32.ActiveBorder
+        WindowR3.ColorBorder = [CP].Win32.ActiveBorder
+        WindowR4.ColorBorder = [CP].Win32.ActiveBorder
 
-        c = [CP].Win32.InactiveBorder
-        WindowR1.ColorBorder = c
+        WindowR1.ColorBorder = [CP].Win32.InactiveBorder
 
-        c = [CP].Win32.WindowFrame
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.WindowFrame = c
-            Next
-        Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.WindowFrame = c
+        For Each WindowR As UI.Retro.WindowR In ClassicColorsPreview.GetAllControls.OfType(Of UI.Retro.WindowR)
+            If WindowR IsNot Menu Then WindowR.BackColor = [CP].Win32.ButtonFace
+            WindowR.ButtonDkShadow = [CP].Win32.ButtonDkShadow
+            WindowR.ButtonHilight = [CP].Win32.ButtonHilight
+            WindowR.ButtonHilight = [CP].Win32.ButtonHilight
+            WindowR.ButtonLight = [CP].Win32.ButtonLight
+            WindowR.ButtonShadow = [CP].Win32.ButtonShadow
+            WindowR.ButtonText = [CP].Win32.ButtonText
         Next
 
-        c = [CP].Win32.ButtonFace
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            If RW IsNot Menu Then RW.BackColor = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.BackColor = c
-            Next
+        For Each ButtonR As UI.Retro.ButtonR In ClassicColorsPreview.GetAllControls.OfType(Of UI.Retro.ButtonR)
+            ButtonR.WindowFrame = [CP].Win32.WindowFrame
+            ButtonR.BackColor = [CP].Win32.ButtonFace
+            ButtonR.ButtonDkShadow = [CP].Win32.ButtonDkShadow
+            ButtonR.ButtonHilight = [CP].Win32.ButtonHilight
+            ButtonR.ButtonHilight = [CP].Win32.ButtonHilight
+            ButtonR.ButtonLight = [CP].Win32.ButtonLight
+            ButtonR.ButtonShadow = [CP].Win32.ButtonShadow
+            ButtonR.ForeColor = [CP].Win32.ButtonText
         Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.BackColor = c
-        Next
-        PanelR2.BackColor = c
-        Menu_Window.ButtonFace = c
 
-        c = [CP].Win32.ButtonDkShadow
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.ButtonDkShadow = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.ButtonDkShadow = c
-            Next
+        For Each PanelRaisedR As UI.Retro.PanelRaisedR In ClassicColorsPreview.GetAllControls.OfType(Of UI.Retro.PanelRaisedR)
+            PanelRaisedR.ButtonHilight = [CP].Win32.ButtonHilight
+            PanelRaisedR.ButtonShadow = [CP].Win32.ButtonShadow
         Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.ButtonDkShadow = c
-        Next
-        TextBoxR1.ButtonDkShadow = c
-        Menu_Window.ButtonDkShadow = c
 
-        c = [CP].Win32.ButtonHilight
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.ButtonHilight = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.ButtonHilight = c
-            Next
-        Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.ButtonHilight = c
-        Next
-        For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
-            RB.ButtonHilight = c
-        Next
-        TextBoxR1.ButtonHilight = c
-        PanelR1.ButtonHilight = c
-        PanelR2.ButtonHilight = c
-        Menu_Window.ButtonHilight = c
-
-        c = [CP].Win32.ButtonLight
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.ButtonLight = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.ButtonLight = c
-            Next
-        Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.ButtonLight = c
-        Next
-        TextBoxR1.ButtonLight = c
-        Menu_Window.ButtonLight = c
-
-        c = [CP].Win32.ButtonShadow
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.ButtonShadow = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.ButtonShadow = c
-            Next
-        Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.ButtonShadow = c
-        Next
-        For Each RB As UI.Retro.PanelRaisedR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.PanelRaisedR)
-            RB.ButtonShadow = c
-        Next
-        TextBoxR1.ButtonShadow = c
-        PanelR1.ButtonShadow = c
+        TextBoxR1.BackColor = [CP].Win32.Window
+        TextBoxR1.ForeColor = [CP].Win32.WindowText
+        TextBoxR1.ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        TextBoxR1.ButtonHilight = [CP].Win32.ButtonHilight
+        TextBoxR1.ButtonLight = [CP].Win32.ButtonLight
+        TextBoxR1.ButtonShadow = [CP].Win32.ButtonShadow
         TextBoxR1.Invalidate()
-        Menu_Window.ButtonShadow = c
 
-        c = [CP].Win32.ButtonText
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.ButtonText = c
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.ForeColor = c
-            Next
-        Next
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.ForeColor = c
-        Next
+        PanelR2.BackColor = [CP].Win32.ButtonFace
+        PanelR2.ButtonHilight = [CP].Win32.ButtonHilight
 
-        c = [CP].Win32.AppWorkspace
-        programcontainer.BackColor = c
-
-        c = [CP].Win32.Background
-        ClassicColorsPreview.BackColor = c
-
-        c = [CP].Win32.Menu
-        Menu_Window.BackColor = c
-        PanelR1.BackColor = c
+        Menu_Window.ButtonFace = [CP].Win32.ButtonFace
+        Menu_Window.ButtonDkShadow = [CP].Win32.ButtonDkShadow
+        Menu_Window.ButtonHilight = [CP].Win32.ButtonHilight
+        Menu_Window.ButtonLight = [CP].Win32.ButtonLight
+        Menu_Window.ButtonShadow = [CP].Win32.ButtonShadow
         Menu_Window.Invalidate()
 
-        c = [CP].Win32.MenuBar
-        menucontainer0.BackColor = c
+        PanelR1.BackColor = [CP].Win32.Menu
+        PanelR1.ButtonHilight = [CP].Win32.ButtonHilight
+        PanelR1.ButtonShadow = [CP].Win32.ButtonShadow
 
-        c = [CP].Win32.Hilight
-        highlight.BackColor = c
+        programcontainer.BackColor = [CP].Win32.AppWorkspace
 
-        c = [CP].Win32.MenuHilight
-        menuhilight.BackColor = c
+        ClassicColorsPreview.BackColor = [CP].Win32.Background
 
-        c = [CP].Win32.MenuText
-        LabelR6.ForeColor = c
-        LabelR1.ForeColor = c
+        Menu_Window.BackColor = [CP].Win32.Menu
 
-        c = [CP].Win32.HilightText
-        LabelR5.ForeColor = c
+        menucontainer0.BackColor = [CP].Win32.MenuBar
 
-        c = [CP].Win32.GrayText
-        LabelR2.ForeColor = c
-        LabelR9.ForeColor = c
+        highlight.BackColor = [CP].Win32.Hilight
 
-        c = [CP].Win32.Window
-        TextBoxR1.BackColor = c
+        menuhilight.BackColor = [CP].Win32.MenuHilight
 
-        c = [CP].Win32.WindowText
-        TextBoxR1.ForeColor = c
-        LabelR4.ForeColor = c
+        LabelR6.ForeColor = [CP].Win32.MenuText
+        LabelR1.ForeColor = [CP].Win32.MenuText
 
-        c = [CP].Win32.InfoWindow
-        LabelR13.BackColor = c
+        LabelR5.ForeColor = [CP].Win32.HilightText
 
-        c = [CP].Win32.InfoText
-        LabelR13.ForeColor = c
+        LabelR2.ForeColor = [CP].Win32.GrayText
+        LabelR9.ForeColor = [CP].Win32.GrayText
 
-        For Each RW As UI.Retro.WindowR In ClassicColorsPreview.Controls.OfType(Of UI.Retro.WindowR)
-            RW.Invalidate()
-            For Each RB As UI.Retro.ButtonR In RW.Controls.OfType(Of UI.Retro.ButtonR)
-                RB.Invalidate()
-            Next
-        Next
+        LabelR4.ForeColor = [CP].Win32.WindowText
 
-        For Each RB As UI.Retro.ButtonR In PanelR2.Controls.OfType(Of UI.Retro.ButtonR)
-            RB.Invalidate()
-        Next
+        LabelR13.BackColor = [CP].Win32.InfoWindow
+
+        LabelR13.ForeColor = [CP].Win32.InfoText
 
         Refresh17BitPreference([CP])
 
@@ -526,7 +442,7 @@ Public Class Store
         LoadLanguage
         ApplyStyle(Me, True)
 
-        store_container.CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
+        CheckForIllegalCrossThreadCalls = False         'Prevent exception error of cross-thread
 
         DoubleBuffer
         Cursors_Container.DoubleBuffer
@@ -566,7 +482,7 @@ Public Class Store
 
     Private Sub Store_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         'To prevent effect of a store theme on the other forms
-        My.Settings = New XeSettings(XeSettings.Mode.Registry)
+        My.Settings = New WPSettings(WPSettings.Mode.Registry)
         My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
         ApplyStyle(Me)
@@ -1098,7 +1014,7 @@ Public Class Store
             log_lbl.Text = My.Lang.CP_ErrorHappened
             ShowErrors_btn.Visible = True
         Else
-            If My.Settings.ThemeLog.CountDown Then
+            If My.Settings.ThemeLog.CountDown AndAlso Not My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed Then
                 log_lbl.Text = String.Format(My.Lang.CP_LogWillClose, My.Settings.ThemeLog.CountDown_Seconds)
                 apply_elapsedSecs = 1
                 Log_Timer.Enabled = True
@@ -1139,7 +1055,7 @@ Public Class Store
         For x = 0 To Container.Controls.Count - 1
 
             If TypeOf Container.Controls(0) Is UI.Controllers.StoreItem Then
-                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).Click, AddressOf StoreItem_Clicked
+                RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).MouseClick, AddressOf StoreItem_Clicked
                 RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).CPChanged, AddressOf StoreItem_CPChanged
                 RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).MouseEnter, AddressOf StoreItem_MouseEnter
                 RemoveHandler DirectCast(Container.Controls(0), UI.Controllers.StoreItem).MouseLeave, AddressOf StoreItem_MouseLeave
@@ -1369,7 +1285,8 @@ Public Class Store
         My.RenderingHint = If(My.CP.MetricsFonts.Fonts_SingleBitPP, Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit, Drawing.Text.TextRenderingHint.ClearTypeGridFit)
 
         If selectedItem IsNot Nothing AndAlso selectedItem.CP.AppTheme.Enabled Then
-            My.Settings = New XeSettings(XeSettings.Mode.Registry)
+            My.Settings = New WPSettings(WPSettings.Mode.Registry)
+            FetchDarkMode()
             ApplyStyle(Me, True)
         End If
 
@@ -1384,7 +1301,6 @@ Public Class Store
 
         '' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, My.Style.Colors.Back, 10, 15)
     End Sub
-
 
 #Region "   Applying row"
     Private Sub Apply_Edit_btn_Click(sender As Object, e As EventArgs) Handles Apply_btn.Click, Edit_btn.Click

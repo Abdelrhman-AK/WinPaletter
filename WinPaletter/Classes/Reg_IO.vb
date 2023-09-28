@@ -1,5 +1,6 @@
 ﻿Imports System.Security.AccessControl
 Imports Microsoft.Win32
+Imports Newtonsoft.Json.Linq
 Imports WinPaletter.NativeMethods
 
 ''' <summary>
@@ -13,10 +14,17 @@ Public Class Reg_IO
         HKEY_CLASSES_ROOT
         HKEY_CURRENT_CONFIG
     End Enum
-    Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
+
+    Shared Sub EditReg([TreeView] As TreeView, KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
+        EditReg(KeyName, ValueName, Value, RegType, [TreeView])
+    End Sub
+
+    Shared Sub EditReg(KeyName As String, ValueName As String, Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord, Optional [TreeView] As TreeView = Nothing)
         Dim R As RegistryKey = Nothing
 
         If KeyName.StartsWith("Computer\", My._ignore) Then KeyName = KeyName.Remove(0, "Computer\".Count)
+
+        Dim KeyName_BeforeModification As String = KeyName
 
         If RegType = RegistryValueKind.String And Value Is Nothing Then Value = ""
 
@@ -72,26 +80,63 @@ Public Class Reg_IO
 
         'Skips setting to registry if the values are the same
         Try
-            If R.OpenSubKey(KeyName).GetValue(ValueName, Nothing) = (Value) Then
-                If R IsNot Nothing Then
-                    R.Flush()
-                    R.Close()
+            Dim ToCheck As Object = GetReg(KeyName_BeforeModification, ValueName, Nothing)
+            Dim CheckBy As Object = Value
+            Dim Skip As Boolean = False
+
+            If ToCheck IsNot Nothing Then
+                If ToCheck.GetType.IsArray Then
+                    Skip = Enumerable.SequenceEqual(ToCheck, CheckBy)
+
+                ElseIf TypeOf ToCheck Is Integer AndAlso CheckBy IsNot Nothing AndAlso TypeOf CheckBy Is Boolean Then
+                    Skip = ToCheck = CType(CheckBy, Boolean).ToInteger
+
+                ElseIf CheckBy IsNot Nothing Then
+                    Skip = ToCheck = CheckBy
+
                 End If
 
-                Exit Sub
+                If Skip Then
+                    AddVerboseItem([TreeView], True, KeyName_BeforeModification, ValueName, Value, RegType)
+                    Exit Sub
+                End If
             End If
         Catch
         End Try
 
-        If (My.isElevated AndAlso (scope = Reg_scope.HKEY_LOCAL_MACHINE OrElse scope = Reg_scope.HKEY_USERS)) OrElse (Not scope = Reg_scope.HKEY_LOCAL_MACHINE And Not scope = Reg_scope.HKEY_USERS) Then
-            R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType)
-        Else
-            If scope = Reg_scope.HKEY_LOCAL_MACHINE Then
-                EditReg_CMD("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
-            ElseIf scope = Reg_scope.HKEY_USERS Then
-                EditReg_CMD("HKEY_USERS\" & KeyName, ValueName, Value, RegType)
+        Try
+            If (My.isElevated AndAlso (scope = Reg_scope.HKEY_LOCAL_MACHINE OrElse scope = Reg_scope.HKEY_USERS)) OrElse (Not scope = Reg_scope.HKEY_LOCAL_MACHINE And Not scope = Reg_scope.HKEY_USERS) Then
+                R.OpenSubKey(KeyName, RegistryKeyPermissionCheck.ReadWriteSubTree).SetValue(ValueName, Value, RegType)
+                AddVerboseItem([TreeView], False, KeyName_BeforeModification, ValueName, Value, RegType)
+            Else
+                If scope = Reg_scope.HKEY_LOCAL_MACHINE Then
+                    EditReg_CMD("HKEY_LOCAL_MACHINE\" & KeyName, ValueName, Value, RegType)
+                ElseIf scope = Reg_scope.HKEY_USERS Then
+                    EditReg_CMD("HKEY_USERS\" & KeyName, ValueName, Value, RegType)
+                End If
+                AddVerboseItem([TreeView], False, KeyName_BeforeModification, ValueName, Value, RegType)
             End If
-        End If
+        Catch ex As Exception
+            If My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed Then
+                Dim v0 As String = ValueName
+                Dim v1 As String
+                If TypeOf Value Is Boolean Then
+                    v1 = CBool(Value).ToInteger
+                ElseIf TypeOf Value Is Byte() Then
+                    v1 = String.Join(" ", CType(Value, Byte()))
+                Else
+                    v1 = Convert.ToString(Value)
+                End If
+                If String.IsNullOrWhiteSpace(v0) Then v0 = "(default)"
+                If String.IsNullOrWhiteSpace(v1) Then v1 = "null"
+                Dim v2 As String = ex.Message & " - " & String.Format(My.Lang.Verbose_RegScheme, KeyName_BeforeModification, v0, v1, RegType.ToString)
+                CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, v2), "error")
+                My.Saving_Exceptions.Add(New Tuple(Of String, Exception)(v2, ex))
+            Else
+                CP.AddNode([TreeView], String.Format("{0}: {1}", Now.ToLongTimeString, ex.Message), "error")
+                My.Saving_Exceptions.Add(New Tuple(Of String, Exception)(ex.Message, ex))
+            End If
+        End Try
 
         Try
             If R IsNot Nothing Then
@@ -103,6 +148,34 @@ Public Class Reg_IO
         End Try
 
     End Sub
+
+    Private Shared Sub AddVerboseItem([TreeView] As TreeView, Skipped As Boolean, KeyName As String, ValueName As String, Value As Object, RegType As RegistryValueKind)
+        If My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed AndAlso [TreeView] IsNot Nothing Then
+            Dim v0 As String = ValueName
+            Dim v1 As String
+            Dim v2 As String
+            Dim v3 As String
+            If TypeOf Value Is Boolean Then
+                v1 = CBool(Value).ToInteger
+            ElseIf TypeOf Value Is Byte() Then
+                v1 = String.Join(" ", CType(Value, Byte()))
+            Else
+                v1 = Convert.ToString(Value)
+            End If
+            If String.IsNullOrWhiteSpace(v0) Then v0 = "(default)"
+            If String.IsNullOrWhiteSpace(v1) Then v1 = "null"
+            If Not Skipped Then
+                v2 = String.Format(My.Lang.Verbose_RegScheme, KeyName, v0, v1, RegType.ToString)
+                v3 = "reg_add"
+            Else
+                If Not My.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose Then Exit Sub
+                v2 = String.Format(My.Lang.Verbose_RegSkipped, String.Format(My.Lang.Verbose_RegScheme, KeyName, v0, v1, RegType.ToString))
+                v3 = "reg_skip"
+            End If
+            CP.AddNode([TreeView], v2, v3)
+        End If
+    End Sub
+
     Shared Sub EditReg_CMD(ByVal RegistryKeyPath As String, ByVal ValueName As String, ByVal Value As Object, Optional RegType As RegistryValueKind = RegistryValueKind.DWord)
         Dim regTemplate As String
 

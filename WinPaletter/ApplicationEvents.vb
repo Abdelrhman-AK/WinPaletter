@@ -109,7 +109,7 @@ Namespace My
         ''' <summary>
         ''' A class that represents WinPaletter's Settings
         ''' </summary>
-        Public [Settings] As New XeSettings(XeSettings.Mode.Registry)
+        Public [Settings] As New WPSettings(WPSettings.Mode.Registry)
 
         ''' <summary>
         ''' A class that represents WinPaletter's Language Strings (Loaded at application startup)
@@ -411,11 +411,11 @@ Namespace My
                 IO.Directory.Delete(PATH_appData, True)
                 If Not My.WXP Then
                     CP.ResetCursorsToAero()
-                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToAero("HKEY_USERS\.DEFAULT")
 
                 Else
                     CP.ResetCursorsToNone_XP()
-                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then CP.ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
 
                 End If
             End If
@@ -429,7 +429,7 @@ Namespace My
 #End Region
 
 #Region "   Wallpaper and User Preferences System"
-        Private Sub FetchStockWallpaper(Size As Size)
+        Private Sub FetchStockWallpaper()
             Using wall_New As New Bitmap(CType(GetWallpaper().Clone, Bitmap))
                 Wallpaper_Unscaled = wall_New.Clone
                 Wallpaper = wall_New.GetThumbnailImage(Computer.Screen.Bounds.Width, Computer.Screen.Bounds.Height, Nothing, IntPtr.Zero)
@@ -440,7 +440,7 @@ Namespace My
                 Dim Wall As Bitmap
 
                 If Not CP.Wallpaper.Enabled Then
-                    FetchStockWallpaper(picbox.Size)
+                    FetchStockWallpaper()
                     Wall = Wallpaper
                 Else
                     Dim condition0 As Boolean = PreviewConfig = WindowStyle.W11 And CP.WallpaperTone_W11.Enabled
@@ -481,7 +481,7 @@ Namespace My
                             If IO.File.Exists(CP.Wallpaper.ImageFile) Then
                                 Wall = Bitmap_Mgr.Load(CP.Wallpaper.ImageFile)
                             Else
-                                FetchStockWallpaper(picbox.Size)
+                                FetchStockWallpaper()
                                 Wall = Wallpaper
                             End If
 
@@ -501,7 +501,7 @@ Namespace My
                                     Wall = Bitmap_Mgr.Load(ls(0))
 
                                 Else
-                                    FetchStockWallpaper(picbox.Size)
+                                    FetchStockWallpaper()
                                     Wall = Wallpaper
                                 End If
 
@@ -509,12 +509,12 @@ Namespace My
                                 If CP.Wallpaper.Wallpaper_Slideshow_Images.Count > 0 AndAlso IO.File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images(0)) Then
                                     Wall = Bitmap_Mgr.Load(CP.Wallpaper.Wallpaper_Slideshow_Images(0))
                                 Else
-                                    FetchStockWallpaper(picbox.Size)
+                                    FetchStockWallpaper()
                                     Wall = Wallpaper
                                 End If
                             End If
                         Else
-                            FetchStockWallpaper(picbox.Size)
+                            FetchStockWallpaper()
                             Wall = Wallpaper
                         End If
                     End If
@@ -601,10 +601,10 @@ Namespace My
             Dim query2 = New WqlEventQuery(Base)
             WallMon_Watcher2 = New ManagementEventWatcher(query2)
 
-            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
+            AddHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed_EventHandler
             WallMon_Watcher1.Start()
 
-            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
+            AddHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed_EventHandler
             WallMon_Watcher2.Start()
 
             If My.W10 OrElse My.W11 Then
@@ -623,7 +623,7 @@ Namespace My
                 AddHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed
                 WallMon_Watcher3.Start()
 
-                AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed
+                AddHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed_EventHandler
                 WallMon_Watcher4.Start()
 
             Else
@@ -638,9 +638,19 @@ Namespace My
                 If e.Category = UserPreferenceCategory.Desktop Or e.Category = UserPreferenceCategory.Color Then Wallpaper_Changed()
             End If
         End Sub
+
+        Sub DarkMode_Changed_EventHandler(sender As Object, e As EventArgs)
+            DarkMode_Changed()
+        End Sub
+
         Sub DarkMode_Changed()
             Invoke(UpdateDarkModeInvoker)
         End Sub
+
+        Sub Wallpaper_Changed_EventHandler(sender As Object, e As EventArgs)
+            Wallpaper_Changed()
+        End Sub
+
         Sub Wallpaper_Changed()
             Invoke(UpdateWallpaperInvoker)
         End Sub
@@ -671,10 +681,10 @@ Namespace My
             RemoveHandler Windows.Forms.Application.ThreadException, AddressOf ThreadExceptionHandler
 
             Try
-                RemoveHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed
-                RemoveHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed
-                RemoveHandler WallMon_Watcher3.EventArrived, AddressOf Wallpaper_Changed
-                RemoveHandler WallMon_Watcher4.EventArrived, AddressOf Wallpaper_Changed
+                RemoveHandler WallMon_Watcher1.EventArrived, AddressOf Wallpaper_Changed_EventHandler
+                RemoveHandler WallMon_Watcher2.EventArrived, AddressOf Wallpaper_Changed_EventHandler
+                RemoveHandler WallMon_Watcher3.EventArrived, AddressOf WallpaperType_Changed
+                RemoveHandler WallMon_Watcher4.EventArrived, AddressOf DarkMode_Changed_EventHandler
             Catch
             End Try
 
@@ -832,6 +842,18 @@ Namespace My
             Notifications_IL.Images.Add("success", Resources.notify_success)
             Notifications_IL.Images.Add("skip", Resources.notify_skip)
             Notifications_IL.Images.Add("admin", Resources.notify_administrator)
+
+            Notifications_IL.Images.Add("reg_add", Resources.notify_reg_add)
+            Notifications_IL.Images.Add("reg_delete", Resources.notify_reg_delete)
+            Notifications_IL.Images.Add("reg_skip", Resources.notify_reg_skip)
+            Notifications_IL.Images.Add("task_add", Resources.notify_task_add)
+            Notifications_IL.Images.Add("task_remove", Resources.notify_task_remove)
+            Notifications_IL.Images.Add("file_rename", Resources.notify_file_rename)
+            Notifications_IL.Images.Add("dll", Resources.notify_dll)
+            Notifications_IL.Images.Add("pe_patch", Resources.notify_pe_patch)
+            Notifications_IL.Images.Add("pe_backup", Resources.notify_pe_backup)
+            Notifications_IL.Images.Add("pe_restore", Resources.notify_pe_restore)
+
 
             Lang_IL.Images.Add("main", Resources.LangNode_Main)
             Lang_IL.Images.Add("value", Resources.LangNode_Value)

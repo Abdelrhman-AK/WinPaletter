@@ -54,7 +54,7 @@
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         My.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Save(WPSettings.Mode.Registry)
 
         DialogResult = DialogResult.Cancel
         Me.Close()
@@ -62,7 +62,7 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         My.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Save(WPSettings.Mode.Registry)
 
         DialogResult = DialogResult.OK
         Me.Close()
@@ -77,7 +77,7 @@
 
     Private Sub PE_Warning_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Save(WPSettings.Mode.Registry)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click

@@ -14,7 +14,11 @@ Public Module PE
         Return PE_File.GetResource(New ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), New Language(LangID))).Data
     End Function
 
-    Public Sub ReplaceResource(SourceFile As String, ResourceType As String, ID As Integer, NewRes As Byte(), Optional LangID As UShort = 1033)
+    Public Sub ReplaceResource([TreeView] As TreeView, SourceFile As String, ResourceType As String, ID As Integer, NewRes As Byte(), Optional LangID As UShort = 1033)
+        ReplaceResource(SourceFile, ResourceType, ID, NewRes, LangID, [TreeView])
+    End Sub
+
+    Public Sub ReplaceResource(SourceFile As String, ResourceType As String, ID As Integer, NewRes As Byte(), Optional LangID As UShort = 1033, Optional [TreeView] As TreeView = Nothing)
 
         If IO.Path.GetFullPath(SourceFile).ToLower.StartsWith(My.PATH_Windows, My._ignore) Then
             'It is a system PE file that needs rights/permissions modification.
@@ -23,17 +27,23 @@ Public Module PE
 
                 Dim TempFile As String = IO.Path.GetTempFileName
 
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_GettingAccess, IO.Path.GetFileName(SourceFile)), "admin")
                 PreparePrivileges()                                     'To get authorized access to change PE file access/permissions
 
+                If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_CreateBackup, IO.Path.GetFileName(SourceFile)), "pe_backup")
                 If CreateBackup(SourceFile) Then                        'Makes a copy of EP file as a backup file
 
+                    If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_GetBackupPermissions, IO.Path.GetFileName(SourceFile)), "pe_backup")
                     If BackupPermissions(SourceFile, TempFile) Then     'Source file rights have been backed up successfully
 
+                        If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_GetAccessToChangeResources, IO.Path.GetFileName(SourceFile)), "admin")
                         PreparePrivileges()                             'To get authorized access to change resources for PE file
 
+                        If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_PatchingPE, IO.Path.GetFileName(SourceFile)), "pe_patch")
                         Dim PE_File As New PortableExecutable(SourceFile)
                         PE_File.SetResource(New ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), New Language(LangID)), NewRes)
 
+                        If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format(My.Lang.Verbose_PE_RestoringPermissions, IO.Path.GetFileName(SourceFile)), "pe_restore")
                         RestorePermissions(SourceFile, TempFile)        'Restore source file rights
 
                     End If
@@ -43,7 +53,7 @@ Public Module PE
 
         Else
             'It isn't in system directory and can be modified without changing rights/permissions.
-
+            If [TreeView] IsNot Nothing Then CP.AddNode([TreeView], String.Format("Replacing '{0}' resources", IO.Path.GetFileName(SourceFile)), "pe_patch")
             Dim PE_File As New PortableExecutable(SourceFile)
             PE_File.SetResource(New ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), New Language(LangID)), NewRes)
         End If
@@ -137,19 +147,14 @@ Friend Module Privileges
     End Function
 
     Public Function EnablePrivilege(ByVal privilege As String, ByVal disable As Boolean) As Boolean
-        Dim value As Long
-        Using Prc As Process = Process.GetCurrentProcess : value = Prc.Handle.ToInt32 : End Using
+        Dim value As Long = Process.GetCurrentProcess.Handle.ToInt32()
         Dim h As New IntPtr(value)
         Dim phtok = IntPtr.Zero
         Dim flag = OpenProcessToken(h, 40, phtok)
         Dim newst As TokPriv1Luid = Nothing
         newst.Count = 1
         newst.Luid = 0L
-        If disable Then
-            newst.Attr = 0
-        Else
-            newst.Attr = 2
-        End If
+        newst.Attr = If(disable, 0, 2)
         flag = LookupPrivilegeValue(Nothing, privilege, newst.Luid)
         Return AdjustTokenPrivileges(phtok, disall:=False, newst, 0, IntPtr.Zero, IntPtr.Zero)
     End Function

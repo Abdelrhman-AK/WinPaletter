@@ -237,19 +237,12 @@ Namespace UI.WP
                 Using br As New SolidBrush(My.Style.Colors.Border_Checked_Hover) : e.Graphics.FillRectangle(br, e.Bounds) : End Using
             End If
 
-            Dim f As Font
-            Try
-                f = New Font(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font.Size, e.Font.Style)
-            Catch
-                f = e.Font
-            End Try
-
             Dim Rect As Rectangle = e.Bounds
             Rect.X += 2
             Rect.Width -= 2
 
             If e.Index >= 0 Then
-                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), f, br, Rect, ContentAlignment.MiddleLeft.ToStringFormat) : End Using
+                Using br As New SolidBrush(ForeColor) : e.Graphics.DrawString(MyBase.GetItemText(MyBase.Items(e.Index)), e.Font, br, Rect, ContentAlignment.MiddleLeft.ToStringFormat) : End Using
             End If
         End Sub
 
@@ -317,14 +310,7 @@ Namespace UI.WP
 
             End If
 
-            Dim f As Font
-            Try
-                f = New Font(Text, Font.Size, Font.Style)
-            Catch
-                f = Font
-            End Try
-
-            Using br As New SolidBrush(ForeColor) : G.DrawString(Text, f, br, TextRect, New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near}) : End Using
+            Using br As New SolidBrush(ForeColor) : G.DrawString(Text, Font, br, TextRect, New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near}) : End Using
         End Sub
 
     End Class

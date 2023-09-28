@@ -627,7 +627,7 @@ Public Module StringExtensions
     Public Function Replace(s As String, word As String, by As String, stringComparison As StringComparison, WholeWord As Boolean) As String
         s &= " "
         Dim wordSt As Integer
-        Dim sb As StringBuilder = New StringBuilder()
+        Dim sb As New StringBuilder()
         While s.IndexOf(word, stringComparison) > -1
             wordSt = s.IndexOf(word, stringComparison)
             If Not WholeWord OrElse (wordSt = 0 OrElse Not Char.IsLetterOrDigit(Char.Parse(s.Substring(wordSt - 1, 1)))) AndAlso Not Char.IsLetterOrDigit(Char.Parse(s.Substring(wordSt + word.Length, 1))) Then

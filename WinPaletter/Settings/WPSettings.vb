@@ -4,7 +4,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports WinPaletter.Reg_IO
 
-Public Class XeSettings
+Public Class WPSettings
     Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
 
     Class Structures
@@ -241,18 +241,31 @@ Public Class XeSettings
         End Structure
 
         Structure ThemeLog
-            Public Enabled As Boolean
+            Public VerboseLevel As VerboseLevels
+            Public ShowSkippedItemsOnDetailedVerbose As Boolean
             Public CountDown As Boolean
             Public CountDown_Seconds As Integer
 
+            Enum VerboseLevels
+                None
+                Basic
+                Detailed
+            End Enum
+
+            Public Function Enabled() As Boolean
+                Return VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None
+            End Function
+
             Sub Load()
-                Enabled = GetReg(REG_ThemeLog, "", True)
+                VerboseLevel = GetReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic)
+                ShowSkippedItemsOnDetailedVerbose = GetReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", False)
                 CountDown = GetReg(REG_ThemeLog, "CountDown", True)
                 CountDown_Seconds = GetReg(REG_ThemeLog, "CountDown_Seconds", 20)
             End Sub
 
             Sub Save()
-                EditReg(REG_ThemeLog, "", Enabled, RegistryValueKind.DWord)
+                EditReg(REG_ThemeLog, "VerboseLevel", VerboseLevel, RegistryValueKind.DWord)
+                EditReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", ShowSkippedItemsOnDetailedVerbose, RegistryValueKind.DWord)
                 EditReg(REG_ThemeLog, "CountDown", CountDown, RegistryValueKind.DWord)
                 EditReg(REG_ThemeLog, "CountDown_Seconds", CountDown_Seconds, RegistryValueKind.DWord)
             End Sub
@@ -465,7 +478,8 @@ Public Class XeSettings
         .StartStyle = WinPaletter.ExplorerPatcher.StartStyles.NotRounded}
 
     Public ThemeLog As New Structures.ThemeLog With {
-        .Enabled = True,
+        .VerboseLevel = Structures.ThemeLog.VerboseLevels.Basic,
+        .ShowSkippedItemsOnDetailedVerbose = False,
         .CountDown = True,
         .CountDown_Seconds = 20
     }

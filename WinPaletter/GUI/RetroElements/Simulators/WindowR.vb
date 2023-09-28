@@ -16,8 +16,6 @@ Namespace UI.Retro
 
 #Region "Properties"
 
-        Public Property Color1 As Color = Color.FromArgb(0, 0, 128)
-        Public Property Color2 As Color = Color.FromArgb(16, 132, 208)
         Public Property ColorGradient As Boolean = True
         Public Property ColorBorder As Color = Color.FromArgb(192, 192, 192)
 
@@ -31,6 +29,32 @@ Namespace UI.Retro
         Public Property UseItAsMenu As Boolean = False
         Public Property Flat As Boolean = False
 
+        Private _Color1 As Color = Color.FromArgb(0, 0, 128)
+        Public Property Color1 As Color
+            Get
+                Return _Color1
+            End Get
+            Set(value As Color)
+                If _Color1 <> value Then
+                    _Color1 = value
+                    Refresh()
+                End If
+            End Set
+        End Property
+
+        Private _Color2 As Color = Color.FromArgb(16, 132, 208)
+        Public Property Color2 As Color
+            Get
+                Return _Color2
+            End Get
+            Set(value As Color)
+                If _Color2 <> value Then
+                    _Color2 = value
+                    Refresh()
+                End If
+            End Set
+        End Property
+
         Private _ButtonShadow As Color = Color.FromArgb(128, 128, 128)
         Public Property ButtonShadow As Color
             Get
@@ -41,7 +65,7 @@ Namespace UI.Retro
                 _CloseBtn.ButtonShadow = value
                 _MinBtn.ButtonShadow = value
                 _MaxBtn.ButtonShadow = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -55,7 +79,7 @@ Namespace UI.Retro
                 _CloseBtn.ButtonDkShadow = value
                 _MinBtn.ButtonDkShadow = value
                 _MaxBtn.ButtonDkShadow = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -69,7 +93,7 @@ Namespace UI.Retro
                 _CloseBtn.ButtonHilight = value
                 _MinBtn.ButtonHilight = value
                 _MaxBtn.ButtonHilight = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -83,7 +107,7 @@ Namespace UI.Retro
                 _CloseBtn.ButtonLight = value
                 _MinBtn.ButtonLight = value
                 _MaxBtn.ButtonLight = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -94,7 +118,7 @@ Namespace UI.Retro
             End Get
             Set(value As Color)
                 _ButtonFace = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -108,7 +132,7 @@ Namespace UI.Retro
                 _CloseBtn.ForeColor = value
                 _MinBtn.ForeColor = value
                 _MaxBtn.ForeColor = value
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -123,7 +147,7 @@ Namespace UI.Retro
                 AdjustButtonSizes()
                 AdjustControlBoxFontsSizes()
                 AdjustPadding()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -137,7 +161,7 @@ Namespace UI.Retro
                 AdjustButtonSizes()
                 AdjustLocations()
                 AdjustControlBoxFontsSizes()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -151,7 +175,7 @@ Namespace UI.Retro
                 _Metrics_BorderWidth = value
                 AdjustLocations()
                 AdjustPadding()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -164,7 +188,7 @@ Namespace UI.Retro
                 _Metrics_PaddedBorderWidth = value
                 AdjustLocations()
                 AdjustPadding()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -179,7 +203,7 @@ Namespace UI.Retro
                 _MinBtn.Visible = value And _MinimizeBox
                 _MaxBtn.Visible = value And _MaximizeBox
                 AdjustLocations()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -192,7 +216,7 @@ Namespace UI.Retro
                 _MinimizeBox = value
                 _MinBtn.Visible = value
                 AdjustLocations()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -205,7 +229,7 @@ Namespace UI.Retro
                 _MaximizeBox = value
                 _MaxBtn.Visible = value
                 AdjustLocations()
-                Refresh()
+                'Refresh()
             End Set
         End Property
 
@@ -311,9 +335,9 @@ Namespace UI.Retro
 
 #Region "ControlBox"
 
-        Private ReadOnly _CloseBtn As New UI.Retro.ButtonR With {.Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
-        Private ReadOnly _MinBtn As New UI.Retro.ButtonR With {.Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
-        Private ReadOnly _MaxBtn As New UI.Retro.ButtonR With {.Text = "0", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+        Private ReadOnly _CloseBtn As New UI.Retro.ButtonR With {.Name = "CloseBtn", .Text = "r", .Font = New Font("Marlett", 7.8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+        Private ReadOnly _MinBtn As New UI.Retro.ButtonR With {.Name = "MinBtn", .Text = "1", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
+        Private ReadOnly _MaxBtn As New UI.Retro.ButtonR With {.Name = "MaxBtn", .Text = "0", .Font = New Font("Marlett", 8), .Size = New Size(BtnWidth, BtnHeight), .TextAlign = ContentAlignment.MiddleCenter}
 
         Private BtnHeight As Integer = Metrics_CaptionHeight + GetTitleTextHeight() - 4
         Private BtnWidth As Integer = Metrics_CaptionWidth - 2

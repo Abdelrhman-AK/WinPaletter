@@ -415,7 +415,7 @@ Public Class Sounds_Editor
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Save(WPSettings.Mode.Registry)
 
         ApplyToCP(My.CP)
         Close()
@@ -425,7 +425,7 @@ Public Class Sounds_Editor
         Cursor = Cursors.WaitCursor
 
         My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked
-        My.Settings.Save(XeSettings.Mode.Registry)
+        My.Settings.Save(WPSettings.Mode.Registry)
 
         Dim CPx As New CP(CP.CP_Type.Registry)
         ApplyToCP(CPx)

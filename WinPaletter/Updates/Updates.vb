@@ -41,8 +41,8 @@ Public Class Updates
                         End If
                     Next
 
-                    If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable Then UpdateChannel = StableInt
-                    If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Beta Then UpdateChannel = BetaInt
+                    If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Stable Then UpdateChannel = StableInt
+                    If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Beta Then UpdateChannel = BetaInt
 
                     ver = ls(UpdateChannel).Split(" ")(1)
 
@@ -137,7 +137,7 @@ Public Class Updates
         UC = New WebClient
         LinkLabel3.Visible = False
         Dim F As String = If(My.Lang.RightToLeft, "{1}: {0}", "{0} {1}")
-        Label3.Text = String.Format(F, If(My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
+        Label3.Text = String.Format(F, If(My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Stable, My.Lang.Stable, My.Lang.Beta), My.Lang.Channel)
         CheckBox1.Checked = My.Settings.Updates.AutoCheck
         _Shown = False
         AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning
@@ -162,8 +162,8 @@ Public Class Updates
                 End If
             Next
 
-            If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable Then UpdateChannel = StableInt
-            If My.Settings.Updates.Channel = XeSettings.Structures.Updates.Channels.Beta Then UpdateChannel = BetaInt
+            If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Stable Then UpdateChannel = StableInt
+            If My.Settings.Updates.Channel = WPSettings.Structures.Updates.Channels.Beta Then UpdateChannel = BetaInt
 
             url = ls(UpdateChannel).Split(" ")(4)
             UpdateSize = ls(UpdateChannel).Split(" ")(2)

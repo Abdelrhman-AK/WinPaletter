@@ -17,7 +17,7 @@ Imports WinPaletter.Reg_IO
 Public Class CP : Implements IDisposable : Implements ICloneable
 
     Private _ErrorHappened As Boolean = False
-    Private bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
+    Private ReadOnly bindingFlags As BindingFlags = BindingFlags.Instance Or BindingFlags.Public
     Private ReadOnly _Converter As New Converter
 
 #Region "IDisposable Support"
@@ -70,17 +70,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public DesignedFor_WinVista As Boolean
             Public DesignedFor_WinXP As Boolean
 
-            Shared Operator =(First As Info, Second As Info) As Boolean
-                Return First.Equals(Second)
-            End Operator
-
-            Shared Operator <>(First As Info, Second As Info) As Boolean
-                Return Not First.Equals(Second)
-            End Operator
-            Public Function Clone() Implements ICloneable.Clone
-                Return MemberwiseClone()
-            End Function
-
             Public Sub Load()
                 ThemeName = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", My.Lang.CurrentMode)
                 ThemeVersion = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0")
@@ -104,27 +93,38 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 DesignedFor_WinVista = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", True)
                 DesignedFor_WinXP = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", True)
             End Sub
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.AppVersion, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", ExportResThemePack, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String)
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", AuthorSocialMediaLink, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", My.AppVersion, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", Description, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", ExportResThemePack, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", License, RegistryValueKind.String)
-
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color2.ToArgb, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", Pattern, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", DesignedFor_Win81.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista.ToInteger, RegistryValueKind.DWord)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Color1.ToArgb, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Color2.ToArgb, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", Pattern, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", DesignedFor_Win81.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista.ToInteger, RegistryValueKind.DWord)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP.ToInteger, RegistryValueKind.DWord)
             End Sub
+
+            Shared Operator =(First As Info, Second As Info) As Boolean
+                Return First.Equals(Second)
+            End Operator
+
+            Shared Operator <>(First As Info, Second As Info) As Boolean
+                Return Not First.Equals(Second)
+            End Operator
+            Public Function Clone() Implements ICloneable.Clone
+                Return MemberwiseClone()
+            End Function
+
         End Structure
         Structure AppTheme : Implements ICloneable
             Public Enabled As Boolean
@@ -140,13 +140,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 DarkMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", _DefAppTheme.DarkMode)
                 RoundCorners = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", _DefAppTheme.RoundCorners)
             End Sub
-
-            Sub Apply(Optional SkipSettingWallpaper As Boolean = False)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", BackColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", AccentColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", DarkMode)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", RoundCorners)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Appearance_Custom", Enabled)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Settings", ".BackColor", BackColor.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Settings", "AccentColor", AccentColor.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Settings", "Custom_Dark", DarkMode)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", RoundCorners)
 
                 With My.Settings.Appearance
                     .CustomColors = Enabled
@@ -163,11 +162,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Return First.Equals(Second)
             End Operator
 
-
             Shared Operator <>(First As AppTheme, Second As AppTheme) As Boolean
                 Return Not First.Equals(Second)
             End Operator
-
             Public Function Clone() As Object Implements ICloneable.Clone
                 Return MemberwiseClone()
             End Function
@@ -199,7 +196,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             End Enum
 
             Sub Load(_DefWin As Windows10x, DefColorsBytes As Byte())
-                If My.W10 Or My.W11 Then
+                If My.W10 Or My.W11 Or My.W12 Then
                     Dim Colors As New List(Of Color)
                     Colors.Clear()
 
@@ -275,8 +272,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
 
             End Sub
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
                 Dim Colors As Byte() = {Color_Index0.R, (Color_Index0).G, (Color_Index0).B, (Color_Index0).A _
                          , (Color_Index1).R, (Color_Index1).G, (Color_Index1).B, (Color_Index1).A _
@@ -289,36 +286,36 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 Select Case ApplyAccentOnTaskbar
                     Case CP.Structures.Windows10x.AccentTaskbarLevels.None
-                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
 
                     Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC
-                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 1)
 
                     Case CP.Structures.Windows10x.AccentTaskbarLevels.Taskbar
-                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 2)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 2)
 
                     Case Else
-                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", 0)
                 End Select
 
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars.ToInteger)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.ToArgb)
 
 
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse.ToArgb)
 
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light.ToInteger)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency.ToInteger)
 
                 If My.W10 Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (Not TB_Blur).ToInteger)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", IncreaseTBTransparency.ToInteger)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (Not TB_Blur).ToInteger)
                 End If
 
             End Sub
@@ -411,20 +408,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Public Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0)
 
                 Try
                     Select Case Theme
                         Case Structures.Windows7.Themes.Aero
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
+
                         Case Structures.Windows7.Themes.AeroLite
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroLite, "dll")
 
                             Try
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_DeletingHighContrastThemes, "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del")
                             Catch
                                 'Do nothing
                                 My.Computer.Registry.CurrentUser.Close()
@@ -432,25 +433,25 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 My.Computer.Registry.CurrentUser.Close()
                             End Try
 
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String)
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", "", RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", "", RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", "", RegistryValueKind.String)
 
                     End Select
                 Catch
                 End Try
 
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse.ToArgb)
-                EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
 
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & PersonalColors_Background.HEX(False), RegistryValueKind.String)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & PersonalColors_Accent.HEX(False), RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", "#" & PersonalColors_Background.HEX(False), RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", "#" & PersonalColors_Accent.HEX(False), RegistryValueKind.String)
             End Sub
         End Structure
         Structure Windows7 : Implements ICloneable
@@ -545,48 +546,52 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Public Sub Apply()
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
                 Select Case Theme
                     Case Themes.Aero
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
 
                     Case Themes.AeroOpaque
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroOpaque, "dll")
 
                     Case Themes.Basic
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingBasic, "dll")
 
                     Case Themes.Classic
                         UxTheme.EnableTheming(0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
 
                 End Select
 
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", ColorizationBlurBalance)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", ColorizationGlassReflectionIntensity)
 
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance)
 
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek.ToInteger)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails.ToInteger)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1)
             End Sub
 
             Public Function Clone() Implements ICloneable.Clone
@@ -645,38 +650,42 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Public Sub Apply()
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
                 Select Case Theme
                     Case Structures.Windows7.Themes.Aero
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
 
                     Case Structures.Windows7.Themes.AeroOpaque
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroOpaque, "dll")
 
                     Case Structures.Windows7.Themes.Basic
                         UxTheme.EnableTheming(1)
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
 
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
-                        EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingBasic, "dll")
 
                     Case Structures.Windows7.Themes.Classic
                         UxTheme.EnableTheming(0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
 
                 End Select
 
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb([Alpha], ColorizationColor).ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb([Alpha], ColorizationColor).ToArgb)
 
             End Sub
 
@@ -743,27 +752,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Sub Apply()
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
                 Try
                     Select Case Theme
                         Case Themes.LunaBlue
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
                             My.StartedWithClassicTheme = False
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaBlue, "dll")
 
                         Case Themes.LunaOliveGreen
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
                             My.StartedWithClassicTheme = False
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaGreen, "dll")
 
                         Case Themes.LunaSilver
                             UxTheme.EnableTheming(1)
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
                             My.StartedWithClassicTheme = False
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaSilver, "dll")
 
                         Case Themes.Classic
                             UxTheme.EnableTheming(0)
                             My.StartedWithClassicTheme = True
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
 
                         Case Themes.Custom
 
@@ -771,6 +784,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 UxTheme.EnableTheming(1)
                                 UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0)
                                 My.StartedWithClassicTheme = False
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingVS, IO.Path.GetFileName(Theme)), "dll")
                             End If
 
                     End Select
@@ -781,8 +795,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
 
-                    EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", vsFile.ToString, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", colorName.ToString, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", vsFile.ToString, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", colorName.ToString, RegistryValueKind.String)
 
                 Catch
                 End Try
@@ -1056,20 +1070,22 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 MenuBar
             End Enum
 
-            Public Sub Apply()
-                'Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
                 Dim vsFile As New Text.StringBuilder(260)
                 Dim colorName As New Text.StringBuilder(260)
                 Dim sizeName As New Text.StringBuilder(260)
                 UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260)
                 Dim isClassic As Boolean = String.IsNullOrEmpty(vsFile.ToString)
 
+                'Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
                 Dim fl As New List(Of Form) : fl.Clear()
                 If isClassic Then
                     For Each f As Form In My.Application.OpenForms
-                        If f.Visible Then fl.Add(f)
-                        f.SuspendLayout()
-                        f.Visible = False
+                        If f.Visible Then
+                            f.SuspendLayout()
+                            f.Visible = False
+                            fl.Add(f)
+                        End If
                     Next
                 End If
 
@@ -1177,71 +1193,71 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 User32.SystemParametersInfo(SPI.Effects.SETFLATMENU, 0, EnableTheming, SPIF.UpdateINIFile)
                 User32.SystemParametersInfo(SPI.Titlebars.SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.UpdateINIFile)
 
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
 
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
 
                 If isClassic Then
                     If fl.Count > 0 Then
@@ -1254,57 +1270,57 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
                 End If
 
-                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
+                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToWin32Reg, RegistryValueKind.String)
                 End If
 
-                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(True).ToArgb)
+                If My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse(True).ToArgb, RegistryValueKind.String)
 
-                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
+                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
                     Dim _DefWin32 As Structures.Win32UI
                     If My.PreviewStyle = WindowStyle.W11 Then
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
@@ -1322,31 +1338,31 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         _DefWin32 = New CP_Defaults().Default_Windows11.Win32
                     End If
 
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, _DefWin32.ButtonFace).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, _DefWin32.ButtonText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, _DefWin32.GrayText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, _DefWin32.Hilight).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, _DefWin32.HilightText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, _DefWin32.HotTrackingColor).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, _DefWin32.InactiveTitle).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, _DefWin32.InactiveTitleText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, _DefWin32.MenuHilight).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, _DefWin32.TitleText).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(True).ToArgb)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(True).ToArgb)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, _DefWin32.ActiveTitle).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, _DefWin32.ButtonFace).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, _DefWin32.ButtonText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, _DefWin32.GrayText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, _DefWin32.Hilight).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, _DefWin32.HilightText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, _DefWin32.HotTrackingColor).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, _DefWin32.InactiveTitle).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, _DefWin32.InactiveTitleText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, _DefWin32.MenuHilight).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, _DefWin32.TitleText).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, _DefWin32.Window).Reverse(True).ToArgb, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, _DefWin32.WindowText).Reverse(True).ToArgb, RegistryValueKind.String)
 
-                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase Then
+                ElseIf My.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase Then
                     DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard")
                 End If
 
 
             End Sub
 
-            Public Sub Update_UPM_DEFAULT()
+            Public Sub Update_UPM_DEFAULT(Optional [TreeView] As TreeView = Nothing)
                 If My.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT Then
                     Dim source As Byte() = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", Nothing)
-                    If source IsNot Nothing Then EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
+                    If source IsNot Nothing Then EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", source, RegistryValueKind.Binary)
                 End If
             End Sub
 
@@ -1386,10 +1402,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Public Sub Apply()
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon.ToInteger)
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage.ToInteger)
-                EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen.ToInteger)
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon.ToInteger)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage.ToInteger)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen.ToInteger)
             End Sub
         End Structure
         Structure LogonUI7 : Implements ICloneable
@@ -1494,13 +1510,13 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Sub
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", "", Enabled)
 
                 If Enabled And My.WXP Then
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", If(Mode = Modes.Default, 1, 0), RegistryValueKind.DWord)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToWin32Reg, RegistryValueKind.String)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions.ToInteger, RegistryValueKind.DWord)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", If(Mode = Modes.Default, 1, 0), RegistryValueKind.DWord)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToWin32Reg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions.ToInteger, RegistryValueKind.DWord)
                 End If
             End Sub
 
@@ -1570,11 +1586,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             End Sub
 
-            Sub Apply(Optional SkipSettingWallpaper As Boolean = False)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString)
+            Sub Apply(Optional SkipSettingWallpaper As Boolean = False, Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "", Enabled)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString)
 
                 If Enabled Then
                     Dim slideshow_ini As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\Microsoft\Windows\Themes\slideshow.ini"
@@ -1588,16 +1604,18 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     ' Setting WallpaperStyle must be before setting wallpaper itself
                     If WallpaperStyle = WallpaperStyles.Tile Then
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String)
                     Else
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", CInt(WallpaperStyle), RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", CInt(WallpaperStyle), RegistryValueKind.String)
                     End If
 
                     If Not SkipSettingWallpaper Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingWallpaper, "dll")
+
                         If WallpaperType = WallpaperTypes.SolidColor Then
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, "", SPIF.UpdateINIFile)
-                            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
 
                         ElseIf WallpaperType = WallpaperTypes.Picture Then
                             If (My.WXP Or My.WVista Or My.W7) AndAlso IO.File.Exists(ImageFile) AndAlso Not New FileInfo(ImageFile).FullName.StartsWith(My.PATH_Windows & "\Web", My._ignore) Then
@@ -1611,24 +1629,26 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             End If
 
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, SPIF.UpdateINIFile)
-                            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String)
 
                             'Necessary to make both WinPaletter and Windows remember last wallpaper that is not from slideshow and not a spotlight image
-                            EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String)
 
                         ElseIf WallpaperType = WallpaperTypes.SlideShow Then
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, SPIF.UpdateINIFile)
-                            EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
 
                         End If
                     End If
 
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType)
 
                     If Not My.WXP AndAlso Not My.WVista Then
 
                         If Not SkipSettingWallpaper Then
                             Using _ini As New INI(slideshow_ini)
+
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingSlideshow, slideshow_ini), "dll")
 
                                 If WallpaperType = WallpaperTypes.SlideShow AndAlso SlideShow_Folder_or_ImagesList AndAlso IO.Directory.Exists(Wallpaper_Slideshow_ImagesRootPath) Then
                                     _ini.IniWriteValue("Slideshow", "ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath)
@@ -1650,8 +1670,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             End Using
                         End If
 
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", Wallpaper_Slideshow_Interval)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", Wallpaper_Slideshow_Interval)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle)
                     End If
                 End If
             End Sub
@@ -1692,15 +1712,15 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 L = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "L", 100)
             End Sub
 
-            Public Shared Sub Save_To_Registry(WT As WallpaperTone, SubKey As String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "Enabled", WT.Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "Image", WT.Image, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "H", WT.H)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "S", WT.S)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "L", WT.L)
+            Public Shared Sub Save_To_Registry(WT As WallpaperTone, SubKey As String, Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "Enabled", WT.Enabled)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "Image", WT.Image, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "H", WT.H)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "S", WT.S)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\" & SubKey, "L", WT.L)
             End Sub
 
-            Public Sub Apply()
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
                 If Not IO.File.Exists(Image) Then Throw New IO.IOException("Couldn't Find image")
 
                 Dim path As String
@@ -1710,6 +1730,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     path = IO.Path.Combine(My.PATH_Windows, "Web\Wallpaper\TintedWallpaper.bmp")
                 End If
 
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingHSLImage, path), "pe_patch")
+
                 Using ImgF As New ImageProcessor.ImageFactory
                     ImgF.Load(Image)
                     ImgF.Hue(H, True)
@@ -1718,9 +1740,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     ImgF.Image.Save(path, Imaging.ImageFormat.Bmp)
                 End Using
 
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingWallpaper, "dll")
                 SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", CInt(Structures.Wallpaper.WallpaperTypes.Picture))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", CInt(Structures.Wallpaper.WallpaperTypes.Picture))
 
                 MainFrm.Update_Wallpaper_Preview()
             End Sub
@@ -1864,8 +1887,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 End If
             End Function
 
-            Public Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
+            Public Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Metrics", "", Enabled)
 
                 If Enabled Then
                     If Core.GetWindowsScreenScalingFactor > 100 Then
@@ -1884,13 +1907,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim lfSMCaptionFont As New LogFont : SmCaptionFont.ToLogFont(lfSMCaptionFont)
                     Dim lfStatusFont As New LogFont : StatusFont.ToLogFont(lfStatusFont)
 
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFontSmoothing, Not Fonts_SingleBitPP), "dll")
                     SystemParametersInfo(SPI.Fonts.SETFONTSMOOTHING, Not Fonts_SingleBitPP, Nothing, SPIF.UpdateINIFile)
 
                     If Not My.Settings.ThemeApplyingBehavior.DelayMetrics Then
                         Dim NCM As New NONCLIENTMETRICS With {.cbSize = Marshal.SizeOf(NCM)}
                         Dim ICO As New ICONMETRICS With {.cbSize = Marshal.SizeOf(ICO)}
+
                         SystemParametersInfo(SPI.Icons.GETICONMETRICS, ICO.cbSize, ICO, SPIF.None)
 
                         With NCM
@@ -1918,94 +1944,97 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             .lfFont = lfIconFont
                         End With
 
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingMetricsFonts, "dll")
                         SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.UpdateINIFile)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingIconsMetrics, "dll")
                         SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.UpdateINIFile)
 
                     Else
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
                     End If
 
                     If My.WXP Then
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
-                        EditReg("HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
                     End If
 
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
 
-                    If My.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
+                    If My.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToByte, RegistryValueKind.Binary)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
                     End If
 
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String)
 
                     If String.IsNullOrWhiteSpace(FontSubstitute_SegoeUI) Then
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "seguisb.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "seguisb.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String)
                     Else
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "", RegistryValueKind.String)
-                        EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "", RegistryValueKind.String)
+                        EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "", RegistryValueKind.String)
                     End If
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String)
 
                 End If
 
@@ -2195,57 +2224,96 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 ColorFilter = GetReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", _DefEffects.ColorFilter)
             End Sub
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", Enabled)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "", Enabled)
 
                 If Enabled Then
                     Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim), .IMinAnimate = WindowAnimation.ToInteger}
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAnimation, anim.IMinAnimate.ToBoolean), "dll")
                     SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingDropShadow, WindowShadow), "dll")
                     SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingUIEffects, WindowUIEffects), "dll")
                     SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingShowWinContentDragging, ShowWinContentDrag), "dll")
                     SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.UpdateINIFile)        'use uiParam not pvParam
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuAnimation, MenuAnimation), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuFade, MenuFade), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuDelay, MenuShowDelay), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.UpdateINIFile)               'use uiParam not pvParam
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuSelectionFade, MenuSelectionFade), "dll")
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingComboBoxAnimation, ComboBoxAnimation), "dll")
                     SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboBoxAnimation, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingListBoxSmoothScrolling, ListBoxSmoothScrolling), "dll")
                     SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingTooltipAnimation, TooltipAnimation), "dll")
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingTooltipFade, TooltipFade.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuUnderline, KeyboardUnderline), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFocusRectW, FocusRectWidth), "dll")
                     SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFocusRectH, FocusRectHeight), "dll")
                     SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCaretRect, Caret), "dll")
                     SystemParametersInfo(SPI.Effects.SETCARETWIDTH, 0, Caret, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT, AWT_Enabled), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT_ActivatedWindowTop, AWT_BringActivatedWindowToTop), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT_Delay, AWT_Delay), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.UpdateINIFile)
+
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingSnapCursorToDefault, SnapCursorToDefButton), "dll")
                     SystemParametersInfo(SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.UpdateINIFile)     'use uiParam not pvParam
 
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, RegistryValueKind.String)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
-                    EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", Not ClassicVolMixer)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel.ToInteger)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (Not ShakeToMinimize).ToInteger)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock.ToInteger)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+                    EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", Not ClassicVolMixer)
 
-                    EditReg("HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars)
 
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled)
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", CInt(ColorFilter))
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", If(ColorFilter_Enabled, "colorfiltering", ""), RegistryValueKind.String)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", CInt(ColorFilter))
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", If(ColorFilter_Enabled, "colorfiltering", ""), RegistryValueKind.String)
 
                     If My.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT Then
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay)
-                        EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton.ToInteger)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion.ToInteger)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay)
+                        EditReg([TreeView], "HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton.ToInteger)
                     End If
 
                     Try
                         If My.Computer.Registry.CurrentUser.OpenSubKey("Software\ExplorerPatcher") IsNot Nothing Then
-                            EditReg("HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar)
                         End If
                     Catch
                         'Do nothing
@@ -2256,7 +2324,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Try
                         If My.Computer.Registry.CurrentUser.OpenSubKey("Software\StartIsBack") IsNot Nothing Then
-                            EditReg("HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
+                            EditReg([TreeView], "HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar)
                         End If
                     Catch
                         'Do nothing
@@ -2265,14 +2333,16 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                         My.Computer.Registry.CurrentUser.Close()
                     End Try
 
-                    EditReg("HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar)
 
-                    If My.W11 Then EditReg("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
+                    If My.W11 Then EditReg([TreeView], "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (Not Win11BootDots).ToInteger)
 
                     If My.W8 Or My.W81 OrElse My.W10 Then
                         Select Case Win11ExplorerBar
                             Case ExplorerBar.Bar
                                 If IO.File.Exists(My.PATH_System32 & "\UIRibbon.dll") Then
+                                    If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_EnableExplorerBar, "file_rename")
+
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll")
                                     Move_File(My.PATH_System32 & "\UIRibbon.dll", My.PATH_System32 & "\UIRibbon.dll_bak")
                                 End If
@@ -2281,6 +2351,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                             Case Else
                                 If IO.File.Exists(My.PATH_System32 & "\UIRibbon.dll_bak") Then
+                                    If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RestoreExplorerBar, "file_rename")
+
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll_bak")
                                     Takeown_File(My.PATH_System32 & "\UIRibbon.dll")
                                     Move_File(My.PATH_System32 & "\UIRibbon.dll_bak", My.PATH_System32 & "\UIRibbon.dll")
@@ -2295,23 +2367,27 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     Try
-                        EditReg("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                        EditReg([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
                     Catch
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer > EnableLegacyBalloonNotifications = " & BalloonNotifications.ToInteger, "reg_add")
                         EditReg_CMD("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
                     End Try
 
                     'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     Try
-                        EditReg("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
+                        EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
                     Catch
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer > ForceStartSize = " & If(FullScreenStartMenu, 2, 0), "reg_add")
                         EditReg_CMD("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
                     End Try
 
                     If My.W11 Then
                         Try
                             If Win11ClassicContextMenu Then
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add")
                                 My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
                             Else
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_RegDelete, "HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete")
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", False)
                             End If
                         Catch
@@ -2325,8 +2401,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     If Not My.WXP AndAlso Not My.WVista Then
                         Try
                             If SysListView32 Then
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add")
                                 My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
                             Else
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_RegDelete, "HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete")
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", False)
                             End If
                         Catch
@@ -2339,8 +2417,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Try
                         If DisableNavBar Then
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add")
                             My.Computer.Registry.CurrentUser.CreateSubKey("Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", True).CreateSubKey("InprocServer32", True).SetValue("", "", RegistryValueKind.String)
                         Else
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_RegDelete, "HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete")
                             My.Computer.Registry.CurrentUser.OpenSubKey("Software\Classes\CLSID", True).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", False)
                         End If
                     Catch
@@ -2378,11 +2458,11 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 File = GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", _DefScrSaver.File)
             End Sub
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled.ToInteger, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure.ToInteger, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled.ToInteger, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure.ToInteger, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String)
             End Sub
 
             Shared Operator =(First As ScreenSaver, Second As ScreenSaver) As Boolean
@@ -2591,37 +2671,52 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
             End Sub
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "", Enabled)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String)
 
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", Snd_Win_SystemExit_TaskMgmt)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", Snd_Win_WindowsLogoff_TaskMgmt)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", Snd_Win_WindowsLogon_TaskMgmt)
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", Snd_Win_WindowsUnlock_TaskMgmt)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_SystemExit_TaskMgmt", Snd_Win_SystemExit_TaskMgmt)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogoff_TaskMgmt", Snd_Win_WindowsLogoff_TaskMgmt)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsLogon_TaskMgmt", Snd_Win_WindowsLogon_TaskMgmt)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_Win_WindowsUnlock_TaskMgmt", Snd_Win_WindowsUnlock_TaskMgmt)
 
                 If Enabled Then
                     Dim destination_StartupSnd As String() = {"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"}
 
                     If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 1", "reg_add")
                         EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 1", "reg_add")
                         EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
 
                     ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 0", "reg_add")
                         EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 0", "reg_add")
                         EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
 
                     ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 0", "reg_add")
                         EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 0", "reg_add")
                         EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
 
                     ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = " & (Not My.W11).ToInteger, "reg_add")
                         EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = " & (Not My.W11).ToInteger, "reg_add")
                         EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
 
                     Else
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 1", "reg_add")
                         EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
+
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 1", "reg_add")
                         EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
 
                     End If
@@ -2634,7 +2729,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Dim TargetSoundBytes As Byte() = IO.File.ReadAllBytes(Snd_Imageres_SystemStart)
 
                             If Not CurrentSoundBytes.Equals(TargetSoundBytes) Then
-                                ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), TargetSoundBytes)
+                                ReplaceResource([TreeView], My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), TargetSoundBytes)
                             End If
 
                         ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
@@ -2643,7 +2738,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             Dim OriginalSoundBytes As Byte() = IO.File.ReadAllBytes(My.PATH_appData & "\WindowsStartup_Backup.wav")
 
                             If Not CurrentSoundBytes.Equals(OriginalSoundBytes) Then
-                                ReplaceResource(My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), OriginalSoundBytes)
+                                ReplaceResource([TreeView], My.PATH_imageres, "WAVE", If(My.WVista, 5051, 5080), OriginalSoundBytes)
                             End If
 
                             If My.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound Then SFC(My.PATH_imageres)
@@ -2654,28 +2749,34 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     If My.W8 Or My.W81 Or My.W10 Or My.W11 Or My.W12 Then
                         If Snd_Win_SystemExit_TaskMgmt AndAlso IO.File.Exists(Snd_Win_SystemExit) AndAlso IO.Path.GetExtension(Snd_Win_SystemExit).ToUpper = ".WAV" Then
-                            TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit)
+                            TaskMgmt(TaskType.Shutdown, Actions.Add, Snd_Win_SystemExit, [TreeView])
                         Else
-                            TaskMgmt(TaskType.Shutdown, Actions.Delete)
+                            TaskMgmt(TaskType.Shutdown, Actions.Delete, "", [TreeView])
                         End If
 
                         If Snd_Win_WindowsLogoff_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsLogoff) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogoff).ToUpper = ".WAV" Then
-                            TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff)
+                            TaskMgmt(TaskType.Logoff, Actions.Add, Snd_Win_WindowsLogoff, [TreeView])
                         Else
-                            TaskMgmt(TaskType.Logoff, Actions.Delete)
+                            TaskMgmt(TaskType.Logoff, Actions.Delete, "", [TreeView])
                         End If
 
                         If Snd_Win_WindowsLogon_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsLogon) AndAlso IO.Path.GetExtension(Snd_Win_WindowsLogon).ToUpper = ".WAV" Then
-                            TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon)
+                            TaskMgmt(TaskType.Logon, Actions.Add, Snd_Win_WindowsLogon, [TreeView])
                         Else
-                            TaskMgmt(TaskType.Logon, Actions.Delete)
+                            TaskMgmt(TaskType.Logon, Actions.Delete, "", [TreeView])
                         End If
 
                         If Snd_Win_WindowsUnlock_TaskMgmt AndAlso IO.File.Exists(Snd_Win_WindowsUnlock) AndAlso IO.Path.GetExtension(Snd_Win_WindowsUnlock).ToUpper = ".WAV" Then
-                            TaskMgmt(TaskType.Unlock, Actions.Add, Snd_Win_WindowsUnlock)
+                            TaskMgmt(TaskType.Unlock, Actions.Add, Snd_Win_WindowsUnlock, [TreeView])
                         Else
-                            TaskMgmt(TaskType.Unlock, Actions.Delete)
+                            TaskMgmt(TaskType.Unlock, Actions.Delete, "", [TreeView])
                         End If
+                    End If
+
+                    If IO.File.Exists(Snd_ChargerConnected) AndAlso IO.Path.GetExtension(Snd_ChargerConnected).ToUpper = ".WAV" Then
+                        TaskMgmt(TaskType.ChargerConnected, Actions.Add, Snd_ChargerConnected, [TreeView])
+                    Else
+                        TaskMgmt(TaskType.ChargerConnected, Actions.Delete, "", [TreeView])
                     End If
 
                     Dim Scope_Win As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\{0}\.Modified"}
@@ -2684,104 +2785,98 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim Scope_NetMeeting As String() = {"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Current", "HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Conf\{0}\.Modified"}
 
                     For Each Scope As String In Scope_Win
-                        EditReg(String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "AppGPFault"), "", Snd_Win_AppGPFault, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "CCSelect"), "", Snd_Win_CCSelect, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "ChangeTheme"), "", Snd_Win_ChangeTheme, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Close"), "", Snd_Win_Close, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "CriticalBatteryAlarm"), "", Snd_Win_CriticalBatteryAlarm, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "DeviceConnect"), "", Snd_Win_DeviceConnect, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "DeviceDisconnect"), "", Snd_Win_DeviceDisconnect, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "DeviceFail"), "", Snd_Win_DeviceFail, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FaxBeep"), "", Snd_Win_FaxBeep, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "LowBatteryAlarm"), "", Snd_Win_LowBatteryAlarm, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MailBeep"), "", Snd_Win_MailBeep, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Maximize"), "", Snd_Win_Maximize, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MenuCommand"), "", Snd_Win_MenuCommand, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MenuPopup"), "", Snd_Win_MenuPopup, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MessageNudge"), "", Snd_Win_MessageNudge, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Minimize"), "", Snd_Win_Minimize, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Default"), "", Snd_Win_Notification_Default, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.IM"), "", Snd_Win_Notification_IM, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm"), "", Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm2"), "", Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm3"), "", Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm4"), "", Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm5"), "", Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm6"), "", Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm7"), "", Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm8"), "", Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm9"), "", Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Alarm10"), "", Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call"), "", Snd_Win_Notification_Looping_Call, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call2"), "", Snd_Win_Notification_Looping_Call2, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call3"), "", Snd_Win_Notification_Looping_Call3, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call4"), "", Snd_Win_Notification_Looping_Call4, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call5"), "", Snd_Win_Notification_Looping_Call5, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call6"), "", Snd_Win_Notification_Looping_Call6, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call7"), "", Snd_Win_Notification_Looping_Call7, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call8"), "", Snd_Win_Notification_Looping_Call8, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call9"), "", Snd_Win_Notification_Looping_Call9, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Looping.Call10"), "", Snd_Win_Notification_Looping_Call10, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Mail"), "", Snd_Win_Notification_Mail, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Proximity"), "", Snd_Win_Notification_Proximity, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.Reminder"), "", Snd_Win_Notification_Reminder, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Notification.SMS"), "", Snd_Win_Notification_SMS, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Open"), "", Snd_Win_Open, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "PrintComplete"), "", Snd_Win_PrintComplete, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "ProximityConnection"), "", Snd_Win_ProximityConnection, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "RestoreDown"), "", Snd_Win_RestoreDown, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "RestoreUp"), "", Snd_Win_RestoreUp, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "ShowBand"), "", Snd_Win_ShowBand, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemStart"), "", Snd_Win_SystemStart, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "WindowsLogoff"), "", Snd_Win_WindowsLogoff, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "WindowsLogon"), "", Snd_Win_WindowsLogon, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "WindowsUAC"), "", Snd_Win_WindowsUAC, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "WindowsUnlock"), "", Snd_Win_WindowsUnlock, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, ".Default"), "", Snd_Win_Default, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "AppGPFault"), "", Snd_Win_AppGPFault, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "CCSelect"), "", Snd_Win_CCSelect, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "ChangeTheme"), "", Snd_Win_ChangeTheme, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Close"), "", Snd_Win_Close, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "CriticalBatteryAlarm"), "", Snd_Win_CriticalBatteryAlarm, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "DeviceConnect"), "", Snd_Win_DeviceConnect, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "DeviceDisconnect"), "", Snd_Win_DeviceDisconnect, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "DeviceFail"), "", Snd_Win_DeviceFail, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FaxBeep"), "", Snd_Win_FaxBeep, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "LowBatteryAlarm"), "", Snd_Win_LowBatteryAlarm, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MailBeep"), "", Snd_Win_MailBeep, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Maximize"), "", Snd_Win_Maximize, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MenuCommand"), "", Snd_Win_MenuCommand, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MenuPopup"), "", Snd_Win_MenuPopup, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MessageNudge"), "", Snd_Win_MessageNudge, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Minimize"), "", Snd_Win_Minimize, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Default"), "", Snd_Win_Notification_Default, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.IM"), "", Snd_Win_Notification_IM, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm"), "", Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm2"), "", Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm3"), "", Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm4"), "", Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm5"), "", Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm6"), "", Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm7"), "", Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm8"), "", Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm9"), "", Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Alarm10"), "", Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call"), "", Snd_Win_Notification_Looping_Call, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call2"), "", Snd_Win_Notification_Looping_Call2, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call3"), "", Snd_Win_Notification_Looping_Call3, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call4"), "", Snd_Win_Notification_Looping_Call4, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call5"), "", Snd_Win_Notification_Looping_Call5, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call6"), "", Snd_Win_Notification_Looping_Call6, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call7"), "", Snd_Win_Notification_Looping_Call7, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call8"), "", Snd_Win_Notification_Looping_Call8, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call9"), "", Snd_Win_Notification_Looping_Call9, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Looping.Call10"), "", Snd_Win_Notification_Looping_Call10, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Mail"), "", Snd_Win_Notification_Mail, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Proximity"), "", Snd_Win_Notification_Proximity, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.Reminder"), "", Snd_Win_Notification_Reminder, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Notification.SMS"), "", Snd_Win_Notification_SMS, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Open"), "", Snd_Win_Open, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "PrintComplete"), "", Snd_Win_PrintComplete, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "ProximityConnection"), "", Snd_Win_ProximityConnection, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "RestoreDown"), "", Snd_Win_RestoreDown, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "RestoreUp"), "", Snd_Win_RestoreUp, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "ShowBand"), "", Snd_Win_ShowBand, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemAsterisk"), "", Snd_Win_SystemAsterisk, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemExclamation"), "", Snd_Win_SystemExclamation, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemExit"), "", Snd_Win_SystemExit, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemStart"), "", Snd_Win_SystemStart, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemHand"), "", Snd_Win_SystemHand, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemNotification"), "", Snd_Win_SystemNotification, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SystemQuestion"), "", Snd_Win_SystemQuestion, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "WindowsLogoff"), "", Snd_Win_WindowsLogoff, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "WindowsLogon"), "", Snd_Win_WindowsLogon, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "WindowsUAC"), "", Snd_Win_WindowsUAC, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "WindowsUnlock"), "", Snd_Win_WindowsUnlock, RegistryValueKind.String)
                     Next
 
                     For Each Scope As String In Scope_Explorer
-                        EditReg(String.Format(Scope, "ActivatingDocument"), "", Snd_Explorer_ActivatingDocument, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "BlockedPopup"), "", Snd_Explorer_BlockedPopup, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "EmptyRecycleBin"), "", Snd_Explorer_EmptyRecycleBin, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FeedDiscovered"), "", Snd_Explorer_FeedDiscovered, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "SearchProviderDiscovered"), "", Snd_Explorer_SearchProviderDiscovered, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FaxError"), "", Snd_Explorer_FaxError, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FaxLineRings"), "", Snd_Explorer_FaxLineRings, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FaxNew"), "", Snd_Explorer_FaxNew, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "FaxSent"), "", Snd_Explorer_FaxSent, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "ActivatingDocument"), "", Snd_Explorer_ActivatingDocument, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "BlockedPopup"), "", Snd_Explorer_BlockedPopup, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "EmptyRecycleBin"), "", Snd_Explorer_EmptyRecycleBin, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FeedDiscovered"), "", Snd_Explorer_FeedDiscovered, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MoveMenuItem"), "", Snd_Explorer_MoveMenuItem, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Navigating"), "", Snd_Explorer_Navigating, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SecurityBand"), "", Snd_Explorer_SecurityBand, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "SearchProviderDiscovered"), "", Snd_Explorer_SearchProviderDiscovered, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FaxError"), "", Snd_Explorer_FaxError, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FaxLineRings"), "", Snd_Explorer_FaxLineRings, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FaxNew"), "", Snd_Explorer_FaxNew, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "FaxSent"), "", Snd_Explorer_FaxSent, RegistryValueKind.String)
                     Next
 
                     For Each Scope As String In Scope_NetMeeting
-                        EditReg(String.Format(Scope, "Person Joins"), "", Snd_NetMeeting_PersonJoins, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Person Leaves"), "", Snd_NetMeeting_PersonLeaves, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Receive Call"), "", Snd_NetMeeting_ReceiveCall, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "Receive Request to Join"), "", Snd_NetMeeting_ReceiveRequestToJoin, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Person Joins"), "", Snd_NetMeeting_PersonJoins, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Person Leaves"), "", Snd_NetMeeting_PersonLeaves, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Receive Call"), "", Snd_NetMeeting_ReceiveCall, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "Receive Request to Join"), "", Snd_NetMeeting_ReceiveRequestToJoin, RegistryValueKind.String)
                     Next
 
                     For Each Scope As String In Scope_SpeechRec
-                        EditReg(String.Format(Scope, "DisNumbersSound"), "", Snd_SpeechRec_DisNumbersSound, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "HubOffSound"), "", Snd_SpeechRec_HubOffSound, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "HubOnSound"), "", Snd_SpeechRec_HubOnSound, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "HubSleepSound"), "", Snd_SpeechRec_HubSleepSound, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "MisrecoSound"), "", Snd_SpeechRec_MisrecoSound, RegistryValueKind.String)
-                        EditReg(String.Format(Scope, "PanelSound"), "", Snd_SpeechRec_PanelSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "DisNumbersSound"), "", Snd_SpeechRec_DisNumbersSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "HubOffSound"), "", Snd_SpeechRec_HubOffSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "HubOnSound"), "", Snd_SpeechRec_HubOnSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "HubSleepSound"), "", Snd_SpeechRec_HubSleepSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "MisrecoSound"), "", Snd_SpeechRec_MisrecoSound, RegistryValueKind.String)
+                        EditReg([TreeView], String.Format(Scope, "PanelSound"), "", Snd_SpeechRec_PanelSound, RegistryValueKind.String)
                     Next
-
-                    If IO.File.Exists(Snd_ChargerConnected) AndAlso IO.Path.GetExtension(Snd_ChargerConnected).ToUpper = ".WAV" Then
-                        TaskMgmt(TaskType.ChargerConnected, Actions.Add, Snd_ChargerConnected)
-                    Else
-                        TaskMgmt(TaskType.ChargerConnected, Actions.Delete)
-                    End If
 
                 End If
 
@@ -2822,12 +2917,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 If Win10Opacity = Nothing Then Win10Opacity = _DefAltTab.Win10Opacity
             End Sub
 
-            Sub Apply()
-                EditReg("HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", Enabled)
+            Sub Apply(Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\AltTab", "", Enabled)
 
                 If Enabled Then
-                    EditReg("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", Style)
-                    EditReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", Win10Opacity)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", Style)
+                    EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", Win10Opacity)
                 End If
             End Sub
 
@@ -2973,7 +3068,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Enabled = CInt(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)).ToBoolean
 
             End Sub
-            Shared Sub Save_Console_To_Registry(scopeReg As String, [RegKey] As String, [Console] As Console)
+            Shared Sub Save_Console_To_Registry(scopeReg As String, [RegKey] As String, [Console] As Console, Optional [TreeView] As TreeView = Nothing)
 
                 Dim RegAddress As String = scopeReg & "\Console" & If(String.IsNullOrEmpty([RegKey]), "", "\" & [RegKey])
 
@@ -2984,48 +3079,48 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Catch
                 End Try
 
-                EditReg(RegAddress, "EnableColorSelection", 1)
-                EditReg(RegAddress, "ColorTable00", Color.FromArgb(0, [Console].ColorTable00.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable01", Color.FromArgb(0, [Console].ColorTable01.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable02", Color.FromArgb(0, [Console].ColorTable02.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable03", Color.FromArgb(0, [Console].ColorTable03.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable04", Color.FromArgb(0, [Console].ColorTable04.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable05", Color.FromArgb(0, [Console].ColorTable05.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable06", Color.FromArgb(0, [Console].ColorTable06.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable07", Color.FromArgb(0, [Console].ColorTable07.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable08", Color.FromArgb(0, [Console].ColorTable08.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable09", Color.FromArgb(0, [Console].ColorTable09.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable10", Color.FromArgb(0, [Console].ColorTable10.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable11", Color.FromArgb(0, [Console].ColorTable11.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable12", Color.FromArgb(0, [Console].ColorTable12.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable13", Color.FromArgb(0, [Console].ColorTable13.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable14", Color.FromArgb(0, [Console].ColorTable14.Reverse).ToArgb)
-                EditReg(RegAddress, "ColorTable15", Color.FromArgb(0, [Console].ColorTable15.Reverse).ToArgb)
-                EditReg(RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
-                EditReg(RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
-                EditReg(RegAddress, "CursorSize", [Console].CursorSize)
+                EditReg([TreeView], RegAddress, "EnableColorSelection", 1)
+                EditReg([TreeView], RegAddress, "ColorTable00", Color.FromArgb(0, [Console].ColorTable00.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable01", Color.FromArgb(0, [Console].ColorTable01.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable02", Color.FromArgb(0, [Console].ColorTable02.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable03", Color.FromArgb(0, [Console].ColorTable03.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable04", Color.FromArgb(0, [Console].ColorTable04.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable05", Color.FromArgb(0, [Console].ColorTable05.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable06", Color.FromArgb(0, [Console].ColorTable06.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable07", Color.FromArgb(0, [Console].ColorTable07.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable08", Color.FromArgb(0, [Console].ColorTable08.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable09", Color.FromArgb(0, [Console].ColorTable09.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable10", Color.FromArgb(0, [Console].ColorTable10.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable11", Color.FromArgb(0, [Console].ColorTable11.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable12", Color.FromArgb(0, [Console].ColorTable12.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable13", Color.FromArgb(0, [Console].ColorTable13.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable14", Color.FromArgb(0, [Console].ColorTable14.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "ColorTable15", Color.FromArgb(0, [Console].ColorTable15.Reverse).ToArgb)
+                EditReg([TreeView], RegAddress, "PopupColors", Convert.ToInt32([Console].PopupBackground.ToString("X") & [Console].PopupForeground.ToString("X"), 16))
+                EditReg([TreeView], RegAddress, "ScreenColors", Convert.ToInt32([Console].ScreenColorsBackground.ToString("X") & [Console].ScreenColorsForeground.ToString("X"), 16))
+                EditReg([TreeView], RegAddress, "CursorSize", [Console].CursorSize)
 
                 If [Console].FontRaster Then
-                    EditReg(RegAddress, "FaceName", "Terminal", RegistryValueKind.String)
-                    EditReg(RegAddress, "FontFamily", 48)
+                    EditReg([TreeView], RegAddress, "FaceName", "Terminal", RegistryValueKind.String)
+                    EditReg([TreeView], RegAddress, "FontFamily", 48)
                 Else
-                    EditReg(RegAddress, "FaceName", [Console].FaceName, RegistryValueKind.String)
-                    EditReg(RegAddress, "FontFamily", If([Console].FontRaster, 1, 54))
+                    EditReg([TreeView], RegAddress, "FaceName", [Console].FaceName, RegistryValueKind.String)
+                    EditReg([TreeView], RegAddress, "FontFamily", If([Console].FontRaster, 1, 54))
                 End If
 
-                EditReg(RegAddress, "FontSize", [Console].FontSize)
-                EditReg(RegAddress, "FontWeight", [Console].FontWeight)
+                EditReg([TreeView], RegAddress, "FontSize", [Console].FontSize)
+                EditReg([TreeView], RegAddress, "FontWeight", [Console].FontWeight)
 
                 If My.W10_1909 Then
-                    EditReg(RegAddress, "CursorColor", Color.FromArgb(0, [Console].W10_1909_CursorColor.Reverse).ToArgb)
-                    EditReg(RegAddress, "CursorType", [Console].W10_1909_CursorType)
-                    EditReg(RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
-                    EditReg(RegAddress, "ForceV2", [Console].W10_1909_ForceV2.ToInteger)
-                    EditReg(RegAddress, "LineSelection", [Console].W10_1909_LineSelection.ToInteger)
-                    EditReg(RegAddress, "TerminalScrolling", [Console].W10_1909_TerminalScrolling.ToInteger)
+                    EditReg([TreeView], RegAddress, "CursorColor", Color.FromArgb(0, [Console].W10_1909_CursorColor.Reverse).ToArgb)
+                    EditReg([TreeView], RegAddress, "CursorType", [Console].W10_1909_CursorType)
+                    EditReg([TreeView], RegAddress, "WindowAlpha", [Console].W10_1909_WindowAlpha)
+                    EditReg([TreeView], RegAddress, "ForceV2", [Console].W10_1909_ForceV2.ToInteger)
+                    EditReg([TreeView], RegAddress, "LineSelection", [Console].W10_1909_LineSelection.ToInteger)
+                    EditReg([TreeView], RegAddress, "TerminalScrolling", [Console].W10_1909_TerminalScrolling.ToInteger)
                 End If
 
-                EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, RegistryValueKind.String)
+                EditReg([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", [Console].FaceName, RegistryValueKind.String)
 
             End Sub
 
@@ -3076,100 +3171,78 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Public Shadow_OffsetY As Integer
 
             Public Sub Load([subKey] As String)
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
+                ArrowStyle = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "ArrowStyle", Paths.ArrowStyle.Aero)
+                CircleStyle = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "CircleStyle", Paths.CircleStyle.Aero)
 
-                Dim r As RegistryKey = rMain
-                r.CreateSubKey([subKey])
-                r = r.OpenSubKey([subKey])
+                PrimaryColor1 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColor1", Color.White.ToArgb))
+                PrimaryColor2 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColor2", Color.White.ToArgb))
+                SecondaryColor1 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColor1", If([subKey].ToLower <> "none", Color.Black, Color.Red).ToArgb))
+                SecondaryColor2 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColor2", If([subKey].ToLower <> "none", Color.FromArgb(64, 65, 75), Color.Red).ToArgb))
+                LoadingCircleBack1 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
+                LoadingCircleBack2 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
+                LoadingCircleHot1 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
+                LoadingCircleHot2 = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
 
-                ArrowStyle = r.GetValue("ArrowStyle", Paths.ArrowStyle.Aero)
-                CircleStyle = r.GetValue("CircleStyle", Paths.CircleStyle.Aero)
+                PrimaryColorGradient = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColorGradient", False)
+                SecondaryColorGradient = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColorGradient", True)
+                LoadingCircleBackGradient = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBackGradient", False)
+                LoadingCircleHotGradient = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHotGradient", False)
 
-                PrimaryColor1 = Color.FromArgb(r.GetValue("PrimaryColor1", Color.White.ToArgb))
-                PrimaryColor2 = Color.FromArgb(r.GetValue("PrimaryColor2", Color.White.ToArgb))
-                SecondaryColor1 = Color.FromArgb(r.GetValue("SecondaryColor1", If([subKey].ToLower <> "none", Color.Black, Color.Red).ToArgb))
-                SecondaryColor2 = Color.FromArgb(r.GetValue("SecondaryColor2", If([subKey].ToLower <> "none", Color.FromArgb(64, 65, 75), Color.Red).ToArgb))
-                LoadingCircleBack1 = Color.FromArgb(r.GetValue("LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb))
-                LoadingCircleBack2 = Color.FromArgb(r.GetValue("LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb))
-                LoadingCircleHot1 = Color.FromArgb(r.GetValue("LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb))
-                LoadingCircleHot2 = Color.FromArgb(r.GetValue("LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb))
+                PrimaryColorNoise = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColorNoise", False)
+                SecondaryColorNoise = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColorNoise", False)
+                LoadingCircleBackNoise = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBackNoise", False)
+                LoadingCircleHotNoise = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHotNoise", False)
 
-                PrimaryColorGradient = r.GetValue("PrimaryColorGradient", False)
-                SecondaryColorGradient = r.GetValue("SecondaryColorGradient", True)
-                LoadingCircleBackGradient = r.GetValue("LoadingCircleBackGradient", False)
-                LoadingCircleHotGradient = r.GetValue("LoadingCircleHotGradient", False)
+                PrimaryColorGradientMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColorGradientMode", CInt(GradientMode.Circle))
+                SecondaryColorGradientMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColorGradientMode", CInt(GradientMode.Vertical))
+                LoadingCircleBackGradientMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBackGradientMode", CInt(GradientMode.Circle))
+                LoadingCircleHotGradientMode = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHotGradientMode", CInt(GradientMode.Circle))
 
-                PrimaryColorNoise = r.GetValue("PrimaryColorNoise", False)
-                SecondaryColorNoise = r.GetValue("SecondaryColorNoise", False)
-                LoadingCircleBackNoise = r.GetValue("LoadingCircleBackNoise", False)
-                LoadingCircleHotNoise = r.GetValue("LoadingCircleHotNoise", False)
+                PrimaryColorNoiseOpacity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "PrimaryColorNoiseOpacity", 25) / 100
+                SecondaryColorNoiseOpacity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "SecondaryColorNoiseOpacity", 25) / 100
+                LoadingCircleBackNoiseOpacity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleBackNoiseOpacity", 25) / 100
+                LoadingCircleHotNoiseOpacity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "LoadingCircleHotNoiseOpacity", 25) / 100
 
-                PrimaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("PrimaryColorGradientMode", "Circle"))
-                SecondaryColorGradientMode = ReturnGradientModeFromString(r.GetValue("SecondaryColorGradientMode", "Vertical"))
-                LoadingCircleBackGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleBackGradientMode", "Circle"))
-                LoadingCircleHotGradientMode = ReturnGradientModeFromString(r.GetValue("LoadingCircleHotGradientMode", "Circle"))
-
-                PrimaryColorNoiseOpacity = r.GetValue("PrimaryColorNoiseOpacity", 25) / 100
-                SecondaryColorNoiseOpacity = r.GetValue("SecondaryColorNoiseOpacity", 25) / 100
-                LoadingCircleBackNoiseOpacity = r.GetValue("LoadingCircleBackNoiseOpacity", 25) / 100
-                LoadingCircleHotNoiseOpacity = r.GetValue("LoadingCircleHotNoiseOpacity", 25) / 100
-
-                Shadow_Enabled = r.GetValue("Shadow_Enabled", False)
-                Shadow_Color = Color.FromArgb(r.GetValue("Shadow_Color", Color.Black.ToArgb))
-                Shadow_Blur = r.GetValue("Shadow_Blur", 5)
-                Shadow_Opacity = r.GetValue("Shadow_Opacity", 30) / 100
-                Shadow_OffsetX = r.GetValue("Shadow_OffsetX", 2)
-                Shadow_OffsetY = r.GetValue("Shadow_OffsetY", 2)
-
-                r.Close()
-                rMain.Close()
+                Shadow_Enabled = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_Enabled", False)
+                Shadow_Color = Color.FromArgb(GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_Color", Color.Black.ToArgb))
+                Shadow_Blur = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_Blur", 5)
+                Shadow_Opacity = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_Opacity", 30) / 100
+                Shadow_OffsetX = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_OffsetX", 2)
+                Shadow_OffsetY = GetReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & [subKey], "Shadow_OffsetY", 2)
             End Sub
-
-            Shared Sub Save_Cursors_To_Registry(subKey As String, [Cursor] As Cursor)
-
-                Dim rMain As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\WinPaletter\Cursors")
-                Dim r As RegistryKey
-
-                r = rMain.CreateSubKey(subKey)
-                With r
-                    .SetValue("ArrowStyle", [Cursor].ArrowStyle, RegistryValueKind.DWord)
-                    .SetValue("CircleStyle", [Cursor].CircleStyle, RegistryValueKind.DWord)
-
-                    .SetValue("PrimaryColor1", [Cursor].PrimaryColor1.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("PrimaryColor2", [Cursor].PrimaryColor2.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("PrimaryColorGradientMode", [Cursor].PrimaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("PrimaryColorNoise", [Cursor].PrimaryColorNoise.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100, RegistryValueKind.DWord)
-                    .SetValue("SecondaryColor1", [Cursor].SecondaryColor1.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("SecondaryColor2", [Cursor].SecondaryColor2.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("SecondaryColorGradient", [Cursor].SecondaryColorGradient.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("SecondaryColorGradientMode", [Cursor].SecondaryColorGradientMode, RegistryValueKind.String)
-                    .SetValue("SecondaryColorNoise", [Cursor].SecondaryColorNoise.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleBackGradient", [Cursor].LoadingCircleBackGradient.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleBackGradientMode", [Cursor].LoadingCircleBackGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleBackNoise", [Cursor].LoadingCircleBackNoise.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleHotGradient", [Cursor].LoadingCircleHotGradient.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleHotGradientMode", [Cursor].LoadingCircleHotGradientMode, RegistryValueKind.String)
-                    .SetValue("LoadingCircleHotNoise", [Cursor].LoadingCircleHotNoise.ToInteger, RegistryValueKind.DWord)
-                    .SetValue("LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100, RegistryValueKind.DWord)
-                    .SetValue("Shadow_Enabled", [Cursor].Shadow_Enabled, RegistryValueKind.DWord)
-                    .SetValue("Shadow_Color", [Cursor].Shadow_Color.ToArgb, RegistryValueKind.DWord)
-                    .SetValue("Shadow_Blur", [Cursor].Shadow_Blur, RegistryValueKind.DWord)
-                    .SetValue("Shadow_Opacity", [Cursor].Shadow_Opacity * 100, RegistryValueKind.DWord)
-                    .SetValue("Shadow_OffsetX", [Cursor].Shadow_OffsetX, RegistryValueKind.DWord)
-                    .SetValue("Shadow_OffsetY", [Cursor].Shadow_OffsetY, RegistryValueKind.DWord)
-                End With
-
-                r.Close()
-                rMain.Close()
-
+            Shared Sub Save_Cursors_To_Registry(subKey As String, [Cursor] As Cursor, Optional [TreeView] As TreeView = Nothing)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "ArrowStyle", CInt([Cursor].ArrowStyle))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "CircleStyle", CInt([Cursor].CircleStyle))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColor1", [Cursor].PrimaryColor1.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColor2", [Cursor].PrimaryColor2.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColorGradient", [Cursor].PrimaryColorGradient.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColorGradientMode", CInt([Cursor].PrimaryColorGradientMode))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColorNoise", [Cursor].PrimaryColorNoise.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "PrimaryColorNoiseOpacity", [Cursor].PrimaryColorNoiseOpacity * 100)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColor1", [Cursor].SecondaryColor1.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColor2", [Cursor].SecondaryColor2.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColorGradient", [Cursor].SecondaryColorGradient.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColorGradientMode", CInt([Cursor].SecondaryColorGradientMode))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColorNoise", [Cursor].SecondaryColorNoise.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "SecondaryColorNoiseOpacity", [Cursor].SecondaryColorNoiseOpacity * 100)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBack1", [Cursor].LoadingCircleBack1.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBack2", [Cursor].LoadingCircleBack2.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBackGradient", [Cursor].LoadingCircleBackGradient.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBackGradientMode", CInt([Cursor].LoadingCircleBackGradientMode))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBackNoise", [Cursor].LoadingCircleBackNoise.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleBackNoiseOpacity", [Cursor].LoadingCircleBackNoiseOpacity * 100)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHot1", [Cursor].LoadingCircleHot1.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHot2", [Cursor].LoadingCircleHot2.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHotGradient", [Cursor].LoadingCircleHotGradient.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHotGradientMode", CInt([Cursor].LoadingCircleHotGradientMode))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHotNoise", [Cursor].LoadingCircleHotNoise.ToInteger)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "LoadingCircleHotNoiseOpacity", [Cursor].LoadingCircleHotNoiseOpacity * 100)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_Enabled", [Cursor].Shadow_Enabled)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_Color", [Cursor].Shadow_Color.ToArgb)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_Blur", [Cursor].Shadow_Blur)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_Opacity", CInt([Cursor].Shadow_Opacity * 100))
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_OffsetX", [Cursor].Shadow_OffsetX)
+                EditReg([TreeView], "HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" & subKey, "Shadow_OffsetY", [Cursor].Shadow_OffsetY)
             End Sub
 
             Shared Operator =(First As Cursor, Second As Cursor) As Boolean
@@ -3179,7 +3252,6 @@ Public Class CP : Implements IDisposable : Implements ICloneable
             Shared Operator <>(First As Cursor, Second As Cursor) As Boolean
                 Return Not First.Equals(Second)
             End Operator
-
             Public Function Clone() Implements ICloneable.Clone
                 Return MemberwiseClone()
             End Function
@@ -4454,7 +4526,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
         Return installed
     End Function
-    Public Shared Sub AddNode([TreeView] As Windows.Forms.TreeView, [Text] As String, [ImageKey] As String)
+    Public Shared Sub AddNode([TreeView] As TreeView, [Text] As String, [ImageKey] As String)
         If [TreeView] IsNot Nothing Then
             If [TreeView].InvokeRequired Then
 
@@ -4464,7 +4536,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                                     .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
                                                 End With
                                                 [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                                [TreeView].Refresh()
+                                                [TreeView].Update()
                                             End Sub, MethodInvoker))
                 Catch
                 End Try
@@ -4477,11 +4549,12 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                                     .ImageKey = [ImageKey] : .SelectedImageKey = [ImageKey]
                                                 End With
                                                 [TreeView].SelectedNode = [TreeView].Nodes([TreeView].Nodes.Count - 1)
-                                                [TreeView].Refresh()
+                                                [TreeView].Update()
                                             End Sub, MethodInvoker))
                 Catch
                 End Try
             End If
+
         End If
     End Sub
     Private Sub AddException([Label] As String, [Exception] As Exception)
@@ -4758,7 +4831,9 @@ Start:
             Case CP_Type.Registry
 
 #Region "Registry"
-                Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
+                Dim ReportProgress As Boolean = My.Settings.ThemeLog.VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None AndAlso [TreeView] IsNot Nothing
+                Dim ReportProgress_Detailed As Boolean = ReportProgress AndAlso My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
+
                 _ErrorHappened = False
 
                 Dim sw_all As New Stopwatch
@@ -4768,8 +4843,9 @@ Start:
 
                 If ReportProgress Then
                     My.Saving_Exceptions.Clear()
+                    [TreeView].Visible = False
                     [TreeView].Nodes.Clear()
-
+                    [TreeView].Visible = True
                     Dim OS As String
                     If My.W11 Then
                         OS = My.Lang.OS_Win11
@@ -4816,12 +4892,13 @@ Start:
                                     def.PowerShellx64.Enabled = True
 
                                     def.MetricsFonts.Enabled = True
-                                    def.Wallpaper.Enabled = True
                                     def.WindowsEffects.Enabled = True
                                     def.AltTab.Enabled = True
                                     def.ScreenSaver.Enabled = True
                                     def.Sounds.Enabled = True
                                     def.AppTheme.Enabled = True
+
+                                    def.Wallpaper.Enabled = False
 
                                     def.Save(CP_Type.Registry)
                                 End Using
@@ -4831,43 +4908,43 @@ Start:
 
                 'Theme info
                 Execute(Sub()
-                            Info.Apply()
+                            Info.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                         End Sub, [TreeView], My.Lang.CP_SavingInfo, My.Lang.CP_SavingInfo_Error, My.Lang.CP_Time, sw_all)
 
                 'WinPaletter application theme
                 Execute(Sub()
-                            AppTheme.Apply()
+                            AppTheme.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                         End Sub, [TreeView], My.Lang.CP_Applying_AppTheme, My.Lang.CP_Error_AppTheme, My.Lang.CP_Time, sw_all, Not AppTheme.Enabled, My.Lang.CP_Skip_AppTheme, True)
 
                 'Wallpaper
                 'Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
                 Execute(CType(Sub()
-                                  Wallpaper.Apply()
+                                  Wallpaper.Apply(False, If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Wallpaper, My.Lang.CP_Error_Wallpaper, My.Lang.CP_Time, sw_all, Not Wallpaper.Enabled, My.Lang.CP_Skip_Wallpaper)
 
                 If My.W11 Then
                     Execute(CType(Sub()
-                                      Windows11.Apply()
+                                      Windows11.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win11, My.Lang.CP_W11_Error, My.Lang.CP_Time, sw_all)
 
                     Execute(CType(Sub()
-                                      LogonUI10x.Apply()
+                                      LogonUI10x.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI11, My.Lang.CP_LogonUI11_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.W10 Then
                     Execute(CType(Sub()
-                                      Windows10.Apply()
+                                      Windows10.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win10, My.Lang.CP_W10_Error, My.Lang.CP_Time, sw_all)
 
                     Execute(CType(Sub()
-                                      LogonUI10x.Apply()
+                                      LogonUI10x.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUI10, My.Lang.CP_LogonUI10_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.W8 Or My.W81 Then
                     Execute(CType(Sub()
-                                      Windows81.Apply()
+                                      Windows81.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                       RefreshDWM(Me)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win81, My.Lang.CP_W81_Error, My.Lang.CP_Time, sw_all)
 
@@ -4879,7 +4956,7 @@ Start:
 
                 If My.W7 Then
                     Execute(CType(Sub()
-                                      Windows7.Apply()
+                                      Windows7.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                       RefreshDWM(Me)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win7, My.Lang.CP_W7_Error, My.Lang.CP_Time, sw_all)
 
@@ -4890,57 +4967,57 @@ Start:
 
                 If My.WVista Then
                     Execute(CType(Sub()
-                                      WindowsVista.Apply()
+                                      WindowsVista.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                       RefreshDWM(Me)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinVista, My.Lang.CP_WVista_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 If My.WXP Then
                     Execute(CType(Sub()
-                                      WindowsXP.Apply()
+                                      WindowsXP.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinXP, My.Lang.CP_WXP_Error, My.Lang.CP_Time, sw_all)
 
                     Execute(CType(Sub()
-                                      LogonUIXP.Apply()
+                                      LogonUIXP.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_LogonUIXP, My.Lang.CP_LogonUIXP_Error, My.Lang.CP_Time, sw_all)
                 End If
 
                 'Win32UI
                 Execute(CType(Sub()
-                                  Win32.Apply()
+                                  Win32.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Win32UI, My.Lang.CP_WIN32UI_Error, My.Lang.CP_Time, sw_all)
 
                 'WindowsEffects
                 Execute(CType(Sub()
-                                  WindowsEffects.Apply()
+                                  WindowsEffects.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WinEffects, My.Lang.CP_WinEffects_Error, My.Lang.CP_Time, sw_all)
 
                 'Metrics\Fonts
                 Execute(CType(Sub()
-                                  MetricsFonts.Apply()
+                                  MetricsFonts.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Metrics, My.Lang.CP_Error_Metrics, My.Lang.CP_Time_They, sw_all, Not MetricsFonts.Enabled, My.Lang.CP_Skip_Metrics)
 
                 'AltTab
                 Execute(CType(Sub()
-                                  AltTab.Apply()
+                                  AltTab.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_AltTab, My.Lang.CP_Error_AltTab, My.Lang.CP_Time, sw_all, Not AltTab.Enabled, My.Lang.CP_Skip_AltTab, True)
 
                 'WallpaperTone
                 Execute(CType(Sub()
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista")
-                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP")
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", If(ReportProgress_Detailed, [TreeView], Nothing))
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", If(ReportProgress_Detailed, [TreeView], Nothing))
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", If(ReportProgress_Detailed, [TreeView], Nothing))
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", If(ReportProgress_Detailed, [TreeView], Nothing))
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", If(ReportProgress_Detailed, [TreeView], Nothing))
+                                  Structures.WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", If(ReportProgress_Detailed, [TreeView], Nothing))
 
                                   If Wallpaper.Enabled Then
-                                      If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply()
-                                      If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply()
-                                      If My.W81 And WallpaperTone_W81.Enabled Then WallpaperTone_W81.Apply()
-                                      If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply()
-                                      If My.WVista And WallpaperTone_WVista.Enabled Then WallpaperTone_WVista.Apply()
-                                      If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply()
+                                      If My.W11 And WallpaperTone_W11.Enabled Then WallpaperTone_W11.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
+                                      If My.W10 And WallpaperTone_W10.Enabled Then WallpaperTone_W10.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
+                                      If My.W81 And WallpaperTone_W81.Enabled Then WallpaperTone_W81.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
+                                      If My.W7 And WallpaperTone_W7.Enabled Then WallpaperTone_W7.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
+                                      If My.WVista And WallpaperTone_WVista.Enabled Then WallpaperTone_WVista.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
+                                      If My.WXP And WallpaperTone_WXP.Enabled Then WallpaperTone_WXP.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End If
 
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_WallpaperTone, My.Lang.CP_WallpaperTone_Error, My.Lang.CP_Time, sw_all)
@@ -4953,15 +5030,15 @@ Start:
                 EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled)
 
                 Execute(CType(Sub()
-                                  Apply_CommandPrompt()
+                                  Apply_CommandPrompt(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_CMD, My.Lang.CP_CMD_Error, My.Lang.CP_Time, sw_all, Not CommandPrompt.Enabled, My.Lang.CP_Skip_CMD)
 
                 Execute(CType(Sub()
-                                  Apply_PowerShell86()
+                                  Apply_PowerShell86(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_PS32, My.Lang.CP_PS32_Error, My.Lang.CP_Time, sw_all, Not PowerShellx86.Enabled, My.Lang.CP_Skip_PS32)
 
                 Execute(CType(Sub()
-                                  Apply_PowerShell64()
+                                  Apply_PowerShell64(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_PS64, My.Lang.CP_PS64_Error, My.Lang.CP_Time, sw_all, Not PowerShellx64.Enabled, My.Lang.CP_Skip_PS64)
 #End Region
 
@@ -5077,12 +5154,12 @@ Start:
 
                 'ScreenSaver
                 Execute(CType(Sub()
-                                  ScreenSaver.Apply()
+                                  ScreenSaver.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_ScreenSaver, My.Lang.CP_Error_ScreenSaver, My.Lang.CP_Time, sw_all)
 
                 'Sounds
                 Execute(CType(Sub()
-                                  Sounds.Apply()
+                                  Sounds.Apply(If(ReportProgress_Detailed, [TreeView], Nothing))
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_Sounds, My.Lang.CP_Error_Sounds, My.Lang.CP_Time, sw_all, Not Sounds.Enabled, My.Lang.CP_Skip_Sounds)
 
                 'Cursors
@@ -5091,22 +5168,22 @@ Start:
                               End Sub, MethodInvoker), [TreeView], "", My.Lang.CP_Error_Cursors, My.Lang.CP_Time_Cursors, sw_all)
 
                 'Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
-                If My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                If My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
 
                     Execute(CType(Sub()
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ""), RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_DesktopAllUsers, My.Lang.CP_Error_SetDesktop, My.Lang.CP_Time)
 
-                ElseIf My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
+                ElseIf My.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults Then
 
                     Execute(CType(Sub()
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
-                                      EditReg("HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String)
+                                      EditReg(If(ReportProgress_Detailed, [TreeView], Nothing), "HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String)
                                   End Sub, MethodInvoker), [TreeView], My.Lang.CP_Applying_DesktopAllUsers, My.Lang.CP_Error_SetDesktop, My.Lang.CP_Time)
 
                 End If
@@ -5114,10 +5191,11 @@ Start:
                 'Update User Preference Mask for HKEY_USERS\.DEFAULT
                 'Always make it the last operation
                 Try
-                    Win32.Update_UPM_DEFAULT()
+                    Win32.Update_UPM_DEFAULT(If(ReportProgress_Detailed, [TreeView], Nothing))
                 Catch
                 End Try
 
+                If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_BroadcastEffects, "dll")
                 User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
 
                 If ReportProgress Then
@@ -6031,8 +6109,10 @@ Start:
 #End Region
 
 #Region "Applying Subs"
-    Public Sub Apply_LogonUI7([LogonElement] As Structures.LogonUI7, Optional RegEntryHint As String = "LogonUI", Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
-        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
+    Public Sub Apply_LogonUI7([LogonElement] As Structures.LogonUI7, Optional RegEntryHint As String = "LogonUI", Optional [TreeView] As TreeView = Nothing)
+
+        Dim ReportProgress As Boolean = My.Settings.ThemeLog.VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None AndAlso [TreeView] IsNot Nothing
+        Dim ReportProgress_Detailed As Boolean = ReportProgress AndAlso My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
 
         EditReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", [LogonElement].Enabled.ToInteger)
         EditReg("HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", [LogonElement].Enabled.ToInteger)
@@ -6060,6 +6140,8 @@ Start:
 
             Dim bmpList As New List(Of Bitmap)
             bmpList.Clear()
+
+            If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_GetInstanceLogonUIImg, "info")
 
             Select Case [LogonElement].Mode
                 Case Structures.LogonUI7.Modes.Default_
@@ -6089,9 +6171,15 @@ Start:
             For x = 0 To bmpList.Count - 1
                 If ReportProgress Then AddNode([TreeView], String.Format("{3}: " & My.Lang.CP_RenderingCustomLogonUI_Progress & " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList(x).Width & "x" & bmpList(x).Height, Now.ToLongTimeString), "info")
 
-                If [LogonElement].Grayscale Then bmpList(x) = bmpList(x).Grayscale
+                If [LogonElement].Grayscale Then
+                    If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_GrayscaleLogonUIImg, "apply")
+                    bmpList(x) = bmpList(x).Grayscale
+                End If
+
 
                 If [LogonElement].Blur Then
+                    If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_BlurringLogonUIImg, "apply")
+
                     Dim imgF As New ImageProcessor.ImageFactory
                     Using b As New Bitmap(bmpList(x))
                         imgF.Load(b)
@@ -6101,14 +6189,21 @@ Start:
 
                 End If
 
-                If [LogonElement].Noise Then bmpList(x) = bmpList(x).Noise([LogonElement].Noise_Mode, [LogonElement].Noise_Intensity / 100)
+                If [LogonElement].Noise Then
+                    If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_NoiseLogonUIImg, "apply")
+
+                    bmpList(x) = bmpList(x).Noise([LogonElement].Noise_Mode, [LogonElement].Noise_Intensity / 100)
+                End If
             Next
 
             If bmpList.Count = 1 Then
                 bmpList(0).Save(DirX & "\backgroundDefault.jpg", Imaging.ImageFormat.Jpeg)
+                If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_LogonUIImgSaved, DirX & "\backgroundDefault.jpg"), "info")
             Else
                 For x = 0 To bmpList.Count - 1
                     bmpList(x).Save(DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), Imaging.ImageFormat.Jpeg)
+                    If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_LogonUIImgNUMSaved, DirX & String.Format("\background{0}x{1}.jpg", bmpList(x).Width, bmpList(x).Height), x + 1), "info")
+
                 Next
             End If
 
@@ -6116,9 +6211,10 @@ Start:
         End If
     End Sub
 
-    Public Sub Apply_LogonUI_8(Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
+    Public Sub Apply_LogonUI_8(Optional [TreeView] As TreeView = Nothing)
 
-        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
+        Dim ReportProgress As Boolean = My.Settings.ThemeLog.VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None AndAlso [TreeView] IsNot Nothing
+        Dim ReportProgress_Detailed As Boolean = ReportProgress AndAlso My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
 
         Dim lockimg As String = My.PATH_appData & "\LockScreen.png"
 
@@ -6139,9 +6235,11 @@ Start:
         If Not Windows81.NoLockScreen Then
             Dim bmp As Bitmap
 
+            If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_GetInstanceLockScreenImg, "info")
+
             Select Case Windows81.LockScreenType
                 Case Structures.LogonUI7.Modes.Default_
-                    Dim syslock As String
+                    Dim syslock As String = ""
 
                     If IO.File.Exists(String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows81.LockScreenSystemID)) Then
                         syslock = String.Format(My.PATH_Windows & "\Web\Screen\img10{0}.png", My.CP.Windows81.LockScreenSystemID)
@@ -6179,11 +6277,15 @@ Start:
 
             If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_RenderingCustomLogonUI_MayNotRespond), "info")
 
-            If ReportProgress Then AddNode([TreeView], String.Format("{0}: " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
+            If ReportProgress Then AddNode([TreeView], String.Format("{0}:  " & My.Lang.CP_RenderingCustomLogonUI, Now.ToLongTimeString), "info")
 
-            If LogonUI7.Grayscale Then bmp = bmp.Grayscale
+            If LogonUI7.Grayscale Then
+                If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_GrayscaleLockScreenImg, "apply")
+                bmp = bmp.Grayscale
+            End If
 
             If LogonUI7.Blur Then
+                If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_BlurringLockScreenImg, "apply")
                 Dim imgF As New ImageProcessor.ImageFactory
                 Using b As New Bitmap(bmp)
                     imgF.Load(b)
@@ -6193,54 +6295,59 @@ Start:
 
             End If
 
-            If LogonUI7.Noise Then bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
+            If LogonUI7.Noise Then
+                If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_NoiseLockScreenImg, "apply")
+                bmp = bmp.Noise(LogonUI7.Noise_Mode, LogonUI7.Noise_Intensity / 100)
+            End If
 
             If IO.File.Exists(lockimg) Then Kill(lockimg)
 
+            If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_LockScreenImgSaved, lockimg), "info")
             bmp.Save(lockimg)
 
         End If
 
     End Sub
 
-    Public Sub Apply_CommandPrompt()
+    Public Sub Apply_CommandPrompt(Optional [TreeView] As TreeView = Nothing)
         If CommandPrompt.Enabled Then
-            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt)
-            If My.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences Then Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
+            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "", CommandPrompt, [TreeView])
+            If My.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences Then Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, [TreeView])
 
-            If My.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "", CommandPrompt)
-                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt)
+            If My.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "", CommandPrompt, [TreeView])
+                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_cmd.exe", CommandPrompt, [TreeView])
             End If
         End If
     End Sub
 
-    Public Sub Apply_PowerShell86()
+    Public Sub Apply_PowerShell86(Optional [TreeView] As TreeView = Nothing)
         If PowerShellx86.Enabled And IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\System32\WindowsPowerShell\v1.0") Then
 
-            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86)
+            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, [TreeView])
 
 
-            If My.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86)
+            If My.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, [TreeView])
             End If
 
         End If
     End Sub
 
-    Public Sub Apply_PowerShell64()
+    Public Sub Apply_PowerShell64(Optional [TreeView] As TreeView = Nothing)
         If PowerShellx64.Enabled And IO.Directory.Exists(Environment.GetEnvironmentVariable("WINDIR") & "\SysWOW64\WindowsPowerShell\v1.0") Then
 
-            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64)
+            Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, [TreeView])
 
-            If My.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
-                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64)
+            If My.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                Structures.Console.Save_Console_To_Registry("HKEY_USERS\.DEFAULT", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, [TreeView])
             End If
         End If
     End Sub
 
-    Public Sub Apply_Cursors(Optional ByVal [TreeView] As Windows.Forms.TreeView = Nothing)
-        Dim ReportProgress As Boolean = ([TreeView] IsNot Nothing)
+    Public Sub Apply_Cursors(Optional [TreeView] As TreeView = Nothing)
+        Dim ReportProgress As Boolean = My.Settings.ThemeLog.VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None AndAlso [TreeView] IsNot Nothing
+        Dim ReportProgress_Detailed As Boolean = ReportProgress AndAlso My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
 
         EditReg("HKEY_CURRENT_USER\Software\WinPaletter\Cursors", "", Cursor_Enabled)
 
@@ -6250,42 +6357,48 @@ Start:
         sw.Reset()
         sw.Start()
 
-        Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow)
-        Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help)
-        Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading)
-        Structures.Cursor.Save_Cursors_To_Registry("Busy", Cursor_Busy)
-        Structures.Cursor.Save_Cursors_To_Registry("Move", Cursor_Move)
-        Structures.Cursor.Save_Cursors_To_Registry("NS", Cursor_NS)
-        Structures.Cursor.Save_Cursors_To_Registry("EW", Cursor_EW)
-        Structures.Cursor.Save_Cursors_To_Registry("NESW", Cursor_NESW)
-        Structures.Cursor.Save_Cursors_To_Registry("NWSE", Cursor_NWSE)
-        Structures.Cursor.Save_Cursors_To_Registry("Up", Cursor_Up)
-        Structures.Cursor.Save_Cursors_To_Registry("Pen", Cursor_Pen)
-        Structures.Cursor.Save_Cursors_To_Registry("None", Cursor_None)
-        Structures.Cursor.Save_Cursors_To_Registry("Link", Cursor_Link)
-        Structures.Cursor.Save_Cursors_To_Registry("Pin", Cursor_Pin)
-        Structures.Cursor.Save_Cursors_To_Registry("Person", Cursor_Person)
-        Structures.Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam)
-        Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross)
+        Structures.Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Help", Cursor_Help, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("AppLoading", Cursor_AppLoading, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Busy", Cursor_Busy, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Move", Cursor_Move, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("NS", Cursor_NS, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("EW", Cursor_EW, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("NESW", Cursor_NESW, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("NWSE", Cursor_NWSE, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Up", Cursor_Up, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Pen", Cursor_Pen, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("None", Cursor_None, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Link", Cursor_Link, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Pin", Cursor_Pin, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, If(ReportProgress_Detailed, [TreeView], Nothing))
+        Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, If(ReportProgress_Detailed, [TreeView], Nothing))
 
         If ReportProgress Then AddNode([TreeView], String.Format(My.Lang.CP_Time, sw.ElapsedMilliseconds / 1000), "time")
         sw.Stop()
 
         If Cursor_Enabled Then
             Execute(CType(Sub()
-                              ExportCursors(Me)
+                              ExportCursors(Me, [TreeView])
                           End Sub, MethodInvoker), [TreeView], My.Lang.CP_RenderingCursors, My.Lang.CP_RenderingCursors_Error, My.Lang.CP_Time)
 
             If My.Settings.ThemeApplyingBehavior.AutoApplyCursors Then
                 Execute(CType(Sub()
+                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorShadow, Cursor_Shadow), "dll")
                                   SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile)
-                                  SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile)
-                                  SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile)
-                                  ApplyCursorsToReg()
 
-                                  If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
+                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorSonar, Cursor_Sonar), "dll")
+                                  SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile)
+
+                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorTrails, Cursor_Trails), "dll")
+                                  SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile)
+
+                                  ApplyCursorsToReg("HKEY_CURRENT_USER", If(ReportProgress_Detailed, [TreeView], Nothing))
+
+                                  If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then
                                       EditReg("HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Cursor_Trails)
-                                      ApplyCursorsToReg("HKEY_USERS\.DEFAULT")
+                                      ApplyCursorsToReg("HKEY_USERS\.DEFAULT", If(ReportProgress_Detailed, [TreeView], Nothing))
                                   End If
 
                               End Sub, MethodInvoker), [TreeView], My.Lang.CP_ApplyingCursors, My.Lang.CP_CursorsApplying_Error, My.Lang.CP_Time)
@@ -6296,12 +6409,12 @@ Start:
 
             If My.Settings.ThemeApplyingBehavior.ResetCursorsToAero Then
                 If Not My.WXP Then
-                    ResetCursorsToAero()
-                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToAero("HKEY_USERS\.DEFAULT")
+                    ResetCursorsToAero("HKEY_CURRENT_USER", If(ReportProgress_Detailed, [TreeView], Nothing))
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToAero("HKEY_USERS\.DEFAULT")
 
                 Else
-                    ResetCursorsToNone_XP()
-                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
+                    ResetCursorsToNone_XP("HKEY_CURRENT_USER", If(ReportProgress_Detailed, [TreeView], Nothing))
+                    If My.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Then ResetCursorsToNone_XP("HKEY_USERS\.DEFAULT")
 
                 End If
             End If
@@ -6312,27 +6425,30 @@ Start:
 #End Region
 
 #Region "Cursors Render"
-    Sub ExportCursors([CP] As CP)
-        Try : RenderCursor(CursorType.Arrow, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Help, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.AppLoading, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Busy, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Pen, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.None, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Move, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Up, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NS, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.EW, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NESW, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.NWSE, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Link, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Pin, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Person, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.IBeam, [CP]) : Catch : End Try
-        Try : RenderCursor(CursorType.Cross, [CP]) : Catch : End Try
+    Sub ExportCursors([CP] As CP, Optional [TreeView] As TreeView = Nothing)
+        Dim ReportProgress As Boolean = My.Settings.ThemeLog.VerboseLevel <> WPSettings.Structures.ThemeLog.VerboseLevels.None AndAlso [TreeView] IsNot Nothing
+        Dim ReportProgress_Detailed As Boolean = ReportProgress AndAlso My.Settings.ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
+
+        Try : RenderCursor(CursorType.Arrow, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Help, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.AppLoading, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Busy, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Pen, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.None, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Move, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Up, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.NS, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.EW, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.NESW, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.NWSE, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Link, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Pin, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Person, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.IBeam, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
+        Try : RenderCursor(CursorType.Cross, [CP], If(ReportProgress_Detailed, [TreeView], Nothing)) : Catch : End Try
     End Sub
 
-    Sub RenderCursor([Type] As CursorType, [CP] As CP)
+    Sub RenderCursor([Type] As CursorType, [CP] As CP, Optional [TreeView] As TreeView = Nothing)
 
         Dim CurName As String = ""
 
@@ -6389,6 +6505,8 @@ Start:
                 CurName = "Cross"
 
         End Select
+
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_RenderingCursor, CurName), "pe_patch")
 
         If Not [Type] = CursorType.Busy And Not [Type] = CursorType.AppLoading Then
 
@@ -6486,6 +6604,8 @@ Start:
 
             fs.Close()
 
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_CursorRenderedInto, Path), "info")
+
         Else
             Dim HotPoint As New Point(1, 1)
 
@@ -6555,6 +6675,8 @@ Start:
                     AN.WriteFrame32(BMPList(ix))
                 Next
 
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_CursorRenderedInto, String.Format(My.PATH_CursorsWP & "\{0}_{1}x.ani", CurName, i)), "info")
+
                 fs.Close()
             Next
 
@@ -6562,7 +6684,7 @@ Start:
 
     End Sub
 
-    Sub ApplyCursorsToReg(Optional scopeReg As String = "HKEY_CURRENT_USER")
+    Sub ApplyCursorsToReg(Optional scopeReg As String = "HKEY_CURRENT_USER", Optional [TreeView] As TreeView = Nothing)
         Dim Path As String = My.PATH_CursorsWP
 
         Dim RegValue As String
@@ -6591,30 +6713,38 @@ Start:
 
         Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
         EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
+
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
         x = String.Format("{0}\{1}", Path, "Arrow.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
         x = String.Format("{0}\{1}", Path, "Cross.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
         x = String.Format("{0}\{1}", Path, "Link.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
         x = String.Format("{0}\{1}", Path, "Help.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
         x = String.Format("{0}\{1}", Path, "IBeam.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
         x = String.Format("{0}\{1}", Path, "None.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
         x = String.Format("{0}\{1}", Path, "Pen.cur")
@@ -6631,41 +6761,50 @@ Start:
 
         x = String.Format("{0}\{1}", Path, "Move.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
         x = String.Format("{0}\{1}", Path, "NESW.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
         x = String.Format("{0}\{1}", Path, "NS.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
         x = String.Format("{0}\{1}", Path, "NWSE.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
         x = String.Format("{0}\{1}", Path, "EW.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
         x = String.Format("{0}\{1}", Path, "Up.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
         x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
         EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
         SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
     End Sub
 
-    Shared Sub ResetCursorsToAero(Optional scopeReg As String = "HKEY_CURRENT_USER")
+    Shared Sub ResetCursorsToAero(Optional scopeReg As String = "HKEY_CURRENT_USER", Optional [TreeView] As TreeView = Nothing)
         Try
             Dim path As String = "%SystemRoot%\Cursors"
 
             If scopeReg.ToUpper = "HKEY_CURRENT_USER" Then
                 If Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", False) IsNot Nothing Then
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_DelCursorWPFromReg, "HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete")
                     Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
                     rx.DeleteValue("WinPaletter", False)
                     rx.Close()
@@ -6678,31 +6817,52 @@ Start:
 
             Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_arrow.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
+            End If
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_link.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
+            End If
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_unavail.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_pen.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String)
@@ -6718,32 +6878,54 @@ Start:
 
             x = String.Format("{0}\{1}", path, "aero_move.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_nesw.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_ns.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_nwse.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_ew.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_up.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
+            End If
 
             x = String.Format("{0}\{1}", path, "aero_busy.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
-            If IO.File.Exists(x) Then User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
+            If IO.File.Exists(x) Then
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
+                User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
+            End If
 
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
             SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception
@@ -6755,13 +6937,14 @@ Start:
 
     End Sub
 
-    Shared Sub ResetCursorsToNone_XP(Optional scopeReg As String = "HKEY_CURRENT_USER")
+    Shared Sub ResetCursorsToNone_XP(Optional scopeReg As String = "HKEY_CURRENT_USER", Optional [TreeView] As TreeView = Nothing)
         Try
             Dim path As String = "%SystemRoot%\Cursors"
 
             If scopeReg.ToUpper = "HKEY_CURRENT_USER" Then
                 Try
                     If Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", False) IsNot Nothing Then
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_DelCursorWPFromReg, "HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete")
                         Dim rx As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Cursors\Schemes", True)
                         rx.DeleteValue("WinPaletter", False)
                         rx.Close()
@@ -6777,47 +6960,62 @@ Start:
 
             Dim x As String = ""
             EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
             SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception

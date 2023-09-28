@@ -8,9 +8,9 @@ Public Class SettingsX
 
 
     Sub LoadSettings()
-        Dim sets As XeSettings
+        Dim sets As WPSettings
 
-        If Not _External Then sets = My.Settings Else sets = New XeSettings(XeSettings.Mode.File, _File)
+        If Not _External Then sets = My.Settings Else sets = New WPSettings(WPSettings.Mode.File, _File)
         Read(sets)
 
         With My.Lang
@@ -25,7 +25,7 @@ Public Class SettingsX
         If _External Then OpenFileDialog1.FileName = _File
         TextBox3.Text = My.Settings.Language.File
     End Sub
-    Sub Read(Sets As XeSettings)
+    Sub Read(Sets As WPSettings)
         With Sets
             CheckBox1.Checked = .FileTypeManagement.AutoAddExt
 
@@ -39,7 +39,7 @@ Public Class SettingsX
             CheckBox5.Checked = .Updates.AutoCheck
             CheckBox9.Checked = .Miscellaneous.Win7LivePreview
 
-            ComboBox2.SelectedIndex = If(.Updates.Channel = XeSettings.Structures.Updates.Channels.Stable, 0, 1)
+            ComboBox2.SelectedIndex = If(.Updates.Channel = WPSettings.Structures.Updates.Channels.Stable, 0, 1)
             CheckBox17.Checked = .ThemeApplyingBehavior.ShowSaveConfirmation
             CheckBox33.Checked = .FileTypeManagement.CompressThemeFile
 
@@ -59,13 +59,13 @@ Public Class SettingsX
             CheckBox15.Checked = .ThemeApplyingBehavior.CMD_OverrideUserPreferences
 
             Select Case .NerdStats.Type
-                Case XeSettings.Structures.NerdStats.Formats.HEX
+                Case WPSettings.Structures.NerdStats.Formats.HEX
                     ComboBox3.SelectedIndex = 0
-                Case XeSettings.Structures.NerdStats.Formats.RGB
+                Case WPSettings.Structures.NerdStats.Formats.RGB
                     ComboBox3.SelectedIndex = 1
-                Case XeSettings.Structures.NerdStats.Formats.HSL
+                Case WPSettings.Structures.NerdStats.Formats.HSL
                     ComboBox3.SelectedIndex = 2
-                Case XeSettings.Structures.NerdStats.Formats.Dec
+                Case WPSettings.Structures.NerdStats.Formats.Dec
                     ComboBox3.SelectedIndex = 3
             End Select
             CheckBox10.Checked = .NerdStats.Enabled
@@ -74,9 +74,21 @@ Public Class SettingsX
             CheckBox31.Checked = .NerdStats.UseWindowsMonospacedFont
             CheckBox34.Checked = .NerdStats.DotDefaultChangedIndicator
 
-            CheckBox19.Checked = .ThemeLog.Enabled
+            Select Case .ThemeLog.VerboseLevel
+                Case WPSettings.Structures.ThemeLog.VerboseLevels.Basic
+                    VL1.Checked = True
+
+                Case WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
+                    VL2.Checked = True
+
+                Case Else
+                    VL0.Checked = True
+
+            End Select
+
             CheckBox18.Checked = .ThemeLog.CountDown
             NumericUpDown1.Value = .ThemeLog.CountDown_Seconds
+            CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked = .ThemeLog.ShowSkippedItemsOnDetailedVerbose
 
             CheckBox20.Checked = .ExplorerPatcher.Enabled
             CheckBox21.Checked = .ExplorerPatcher.Enabled_Force
@@ -90,26 +102,26 @@ Public Class SettingsX
 
             CheckBox22.Checked = .ThemeApplyingBehavior.DelayMetrics
 
-            RadioButton5.Checked = .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton6.Checked = Not (.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton8.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton10.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            RadioButton9.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
-            RadioButton7.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase
+            RadioButton5.Checked = .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton6.Checked = Not (.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton8.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton10.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            RadioButton9.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
+            RadioButton7.Checked = .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase
             CheckBox25.Checked = .ThemeApplyingBehavior.UPM_HKU_DEFAULT
-            RadioButton12.Checked = .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton11.Checked = Not (.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton14.Checked = .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton13.Checked = Not (.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton16.Checked = .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton15.Checked = Not (.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton18.Checked = .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton17.Checked = Not (.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton20.Checked = .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton19.Checked = Not (.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-            RadioButton22.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            RadioButton23.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
-            RadioButton21.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            RadioButton12.Checked = .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton11.Checked = Not (.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton14.Checked = .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton13.Checked = Not (.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton16.Checked = .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton15.Checked = Not (.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton18.Checked = .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton17.Checked = Not (.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton20.Checked = .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton19.Checked = Not (.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+            RadioButton22.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            RadioButton23.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
+            RadioButton21.Checked = .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
             CheckBox35_SFC.Checked = .ThemeApplyingBehavior.SFC_on_restoring_StartupSound
             CheckBox36.Checked = .ThemeApplyingBehavior.Ignore_PE_Modify_Alert
             RadioButton25.Checked = .ThemeApplyingBehavior.PE_ModifyByDefault
@@ -178,7 +190,7 @@ Public Class SettingsX
             If .ExplorerPatcher.TaskbarButton10 <> EP_ORB_10.Checked Then ch_EP = True
         End With
 
-        Write(My.Settings, XeSettings.Mode.Registry)
+        Write(My.Settings, WPSettings.Mode.Registry)
 
         If ch_appearance Then
             FetchDarkMode()
@@ -257,7 +269,7 @@ Public Class SettingsX
 
         MsgBox(My.Lang.SettingsSaved, MsgBoxStyle.Information)
     End Sub
-    Sub Write(Sets As XeSettings, Mode As XeSettings.Mode, Optional File As String = "")
+    Sub Write(Sets As WPSettings, Mode As WPSettings.Mode, Optional File As String = "")
         With Sets
             .FileTypeManagement.AutoAddExt = CheckBox1.Checked
             .FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked
@@ -295,9 +307,12 @@ Public Class SettingsX
             .WindowsTerminals.Terminal_Preview_Path = TextBox2.Text
             .ThemeApplyingBehavior.CMD_OverrideUserPreferences = CheckBox15.Checked
 
-            .ThemeLog.Enabled = CheckBox19.Checked
+            If VL0.Checked Then .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.None
+            If VL1.Checked Then .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Basic
+            If VL2.Checked Then .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed
             .ThemeLog.CountDown = CheckBox18.Checked
             .ThemeLog.CountDown_Seconds = NumericUpDown1.Value
+            .ThemeLog.ShowSkippedItemsOnDetailedVerbose = CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked
 
             .ExplorerPatcher.Enabled = CheckBox20.Checked
             .ExplorerPatcher.Enabled_Force = CheckBox21.Checked
@@ -307,20 +322,20 @@ Public Class SettingsX
             .ExplorerPatcher.TaskbarButton10 = EP_ORB_10.Checked
             .ThemeApplyingBehavior.DelayMetrics = CheckBox22.Checked
 
-            If RadioButton5.Checked Then .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton8.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            If RadioButton10.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton9.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
-            If RadioButton7.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase
+            If RadioButton5.Checked Then .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton8.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            If RadioButton10.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton9.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
+            If RadioButton7.Checked Then .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase
             .ThemeApplyingBehavior.UPM_HKU_DEFAULT = CheckBox25.Checked
-            If RadioButton12.Checked Then .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton14.Checked Then .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton16.Checked Then .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton18.Checked Then .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton20.Checked Then .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
-            If RadioButton22.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
-            If RadioButton23.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
-            If RadioButton21.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton12.Checked Then .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton14.Checked Then .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton16.Checked Then .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton18.Checked Then .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton20.Checked Then .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite Else .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
+            If RadioButton22.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite
+            If RadioButton23.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults
+            If RadioButton21.Checked Then .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange
             .ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked
             .ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox36.Checked
             .ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked
@@ -340,7 +355,7 @@ Public Class SettingsX
         End With
     End Sub
     Protected Overrides Sub OnFormClosing(ByVal e As FormClosingEventArgs)
-        Dim NewSets As New XeSettings(XeSettings.Mode.Empty)
+        Dim NewSets As New WPSettings(WPSettings.Mode.Empty)
 
         Changed = False
 
@@ -381,9 +396,12 @@ Public Class SettingsX
             If .WindowsTerminals.Terminal_Preview_Path <> TextBox2.Text Then Changed = True
             If .ThemeApplyingBehavior.CMD_OverrideUserPreferences <> CheckBox15.Checked Then Changed = True
 
-            If .ThemeLog.Enabled <> CheckBox19.Checked Then Changed = True
+            If .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.None And Not VL0.Checked Then Changed = True
+            If .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Basic And Not VL1.Checked Then Changed = True
+            If .ThemeLog.VerboseLevel = WPSettings.Structures.ThemeLog.VerboseLevels.Detailed And Not VL2.Checked Then Changed = True
             If .ThemeLog.CountDown <> CheckBox18.Checked Then Changed = True
             If .ThemeLog.CountDown_Seconds <> NumericUpDown1.Value Then Changed = True
+            If .ThemeLog.ShowSkippedItemsOnDetailedVerbose <> CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked Then Changed = True
 
             If .ExplorerPatcher.Enabled <> CheckBox20.Checked Then Changed = True
             If .ExplorerPatcher.Enabled_Force <> CheckBox21.Checked Then Changed = True
@@ -394,27 +412,27 @@ Public Class SettingsX
 
             If .ThemeApplyingBehavior.DelayMetrics <> CheckBox22.Checked Then Changed = True
 
-            If .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton5.Checked Then Changed = True
-            If .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton6.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton5.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton6.Checked Then Changed = True
 
-            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton8.Checked Then Changed = True
-            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton10.Checked Then Changed = True
-            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults And Not RadioButton9.Checked Then Changed = True
-            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase And Not RadioButton7.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton8.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton10.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults And Not RadioButton9.Checked Then Changed = True
+            If .ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase And Not RadioButton7.Checked Then Changed = True
             If .ThemeApplyingBehavior.UPM_HKU_DEFAULT <> CheckBox25.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton12.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton11.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton14.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton13.Checked Then Changed = True
-            If .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton16.Checked Then Changed = True
-            If .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton15.Checked Then Changed = True
-            If .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton18.Checked Then Changed = True
-            If .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton17.Checked Then Changed = True
-            If .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton20.Checked Then Changed = True
-            If .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton19.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton22.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults And Not RadioButton23.Checked Then Changed = True
-            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = XeSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton21.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton12.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton11.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton14.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton13.Checked Then Changed = True
+            If .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton16.Checked Then Changed = True
+            If .ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton15.Checked Then Changed = True
+            If .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton18.Checked Then Changed = True
+            If .ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton17.Checked Then Changed = True
+            If .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton20.Checked Then Changed = True
+            If .ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton19.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite And Not RadioButton22.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults And Not RadioButton23.Checked Then Changed = True
+            If .ThemeApplyingBehavior.Desktop_HKU_DEFAULT = WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange And Not RadioButton21.Checked Then Changed = True
             If .ThemeApplyingBehavior.SFC_on_restoring_StartupSound <> CheckBox35_SFC.Checked Then Changed = True
             If .ThemeApplyingBehavior.Ignore_PE_Modify_Alert <> CheckBox36.Checked Then Changed = True
             If .ThemeApplyingBehavior.PE_ModifyByDefault <> RadioButton25.Checked Then Changed = True
@@ -521,15 +539,15 @@ Public Class SettingsX
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
 
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
-            Dim sets As New XeSettings(XeSettings.Mode.Empty)
-            Write(sets, XeSettings.Mode.File, SaveFileDialog1.FileName)
+            Dim sets As New WPSettings(WPSettings.Mode.Empty)
+            Write(sets, WPSettings.Mode.File, SaveFileDialog1.FileName)
         End If
 
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            Dim sets As New XeSettings(XeSettings.Mode.File, OpenFileDialog1.FileName)
+            Dim sets As New WPSettings(WPSettings.Mode.File, OpenFileDialog1.FileName)
             Read(sets)
         End If
     End Sub
@@ -547,7 +565,7 @@ Public Class SettingsX
     Private Sub MainFrm_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
-        Dim sets As New XeSettings(XeSettings.Mode.File, files(0))
+        Dim sets As New WPSettings(WPSettings.Mode.File, files(0))
         Read(sets)
 
         OpenFileDialog1.FileName = files(0)

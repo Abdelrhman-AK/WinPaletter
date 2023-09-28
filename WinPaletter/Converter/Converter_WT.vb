@@ -374,6 +374,7 @@ Public Class WinTerminal_Converter
     Public Function Save(File As String, Mode As Mode, Optional [Version] As Version = Version.Stable) As String
         Select Case Mode
             Case Mode.JSONFile
+                Return ""
 
             Case Mode.WinPaletterFile
 
@@ -466,6 +467,7 @@ Public Class WinTerminal_Converter
                 Return ""
 
         End Select
+
     End Function
 
     Public Overloads Function ToString(Signature As String, Edition As Version) As String

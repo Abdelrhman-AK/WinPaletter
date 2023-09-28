@@ -33,9 +33,9 @@ Partial Class Win32UI
         Me.PictureBox35 = New System.Windows.Forms.PictureBox()
         Me.PictureBox16 = New System.Windows.Forms.PictureBox()
         Me.PictureBox34 = New System.Windows.Forms.PictureBox()
-        Me.Toggle1 = New UI.WP.Toggle()
+        Me.Toggle1 = New WinPaletter.UI.WP.Toggle()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.Toggle2 = New UI.WP.Toggle()
+        Me.Toggle2 = New WinPaletter.UI.WP.Toggle()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Button10 = New WinPaletter.UI.WP.Button()
         Me.AlertBox1 = New WinPaletter.UI.WP.AlertBox()
@@ -2436,7 +2436,7 @@ Partial Class Win32UI
         '
         'LabelR13
         '
-        Me.LabelR13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelR13.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.LabelR13.AutoSize = True
         Me.LabelR13.BackColor = System.Drawing.Color.White
         Me.LabelR13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -2462,6 +2462,7 @@ Partial Class Win32UI
         '
         'Menu_Window
         '
+        Me.Menu_Window.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.Menu_Window.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Menu_Window.ButtonDkShadow = System.Drawing.Color.Black
         Me.Menu_Window.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2584,6 +2585,7 @@ Partial Class Win32UI
         '
         'WindowR3
         '
+        Me.WindowR3.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.WindowR3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.WindowR3.ButtonDkShadow = System.Drawing.Color.Black
         Me.WindowR3.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2657,6 +2659,7 @@ Partial Class Win32UI
         '
         'WindowR2
         '
+        Me.WindowR2.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.WindowR2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.WindowR2.ButtonDkShadow = System.Drawing.Color.Black
         Me.WindowR2.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2786,6 +2789,7 @@ Partial Class Win32UI
         '
         'WindowR1
         '
+        Me.WindowR1.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.WindowR1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.WindowR1.ButtonDkShadow = System.Drawing.Color.Black
         Me.WindowR1.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2817,6 +2821,7 @@ Partial Class Win32UI
         '
         'WindowR4
         '
+        Me.WindowR4.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.WindowR4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.WindowR4.ButtonDkShadow = System.Drawing.Color.Black
         Me.WindowR4.ButtonFace = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -2962,7 +2967,7 @@ Partial Class Win32UI
         Me.Button2.Text = "Cancel"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(34, Byte), Integer))

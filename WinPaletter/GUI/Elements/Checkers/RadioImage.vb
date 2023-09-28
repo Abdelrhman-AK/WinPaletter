@@ -63,6 +63,7 @@ Namespace UI.WP
         <Bindable(True)>
         Public Overrides Property Text As String = ""
 
+        Public Property TextAlign As ContentAlignment = ContentAlignment.MiddleCenter
 #End Region
 
 #Region "Events"
@@ -220,6 +221,8 @@ Namespace UI.WP
 
                 Dim MainRect As New Rectangle(0, 0, Width - 1, Height - 1)
                 Dim MainRectInner As New Rectangle(1, 1, Width - 3, Height - 3)
+                Dim TextRect As New Rectangle(5, 5, Width - 10, Height - 10)
+
                 Dim CenterRect As New Rectangle
 
                 If Image IsNot Nothing Then CenterRect = New Rectangle(MainRect.X + (MainRect.Width - Image.Width) / 2,
@@ -241,7 +244,7 @@ Namespace UI.WP
                 If Image IsNot Nothing Then G.DrawImage(Image, CenterRect)
 
                 If ShowText Then
-                    Using br As New SolidBrush(ForeColor) : G.DrawString(Text, Font, br, MainRectInner, ContentAlignment.MiddleCenter.ToStringFormat) : End Using
+                    Using br As New SolidBrush(ForeColor) : G.DrawString(Text, Font, br, TextRect, TextAlign.ToStringFormat) : End Using
                 End If
             Catch
 

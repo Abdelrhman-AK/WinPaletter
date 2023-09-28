@@ -40,7 +40,7 @@ Public Class Wallpaper_Editor
     End Sub
 
     Protected Overrides Sub OnDragOver(e As DragEventArgs)
-        If TypeOf e.Data.GetData("WinPaletter.UI.Controllers.ColorItem") Is UI.Controllers.ColorItem Then
+        If TypeOf e.Data.GetData(GetType(UI.Controllers.ColorItem).FullName) Is UI.Controllers.ColorItem Then
             Focus()
             BringToFront()
         Else
@@ -502,7 +502,7 @@ Public Class Wallpaper_Editor
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub color_pick_DragDrop(sender As Object, e As DragEventArgs) Handles color_pick.DragDrop
+    Private Sub Color_pick_DragDrop(sender As Object, e As DragEventArgs) Handles color_pick.DragDrop
         pnl_preview.BackColor = color_pick.BackColor
     End Sub
 
