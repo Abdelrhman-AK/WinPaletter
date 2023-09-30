@@ -9,7 +9,7 @@ $packageArgs = @{
   fileType      = 'EXE'
   softwareName  = 'WinPaletter*'
   unzipLocation = $appdir
-  url           = 'https://github.com/Abdelrhman-AK/WinPaletter/releases/download/v1.0.8.0/WinPaletter.zip'
+  url           = 'https://github.com/Abdelrhman-AK/WinPaletter/releases/download/v1.0.8.1/WinPaletter.zip'
   checksum      = 'EF8A79746DA2E8D8273A39E9260EFFCE'
   checksumType  = 'md5'
 }

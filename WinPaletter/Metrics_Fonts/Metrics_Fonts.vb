@@ -51,10 +51,6 @@ Public Class Metrics_Fonts
 
         DoubleBuffer
 
-        FakeIcon1.Title = "Icon 1"
-        FakeIcon2.Title = "Icon 2"
-        FakeIcon3.Title = "Icon 3"
-
         Dim condition0 As Boolean = My.PreviewStyle = WindowStyle.W7 AndAlso My.CP.Windows7.Theme = CP.Structures.Windows7.Themes.Classic
         Dim condition1 As Boolean = My.PreviewStyle = WindowStyle.WVista AndAlso My.CP.WindowsVista.Theme = CP.Structures.Windows7.Themes.Classic
         Dim condition2 As Boolean = My.PreviewStyle = WindowStyle.WXP AndAlso My.CP.WindowsXP.Theme = CP.Structures.WindowsXP.Themes.Classic

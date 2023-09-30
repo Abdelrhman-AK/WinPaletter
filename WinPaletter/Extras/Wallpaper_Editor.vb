@@ -655,9 +655,7 @@ Public Class Wallpaper_Editor
     End Sub
 
     Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
-        Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-        Dim WallpaperPath As String = R1.GetValue("Wallpaper").ToString()
-        If R1 IsNot Nothing Then R1.Close()
+        Dim WallpaperPath As String = Reg_IO.GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "")
 
         If Not IO.File.Exists(WallpaperPath) Then
             If My.PreviewStyle = WindowStyle.WXP Then
@@ -679,9 +677,7 @@ Public Class Wallpaper_Editor
         End If
 
         If Not IO.File.Exists(TextBox1.Text) Then
-            Dim R1 As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-            TextBox3.Text = R1.GetValue("Wallpaper").ToString()
-            If R1 IsNot Nothing Then R1.Close()
+            TextBox3.Text = Reg_IO.GetReg("HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", If(My.PreviewStyle = WindowStyle.WXP, My.PATH_Windows & "\Web\Wallpaper\Bliss.bmp", My.PATH_Windows & "\Web\Wallpaper\Windows\img0.jpg"))
         End If
         ApplyHSLPreview()
     End Sub

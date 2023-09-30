@@ -331,8 +331,8 @@ Namespace UI.Simulation
             Dim Rect_Titlebar As New Rectangle(0, 0, Width - 1, 32)
             Dim Rect_Console As New Rectangle(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height)
 
-            Dim s1 As String = "Console Sample"
-            Dim s2 As String = "This is a selection"
+            Dim s1 As String = My.Lang.Terminal_ConsoleSample
+            Dim s2 As String = My.Lang.Terminal_ThisIsASelection
             Dim s3 As String = My.PATH_System32 & ">"
 
             Dim s1X As SizeF = s1.Measure(Font) + New SizeF(5, 0)
@@ -445,7 +445,7 @@ Namespace UI.Simulation
             Using br As New SolidBrush(FC1) : G.DrawString(TabIconButItIsString, fx, br, IconRect1, ContentAlignment.TopCenter.ToStringFormat) : End Using
 
             TextRenderer.DrawText(G, TabTitle, New Font("Segoe UI", 8, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis)
-            TextRenderer.DrawText(G, "Other Terminal", New Font("Segoe UI", 8, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis)
+            TextRenderer.DrawText(G, My.Lang.Terminal_Another, New Font("Segoe UI", 8, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis)
 
 
             Using br As New SolidBrush(FC0) : G.DrawString("", New Font("Segoe MDL2 Assets", 6, FontStyle.Regular), br, RectClose_Tab0, ContentAlignment.MiddleCenter.ToStringFormat) : End Using

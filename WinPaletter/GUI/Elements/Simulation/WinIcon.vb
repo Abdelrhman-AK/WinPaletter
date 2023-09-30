@@ -18,7 +18,6 @@ Namespace UI.Simulation
         Public Property ColorText As Color = Color.White
         Public Property ColorGlow As Color = Color.FromArgb(50, 0, 0, 0)
         Public Property Icon As Icon
-        Public Property Title As String = "New Folder"
 
         Private _IconSize As Integer = 32
         Public Property IconSize As Integer
@@ -30,6 +29,14 @@ Namespace UI.Simulation
                 Invalidate()
             End Set
         End Property
+
+
+        <Browsable(True)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
+        <EditorBrowsable(EditorBrowsableState.Always)>
+        <Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(System.Drawing.Design.UITypeEditor))>
+        <Bindable(True)>
+        Public Overrides Property Text As String = ""
 
         Protected Overrides ReadOnly Property CreateParams As CreateParams
             Get
@@ -63,12 +70,9 @@ Namespace UI.Simulation
                 ico.Dispose()
             End If
 
-            If ColorGlow.A > 0 Then G.DrawString(Title, Me.Font, Brushes.Black, LabelRectShadow, ContentAlignment.MiddleCenter.ToStringFormat)
-            'G.DrawString(Title, Font, Brushes.White, LabelRect, ToStringFormat(ContentAlignment.MiddleCenter))
+            If ColorGlow.A > 0 Then G.DrawString(Text, Me.Font, Brushes.Black, LabelRectShadow, ContentAlignment.MiddleCenter.ToStringFormat)
 
-            G.DrawGlowString(1, Title, Font, ColorText, ColorGlow, New Rectangle(0, 0, Width - 1, Height - 1), LabelRect, ContentAlignment.MiddleCenter.ToStringFormat)
-
-            'G.DrawRectangle(Pens.Red, New Rectangle(0, 0, Width - 1, Height - 1))
+            G.DrawGlowString(1, Text, Font, ColorText, ColorGlow, New Rectangle(0, 0, Width - 1, Height - 1), LabelRect, ContentAlignment.MiddleCenter.ToStringFormat)
         End Sub
 
     End Class

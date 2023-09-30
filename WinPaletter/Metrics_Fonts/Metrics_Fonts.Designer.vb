@@ -34,7 +34,7 @@ Partial Class Metrics_Fonts
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Button11 = New WinPaletter.UI.WP.Button()
         Me.Button12 = New WinPaletter.UI.WP.Button()
-        Me.MetricsEnabled = New UI.WP.Toggle()
+        Me.MetricsEnabled = New WinPaletter.UI.WP.Toggle()
         Me.checker_img = New System.Windows.Forms.PictureBox()
         Me.TabControl1 = New WinPaletter.UI.WP.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -175,7 +175,7 @@ Partial Class Metrics_Fonts
         Me.Label47 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.GroupBox17 = New WinPaletter.UI.WP.GroupBox()
-        Me.CheckBox1 = New UI.WP.CheckBox()
+        Me.CheckBox1 = New WinPaletter.UI.WP.CheckBox()
         Me.PictureBox31 = New System.Windows.Forms.PictureBox()
         Me.PictureBox44 = New System.Windows.Forms.PictureBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -717,7 +717,7 @@ Partial Class Metrics_Fonts
         Me.Label1.TabIndex = 0
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Button12
+        'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
@@ -1503,7 +1503,7 @@ Partial Class Metrics_Fonts
         Me.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive
         Me.AlertBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(2, Byte), Integer))
+        Me.AlertBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(68, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(2, Byte), Integer))
         Me.AlertBox1.CenterText = False
         Me.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(81, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.AlertBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -1592,7 +1592,7 @@ Partial Class Metrics_Fonts
         Me.FakeIcon1.Name = "FakeIcon1"
         Me.FakeIcon1.Size = New System.Drawing.Size(76, 70)
         Me.FakeIcon1.TabIndex = 3
-        Me.FakeIcon1.Title = "New folder"
+        Me.FakeIcon1.Text = "Icon 1"
         '
         'FakeIcon2
         '
@@ -1606,7 +1606,7 @@ Partial Class Metrics_Fonts
         Me.FakeIcon2.Name = "FakeIcon2"
         Me.FakeIcon2.Size = New System.Drawing.Size(76, 70)
         Me.FakeIcon2.TabIndex = 6
-        Me.FakeIcon2.Title = "New folder"
+        Me.FakeIcon2.Text = "Icon 2"
         '
         'FakeIcon3
         '
@@ -1620,7 +1620,8 @@ Partial Class Metrics_Fonts
         Me.FakeIcon3.Name = "FakeIcon3"
         Me.FakeIcon3.Size = New System.Drawing.Size(76, 70)
         Me.FakeIcon3.TabIndex = 5
-        Me.FakeIcon3.Title = "New folder"
+        Me.FakeIcon3.Tag = ""
+        Me.FakeIcon3.Text = "Icon 3"
         '
         'GroupBox5
         '

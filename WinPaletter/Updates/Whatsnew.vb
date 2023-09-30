@@ -33,14 +33,24 @@
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Store_Intro.ShowDialog()
+        Process.Start(My.Resources.Link_Wiki & "/Color-picker-control#3-drag-and-drop")
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        Process.Start(My.Resources.Link_Wiki)
+        Process.Start(My.Resources.Link_Wiki & "/Palette-generator")
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        Process.Start(My.Resources.Link_Wiki)
+        Process.Start(My.Resources.Link_Wiki & "/Color-picker-control#4-previous-colors-like-undo-or-colors-history")
+        Process.Start(My.Resources.Link_Wiki & "/Color-picker-control#1-cut-copy-paste-and-undo")
+        Process.Start(My.Resources.Link_Wiki & "/Color-picker-control#6-color-history")
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Process.Start(My.Resources.Link_Wiki & "/Language-creation")
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Process.Start(My.Resources.Link_Wiki & "/Theme-log-verbose-level")
     End Sub
 End Class

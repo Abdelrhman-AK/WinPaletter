@@ -415,13 +415,17 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Select Case Theme
                         Case Structures.Windows7.Themes.Aero
                             UxTheme.EnableTheming(1)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         Case Structures.Windows7.Themes.AeroLite
                             UxTheme.EnableTheming(1)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0)
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroLite, "dll")
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                             Try
                                 My.Computer.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", True).DeleteSubKeyTree("Pre-High Contrast Scheme", False)
@@ -550,8 +554,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Select Case Theme
                     Case Themes.Aero
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
@@ -559,25 +565,29 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                     Case Themes.AeroOpaque
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroOpaque, "dll")
 
                     Case Themes.Basic
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingBasic, "dll")
 
                     Case Themes.Classic
                         UxTheme.EnableTheming(0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 0), "dll")
 
                 End Select
 
@@ -654,34 +664,40 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                 Select Case Theme
                     Case Structures.Windows7.Themes.Aero
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAero, "dll")
 
                     Case Structures.Windows7.Themes.AeroOpaque
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingAeroOpaque, "dll")
 
                     Case Structures.Windows7.Themes.Basic
                         UxTheme.EnableTheming(1)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                         UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0)
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0), "dll")
 
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0)
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingBasic, "dll")
 
                     Case Structures.Windows7.Themes.Classic
                         UxTheme.EnableTheming(0)
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 0), "dll")
 
                 End Select
 
@@ -757,34 +773,43 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Select Case Theme
                         Case Themes.LunaBlue
                             UxTheme.EnableTheming(1)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0), "dll")
+
                             My.StartedWithClassicTheme = False
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaBlue, "dll")
 
                         Case Themes.LunaOliveGreen
                             UxTheme.EnableTheming(1)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0), "dll")
                             My.StartedWithClassicTheme = False
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaGreen, "dll")
 
                         Case Themes.LunaSilver
                             UxTheme.EnableTheming(1)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                             UxTheme.SetSystemVisualStyle(My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", My.PATH_Windows & "\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0), "dll")
                             My.StartedWithClassicTheme = False
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingLunaSilver, "dll")
 
                         Case Themes.Classic
                             UxTheme.EnableTheming(0)
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 0), "dll")
                             My.StartedWithClassicTheme = True
-                            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingClassic, "dll")
 
                         Case Themes.Custom
 
                             If IO.File.Exists(ThemeFile) AndAlso (IO.Path.GetExtension(ThemeFile) = ".theme" Or IO.Path.GetExtension(ThemeFile) = ".msstyles") Then
                                 UxTheme.EnableTheming(1)
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_ET, "UxTheme", "EnableTheming", 1), "dll")
+
                                 UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0)
                                 My.StartedWithClassicTheme = False
-                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingVS, IO.Path.GetFileName(Theme)), "dll")
+                                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_UxTheme_SSVS, "UxTheme", "SetSystemVisualStyle", ThemeFile, ColorScheme, "NormalSize", 0), "dll")
                             End If
 
                     End Select
@@ -1611,9 +1636,9 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     End If
 
                     If Not SkipSettingWallpaper Then
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingWallpaper, "dll")
 
                         If WallpaperType = WallpaperTypes.SolidColor Then
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString, 0, "", SPIF.UpdateINIFile.ToString), "dll")
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, "", SPIF.UpdateINIFile)
                             EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "", RegistryValueKind.String)
 
@@ -1628,6 +1653,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 End Using
                             End If
 
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString, 0, ImageFile, SPIF.UpdateINIFile.ToString), "dll")
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, ImageFile, SPIF.UpdateINIFile)
                             EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String)
 
@@ -1635,6 +1661,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String)
 
                         ElseIf WallpaperType = WallpaperTypes.SlideShow Then
+                            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString, 0, slideshow_img, SPIF.UpdateINIFile.ToString), "dll")
                             SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, slideshow_img, SPIF.UpdateINIFile)
                             EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String)
 
@@ -1740,7 +1767,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     ImgF.Image.Save(path, Imaging.ImageFormat.Bmp)
                 End Using
 
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingWallpaper, "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Desktop.SETDESKWALLPAPER.ToString, 0, path, SPIF.UpdateINIFile.ToString), "dll")
                 SystemParametersInfo(SPI.Desktop.SETDESKWALLPAPER, 0, path, SPIF.UpdateINIFile)
                 EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String)
                 EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", CInt(Structures.Wallpaper.WallpaperTypes.Picture))
@@ -1913,7 +1940,7 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", If(Not Fonts_SingleBitPP, 2, 0))
                     EditReg([TreeView], "HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", If(Not Fonts_SingleBitPP, 2, 1))
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFontSmoothing, Not Fonts_SingleBitPP), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Fonts.SETFONTSMOOTHING.ToString, Not Fonts_SingleBitPP, "null", SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Fonts.SETFONTSMOOTHING, Not Fonts_SingleBitPP, Nothing, SPIF.UpdateINIFile)
 
                     If Not My.Settings.ThemeApplyingBehavior.DelayMetrics Then
@@ -1947,10 +1974,10 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                             .lfFont = lfIconFont
                         End With
 
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingMetricsFonts, "dll")
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Metrics.SETNONCLIENTMETRICS.ToString, Marshal.SizeOf(NCM), NCM.ToString, SPIF.UpdateINIFile.ToString), "dll")
                         SystemParametersInfo(SPI.Metrics.SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), NCM, SPIF.UpdateINIFile)
 
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_SettingIconsMetrics, "dll")
+                        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Icons.SETICONMETRICS.ToString, Marshal.SizeOf(ICO), ICO.ToString, SPIF.UpdateINIFile.ToString), "dll")
                         SystemParametersInfo(SPI.Icons.SETICONMETRICS, Marshal.SizeOf(ICO), ICO, SPIF.UpdateINIFile)
                     End If
 
@@ -2234,67 +2261,67 @@ Public Class CP : Implements IDisposable : Implements ICloneable
 
                 If Enabled Then
                     Dim anim As New ANIMATIONINFO With {.cbSize = Marshal.SizeOf(anim), .IMinAnimate = WindowAnimation.ToInteger}
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAnimation, anim.IMinAnimate.ToBoolean), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETANIMATION.ToString, anim.cbSize, anim.ToString, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETANIMATION, anim.cbSize, anim, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingDropShadow, WindowShadow), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDROPSHADOW.ToString, 0, WindowShadow, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETDROPSHADOW, 0, WindowShadow, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingUIEffects, WindowUIEffects), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETUIEFFECTS.ToString, 0, WindowUIEffects, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETUIEFFECTS, 0, WindowUIEffects, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAnimateControls, WindowUIEffects), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCLIENTAREAANIMATION.ToString, 0, AnimateControlsInsideWindow, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETCLIENTAREAANIMATION, 0, AnimateControlsInsideWindow, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingShowWinContentDragging, ShowWinContentDrag), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETDRAGFULLWINDOWS.ToString, 0, ShowWinContentDrag, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETDRAGFULLWINDOWS, ShowWinContentDrag, 0, SPIF.UpdateINIFile)        'use uiParam not pvParam
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuAnimation, MenuAnimation), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUANIMATION.ToString, 0, MenuAnimation, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUANIMATION, 0, MenuAnimation, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuFade, MenuFade), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUFADE.ToString, 0, MenuFade = MenuAnimType.Fade, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUFADE, 0, MenuFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuDelay, MenuShowDelay), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUSHOWDELAY.ToString, MenuShowDelay, 0, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUSHOWDELAY, MenuShowDelay, 0, SPIF.UpdateINIFile)               'use uiParam not pvParam
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuSelectionFade, MenuSelectionFade.ToString), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETSELECTIONFADE.ToString, 0, MenuSelectionFade, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETSELECTIONFADE, 0, MenuSelectionFade, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingComboBoxAnimation, ComboBoxAnimation), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCOMBOBOXANIMATION.ToString, 0, ComboBoxAnimation, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETCOMBOBOXANIMATION, 0, ComboBoxAnimation, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingListBoxSmoothScrolling, ListBoxSmoothScrolling), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETLISTBOXSMOOTHSCROLLING.ToString, 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETLISTBOXSMOOTHSCROLLING, 0, ListBoxSmoothScrolling, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingTooltipAnimation, TooltipAnimation), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPANIMATION.ToString, 0, TooltipAnimation, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPANIMATION, 0, TooltipAnimation, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingTooltipFade, TooltipFade.ToString), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETTOOLTIPFADE.ToString, 0, TooltipFade = MenuAnimType.Fade, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETTOOLTIPFADE, 0, TooltipFade = MenuAnimType.Fade, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingMenuUnderline, KeyboardUnderline), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETMENUUNDERLINES.ToString, 0, KeyboardUnderline, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETMENUUNDERLINES, 0, KeyboardUnderline, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFocusRectW, FocusRectWidth), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERWIDTH.ToString, 0, FocusRectWidth, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERWIDTH, 0, FocusRectWidth, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingFocusRectH, FocusRectHeight), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.FocusRect.SETFOCUSBORDERHEIGHT.ToString, 0, FocusRectHeight, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.FocusRect.SETFOCUSBORDERHEIGHT, 0, FocusRectHeight, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCaretRect, Caret), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETCARETWIDTH.ToString, 0, Caret, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETCARETWIDTH, 0, Caret, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT, AWT_Enabled), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWINDOWTRACKING.ToString, 0, AWT_Enabled, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWINDOWTRACKING, 0, AWT_Enabled, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT_ActivatedWindowTop, AWT_BringActivatedWindowToTop), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKZORDER.ToString, 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKZORDER, 0, AWT_BringActivatedWindowToTop, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingAWT_Delay, AWT_Delay), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Effects.SETACTIVEWNDTRKTIMEOUT.ToString, 0, AWT_Delay, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Effects.SETACTIVEWNDTRKTIMEOUT, 0, AWT_Delay, SPIF.UpdateINIFile)
 
-                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingSnapCursorToDefault, SnapCursorToDefButton), "dll")
+                    If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETSNAPTODEFBUTTON.ToString, 0, SnapCursorToDefButton, SPIF.UpdateINIFile.ToString), "dll")
                     SystemParametersInfo(SPI.Cursors.SETSNAPTODEFBUTTON, SnapCursorToDefButton, 0, SPIF.UpdateINIFile)     'use uiParam not pvParam
 
                     EditReg([TreeView], "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow.ToInteger)
@@ -2367,8 +2394,8 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                                 End If
 
                                 'TakeOwn_Reg(Registry.LocalMachine.OpenSubKey("SOFTWARE\Classes\CLSID"), "{926749fa-2615-4987-8845-c33e65f2b957}")
-                                'EditReg_CMD("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{926749fa-2615-4987-8845-c33e65f2b957}", "", "%SystemRoot%\system32\UIRibbon.dll", RegistryValueKind.ExpandString)
-                                'EditReg_CMD("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{926749fa-2615-4987-8845-c33e65f2b957}", "ThreadingModel", "Apartment", RegistryValueKind.String)
+                                'EditReg_CMD([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{926749fa-2615-4987-8845-c33e65f2b957}", "", "%SystemRoot%\system32\UIRibbon.dll", RegistryValueKind.ExpandString)
+                                'EditReg_CMD([TreeView], "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{926749fa-2615-4987-8845-c33e65f2b957}", "ThreadingModel", "Apartment", RegistryValueKind.String)
 
                         End Select
                     End If
@@ -2377,16 +2404,14 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Try
                         EditReg([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
                     Catch
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer > EnableLegacyBalloonNotifications = " & BalloonNotifications.ToInteger, "reg_add")
-                        EditReg_CMD("HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
+                        EditReg_CMD([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications.ToInteger)
                     End Try
 
                     'Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     Try
                         EditReg([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
                     Catch
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], "HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer > ForceStartSize = " & If(FullScreenStartMenu, 2, 0), "reg_add")
-                        EditReg_CMD("HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
+                        EditReg_CMD([TreeView], "HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", If(FullScreenStartMenu, 2, 0))
                     End Try
 
                     If My.W11 Then
@@ -2693,39 +2718,24 @@ Public Class CP : Implements IDisposable : Implements ICloneable
                     Dim destination_StartupSnd As String() = {"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation"}
 
                     If String.IsNullOrWhiteSpace(Snd_Imageres_SystemStart) Then
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 1", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
-
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 1", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
+                        EditReg_CMD([TreeView], destination_StartupSnd(0), "DisableStartupSound", 1)
+                        EditReg_CMD([TreeView], destination_StartupSnd(1), "DisableStartupSound", 1)
 
                     ElseIf IO.File.Exists(Snd_Imageres_SystemStart) Then
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 0", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
-
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 0", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
+                        EditReg_CMD([TreeView], destination_StartupSnd(0), "DisableStartupSound", 0)
+                        EditReg_CMD([TreeView], destination_StartupSnd(1), "DisableStartupSound", 0)
 
                     ElseIf Snd_Imageres_SystemStart.Trim.ToUpper = "DEFAULT" Then
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 0", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 0)
-
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 0", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 0)
+                        EditReg_CMD([TreeView], destination_StartupSnd(0), "DisableStartupSound", 0)
+                        EditReg_CMD([TreeView], destination_StartupSnd(1), "DisableStartupSound", 0)
 
                     ElseIf Not Snd_Imageres_SystemStart.Trim.ToUpper = "CURRENT" Then
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = " & (Not My.W11).ToInteger, "reg_add")
-                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
-
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = " & (Not My.W11).ToInteger, "reg_add")
-                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
+                        EditReg_CMD([TreeView], destination_StartupSnd(0), "DisableStartupSound", (Not My.W11).ToInteger)
+                        EditReg_CMD([TreeView], destination_StartupSnd(1), "DisableStartupSound", (Not My.W11).ToInteger)
 
                     Else
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(0) & ", DisableStartupSound = 1", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(0), "DisableStartupSound", 1)
-
-                        If [TreeView] IsNot Nothing Then AddNode([TreeView], destination_StartupSnd(1) & ", DisableStartupSound = 1", "reg_add")
-                        EditReg_CMD(destination_StartupSnd(1), "DisableStartupSound", 1)
+                        EditReg_CMD([TreeView], destination_StartupSnd(0), "DisableStartupSound", 1)
+                        EditReg_CMD([TreeView], destination_StartupSnd(1), "DisableStartupSound", 1)
 
                     End If
 
@@ -5224,7 +5234,8 @@ Start:
                 Catch
                 End Try
 
-                If ReportProgress_Detailed Then AddNode([TreeView], My.Lang.Verbose_BroadcastEffects, "dll")
+                If ReportProgress_Detailed Then AddNode([TreeView],
+                                                        String.Format(My.Lang.Verbose_User32_SMT, "User32", "SendMessageTimeout", "HWND_BROADCAST", "WM_SETTINGCHANGE", "UIntPtr.Zero", "Marshal.StringToHGlobalAnsi(""Environment"")", "SMTO_ABORTIFHUNG", MSG_TIMEOUT, "RESULT"), "dll")
                 User32.SendMessageTimeout(User32.HWND_BROADCAST, User32.WM_SETTINGCHANGE, UIntPtr.Zero, Marshal.StringToHGlobalAnsi("Environment"), User32.SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, User32.MSG_TIMEOUT, User32.RESULT)
 
                 If ReportProgress Then
@@ -6414,13 +6425,13 @@ Start:
 
             If My.Settings.ThemeApplyingBehavior.AutoApplyCursors Then
                 Execute(CType(Sub()
-                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorShadow, Cursor_Shadow), "dll")
+                                  If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORSHADOW.ToString, 0, Cursor_Shadow, SPIF.UpdateINIFile.ToString), "dll")
                                   SystemParametersInfo(SPI.Cursors.SETCURSORSHADOW, 0, Cursor_Shadow, SPIF.UpdateINIFile)
 
-                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorSonar, Cursor_Sonar), "dll")
+                                  If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSESONAR.ToString, 0, Cursor_Sonar, SPIF.UpdateINIFile.ToString), "dll")
                                   SystemParametersInfo(SPI.Cursors.SETMOUSESONAR, 0, Cursor_Sonar, SPIF.UpdateINIFile)
 
-                                  If ReportProgress_Detailed Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursorTrails, Cursor_Trails), "dll")
+                                  If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETMOUSETRAILS.ToString, 0, Cursor_Trails, SPIF.UpdateINIFile.ToString), "dll")
                                   SystemParametersInfo(SPI.Cursors.SETMOUSETRAILS, Cursor_Trails, 0, SPIF.UpdateINIFile)
 
                                   ApplyCursorsToReg("HKEY_CURRENT_USER", If(ReportProgress_Detailed, [TreeView], Nothing))
@@ -6743,37 +6754,37 @@ Start:
         Dim x As String = String.Format("{0}\{1}", Path, "AppLoading_1x.ani")
         EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
 
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
         x = String.Format("{0}\{1}", Path, "Arrow.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
         x = String.Format("{0}\{1}", Path, "Cross.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_CROSS.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
         x = String.Format("{0}\{1}", Path, "Link.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HAND.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
         x = String.Format("{0}\{1}", Path, "Help.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HELP.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
         x = String.Format("{0}\{1}", Path, "IBeam.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
         x = String.Format("{0}\{1}", Path, "None.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NO.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
         x = String.Format("{0}\{1}", Path, "Pen.cur")
@@ -6790,40 +6801,40 @@ Start:
 
         x = String.Format("{0}\{1}", Path, "Move.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
         x = String.Format("{0}\{1}", Path, "NESW.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
         x = String.Format("{0}\{1}", Path, "NS.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
         x = String.Format("{0}\{1}", Path, "NWSE.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
         x = String.Format("{0}\{1}", Path, "EW.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
         x = String.Format("{0}\{1}", Path, "Up.cur")
         EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_UP.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
         x = String.Format("{0}\{1}", Path, "Busy_1x.ani")
         EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_WAIT.ToString), "dll")
         User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-        If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
+        If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString, 0, 0, SPIF.UpdateINIFile.ToString), "dll")
         SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
     End Sub
 
@@ -6847,49 +6858,49 @@ Start:
             Dim x As String = String.Format("{0}\{1}", path, "aero_working.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_arrow.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
             End If
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_CROSS.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_link.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HAND.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_helpsel.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HELP.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
             End If
 
             x = String.Format("")
             EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_unavail.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NO.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
             End If
 
@@ -6908,53 +6919,53 @@ Start:
             x = String.Format("{0}\{1}", path, "aero_move.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_nesw.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_ns.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_nwse.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_ew.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_up.cur")
             EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_UP.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
             End If
 
             x = String.Format("{0}\{1}", path, "aero_busy.ani")
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
             If IO.File.Exists(x) Then
-                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
+                If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_WAIT.ToString), "dll")
                 User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
             End If
 
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString, 0, 0, SPIF.UpdateINIFile.ToString), "dll")
             SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception
@@ -6989,62 +7000,62 @@ Start:
 
             Dim x As String = ""
             EditReg(scopeReg & "\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "APPSTARTING", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NORMAL", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NORMAL.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NORMAL)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "CROSS", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_CROSS.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_CROSS)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Hand", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HAND", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HAND.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HAND)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Help", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "HELP", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_HELP.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_HELP)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "IBEAM", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_IBEAM.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_IBEAM)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "No", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "NO", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_NO.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_NO)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEALL", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEALL)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENESW", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENESW)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENS", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENS.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENS)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZENWSE", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZENWSE)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "SIZEWE", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_SIZEWE)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "UP", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_UP.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_UP)
 
             EditReg(scopeReg & "\Control Panel\Cursors", "Wait", x, RegistryValueKind.String)
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_SettingCursor, "WAIT", x), "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SSC, "User32", "SetSystemCursor", x, User32.OCR_SYSTEM_CURSORS.OCR_WAIT.ToString), "dll")
             User32.SetSystemCursor(User32.LoadCursorFromFile(x), User32.OCR_SYSTEM_CURSORS.OCR_WAIT)
 
-            If [TreeView] IsNot Nothing Then AddNode([TreeView], My.Lang.Verbose_RefreshingCursors, "dll")
+            If [TreeView] IsNot Nothing Then AddNode([TreeView], String.Format(My.Lang.Verbose_User32_SPI, "User32", "SystemParameterInfo", SPI.Cursors.SETCURSORS.ToString, 0, 0, SPIF.UpdateINIFile.ToString), "dll")
             SystemParametersInfo(SPI.Cursors.SETCURSORS, 0, 0, SPIF.UpdateINIFile Or SPIF.UpdateINIFile)
 
         Catch ex As Exception

@@ -190,7 +190,7 @@ Public Module ColorsExtensions
     '''</summary>
     <Extension()>
     Public Function ReturnFormat(Color As Color, Format As ColorFormat, Optional HexHash As Boolean = False, Optional Alpha As Boolean = False) As String
-        Dim s As String = "Empty"
+        Dim s As String = My.Lang.Empty
 
         If Color <> Color.FromArgb(0, 0, 0, 0) Then
             Select Case Format
@@ -208,7 +208,7 @@ Public Module ColorsExtensions
 
             End Select
         Else
-            s = "Empty"
+            s = My.Lang.Empty
         End If
 
         Return s
@@ -1262,6 +1262,7 @@ Module GraphicsExtensions
         Dim w As Integer = Math.Max(8, ClientRect.Width / 5)
         Dim h As Integer = Math.Max(8, ClientRect.Height / 5)
         Dim emSize As Single = G.DpiY * Font.SizeInPoints / 72
+        If Text Is Nothing Or String.IsNullOrWhiteSpace(Text) Then Text = ""
 
         Using b As New Bitmap(w, h)
             Using gp As New GraphicsPath()

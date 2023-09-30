@@ -1,4 +1,5 @@
 ﻿Public Class Store_ThemeLicense
+
     Private Sub Store_ThemeLicense_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadLanguage
         ApplyStyle(Me)
@@ -16,6 +17,5 @@
         DialogResult = DialogResult.Cancel
         Close()
     End Sub
-
 
 End Class

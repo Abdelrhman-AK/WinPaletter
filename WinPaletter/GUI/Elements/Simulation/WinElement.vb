@@ -1319,8 +1319,8 @@ Namespace UI.Simulation
                     G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
                     G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
-                    G.DrawString("App Preview", Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
-                    G.DrawString("Inactive app", Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
 #End Region
 
                 Case Styles.TaskbarVistaOpaque
@@ -1344,8 +1344,8 @@ Namespace UI.Simulation
                     G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
                     G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
-                    G.DrawString("App Preview", Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
-                    G.DrawString("Inactive app", Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
 #End Region
 
                 Case Styles.TaskbarVistaBasic
@@ -1367,8 +1367,8 @@ Namespace UI.Simulation
                     G.DrawImage(My.Resources.SampleApp_Active, appIcon1)
                     G.DrawImage(My.Resources.SampleApp_Inactive, appIcon2)
 
-                    G.DrawString("App Preview", Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
-                    G.DrawString("Inactive app", Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.AppPreview, Font, Brushes.White, appLabel1, ContentAlignment.MiddleLeft.ToStringFormat)
+                    G.DrawString(My.Lang.InactiveApp, Font, Brushes.White, appLabel2, ContentAlignment.MiddleLeft.ToStringFormat)
 #End Region
 
                 Case Styles.StartXP

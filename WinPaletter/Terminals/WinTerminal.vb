@@ -536,13 +536,12 @@ Public Class WinTerminal : Implements ICloneable
 
 
     Public Shared Sub TakeOwnership(ByVal filepath As String)
-        Dim proc = New Process()
+        Dim proc As New Process()
         proc.StartInfo.FileName = "takeown.exe"
         proc.StartInfo.Arguments = "/R /F """ & filepath & """"
         proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
         proc.Start()
         proc.WaitForExit()
-
         proc.StartInfo.FileName = "icacls.exe"
         proc.StartInfo.Arguments = """" & filepath & """ /grant *{GROUP_USERS_SID}:F /T"
         proc.Start()
