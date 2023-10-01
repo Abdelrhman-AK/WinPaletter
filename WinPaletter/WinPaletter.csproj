@@ -1,0 +1,1130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{53965879-6567-4181-B551-04534B0D0F2B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>WinPaletter.My.MyApplication</StartupObject>
+    <RootNamespace>WinPaletter</RootNamespace>
+    <AssemblyName>WinPaletter</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
+    <LangVersion>latest</LangVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\WinPaletter.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>bin\Release\WinPaletter.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ICON.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Animator">
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Animator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AnimCur">
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\AnimCur.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Cyotek.Windows.Forms.ColorPicker">
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Devcorp.Controls.VisualStyles">
+      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Ookii.Dialogs.WinForms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Ressy, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Ressy.1.0.3\lib\net461\Ressy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Design">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Management">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Resources.Extensions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Resources.Extensions.7.0.0\lib\net462\System.Resources.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Security">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ServiceProcess">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+    <Import Include="WinPaletter" />
+    <Import Include="WinPaletter.WPStyle" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Resources\Assemblies.zip" />
+    <None Include="Resources\JetBrainsMono-Medium.ttf" />
+    <None Include="Resources\luna.zip" />
+    <None Include="Resources\RetroThemesDB.wpdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalUsings.cs" />
+    <Compile Include="ColorItemControllers\ColorInfoDragDrop.Designer.cs">
+      <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorItemControllers\ColorInfoDragDrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PE_Warning.Designer.cs">
+      <DependentUpon>PE_Warning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PE_Warning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Bitmap_Mgr.cs" />
+    <Compile Include="Classes\INI.cs" />
+    <Compile Include="Converter\Converter_CP.cs" />
+    <Compile Include="Converter\Converter_Form.Designer.cs">
+      <DependentUpon>Converter_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\Converter_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Converter\Converter.cs" />
+    <Compile Include="Converter\Converter_WT.cs" />
+    <Compile Include="CP\PreviewHelpers.cs" />
+    <Compile Include="Extras\AltTabEditor.Designer.cs">
+      <DependentUpon>AltTabEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\AltTabEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="bk.Designer.cs">
+      <DependentUpon>bk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="bk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\BugReport.Designer.cs">
+      <DependentUpon>BugReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\BugReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\PE.cs" />
+    <Compile Include="Classes\ExplorerPatcher.cs" />
+    <Compile Include="Classes\MemoryFonts.cs" />
+    <Compile Include="Classes\NativeMethods.cs" />
+    <Compile Include="Classes\Reg_IO.cs" />
+    <Compile Include="Classes\TypesExtensions.cs" />
+    <Compile Include="Classes\Core.cs" />
+    <Compile Include="Extras\ApplicationThemer.Designer.cs">
+      <DependentUpon>ApplicationThemer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\ApplicationThemer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\ScreenSaver_Editor.Designer.cs">
+      <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\ScreenSaver_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\Sounds_Editor.Designer.cs">
+      <DependentUpon>Sounds_Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\Sounds_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\CursorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Containers\PanelR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Containers\PanelRaisedR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Input\ButtonR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Input\TextBoxR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Others\ScrollBarR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Simulators\Preview3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\RetroElements\Simulators\WindowR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\ColorItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\CheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\RadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\RadioImage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Checkers\Toggle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TablessControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\AlertBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\AnimatedBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\GroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\ContainersAndBoxes\TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\Button.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\ComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\NumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Input\TextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\LabelAlt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\LinkLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Labels\ToolStripStatusLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\StripRenderer.cs" />
+    <Compile Include="GUI\Elements\Others\TransparentPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\ToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\TreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Separators\SeparatorH.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Separators\SeparatorV.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\TextTranslationItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\Trackbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinCMD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinTerminal.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\Window.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Simulation\WinElement.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Trackbars\ColorBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_GUI.Designer.cs">
+      <DependentUpon>Lang_JSON_GUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_GUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_ReplaceText.Designer.cs">
+      <DependentUpon>Lang_ReplaceText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_ReplaceText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.cs" />
+    <Compile Include="My Project\MyNamespace.Dynamic.Designer.cs" />
+    <Compile Include="My Project\MyNamespace.Static.Designer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.cs">
+      <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.Designer.cs">
+      <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.Designer.cs">
+      <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaletteGenerator\PaletteGenerateDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\WPSettings.cs" />
+    <Compile Include="ColorItemControllers\ColorPickerDlg.Designer.cs">
+      <DependentUpon>ColorPickerDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorItemControllers\ColorPickerDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ComplexSave.Designer.cs">
+      <DependentUpon>ComplexSave.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ComplexSave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Saving_ex_list.Designer.cs">
+      <DependentUpon>Saving_ex_list.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Saving_ex_list.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorItemControllers\SubMenu.Designer.cs">
+      <DependentUpon>SubMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorItemControllers\SubMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP\CP.cs" />
+    <Compile Include="CP\CP_Defaults.cs" />
+    <Compile Include="CursorsStudio\CursorsCustomizer.cs" />
+    <Compile Include="CursorsStudio\CursorsStudio.Designer.cs">
+      <DependentUpon>CursorsStudio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CursorsStudio\CursorsStudio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditInfo.Designer.cs">
+      <DependentUpon>EditInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\VisualStylesRes.cs" />
+    <Compile Include="GUI\WPStyle.cs" />
+    <Compile Include="Languages\Lang_Add_Snippet.Designer.cs">
+      <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_Add_Snippet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_Dashboard.Designer.cs">
+      <DependentUpon>Lang_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Manage.Designer.cs">
+      <DependentUpon>Lang_JSON_Manage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Manage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Update.Designer.cs">
+      <DependentUpon>Lang_JSON_Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\Lang_JSON_Update.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Languages\Localizer.cs" />
+    <Compile Include="Dialogs\LicenseForm.Designer.cs">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI.Designer.cs">
+      <DependentUpon>LogonUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI7.Designer.cs">
+      <DependentUpon>LogonUI7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI8Colors.Designer.cs">
+      <DependentUpon>LogonUI8Colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI8Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI8_Pics.Designer.cs">
+      <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUI8_Pics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonUI\LogonUIXP.Designer.cs">
+      <DependentUpon>LogonUIXP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogonUI\LogonUIXP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFrm.Designer.cs">
+      <DependentUpon>MainFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metrics_Fonts\LogFont.cs" />
+    <Compile Include="Metrics_Fonts\Metrics.cs" />
+    <Compile Include="Metrics_Fonts\Metrics_Fonts.Designer.cs">
+      <DependentUpon>Metrics_Fonts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics_Fonts\Metrics_Fonts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metrics_Fonts\VS2Metrics.Designer.cs">
+      <DependentUpon>VS2Metrics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics_Fonts\VS2Metrics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\SettingsX.Designer.cs">
+      <DependentUpon>SettingsX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\SettingsX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\Uninstall.Designer.cs">
+      <DependentUpon>Uninstall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Uninstall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store.Designer.cs">
+      <DependentUpon>Store.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\StoreItem.Designer.cs">
+      <DependentUpon>StoreItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\StoreItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Store\Store_CPToggles.Designer.cs">
+      <DependentUpon>Store_CPToggles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_CPToggles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store_DownloadProgress.Designer.cs">
+      <DependentUpon>Store_DownloadProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_DownloadProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store_Hover.Designer.cs">
+      <DependentUpon>Store_Hover.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_Hover.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store_Intro.Designer.cs">
+      <DependentUpon>Store_Intro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_Intro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store_SearchFilter.Designer.cs">
+      <DependentUpon>Store_SearchFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_SearchFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Store_ThemeLicense.Designer.cs">
+      <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Store_ThemeLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\CMD.Designer.cs">
+      <DependentUpon>CMD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\CMD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\ExternalTerminal.Designer.cs">
+      <DependentUpon>ExternalTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\ExternalTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\NewExtTerminal.Designer.cs">
+      <DependentUpon>NewExtTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\NewExtTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\TerminalInfo.Designer.cs">
+      <DependentUpon>TerminalInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\TerminalInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\TerminalsDashboard.Designer.cs">
+      <DependentUpon>TerminalsDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\TerminalsDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminal.Designer.cs">
+      <DependentUpon>WindowsTerminal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalCopycat.Designer.cs">
+      <DependentUpon>WindowsTerminalCopycat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalCopycat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalDecide.Designer.cs">
+      <DependentUpon>WindowsTerminalDecide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terminals\WindowsTerminalDecide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Terminals\WinTerminal.cs" />
+    <Compile Include="Updates\Updates.Designer.cs">
+      <DependentUpon>Updates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Updates\Updates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Updates\Whatsnew.Designer.cs">
+      <DependentUpon>Whatsnew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Updates\Whatsnew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\Wallpaper_Editor.Designer.cs">
+      <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\Wallpaper_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win32UI\VS2Win32UI.Designer.cs">
+      <DependentUpon>VS2Win32UI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI\VS2Win32UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI.Designer.cs">
+      <DependentUpon>Win32UI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32UI\Win32UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\Start8Selector.Designer.cs">
+      <DependentUpon>Start8Selector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\Start8Selector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extras\WinEffecter.Designer.cs">
+      <DependentUpon>WinEffecter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extras\WinEffecter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ICON.ico" />
+    <Content Include="Icons\fileextension.ico" />
+    <Content Include="Icons\settingsfile.ico" />
+    <Content Include="My Project\Application.myapp" />
+    <Content Include="Resources\AC_10_Dark.png" />
+    <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\XML_Unlock.xml" />
+    <None Include="Resources\XML_ChargerConnected.xml" />
+    <None Include="Resources\XML_Shutdown.xml" />
+    <None Include="Resources\XML_Logon.xml" />
+    <None Include="Resources\XML_Logoff.xml" />
+    <None Include="Resources\AC_11_Dark.png" />
+    <Content Include="Resources\add_win10.png" />
+    <Content Include="Resources\add_win11.png" />
+    <Content Include="Resources\add_win7.png" />
+    <Content Include="Resources\add_win8.png" />
+    <Content Include="Resources\add_winvista.png" />
+    <Content Include="Resources\add_winxp.png" />
+    <Content Include="Resources\AeroGlass.png" />
+    <Content Include="Resources\AeroPeek.png" />
+    <None Include="Resources\BackgroundOpacity.png" />
+    <Content Include="Resources\BasicTaskbar.png" />
+    <None Include="Resources\WP_Admin.png" />
+    <None Include="Resources\checker_enabled.png" />
+    <None Include="Resources\checker_disabled.png" />
+    <None Include="Resources\checker_enabled.png" />
+    <None Include="Resources\checker_disabled.png" />
+    <None Include="Resources\CF_Pie_Red-green_red weak_protanopia.png" />
+    <None Include="Resources\CF_Img_Blue-yellow_tritanopia.png" />
+    <None Include="Resources\CF_Img_Grayscale.png" />
+    <None Include="Resources\CF_Img_Normal.png" />
+    <None Include="Resources\CF_Img_Red-green_green_weak_deuteranopia.png" />
+    <None Include="Resources\CF_Img_Red-green_red_weak_protanopia.png" />
+    <None Include="Resources\CF_Pie_Blue-yellow _tritanopia.png" />
+    <None Include="Resources\CF_Pie_Grayscale.png" />
+    <None Include="Resources\CF_Pie_Normal.png" />
+    <None Include="Resources\CF_Pie_Red-green_green weak_deuteranopia.png" />
+    <Content Include="Resources\CMD_10x18.png" />
+    <Content Include="Resources\CMD_10x18_P.png" />
+    <Content Include="Resources\CMD_12x16.png" />
+    <Content Include="Resources\CMD_12x16_P.png" />
+    <Content Include="Resources\CMD_16x12.png" />
+    <Content Include="Resources\CMD_16x12_P.png" />
+    <Content Include="Resources\CMD_16x8.png" />
+    <Content Include="Resources\CMD_16x8_P.png" />
+    <Content Include="Resources\CMD_4x6.png" />
+    <Content Include="Resources\CMD_4x6_P.png" />
+    <Content Include="Resources\CMD_5x12.png" />
+    <Content Include="Resources\CMD_5x12_P.png" />
+    <Content Include="Resources\CMD_6x8.png" />
+    <Content Include="Resources\CMD_6x8_P.png" />
+    <Content Include="Resources\CMD_7x12.png" />
+    <Content Include="Resources\CMD_7x12_P.png" />
+    <Content Include="Resources\CMD_8x12.png" />
+    <Content Include="Resources\CMD_8x12_P.png" />
+    <Content Include="Resources\CMD_8x8.png" />
+    <Content Include="Resources\CMD_8x8_P.png" />
+    <Content Include="Resources\GaussianBlur.png" />
+    <Content Include="Resources\GaussianBlurOpaque.png" />
+    <None Include="Resources\icons8_PowerShell.ico" />
+    <None Include="Resources\icons8_command_line.ico" />
+    <Content Include="Resources\Icon_Uninstall.ico" />
+    <Content Include="Resources\LangNode_JSON.png" />
+    <Content Include="Resources\LangNode_Main.png" />
+    <Content Include="Resources\LangNode_Value.png" />
+    <Content Include="Resources\LICENSE.txt" />
+    <Content Include="Resources\LogonUI7.png" />
+    <Content Include="Resources\LogonUI8.png" />
+    <None Include="Resources\Mini_AC.png" />
+    <Content Include="Resources\Mini_ACHover_Links.png" />
+    <None Include="Resources\Mini_Badge.png" />
+    <Content Include="Resources\Mini_Hamburger.png" />
+    <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
+    <Content Include="Resources\Mini_Overflow.png" />
+    <Content Include="Resources\Mini_PressedButton.png" />
+    <Content Include="Resources\Mini_SettingsIcons.png" />
+    <None Include="Resources\Mini_StartMenu.png" />
+    <None Include="Resources\Mini_StartContextMenu.png" />
+    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
+    <Content Include="Resources\Mini_Taskbar.png" />
+    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
+    <Content Include="Resources\Mini_TaskbarApp.png" />
+    <Content Include="Resources\Mini_Undefined.png" />
+    <Content Include="Resources\Mini_UWPDlg.png" />
+    <Content Include="Resources\Native10.png" />
+    <Content Include="Resources\Native7.png" />
+    <Content Include="Resources\Native8.png" />
+    <Content Include="Resources\NativeVista.png" />
+    <Content Include="Resources\NativeXP.png" />
+    <Content Include="Resources\notify_administrator.png" />
+    <None Include="Resources\notify_applying.png" />
+    <None Include="Resources\notify_dll.png" />
+    <None Include="Resources\notify_reg_add.png" />
+    <None Include="Resources\notify_reg_delete.png" />
+    <None Include="Resources\notify_reg_skip.png" />
+    <None Include="Resources\notify_file_rename.png" />
+    <None Include="Resources\notify_pe_restore.png" />
+    <None Include="Resources\notify_pe_patch.png" />
+    <None Include="Resources\notify_pe_backup.png" />
+    <Content Include="Resources\notify_skip.png" />
+    <Content Include="Resources\notify_success.png" />
+    <None Include="Resources\notify_task_add.png" />
+    <None Include="Resources\notify_task_remove.png" />
+    <Content Include="Resources\notify_time.png" />
+    <Content Include="Resources\PS_10x18.png" />
+    <Content Include="Resources\PS_12x16.png" />
+    <Content Include="Resources\PS_16x12.png" />
+    <Content Include="Resources\PS_16x8.png" />
+    <Content Include="Resources\PS_4x6.png" />
+    <Content Include="Resources\PS_5x12.png" />
+    <Content Include="Resources\PS_6x8.png" />
+    <Content Include="Resources\PS_7x12.png" />
+    <Content Include="Resources\PS_8x12.png" />
+    <Content Include="Resources\PS_8x8.png" />
+    <None Include="Resources\Start11_EP_Rounded_Dark.png" />
+    <None Include="Resources\Start11_EP_Rounded_Light.png" />
+    <None Include="Resources\Start11_Light.png" />
+    <None Include="Resources\Start11_Dark.png" />
+    <None Include="Resources\SampleApp_Small_Inactive.png" />
+    <None Include="Resources\SampleApp_Active.png" />
+    <None Include="Resources\SampleApp_Inctive.png" />
+    <None Include="Resources\SampleApp_Small_Active.png" />
+    <None Include="Resources\Sound_Stop.png" />
+    <None Include="Resources\Sound_Play.png" />
+    <None Include="Resources\settingsfile.ico" />
+    <Content Include="Resources\Start7.png" />
+    <Content Include="Resources\Start7Basic.png" />
+    <Content Include="Resources\Start7Glass.png" />
+    <Content Include="Resources\StartBtn_10Dark.png" />
+    <Content Include="Resources\StartBtn_10Light.png" />
+    <None Include="Resources\StartBtn_11_EP.png" />
+    <None Include="Resources\StartBtn_11Dark.png" />
+    <None Include="Resources\StartBtn_11Light.png" />
+    <None Include="Resources\Store_DoneByWinPaletter.png" />
+    <None Include="Resources\Store_DoneByUser.png" />
+    <None Include="Resources\Store_DesignedForXP.png" />
+    <None Include="Resources\Store_DesignedFor7.png" />
+    <None Include="Resources\Store_DesignedFor8.png" />
+    <None Include="Resources\Store_DesignedFor10.png" />
+    <None Include="Resources\Store_DesignedFor11.png" />
+    <None Include="Resources\Store_DesignedForVista.png" />
+    <None Include="Resources\Store_BackBtn.png" />
+    <None Include="Resources\Store_Pattern1.png" />
+    <None Include="Resources\Store_Pattern2.png" />
+    <None Include="Resources\Store_Pattern3.png" />
+    <None Include="Resources\Store_Pattern4.png" />
+    <None Include="Resources\Store_Pattern5.png" />
+    <None Include="Resources\Store_Pattern6.png" />
+    <None Include="Resources\Store_Pattern8.png" />
+    <None Include="Resources\Store_Pattern10.png" />
+    <None Include="Resources\Store_Pattern7.png" />
+    <None Include="Resources\Store_Pattern9.png" />
+    <None Include="Resources\Store_ThemeVersion.png" />
+    <Content Include="Resources\Taskbar_ActiveApp7.png" />
+    <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <None Include="Resources\ThemesResIcon.ico" />
+    <Content Include="Resources\Update.png" />
+    <Content Include="Resources\Update_Dot.png" />
+    <Content Include="Resources\Vista_ActiveApp.png" />
+    <Content Include="Resources\Vista_Close_Active.png" />
+    <Content Include="Resources\Vista_Close_inactive.png" />
+    <Content Include="Resources\Vista_InactiveApp.png" />
+    <Content Include="Resources\Vista_StartAero.png" />
+    <Content Include="Resources\Vista_StartBasic.png" />
+    <Content Include="Resources\Vista_StartLowerORB.png" />
+    <Content Include="Resources\Vista_Taskbar.png" />
+    <None Include="Resources\Win7AltTabBasicButton.png" />
+    <None Include="Resources\Win10x_Close_Light.png" />
+    <None Include="Resources\Win10x_Close_Dark.png" />
+    <Content Include="Resources\Win7Logo.png" />
+    <Content Include="Resources\Win7ORB.png" />
+    <Content Include="Resources\Win7Sides.png" />
+    <Content Include="Resources\Win7TaskbarSides.png" />
+    <Content Include="Resources\Win7_Basic_Close_0.png" />
+    <Content Include="Resources\Win7_Basic_Close_1.png" />
+    <Content Include="Resources\Win7_Basic_Close_2.png" />
+    <Content Include="Resources\Win7_Basic_Close_ToolWindow.png" />
+    <Content Include="Resources\Win7_Close_Active.png" />
+    <Content Include="Resources\Win7_Close_inactive.png" />
+    <Content Include="Resources\Win7_TitleTopL.png" />
+    <Content Include="Resources\Win7_TitleTopR.png" />
+    <Content Include="Resources\Win8ORB.png" />
+    <Content Include="Resources\Win8_Close_0.png" />
+    <Content Include="Resources\Win8_Close_1.png" />
+    <Content Include="Resources\Win8_Close_2.png" />
+    <Content Include="Resources\Win8_Close_3.png" />
+    <Content Include="Resources\Win8_Close_ToolWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
+      <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PE_Warning.resx">
+      <DependentUpon>PE_Warning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Converter\Converter_Form.resx">
+      <DependentUpon>Converter_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\AltTabEditor.resx">
+      <DependentUpon>AltTabEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="bk.resx">
+      <DependentUpon>bk.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>bk1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\BugReport.resx">
+      <DependentUpon>BugReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorItemControllers\ColorPickerDlg.resx">
+      <DependentUpon>ColorPickerDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ComplexSave.resx">
+      <DependentUpon>ComplexSave.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">
+      <DependentUpon>Saving_ex_list.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorItemControllers\SubMenu.resx">
+      <DependentUpon>SubMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CursorsStudio\CursorsStudio.resx">
+      <DependentUpon>CursorsStudio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditInfo.resx">
+      <DependentUpon>EditInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\ApplicationThemer.resx">
+      <DependentUpon>ApplicationThemer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\Sounds_Editor.resx">
+      <DependentUpon>Sounds_Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
+      <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_Dashboard.resx">
+      <DependentUpon>Lang_Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_Manage.resx">
+      <DependentUpon>Lang_JSON_Manage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_Update.resx">
+      <DependentUpon>Lang_JSON_Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LicenseForm.resx">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_JSON_GUI.resx">
+      <DependentUpon>Lang_JSON_GUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Lang_ReplaceText.resx">
+      <DependentUpon>Lang_ReplaceText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI\LogonUI.resx">
+      <DependentUpon>LogonUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI\LogonUI7.resx">
+      <DependentUpon>LogonUI7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI\LogonUI8Colors.resx">
+      <DependentUpon>LogonUI8Colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI\LogonUI8_Pics.resx">
+      <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonUI\LogonUIXP.resx">
+      <DependentUpon>LogonUIXP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFrm.resx">
+      <DependentUpon>MainFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Metrics_Fonts\Metrics_Fonts.resx">
+      <DependentUpon>Metrics_Fonts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Metrics_Fonts\VS2Metrics.resx">
+      <DependentUpon>VS2Metrics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
+      <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WinPaletter.My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
+      <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromImage.resx">
+      <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateDashboard.resx">
+      <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\SettingsX.resx">
+      <DependentUpon>SettingsX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\Uninstall.resx">
+      <DependentUpon>Uninstall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store.resx">
+      <DependentUpon>Store.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_CPToggles.resx">
+      <DependentUpon>Store_CPToggles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_DownloadProgress.resx">
+      <DependentUpon>Store_DownloadProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_Hover.resx">
+      <DependentUpon>Store_Hover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_Intro.resx">
+      <DependentUpon>Store_Intro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_SearchFilter.resx">
+      <DependentUpon>Store_SearchFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
+      <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\CMD.resx">
+      <DependentUpon>CMD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\ExternalTerminal.resx">
+      <DependentUpon>ExternalTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\NewExtTerminal.resx">
+      <DependentUpon>NewExtTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\TerminalInfo.resx">
+      <DependentUpon>TerminalInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\TerminalsDashboard.resx">
+      <DependentUpon>TerminalsDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\WindowsTerminal.resx">
+      <DependentUpon>WindowsTerminal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\WindowsTerminalCopycat.resx">
+      <DependentUpon>WindowsTerminalCopycat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Terminals\WindowsTerminalDecide.resx">
+      <DependentUpon>WindowsTerminalDecide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Updates\Updates.resx">
+      <DependentUpon>Updates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Updates\Whatsnew.resx">
+      <DependentUpon>Whatsnew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\Wallpaper_Editor.resx">
+      <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI\VS2Win32UI.resx">
+      <DependentUpon>VS2Win32UI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Win32UI\Win32UI.resx">
+      <DependentUpon>Win32UI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\Start8Selector.resx">
+      <DependentUpon>Start8Selector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extras\WinEffecter.resx">
+      <DependentUpon>WinEffecter.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
