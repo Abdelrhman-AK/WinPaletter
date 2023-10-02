@@ -477,7 +477,7 @@ namespace WinPaletter
                             break;
                         }
 
-                } 
+                }
                 (ctrl as DataGridView).ColumnHeadersDefaultCellStyle.BackColor = ColumnBack;
                 (ctrl as DataGridView).BackColor = ctrl.Parent.BackColor;
                 (ctrl as DataGridView).BackgroundColor = ctrl.Parent.BackColor;
@@ -618,7 +618,7 @@ namespace WinPaletter
         /// <param name="FooterCustomIcon">Icon of the fotter when its type is set to TaskDialogIcon.Custom</param>
         /// <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means Administrator\Elevation is required</param>
         /// <returns></returns>
-        public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons =  MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.None, object SubMessage = null, object CollapsedText = null, object ExpandedText = null, object ExpandedDetails = null, object DialogTitle = null, object Footer = null, TaskDialogIcon FooterIcon = TaskDialogIcon.Custom, Icon FooterCustomIcon = null, bool RequireElevation = false)
+        public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.None, object SubMessage = null, object CollapsedText = null, object ExpandedText = null, object ExpandedDetails = null, object DialogTitle = null, object Footer = null, TaskDialogIcon FooterIcon = TaskDialogIcon.Custom, Icon FooterCustomIcon = null, bool RequireElevation = false)
         {
             try
             {
@@ -700,7 +700,7 @@ namespace WinPaletter
                         icon = TaskDialogIcon.Custom;
 
                         TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
-                     }
+                    }
 
                     else if (Icon == MessageBoxIcon.Error)
                         icon = TaskDialogIcon.Error;
@@ -709,26 +709,26 @@ namespace WinPaletter
                         icon = TaskDialogIcon.Warning;
 
                     else
-                        icon =  TaskDialogIcon.Custom;
+                        icon = TaskDialogIcon.Custom;
 
                     TD.MainIcon = icon;
 
                     var result = DialogResult.OK;
                     TaskDialogButton resultButton = TD.ShowDialog();
 
-                    if (resultButton ==  yesButton)
+                    if (resultButton == yesButton)
                     {
                         result = DialogResult.Yes;
                     }
-                    else if (resultButton ==  okButton)
+                    else if (resultButton == okButton)
                     {
                         result = DialogResult.OK;
                     }
-                    else if (resultButton ==  noButton)
+                    else if (resultButton == noButton)
                     {
                         result = DialogResult.No;
                     }
-                    else if (resultButton ==  cancelButton)
+                    else if (resultButton == cancelButton)
                     {
                         result = DialogResult.Cancel;
                     }

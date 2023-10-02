@@ -246,61 +246,61 @@ namespace WinPaletter.UI.Simulation
         }
 
         public void ProcessBack()
-{
-    Bitmap Wallpaper;
-    if (Parent.BackgroundImage is null)
-        Wallpaper = My.Env.Wallpaper;
-    else
-        Wallpaper = (Bitmap)Parent.BackgroundImage;
-    try
-    {
-        if (Wallpaper is not null)
-            AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
-    }
-    catch
-    {
-    }
-    try
-    {
-        if (Preview == Preview_Enum.W11)
         {
-            if (AdaptedBack is not null)
+            Bitmap Wallpaper;
+            if (Parent.BackgroundImage is null)
+                Wallpaper = My.Env.Wallpaper;
+            else
+                Wallpaper = (Bitmap)Parent.BackgroundImage;
+            try
             {
-                Bitmap b = new Bitmap(AdaptedBack).Blur(15);
-                if (DarkMode)
+                if (Wallpaper is not null)
+                    AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
+            }
+            catch
+            {
+            }
+            try
+            {
+                if (Preview == Preview_Enum.W11)
                 {
-                    if (b is not null)
+                    if (AdaptedBack is not null)
                     {
-                        using (var ImgF = new ImageProcessor.ImageFactory())
+                        Bitmap b = new Bitmap(AdaptedBack).Blur(15);
+                        if (DarkMode)
                         {
-                            ImgF.Load(b);
-                            ImgF.Saturation(15);
-                            ImgF.Brightness(-10);
-                            AdaptedBackBlurred = (Bitmap)ImgF.Image.Clone();
+                            if (b is not null)
+                            {
+                                using (var ImgF = new ImageProcessor.ImageFactory())
+                                {
+                                    ImgF.Load(b);
+                                    ImgF.Saturation(15);
+                                    ImgF.Brightness(-10);
+                                    AdaptedBackBlurred = (Bitmap)ImgF.Image.Clone();
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            AdaptedBackBlurred = b;
                         }
                     }
                 }
-
-                else
-                {
-                    AdaptedBackBlurred = b;
-                }
+                else if (AdaptedBack is not null)
+                    AdaptedBackBlurred = new Bitmap(AdaptedBack).Blur(3);
+            }
+            catch
+            {
+            }
+            try
+            {
+                Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100);
+            }
+            catch
+            {
             }
         }
-        else if (AdaptedBack is not null)
-            AdaptedBackBlurred = new Bitmap(AdaptedBack).Blur(1);
-    }
-    catch
-    {
-    }
-    try
-    {
-        Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100);
-    }
-    catch
-    {
-    }
-}
 
         #endregion
 
@@ -856,9 +856,9 @@ namespace WinPaletter.UI.Simulation
                     {
                         var bk = AdaptedBackBlurred;
 
-                        float alpha = (float)(1d - Win7Alpha / 100d);   // ColorBlurBalance
-                        float ColBal = (float)(Win7ColorBal / 100d);   // ColorBalance
-                        float GlowBal = (float)(Win7GlowBal / 100d);   // AfterGlowBalance
+                        decimal alpha = 1 - (decimal)Win7Alpha / 100;   // ColorBlurBalance
+                        decimal ColBal = (decimal)Win7ColorBal / 100;   // ColorBalance
+                        decimal GlowBal = (decimal)Win7GlowBal / 100;   // AfterGlowBalance
 
                         var Color1 = Active ? AccentColor_Active : AccentColor_Inactive;
                         var Color2 = Active ? AccentColor2_Active : AccentColor2_Inactive;
@@ -1462,14 +1462,14 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Active)
                 {
-                    using (var br = new SolidBrush(My.Env.CP.Win32.TitleText))
+                    using (var br = new SolidBrush(My.Env.TM.Win32.TitleText))
                     {
                         G.DrawString(Text, Font, br, LabelRect8, ContentAlignment.MiddleCenter.ToStringFormat());
                     }
                 }
                 else
                 {
-                    using (var br = new SolidBrush(My.Env.CP.Win32.InactiveTitleText))
+                    using (var br = new SolidBrush(My.Env.TM.Win32.InactiveTitleText))
                     {
                         G.DrawString(Text, Font, br, LabelRect8, ContentAlignment.MiddleCenter.ToStringFormat());
                     }

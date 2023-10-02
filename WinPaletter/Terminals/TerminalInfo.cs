@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -27,7 +26,7 @@ namespace WinPaletter
             TerTabTitle.Text = Profile.TabTitle;
             TerTabIcon.Text = Profile.Icon;
             TerTabColor.BackColor = Profile.TabColor;
-            TerAcrylic.Checked = My.Env.CP.TerminalPreview.UseAcrylicInTabRow;
+            TerAcrylic.Checked = My.Env.TM.TerminalPreview.UseAcrylicInTabRow;
 
             if (IsDefault)
             {
@@ -61,7 +60,7 @@ namespace WinPaletter
             Profile.TabTitle = TerTabTitle.Text;
             Profile.Icon = TerTabIcon.Text;
             Profile.TabColor = TerTabColor.BackColor;
-            My.Env.CP.TerminalPreview.UseAcrylicInTabRow = TerAcrylic.Checked;
+            My.Env.TM.TerminalPreview.UseAcrylicInTabRow = TerAcrylic.Checked;
             DialogResult = DialogResult.OK;
         }
 

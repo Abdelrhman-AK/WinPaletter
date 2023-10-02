@@ -1,9 +1,7 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using static WinPaletter.CP;
 
 namespace WinPaletter
 {
@@ -22,7 +20,7 @@ namespace WinPaletter
             WVista,
             WXP
         }
-        public static void ApplyWin10xLegends(CP CP, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
+        public static void ApplyWin10xLegends(Theme.Manager TM, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
         {
 
             if (ExplorerPatcher.IsAllowed())
@@ -43,7 +41,7 @@ namespace WinPaletter
                         pic8.Image = My.Resources.Mini_Undefined;
                         pic9.Image = My.Resources.Mini_Undefined;
 
-                        switch (!CP.Windows11.WinMode_Light)
+                        switch (!TM.Windows11.WinMode_Light)
                         {
                             case true:   // '''''''''DarkMode
                                 {
@@ -77,7 +75,7 @@ namespace WinPaletter
 
                         if (ExplorerPatcher.IsAllowed())
                         {
-                            switch (!CP.Windows11.WinMode_Light)
+                            switch (!TM.Windows11.WinMode_Light)
                             {
                                 case true: // '''''''''DarkMode
                                     {
@@ -151,7 +149,7 @@ namespace WinPaletter
                         #region Win10
                         lbl9.Text = My.Env.Lang.CP_Undefined;
 
-                        switch (!CP.Windows10.WinMode_Light)
+                        switch (!TM.Windows10.WinMode_Light)
                         {
                             case true: // '''''''''DarkMode
                                 {
@@ -167,7 +165,7 @@ namespace WinPaletter
                                     pic6.Image = My.Resources.Native10;
                                     pic7.Image = My.Resources.Mini_UWPDlg;
 
-                                    if (CP.Windows10.Transparency)
+                                    if (TM.Windows10.Transparency)
                                     {
                                         lbl1.Text = My.Env.Lang.CP_10_Hamburger;
                                         lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
@@ -177,7 +175,7 @@ namespace WinPaletter
                                         pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
                                         pic8.Image = My.Resources.Mini_Taskbar;
 
-                                        if (CP.Windows10.ApplyAccentOnTaskbar != Structures.Windows10x.AccentTaskbarLevels.None)
+                                        if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_Taskbar_SomeBtns;
                                         }
@@ -189,7 +187,7 @@ namespace WinPaletter
                                         pic1.Image = My.Resources.Mini_Taskbar;
                                         pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
 
-                                        if (CP.Windows10.ApplyAccentOnTaskbar != Structures.Windows10x.AccentTaskbarLevels.None)
+                                        if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
                                             lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC_TaskbarActiveApp;
                                         }
@@ -208,7 +206,7 @@ namespace WinPaletter
 
                             case false: // '''''''''Light
                                 {
-                                    if (CP.Windows10.Transparency)
+                                    if (TM.Windows10.Transparency)
                                     {
                                         lbl1.Text = My.Env.Lang.CP_10_Hamburger;
                                         lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
@@ -222,7 +220,7 @@ namespace WinPaletter
                                         pic7.Image = My.Resources.Mini_UWPDlg;
                                         pic8.Image = My.Resources.Mini_Taskbar;
 
-                                        if (CP.Windows10.ApplyAccentOnTaskbar == Structures.Windows10x.AccentTaskbarLevels.None)
+                                        if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
                                             lbl2.Text = My.Env.Lang.CP_Undefined;
                                             lbl3.Text = My.Env.Lang.CP_Undefined;
@@ -233,7 +231,7 @@ namespace WinPaletter
                                             pic3.Image = My.Resources.Mini_Undefined;
                                         }
 
-                                        else if (CP.Windows10.ApplyAccentOnTaskbar == Structures.Windows10x.AccentTaskbarLevels.Taskbar)
+                                        else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
                                             lbl2.Text = My.Env.Lang.CP_Undefined;
                                             lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
@@ -266,7 +264,7 @@ namespace WinPaletter
                                         pic6.Image = My.Resources.Native10;
                                         pic7.Image = My.Resources.Mini_UWPDlg;
 
-                                        if (CP.Windows10.ApplyAccentOnTaskbar == Structures.Windows10x.AccentTaskbarLevels.None)
+                                        if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
                                             lbl2.Text = My.Env.Lang.CP_Undefined;
                                             lbl3.Text = My.Env.Lang.CP_Undefined;
@@ -281,7 +279,7 @@ namespace WinPaletter
                                             pic8.Image = My.Resources.Mini_ACHover_Links;
                                         }
 
-                                        else if (CP.Windows10.ApplyAccentOnTaskbar == Structures.Windows10x.AccentTaskbarLevels.Taskbar)
+                                        else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
                                             lbl2.Text = My.Env.Lang.CP_Undefined;
                                             lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
@@ -322,13 +320,13 @@ namespace WinPaletter
             }
 
         }
-        public static void ApplyWinElementsColors(CP CP, WindowStyle Style, bool AnimateColorChange, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.WP.LabelAlt setting_icon_preview, UI.WP.LabelAlt settings_label, UI.WP.LabelAlt Link_preview)
+        public static void ApplyWinElementsColors(Theme.Manager TM, WindowStyle Style, bool AnimateColorChange, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.WP.LabelAlt setting_icon_preview, UI.WP.LabelAlt settings_label, UI.WP.LabelAlt Link_preview)
         {
 
             if (ExplorerPatcher.IsAllowed())
                 My.Env.EP = new ExplorerPatcher();
 
-            My.Env.RenderingHint = CP.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -346,14 +344,14 @@ namespace WinPaletter
                         Color Settings_Label_Color = default, Link_preview_Color = default;
                         Color AC_Normal = default, AC_Hover = default, AC_Pressed = default;
 
-                        Start.DarkMode = !CP.Windows11.WinMode_Light;
-                        Taskbar.DarkMode = !CP.Windows11.WinMode_Light;
-                        ActionCenter.DarkMode = !CP.Windows11.WinMode_Light;
-                        Taskbar.Transparency = CP.Windows11.Transparency;
-                        Start.Transparency = CP.Windows11.Transparency;
-                        ActionCenter.Transparency = CP.Windows11.Transparency;
+                        Start.DarkMode = !TM.Windows11.WinMode_Light;
+                        Taskbar.DarkMode = !TM.Windows11.WinMode_Light;
+                        ActionCenter.DarkMode = !TM.Windows11.WinMode_Light;
+                        Taskbar.Transparency = TM.Windows11.Transparency;
+                        Start.Transparency = TM.Windows11.Transparency;
+                        ActionCenter.Transparency = TM.Windows11.Transparency;
 
-                        switch (!CP.Windows11.WinMode_Light)
+                        switch (!TM.Windows11.WinMode_Light)
                         {
                             case true:   // DarkMode
                                 {
@@ -388,9 +386,9 @@ namespace WinPaletter
                                         S_Alpha = 90;
                                     }
 
-                                    switch (CP.Windows11.ApplyAccentOnTaskbar)
+                                    switch (TM.Windows11.ApplyAccentOnTaskbar)
                                     {
-                                        case Structures.Windows10x.AccentTaskbarLevels.None:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                             {
                                                 TB_Color = Color.FromArgb(28, 28, 28);
                                                 S_Color = Color.FromArgb(28, 28, 28);
@@ -398,39 +396,39 @@ namespace WinPaletter
                                                 break;
                                             }
 
-                                        case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                             {
-                                                TB_Color = Color.FromArgb(Taskbar.Background.A, CP.Windows11.Color_Index5);
+                                                TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
                                                 S_Color = Color.FromArgb(28, 28, 28);
                                                 AC_Color = Color.FromArgb(28, 28, 28);
                                                 break;
                                             }
 
-                                        case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                             {
-                                                TB_Color = Color.FromArgb(Taskbar.Background.A, CP.Windows11.Color_Index5);
+                                                TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
 
                                                 if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseStart10)
                                                 {
-                                                    S_Color = Color.FromArgb(Start.Background.A, CP.Windows11.Color_Index4);
+                                                    S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index4);
                                                 }
                                                 else
                                                 {
-                                                    S_Color = Color.FromArgb(Start.Background.A, CP.Windows11.Color_Index5);
+                                                    S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index5);
                                                 }
 
-                                                AC_Color = Color.FromArgb(ActionCenter.Background.A, CP.Windows11.Color_Index5);
+                                                AC_Color = Color.FromArgb(ActionCenter.Background.A, TM.Windows11.Color_Index5);
                                                 break;
                                             }
 
                                     }
 
-                                    AC_Normal = CP.Windows11.Color_Index1;
-                                    AC_Hover = CP.Windows11.Color_Index0;
-                                    AC_Pressed = CP.Windows11.Color_Index2;
-                                    TB_UL_Color = CP.Windows11.Color_Index1;
-                                    Settings_Label_Color = CP.Windows11.Color_Index3;
-                                    Link_preview_Color = CP.Windows11.Color_Index0;
+                                    AC_Normal = TM.Windows11.Color_Index1;
+                                    AC_Hover = TM.Windows11.Color_Index0;
+                                    AC_Pressed = TM.Windows11.Color_Index2;
+                                    TB_UL_Color = TM.Windows11.Color_Index1;
+                                    Settings_Label_Color = TM.Windows11.Color_Index3;
+                                    Link_preview_Color = TM.Windows11.Color_Index0;
                                     break;
                                 }
 
@@ -467,9 +465,9 @@ namespace WinPaletter
                                         S_Alpha = 180;
                                     }
 
-                                    switch (CP.Windows11.ApplyAccentOnTaskbar)
+                                    switch (TM.Windows11.ApplyAccentOnTaskbar)
                                     {
-                                        case Structures.Windows10x.AccentTaskbarLevels.None:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                             {
                                                 TB_Color = Color.FromArgb(255, 255, 255);
                                                 S_Color = Color.FromArgb(255, 255, 255);
@@ -477,48 +475,48 @@ namespace WinPaletter
                                                 break;
                                             }
 
-                                        case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                             {
-                                                TB_Color = Color.FromArgb(Taskbar.Background.A, CP.Windows11.Color_Index5);
+                                                TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
                                                 S_Color = Color.FromArgb(255, 255, 255);
                                                 AC_Color = Color.FromArgb(255, 255, 255);
                                                 break;
                                             }
 
-                                        case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                        case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                             {
-                                                TB_Color = Color.FromArgb(Taskbar.Background.A, CP.Windows11.Color_Index5);
+                                                TB_Color = Color.FromArgb(Taskbar.Background.A, TM.Windows11.Color_Index5);
 
                                                 if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseStart10)
                                                 {
-                                                    S_Color = Color.FromArgb(Start.Background.A, CP.Windows11.Color_Index4);
+                                                    S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index4);
                                                 }
                                                 else
                                                 {
-                                                    S_Color = Color.FromArgb(Start.Background.A, CP.Windows11.Color_Index0);
+                                                    S_Color = Color.FromArgb(Start.Background.A, TM.Windows11.Color_Index0);
                                                 }
 
-                                                AC_Color = Color.FromArgb(ActionCenter.Background.A, CP.Windows11.Color_Index0);
+                                                AC_Color = Color.FromArgb(ActionCenter.Background.A, TM.Windows11.Color_Index0);
                                                 break;
                                             }
 
                                     }
 
-                                    AC_Normal = CP.Windows11.Color_Index4;
-                                    AC_Hover = CP.Windows11.Color_Index5;
-                                    AC_Pressed = CP.Windows11.Color_Index2;
+                                    AC_Normal = TM.Windows11.Color_Index4;
+                                    AC_Hover = TM.Windows11.Color_Index5;
+                                    AC_Pressed = TM.Windows11.Color_Index2;
 
                                     if (ExplorerPatcher.IsAllowed() & My.Env.EP.UseTaskbar10)
                                     {
-                                        TB_UL_Color = CP.Windows11.Color_Index1;
+                                        TB_UL_Color = TM.Windows11.Color_Index1;
                                     }
                                     else
                                     {
-                                        TB_UL_Color = CP.Windows11.Color_Index3;
+                                        TB_UL_Color = TM.Windows11.Color_Index3;
                                     }
 
-                                    Settings_Label_Color = CP.Windows11.Color_Index3;
-                                    Link_preview_Color = CP.Windows11.Color_Index5;
+                                    Settings_Label_Color = TM.Windows11.Color_Index3;
+                                    Link_preview_Color = TM.Windows11.Color_Index5;
                                     break;
                                 }
                         }
@@ -539,7 +537,7 @@ namespace WinPaletter
                             Visual.FadeColor(Taskbar, "AppUnderline", Taskbar.AppUnderline, TB_UL_Color, Steps, Delay);
                             Visual.FadeColor(setting_icon_preview, "ForeColor", setting_icon_preview.ForeColor, Settings_Label_Color, Steps, Delay);
                             Visual.FadeColor(Link_preview, "ForeColor", Link_preview.ForeColor, Link_preview_Color, Steps, Delay);
-                            Visual.FadeColor(settings_label, "ForeColor", settings_label.ForeColor, CP.Windows11.AppMode_Light ? Color.Black : Color.White, Steps, Delay);
+                            Visual.FadeColor(settings_label, "ForeColor", settings_label.ForeColor, TM.Windows11.AppMode_Light ? Color.Black : Color.White, Steps, Delay);
                         }
                         else
                         {
@@ -552,7 +550,7 @@ namespace WinPaletter
                             Taskbar.AppUnderline = TB_UL_Color;
                             setting_icon_preview.ForeColor = Settings_Label_Color;
                             Link_preview.ForeColor = Link_preview_Color;
-                            settings_label.ForeColor = CP.Windows11.AppMode_Light ? Color.Black : Color.White;
+                            settings_label.ForeColor = TM.Windows11.AppMode_Light ? Color.Black : Color.White;
                         }
 
                         break;
@@ -574,33 +572,33 @@ namespace WinPaletter
                         Color Settings_Label_Color = default, Link_preview_Color = default;
                         var AC_Normal = default(Color);
 
-                        Start.DarkMode = !CP.Windows10.WinMode_Light;
-                        Taskbar.DarkMode = !CP.Windows10.WinMode_Light;
-                        ActionCenter.DarkMode = !CP.Windows10.WinMode_Light;
-                        Taskbar.Transparency = CP.Windows10.Transparency;
-                        Start.Transparency = CP.Windows10.Transparency && CP.Windows10.TB_Blur;
-                        ActionCenter.Transparency = CP.Windows10.Transparency && CP.Windows10.TB_Blur;
+                        Start.DarkMode = !TM.Windows10.WinMode_Light;
+                        Taskbar.DarkMode = !TM.Windows10.WinMode_Light;
+                        ActionCenter.DarkMode = !TM.Windows10.WinMode_Light;
+                        Taskbar.Transparency = TM.Windows10.Transparency;
+                        Start.Transparency = TM.Windows10.Transparency && TM.Windows10.TB_Blur;
+                        ActionCenter.Transparency = TM.Windows10.Transparency && TM.Windows10.TB_Blur;
 
-                        if (!CP.Windows10.TB_Blur)
+                        if (!TM.Windows10.TB_Blur)
                         {
                             TB_Blur = 0;
                         }
                         else
                         {
-                            TB_Blur = (byte)(!CP.Windows10.IncreaseTBTransparency ? 8 : 6);
+                            TB_Blur = (byte)(!TM.Windows10.IncreaseTBTransparency ? 8 : 6);
                         }
 
-                        if (CP.Windows10.Transparency)
+                        if (TM.Windows10.Transparency)
                         {
-                            if (!CP.Windows10.WinMode_Light)
+                            if (!TM.Windows10.WinMode_Light)
                             {
-                                TB_Alpha = (byte)(!CP.Windows10.IncreaseTBTransparency ? 150 : 75);
+                                TB_Alpha = (byte)(!TM.Windows10.IncreaseTBTransparency ? 150 : 75);
                                 S_Alpha = 150;
                                 AC_Alpha = 150;
                             }
                             else
                             {
-                                TB_Alpha = (byte)(!CP.Windows10.IncreaseTBTransparency ? 200 : 125);
+                                TB_Alpha = (byte)(!TM.Windows10.IncreaseTBTransparency ? 200 : 125);
                                 S_Alpha = 200;
                                 AC_Alpha = 200;
                             }
@@ -612,16 +610,16 @@ namespace WinPaletter
                             AC_Alpha = 255;
                         }
 
-                        switch (!CP.Windows10.WinMode_Light)
+                        switch (!TM.Windows10.WinMode_Light)
                         {
                             case true:
                                 {
 
-                                    if (CP.Windows10.Transparency)
+                                    if (TM.Windows10.Transparency)
                                     {
-                                        switch (CP.Windows10.ApplyAccentOnTaskbar)
+                                        switch (TM.Windows10.ApplyAccentOnTaskbar)
                                         {
-                                            case Structures.Windows10x.AccentTaskbarLevels.None:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                                 {
                                                     TB_Color = Color.FromArgb(16, 16, 16);
                                                     TB_StartBtnColor = Color.FromArgb(150, 150, 150, 150);
@@ -629,43 +627,43 @@ namespace WinPaletter
                                                     AC_Color = Color.FromArgb(31, 31, 31);
 
                                                     TB_AppBack_Color = Color.FromArgb(150, 150, 150, 150);
-                                                    AC_LinkColor = CP.Windows10.Color_Index0;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    AC_LinkColor = TM.Windows10.Color_Index0;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index6;
+                                                    TB_Color = TM.Windows10.Color_Index6;
                                                     TB_StartBtnColor = Color.FromArgb(0, 0, 0, 0);
                                                     S_Color = Color.FromArgb(31, 31, 31);
                                                     AC_Color = Color.FromArgb(31, 31, 31);
 
-                                                    TB_AppBack_Color = Color.FromArgb(150, CP.Windows10.Color_Index3);
-                                                    AC_LinkColor = CP.Windows10.Color_Index0;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = Color.FromArgb(150, TM.Windows10.Color_Index3);
+                                                    AC_LinkColor = TM.Windows10.Color_Index0;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index6;
+                                                    TB_Color = TM.Windows10.Color_Index6;
                                                     TB_StartBtnColor = Color.FromArgb(0, 0, 0, 0);
-                                                    S_Color = CP.Windows10.Color_Index4;
-                                                    AC_Color = CP.Windows10.Color_Index4;
+                                                    S_Color = TM.Windows10.Color_Index4;
+                                                    AC_Color = TM.Windows10.Color_Index4;
 
-                                                    TB_AppBack_Color = Color.FromArgb(150, CP.Windows10.Color_Index3);
-                                                    AC_LinkColor = CP.Windows10.Color_Index0;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = Color.FromArgb(150, TM.Windows10.Color_Index3);
+                                                    AC_LinkColor = TM.Windows10.Color_Index0;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
@@ -674,9 +672,9 @@ namespace WinPaletter
 
                                     else
                                     {
-                                        switch (CP.Windows10.ApplyAccentOnTaskbar)
+                                        switch (TM.Windows10.ApplyAccentOnTaskbar)
                                         {
-                                            case Structures.Windows10x.AccentTaskbarLevels.None:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                                 {
                                                     TB_Color = Color.FromArgb(16, 16, 16);
                                                     TB_StartBtnColor = Color.FromArgb(31, 31, 31);
@@ -685,39 +683,39 @@ namespace WinPaletter
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index5;
-                                                    TB_StartBtnColor = CP.Windows10.Color_Index4;
+                                                    TB_Color = TM.Windows10.Color_Index5;
+                                                    TB_StartBtnColor = TM.Windows10.Color_Index4;
                                                     S_Color = Color.FromArgb(31, 31, 31);
                                                     AC_Color = Color.FromArgb(31, 31, 31);
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index5;
-                                                    TB_StartBtnColor = CP.Windows10.Color_Index4;
-                                                    S_Color = CP.Windows10.Color_Index4;
-                                                    AC_Color = CP.Windows10.Color_Index4;
+                                                    TB_Color = TM.Windows10.Color_Index5;
+                                                    TB_StartBtnColor = TM.Windows10.Color_Index4;
+                                                    S_Color = TM.Windows10.Color_Index4;
+                                                    AC_Color = TM.Windows10.Color_Index4;
                                                     break;
                                                 }
                                         }
 
-                                        if (CP.Windows10.ApplyAccentOnTaskbar == Structures.Windows10x.AccentTaskbarLevels.None)
+                                        if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
                                             TB_AppBack_Color = Color.FromArgb(150, 100, 100, 100);
                                         }
                                         else
                                         {
-                                            TB_AppBack_Color = CP.Windows10.Color_Index4;
+                                            TB_AppBack_Color = TM.Windows10.Color_Index4;
                                         }
 
-                                        AC_LinkColor = CP.Windows10.Color_Index0;
-                                        TB_UL_Color = CP.Windows10.Color_Index1;
-                                        Settings_Label_Color = CP.Windows10.Color_Index3;
-                                        Link_preview_Color = CP.Windows10.Color_Index3;
-                                        AC_Normal = CP.Windows10.Color_Index3;
+                                        AC_LinkColor = TM.Windows10.Color_Index0;
+                                        TB_UL_Color = TM.Windows10.Color_Index1;
+                                        Settings_Label_Color = TM.Windows10.Color_Index3;
+                                        Link_preview_Color = TM.Windows10.Color_Index3;
+                                        AC_Normal = TM.Windows10.Color_Index3;
 
                                     }
 
@@ -726,12 +724,12 @@ namespace WinPaletter
 
                             case false:
                                 {
-                                    if (CP.Windows10.Transparency)
+                                    if (TM.Windows10.Transparency)
                                     {
 
-                                        switch (CP.Windows10.ApplyAccentOnTaskbar)
+                                        switch (TM.Windows10.ApplyAccentOnTaskbar)
                                         {
-                                            case Structures.Windows10x.AccentTaskbarLevels.None:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                                 {
                                                     TB_Color = Color.FromArgb(238, 238, 238);
                                                     TB_StartBtnColor = Color.Transparent;
@@ -739,43 +737,43 @@ namespace WinPaletter
                                                     AC_Color = Color.FromArgb(228, 228, 228);
 
                                                     TB_AppBack_Color = Color.FromArgb(150, 238, 238, 238);
-                                                    AC_LinkColor = CP.Windows10.Color_Index6;
-                                                    TB_UL_Color = CP.Windows10.Color_Index3;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    AC_LinkColor = TM.Windows10.Color_Index6;
+                                                    TB_UL_Color = TM.Windows10.Color_Index3;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index6;
+                                                    TB_Color = TM.Windows10.Color_Index6;
                                                     TB_StartBtnColor = Color.Transparent;
                                                     S_Color = Color.FromArgb(228, 228, 228);
                                                     AC_Color = Color.FromArgb(228, 228, 228);
 
-                                                    TB_AppBack_Color = Color.FromArgb(150, CP.Windows10.Color_Index3);
-                                                    AC_LinkColor = CP.Windows10.Color_Index6;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = Color.FromArgb(150, TM.Windows10.Color_Index3);
+                                                    AC_LinkColor = TM.Windows10.Color_Index6;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index6;
+                                                    TB_Color = TM.Windows10.Color_Index6;
                                                     TB_StartBtnColor = Color.Transparent;
-                                                    S_Color = CP.Windows10.Color_Index4;
-                                                    AC_Color = CP.Windows10.Color_Index4;
+                                                    S_Color = TM.Windows10.Color_Index4;
+                                                    AC_Color = TM.Windows10.Color_Index4;
 
-                                                    TB_AppBack_Color = Color.FromArgb(150, CP.Windows10.Color_Index3);
-                                                    AC_LinkColor = CP.Windows10.Color_Index0;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = Color.FromArgb(150, TM.Windows10.Color_Index3);
+                                                    AC_LinkColor = TM.Windows10.Color_Index0;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
@@ -785,9 +783,9 @@ namespace WinPaletter
                                     else
                                     {
 
-                                        switch (CP.Windows10.ApplyAccentOnTaskbar)
+                                        switch (TM.Windows10.ApplyAccentOnTaskbar)
                                         {
-                                            case Structures.Windows10x.AccentTaskbarLevels.None:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.None:
                                                 {
                                                     TB_Color = Color.FromArgb(238, 238, 238);
                                                     TB_StartBtnColor = Color.FromArgb(241, 241, 241);
@@ -795,43 +793,43 @@ namespace WinPaletter
                                                     AC_Color = Color.FromArgb(228, 228, 228);
 
                                                     TB_AppBack_Color = Color.FromArgb(252, 252, 252);
-                                                    AC_LinkColor = CP.Windows10.Color_Index6;
-                                                    TB_UL_Color = CP.Windows10.Color_Index3;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    AC_LinkColor = TM.Windows10.Color_Index6;
+                                                    TB_UL_Color = TM.Windows10.Color_Index3;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index5;
-                                                    TB_StartBtnColor = CP.Windows10.Color_Index4;
+                                                    TB_Color = TM.Windows10.Color_Index5;
+                                                    TB_StartBtnColor = TM.Windows10.Color_Index4;
                                                     S_Color = Color.FromArgb(228, 228, 228);
                                                     AC_Color = Color.FromArgb(228, 228, 228);
 
-                                                    TB_AppBack_Color = CP.Windows10.Color_Index4;
-                                                    AC_LinkColor = CP.Windows10.Color_Index6;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = TM.Windows10.Color_Index4;
+                                                    AC_LinkColor = TM.Windows10.Color_Index6;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
 
-                                            case Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
+                                            case Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC:
                                                 {
-                                                    TB_Color = CP.Windows10.Color_Index5;
-                                                    TB_StartBtnColor = CP.Windows10.Color_Index4;
-                                                    S_Color = CP.Windows10.Color_Index4;
-                                                    AC_Color = CP.Windows10.Color_Index4;
+                                                    TB_Color = TM.Windows10.Color_Index5;
+                                                    TB_StartBtnColor = TM.Windows10.Color_Index4;
+                                                    S_Color = TM.Windows10.Color_Index4;
+                                                    AC_Color = TM.Windows10.Color_Index4;
 
-                                                    TB_AppBack_Color = CP.Windows10.Color_Index4;
-                                                    AC_LinkColor = CP.Windows10.Color_Index0;
-                                                    TB_UL_Color = CP.Windows10.Color_Index1;
-                                                    Settings_Label_Color = CP.Windows10.Color_Index3;
-                                                    Link_preview_Color = CP.Windows10.Color_Index3;
-                                                    AC_Normal = CP.Windows10.Color_Index3;
+                                                    TB_AppBack_Color = TM.Windows10.Color_Index4;
+                                                    AC_LinkColor = TM.Windows10.Color_Index0;
+                                                    TB_UL_Color = TM.Windows10.Color_Index1;
+                                                    Settings_Label_Color = TM.Windows10.Color_Index3;
+                                                    Link_preview_Color = TM.Windows10.Color_Index3;
+                                                    AC_Normal = TM.Windows10.Color_Index3;
                                                     break;
                                                 }
                                         }
@@ -882,15 +880,15 @@ namespace WinPaletter
                 case WindowStyle.W81:
                     {
                         #region Win8.1
-                        switch (CP.Windows81.Theme)
+                        switch (TM.Windows81.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Taskbar.Transparency = true;
                                     Taskbar.BackColorAlpha = 100;
                                     break;
                                 }
-                            case Structures.Windows7.Themes.AeroLite:
+                            case Theme.Structures.Windows7.Themes.AeroLite:
                                 {
                                     Taskbar.Transparency = false;
                                     Taskbar.BackColorAlpha = 255;
@@ -900,14 +898,14 @@ namespace WinPaletter
 
                         if (AnimateColorChange)
                         {
-                            Visual.FadeColor(Taskbar, "Background", Taskbar.Background, CP.Windows81.ColorizationColor, Steps, Delay);
+                            Visual.FadeColor(Taskbar, "Background", Taskbar.Background, TM.Windows81.ColorizationColor, Steps, Delay);
                         }
                         else
                         {
-                            Taskbar.Background = CP.Windows81.ColorizationColor;
+                            Taskbar.Background = TM.Windows81.ColorizationColor;
                         }
 
-                        Taskbar.Win7ColorBal = CP.Windows81.ColorizationColorBalance;
+                        Taskbar.Win7ColorBal = TM.Windows81.ColorizationColorBalance;
                         break;
                     }
                 #endregion
@@ -915,42 +913,42 @@ namespace WinPaletter
                 case WindowStyle.W7:
                     {
                         #region Win7
-                        Start.Transparency = !(CP.Windows7.Theme == Structures.Windows7.Themes.Basic) & !(CP.Windows7.Theme == Structures.Windows7.Themes.Classic);
-                        Taskbar.Transparency = !(CP.Windows7.Theme == Structures.Windows7.Themes.Basic) & !(CP.Windows7.Theme == Structures.Windows7.Themes.Classic);
+                        Start.Transparency = !(TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Basic) & !(TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic);
+                        Taskbar.Transparency = !(TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Basic) & !(TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic);
 
-                        switch (CP.Windows7.Theme)
+                        switch (TM.Windows7.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
-                                    Start.BackColorAlpha = CP.Windows7.ColorizationBlurBalance;
-                                    Start.Win7ColorBal = CP.Windows7.ColorizationColorBalance;
-                                    Start.Win7GlowBal = CP.Windows7.ColorizationAfterglowBalance;
-                                    Start.Background = CP.Windows7.ColorizationColor;
-                                    Start.Background2 = CP.Windows7.ColorizationAfterglow;
-                                    Start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity;
-                                    Taskbar.BackColorAlpha = CP.Windows7.ColorizationBlurBalance;
-                                    Taskbar.Win7ColorBal = CP.Windows7.ColorizationColorBalance;
-                                    Taskbar.Win7GlowBal = CP.Windows7.ColorizationAfterglowBalance;
-                                    Taskbar.Background = CP.Windows7.ColorizationColor;
-                                    Taskbar.Background2 = CP.Windows7.ColorizationAfterglow;
-                                    Taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Start.BackColorAlpha = TM.Windows7.ColorizationBlurBalance;
+                                    Start.Win7ColorBal = TM.Windows7.ColorizationColorBalance;
+                                    Start.Win7GlowBal = TM.Windows7.ColorizationAfterglowBalance;
+                                    Start.Background = TM.Windows7.ColorizationColor;
+                                    Start.Background2 = TM.Windows7.ColorizationAfterglow;
+                                    Start.NoisePower = TM.Windows7.ColorizationGlassReflectionIntensity;
+                                    Taskbar.BackColorAlpha = TM.Windows7.ColorizationBlurBalance;
+                                    Taskbar.Win7ColorBal = TM.Windows7.ColorizationColorBalance;
+                                    Taskbar.Win7GlowBal = TM.Windows7.ColorizationAfterglowBalance;
+                                    Taskbar.Background = TM.Windows7.ColorizationColor;
+                                    Taskbar.Background2 = TM.Windows7.ColorizationAfterglow;
+                                    Taskbar.NoisePower = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
-                                    Taskbar.BackColorAlpha = CP.Windows7.ColorizationColorBalance;
-                                    Taskbar.Background = CP.Windows7.ColorizationColor;
-                                    Taskbar.Background2 = CP.Windows7.ColorizationColor;
-                                    Taskbar.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity;
-                                    Start.BackColorAlpha = CP.Windows7.ColorizationColorBalance;
-                                    Start.Background = CP.Windows7.ColorizationColor;
-                                    Start.Background2 = CP.Windows7.ColorizationColor;
-                                    Start.NoisePower = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Taskbar.BackColorAlpha = TM.Windows7.ColorizationColorBalance;
+                                    Taskbar.Background = TM.Windows7.ColorizationColor;
+                                    Taskbar.Background2 = TM.Windows7.ColorizationColor;
+                                    Taskbar.NoisePower = TM.Windows7.ColorizationGlassReflectionIntensity;
+                                    Start.BackColorAlpha = TM.Windows7.ColorizationColorBalance;
+                                    Start.Background = TM.Windows7.ColorizationColor;
+                                    Start.Background2 = TM.Windows7.ColorizationColor;
+                                    Start.NoisePower = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Taskbar.Background = Color.FromArgb(166, 190, 218);
                                     Taskbar.BackColorAlpha = 100;
@@ -969,43 +967,43 @@ namespace WinPaletter
                 case WindowStyle.WVista:
                     {
                         #region WinVista
-                        Start.Transparency = !(CP.WindowsVista.Theme == Structures.Windows7.Themes.Basic) & !(CP.WindowsVista.Theme == Structures.Windows7.Themes.Classic);
-                        Taskbar.Transparency = !(CP.WindowsVista.Theme == Structures.Windows7.Themes.Basic) & !(CP.WindowsVista.Theme == Structures.Windows7.Themes.Classic);
+                        Start.Transparency = !(TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Basic) & !(TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic);
+                        Taskbar.Transparency = !(TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Basic) & !(TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic);
 
-                        switch (CP.WindowsVista.Theme)
+                        switch (TM.WindowsVista.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
-                                    Start.BackColorAlpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 180d);
-                                    Start.Win7ColorBal = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    // .Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                                    Start.Background = CP.WindowsVista.ColorizationColor;
-                                    Start.Background2 = CP.WindowsVista.ColorizationColor;
+                                    Start.BackColorAlpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 180d);
+                                    Start.Win7ColorBal = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    // .Win7GlowBal = [Manager].WindowsVista.ColorizationAfterglowBalance
+                                    Start.Background = TM.WindowsVista.ColorizationColor;
+                                    Start.Background2 = TM.WindowsVista.ColorizationColor;
                                     Start.NoisePower = 100f;
-                                    Taskbar.BackColorAlpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 180d);
-                                    Taskbar.Win7ColorBal = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    // .Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                                    Taskbar.Background = CP.WindowsVista.ColorizationColor;
-                                    Taskbar.Background2 = CP.WindowsVista.ColorizationColor;
+                                    Taskbar.BackColorAlpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 180d);
+                                    Taskbar.Win7ColorBal = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    // .Win7GlowBal = [Manager].WindowsVista.ColorizationAfterglowBalance
+                                    Taskbar.Background = TM.WindowsVista.ColorizationColor;
+                                    Taskbar.Background2 = TM.WindowsVista.ColorizationColor;
                                     Taskbar.NoisePower = 100f;
                                     break;
                                 }
 
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
-                                    Taskbar.BackColorAlpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 200d);
-                                    Taskbar.Background = CP.WindowsVista.ColorizationColor;
-                                    Taskbar.Background2 = CP.WindowsVista.ColorizationColor;
+                                    Taskbar.BackColorAlpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 200d);
+                                    Taskbar.Background = TM.WindowsVista.ColorizationColor;
+                                    Taskbar.Background2 = TM.WindowsVista.ColorizationColor;
                                     Taskbar.NoisePower = 100f;
-                                    Start.BackColorAlpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 200d);
-                                    Start.Background = CP.WindowsVista.ColorizationColor;
-                                    Start.Background2 = CP.WindowsVista.ColorizationColor;
+                                    Start.BackColorAlpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 200d);
+                                    Start.Background = TM.WindowsVista.ColorizationColor;
+                                    Start.Background2 = TM.WindowsVista.ColorizationColor;
                                     Start.NoisePower = 100f;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Taskbar.Background = Color.FromArgb(166, 190, 218);
                                     Taskbar.BackColorAlpha = 100;
@@ -1032,16 +1030,16 @@ namespace WinPaletter
             Start.Invalidate();
             ActionCenter.Invalidate();
 
-            if (!IsFontInstalled("Segoe MDL2 Assets"))
+            if (!Theme.Manager.IsFontInstalled("Segoe MDL2 Assets"))
             {
                 setting_icon_preview.Font = new Font("Arial", 28f, FontStyle.Regular);
                 setting_icon_preview.Text = "♣";
             }
 
         }
-        public static void ApplyWinElementsStyle(CP CP, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
+        public static void ApplyWinElementsStyle(Theme.Manager TM, WindowStyle Style, UI.Simulation.WinElement Taskbar, UI.Simulation.WinElement Start, UI.Simulation.WinElement ActionCenter, UI.Simulation.Window Window1, UI.Simulation.Window Window2, Panel Settings_Container, Label Link_preview, UI.Retro.PanelRaisedR ClassicTaskbar, UI.Retro.ButtonR ClassicStartButton, UI.Retro.ButtonR ClassicAppButton1, UI.Retro.ButtonR ClassicAppButton2, UI.Retro.WindowR ClassicWindow1, UI.Retro.WindowR ClassicWindow2, bool WXP_VS_ReplaceColors, bool WXP_VS_ReplaceMetrics, bool WXP_VS_ReplaceFonts)
         {
-            My.Env.RenderingHint = CP.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Taskbar.SuspendRefresh = true;
             Start.SuspendRefresh = true;
@@ -1056,7 +1054,7 @@ namespace WinPaletter
 
             Settings_Container.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
             Link_preview.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
-            Start.Visible = !(Style == WindowStyle.W81) & !(Style == WindowStyle.W10 & CP.WindowsEffects.FullScreenStartMenu);
+            Start.Visible = !(Style == WindowStyle.W81) & !(Style == WindowStyle.W10 & TM.WindowsEffects.FullScreenStartMenu);
             ActionCenter.Visible = Style == WindowStyle.W11 | Style == WindowStyle.W10;
 
             switch (Style)
@@ -1110,16 +1108,16 @@ namespace WinPaletter
 
                 case WindowStyle.W81:
                     {
-                        Window_Style = CP.Windows81.Theme == Structures.Windows7.Themes.AeroLite ? UI.Simulation.Window.Preview_Enum.W8Lite : UI.Simulation.Window.Preview_Enum.W8;
-                        Taskbar_Style = CP.Windows81.Theme == Structures.Windows7.Themes.Aero ? UI.Simulation.WinElement.Styles.Taskbar8Aero : UI.Simulation.WinElement.Styles.Taskbar8Lite;
+                        Window_Style = TM.Windows81.Theme == Theme.Structures.Windows7.Themes.AeroLite ? UI.Simulation.Window.Preview_Enum.W8Lite : UI.Simulation.Window.Preview_Enum.W8;
+                        Taskbar_Style = TM.Windows81.Theme == Theme.Structures.Windows7.Themes.Aero ? UI.Simulation.WinElement.Styles.Taskbar8Aero : UI.Simulation.WinElement.Styles.Taskbar8Lite;
                         break;
                     }
 
                 case WindowStyle.W7:
                     {
-                        switch (CP.Windows7.Theme)
+                        switch (TM.Windows7.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Aero;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Aero;
@@ -1127,7 +1125,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Opaque;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Opaque;
@@ -1135,7 +1133,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Basic;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar7Basic;
@@ -1150,9 +1148,9 @@ namespace WinPaletter
 
                 case WindowStyle.WVista:
                     {
-                        switch (CP.WindowsVista.Theme)     // Windows Vista uses the same aero of Windows 7
+                        switch (TM.WindowsVista.Theme)     // Windows Vista uses the same aero of Windows 7
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Aero;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaAero;
@@ -1160,7 +1158,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Opaque;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaOpaque;
@@ -1168,7 +1166,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Window_Style = UI.Simulation.Window.Preview_Enum.W7Basic;
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarVistaBasic;
@@ -1187,9 +1185,9 @@ namespace WinPaletter
                         Taskbar_Style = UI.Simulation.WinElement.Styles.TaskbarXP;
                         Start_Style = UI.Simulation.WinElement.Styles.StartXP;
 
-                        switch (CP.WindowsXP.Theme)
+                        switch (TM.WindowsXP.Theme)
                         {
-                            case Structures.WindowsXP.Themes.LunaBlue:
+                            case Theme.Structures.WindowsXP.Themes.LunaBlue:
                                 {
                                     My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
                                     System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
@@ -1197,7 +1195,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.WindowsXP.Themes.LunaOliveGreen:
+                            case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
                                 {
                                     My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
                                     System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=HomeStead{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
@@ -1205,7 +1203,7 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.WindowsXP.Themes.LunaSilver:
+                            case Theme.Structures.WindowsXP.Themes.LunaSilver:
                                 {
                                     My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
                                     System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=Metallic{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
@@ -1213,25 +1211,25 @@ namespace WinPaletter
                                     break;
                                 }
 
-                            case Structures.WindowsXP.Themes.Custom:
+                            case Theme.Structures.WindowsXP.Themes.Custom:
                                 {
-                                    if (System.IO.File.Exists(CP.WindowsXP.ThemeFile))
+                                    if (System.IO.File.Exists(TM.WindowsXP.ThemeFile))
                                     {
-                                        if (System.IO.Path.GetExtension(CP.WindowsXP.ThemeFile) == ".theme")
+                                        if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".theme")
                                         {
-                                            My.Env.VS = CP.WindowsXP.ThemeFile;
+                                            My.Env.VS = TM.WindowsXP.ThemeFile;
                                         }
-                                        else if (System.IO.Path.GetExtension(CP.WindowsXP.ThemeFile) == ".msstyles")
+                                        else if (System.IO.Path.GetExtension(TM.WindowsXP.ThemeFile) == ".msstyles")
                                         {
                                             My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
-                                            System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", CP.WindowsXP.ThemeFile, "\r\n", CP.WindowsXP.ColorScheme));
+                                            System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle={2}{1}Size=NormalSize", TM.WindowsXP.ThemeFile, "\r\n", TM.WindowsXP.ColorScheme));
                                         }
                                     }
                                     My.Env.resVS = new VisualStylesRes(My.Env.VS);
                                     break;
                                 }
 
-                            case Structures.WindowsXP.Themes.Classic:
+                            case Theme.Structures.WindowsXP.Themes.Classic:
                                 {
                                     My.Env.VS = My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme";
                                     System.IO.File.WriteAllText(My.Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", My.Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
@@ -1241,30 +1239,30 @@ namespace WinPaletter
 
                         }
 
-                        if (WXP_VS_ReplaceColors & CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                        if (WXP_VS_ReplaceColors & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
                             if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
                             {
                                 var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
-                                CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics);
+                                TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
                             }
                         }
 
-                        if (WXP_VS_ReplaceMetrics & CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                        if (WXP_VS_ReplaceMetrics & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
                             if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
                             {
                                 var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
-                                CP.MetricsFonts.Overwrite_Metrics(vs.Metrics);
+                                TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                             }
                         }
 
-                        if (WXP_VS_ReplaceFonts & CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                        if (WXP_VS_ReplaceFonts & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                         {
                             if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
                             {
                                 var vs = new Devcorp.Controls.VisualStyles.VisualStyleFile(My.Env.VS);
-                                CP.MetricsFonts.Overwrite_Fonts(vs.Metrics);
+                                TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                             }
                         }
 
@@ -1280,16 +1278,16 @@ namespace WinPaletter
             Window2.WinVista = Style == WindowStyle.WVista;
             Window2.Preview = Window1.Preview;
 
-            SetModernWindowMetrics(CP, Window1);
-            SetModernWindowMetrics(CP, Window2);
-            SetClassicWindowMetrics(CP, ClassicWindow1);
-            SetClassicWindowMetrics(CP, ClassicWindow2);
-            SetClassicWindowColors(CP, ClassicWindow1);
-            SetClassicWindowColors(CP, ClassicWindow2, false);
-            SetClassicButtonColors(CP, ClassicStartButton);
-            SetClassicButtonColors(CP, ClassicAppButton1);
-            SetClassicButtonColors(CP, ClassicAppButton2);
-            SetClassicPanelRaisedRColors(CP, ClassicTaskbar);
+            SetModernWindowMetrics(TM, Window1);
+            SetModernWindowMetrics(TM, Window2);
+            SetClassicWindowMetrics(TM, ClassicWindow1);
+            SetClassicWindowMetrics(TM, ClassicWindow2);
+            SetClassicWindowColors(TM, ClassicWindow1);
+            SetClassicWindowColors(TM, ClassicWindow2, false);
+            SetClassicButtonColors(TM, ClassicStartButton);
+            SetClassicButtonColors(TM, ClassicAppButton1);
+            SetClassicButtonColors(TM, ClassicAppButton2);
+            SetClassicPanelRaisedRColors(TM, ClassicTaskbar);
 
             if (Style != WindowStyle.WVista & Style != WindowStyle.WXP)
             {
@@ -1304,9 +1302,9 @@ namespace WinPaletter
                 ClassicAppButton1.Text = "";
                 ClassicAppButton2.Text = "";
                 ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                ClassicAppButton1.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                ClassicAppButton2.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                ClassicStartButton.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                 ClassicAppButton1.HatchBrush = false;
             }
 
@@ -1411,7 +1409,7 @@ namespace WinPaletter
                         ActionCenter.BlurPower = 7;
                         ActionCenter.NoisePower = 0.3f;
                         // ########################
-                        Taskbar.BlurPower = !CP.Windows10.IncreaseTBTransparency ? 12 : 6;
+                        Taskbar.BlurPower = !TM.Windows10.IncreaseTBTransparency ? 12 : 6;
                         // ########################
                         Start.BlurPower = 7;
                         Start.NoisePower = 0.3f;
@@ -1449,14 +1447,14 @@ namespace WinPaletter
                         ActionCenter.Visible = false;
 
                         Taskbar.BlurPower = 1;
-                        Taskbar.NoisePower = (float)(CP.Windows7.ColorizationGlassReflectionIntensity / 100d);
+                        Taskbar.NoisePower = (float)(TM.Windows7.ColorizationGlassReflectionIntensity / 100d);
                         Taskbar.Height = 34;
 
                         Start.BlurPower = 1;
                         Start.NoisePower = 0.5f;
                         Start.Width = 136;
                         Start.Height = 191;
-                        Start.NoisePower = (float)(CP.Windows7.ColorizationGlassReflectionIntensity / 100d);
+                        Start.NoisePower = (float)(TM.Windows7.ColorizationGlassReflectionIntensity / 100d);
                         Start.Left = 0;
                         Start.Top = Taskbar.Top - Start.Height;
                         break;
@@ -1485,9 +1483,9 @@ namespace WinPaletter
                         ClassicAppButton1.Text = ClassicWindow1.Text;
                         ClassicAppButton2.Text = ClassicWindow2.Text;
                         ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                        ClassicAppButton1.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                        ClassicAppButton2.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                        ClassicStartButton.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                        ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                        ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                        ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                         ClassicAppButton1.HatchBrush = true;
                         break;
                     }
@@ -1511,16 +1509,16 @@ namespace WinPaletter
                         ClassicAppButton1.Text = ClassicWindow1.Text;
                         ClassicAppButton2.Text = ClassicWindow2.Text;
                         ClassicAppButton2.Left = ClassicAppButton1.Right + 3;
-                        ClassicAppButton1.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
-                        ClassicAppButton2.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
-                        ClassicStartButton.Font = new Font(CP.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
+                        ClassicAppButton1.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton1.Font.Style);
+                        ClassicAppButton2.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8f, ClassicAppButton2.Font.Style);
+                        ClassicStartButton.Font = new Font(TM.MetricsFonts.CaptionFont.Name, 8.5f, ClassicStartButton.Font.Style);
                         ClassicAppButton1.HatchBrush = true;
                         break;
                     }
 
             }
 
-            if (Style == WindowStyle.W10 & !CP.WindowsEffects.FullScreenStartMenu | Style == WindowStyle.W11)
+            if (Style == WindowStyle.W10 & !TM.WindowsEffects.FullScreenStartMenu | Style == WindowStyle.W11)
             {
                 Window1.Left = (int)Math.Round(Start.Right + (Window1.Parent.Width - (Start.Width + Start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - Window1.Width) / 2d);
             }
@@ -1556,7 +1554,7 @@ namespace WinPaletter
             Window2.Invalidate();
 
         }
-        public static void ApplyWindowStyles(CP CP, WindowStyle Style, UI.Simulation.Window Window1, UI.Simulation.Window Window2, UI.WP.Button StartButton = null, UI.WP.Button LogonUIButton = null)
+        public static void ApplyWindowStyles(Theme.Manager TM, WindowStyle Style, UI.Simulation.Window Window1, UI.Simulation.Window Window2, UI.WP.Button StartButton = null, UI.WP.Button LogonUIButton = null)
         {
             Window1.Active = true;
             Window2.Active = false;
@@ -1572,20 +1570,20 @@ namespace WinPaletter
                 case WindowStyle.W11:
                     {
                         #region Win11
-                        Window1.AccentColor_Enabled = CP.Windows11.ApplyAccentOnTitlebars;
-                        Window2.AccentColor_Enabled = CP.Windows11.ApplyAccentOnTitlebars;
+                        Window1.AccentColor_Enabled = TM.Windows11.ApplyAccentOnTitlebars;
+                        Window2.AccentColor_Enabled = TM.Windows11.ApplyAccentOnTitlebars;
 
-                        Window1.AccentColor_Active = CP.Windows11.Titlebar_Active;
-                        Window2.AccentColor_Active = CP.Windows11.Titlebar_Active;
+                        Window1.AccentColor_Active = TM.Windows11.Titlebar_Active;
+                        Window2.AccentColor_Active = TM.Windows11.Titlebar_Active;
 
-                        Window1.AccentColor_Inactive = CP.Windows11.Titlebar_Inactive;
-                        Window2.AccentColor_Inactive = CP.Windows11.Titlebar_Inactive;
+                        Window1.AccentColor_Inactive = TM.Windows11.Titlebar_Inactive;
+                        Window2.AccentColor_Inactive = TM.Windows11.Titlebar_Inactive;
 
-                        Window1.DarkMode = !CP.Windows11.AppMode_Light;
-                        Window2.DarkMode = !CP.Windows11.AppMode_Light;
+                        Window1.DarkMode = !TM.Windows11.AppMode_Light;
+                        Window2.DarkMode = !TM.Windows11.AppMode_Light;
 
-                        Window1.Shadow = CP.WindowsEffects.WindowShadow;
-                        Window2.Shadow = CP.WindowsEffects.WindowShadow;
+                        Window1.Shadow = TM.WindowsEffects.WindowShadow;
+                        Window2.Shadow = TM.WindowsEffects.WindowShadow;
                         break;
                     }
 
@@ -1593,20 +1591,20 @@ namespace WinPaletter
                 case WindowStyle.W10:
                     {
                         #region Win10
-                        Window1.AccentColor_Enabled = CP.Windows10.ApplyAccentOnTitlebars;
-                        Window2.AccentColor_Enabled = CP.Windows10.ApplyAccentOnTitlebars;
+                        Window1.AccentColor_Enabled = TM.Windows10.ApplyAccentOnTitlebars;
+                        Window2.AccentColor_Enabled = TM.Windows10.ApplyAccentOnTitlebars;
 
-                        Window1.AccentColor_Active = CP.Windows10.Titlebar_Active;
-                        Window2.AccentColor_Active = CP.Windows10.Titlebar_Active;
+                        Window1.AccentColor_Active = TM.Windows10.Titlebar_Active;
+                        Window2.AccentColor_Active = TM.Windows10.Titlebar_Active;
 
-                        Window1.AccentColor_Inactive = CP.Windows10.Titlebar_Inactive;
-                        Window2.AccentColor_Inactive = CP.Windows10.Titlebar_Inactive;
+                        Window1.AccentColor_Inactive = TM.Windows10.Titlebar_Inactive;
+                        Window2.AccentColor_Inactive = TM.Windows10.Titlebar_Inactive;
 
-                        Window1.DarkMode = !CP.Windows10.AppMode_Light;
-                        Window2.DarkMode = !CP.Windows10.AppMode_Light;
+                        Window1.DarkMode = !TM.Windows10.AppMode_Light;
+                        Window2.DarkMode = !TM.Windows10.AppMode_Light;
 
-                        Window1.Shadow = CP.WindowsEffects.WindowShadow;
-                        Window2.Shadow = CP.WindowsEffects.WindowShadow;
+                        Window1.Shadow = TM.WindowsEffects.WindowShadow;
+                        Window2.Shadow = TM.WindowsEffects.WindowShadow;
                         break;
                     }
                 #endregion
@@ -1615,23 +1613,23 @@ namespace WinPaletter
                         #region Win8.1
                         if ((My.Env.W8 | My.Env.W81) & My.Env.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(CP);
+                            RefreshDWM(TM);
                         }
 
                         if (StartButton is not null)
-                            ApplyMetroStartToButton(CP, StartButton);
+                            ApplyMetroStartToButton(TM, StartButton);
                         if (LogonUIButton is not null)
-                            ApplyBackLogonUI(CP, LogonUIButton);
+                            ApplyBackLogonUI(TM, LogonUIButton);
 
-                        switch (CP.Windows81.Theme)
+                        switch (TM.Windows81.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W8;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W8;
                                     break;
                                 }
-                            case Structures.Windows7.Themes.AeroLite:
+                            case Theme.Structures.Windows7.Themes.AeroLite:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W8Lite;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W8Lite;
@@ -1639,11 +1637,11 @@ namespace WinPaletter
                                 }
                         }
 
-                        Window1.AccentColor_Active = CP.Windows81.ColorizationColor;
-                        Window1.Win7ColorBal = CP.Windows81.ColorizationColorBalance;
+                        Window1.AccentColor_Active = TM.Windows81.ColorizationColor;
+                        Window1.Win7ColorBal = TM.Windows81.ColorizationColorBalance;
 
-                        Window2.AccentColor_Active = CP.Windows81.ColorizationColor;
-                        Window2.Win7ColorBal = CP.Windows81.ColorizationColorBalance;
+                        Window2.AccentColor_Active = TM.Windows81.ColorizationColor;
+                        Window2.Win7ColorBal = TM.Windows81.ColorizationColorBalance;
                         break;
                     }
 
@@ -1653,53 +1651,53 @@ namespace WinPaletter
                         #region Win7
                         if (My.Env.WVista & My.Env.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(CP);
+                            RefreshDWM(TM);
                         }
 
-                        Window1.Shadow = CP.WindowsEffects.WindowShadow;
-                        Window2.Shadow = CP.WindowsEffects.WindowShadow;
+                        Window1.Shadow = TM.WindowsEffects.WindowShadow;
+                        Window2.Shadow = TM.WindowsEffects.WindowShadow;
 
-                        switch (CP.Windows7.Theme)
+                        switch (TM.Windows7.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Aero;
-                                    Window1.Win7Alpha = CP.Windows7.ColorizationBlurBalance;
-                                    Window1.Win7ColorBal = CP.Windows7.ColorizationColorBalance;
-                                    Window1.Win7GlowBal = CP.Windows7.ColorizationAfterglowBalance;
-                                    Window1.AccentColor_Active = CP.Windows7.ColorizationColor;
-                                    Window1.AccentColor2_Active = CP.Windows7.ColorizationAfterglow;
-                                    Window1.AccentColor_Inactive = CP.Windows7.ColorizationColor;
-                                    Window1.AccentColor2_Inactive = CP.Windows7.ColorizationAfterglow;
-                                    Window1.Win7Noise = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Window1.Win7Alpha = TM.Windows7.ColorizationBlurBalance;
+                                    Window1.Win7ColorBal = TM.Windows7.ColorizationColorBalance;
+                                    Window1.Win7GlowBal = TM.Windows7.ColorizationAfterglowBalance;
+                                    Window1.AccentColor_Active = TM.Windows7.ColorizationColor;
+                                    Window1.AccentColor2_Active = TM.Windows7.ColorizationAfterglow;
+                                    Window1.AccentColor_Inactive = TM.Windows7.ColorizationColor;
+                                    Window1.AccentColor2_Inactive = TM.Windows7.ColorizationAfterglow;
+                                    Window1.Win7Noise = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W7Aero;
-                                    Window2.Win7Alpha = CP.Windows7.ColorizationBlurBalance;
-                                    Window2.Win7ColorBal = CP.Windows7.ColorizationColorBalance;
-                                    Window2.Win7GlowBal = CP.Windows7.ColorizationAfterglowBalance;
-                                    Window2.AccentColor_Active = CP.Windows7.ColorizationColor;
-                                    Window2.AccentColor2_Active = CP.Windows7.ColorizationAfterglow;
-                                    Window2.AccentColor_Inactive = CP.Windows7.ColorizationColor;
-                                    Window2.AccentColor2_Inactive = CP.Windows7.ColorizationAfterglow;
-                                    Window2.Win7Noise = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Window2.Win7Alpha = TM.Windows7.ColorizationBlurBalance;
+                                    Window2.Win7ColorBal = TM.Windows7.ColorizationColorBalance;
+                                    Window2.Win7GlowBal = TM.Windows7.ColorizationAfterglowBalance;
+                                    Window2.AccentColor_Active = TM.Windows7.ColorizationColor;
+                                    Window2.AccentColor2_Active = TM.Windows7.ColorizationAfterglow;
+                                    Window2.AccentColor_Inactive = TM.Windows7.ColorizationColor;
+                                    Window2.AccentColor2_Inactive = TM.Windows7.ColorizationAfterglow;
+                                    Window2.Win7Noise = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Opaque;
-                                    Window1.Win7Alpha = CP.Windows7.ColorizationColorBalance;
-                                    Window1.AccentColor_Active = CP.Windows7.ColorizationColor;
-                                    Window1.AccentColor_Inactive = CP.Windows7.ColorizationColor;
-                                    Window1.Win7Noise = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Window1.Win7Alpha = TM.Windows7.ColorizationColorBalance;
+                                    Window1.AccentColor_Active = TM.Windows7.ColorizationColor;
+                                    Window1.AccentColor_Inactive = TM.Windows7.ColorizationColor;
+                                    Window1.Win7Noise = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W7Opaque;
-                                    Window2.Win7Alpha = CP.Windows7.ColorizationColorBalance;
-                                    Window2.AccentColor_Active = CP.Windows7.ColorizationColor;
-                                    Window2.AccentColor_Inactive = CP.Windows7.ColorizationColor;
-                                    Window2.Win7Noise = CP.Windows7.ColorizationGlassReflectionIntensity;
+                                    Window2.Win7Alpha = TM.Windows7.ColorizationColorBalance;
+                                    Window2.AccentColor_Active = TM.Windows7.ColorizationColor;
+                                    Window2.AccentColor_Inactive = TM.Windows7.ColorizationColor;
+                                    Window2.Win7Noise = TM.Windows7.ColorizationGlassReflectionIntensity;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Basic;
                                     Window1.Win7Alpha = 100;
@@ -1721,53 +1719,53 @@ namespace WinPaletter
                         #region WinVista
                         if (My.Env.WVista & My.Env.Settings.Miscellaneous.Win7LivePreview)
                         {
-                            RefreshDWM(CP);
+                            RefreshDWM(TM);
                         }
 
-                        Window1.Shadow = CP.WindowsEffects.WindowShadow;
-                        Window2.Shadow = CP.WindowsEffects.WindowShadow;
+                        Window1.Shadow = TM.WindowsEffects.WindowShadow;
+                        Window2.Shadow = TM.WindowsEffects.WindowShadow;
 
-                        switch (CP.WindowsVista.Theme)
+                        switch (TM.WindowsVista.Theme)
                         {
-                            case Structures.Windows7.Themes.Aero:
+                            case Theme.Structures.Windows7.Themes.Aero:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Aero;
-                                    Window1.Win7Alpha = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    Window1.Win7ColorBal = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    // .Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                                    Window1.AccentColor_Active = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor);
-                                    Window1.AccentColor2_Active = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor);
-                                    Window1.AccentColor_Inactive = Color.FromArgb(100, CP.WindowsVista.ColorizationColor);
-                                    Window1.AccentColor2_Inactive = Color.FromArgb(100, CP.WindowsVista.ColorizationColor);
+                                    Window1.Win7Alpha = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    Window1.Win7ColorBal = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    // .Win7GlowBal = [Manager].WindowsVista.ColorizationAfterglowBalance
+                                    Window1.AccentColor_Active = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor);
+                                    Window1.AccentColor2_Active = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor);
+                                    Window1.AccentColor_Inactive = Color.FromArgb(100, TM.WindowsVista.ColorizationColor);
+                                    Window1.AccentColor2_Inactive = Color.FromArgb(100, TM.WindowsVista.ColorizationColor);
                                     Window1.Win7Noise = 100f;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W7Aero;
-                                    Window2.Win7Alpha = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    Window2.Win7ColorBal = (int)Math.Round((255 - CP.WindowsVista.Alpha) / 255d * 100d);
-                                    // .Win7GlowBal = [CP].WindowsVista.ColorizationAfterglowBalance
-                                    Window2.AccentColor_Active = CP.WindowsVista.ColorizationColor;
-                                    Window2.AccentColor2_Active = CP.WindowsVista.ColorizationColor;
-                                    Window2.AccentColor_Inactive = Color.FromArgb(100, CP.WindowsVista.ColorizationColor);
-                                    Window2.AccentColor2_Inactive = Color.FromArgb(100, CP.WindowsVista.ColorizationColor);
+                                    Window2.Win7Alpha = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    Window2.Win7ColorBal = (int)Math.Round((255 - TM.WindowsVista.Alpha) / 255d * 100d);
+                                    // .Win7GlowBal = [Manager].WindowsVista.ColorizationAfterglowBalance
+                                    Window2.AccentColor_Active = TM.WindowsVista.ColorizationColor;
+                                    Window2.AccentColor2_Active = TM.WindowsVista.ColorizationColor;
+                                    Window2.AccentColor_Inactive = Color.FromArgb(100, TM.WindowsVista.ColorizationColor);
+                                    Window2.AccentColor2_Inactive = Color.FromArgb(100, TM.WindowsVista.ColorizationColor);
                                     Window2.Win7Noise = 100f;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.AeroOpaque:
+                            case Theme.Structures.Windows7.Themes.AeroOpaque:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Opaque;
-                                    Window1.Win7Alpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 100d);
-                                    Window1.AccentColor_Active = CP.WindowsVista.ColorizationColor;
-                                    Window1.AccentColor_Inactive = CP.WindowsVista.ColorizationColor;
+                                    Window1.Win7Alpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 100d);
+                                    Window1.AccentColor_Active = TM.WindowsVista.ColorizationColor;
+                                    Window1.AccentColor_Inactive = TM.WindowsVista.ColorizationColor;
                                     Window1.Win7Noise = 100f;
                                     Window2.Preview = UI.Simulation.Window.Preview_Enum.W7Opaque;
-                                    Window2.Win7Alpha = (int)Math.Round(CP.WindowsVista.Alpha / 255d * 100d);
-                                    Window2.AccentColor_Active = CP.WindowsVista.ColorizationColor;
-                                    Window2.AccentColor_Inactive = CP.WindowsVista.ColorizationColor;
+                                    Window2.Win7Alpha = (int)Math.Round(TM.WindowsVista.Alpha / 255d * 100d);
+                                    Window2.AccentColor_Active = TM.WindowsVista.ColorizationColor;
+                                    Window2.AccentColor_Inactive = TM.WindowsVista.ColorizationColor;
                                     Window2.Win7Noise = 100f;
                                     break;
                                 }
 
-                            case Structures.Windows7.Themes.Basic:
+                            case Theme.Structures.Windows7.Themes.Basic:
                                 {
                                     Window1.Preview = UI.Simulation.Window.Preview_Enum.W7Basic;
                                     Window1.Win7Alpha = 100;
@@ -1794,98 +1792,98 @@ namespace WinPaletter
             Window1.Invalidate();
             Window2.Invalidate();
         }
-        public static void AdjustPreview_ModernOrClassic(CP CP, WindowStyle Style, UI.WP.TablessControl tabs_preview, UI.WP.AlertBox WXP_Alert)
+        public static void AdjustPreview_ModernOrClassic(Theme.Manager TM, WindowStyle Style, UI.WP.TablessControl tabs_preview, UI.WP.AlertBox WXP_Alert)
         {
-            if (CP is not null)
+            if (TM is not null)
             {
-                bool condition0 = Style == WindowStyle.W7 && CP.Windows7.Theme == Structures.Windows7.Themes.Classic;
-                bool condition1 = Style == WindowStyle.WVista && CP.WindowsVista.Theme == Structures.Windows7.Themes.Classic;
-                bool condition2 = Style == WindowStyle.WXP && CP.WindowsXP.Theme == Structures.WindowsXP.Themes.Classic;
+                bool condition0 = Style == WindowStyle.W7 && TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
+                bool condition1 = Style == WindowStyle.WVista && TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
+                bool condition2 = Style == WindowStyle.WXP && TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
                 WXP_Alert.Visible = Style == WindowStyle.WXP && My.Env.StartedWithClassicTheme;
                 tabs_preview.SelectedIndex = condition0 | condition1 | condition2 ? 1 : 0;
             }
         }
-        public static void SetClassicWindowMetrics(CP CP, UI.Retro.WindowR Window)
+        public static void SetClassicWindowMetrics(Theme.Manager TM, UI.Retro.WindowR Window)
         {
-            if (CP is not null)
+            if (TM is not null)
             {
-                Window.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth;
-                Window.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight;
-                Window.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth;
-                Window.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth;
-                Window.Font = CP.MetricsFonts.CaptionFont;
+                Window.Metrics_BorderWidth = TM.MetricsFonts.BorderWidth;
+                Window.Metrics_CaptionHeight = TM.MetricsFonts.CaptionHeight;
+                Window.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
+                Window.Metrics_PaddedBorderWidth = TM.MetricsFonts.PaddedBorderWidth;
+                Window.Font = TM.MetricsFonts.CaptionFont;
                 Window.Refresh();
             }
         }
-        public static void SetModernWindowMetrics(CP CP, UI.Simulation.Window Window)
+        public static void SetModernWindowMetrics(Theme.Manager TM, UI.Simulation.Window Window)
         {
-            if (CP is not null)
+            if (TM is not null)
             {
-                Window.Font = CP.MetricsFonts.CaptionFont;
-                Window.Metrics_BorderWidth = CP.MetricsFonts.BorderWidth;
-                Window.Metrics_CaptionHeight = CP.MetricsFonts.CaptionHeight;
-                Window.Metrics_PaddedBorderWidth = CP.MetricsFonts.PaddedBorderWidth;
+                Window.Font = TM.MetricsFonts.CaptionFont;
+                Window.Metrics_BorderWidth = TM.MetricsFonts.BorderWidth;
+                Window.Metrics_CaptionHeight = TM.MetricsFonts.CaptionHeight;
+                Window.Metrics_PaddedBorderWidth = TM.MetricsFonts.PaddedBorderWidth;
                 Window.Invalidate();
             }
         }
-        public static void SetClassicWindowColors(CP CP, UI.Retro.WindowR Window, bool Active = true)
+        public static void SetClassicWindowColors(Theme.Manager TM, UI.Retro.WindowR Window, bool Active = true)
         {
-            if (CP is not null)
+            if (TM is not null)
             {
-                Window.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-                Window.BackColor = CP.Win32.ButtonFace;
-                Window.ButtonHilight = CP.Win32.ButtonHilight;
-                Window.ButtonLight = CP.Win32.ButtonLight;
-                Window.ButtonShadow = CP.Win32.ButtonShadow;
-                Window.ButtonText = CP.Win32.ButtonText;
+                Window.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+                Window.BackColor = TM.Win32.ButtonFace;
+                Window.ButtonHilight = TM.Win32.ButtonHilight;
+                Window.ButtonLight = TM.Win32.ButtonLight;
+                Window.ButtonShadow = TM.Win32.ButtonShadow;
+                Window.ButtonText = TM.Win32.ButtonText;
 
                 if (Active)
                 {
-                    Window.ColorBorder = CP.Win32.ActiveBorder;
-                    Window.ForeColor = CP.Win32.TitleText;
-                    Window.Color1 = CP.Win32.ActiveTitle;
-                    Window.Color2 = CP.Win32.GradientActiveTitle;
+                    Window.ColorBorder = TM.Win32.ActiveBorder;
+                    Window.ForeColor = TM.Win32.TitleText;
+                    Window.Color1 = TM.Win32.ActiveTitle;
+                    Window.Color2 = TM.Win32.GradientActiveTitle;
                 }
                 else
                 {
-                    Window.ColorBorder = CP.Win32.InactiveBorder;
-                    Window.ForeColor = CP.Win32.InactiveTitleText;
-                    Window.Color1 = CP.Win32.InactiveTitle;
-                    Window.Color2 = CP.Win32.GradientInactiveTitle;
+                    Window.ColorBorder = TM.Win32.InactiveBorder;
+                    Window.ForeColor = TM.Win32.InactiveTitleText;
+                    Window.Color1 = TM.Win32.InactiveTitle;
+                    Window.Color2 = TM.Win32.GradientInactiveTitle;
                 }
 
-                Window.ColorGradient = CP.Win32.EnableGradient;
+                Window.ColorGradient = TM.Win32.EnableGradient;
             }
         }
-        public static void SetClassicPanelRaisedRColors(CP CP, UI.Retro.PanelRaisedR Panel)
+        public static void SetClassicPanelRaisedRColors(Theme.Manager TM, UI.Retro.PanelRaisedR Panel)
         {
-            Panel.BackColor = CP.Win32.ButtonFace;
-            Panel.ButtonHilight = CP.Win32.ButtonHilight;
-            Panel.ButtonLight = CP.Win32.ButtonLight;
-            Panel.ButtonShadow = CP.Win32.ButtonShadow;
-            Panel.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-            Panel.ForeColor = CP.Win32.TitleText;
+            Panel.BackColor = TM.Win32.ButtonFace;
+            Panel.ButtonHilight = TM.Win32.ButtonHilight;
+            Panel.ButtonLight = TM.Win32.ButtonLight;
+            Panel.ButtonShadow = TM.Win32.ButtonShadow;
+            Panel.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+            Panel.ForeColor = TM.Win32.TitleText;
         }
-        public static void SetClassicPanelColors(CP CP, UI.Retro.PanelR Panel)
+        public static void SetClassicPanelColors(Theme.Manager TM, UI.Retro.PanelR Panel)
         {
-            Panel.BackColor = CP.Win32.ButtonFace;
-            Panel.ButtonHilight = CP.Win32.ButtonHilight;
-            Panel.ButtonLight = CP.Win32.ButtonLight;
-            Panel.ButtonShadow = CP.Win32.ButtonShadow;
-            Panel.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-            Panel.ForeColor = CP.Win32.TitleText;
+            Panel.BackColor = TM.Win32.ButtonFace;
+            Panel.ButtonHilight = TM.Win32.ButtonHilight;
+            Panel.ButtonLight = TM.Win32.ButtonLight;
+            Panel.ButtonShadow = TM.Win32.ButtonShadow;
+            Panel.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+            Panel.ForeColor = TM.Win32.TitleText;
         }
-        public static void SetClassicButtonColors(CP CP, UI.Retro.ButtonR Button)
+        public static void SetClassicButtonColors(Theme.Manager TM, UI.Retro.ButtonR Button)
         {
-            Button.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-            Button.ButtonHilight = CP.Win32.ButtonHilight;
-            Button.ButtonLight = CP.Win32.ButtonLight;
-            Button.ButtonShadow = CP.Win32.ButtonShadow;
-            Button.BackColor = CP.Win32.ButtonFace;
-            Button.ForeColor = CP.Win32.ButtonText;
-            Button.WindowFrame = CP.Win32.WindowFrame;
-            Button.FocusRectWidth = (int)CP.WindowsEffects.FocusRectWidth;
-            Button.FocusRectHeight = (int)CP.WindowsEffects.FocusRectHeight;
+            Button.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+            Button.ButtonHilight = TM.Win32.ButtonHilight;
+            Button.ButtonLight = TM.Win32.ButtonLight;
+            Button.ButtonShadow = TM.Win32.ButtonShadow;
+            Button.BackColor = TM.Win32.ButtonFace;
+            Button.ForeColor = TM.Win32.ButtonText;
+            Button.WindowFrame = TM.Win32.WindowFrame;
+            Button.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
+            Button.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
         }
         public static void ReValidateLivePreview(Control Parent)
         {
@@ -1901,9 +1899,9 @@ namespace WinPaletter
                 }
             }
         }
-        public static void ApplyMetroStartToButton(CP ColorPalette, UI.WP.Button W81_start)
+        public static void ApplyMetroStartToButton(Theme.Manager TM, UI.WP.Button W81_start)
         {
-            switch (ColorPalette.Windows81.Start)
+            switch (TM.Windows81.Start)
             {
                 case 1:
                     {
@@ -1997,7 +1995,7 @@ namespace WinPaletter
                     }
                 case 19:
                     {
-                        W81_start.Image = (Image)ColorPalette.Windows81.PersonalColors_Background.ToBitmap(new Size(48, 48));
+                        W81_start.Image = (Image)TM.Windows81.PersonalColors_Background.ToBitmap(new Size(48, 48));
                         break;
                     }
                 case 20:
@@ -2013,10 +2011,10 @@ namespace WinPaletter
                     }
             }
         }
-        public static void ApplyBackLogonUI(CP ColorPalette, UI.WP.Button W8_logonui)
+        public static void ApplyBackLogonUI(Theme.Manager TM, UI.WP.Button W8_logonui)
         {
 
-            switch (ColorPalette.Windows81.LogonUI)
+            switch (TM.Windows81.LogonUI)
             {
                 case 0:
                     {
@@ -2178,7 +2176,7 @@ namespace WinPaletter
 
 
         }
-        public static Bitmap GetTintedWallpaper(Structures.WallpaperTone WT)
+        public static Bitmap GetTintedWallpaper(Theme.Structures.WallpaperTone WT)
         {
             if (!System.IO.File.Exists(WT.Image))
             {

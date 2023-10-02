@@ -275,7 +275,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
 
-            if (My.MyProject.Application.CopiedColor == default)
+            if (My.MyProject.Application.CopiedColor == null)
             {
 
                 Button3.Enabled = false;

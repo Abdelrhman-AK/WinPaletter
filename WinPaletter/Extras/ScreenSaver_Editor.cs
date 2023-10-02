@@ -23,14 +23,14 @@ namespace WinPaletter
             WPStyle.ApplyStyle(this);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
             pnl_preview.DoubleBuffer();
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
         }
 
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.ScreenSaver;
+                ref var temp = ref TM.ScreenSaver;
                 ScrSvrEnabled.Checked = temp.Enabled;
                 TextBox1.Text = temp.File;
                 Trackbar5.Value = temp.TimeOut;
@@ -39,10 +39,10 @@ namespace WinPaletter
 
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.ScreenSaver;
+                ref var temp = ref TM.ScreenSaver;
                 temp.Enabled = ScrSvrEnabled.Checked;
                 temp.File = TextBox1.Text;
                 temp.TimeOut = Trackbar5.Value;
@@ -54,41 +54,41 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             Close();
         }
 
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            CPx.ScreenSaver.Apply();
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            TMx.ScreenSaver.Apply();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
@@ -178,14 +178,14 @@ namespace WinPaletter
 
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.ScreenSaver);
                 }
             }
         }
 
-        public void GetFromClassicThemeFile(string File, CP.Structures.ScreenSaver _DefaultScrSvr)
+        public void GetFromClassicThemeFile(string File, Theme.Structures.ScreenSaver _DefaultScrSvr)
         {
             using (var _ini = new INI(File))
             {

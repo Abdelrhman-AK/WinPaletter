@@ -1739,7 +1739,7 @@ namespace WinPaletter.NativeMethods
             {
                 var sii = new Shell32.SHSTOCKICONINFO() { cbSize = (uint)Marshal.SizeOf(typeof(Shell32.SHSTOCKICONINFO)) };
                 Shell32.SHGetStockIconInfo(_Icon, _Type, ref sii);
-                if (sii.hIcon != default && sii.hIcon != IntPtr.Zero)
+                if (sii.hIcon != null && sii.hIcon != IntPtr.Zero)
                 {
                     return Icon.FromHandle(sii.hIcon);
                 }

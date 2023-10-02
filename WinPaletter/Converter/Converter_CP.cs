@@ -1224,7 +1224,7 @@ namespace WinPaletter
 
                 public enum Modes
                 {
-                    Default_,
+                    Default,
                     Wallpaper,
                     CustomImage,
                     SolidColor
@@ -1872,7 +1872,7 @@ namespace WinPaletter
             PersonalColors_Background = Color.FromArgb(30, 0, 84),
             PersonalColors_Accent = Color.FromArgb(72, 29, 178),
             NoLockScreen = false,
-            LockScreenType = Structures.LogonUI7.Modes.Default_,
+            LockScreenType = Structures.LogonUI7.Modes.Default,
             LockScreenSystemID = 0
         };
 
@@ -1905,7 +1905,7 @@ namespace WinPaletter
         public Structures.LogonUI7 LogonUI7 = new Structures.LogonUI7()
         {
             Enabled = false,
-            Mode = Structures.LogonUI7.Modes.Default_,
+            Mode = Structures.LogonUI7.Modes.Default,
             ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg",
             Color = Color.Black,
             Blur = false,

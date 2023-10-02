@@ -29,7 +29,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
             AdjustPreview();
             CloseAndApply = false;
         }
@@ -61,10 +61,10 @@ namespace WinPaletter
             FixLanguageDarkModeBug = true;
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.AppTheme;
+                ref var temp = ref TM.AppTheme;
                 AppThemeEnabled.Checked = temp.Enabled;
                 appearance_dark.Checked = temp.DarkMode;
                 RoundedCorners.Checked = temp.RoundCorners;
@@ -74,10 +74,10 @@ namespace WinPaletter
 
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.AppTheme;
+                ref var temp = ref TM.AppTheme;
                 temp.Enabled = AppThemeEnabled.Checked;
                 temp.DarkMode = appearance_dark.Checked;
                 temp.RoundCorners = RoundedCorners.Checked;
@@ -113,33 +113,33 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
                 AdjustPreview();
-                CPx.Dispose();
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
             AdjustPreview();
-            CPx.Dispose();
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
                 AdjustPreview();
             }
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             CloseAndApply = false;
             Close();
         }
@@ -147,13 +147,13 @@ namespace WinPaletter
         private void Button10_Click_1(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            CPx.AppTheme.Apply();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            TMx.AppTheme.Apply();
             CloseAndApply = true;
             BackupSettings = new WPSettings(WPSettings.Mode.Registry);
-            CPx.Dispose();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 

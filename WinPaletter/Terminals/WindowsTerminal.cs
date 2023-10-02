@@ -37,20 +37,20 @@ namespace WinPaletter
             {
                 case WinTerminal.Version.Stable:
                     {
-                        _Terminal = My.Env.CP.Terminal;
-                        _TerminalDefault = My.Env.CP.Terminal;
+                        _Terminal = My.Env.TM.Terminal;
+                        _TerminalDefault = My.Env.TM.Terminal;
                         Text = My.Env.Lang.TerminalStable;
-                        TerEnabled.Checked = My.Env.CP.Terminal.Enabled;
+                        TerEnabled.Checked = My.Env.TM.Terminal.Enabled;
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        _Terminal = My.Env.CP.TerminalPreview;
-                        _TerminalDefault = My.Env.CP.TerminalPreview;
+                        _Terminal = My.Env.TM.TerminalPreview;
+                        _TerminalDefault = My.Env.TM.TerminalPreview;
 
                         Text = My.Env.Lang.TerminalPreview;
-                        TerEnabled.Checked = My.Env.CP.TerminalPreview.Enabled;
+                        TerEnabled.Checked = My.Env.TM.TerminalPreview.Enabled;
                         break;
                     }
 
@@ -123,25 +123,25 @@ namespace WinPaletter
                 {
                     case WindowStyle.W11:
                         {
-                            TerMode.Checked = !My.Env.CP.Windows11.AppMode_Light;
-                            Terminal1.Light = My.Env.CP.Windows11.AppMode_Light;
-                            Terminal2.Light = My.Env.CP.Windows11.AppMode_Light;
+                            TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
                             break;
                         }
 
                     case WindowStyle.W10:
                         {
-                            TerMode.Checked = !My.Env.CP.Windows10.AppMode_Light;
-                            Terminal1.Light = My.Env.CP.Windows10.AppMode_Light;
-                            Terminal2.Light = My.Env.CP.Windows10.AppMode_Light;
+                            TerMode.Checked = !My.Env.TM.Windows10.AppMode_Light;
+                            Terminal1.Light = My.Env.TM.Windows10.AppMode_Light;
+                            Terminal2.Light = My.Env.TM.Windows10.AppMode_Light;
                             break;
                         }
 
                     default:
                         {
-                            TerMode.Checked = !My.Env.CP.Windows11.AppMode_Light;
-                            Terminal1.Light = My.Env.CP.Windows11.AppMode_Light;
-                            Terminal2.Light = My.Env.CP.Windows11.AppMode_Light;
+                            TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
                             break;
                         }
                 }
@@ -987,22 +987,22 @@ namespace WinPaletter
                         {
                             case WindowStyle.W11:
                                 {
-                                    Terminal1.Light = My.Env.CP.Windows11.AppMode_Light;
-                                    Terminal2.Light = My.Env.CP.Windows11.AppMode_Light;
+                                    Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
+                                    Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
                                     break;
                                 }
 
                             case WindowStyle.W10:
                                 {
-                                    Terminal1.Light = My.Env.CP.Windows10.AppMode_Light;
-                                    Terminal2.Light = My.Env.CP.Windows10.AppMode_Light;
+                                    Terminal1.Light = My.Env.TM.Windows10.AppMode_Light;
+                                    Terminal2.Light = My.Env.TM.Windows10.AppMode_Light;
                                     break;
                                 }
 
                             default:
                                 {
-                                    Terminal1.Light = My.Env.CP.Windows11.AppMode_Light;
-                                    Terminal2.Light = My.Env.CP.Windows11.AppMode_Light;
+                                    Terminal1.Light = My.Env.TM.Windows11.AppMode_Light;
+                                    Terminal2.Light = My.Env.TM.Windows11.AppMode_Light;
                                     break;
                                 }
                         }
@@ -1100,21 +1100,21 @@ namespace WinPaletter
                     case WindowStyle.W11:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.CP.Windows11.AppMode_Light;
+                                TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
                             break;
                         }
 
                     case WindowStyle.W10:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.CP.Windows10.AppMode_Light;
+                                TerMode.Checked = !My.Env.TM.Windows10.AppMode_Light;
                             break;
                         }
 
                     default:
                         {
                             if (TerThemes.SelectedIndex == 2)
-                                TerMode.Checked = !My.Env.CP.Windows11.AppMode_Light;
+                                TerMode.Checked = !My.Env.TM.Windows11.AppMode_Light;
                             break;
                         }
 
@@ -1353,15 +1353,15 @@ namespace WinPaletter
             {
                 case WinTerminal.Version.Stable:
                     {
-                        My.Env.CP.Terminal.Enabled = TerEnabled.Checked;
-                        My.Env.CP.Terminal = _Terminal;
+                        My.Env.TM.Terminal.Enabled = TerEnabled.Checked;
+                        My.Env.TM.Terminal = _Terminal;
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        My.Env.CP.TerminalPreview.Enabled = TerEnabled.Checked;
-                        My.Env.CP.TerminalPreview = _Terminal;
+                        My.Env.TM.TerminalPreview.Enabled = TerEnabled.Checked;
+                        My.Env.TM.TerminalPreview = _Terminal;
                         break;
                     }
 
@@ -1382,13 +1382,13 @@ namespace WinPaletter
                 {
                     case WinTerminal.Version.Stable:
                         {
-                            My.Env.CP.Terminal = _TerminalDefault;
+                            My.Env.TM.Terminal = _TerminalDefault;
                             break;
                         }
 
                     case WinTerminal.Version.Preview:
                         {
-                            My.Env.CP.TerminalPreview = _TerminalDefault;
+                            My.Env.TM.TerminalPreview = _TerminalDefault;
                             break;
                         }
 
@@ -1928,28 +1928,28 @@ namespace WinPaletter
 
         private void Button22_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
 
             switch (_Mode)
             {
                 case WinTerminal.Version.Stable:
                     {
-                        _Terminal = CPx.Terminal;
-                        TerEnabled.Checked = CPx.Terminal.Enabled;
+                        _Terminal = TMx.Terminal;
+                        TerEnabled.Checked = TMx.Terminal.Enabled;
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        _Terminal = CPx.TerminalPreview;
-                        TerEnabled.Checked = CPx.TerminalPreview.Enabled;
+                        _Terminal = TMx.TerminalPreview;
+                        TerEnabled.Checked = TMx.TerminalPreview.Enabled;
                         break;
                     }
             }
 
             Load_FromTerminal();
 
-            CPx.Dispose();
+            TMx.Dispose();
         }
 
         private void TerFontSizeVal_Click(object sender, EventArgs e)

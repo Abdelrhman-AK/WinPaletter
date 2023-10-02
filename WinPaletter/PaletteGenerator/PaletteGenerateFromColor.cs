@@ -12,7 +12,7 @@ namespace WinPaletter
     {
 
         private List<Color> Colors_List = new List<Color>();
-        private CP CP_Backup;
+        private Theme.Manager TM_Backup;
 
         private bool PickerOpened = false;
 
@@ -26,7 +26,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             Icon = My.MyProject.Forms.PaletteGenerateFromImage.Icon;
-            CP_Backup = new CP(CP.CP_Type.Registry);
+            TM_Backup = new Theme.Manager(Theme.Manager.Source.Registry);
         }
         private void SelectedColor_DragDrop(object sender, DragEventArgs e)
         {
@@ -166,63 +166,63 @@ namespace WinPaletter
             {
                 case PreviewHelpers.WindowStyle.W11:
                     {
-                        My.Env.CP.Windows11.Titlebar_Active = Colors_List[arr[0]];
-                        My.Env.CP.Windows11.Titlebar_Inactive = Colors_List[arr[1]];
-                        My.Env.CP.Windows11.StartMenu_Accent = Colors_List[arr[2]];
-                        My.Env.CP.Windows11.Color_Index0 = Colors_List[arr[3]];
-                        My.Env.CP.Windows11.Color_Index1 = Colors_List[arr[4]];
-                        My.Env.CP.Windows11.Color_Index2 = Colors_List[arr[5]];
-                        My.Env.CP.Windows11.Color_Index3 = Colors_List[arr[6]];
-                        My.Env.CP.Windows11.Color_Index4 = Colors_List[arr[7]];
-                        My.Env.CP.Windows11.Color_Index5 = Colors_List[arr[8]];
-                        My.Env.CP.Windows11.Color_Index6 = Colors_List[arr[9]];
-                        My.Env.CP.Windows11.Color_Index7 = Colors_List[arr[10]];
+                        My.Env.TM.Windows11.Titlebar_Active = Colors_List[arr[0]];
+                        My.Env.TM.Windows11.Titlebar_Inactive = Colors_List[arr[1]];
+                        My.Env.TM.Windows11.StartMenu_Accent = Colors_List[arr[2]];
+                        My.Env.TM.Windows11.Color_Index0 = Colors_List[arr[3]];
+                        My.Env.TM.Windows11.Color_Index1 = Colors_List[arr[4]];
+                        My.Env.TM.Windows11.Color_Index2 = Colors_List[arr[5]];
+                        My.Env.TM.Windows11.Color_Index3 = Colors_List[arr[6]];
+                        My.Env.TM.Windows11.Color_Index4 = Colors_List[arr[7]];
+                        My.Env.TM.Windows11.Color_Index5 = Colors_List[arr[8]];
+                        My.Env.TM.Windows11.Color_Index6 = Colors_List[arr[9]];
+                        My.Env.TM.Windows11.Color_Index7 = Colors_List[arr[10]];
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W10:
                     {
-                        My.Env.CP.Windows10.Titlebar_Active = Colors_List[arr[0]];
-                        My.Env.CP.Windows10.Titlebar_Inactive = Colors_List[arr[1]];
-                        My.Env.CP.Windows10.StartMenu_Accent = Colors_List[arr[2]];
-                        My.Env.CP.Windows10.Color_Index0 = Colors_List[arr[3]];
-                        My.Env.CP.Windows10.Color_Index1 = Colors_List[arr[4]];
-                        My.Env.CP.Windows10.Color_Index2 = Colors_List[arr[5]];
-                        My.Env.CP.Windows10.Color_Index3 = Colors_List[arr[6]];
-                        My.Env.CP.Windows10.Color_Index4 = Colors_List[arr[7]];
-                        My.Env.CP.Windows10.Color_Index5 = Colors_List[arr[8]];
-                        My.Env.CP.Windows10.Color_Index6 = Colors_List[arr[9]];
-                        My.Env.CP.Windows10.Color_Index7 = Colors_List[arr[10]];
+                        My.Env.TM.Windows10.Titlebar_Active = Colors_List[arr[0]];
+                        My.Env.TM.Windows10.Titlebar_Inactive = Colors_List[arr[1]];
+                        My.Env.TM.Windows10.StartMenu_Accent = Colors_List[arr[2]];
+                        My.Env.TM.Windows10.Color_Index0 = Colors_List[arr[3]];
+                        My.Env.TM.Windows10.Color_Index1 = Colors_List[arr[4]];
+                        My.Env.TM.Windows10.Color_Index2 = Colors_List[arr[5]];
+                        My.Env.TM.Windows10.Color_Index3 = Colors_List[arr[6]];
+                        My.Env.TM.Windows10.Color_Index4 = Colors_List[arr[7]];
+                        My.Env.TM.Windows10.Color_Index5 = Colors_List[arr[8]];
+                        My.Env.TM.Windows10.Color_Index6 = Colors_List[arr[9]];
+                        My.Env.TM.Windows10.Color_Index7 = Colors_List[arr[10]];
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W81:
                     {
-                        My.Env.CP.Windows81.AccentColor = Colors_List[arr[0]];
-                        My.Env.CP.Windows81.ColorizationColor = Colors_List[arr[1]];
-                        My.Env.CP.Windows81.PersonalColors_Accent = Colors_List[arr[2]];
-                        My.Env.CP.Windows81.PersonalColors_Background = Colors_List[arr[3]];
-                        My.Env.CP.Windows81.StartColor = Colors_List[arr[4]];
+                        My.Env.TM.Windows81.AccentColor = Colors_List[arr[0]];
+                        My.Env.TM.Windows81.ColorizationColor = Colors_List[arr[1]];
+                        My.Env.TM.Windows81.PersonalColors_Accent = Colors_List[arr[2]];
+                        My.Env.TM.Windows81.PersonalColors_Background = Colors_List[arr[3]];
+                        My.Env.TM.Windows81.StartColor = Colors_List[arr[4]];
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W7:
                     {
-                        My.Env.CP.Windows7.ColorizationColor = Colors_List[arr[0]];
-                        My.Env.CP.Windows7.ColorizationAfterglow = Colors_List[arr[1]];
+                        My.Env.TM.Windows7.ColorizationColor = Colors_List[arr[0]];
+                        My.Env.TM.Windows7.ColorizationAfterglow = Colors_List[arr[1]];
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.WVista:
                     {
-                        My.Env.CP.WindowsVista.ColorizationColor = Colors_List[arr[0]];
+                        My.Env.TM.WindowsVista.ColorizationColor = Colors_List[arr[0]];
                         break;
                     }
 
             }
 
-            My.MyProject.Forms.MainFrm.ApplyCPValues(My.Env.CP);
-            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
+            My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
+            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
         }
 
         private static Random StaticRandom = new Random();
@@ -239,61 +239,61 @@ namespace WinPaletter
             {
                 case PreviewHelpers.WindowStyle.W11:
                     {
-                        My.Env.CP.Windows11.Titlebar_Active = CP_Backup.Windows11.Titlebar_Active;
-                        My.Env.CP.Windows11.StartMenu_Accent = CP_Backup.Windows11.StartMenu_Accent;
-                        My.Env.CP.Windows11.Color_Index0 = CP_Backup.Windows11.Color_Index0;
-                        My.Env.CP.Windows11.Color_Index1 = CP_Backup.Windows11.Color_Index1;
-                        My.Env.CP.Windows11.Color_Index2 = CP_Backup.Windows11.Color_Index2;
-                        My.Env.CP.Windows11.Color_Index3 = CP_Backup.Windows11.Color_Index3;
-                        My.Env.CP.Windows11.Color_Index4 = CP_Backup.Windows11.Color_Index4;
-                        My.Env.CP.Windows11.Color_Index5 = CP_Backup.Windows11.Color_Index5;
-                        My.Env.CP.Windows11.Color_Index6 = CP_Backup.Windows11.Color_Index6;
-                        My.Env.CP.Windows11.Color_Index7 = CP_Backup.Windows11.Color_Index7;
+                        My.Env.TM.Windows11.Titlebar_Active = TM_Backup.Windows11.Titlebar_Active;
+                        My.Env.TM.Windows11.StartMenu_Accent = TM_Backup.Windows11.StartMenu_Accent;
+                        My.Env.TM.Windows11.Color_Index0 = TM_Backup.Windows11.Color_Index0;
+                        My.Env.TM.Windows11.Color_Index1 = TM_Backup.Windows11.Color_Index1;
+                        My.Env.TM.Windows11.Color_Index2 = TM_Backup.Windows11.Color_Index2;
+                        My.Env.TM.Windows11.Color_Index3 = TM_Backup.Windows11.Color_Index3;
+                        My.Env.TM.Windows11.Color_Index4 = TM_Backup.Windows11.Color_Index4;
+                        My.Env.TM.Windows11.Color_Index5 = TM_Backup.Windows11.Color_Index5;
+                        My.Env.TM.Windows11.Color_Index6 = TM_Backup.Windows11.Color_Index6;
+                        My.Env.TM.Windows11.Color_Index7 = TM_Backup.Windows11.Color_Index7;
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W10:
                     {
-                        My.Env.CP.Windows10.Titlebar_Active = CP_Backup.Windows10.Titlebar_Active;
-                        My.Env.CP.Windows10.StartMenu_Accent = CP_Backup.Windows10.StartMenu_Accent;
-                        My.Env.CP.Windows10.Color_Index0 = CP_Backup.Windows10.Color_Index0;
-                        My.Env.CP.Windows10.Color_Index1 = CP_Backup.Windows10.Color_Index1;
-                        My.Env.CP.Windows10.Color_Index2 = CP_Backup.Windows10.Color_Index2;
-                        My.Env.CP.Windows10.Color_Index3 = CP_Backup.Windows10.Color_Index3;
-                        My.Env.CP.Windows10.Color_Index4 = CP_Backup.Windows10.Color_Index4;
-                        My.Env.CP.Windows10.Color_Index5 = CP_Backup.Windows10.Color_Index5;
-                        My.Env.CP.Windows10.Color_Index6 = CP_Backup.Windows10.Color_Index6;
-                        My.Env.CP.Windows10.Color_Index7 = CP_Backup.Windows10.Color_Index7;
+                        My.Env.TM.Windows10.Titlebar_Active = TM_Backup.Windows10.Titlebar_Active;
+                        My.Env.TM.Windows10.StartMenu_Accent = TM_Backup.Windows10.StartMenu_Accent;
+                        My.Env.TM.Windows10.Color_Index0 = TM_Backup.Windows10.Color_Index0;
+                        My.Env.TM.Windows10.Color_Index1 = TM_Backup.Windows10.Color_Index1;
+                        My.Env.TM.Windows10.Color_Index2 = TM_Backup.Windows10.Color_Index2;
+                        My.Env.TM.Windows10.Color_Index3 = TM_Backup.Windows10.Color_Index3;
+                        My.Env.TM.Windows10.Color_Index4 = TM_Backup.Windows10.Color_Index4;
+                        My.Env.TM.Windows10.Color_Index5 = TM_Backup.Windows10.Color_Index5;
+                        My.Env.TM.Windows10.Color_Index6 = TM_Backup.Windows10.Color_Index6;
+                        My.Env.TM.Windows10.Color_Index7 = TM_Backup.Windows10.Color_Index7;
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W81:
                     {
-                        My.Env.CP.Windows81.AccentColor = CP_Backup.Windows81.AccentColor;
-                        My.Env.CP.Windows81.ColorizationColor = CP_Backup.Windows81.ColorizationColor;
-                        My.Env.CP.Windows81.PersonalColors_Accent = CP_Backup.Windows81.PersonalColors_Accent;
-                        My.Env.CP.Windows81.PersonalColors_Background = CP_Backup.Windows81.PersonalColors_Background;
-                        My.Env.CP.Windows81.StartColor = CP_Backup.Windows81.StartColor;
+                        My.Env.TM.Windows81.AccentColor = TM_Backup.Windows81.AccentColor;
+                        My.Env.TM.Windows81.ColorizationColor = TM_Backup.Windows81.ColorizationColor;
+                        My.Env.TM.Windows81.PersonalColors_Accent = TM_Backup.Windows81.PersonalColors_Accent;
+                        My.Env.TM.Windows81.PersonalColors_Background = TM_Backup.Windows81.PersonalColors_Background;
+                        My.Env.TM.Windows81.StartColor = TM_Backup.Windows81.StartColor;
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.W7:
                     {
-                        My.Env.CP.Windows7.ColorizationColor = CP_Backup.Windows7.ColorizationColor;
-                        My.Env.CP.Windows7.ColorizationAfterglow = CP_Backup.Windows7.ColorizationAfterglow;
+                        My.Env.TM.Windows7.ColorizationColor = TM_Backup.Windows7.ColorizationColor;
+                        My.Env.TM.Windows7.ColorizationAfterglow = TM_Backup.Windows7.ColorizationAfterglow;
                         break;
                     }
 
                 case PreviewHelpers.WindowStyle.WVista:
                     {
-                        My.Env.CP.WindowsVista.ColorizationColor = CP_Backup.WindowsVista.ColorizationColor;
+                        My.Env.TM.WindowsVista.ColorizationColor = TM_Backup.WindowsVista.ColorizationColor;
                         break;
                     }
 
             }
 
-            My.MyProject.Forms.MainFrm.ApplyCPValues(My.Env.CP);
-            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
+            My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
+            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
 
             Close();
         }

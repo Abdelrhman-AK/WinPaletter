@@ -17,7 +17,7 @@ namespace WinPaletter
             WPStyle.ApplyStyle(this);
             LoadImagesFromDLL();
 
-            switch (My.Env.CP.Windows81.Start)
+            switch (My.Env.TM.Windows81.Start)
             {
                 case 1:
                     {
@@ -130,52 +130,52 @@ namespace WinPaletter
 
         public void LoadImagesFromDLL()
         {
-            img19.Image = (Image)My.Env.CP.Windows81.PersonalColors_Background.ToBitmap(new Size(64, 64));
+            img19.Image = (Image)My.Env.TM.Windows81.PersonalColors_Background.ToBitmap(new Size(64, 64));
             img20.Image = My.Env.Wallpaper.Resize(64, 64);
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             if (img1.Checked)
-                My.Env.CP.Windows81.Start = 1;
+                My.Env.TM.Windows81.Start = 1;
             if (img2.Checked)
-                My.Env.CP.Windows81.Start = 2;
+                My.Env.TM.Windows81.Start = 2;
             if (img3.Checked)
-                My.Env.CP.Windows81.Start = 3;
+                My.Env.TM.Windows81.Start = 3;
             if (img4.Checked)
-                My.Env.CP.Windows81.Start = 4;
+                My.Env.TM.Windows81.Start = 4;
             if (img5.Checked)
-                My.Env.CP.Windows81.Start = 5;
+                My.Env.TM.Windows81.Start = 5;
             if (img6.Checked)
-                My.Env.CP.Windows81.Start = 6;
+                My.Env.TM.Windows81.Start = 6;
             if (img7.Checked)
-                My.Env.CP.Windows81.Start = 7;
+                My.Env.TM.Windows81.Start = 7;
             if (img8.Checked)
-                My.Env.CP.Windows81.Start = 8;
+                My.Env.TM.Windows81.Start = 8;
             if (img9.Checked)
-                My.Env.CP.Windows81.Start = 9;
+                My.Env.TM.Windows81.Start = 9;
             if (img10.Checked)
-                My.Env.CP.Windows81.Start = 10;
+                My.Env.TM.Windows81.Start = 10;
             if (img11.Checked)
-                My.Env.CP.Windows81.Start = 11;
+                My.Env.TM.Windows81.Start = 11;
             if (img12.Checked)
-                My.Env.CP.Windows81.Start = 12;
+                My.Env.TM.Windows81.Start = 12;
             if (img13.Checked)
-                My.Env.CP.Windows81.Start = 13;
+                My.Env.TM.Windows81.Start = 13;
             if (img14.Checked)
-                My.Env.CP.Windows81.Start = 14;
+                My.Env.TM.Windows81.Start = 14;
             if (img15.Checked)
-                My.Env.CP.Windows81.Start = 15;
+                My.Env.TM.Windows81.Start = 15;
             if (img16.Checked)
-                My.Env.CP.Windows81.Start = 16;
+                My.Env.TM.Windows81.Start = 16;
             if (img17.Checked)
-                My.Env.CP.Windows81.Start = 17;
+                My.Env.TM.Windows81.Start = 17;
             if (img18.Checked)
-                My.Env.CP.Windows81.Start = 18;
+                My.Env.TM.Windows81.Start = 18;
             if (img19.Checked)
-                My.Env.CP.Windows81.Start = 19;
+                My.Env.TM.Windows81.Start = 19;
             if (img20.Checked)
-                My.Env.CP.Windows81.Start = 20;
+                My.Env.TM.Windows81.Start = 20;
             Close();
         }
 

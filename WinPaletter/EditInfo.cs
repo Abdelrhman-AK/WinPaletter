@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -21,7 +20,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Load_Info(My.Env.CP);
+            Load_Info(My.Env.TM);
             TextBox3.Font = My.MyProject.Application.ConsoleFontMedium;
             TextBox6.Font = My.MyProject.Application.ConsoleFontMedium;
 
@@ -72,56 +71,56 @@ namespace WinPaletter
             }
 
 
-            Save_Info(My.Env.CP);
-            My.MyProject.Forms.MainFrm.themename_lbl.Text = string.Format("{0} ({1})", My.Env.CP.Info.ThemeName, My.Env.CP.Info.ThemeVersion);
-            My.MyProject.Forms.MainFrm.author_lbl.Text = string.Format("{0} {1}", My.Env.Lang.By, My.Env.CP.Info.Author);
+            Save_Info(My.Env.TM);
+            My.MyProject.Forms.MainFrm.themename_lbl.Text = string.Format("{0} ({1})", My.Env.TM.Info.ThemeName, My.Env.TM.Info.ThemeVersion);
+            My.MyProject.Forms.MainFrm.author_lbl.Text = string.Format("{0} {1}", My.Env.Lang.By, My.Env.TM.Info.Author);
 
             Close();
         }
 
-        public void Load_Info(CP CP)
+        public void Load_Info(Theme.Manager TM)
         {
-            StoreItem1.CP = CP;
-            TextBox1.Text = CP.Info.ThemeName;
-            TextBox2.Text = CP.Info.ThemeVersion;
-            TextBox3.Text = CP.Info.Description;
-            TextBox4.Text = CP.Info.Author;
-            TextBox5.Text = CP.Info.AuthorSocialMediaLink;
-            TextBox6.Text = CP.Info.License;
-            CheckBox7.Checked = CP.Info.ExportResThemePack;
+            StoreItem1.TM = TM;
+            TextBox1.Text = TM.Info.ThemeName;
+            TextBox2.Text = TM.Info.ThemeVersion;
+            TextBox3.Text = TM.Info.Description;
+            TextBox4.Text = TM.Info.Author;
+            TextBox5.Text = TM.Info.AuthorSocialMediaLink;
+            TextBox6.Text = TM.Info.License;
+            CheckBox7.Checked = TM.Info.ExportResThemePack;
 
-            color1.BackColor = CP.Info.Color1;
-            color2.BackColor = CP.Info.Color2;
-            Trackbar1.Value = CP.Info.Pattern;
+            color1.BackColor = TM.Info.Color1;
+            color2.BackColor = TM.Info.Color2;
+            Trackbar1.Value = TM.Info.Pattern;
 
-            CheckBox1.Checked = CP.Info.DesignedFor_Win11;
-            CheckBox2.Checked = CP.Info.DesignedFor_Win10;
-            CheckBox3.Checked = CP.Info.DesignedFor_Win81;
-            CheckBox4.Checked = CP.Info.DesignedFor_Win7;
-            CheckBox5.Checked = CP.Info.DesignedFor_WinVista;
-            CheckBox6.Checked = CP.Info.DesignedFor_WinXP;
+            CheckBox1.Checked = TM.Info.DesignedFor_Win11;
+            CheckBox2.Checked = TM.Info.DesignedFor_Win10;
+            CheckBox3.Checked = TM.Info.DesignedFor_Win81;
+            CheckBox4.Checked = TM.Info.DesignedFor_Win7;
+            CheckBox5.Checked = TM.Info.DesignedFor_WinVista;
+            CheckBox6.Checked = TM.Info.DesignedFor_WinXP;
         }
 
-        public void Save_Info(CP CP)
+        public void Save_Info(Theme.Manager TM)
         {
-            CP.Info.ThemeName = string.Concat(TextBox1.Text.Split(System.IO.Path.GetInvalidFileNameChars())).Trim();
-            CP.Info.ThemeVersion = TextBox2.Text;
-            CP.Info.Description = TextBox3.Text;
-            CP.Info.Author = TextBox4.Text;
-            CP.Info.AuthorSocialMediaLink = TextBox5.Text;
-            CP.Info.License = TextBox6.Text;
-            CP.Info.ExportResThemePack = CheckBox7.Checked;
+            TM.Info.ThemeName = string.Concat(TextBox1.Text.Split(System.IO.Path.GetInvalidFileNameChars())).Trim();
+            TM.Info.ThemeVersion = TextBox2.Text;
+            TM.Info.Description = TextBox3.Text;
+            TM.Info.Author = TextBox4.Text;
+            TM.Info.AuthorSocialMediaLink = TextBox5.Text;
+            TM.Info.License = TextBox6.Text;
+            TM.Info.ExportResThemePack = CheckBox7.Checked;
 
-            CP.Info.Color1 = color1.BackColor;
-            CP.Info.Color2 = color2.BackColor;
-            CP.Info.Pattern = Trackbar1.Value;
+            TM.Info.Color1 = color1.BackColor;
+            TM.Info.Color2 = color2.BackColor;
+            TM.Info.Pattern = Trackbar1.Value;
 
-            CP.Info.DesignedFor_Win11 = CheckBox1.Checked;
-            CP.Info.DesignedFor_Win10 = CheckBox2.Checked;
-            CP.Info.DesignedFor_Win81 = CheckBox3.Checked;
-            CP.Info.DesignedFor_Win7 = CheckBox4.Checked;
-            CP.Info.DesignedFor_WinVista = CheckBox5.Checked;
-            CP.Info.DesignedFor_WinXP = CheckBox6.Checked;
+            TM.Info.DesignedFor_Win11 = CheckBox1.Checked;
+            TM.Info.DesignedFor_Win10 = CheckBox2.Checked;
+            TM.Info.DesignedFor_Win81 = CheckBox3.Checked;
+            TM.Info.DesignedFor_Win7 = CheckBox4.Checked;
+            TM.Info.DesignedFor_WinVista = CheckBox5.Checked;
+            TM.Info.DesignedFor_WinXP = CheckBox6.Checked;
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -131,8 +130,8 @@ namespace WinPaletter
 
         private void Color1_2_DragDrop(object sender, DragEventArgs e)
         {
-            StoreItem1.CP.Info.Color1 = color1.BackColor;
-            StoreItem1.CP.Info.Color2 = color2.BackColor;
+            StoreItem1.TM.Info.Color1 = color1.BackColor;
+            StoreItem1.TM.Info.Color2 = color2.BackColor;
         }
 
         private void Color1_Click(object sender, EventArgs e)
@@ -140,7 +139,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 ((UI.Controllers.ColorItem)sender).BackColor = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.CP.Info.Color1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
+                StoreItem1.TM.Info.Color1 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 
@@ -148,7 +147,7 @@ namespace WinPaletter
             var clist = new List<Control>() { color1, StoreItem1 };
             var c = My.MyProject.Forms.ColorPickerDlg.Pick(clist, _conditions);
 
-            StoreItem1.CP.Info.Color1 = c;
+            StoreItem1.TM.Info.Color1 = c;
             color1.BackColor = c;
 
             clist.Clear();
@@ -159,7 +158,7 @@ namespace WinPaletter
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 ((UI.Controllers.ColorItem)sender).BackColor = My.MyProject.Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.CP.Info.Color2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
+                StoreItem1.TM.Info.Color2 = (Color)((UI.Controllers.ColorItem)sender).BackColor;
                 return;
             }
 
@@ -167,7 +166,7 @@ namespace WinPaletter
             var clist = new List<Control>() { color2, StoreItem1 };
             var c = My.MyProject.Forms.ColorPickerDlg.Pick(clist, _conditions);
 
-            StoreItem1.CP.Info.Color2 = c;
+            StoreItem1.TM.Info.Color2 = c;
             color2.BackColor = c;
 
             clist.Clear();
@@ -179,8 +178,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_Win11 = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_Win11 = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -194,8 +193,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_Win10 = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_Win10 = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -209,8 +208,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_Win81 = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_Win81 = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -224,8 +223,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_Win7 = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_Win7 = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -239,8 +238,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_WinVista = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_WinVista = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -254,8 +253,8 @@ namespace WinPaletter
                 ((UI.WP.CheckBox)sender).Checked = true;
             try
             {
-                if (StoreItem1.CP is not null)
-                    StoreItem1.CP.Info.DesignedFor_WinXP = ((UI.WP.CheckBox)sender).Checked;
+                if (StoreItem1.TM is not null)
+                    StoreItem1.TM.Info.DesignedFor_WinXP = ((UI.WP.CheckBox)sender).Checked;
                 StoreItem1.UpdateBadges();
             }
             catch
@@ -275,17 +274,17 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            StoreItem1.CP.Info.ThemeName = ((UI.WP.TextBox)sender).Text;
+            StoreItem1.TM.Info.ThemeName = ((UI.WP.TextBox)sender).Text;
         }
 
         private void TextBox4_TextChanged(object sender, EventArgs e)
         {
-            StoreItem1.CP.Info.Author = ((UI.WP.TextBox)sender).Text;
+            StoreItem1.TM.Info.Author = ((UI.WP.TextBox)sender).Text;
         }
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
-            StoreItem1.CP.Info.ThemeVersion = ((UI.WP.TextBox)sender).Text;
+            StoreItem1.TM.Info.ThemeVersion = ((UI.WP.TextBox)sender).Text;
         }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)

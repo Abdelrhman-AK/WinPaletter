@@ -45,21 +45,21 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Properties
-        private CP _CP;
-        public CP CP
+        private Theme.Manager _TM;
+        public Theme.Manager TM
         {
             get
             {
-                return _CP;
+                return _TM;
             }
             set
             {
                 if (value is not null)
                 {
-                    _CP = (CP)value.Clone();
+                    _TM = (Theme.Manager)value.Clone();
                     UpdateBadges();
-                    UpdatePattern(_CP.Info.Pattern);
-                    CPChanged?.Invoke(this, new EventArgs());
+                    UpdatePattern(_TM.Info.Pattern);
+                    ThemeManagerChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -74,9 +74,9 @@ namespace WinPaletter.UI.Controllers
 
         #region Events
 
-        public event CPChangedEventHandler CPChanged;
+        public event ThemeManagerChangedEventHandler ThemeManagerChanged;
 
-        public delegate void CPChangedEventHandler(object sender, EventArgs e);
+        public delegate void ThemeManagerChangedEventHandler(object sender, EventArgs e);
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -118,19 +118,19 @@ namespace WinPaletter.UI.Controllers
         public void UpdateBadges()
         {
             DesignedFor_Badges.Clear();
-            if (_CP is not null)
+            if (_TM is not null)
             {
-                if (_CP.Info.DesignedFor_Win11)
+                if (_TM.Info.DesignedFor_Win11)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11);
-                if (_CP.Info.DesignedFor_Win10)
+                if (_TM.Info.DesignedFor_Win10)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10);
-                if (_CP.Info.DesignedFor_Win81)
+                if (_TM.Info.DesignedFor_Win81)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8);
-                if (_CP.Info.DesignedFor_Win7)
+                if (_TM.Info.DesignedFor_Win7)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7);
-                if (_CP.Info.DesignedFor_WinVista)
+                if (_TM.Info.DesignedFor_WinVista)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista);
-                if (_CP.Info.DesignedFor_WinXP)
+                if (_TM.Info.DesignedFor_WinXP)
                     DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP);
             }
             Refresh();
@@ -286,9 +286,9 @@ namespace WinPaletter.UI.Controllers
 
             G.SmoothingMode = SmoothingMode.HighQuality;
 
-            if (CP is not null)
+            if (TM is not null)
             {
-                G.TextRenderingHint = CP.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+                G.TextRenderingHint = TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             }
             else
             {
@@ -304,15 +304,15 @@ namespace WinPaletter.UI.Controllers
             var bkC = Color.FromArgb(255 - alpha, My.Env.Style.Colors.Back);
             var bkCC = bkC;
 
-            if (CP is not null)
+            if (TM is not null)
             {
                 if (My.Env.Style.DarkMode)
                 {
-                    bkCC = Color.FromArgb(alpha, CP.Info.Color1.Dark());
+                    bkCC = Color.FromArgb(alpha, TM.Info.Color1.Dark());
                 }
                 else
                 {
-                    bkCC = Color.FromArgb(alpha, CP.Info.Color1.Light());
+                    bkCC = Color.FromArgb(alpha, TM.Info.Color1.Light());
                 }
             }
 
@@ -330,13 +330,13 @@ namespace WinPaletter.UI.Controllers
             var Circle1 = new Rectangle((int)Math.Round(rect_inner.X + 10 + factor_max - factor1), (int)Math.Round(rect_inner.Y + (rect_inner.Height - CircleR) / 2d), CircleR, CircleR);
             var Circle2 = new Rectangle((int)Math.Round(rect_inner.X + 10 + CircleR + CircleR * 0.4d - (double)factor2), (int)Math.Round(rect_inner.Y + (rect_inner.Height - CircleR) / 2d), CircleR, CircleR);
 
-            if (CP is not null)
+            if (TM is not null)
             {
-                G.FillEllipse(new SolidBrush(Color.FromArgb(125, CP.Info.Color2)), Circle2);
-                G.DrawEllipse(new Pen(CP.Info.Color2.CB(0.3f), 1.75f), Circle2);
+                G.FillEllipse(new SolidBrush(Color.FromArgb(125, TM.Info.Color2)), Circle2);
+                G.DrawEllipse(new Pen(TM.Info.Color2.CB(0.3f), 1.75f), Circle2);
 
-                G.FillEllipse(new SolidBrush(Color.FromArgb(125, CP.Info.Color1)), Circle1);
-                G.DrawEllipse(new Pen(CP.Info.Color1.CB(0.3f), 1.75f), Circle1);
+                G.FillEllipse(new SolidBrush(Color.FromArgb(125, TM.Info.Color1)), Circle1);
+                G.DrawEllipse(new Pen(TM.Info.Color1.CB(0.3f), 1.75f), Circle1);
             }
 
             if (BackgroundImage is not null)
@@ -372,10 +372,10 @@ namespace WinPaletter.UI.Controllers
             var OS_Rect = new Rectangle(0, Author_Rect.Bottom + 7, 16, 16);
             var Version_Rect = new Rectangle(ThemeName_Rect.X, OS_Rect.Bottom + 6, ThemeName_Rect.Width - 20, 15);
 
-            if (CP is not null)
+            if (TM is not null)
             {
                 var FC = Color.FromArgb(Math.Max(100, alpha), bkC.IsDark() ? Color.White : Color.Black);
-                G.DrawString(CP.Info.ThemeName, new Font(CP.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold), new SolidBrush(FC), ThemeName_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                G.DrawString(TM.Info.ThemeName, new Font(TM.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold), new SolidBrush(FC), ThemeName_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 var BadgeRect = new Rectangle(Author_Rect.Right + 2, Author_Rect.Y, 16, 16);
                 var VerRect = new Rectangle(Version_Rect.Right + 2, Version_Rect.Y - 2, 18, 18);
@@ -389,11 +389,11 @@ namespace WinPaletter.UI.Controllers
                     G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect);
                 }
 
-                string author = DoneByWinPaletter ? My.MyProject.Application.Info.ProductName : CP.Info.Author;
-                G.DrawString(My.Env.Lang.By + " " + author, new Font(CP.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                string author = DoneByWinPaletter ? My.MyProject.Application.Info.ProductName : TM.Info.Author;
+                G.DrawString(My.Env.Lang.By + " " + author, new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 G.DrawImage(My.Resources.Store_ThemeVersion, VerRect);
-                G.DrawString(CP.Info.ThemeVersion, My.MyProject.Application.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
+                G.DrawString(TM.Info.ThemeVersion, My.MyProject.Application.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 for (int i = 0, loopTo = DesignedFor_Badges.Count - 1; i <= loopTo; i++)
                     G.DrawImage(DesignedFor_Badges[i], new Rectangle(BadgeRect.Right - 16 - 18 * i, OS_Rect.Y, OS_Rect.Width, OS_Rect.Height));

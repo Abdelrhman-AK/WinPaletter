@@ -188,12 +188,12 @@ namespace WinPaletter.My
         public readonly static bool IsBeta = true;
 
         /// <summary>
-        /// CP is a short name for Color Palette (It was intentionally for Colors only in WinPaletter 1.0.0.0, not it include various parameters (not colors only)
+        /// Global variables to manage WinPaletter theme
         /// </summary>
-        public static CP CP, CP_Original, CP_FirstTime, CP_BeforeDrag;
+        public static Theme.Manager TM, TM_Original, TM_FirstTime;
 
         /// <summary>
-        /// Used to make custom controls follow CP's font smoothing
+        /// Used to make custom controls follow Manager's font smoothing
         /// </summary>
         public static TextRenderingHint RenderingHint = TextRenderingHint.SystemDefault;
     }
@@ -268,7 +268,7 @@ namespace WinPaletter.My
 
         private MethodInvoker UpdateWallpaperInvoker()
         {
-            Bitmap wall = FetchSuitableWallpaper(Env.CP, Env.PreviewStyle);
+            Bitmap wall = FetchSuitableWallpaper(Env.TM, Env.PreviewStyle);
             MyProject.Forms.MainFrm.pnl_preview.BackgroundImage = wall;
             MyProject.Forms.MainFrm.pnl_preview_classic.BackgroundImage = wall;
             MyProject.Forms.Metrics_Fonts.pnl_preview1.BackgroundImage = wall;
@@ -493,16 +493,16 @@ namespace WinPaletter.My
                 Directory.Delete(Env.PATH_appData, true);
                 if (!Env.WXP)
                 {
-                    CP.ResetCursorsToAero();
+                    Theme.Manager.ResetCursorsToAero();
                     if (Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                        CP.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
+                        Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                 }
 
                 else
                 {
-                    CP.ResetCursorsToNone_XP();
+                    Theme.Manager.ResetCursorsToNone_XP();
                     if (Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                        CP.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
+                        Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                 }
             }
@@ -527,25 +527,25 @@ namespace WinPaletter.My
                 Env.Wallpaper = (Bitmap)wall_New.GetThumbnailImage(MyProject.Computer.Screen.Bounds.Width, MyProject.Computer.Screen.Bounds.Height, null, IntPtr.Zero);
             }
         }
-        public Bitmap FetchSuitableWallpaper(CP CP, WindowStyle PreviewConfig)
+        public Bitmap FetchSuitableWallpaper(Theme.Manager TM, WindowStyle PreviewConfig)
         {
-            using (var picbox = new PictureBox() { Size = MyProject.Forms.MainFrm.pnl_preview.Size, BackColor = CP.Win32.Background })
+            using (var picbox = new PictureBox() { Size = MyProject.Forms.MainFrm.pnl_preview.Size, BackColor = TM.Win32.Background })
             {
                 Bitmap Wall;
 
-                if (!CP.Wallpaper.Enabled)
+                if (!TM.Wallpaper.Enabled)
                 {
                     FetchStockWallpaper();
                     Wall = Env.Wallpaper;
                 }
                 else
                 {
-                    bool condition0 = PreviewConfig == WindowStyle.W11 & CP.WallpaperTone_W11.Enabled;
-                    bool condition1 = PreviewConfig == WindowStyle.W10 & CP.WallpaperTone_W10.Enabled;
-                    bool condition2 = PreviewConfig == WindowStyle.W81 & CP.WallpaperTone_W81.Enabled;
-                    bool condition3 = PreviewConfig == WindowStyle.W7 & CP.WallpaperTone_W7.Enabled;
-                    bool condition4 = PreviewConfig == WindowStyle.WVista & CP.WallpaperTone_WVista.Enabled;
-                    bool condition5 = PreviewConfig == WindowStyle.WXP & CP.WallpaperTone_WXP.Enabled;
+                    bool condition0 = PreviewConfig == WindowStyle.W11 & TM.WallpaperTone_W11.Enabled;
+                    bool condition1 = PreviewConfig == WindowStyle.W10 & TM.WallpaperTone_W10.Enabled;
+                    bool condition2 = PreviewConfig == WindowStyle.W81 & TM.WallpaperTone_W81.Enabled;
+                    bool condition3 = PreviewConfig == WindowStyle.W7 & TM.WallpaperTone_W7.Enabled;
+                    bool condition4 = PreviewConfig == WindowStyle.WVista & TM.WallpaperTone_WVista.Enabled;
+                    bool condition5 = PreviewConfig == WindowStyle.WXP & TM.WallpaperTone_WXP.Enabled;
                     bool condition = condition0 || condition1 || condition2 || condition3 || condition4 || condition5;
 
                     if (condition)
@@ -554,54 +554,54 @@ namespace WinPaletter.My
                         {
                             case WindowStyle.W11:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_W11);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_W11);
                                     break;
                                 }
 
                             case WindowStyle.W10:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_W10);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_W10);
                                     break;
                                 }
 
                             case WindowStyle.W81:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_W81);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_W81);
                                     break;
                                 }
 
                             case WindowStyle.W7:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_W7);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_W7);
                                     break;
                                 }
 
                             case WindowStyle.WVista:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_WVista);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_WVista);
                                     break;
                                 }
 
                             case WindowStyle.WXP:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_WXP);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_WXP);
                                     break;
                                 }
 
                             default:
                                 {
-                                    Wall = GetTintedWallpaper(CP.WallpaperTone_W11);
+                                    Wall = GetTintedWallpaper(TM.WallpaperTone_W11);
                                     break;
                                 }
 
                         }
                     }
 
-                    else if (CP.Wallpaper.WallpaperType == CP.Structures.Wallpaper.WallpaperTypes.Picture)
+                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.Picture)
                     {
-                        if (File.Exists(CP.Wallpaper.ImageFile))
+                        if (File.Exists(TM.Wallpaper.ImageFile))
                         {
-                            Wall = Bitmap_Mgr.Load(CP.Wallpaper.ImageFile);
+                            Wall = Bitmap_Mgr.Load(TM.Wallpaper.ImageFile);
                         }
                         else
                         {
@@ -610,17 +610,17 @@ namespace WinPaletter.My
                         }
                     }
 
-                    else if (CP.Wallpaper.WallpaperType == CP.Structures.Wallpaper.WallpaperTypes.SolidColor)
+                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.SolidColor)
                     {
                         Wall = null;
                     }
 
-                    else if (CP.Wallpaper.WallpaperType == CP.Structures.Wallpaper.WallpaperTypes.SlideShow)
+                    else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.SlideShow)
                     {
 
-                        if (CP.Wallpaper.SlideShow_Folder_or_ImagesList)
+                        if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
                         {
-                            string[] ls = Directory.EnumerateFiles(CP.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")).ToArray();
+                            string[] ls = Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")).ToArray();
 
 
                             if (ls.Count() > 0 && File.Exists(ls[0]))
@@ -635,9 +635,9 @@ namespace WinPaletter.My
                             }
                         }
 
-                        else if (CP.Wallpaper.Wallpaper_Slideshow_Images.Count() > 0 && File.Exists(CP.Wallpaper.Wallpaper_Slideshow_Images[0]))
+                        else if (TM.Wallpaper.Wallpaper_Slideshow_Images.Count() > 0 && File.Exists(TM.Wallpaper.Wallpaper_Slideshow_Images[0]))
                         {
-                            Wall = Bitmap_Mgr.Load(CP.Wallpaper.Wallpaper_Slideshow_Images[0]);
+                            Wall = Bitmap_Mgr.Load(TM.Wallpaper.Wallpaper_Slideshow_Images[0]);
                         }
                         else
                         {
@@ -666,28 +666,28 @@ namespace WinPaletter.My
 
                     Wall = Wall.Resize((int)Math.Round(Wall.Width / ScaleW), (int)Math.Round(Wall.Height / ScaleH));
 
-                    if (CP.Wallpaper.WallpaperStyle == CP.Structures.Wallpaper.WallpaperStyles.Fill)
+                    if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fill)
                     {
                         picbox.SizeMode = PictureBoxSizeMode.CenterImage;
                         Wall = (Bitmap)((Bitmap)Wall.Clone()).FillScale(picbox.Size);
                     }
 
-                    else if (CP.Wallpaper.WallpaperStyle == CP.Structures.Wallpaper.WallpaperStyles.Fit)
+                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fit)
                     {
                         picbox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
 
-                    else if (CP.Wallpaper.WallpaperStyle == CP.Structures.Wallpaper.WallpaperStyles.Stretched)
+                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Stretched)
                     {
                         picbox.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
 
-                    else if (CP.Wallpaper.WallpaperStyle == CP.Structures.Wallpaper.WallpaperStyles.Centered)
+                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Centered)
                     {
                         picbox.SizeMode = PictureBoxSizeMode.CenterImage;
                     }
 
-                    else if (CP.Wallpaper.WallpaperStyle == CP.Structures.Wallpaper.WallpaperStyles.Tile)
+                    else if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Tile)
                     {
                         picbox.SizeMode = PictureBoxSizeMode.Normal;
                         Wall = ((Bitmap)Wall.Clone()).Tile(picbox.Size);
@@ -983,8 +983,8 @@ namespace WinPaletter.My
                         }
                         else
                         {
-                            var CPx = new CP(CP.CP_Type.File, arg);
-                            CPx.Save(CP.CP_Type.Registry, arg);
+                            var TMx = new Theme.Manager(Theme.Manager.Source.File, arg);
+                            TMx.Save(Theme.Manager.Source.Registry, arg);
                             if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                                 RestartExplorer();
                             using (var Prc = Process.GetCurrentProcess())
@@ -1012,8 +1012,8 @@ namespace WinPaletter.My
                     File = File.Replace("\"", "");
                     if (System.IO.File.Exists(File))
                     {
-                        var CPx = new CP(CP.CP_Type.File, File);
-                        CPx.Save(CP.CP_Type.Registry);
+                        var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
+                        TMx.Save(Theme.Manager.Source.Registry);
                         if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                             RestartExplorer();
                         using (var Prc = Process.GetCurrentProcess())
@@ -1197,22 +1197,22 @@ namespace WinPaletter.My
             if (Env.WXP)
                 Env.PreviewStyle = WindowStyle.WXP;
 
-            // Load CP
+            // Load Manager
             if (!MyProject.Application.ExternalLink)
             {
-                Env.CP = new CP(CP.CP_Type.Registry);
+                Env.TM = new Theme.Manager(Theme.Manager.Source.Registry);
             }
             else
             {
-                Env.CP = new CP(CP.CP_Type.File, MyProject.Application.ExternalLink_File);
+                Env.TM = new Theme.Manager(Theme.Manager.Source.File, MyProject.Application.ExternalLink_File);
                 MyProject.Forms.MainFrm.OpenFileDialog1.FileName = MyProject.Application.ExternalLink_File;
                 MyProject.Forms.MainFrm.SaveFileDialog1.FileName = MyProject.Application.ExternalLink_File;
                 MyProject.Application.ExternalLink = false;
                 MyProject.Application.ExternalLink_File = "";
             }
 
-            Env.CP_Original = (CP)Env.CP.Clone();
-            Env.CP_FirstTime = (CP)Env.CP.Clone();
+            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
+            Env.TM_FirstTime = (Theme.Manager)Env.TM.Clone();
         }
 
         private void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
@@ -1255,7 +1255,7 @@ namespace WinPaletter.My
 
                     if (Path.GetExtension(arg).ToLower() == ".wpth")
                     {
-                        if (Env.CP != Env.CP_Original)
+                        if (Env.TM != Env.TM_Original)
                         {
                             if (Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
                             {
@@ -1272,13 +1272,13 @@ namespace WinPaletter.My
                                                     {
                                                         if (File.Exists(MyProject.Forms.MainFrm.SaveFileDialog1.FileName))
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else
                                                         {
@@ -1292,8 +1292,8 @@ namespace WinPaletter.My
                                                     {
                                                         if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else
                                                         {
@@ -1331,12 +1331,12 @@ namespace WinPaletter.My
 
                         }
 
-                        Env.CP = new CP(CP.CP_Type.File, arg);
-                        Env.CP_Original = (CP)Env.CP.Clone();
+                        Env.TM = new Theme.Manager(Theme.Manager.Source.File, arg);
+                        Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                         MyProject.Forms.MainFrm.OpenFileDialog1.FileName = arg;
                         MyProject.Forms.MainFrm.SaveFileDialog1.FileName = arg;
-                        MyProject.Forms.MainFrm.ApplyCPValues(Env.CP);
-                        MyProject.Forms.MainFrm.ApplyColorsToElements(Env.CP);
+                        MyProject.Forms.MainFrm.LoadFromTM(Env.TM);
+                        MyProject.Forms.MainFrm.ApplyColorsToElements(Env.TM);
 
                         if (!Env.Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                         {
@@ -1360,8 +1360,8 @@ namespace WinPaletter.My
                         File = File.Replace("\"", "");
                         if (System.IO.File.Exists(File))
                         {
-                            var CPx = new CP(CP.CP_Type.File, File);
-                            CPx.Save(CP.CP_Type.Registry);
+                            var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
+                            TMx.Save(Theme.Manager.Source.Registry);
                             if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                                 RestartExplorer();
                         }
@@ -1372,7 +1372,7 @@ namespace WinPaletter.My
                         string File = arg.Remove(0, "/edit:".Count());
                         File = File.Replace("\"", "");
 
-                        if (Env.CP != Env.CP_Original)
+                        if (Env.TM != Env.TM_Original)
                         {
 
                             if (Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
@@ -1390,13 +1390,13 @@ namespace WinPaletter.My
                                                     {
                                                         if (System.IO.File.Exists(MyProject.Forms.MainFrm.SaveFileDialog1.FileName))
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else
                                                         {
@@ -1410,8 +1410,8 @@ namespace WinPaletter.My
                                                     {
                                                         if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
                                                         {
-                                                            Env.CP.Save(CP.CP_Type.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.CP_Original = (CP)Env.CP.Clone();
+                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
+                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                                                         }
                                                         else
                                                         {
@@ -1449,12 +1449,12 @@ namespace WinPaletter.My
 
                         }
 
-                        Env.CP = new CP(CP.CP_Type.File, File);
-                        Env.CP_Original = (CP)Env.CP.Clone();
+                        Env.TM = new Theme.Manager(Theme.Manager.Source.File, File);
+                        Env.TM_Original = (Theme.Manager)Env.TM.Clone();
                         MyProject.Forms.MainFrm.OpenFileDialog1.FileName = File;
                         MyProject.Forms.MainFrm.SaveFileDialog1.FileName = File;
-                        MyProject.Forms.MainFrm.ApplyCPValues(Env.CP);
-                        MyProject.Forms.MainFrm.ApplyColorsToElements(Env.CP);
+                        MyProject.Forms.MainFrm.LoadFromTM(Env.TM);
+                        MyProject.Forms.MainFrm.ApplyColorsToElements(Env.TM);
 
                     }
                 }

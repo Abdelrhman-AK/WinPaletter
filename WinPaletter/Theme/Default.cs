@@ -2,79 +2,78 @@
 using System.Drawing;
 using static WinPaletter.PreviewHelpers;
 
-namespace WinPaletter
+namespace WinPaletter.Theme
 {
-
-    public class CP_Defaults : IDisposable
+    public class Default : IDisposable
     {
 
         public byte[] Default_Windows11Accents_Bytes;
 
         public byte[] Default_Windows10Accents_Bytes;
 
-        public CP_Defaults()
+        public Default()
         {
-            Default_Windows11Accents_Bytes = new[] { Default_Windows11().Windows11.Color_Index0.R, Default_Windows11().Windows11.Color_Index0.G, Default_Windows11().Windows11.Color_Index0.B, (byte)255, Default_Windows11().Windows11.Color_Index1.R, Default_Windows11().Windows11.Color_Index1.G, Default_Windows11().Windows11.Color_Index1.B, (byte)255, Default_Windows11().Windows11.Color_Index2.R, Default_Windows11().Windows11.Color_Index2.G, Default_Windows11().Windows11.Color_Index2.B, (byte)255, Default_Windows11().Windows11.Color_Index3.R, Default_Windows11().Windows11.Color_Index3.G, Default_Windows11().Windows11.Color_Index3.B, (byte)255, Default_Windows11().Windows11.Color_Index4.R, Default_Windows11().Windows11.Color_Index4.G, Default_Windows11().Windows11.Color_Index4.B, (byte)255, Default_Windows11().Windows11.Color_Index5.R, Default_Windows11().Windows11.Color_Index5.G, Default_Windows11().Windows11.Color_Index5.B, (byte)255, Default_Windows11().Windows11.Color_Index6.R, Default_Windows11().Windows11.Color_Index6.G, Default_Windows11().Windows11.Color_Index6.B, (byte)255, Default_Windows11().Windows11.Color_Index7.R, Default_Windows11().Windows11.Color_Index7.G, Default_Windows11().Windows11.Color_Index7.B, (byte)255 };
-            Default_Windows10Accents_Bytes = new[] { Default_Windows10().Windows11.Color_Index0.R, Default_Windows10().Windows11.Color_Index0.G, Default_Windows10().Windows11.Color_Index0.B, (byte)255, Default_Windows10().Windows11.Color_Index1.R, Default_Windows10().Windows11.Color_Index1.G, Default_Windows10().Windows11.Color_Index1.B, (byte)255, Default_Windows10().Windows11.Color_Index2.R, Default_Windows10().Windows11.Color_Index2.G, Default_Windows10().Windows11.Color_Index2.B, (byte)255, Default_Windows10().Windows11.Color_Index3.R, Default_Windows10().Windows11.Color_Index3.G, Default_Windows10().Windows11.Color_Index3.B, (byte)255, Default_Windows10().Windows11.Color_Index4.R, Default_Windows10().Windows11.Color_Index4.G, Default_Windows10().Windows11.Color_Index4.B, (byte)255, Default_Windows10().Windows11.Color_Index5.R, Default_Windows10().Windows11.Color_Index5.G, Default_Windows10().Windows11.Color_Index5.B, (byte)255, Default_Windows10().Windows11.Color_Index6.R, Default_Windows10().Windows11.Color_Index6.G, Default_Windows10().Windows11.Color_Index6.B, (byte)255, Default_Windows10().Windows11.Color_Index7.R, Default_Windows10().Windows11.Color_Index7.G, Default_Windows10().Windows11.Color_Index7.B, (byte)255 };
+            Default_Windows11Accents_Bytes = new[] { Windows11().Windows11.Color_Index0.R, Windows11().Windows11.Color_Index0.G, Windows11().Windows11.Color_Index0.B, (byte)255, Windows11().Windows11.Color_Index1.R, Windows11().Windows11.Color_Index1.G, Windows11().Windows11.Color_Index1.B, (byte)255, Windows11().Windows11.Color_Index2.R, Windows11().Windows11.Color_Index2.G, Windows11().Windows11.Color_Index2.B, (byte)255, Windows11().Windows11.Color_Index3.R, Windows11().Windows11.Color_Index3.G, Windows11().Windows11.Color_Index3.B, (byte)255, Windows11().Windows11.Color_Index4.R, Windows11().Windows11.Color_Index4.G, Windows11().Windows11.Color_Index4.B, (byte)255, Windows11().Windows11.Color_Index5.R, Windows11().Windows11.Color_Index5.G, Windows11().Windows11.Color_Index5.B, (byte)255, Windows11().Windows11.Color_Index6.R, Windows11().Windows11.Color_Index6.G, Windows11().Windows11.Color_Index6.B, (byte)255, Windows11().Windows11.Color_Index7.R, Windows11().Windows11.Color_Index7.G, Windows11().Windows11.Color_Index7.B, (byte)255 };
+            Default_Windows10Accents_Bytes = new[] { Windows10().Windows11.Color_Index0.R, Windows10().Windows11.Color_Index0.G, Windows10().Windows11.Color_Index0.B, (byte)255, Windows10().Windows11.Color_Index1.R, Windows10().Windows11.Color_Index1.G, Windows10().Windows11.Color_Index1.B, (byte)255, Windows10().Windows11.Color_Index2.R, Windows10().Windows11.Color_Index2.G, Windows10().Windows11.Color_Index2.B, (byte)255, Windows10().Windows11.Color_Index3.R, Windows10().Windows11.Color_Index3.G, Windows10().Windows11.Color_Index3.B, (byte)255, Windows10().Windows11.Color_Index4.R, Windows10().Windows11.Color_Index4.G, Windows10().Windows11.Color_Index4.B, (byte)255, Windows10().Windows11.Color_Index5.R, Windows10().Windows11.Color_Index5.G, Windows10().Windows11.Color_Index5.B, (byte)255, Windows10().Windows11.Color_Index6.R, Windows10().Windows11.Color_Index6.G, Windows10().Windows11.Color_Index6.B, (byte)255, Windows10().Windows11.Color_Index7.R, Windows10().Windows11.Color_Index7.G, Windows10().Windows11.Color_Index7.B, (byte)255 };
         }
 
-        public static CP From(WindowStyle PreviewStyle)
+        public static Theme.Manager From(WindowStyle PreviewStyle)
         {
-            CP _Def;
+            Theme.Manager _Def;
 
             if (PreviewStyle == WindowStyle.W11)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows11();
+                    _Def = X.Windows11();
                 }
             }
 
             else if (PreviewStyle == WindowStyle.W10)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows10();
+                    _Def = X.Windows10();
                 }
             }
 
             else if (PreviewStyle == WindowStyle.W81)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows81();
+                    _Def = X.Windows81();
                 }
             }
 
             else if (PreviewStyle == WindowStyle.W7)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows7();
+                    _Def = X.Windows7();
                 }
             }
 
             else if (PreviewStyle == WindowStyle.WVista)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_WindowsVista();
+                    _Def = X.WindowsVista();
                 }
             }
 
             else if (PreviewStyle == WindowStyle.WXP)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_WindowsXP();
+                    _Def = X.WindowsXP();
                 }
             }
 
             else
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows11();
+                    _Def = X.Windows11();
                 }
 
             }
@@ -82,63 +81,63 @@ namespace WinPaletter
             return _Def;
         }
 
-        public static CP GetDefault()
+        public static Theme.Manager Get()
         {
-            CP _Def;
+            Theme.Manager _Def;
 
-            if (My.Env.W11)
+            if (My.Env.W11 | My.Env.W12)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows11();
+                    _Def = X.Windows11();
                 }
             }
 
             else if (My.Env.W10)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows10();
+                    _Def = X.Windows10();
                 }
             }
 
             else if (My.Env.W81)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows81();
+                    _Def = X.Windows81();
                 }
             }
 
             else if (My.Env.W7)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows7();
+                    _Def = X.Windows7();
                 }
             }
 
             else if (My.Env.WVista)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_WindowsVista();
+                    _Def = X.WindowsVista();
                 }
             }
 
             else if (My.Env.WXP)
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_WindowsXP();
+                    _Def = X.WindowsXP();
                 }
             }
 
             else
             {
-                using (var X = new CP_Defaults())
+                using (var X = new Theme.Default())
                 {
-                    _Def = X.Default_Windows11();
+                    _Def = X.Windows11();
                 }
 
             }
@@ -146,14 +145,14 @@ namespace WinPaletter
             return _Def;
         }
 
-        public CP Default_Windows11()
+        public Theme.Manager Windows11()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(Theme.Manager.Source.Empty);
 
-            CP.Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32);
+            TM.Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows 11 (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -163,7 +162,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.CommandPrompt;
+                ref var temp1 = ref TM.CommandPrompt;
                 temp1.ColorTable05 = Color.FromArgb(136, 23, 152);
                 temp1.ColorTable06 = Color.FromArgb(193, 156, 0);
                 temp1.PopupBackground = 15;
@@ -177,7 +176,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp2 = ref CP.PowerShellx86;
+                ref var temp2 = ref TM.PowerShellx86;
                 temp2.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp2.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp2.PopupBackground = 15;
@@ -191,7 +190,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp3 = ref CP.PowerShellx64;
+                ref var temp3 = ref TM.PowerShellx64;
                 temp3.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp3.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp3.PopupBackground = 15;
@@ -205,7 +204,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp4 = ref CP.MetricsFonts;
+                ref var temp4 = ref TM.MetricsFonts;
                 temp4.BorderWidth = 1;
                 temp4.CaptionHeight = 22;
                 temp4.CaptionWidth = 22;
@@ -223,7 +222,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.WindowsEffects;
+                ref var temp5 = ref TM.WindowsEffects;
                 temp5.ShakeToMinimize = false;
                 temp5.BalloonNotifications = false;
                 temp5.PaintDesktopVersion = false;
@@ -232,12 +231,12 @@ namespace WinPaletter
                 temp5.SysListView32 = false;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.Cursor_Shadow = false;
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Cursor_Shadow = false;
 
             {
-                ref var temp6 = ref CP.Sounds;
+                ref var temp6 = ref TM.Sounds;
                 temp6.Snd_Imageres_SystemStart = "Default";
                 temp6.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
                 temp6.Snd_Win_AppGPFault = "";
@@ -328,15 +327,15 @@ namespace WinPaletter
                 temp6.Snd_Win_WindowsUnlock_TaskMgmt = true;
             }
 
-            return CP;
+            return TM;
         }
 
-        public CP Default_Windows10()
+        public Theme.Manager Windows10()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows 10 (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -346,7 +345,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.CommandPrompt;
+                ref var temp1 = ref TM.CommandPrompt;
                 temp1.ColorTable05 = Color.FromArgb(136, 23, 152);
                 temp1.ColorTable06 = Color.FromArgb(193, 156, 0);
                 temp1.PopupBackground = 15;
@@ -360,7 +359,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp2 = ref CP.PowerShellx86;
+                ref var temp2 = ref TM.PowerShellx86;
                 temp2.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp2.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp2.PopupBackground = 15;
@@ -374,7 +373,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp3 = ref CP.PowerShellx64;
+                ref var temp3 = ref TM.PowerShellx64;
                 temp3.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp3.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp3.PopupBackground = 15;
@@ -388,7 +387,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp4 = ref CP.MetricsFonts;
+                ref var temp4 = ref TM.MetricsFonts;
                 temp4.BorderWidth = 1;
                 temp4.CaptionHeight = 22;
                 temp4.CaptionWidth = 22;
@@ -406,7 +405,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.WindowsEffects;
+                ref var temp5 = ref TM.WindowsEffects;
                 temp5.ShakeToMinimize = true;
                 temp5.BalloonNotifications = false;
                 temp5.PaintDesktopVersion = false;
@@ -415,13 +414,13 @@ namespace WinPaletter
                 temp5.SysListView32 = false;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
 
-            CP.Cursor_Shadow = false;
+            TM.Cursor_Shadow = false;
 
             {
-                ref var temp6 = ref CP.Sounds;
+                ref var temp6 = ref TM.Sounds;
                 temp6.Snd_Imageres_SystemStart = "";
                 temp6.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
                 temp6.Snd_Win_AppGPFault = "";
@@ -512,15 +511,15 @@ namespace WinPaletter
                 temp6.Snd_Win_WindowsUnlock_TaskMgmt = true;
             }
 
-            return CP;
+            return TM;
         }
 
-        public CP Default_Windows81()
+        public Theme.Manager Windows81()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows 8.1 (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -530,7 +529,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.Windows81;
+                ref var temp1 = ref TM.Windows81;
                 temp1.ColorizationColor = Color.FromArgb(246, 195, 74);
                 temp1.ColorizationColorBalance = 78;
                 temp1.PersonalColors_Background = Color.FromArgb(30, 0, 84);
@@ -538,15 +537,15 @@ namespace WinPaletter
                 temp1.StartColor = Color.FromArgb(30, 0, 84);
                 temp1.AccentColor = Color.FromArgb(72, 29, 178);
                 temp1.Start = 0;
-                temp1.Theme = CP.Structures.Windows7.Themes.Aero;
+                temp1.Theme = Theme.Structures.Windows7.Themes.Aero;
                 temp1.LogonUI = 0;
                 temp1.NoLockScreen = false;
-                temp1.LockScreenType = CP.Structures.LogonUI7.Modes.Default_;
+                temp1.LockScreenType = Theme.Structures.LogonUI7.Modes.Default;
                 temp1.LockScreenSystemID = 0;
             }
 
             {
-                ref var temp2 = ref CP.Windows7;
+                ref var temp2 = ref TM.Windows7;
                 temp2.ColorizationColor = Color.FromArgb(246, 195, 74);
                 temp2.ColorizationAfterglow = Color.FromArgb(0, 0, 0);
                 temp2.ColorizationColorBalance = 78;
@@ -558,12 +557,12 @@ namespace WinPaletter
             }
 
             {
-                ref var temp3 = ref CP.WindowsVista;
+                ref var temp3 = ref TM.WindowsVista;
                 temp3.ColorizationColor = Color.FromArgb(64, 158, 254);
             }
 
             {
-                ref var temp4 = ref CP.CommandPrompt;
+                ref var temp4 = ref TM.CommandPrompt;
                 temp4.ColorTable05 = Color.FromArgb(136, 23, 152);
                 temp4.ColorTable06 = Color.FromArgb(193, 156, 0);
                 temp4.PopupBackground = 15;
@@ -577,7 +576,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.PowerShellx86;
+                ref var temp5 = ref TM.PowerShellx86;
                 temp5.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp5.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp5.PopupBackground = 15;
@@ -591,7 +590,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp6 = ref CP.PowerShellx64;
+                ref var temp6 = ref TM.PowerShellx64;
                 temp6.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp6.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp6.PopupBackground = 15;
@@ -605,7 +604,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp7 = ref CP.MetricsFonts;
+                ref var temp7 = ref TM.MetricsFonts;
                 temp7.BorderWidth = 1;
                 temp7.CaptionHeight = 22;
                 temp7.CaptionWidth = 22;
@@ -625,7 +624,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp8 = ref CP.WindowsEffects;
+                ref var temp8 = ref TM.WindowsEffects;
                 temp8.ShakeToMinimize = true;
                 temp8.BalloonNotifications = true;
                 temp8.PaintDesktopVersion = false;
@@ -634,12 +633,12 @@ namespace WinPaletter
                 temp8.SysListView32 = false;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.Cursor_Shadow = false;
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Cursor_Shadow = false;
 
             {
-                ref var temp9 = ref CP.Sounds;
+                ref var temp9 = ref TM.Sounds;
                 temp9.Snd_Imageres_SystemStart = "";
                 temp9.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Background.wav";
                 temp9.Snd_Win_AppGPFault = "";
@@ -730,15 +729,15 @@ namespace WinPaletter
                 temp9.Snd_Win_WindowsUnlock_TaskMgmt = true;
             }
 
-            return CP;
+            return TM;
         }
 
-        public CP Default_Windows7()
+        public Theme.Manager Windows7()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows 7 (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -748,7 +747,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.Windows81;
+                ref var temp1 = ref TM.Windows81;
                 temp1.ColorizationColor = Color.FromArgb(246, 195, 74);
                 temp1.ColorizationColorBalance = 78;
                 temp1.PersonalColors_Background = Color.FromArgb(30, 0, 84);
@@ -756,15 +755,15 @@ namespace WinPaletter
                 temp1.StartColor = Color.FromArgb(30, 0, 84);
                 temp1.AccentColor = Color.FromArgb(72, 29, 178);
                 temp1.Start = 0;
-                temp1.Theme = CP.Structures.Windows7.Themes.Aero;
+                temp1.Theme = Theme.Structures.Windows7.Themes.Aero;
                 temp1.LogonUI = 0;
                 temp1.NoLockScreen = false;
-                temp1.LockScreenType = CP.Structures.LogonUI7.Modes.Default_;
+                temp1.LockScreenType = Theme.Structures.LogonUI7.Modes.Default;
                 temp1.LockScreenSystemID = 0;
             }
 
             {
-                ref var temp2 = ref CP.Windows7;
+                ref var temp2 = ref TM.Windows7;
                 temp2.ColorizationColor = Color.FromArgb(116, 184, 252);
                 temp2.ColorizationAfterglow = Color.FromArgb(116, 184, 252);
                 temp2.ColorizationColorBalance = 8;
@@ -773,16 +772,16 @@ namespace WinPaletter
                 temp2.ColorizationGlassReflectionIntensity = 0;
                 temp2.EnableAeroPeek = true;
                 temp2.AlwaysHibernateThumbnails = false;
-                temp2.Theme = CP.Structures.Windows7.Themes.Aero;
+                temp2.Theme = Theme.Structures.Windows7.Themes.Aero;
             }
 
             {
-                ref var temp3 = ref CP.WindowsVista;
+                ref var temp3 = ref TM.WindowsVista;
                 temp3.ColorizationColor = Color.FromArgb(64, 158, 254);
             }
 
             {
-                ref var temp4 = ref CP.CommandPrompt;
+                ref var temp4 = ref TM.CommandPrompt;
                 temp4.ColorTable05 = Color.FromArgb(136, 23, 152);
                 temp4.ColorTable06 = Color.FromArgb(193, 156, 0);
                 temp4.PopupBackground = 15;
@@ -796,7 +795,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.PowerShellx86;
+                ref var temp5 = ref TM.PowerShellx86;
                 temp5.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp5.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp5.PopupBackground = 15;
@@ -810,7 +809,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp6 = ref CP.PowerShellx64;
+                ref var temp6 = ref TM.PowerShellx64;
                 temp6.ColorTable05 = Color.FromArgb(1, 36, 86);
                 temp6.ColorTable06 = Color.FromArgb(238, 237, 240);
                 temp6.PopupBackground = 15;
@@ -824,7 +823,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp7 = ref CP.MetricsFonts;
+                ref var temp7 = ref TM.MetricsFonts;
                 temp7.BorderWidth = 1;
                 temp7.CaptionHeight = 21;
                 temp7.CaptionWidth = 21;
@@ -842,7 +841,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp8 = ref CP.WindowsEffects;
+                ref var temp8 = ref TM.WindowsEffects;
                 temp8.ShakeToMinimize = true;
                 temp8.BalloonNotifications = true;
                 temp8.PaintDesktopVersion = false;
@@ -851,12 +850,12 @@ namespace WinPaletter
                 temp8.SysListView32 = false;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.Cursor_Shadow = true;
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Cursor_Shadow = true;
 
             {
-                ref var temp9 = ref CP.Sounds;
+                ref var temp9 = ref TM.Sounds;
                 temp9.Snd_Imageres_SystemStart = "Default";
                 temp9.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Ding.wav";
                 temp9.Snd_Win_AppGPFault = "";
@@ -947,15 +946,15 @@ namespace WinPaletter
                 temp9.Snd_Win_WindowsUnlock_TaskMgmt = false;
             }
 
-            return CP;
+            return TM;
         }
 
-        public CP Default_WindowsVista()
+        public Theme.Manager WindowsVista()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows Vista (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -965,7 +964,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.Windows81;
+                ref var temp1 = ref TM.Windows81;
                 temp1.ColorizationColor = Color.FromArgb(246, 195, 74);
                 temp1.ColorizationColorBalance = 78;
                 temp1.PersonalColors_Background = Color.FromArgb(30, 0, 84);
@@ -973,15 +972,15 @@ namespace WinPaletter
                 temp1.StartColor = Color.FromArgb(30, 0, 84);
                 temp1.AccentColor = Color.FromArgb(72, 29, 178);
                 temp1.Start = 0;
-                temp1.Theme = CP.Structures.Windows7.Themes.Aero;
+                temp1.Theme = Theme.Structures.Windows7.Themes.Aero;
                 temp1.LogonUI = 0;
                 temp1.NoLockScreen = false;
-                temp1.LockScreenType = CP.Structures.LogonUI7.Modes.Default_;
+                temp1.LockScreenType = Theme.Structures.LogonUI7.Modes.Default;
                 temp1.LockScreenSystemID = 0;
             }
 
             {
-                ref var temp2 = ref CP.Windows7;
+                ref var temp2 = ref TM.Windows7;
                 temp2.ColorizationColor = Color.FromArgb(116, 184, 252);
                 temp2.ColorizationAfterglow = Color.FromArgb(116, 184, 252);
                 temp2.ColorizationColorBalance = 8;
@@ -990,16 +989,16 @@ namespace WinPaletter
                 temp2.ColorizationGlassReflectionIntensity = 0;
                 temp2.EnableAeroPeek = true;
                 temp2.AlwaysHibernateThumbnails = false;
-                temp2.Theme = CP.Structures.Windows7.Themes.Aero;
+                temp2.Theme = Theme.Structures.Windows7.Themes.Aero;
             }
 
             {
-                ref var temp3 = ref CP.WindowsVista;
+                ref var temp3 = ref TM.WindowsVista;
                 temp3.ColorizationColor = Color.FromArgb(64, 158, 254);
             }
 
             {
-                ref var temp4 = ref CP.CommandPrompt;
+                ref var temp4 = ref TM.CommandPrompt;
                 temp4.ColorTable00 = Color.FromArgb(0, 0, 0);
                 temp4.ColorTable01 = Color.FromArgb(0, 0, 128);
                 temp4.ColorTable02 = Color.FromArgb(0, 128, 0);
@@ -1027,7 +1026,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.PowerShellx86;
+                ref var temp5 = ref TM.PowerShellx86;
                 temp5.ColorTable00 = Color.FromArgb(12, 12, 12);
                 temp5.ColorTable01 = Color.FromArgb(0, 55, 218);
                 temp5.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -1055,7 +1054,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp6 = ref CP.PowerShellx64;
+                ref var temp6 = ref TM.PowerShellx64;
                 temp6.ColorTable00 = Color.FromArgb(12, 12, 12);
                 temp6.ColorTable01 = Color.FromArgb(0, 55, 218);
                 temp6.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -1083,7 +1082,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp7 = ref CP.MetricsFonts;
+                ref var temp7 = ref TM.MetricsFonts;
                 temp7.BorderWidth = 1;
                 temp7.CaptionHeight = 19;
                 temp7.CaptionWidth = 19;
@@ -1101,7 +1100,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp8 = ref CP.WindowsEffects;
+                ref var temp8 = ref TM.WindowsEffects;
                 temp8.ShakeToMinimize = false;
                 temp8.BalloonNotifications = true;
                 temp8.PaintDesktopVersion = false;
@@ -1110,12 +1109,12 @@ namespace WinPaletter
                 temp8.SysListView32 = true;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.Cursor_Shadow = true;
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Cursor_Shadow = true;
 
             {
-                ref var temp9 = ref CP.Sounds;
+                ref var temp9 = ref TM.Sounds;
                 temp9.Snd_Imageres_SystemStart = "Default";
                 temp9.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows Ding.wav";
                 temp9.Snd_Win_AppGPFault = "";
@@ -1206,15 +1205,15 @@ namespace WinPaletter
                 temp9.Snd_Win_WindowsUnlock_TaskMgmt = false;
             }
 
-            return CP;
+            return TM;
         }
 
-        public CP Default_WindowsXP()
+        public Theme.Manager WindowsXP()
         {
-            var CP = new CP(WinPaletter.CP.CP_Type.Empty);
+            var TM = new Theme.Manager(WinPaletter.Theme.Manager.Source.Empty);
 
             {
-                ref var temp = ref CP.Info;
+                ref var temp = ref TM.Info;
                 temp.ThemeName = "Windows XP (Initial)";
                 temp.Description = "Initial; Like first time after Windows Setup";
                 temp.ThemeVersion = "1.0.0.0";
@@ -1224,7 +1223,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp1 = ref CP.Win32;
+                ref var temp1 = ref TM.Win32;
                 temp1.ActiveBorder = Color.FromArgb(212, 208, 200);
                 temp1.ActiveTitle = Color.FromArgb(0, 84, 227);
                 temp1.AppWorkspace = Color.FromArgb(128, 128, 128);
@@ -1260,7 +1259,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp2 = ref CP.CommandPrompt;
+                ref var temp2 = ref TM.CommandPrompt;
                 temp2.ColorTable00 = Color.FromArgb(12, 12, 12);
                 temp2.ColorTable01 = Color.FromArgb(0, 55, 218);
                 temp2.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -1288,7 +1287,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp3 = ref CP.PowerShellx86;
+                ref var temp3 = ref TM.PowerShellx86;
                 temp3.ColorTable00 = Color.FromArgb(12, 12, 12);
                 temp3.ColorTable01 = Color.FromArgb(0, 55, 218);
                 temp3.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -1316,7 +1315,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp4 = ref CP.PowerShellx64;
+                ref var temp4 = ref TM.PowerShellx64;
                 temp4.ColorTable00 = Color.FromArgb(12, 12, 12);
                 temp4.ColorTable01 = Color.FromArgb(0, 55, 218);
                 temp4.ColorTable02 = Color.FromArgb(19, 161, 14);
@@ -1344,7 +1343,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp5 = ref CP.MetricsFonts;
+                ref var temp5 = ref TM.MetricsFonts;
                 temp5.BorderWidth = 0;
                 temp5.CaptionHeight = 25;
                 temp5.CaptionWidth = 18;
@@ -1368,9 +1367,9 @@ namespace WinPaletter
                 temp5.StatusFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
             }
 
-            CP.Cursor_Shadow = true;
+            TM.Cursor_Shadow = true;
             {
-                ref var temp6 = ref CP.Cursor_Arrow;
+                ref var temp6 = ref TM.Cursor_Arrow;
                 temp6.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp6.CircleStyle = Paths.CircleStyle.Classic;
                 temp6.PrimaryColor1 = Color.White;
@@ -1394,7 +1393,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp7 = ref CP.Cursor_Help;
+                ref var temp7 = ref TM.Cursor_Help;
                 temp7.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp7.CircleStyle = Paths.CircleStyle.Classic;
                 temp7.PrimaryColor1 = Color.White;
@@ -1418,7 +1417,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp8 = ref CP.Cursor_AppLoading;
+                ref var temp8 = ref TM.Cursor_AppLoading;
                 temp8.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp8.CircleStyle = Paths.CircleStyle.Classic;
                 temp8.PrimaryColor1 = Color.White;
@@ -1442,7 +1441,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp9 = ref CP.Cursor_Busy;
+                ref var temp9 = ref TM.Cursor_Busy;
                 temp9.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp9.CircleStyle = Paths.CircleStyle.Classic;
                 temp9.PrimaryColor1 = Color.White;
@@ -1466,7 +1465,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp10 = ref CP.Cursor_Up;
+                ref var temp10 = ref TM.Cursor_Up;
                 temp10.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp10.CircleStyle = Paths.CircleStyle.Classic;
                 temp10.PrimaryColor1 = Color.White;
@@ -1490,7 +1489,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp11 = ref CP.Cursor_NS;
+                ref var temp11 = ref TM.Cursor_NS;
                 temp11.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp11.CircleStyle = Paths.CircleStyle.Classic;
                 temp11.PrimaryColor1 = Color.White;
@@ -1514,7 +1513,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp12 = ref CP.Cursor_EW;
+                ref var temp12 = ref TM.Cursor_EW;
                 temp12.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp12.CircleStyle = Paths.CircleStyle.Classic;
                 temp12.PrimaryColor1 = Color.White;
@@ -1538,7 +1537,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp13 = ref CP.Cursor_NESW;
+                ref var temp13 = ref TM.Cursor_NESW;
                 temp13.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp13.CircleStyle = Paths.CircleStyle.Classic;
                 temp13.PrimaryColor1 = Color.White;
@@ -1562,7 +1561,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp14 = ref CP.Cursor_NWSE;
+                ref var temp14 = ref TM.Cursor_NWSE;
                 temp14.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp14.CircleStyle = Paths.CircleStyle.Classic;
                 temp14.PrimaryColor1 = Color.White;
@@ -1586,7 +1585,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp15 = ref CP.Cursor_Move;
+                ref var temp15 = ref TM.Cursor_Move;
                 temp15.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp15.CircleStyle = Paths.CircleStyle.Classic;
                 temp15.PrimaryColor1 = Color.White;
@@ -1610,7 +1609,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp16 = ref CP.Cursor_None;
+                ref var temp16 = ref TM.Cursor_None;
                 temp16.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp16.CircleStyle = Paths.CircleStyle.Classic;
                 temp16.PrimaryColor1 = Color.Transparent;
@@ -1634,7 +1633,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp17 = ref CP.Cursor_Arrow;
+                ref var temp17 = ref TM.Cursor_Arrow;
                 temp17.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp17.CircleStyle = Paths.CircleStyle.Classic;
                 temp17.PrimaryColor1 = Color.White;
@@ -1658,7 +1657,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp18 = ref CP.Cursor_Pen;
+                ref var temp18 = ref TM.Cursor_Pen;
                 temp18.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp18.CircleStyle = Paths.CircleStyle.Classic;
                 temp18.PrimaryColor1 = Color.White;
@@ -1682,7 +1681,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp19 = ref CP.Cursor_IBeam;
+                ref var temp19 = ref TM.Cursor_IBeam;
                 temp19.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp19.CircleStyle = Paths.CircleStyle.Classic;
                 temp19.PrimaryColor1 = Color.White;
@@ -1706,7 +1705,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp20 = ref CP.Cursor_Cross;
+                ref var temp20 = ref TM.Cursor_Cross;
                 temp20.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp20.CircleStyle = Paths.CircleStyle.Classic;
                 temp20.PrimaryColor1 = Color.White;
@@ -1730,7 +1729,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp21 = ref CP.Cursor_Link;
+                ref var temp21 = ref TM.Cursor_Link;
                 temp21.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp21.CircleStyle = Paths.CircleStyle.Classic;
                 temp21.PrimaryColor1 = Color.White;
@@ -1754,7 +1753,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp22 = ref CP.Cursor_Pin;
+                ref var temp22 = ref TM.Cursor_Pin;
                 temp22.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp22.CircleStyle = Paths.CircleStyle.Classic;
                 temp22.PrimaryColor1 = Color.White;
@@ -1778,7 +1777,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp23 = ref CP.Cursor_Person;
+                ref var temp23 = ref TM.Cursor_Person;
                 temp23.ArrowStyle = Paths.ArrowStyle.Classic;
                 temp23.CircleStyle = Paths.CircleStyle.Classic;
                 temp23.PrimaryColor1 = Color.White;
@@ -1802,7 +1801,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp24 = ref CP.WindowsEffects;
+                ref var temp24 = ref TM.WindowsEffects;
                 temp24.ShakeToMinimize = false;
                 temp24.BalloonNotifications = true;
                 temp24.PaintDesktopVersion = false;
@@ -1811,12 +1810,12 @@ namespace WinPaletter
                 temp24.SysListView32 = true;
             }
 
-            CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
-            CP.Cursor_Shadow = true;
+            TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty);
+            TM.Cursor_Shadow = true;
 
             {
-                ref var temp25 = ref CP.ScreenSaver;
+                ref var temp25 = ref TM.ScreenSaver;
                 temp25.Enabled = true;
                 temp25.IsSecure = false;
                 temp25.TimeOut = 60;
@@ -1824,7 +1823,7 @@ namespace WinPaletter
             }
 
             {
-                ref var temp26 = ref CP.Sounds;
+                ref var temp26 = ref TM.Sounds;
                 temp26.Snd_Imageres_SystemStart = "";
                 temp26.Snd_Win_Default = My.Env.PATH_Windows + @"\media\Windows XP Ding.wav";
                 temp26.Snd_Win_AppGPFault = "";
@@ -1916,12 +1915,12 @@ namespace WinPaletter
             }
 
             {
-                ref var temp27 = ref CP.Wallpaper;
+                ref var temp27 = ref TM.Wallpaper;
                 temp27.ImageFile = My.Env.PATH_Windows + @"\Web\Wallpaper\Bliss.bmp";
-                temp27.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Stretched;
+                temp27.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
             }
 
-            return CP;
+            return TM;
         }
 
         #region IDisposable Support

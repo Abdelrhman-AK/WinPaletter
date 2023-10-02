@@ -155,7 +155,7 @@ namespace WinPaletter
 
         public bool GetResponse(SaveFileDialog SaveFileDialog, MethodInvoker Apply_Theme_Sub, MethodInvoker Apply_FirstTheme_Sub, MethodInvoker Apply_DefaultWin_Sub)
         {
-            if ((My.Env.CP != My.Env.CP_Original) && My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
+            if ((My.Env.TM != My.Env.TM_Original) && My.Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
             {
                 GroupBox2.Enabled = Apply_Theme_Sub is not null | Apply_FirstTheme_Sub is not null | Apply_DefaultWin_Sub is not null;
 
@@ -174,13 +174,13 @@ namespace WinPaletter
                                     {
                                         if (System.IO.File.Exists(SaveFileDialog.FileName))
                                         {
-                                            My.Env.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName);
-                                            My.Env.CP_Original = (CP)My.Env.CP.Clone();
+                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
                                         }
                                         else if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                                         {
-                                            My.Env.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName);
-                                            My.Env.CP_Original = (CP)My.Env.CP.Clone();
+                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
                                         }
                                         else
                                         {
@@ -193,8 +193,8 @@ namespace WinPaletter
                                     {
                                         if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                                         {
-                                            My.Env.CP.Save(CP.CP_Type.File, SaveFileDialog.FileName);
-                                            My.Env.CP_Original = (CP)My.Env.CP.Clone();
+                                            My.Env.TM.Save(Theme.Manager.Source.File, SaveFileDialog.FileName);
+                                            My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
                                         }
                                         else
                                         {

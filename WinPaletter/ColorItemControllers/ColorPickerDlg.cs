@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -160,7 +159,7 @@ namespace WinPaletter
         }
 
 
-        public void GetColorsFromPalette(CP CP)
+        public void GetColorsFromPalette(Theme.Manager TM)
         {
             PaletteContainer.SuspendLayout();
 
@@ -173,7 +172,7 @@ namespace WinPaletter
 
             PaletteContainer.Controls.Clear();
 
-            foreach (Color c in CP.ListColors())
+            foreach (Color c in TM.ListColors())
             {
 
                 UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
@@ -457,11 +456,11 @@ namespace WinPaletter
                         var temp2 = (UI.Controllers.StoreItem)ctrl;
                         if (_Conditions.BackColor1)
                         {
-                            temp2.CP.Info.Color1 = Color.FromArgb(255, ColorEditorManager1.Color);
+                            temp2.TM.Info.Color1 = Color.FromArgb(255, ColorEditorManager1.Color);
                         }
                         else if (_Conditions.BackColor2)
                         {
-                            temp2.CP.Info.Color2 = Color.FromArgb(255, ColorEditorManager1.Color);
+                            temp2.TM.Info.Color2 = Color.FromArgb(255, ColorEditorManager1.Color);
 
                         }
                         temp2.Invalidate();
@@ -875,12 +874,12 @@ namespace WinPaletter
             {
                 if (_Conditions.Win7LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(ColorEditorManager1.Color, My.Env.CP.Windows7.ColorizationAfterglow);
+                    UpdateWin7Preview(ColorEditorManager1.Color, My.Env.TM.Windows7.ColorizationAfterglow);
                 }
 
                 if (_Conditions.Win7LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(My.Env.CP.Windows7.ColorizationColor, ColorEditorManager1.Color);
+                    UpdateWin7Preview(My.Env.TM.Windows7.ColorizationColor, ColorEditorManager1.Color);
                 }
             }
         }
@@ -903,28 +902,28 @@ namespace WinPaletter
 
                     if (My.Env.PreviewStyle == WindowStyle.W81)
                     {
-                        temp.nIntensity = My.Env.CP.Windows81.ColorizationColorBalance;
+                        temp.nIntensity = My.Env.TM.Windows81.ColorizationColorBalance;
                     }
 
                     else if (My.Env.PreviewStyle == WindowStyle.W7)
                     {
-                        temp.nIntensity = My.Env.CP.Windows7.ColorizationColorBalance;
+                        temp.nIntensity = My.Env.TM.Windows7.ColorizationColorBalance;
 
-                        temp.clrAfterGlowBalance = My.Env.CP.Windows7.ColorizationAfterglowBalance;
-                        temp.clrBlurBalance = My.Env.CP.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = My.Env.CP.Windows7.ColorizationGlassReflectionIntensity;
-                        temp.fOpaque = My.Env.CP.Windows7.Theme == Structures.Windows7.Themes.AeroOpaque;
+                        temp.clrAfterGlowBalance = My.Env.TM.Windows7.ColorizationAfterglowBalance;
+                        temp.clrBlurBalance = My.Env.TM.Windows7.ColorizationBlurBalance;
+                        temp.clrGlassReflectionIntensity = My.Env.TM.Windows7.ColorizationGlassReflectionIntensity;
+                        temp.fOpaque = My.Env.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     else if (My.Env.PreviewStyle == WindowStyle.WVista)
                     {
-                        temp.clrColor = Color.FromArgb(My.Env.CP.WindowsVista.Alpha, My.Env.CP.WindowsVista.ColorizationColor).ToArgb();
-                        temp.clrAfterGlowBalance = Color.FromArgb(My.Env.CP.WindowsVista.Alpha, My.Env.CP.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrColor = Color.FromArgb(My.Env.TM.WindowsVista.Alpha, My.Env.TM.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrAfterGlowBalance = Color.FromArgb(My.Env.TM.WindowsVista.Alpha, My.Env.TM.WindowsVista.ColorizationColor).ToArgb();
 
-                        // temp.nIntensity = My.CP.WindowsVista.ColorizationColorBalance
-                        // temp.clrBlurBalance = My.CP.WindowsVista.ColorizationBlurBalance
-                        // temp.clrGlassReflectionIntensity = My.CP.WindowsVista.ColorizationGlassReflectionIntensity
-                        temp.fOpaque = My.Env.CP.WindowsVista.Theme == Structures.Windows7.Themes.AeroOpaque;
+                        // temp.nIntensity = My.Manager.WindowsVista.ColorizationColorBalance
+                        // temp.clrBlurBalance = My.Manager.WindowsVista.ColorizationBlurBalance
+                        // temp.clrGlassReflectionIntensity = My.Manager.WindowsVista.ColorizationGlassReflectionIntensity
+                        temp.fOpaque = My.Env.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     Dwmapi.DwmSetColorizationParameters(ref temp, false);
@@ -1078,43 +1077,43 @@ namespace WinPaletter
             {
                 case 0:
                     {
-                        GetColorsFromPalette(My.Env.CP);
+                        GetColorsFromPalette(My.Env.TM);
                         break;
                     }
                 case 1:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_Windows11());
+                        GetColorsFromPalette(new Theme.Default().Windows11());
                         break;
                     }
                 case 2:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_Windows10());
+                        GetColorsFromPalette(new Theme.Default().Windows10());
                         break;
                     }
                 case 3:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_Windows81());
+                        GetColorsFromPalette(new Theme.Default().Windows81());
                         break;
                     }
                 case 4:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_WindowsVista());
+                        GetColorsFromPalette(new Theme.Default().WindowsVista());
                         break;
                     }
                 case 5:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_WindowsXP());
+                        GetColorsFromPalette(new Theme.Default().WindowsXP());
                         break;
                     }
                 case 6:
                     {
-                        GetColorsFromPalette(new CP_Defaults().Default_Windows7());
+                        GetColorsFromPalette(new Theme.Default().Windows7());
                         break;
                     }
 
                 default:
                     {
-                        GetColorsFromPalette(My.Env.CP);
+                        GetColorsFromPalette(My.Env.TM);
                         break;
                     }
             }
@@ -1126,12 +1125,12 @@ namespace WinPaletter
             {
                 if (_Conditions.Win7LivePreview_Colorization)
                 {
-                    UpdateWin7Preview(InitColor, My.Env.CP.Windows7.ColorizationAfterglow);
+                    UpdateWin7Preview(InitColor, My.Env.TM.Windows7.ColorizationAfterglow);
                 }
 
                 if (_Conditions.Win7LivePreview_AfterGlow)
                 {
-                    UpdateWin7Preview(My.Env.CP.Windows7.ColorizationColor, InitColor);
+                    UpdateWin7Preview(My.Env.TM.Windows7.ColorizationColor, InitColor);
                 }
             }
         }
@@ -1155,7 +1154,7 @@ namespace WinPaletter
             {
                 if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
                 {
-                    foreach (Color C in GetPaletteFromString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
+                    foreach (Color C in Theme.Manager.GetPaletteFromString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
                     {
                         UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
                         MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
@@ -1217,7 +1216,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        foreach (Color C in GetPaletteFromMSTheme(TextBox2.Text))
+                        foreach (Color C in Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text))
                         {
                             UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
                             MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();

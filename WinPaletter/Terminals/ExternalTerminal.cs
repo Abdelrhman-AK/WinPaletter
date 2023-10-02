@@ -86,7 +86,7 @@ namespace WinPaletter
 
             object y_cmd;
 
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
                 ExtTerminal_ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "ColorTable00", _Def.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
                 ExtTerminal_ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "ColorTable01", _Def.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
@@ -226,7 +226,7 @@ namespace WinPaletter
                     RasterList.SelectedItem = "8x12";
 
                 y_cmd = GetReg(@"HKEY_CURRENT_USER\Console\" + RegKey, "FaceName", "Consolas");
-                if (CP.IsFontInstalled(y_cmd.ToString()))
+                if (Theme.Manager.IsFontInstalled(y_cmd.ToString()))
                 {
                     if (!ExtTerminal_RasterToggle.Checked)
                     {
@@ -1307,37 +1307,37 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
 
-            ExtTerminal_ColorTable00.BackColor = CP.CommandPrompt.ColorTable00;
-            ExtTerminal_ColorTable01.BackColor = CP.CommandPrompt.ColorTable01;
-            ExtTerminal_ColorTable02.BackColor = CP.CommandPrompt.ColorTable02;
-            ExtTerminal_ColorTable03.BackColor = CP.CommandPrompt.ColorTable03;
-            ExtTerminal_ColorTable04.BackColor = CP.CommandPrompt.ColorTable04;
-            ExtTerminal_ColorTable05.BackColor = CP.CommandPrompt.ColorTable05;
-            ExtTerminal_ColorTable06.BackColor = CP.CommandPrompt.ColorTable06;
-            ExtTerminal_ColorTable07.BackColor = CP.CommandPrompt.ColorTable07;
-            ExtTerminal_ColorTable08.BackColor = CP.CommandPrompt.ColorTable08;
-            ExtTerminal_ColorTable09.BackColor = CP.CommandPrompt.ColorTable09;
-            ExtTerminal_ColorTable10.BackColor = CP.CommandPrompt.ColorTable10;
-            ExtTerminal_ColorTable11.BackColor = CP.CommandPrompt.ColorTable11;
-            ExtTerminal_ColorTable12.BackColor = CP.CommandPrompt.ColorTable12;
-            ExtTerminal_ColorTable13.BackColor = CP.CommandPrompt.ColorTable13;
-            ExtTerminal_ColorTable14.BackColor = CP.CommandPrompt.ColorTable14;
-            ExtTerminal_ColorTable15.BackColor = CP.CommandPrompt.ColorTable15;
+            ExtTerminal_ColorTable00.BackColor = TM.CommandPrompt.ColorTable00;
+            ExtTerminal_ColorTable01.BackColor = TM.CommandPrompt.ColorTable01;
+            ExtTerminal_ColorTable02.BackColor = TM.CommandPrompt.ColorTable02;
+            ExtTerminal_ColorTable03.BackColor = TM.CommandPrompt.ColorTable03;
+            ExtTerminal_ColorTable04.BackColor = TM.CommandPrompt.ColorTable04;
+            ExtTerminal_ColorTable05.BackColor = TM.CommandPrompt.ColorTable05;
+            ExtTerminal_ColorTable06.BackColor = TM.CommandPrompt.ColorTable06;
+            ExtTerminal_ColorTable07.BackColor = TM.CommandPrompt.ColorTable07;
+            ExtTerminal_ColorTable08.BackColor = TM.CommandPrompt.ColorTable08;
+            ExtTerminal_ColorTable09.BackColor = TM.CommandPrompt.ColorTable09;
+            ExtTerminal_ColorTable10.BackColor = TM.CommandPrompt.ColorTable10;
+            ExtTerminal_ColorTable11.BackColor = TM.CommandPrompt.ColorTable11;
+            ExtTerminal_ColorTable12.BackColor = TM.CommandPrompt.ColorTable12;
+            ExtTerminal_ColorTable13.BackColor = TM.CommandPrompt.ColorTable13;
+            ExtTerminal_ColorTable14.BackColor = TM.CommandPrompt.ColorTable14;
+            ExtTerminal_ColorTable15.BackColor = TM.CommandPrompt.ColorTable15;
 
             ExtTerminal_ColorTable05.DefaultColor = Color.FromArgb(136, 23, 152);
             ExtTerminal_ColorTable06.DefaultColor = Color.FromArgb(193, 156, 0);
 
-            ExtTerminal_PopupForegroundBar.Value = CP.CommandPrompt.PopupForeground;
-            ExtTerminal_PopupBackgroundBar.Value = CP.CommandPrompt.PopupBackground;
-            ExtTerminal_AccentForegroundBar.Value = CP.CommandPrompt.ScreenColorsForeground;
-            ExtTerminal_AccentBackgroundBar.Value = CP.CommandPrompt.ScreenColorsBackground;
-            ExtTerminal_RasterToggle.Checked = CP.CommandPrompt.FontRaster;
-            RasterList.Visible = CP.CommandPrompt.FontRaster;
+            ExtTerminal_PopupForegroundBar.Value = TM.CommandPrompt.PopupForeground;
+            ExtTerminal_PopupBackgroundBar.Value = TM.CommandPrompt.PopupBackground;
+            ExtTerminal_AccentForegroundBar.Value = TM.CommandPrompt.ScreenColorsForeground;
+            ExtTerminal_AccentBackgroundBar.Value = TM.CommandPrompt.ScreenColorsBackground;
+            ExtTerminal_RasterToggle.Checked = TM.CommandPrompt.FontRaster;
+            RasterList.Visible = TM.CommandPrompt.FontRaster;
 
-            switch (CP.CommandPrompt.FontWeight)
+            switch (TM.CommandPrompt.FontWeight)
             {
                 case 0:
                     {
@@ -1407,11 +1407,11 @@ namespace WinPaletter
 
             }
 
-            if (!CP.CommandPrompt.FontRaster)
+            if (!TM.CommandPrompt.FontRaster)
             {
                 {
-                    var temp = Font.FromLogFont(new LogFont() { lfFaceName = CP.CommandPrompt.FaceName, lfWeight = CP.CommandPrompt.FontWeight });
-                    f_extterminal = new Font(temp.FontFamily, (int)Math.Round(CP.CommandPrompt.FontSize / 65536d), temp.Style);
+                    var temp = Font.FromLogFont(new LogFont() { lfFaceName = TM.CommandPrompt.FaceName, lfWeight = TM.CommandPrompt.FontWeight });
+                    f_extterminal = new Font(temp.FontFamily, (int)Math.Round(TM.CommandPrompt.FontSize / 65536d), temp.Style);
                 }
             }
 
@@ -1420,42 +1420,42 @@ namespace WinPaletter
             ExtTerminal_FontSizeBar.Value = (int)Math.Round(f_extterminal.Size);
             ExtTerminal_FontSizeVal.Text = f_extterminal.Size.ToString();
 
-            if (CP.CommandPrompt.FontSize == 393220)
+            if (TM.CommandPrompt.FontSize == 393220)
                 RasterList.SelectedItem = "4x6";
-            if (CP.CommandPrompt.FontSize == 524294)
+            if (TM.CommandPrompt.FontSize == 524294)
                 RasterList.SelectedItem = "6x8";
-            if (CP.CommandPrompt.FontSize == 524296)
+            if (TM.CommandPrompt.FontSize == 524296)
                 RasterList.SelectedItem = "8x8";
-            if (CP.CommandPrompt.FontSize == 524304)
+            if (TM.CommandPrompt.FontSize == 524304)
                 RasterList.SelectedItem = "16x8";
-            if (CP.CommandPrompt.FontSize == 786437)
+            if (TM.CommandPrompt.FontSize == 786437)
                 RasterList.SelectedItem = "5x12";
-            if (CP.CommandPrompt.FontSize == 786439)
+            if (TM.CommandPrompt.FontSize == 786439)
                 RasterList.SelectedItem = "7x12";
-            if (CP.CommandPrompt.FontSize == 0)
+            if (TM.CommandPrompt.FontSize == 0)
                 RasterList.SelectedItem = "8x12";
-            if (CP.CommandPrompt.FontSize == 786448)
+            if (TM.CommandPrompt.FontSize == 786448)
                 RasterList.SelectedItem = "16x12";
-            if (CP.CommandPrompt.FontSize == 1048588)
+            if (TM.CommandPrompt.FontSize == 1048588)
                 RasterList.SelectedItem = "12x16";
-            if (CP.CommandPrompt.FontSize == 1179658)
+            if (TM.CommandPrompt.FontSize == 1179658)
                 RasterList.SelectedItem = "10x18";
             if (RasterList.SelectedItem == null)
                 RasterList.SelectedItem = "8x12";
 
-            CP.CommandPrompt.CursorSize = ExtTerminal_CursorSizeBar.Value;
+            TM.CommandPrompt.CursorSize = ExtTerminal_CursorSizeBar.Value;
             if (ExtTerminal_CursorSizeBar.Value > 100)
                 ExtTerminal_CursorSizeBar.Value = 100;
             if (ExtTerminal_CursorSizeBar.Value < 20)
                 ExtTerminal_CursorSizeBar.Value = 20;
-            ExtTerminal_CursorStyle.SelectedIndex = CP.CommandPrompt.W10_1909_CursorType;
-            ExtTerminal_CursorColor.BackColor = CP.CommandPrompt.W10_1909_CursorColor;
-            ExtTerminal_PreviewCUR2.BackColor = CP.CommandPrompt.W10_1909_CursorColor;
-            ExtTerminal_EnhancedTerminal.Checked = CP.CommandPrompt.W10_1909_ForceV2;
-            ExtTerminal_OpacityBar.Value = CP.CommandPrompt.W10_1909_WindowAlpha;
-            ExtTerminal_OpacityVal.Text = Conversion.Fix(CP.CommandPrompt.W10_1909_WindowAlpha / 255d * 100d).ToString();
-            ExtTerminal_LineSelection.Checked = CP.CommandPrompt.W10_1909_LineSelection;
-            ExtTerminal_TerminalScrolling.Checked = CP.CommandPrompt.W10_1909_TerminalScrolling;
+            ExtTerminal_CursorStyle.SelectedIndex = TM.CommandPrompt.W10_1909_CursorType;
+            ExtTerminal_CursorColor.BackColor = TM.CommandPrompt.W10_1909_CursorColor;
+            ExtTerminal_PreviewCUR2.BackColor = TM.CommandPrompt.W10_1909_CursorColor;
+            ExtTerminal_EnhancedTerminal.Checked = TM.CommandPrompt.W10_1909_ForceV2;
+            ExtTerminal_OpacityBar.Value = TM.CommandPrompt.W10_1909_WindowAlpha;
+            ExtTerminal_OpacityVal.Text = Conversion.Fix(TM.CommandPrompt.W10_1909_WindowAlpha / 255d * 100d).ToString();
+            ExtTerminal_LineSelection.Checked = TM.CommandPrompt.W10_1909_LineSelection;
+            ExtTerminal_TerminalScrolling.Checked = TM.CommandPrompt.W10_1909_TerminalScrolling;
             ApplyCursorShape();
             UpdateCurPreview();
         }
@@ -1470,10 +1470,10 @@ namespace WinPaletter
 
             if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenWPTHDlg.FileName);
-                ApplyFromCP(CPx);
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
+                ApplyFromTM(TMx);
                 ApplyPreview();
-                CPx.Dispose();
+                TMx.Dispose();
             }
         }
 
@@ -1485,10 +1485,10 @@ namespace WinPaletter
                 return;
             }
 
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
             ApplyPreview();
-            CPx.Dispose();
+            TMx.Dispose();
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -1499,9 +1499,9 @@ namespace WinPaletter
                 return;
             }
 
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
                 ApplyPreview();
             }
         }

@@ -38,7 +38,7 @@ namespace WinPaletter
             CheckBox1.Checked = My.Env.Settings.WindowsTerminals.ListAllFonts;
             RasterList.BringToFront();
 
-            ApplyFromCP(My.Env.CP, _Edition);
+            ApplyFromTM(My.Env.TM, _Edition);
             ApplyPreview();
 
             CMD_PopupForegroundLbl.Font = My.MyProject.Application.ConsoleFont;
@@ -107,39 +107,39 @@ namespace WinPaletter
             if (CMDEnabled.Checked)
             {
                 Cursor = Cursors.WaitCursor;
-                var CPx = new CP(CP.CP_Type.Registry);
-                ApplyToCP(CPx, _Edition);
-                ApplyToCP(My.Env.CP, _Edition);
+                var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+                ApplyToTM(TMx, _Edition);
+                ApplyToTM(My.Env.TM, _Edition);
 
                 switch (_Edition)
                 {
                     case Edition.CMD:
                         {
-                            CPx.Apply_CommandPrompt();
+                            TMx.Apply_CommandPrompt();
                             break;
                         }
 
                     case Edition.PowerShellx86:
                         {
-                            CPx.Apply_PowerShell86();
+                            TMx.Apply_PowerShell86();
                             break;
                         }
 
                     case Edition.PowerShellx64:
                         {
-                            CPx.Apply_PowerShell64();
+                            TMx.Apply_PowerShell64();
                             break;
                         }
 
                     default:
                         {
-                            CPx.Apply_CommandPrompt();
+                            TMx.Apply_CommandPrompt();
                             break;
                         }
 
                 }
 
-                CPx.Dispose();
+                TMx.Dispose();
 
                 Cursor = Cursors.Default;
             }
@@ -151,7 +151,7 @@ namespace WinPaletter
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP, _Edition);
+            ApplyToTM(My.Env.TM, _Edition);
             Close();
         }
         private void Button2_Click(object sender, EventArgs e)
@@ -744,29 +744,29 @@ namespace WinPaletter
         }
         #endregion
 
-        #region    CP Handling
-        public void ApplyFromCP(CP CP, Edition Edition)
+        #region    TM Handling
+        public void ApplyFromTM(Theme.Manager TM, Edition Edition)
         {
 
-            var Console = new CP.Structures.Console();
+            var Console = new Theme.Structures.Console();
 
             switch (Edition)
             {
                 case Edition.CMD:
                     {
-                        SetFromCP(CP.CommandPrompt);
+                        SetFromTM(TM.CommandPrompt);
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        SetFromCP(CP.PowerShellx86);
+                        SetFromTM(TM.PowerShellx86);
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        SetFromCP(CP.PowerShellx64);
+                        SetFromTM(TM.PowerShellx64);
                         break;
                     }
 
@@ -774,7 +774,7 @@ namespace WinPaletter
 
         }
 
-        public void SetFromCP(CP.Structures.Console Console)
+        public void SetFromTM(Theme.Structures.Console Console)
         {
             CMDEnabled.Checked = Console.Enabled;
 
@@ -931,9 +931,9 @@ namespace WinPaletter
 
         }
 
-        public void ApplyToCP(CP CP, Edition Edition)
+        public void ApplyToTM(Theme.Manager TM, Edition Edition)
         {
-            var Console = new CP.Structures.Console()
+            var Console = new Theme.Structures.Console()
             {
                 Enabled = CMDEnabled.Checked,
                 ColorTable00 = ColorTable00.BackColor,
@@ -1074,19 +1074,19 @@ namespace WinPaletter
             {
                 case Edition.CMD:
                     {
-                        CP.CommandPrompt = Console;
+                        TM.CommandPrompt = Console;
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        CP.PowerShellx86 = Console;
+                        TM.PowerShellx86 = Console;
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        CP.PowerShellx64 = Console;
+                        TM.PowerShellx64 = Console;
                         break;
                     }
 
@@ -1419,10 +1419,10 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
                 bool ee = CMDEnabled.Checked;
-                ApplyFromCP(_Def, _Edition);
+                ApplyFromTM(_Def, _Edition);
                 ApplyPreview();
                 CMDEnabled.Checked = ee;
             }
@@ -1432,12 +1432,12 @@ namespace WinPaletter
         {
             if (OpenWPTHDlg.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenWPTHDlg.FileName);
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenWPTHDlg.FileName);
                 bool ee = CMDEnabled.Checked;
-                ApplyFromCP(CPx, _Edition);
+                ApplyFromTM(TMx, _Edition);
                 ApplyPreview();
                 CMDEnabled.Checked = ee;
-                CPx.Dispose();
+                TMx.Dispose();
             }
         }
 
@@ -1448,12 +1448,12 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
             bool ee = CMDEnabled.Checked;
-            ApplyFromCP(CPx, _Edition);
+            ApplyFromTM(TMx, _Edition);
             ApplyPreview();
             CMDEnabled.Checked = ee;
-            CPx.Dispose();
+            TMx.Dispose();
         }
 
         private void CMD_FontSizeVal_Click(object sender, EventArgs e)

@@ -325,7 +325,7 @@ namespace WinPaletter
 
                 case Mode.WinPaletterFile:
                     {
-                        using (var CPx = new CP(CP.CP_Type.File, str))
+                        using (var TBx = new Theme.Manager(WinPaletter.Theme.Manager.Source.File, str))
                         {
 
                             switch (Version)
@@ -336,7 +336,7 @@ namespace WinPaletter
                                         foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                         {
                                             var type = field.FieldType;
-                                            field.SetValue(this, field.GetValue(CPx.TerminalPreview));
+                                            field.SetValue(this, field.GetValue(TBx.TerminalPreview));
                                         }
 
                                         break;
@@ -348,7 +348,7 @@ namespace WinPaletter
                                         foreach (FieldInfo field in GetType().GetFields(bindingFlags))
                                         {
                                             var type = field.FieldType;
-                                            field.SetValue(this, field.GetValue(CPx.TerminalPreview));
+                                            field.SetValue(this, field.GetValue(TBx.TerminalPreview));
                                         }
 
                                         break;
@@ -576,7 +576,7 @@ namespace WinPaletter
                         {
                             // JFont.Add("font"]
                             var JFont = new JObject();
-                            if (DefaultProf.Font.Weight != default(int))
+                            if (DefaultProf.Font.Weight !< 0)
                                 JFont["weight"] = FontWeight_ReturnToString(DefaultProf.Font.Weight);
                             if (!string.IsNullOrEmpty(DefaultProf.Font.Face))
                                 JFont["face"] = DefaultProf.Font.Face;
@@ -587,7 +587,7 @@ namespace WinPaletter
 
                         else
                         {
-                            if (DefaultProf.Font.Weight != default(int))
+                            if (DefaultProf.Font.Weight !< 0)
                                 JSonFile["profiles"]["defaults"]["font"]["weight"] = FontWeight_ReturnToString(DefaultProf.Font.Weight);
                             if (!string.IsNullOrEmpty(DefaultProf.Font.Face))
                                 JSonFile["profiles"]["defaults"]["font"]["face"] = DefaultProf.Font.Face;

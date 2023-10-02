@@ -41,30 +41,30 @@ namespace WinPaletter
                     string TempFile = System.IO.Path.GetTempFileName();
 
                     if (TreeView is not null)
-                        CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
+                        Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
                     PreparePrivileges();                                     // To get authorized access to change PE file access/permissions
 
                     if (TreeView is not null)
-                        CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                        Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
                     if (CreateBackup(SourceFile))                        // Makes a copy of EP file as a backup file
                     {
 
                         if (TreeView is not null)
-                            CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
                         if (BackupPermissions(SourceFile, TempFile))     // Source file rights have been backed up successfully
                         {
 
                             if (TreeView is not null)
-                                CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
                             PreparePrivileges();                             // To get authorized access to change resources for PE file
 
                             if (TreeView is not null)
-                                CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
                             var PE_File = new PortableExecutable(SourceFile);
                             PE_File.SetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
 
                             if (TreeView is not null)
-                                CP.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
                             RestorePermissions(SourceFile, TempFile);        // Restore source file rights
 
                         }
@@ -77,7 +77,7 @@ namespace WinPaletter
             {
                 // It isn't in system directory and can be modified without changing rights/permissions.
                 if (TreeView is not null)
-                    CP.AddNode(TreeView, string.Format("Replacing '{0}' resources", System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                    Theme.Manager.AddNode(TreeView, string.Format("Replacing '{0}' resources", System.IO.Path.GetFileName(SourceFile)), "pe_patch");
                 var PE_File = new PortableExecutable(SourceFile);
                 PE_File.SetResource(new ResourceIdentifier(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
             }

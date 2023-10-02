@@ -17,22 +17,22 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Load_FromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
         }
 
-        public void Load_FromCP(CP ColorPalette)
+        public void ApplyFromTM(Theme.Manager TM)
         {
-            LogonUI_Acrylic_Toggle.Checked = !ColorPalette.LogonUI10x.DisableAcrylicBackgroundOnLogon;
-            LogonUI_Background_Toggle.Checked = !ColorPalette.LogonUI10x.DisableLogonBackgroundImage;
-            LogonUI_Lockscreen_Toggle.Checked = !ColorPalette.LogonUI10x.NoLockScreen;
+            LogonUI_Acrylic_Toggle.Checked = !TM.LogonUI10x.DisableAcrylicBackgroundOnLogon;
+            LogonUI_Background_Toggle.Checked = !TM.LogonUI10x.DisableLogonBackgroundImage;
+            LogonUI_Lockscreen_Toggle.Checked = !TM.LogonUI10x.NoLockScreen;
         }
 
-        public void Save(CP ColorPalette)
+        public void Save(Theme.Manager TM)
         {
-            ColorPalette.LogonUI10x.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
-            ColorPalette.LogonUI10x.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
-            ColorPalette.LogonUI10x.NoLockScreen = !LogonUI_Lockscreen_Toggle.Checked;
+            TM.LogonUI10x.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
+            TM.LogonUI10x.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
+            TM.LogonUI10x.NoLockScreen = !LogonUI_Lockscreen_Toggle.Checked;
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -44,68 +44,68 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                Load_FromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            Load_FromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            CP CPx;
+            Theme.Manager TMx;
             switch (My.Env.PreviewStyle)
             {
                 case WindowStyle.W11:
                     {
-                        CPx = new CP_Defaults().Default_Windows11();
+                        TMx = new Theme.Default().Windows11();
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        CPx = new CP_Defaults().Default_Windows10();
+                        TMx = new Theme.Default().Windows10();
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        CPx = new CP_Defaults().Default_Windows81();
+                        TMx = new Theme.Default().Windows81();
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        CPx = new CP_Defaults().Default_Windows7();
+                        TMx = new Theme.Default().Windows7();
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        CPx = new CP_Defaults().Default_WindowsVista();
+                        TMx = new Theme.Default().WindowsVista();
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        CPx = new CP_Defaults().Default_WindowsXP();
+                        TMx = new Theme.Default().WindowsXP();
                         break;
                     }
 
                 default:
                     {
-                        CPx = new CP_Defaults().Default_Windows11();
+                        TMx = new Theme.Default().Windows11();
                         break;
                     }
             }
-            Load_FromCP(CPx);
-            CPx.Dispose();
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Save(My.Env.CP);
+            Save(My.Env.TM);
             Close();
         }
 

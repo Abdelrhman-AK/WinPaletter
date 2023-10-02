@@ -174,7 +174,7 @@ namespace WinPaletter
 
         private void Store_Hover_FormClosed(object sender, FormClosedEventArgs e)
         {
-            My.Env.RenderingHint = My.Env.CP.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
         }
 
     }

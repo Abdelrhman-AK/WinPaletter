@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
@@ -242,7 +241,7 @@ namespace WinPaletter
                             {
                                 Skip = ToCheck.Equals(CheckBy);
                             }
-                            catch {  }
+                            catch { }
                             break;
                         }
                 }
@@ -253,7 +252,7 @@ namespace WinPaletter
                     return;
                 }
             }
-      
+
             try
             {
                 if (My.Env.isElevated && (scope == Reg_scope.HKEY_LOCAL_MACHINE || scope == Reg_scope.HKEY_USERS) || !(scope == Reg_scope.HKEY_LOCAL_MACHINE) & !(scope == Reg_scope.HKEY_USERS))
@@ -457,7 +456,7 @@ namespace WinPaletter
                     v2 = string.Format(My.Env.Lang.Verbose_RegSkipped, string.Format(My.Env.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()));
                     v3 = "reg_skip";
                 }
-                CP.AddNode(TreeView, v2, v3);
+                Theme.Manager.AddNode(TreeView, v2, v3);
             }
         }
 
@@ -485,13 +484,13 @@ namespace WinPaletter
                     v1 = "null";
                 string v2 = ex.Message + " - " + "CMD: " + string.Format(My.Env.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString());
                 if (TreeView is not null)
-                    CP.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), v2), "error");
+                    Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), v2), "error");
                 My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(v2, ex));
             }
             else
             {
                 if (TreeView is not null)
-                    CP.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ex.Message), "error");
+                    Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), ex.Message), "error");
                 My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
         }

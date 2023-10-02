@@ -8,14 +8,13 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CP;
 
 namespace WinPaletter
 {
 
     public class Core
     {
-        public static void RefreshDWM(CP CP)
+        public static void RefreshDWM(Theme.Manager TM)
         {
 
             try
@@ -29,32 +28,32 @@ namespace WinPaletter
 
                     if (My.Env.W8 | My.Env.W81)
                     {
-                        temp.clrColor = CP.Windows81.ColorizationColor.ToArgb();
-                        temp.nIntensity = CP.Windows81.ColorizationColorBalance;
+                        temp.clrColor = TM.Windows81.ColorizationColor.ToArgb();
+                        temp.nIntensity = TM.Windows81.ColorizationColorBalance;
                     }
 
                     else if (My.Env.W7)
                     {
-                        temp.clrColor = CP.Windows7.ColorizationColor.ToArgb();
-                        temp.nIntensity = CP.Windows7.ColorizationColorBalance;
+                        temp.clrColor = TM.Windows7.ColorizationColor.ToArgb();
+                        temp.nIntensity = TM.Windows7.ColorizationColorBalance;
 
-                        temp.clrAfterGlow = CP.Windows7.ColorizationAfterglow.ToArgb();
-                        temp.clrAfterGlowBalance = CP.Windows7.ColorizationAfterglowBalance;
-                        temp.clrBlurBalance = CP.Windows7.ColorizationBlurBalance;
-                        temp.clrGlassReflectionIntensity = CP.Windows7.ColorizationGlassReflectionIntensity;
-                        temp.fOpaque = CP.Windows7.Theme == Structures.Windows7.Themes.AeroOpaque;
+                        temp.clrAfterGlow = TM.Windows7.ColorizationAfterglow.ToArgb();
+                        temp.clrAfterGlowBalance = TM.Windows7.ColorizationAfterglowBalance;
+                        temp.clrBlurBalance = TM.Windows7.ColorizationBlurBalance;
+                        temp.clrGlassReflectionIntensity = TM.Windows7.ColorizationGlassReflectionIntensity;
+                        temp.fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     else if (My.Env.WVista)
                     {
-                        temp.clrColor = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor).ToArgb();
-                        temp.clrAfterGlow = Color.FromArgb(CP.WindowsVista.Alpha, CP.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrColor = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
+                        temp.clrAfterGlow = Color.FromArgb(TM.WindowsVista.Alpha, TM.WindowsVista.ColorizationColor).ToArgb();
 
-                        // temp.nIntensity = CP.WindowsVista.ColorizationColorBalance
-                        // temp.clrAfterGlowBalance = CP.WindowsVista.ColorizationAfterglowBalance
-                        // temp.clrBlurBalance = CP.WindowsVista.ColorizationBlurBalance
-                        // temp.clrGlassReflectionIntensity = CP.WindowsVista.ColorizationGlassReflectionIntensity
-                        temp.fOpaque = CP.WindowsVista.Theme == Structures.Windows7.Themes.AeroOpaque;
+                        // temp.nIntensity = Manager.WindowsVista.ColorizationColorBalance
+                        // temp.clrAfterGlowBalance = Manager.WindowsVista.ColorizationAfterglowBalance
+                        // temp.clrBlurBalance = Manager.WindowsVista.ColorizationBlurBalance
+                        // temp.clrGlassReflectionIntensity = Manager.WindowsVista.ColorizationGlassReflectionIntensity
+                        temp.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
                     }
 
                     Dwmapi.DwmSetColorizationParameters(ref temp, false);
@@ -72,7 +71,7 @@ namespace WinPaletter
                 try
                 {
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.KillingExplorer), "info");
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.KillingExplorer), "info");
                     var sw = new Stopwatch();
                     sw.Reset();
                     sw.Start();
@@ -81,14 +80,14 @@ namespace WinPaletter
                     temp.processExplorer.Start();
                     sw.Stop();
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)), "time");
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)), "time");
                     sw.Reset();
                 }
                 catch (Exception ex)
                 {
                     if (TreeView is not null)
                     {
-                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.ErrorExplorerRestart), "error");
+                        Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.ErrorExplorerRestart), "error");
                         My.Env.Saving_Exceptions.Add(new Tuple<string, Exception>(My.Env.Lang.ErrorExplorerRestart, ex));
                     }
                 }
@@ -185,7 +184,7 @@ namespace WinPaletter
                             string XML_Scheme = string.Format(My.Resources.XML_Shutdown, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Shutdown"), "task_add");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Shutdown"), "task_add");
                             process.StartInfo.Arguments = @"/Create /TN WinPaletter\Shutdown /XML """ + tmp + "\"";
                             break;
                         }
@@ -195,7 +194,7 @@ namespace WinPaletter
                             string XML_Scheme = string.Format(My.Resources.XML_Logoff, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logoff"), "task_add");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logoff"), "task_add");
                             process.StartInfo.Arguments = @"/Create /TN WinPaletter\Logoff /XML """ + tmp + "\"";
                             break;
                         }
@@ -205,7 +204,7 @@ namespace WinPaletter
                             string XML_Scheme = string.Format(My.Resources.XML_Logon, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logon"), "task_add");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logon"), "task_add");
                             process.StartInfo.Arguments = @"/Create /TN WinPaletter\Logon /XML """ + tmp + "\"";
                             break;
                         }
@@ -215,7 +214,7 @@ namespace WinPaletter
                             string XML_Scheme = string.Format(My.Resources.XML_Unlock, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Unlock"), "task_add");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Unlock"), "task_add");
                             process.StartInfo.Arguments = @"/Create /TN WinPaletter\Unlock /XML """ + tmp + "\"";
                             break;
                         }
@@ -225,7 +224,7 @@ namespace WinPaletter
                             string XML_Scheme = string.Format(My.Resources.XML_ChargerConnected, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
-                                AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\ChargerConnected"), "task_add");
+                                Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\ChargerConnected"), "task_add");
                             process.StartInfo.Arguments = @"/Create /TN WinPaletter\ChargerConnected /XML """ + tmp + "\"";
                             break;
                         }
@@ -258,7 +257,7 @@ namespace WinPaletter
                 case TaskType.Shutdown:
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
                         process.StartInfo.Arguments = @"/Delete /TN WinPaletter\Shutdown /F";
                         break;
                     }
@@ -266,7 +265,7 @@ namespace WinPaletter
                 case TaskType.Logoff:
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Logoff"), "task_remove");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Logoff"), "task_remove");
                         process.StartInfo.Arguments = @"/Delete /TN WinPaletter\Logoff /F";
                         break;
                     }
@@ -274,7 +273,7 @@ namespace WinPaletter
                 case TaskType.Logon:
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Logon"), "task_remove");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Logon"), "task_remove");
                         process.StartInfo.Arguments = @"/Delete /TN WinPaletter\Logon /F";
                         break;
                     }
@@ -282,7 +281,7 @@ namespace WinPaletter
                 case TaskType.Unlock:
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Unlock"), "task_remove");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\Unlock"), "task_remove");
                         process.StartInfo.Arguments = @"/Delete /TN WinPaletter\Unlock /F";
                         break;
                     }
@@ -290,7 +289,7 @@ namespace WinPaletter
                 case TaskType.ChargerConnected:
                     {
                         if (TreeView is not null)
-                            AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
+                            Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
                         process.StartInfo.Arguments = @"/Delete /TN WinPaletter\ChargerConnected /F";
                         break;
                     }
@@ -314,7 +313,7 @@ namespace WinPaletter
         public static void DrawDWMEffect(this Form Form, Padding Margins, bool Border = true, FormStyle FormStyle = FormStyle.Mica)
         {
 
-            if (Margins == default)
+            if (Margins == null)
                 Margins = new Padding(-1, -1, -1, -1);
 
             var CompositionEnabled = default(bool);
@@ -422,7 +421,7 @@ namespace WinPaletter
             else
                 FS = FormStyle.Mica;
 
-            if (Margins == default)
+            if (Margins == null)
                 Margins = new Padding(-1, -1, -1, -1);
             var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
 
@@ -434,7 +433,7 @@ namespace WinPaletter
 
         public static void DrawAero(this Form Form, Padding Margins)
         {
-            if (Margins == default)
+            if (Margins == null)
                 Margins = new Padding(-1, -1, -1, -1);
             var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
             Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
@@ -458,7 +457,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (BackColor != default)
+                    if (BackColor != null)
                     {
                         int argpvAttribute = ColorTranslator.ToWin32(BackColor);
                         Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.CAPTION_COLOR, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
@@ -470,7 +469,7 @@ namespace WinPaletter
 
                 try
                 {
-                    if (ForeColor != default)
+                    if (ForeColor != null)
                     {
                         int argpvAttribute1 = ColorTranslator.ToWin32(ForeColor);
                         Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.TEXT_COLOR, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
@@ -482,7 +481,7 @@ namespace WinPaletter
 
                 try
                 {
-                    if (BorderColor != default)
+                    if (BorderColor != null)
                     {
                         int argpvAttribute2 = ColorTranslator.ToWin32(BorderColor);
                         Dwmapi.DwmSetWindowAttribute(Form.Handle, Dwmapi.DWMATTRIB.BORDER_COLOR, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));

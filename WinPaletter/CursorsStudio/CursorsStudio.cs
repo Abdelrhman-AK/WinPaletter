@@ -22,7 +22,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        public void CursorCP_to_Cursor(CursorControl CursorControl, CP.Structures.Cursor Cursor)
+        public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
             CursorControl.Prop_ArrowStyle = Cursor.ArrowStyle;
             CursorControl.Prop_CircleStyle = Cursor.CircleStyle;
@@ -58,9 +58,9 @@ namespace WinPaletter
             CursorControl.Prop_Shadow_OffsetY = Cursor.Shadow_OffsetY;
         }
 
-        public CP.Structures.Cursor Cursor_to_CursorCP(CursorControl CursorControl)
+        public Theme.Structures.Cursor Cursor_to_CursorTM(CursorControl CursorControl)
         {
-            CP.Structures.Cursor Cursor;
+            Theme.Structures.Cursor Cursor;
             Cursor.ArrowStyle = CursorControl.Prop_ArrowStyle;
             Cursor.CircleStyle = CursorControl.Prop_CircleStyle;
             Cursor.PrimaryColor1 = CursorControl.Prop_PrimaryColor1;
@@ -97,29 +97,30 @@ namespace WinPaletter
             return Cursor;
         }
 
-        public void LoadFromCP(CP CP)
+        public void LoadFromTM(Theme.Manager TM)
         {
-            Toggle1.Checked = CP.Cursor_Enabled;
-            CheckBox9.Checked = CP.Cursor_Shadow;
-            Trackbar2.Value = CP.Cursor_Trails;
-            CheckBox10.Checked = CP.Cursor_Sonar;
-            CursorCP_to_Cursor(Arrow, CP.Cursor_Arrow);
-            CursorCP_to_Cursor(Help, CP.Cursor_Help);
-            CursorCP_to_Cursor(AppLoading, CP.Cursor_AppLoading);
-            CursorCP_to_Cursor(Busy, CP.Cursor_Busy);
-            CursorCP_to_Cursor(Move_Cur, CP.Cursor_Move);
-            CursorCP_to_Cursor(NS, CP.Cursor_NS);
-            CursorCP_to_Cursor(EW, CP.Cursor_EW);
-            CursorCP_to_Cursor(NESW, CP.Cursor_NESW);
-            CursorCP_to_Cursor(NWSE, CP.Cursor_NWSE);
-            CursorCP_to_Cursor(Up, CP.Cursor_Up);
-            CursorCP_to_Cursor(Pen, CP.Cursor_Pen);
-            CursorCP_to_Cursor(None, CP.Cursor_None);
-            CursorCP_to_Cursor(Link, CP.Cursor_Link);
-            CursorCP_to_Cursor(Pin, CP.Cursor_Pin);
-            CursorCP_to_Cursor(Person, CP.Cursor_Person);
-            CursorCP_to_Cursor(IBeam, CP.Cursor_IBeam);
-            CursorCP_to_Cursor(Cross, CP.Cursor_Cross);
+            Toggle1.Checked = TM.Cursor_Enabled;
+            CheckBox9.Checked = TM.Cursor_Shadow;
+            Trackbar2.Value = TM.Cursor_Trails;
+            trails_btn.Text = TM.Cursor_Trails.ToString();
+            CheckBox10.Checked = TM.Cursor_Sonar;
+            CursorTM_to_Cursor(Arrow, TM.Cursor_Arrow);
+            CursorTM_to_Cursor(Help, TM.Cursor_Help);
+            CursorTM_to_Cursor(AppLoading, TM.Cursor_AppLoading);
+            CursorTM_to_Cursor(Busy, TM.Cursor_Busy);
+            CursorTM_to_Cursor(Move_Cur, TM.Cursor_Move);
+            CursorTM_to_Cursor(NS, TM.Cursor_NS);
+            CursorTM_to_Cursor(EW, TM.Cursor_EW);
+            CursorTM_to_Cursor(NESW, TM.Cursor_NESW);
+            CursorTM_to_Cursor(NWSE, TM.Cursor_NWSE);
+            CursorTM_to_Cursor(Up, TM.Cursor_Up);
+            CursorTM_to_Cursor(Pen, TM.Cursor_Pen);
+            CursorTM_to_Cursor(None, TM.Cursor_None);
+            CursorTM_to_Cursor(Link, TM.Cursor_Link);
+            CursorTM_to_Cursor(Pin, TM.Cursor_Pin);
+            CursorTM_to_Cursor(Person, TM.Cursor_Person);
+            CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
+            CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
 
             foreach (CursorControl i in FlowLayoutPanel1.Controls)
             {
@@ -130,36 +131,36 @@ namespace WinPaletter
             }
         }
 
-        public void SaveToCP(CP CP)
+        public void SaveToTM(Theme.Manager TM)
         {
-            CP.Cursor_Enabled = Toggle1.Checked;
-            CP.Cursor_Shadow = CheckBox9.Checked;
-            CP.Cursor_Trails = Trackbar2.Value;
-            CP.Cursor_Sonar = CheckBox10.Checked;
-            CP.Cursor_Arrow = Cursor_to_CursorCP(Arrow);
-            CP.Cursor_Help = Cursor_to_CursorCP(Help);
-            CP.Cursor_AppLoading = Cursor_to_CursorCP(AppLoading);
-            CP.Cursor_Busy = Cursor_to_CursorCP(Busy);
-            CP.Cursor_Move = Cursor_to_CursorCP(Move_Cur);
-            CP.Cursor_NS = Cursor_to_CursorCP(NS);
-            CP.Cursor_EW = Cursor_to_CursorCP(EW);
-            CP.Cursor_NESW = Cursor_to_CursorCP(NESW);
-            CP.Cursor_NWSE = Cursor_to_CursorCP(NWSE);
-            CP.Cursor_Up = Cursor_to_CursorCP(Up);
-            CP.Cursor_Pen = Cursor_to_CursorCP(Pen);
-            CP.Cursor_None = Cursor_to_CursorCP(None);
-            CP.Cursor_Link = Cursor_to_CursorCP(Link);
-            CP.Cursor_Pin = Cursor_to_CursorCP(Pin);
-            CP.Cursor_Person = Cursor_to_CursorCP(Person);
-            CP.Cursor_IBeam = Cursor_to_CursorCP(IBeam);
-            CP.Cursor_Cross = Cursor_to_CursorCP(Cross);
+            TM.Cursor_Enabled = Toggle1.Checked;
+            TM.Cursor_Shadow = CheckBox9.Checked;
+            TM.Cursor_Trails = Trackbar2.Value;
+            TM.Cursor_Sonar = CheckBox10.Checked;
+            TM.Cursor_Arrow = Cursor_to_CursorTM(Arrow);
+            TM.Cursor_Help = Cursor_to_CursorTM(Help);
+            TM.Cursor_AppLoading = Cursor_to_CursorTM(AppLoading);
+            TM.Cursor_Busy = Cursor_to_CursorTM(Busy);
+            TM.Cursor_Move = Cursor_to_CursorTM(Move_Cur);
+            TM.Cursor_NS = Cursor_to_CursorTM(NS);
+            TM.Cursor_EW = Cursor_to_CursorTM(EW);
+            TM.Cursor_NESW = Cursor_to_CursorTM(NESW);
+            TM.Cursor_NWSE = Cursor_to_CursorTM(NWSE);
+            TM.Cursor_Up = Cursor_to_CursorTM(Up);
+            TM.Cursor_Pen = Cursor_to_CursorTM(Pen);
+            TM.Cursor_None = Cursor_to_CursorTM(None);
+            TM.Cursor_Link = Cursor_to_CursorTM(Link);
+            TM.Cursor_Pin = Cursor_to_CursorTM(Pin);
+            TM.Cursor_Person = Cursor_to_CursorTM(Person);
+            TM.Cursor_IBeam = Cursor_to_CursorTM(IBeam);
+            TM.Cursor_Cross = Cursor_to_CursorTM(Cross);
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
-            WPStyle.ApplyStyle(this);
+            ApplyStyle(this);
             FlowLayoutPanel1.DoubleBuffer();
 
             AnimateList.Clear();
@@ -198,7 +199,7 @@ namespace WinPaletter
 
             Button8.Image = MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
 
-            LoadFromCP(My.Env.CP);
+            LoadFromTM(My.Env.TM);
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -817,7 +818,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            SaveToCP(My.Env.CP);
+            SaveToTM(My.Env.TM);
             Close();
         }
 
@@ -825,9 +826,9 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                LoadFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadFromTM(TMx);
+                TMx.Dispose();
 
                 foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
                 {
@@ -843,9 +844,9 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            LoadFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            LoadFromTM(TMx);
+            TMx.Dispose();
 
             foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
             {
@@ -859,9 +860,9 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                LoadFromCP(_Def);
+                LoadFromTM(_Def);
             }
 
             foreach (var x in FlowLayoutPanel1.Controls.OfType<CursorControl>())
@@ -882,12 +883,12 @@ namespace WinPaletter
         private void Button11_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            SaveToCP(CPx);
-            SaveToCP(My.Env.CP);
-            CPx.Apply_Cursors();
-            CPx.Win32.Update_UPM_DEFAULT();
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            SaveToTM(TMx);
+            SaveToTM(My.Env.TM);
+            TMx.Apply_Cursors();
+            TMx.Win32.Update_UPM_DEFAULT();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 

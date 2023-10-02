@@ -57,16 +57,16 @@ namespace WinPaletter
                     System.IO.Directory.Delete(My.Env.PATH_appData, true);
                     if (!My.Env.WXP)
                     {
-                        CP.ResetCursorsToAero();
+                        Theme.Manager.ResetCursorsToAero();
                         if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                            CP.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
+                            Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                     }
 
                     else
                     {
-                        CP.ResetCursorsToNone_XP();
+                        Theme.Manager.ResetCursorsToNone_XP();
                         if (My.Env.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                            CP.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
+                            Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
 
                     }
                 }
@@ -81,18 +81,18 @@ namespace WinPaletter
             {
                 if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    var cpx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                    cpx.Save(CP.CP_Type.Registry);
+                    var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                    TMx.Save(Theme.Manager.Source.Registry);
                     if (My.Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                         RestartExplorer();
-                    cpx.Dispose();
+                    TMx.Dispose();
                 }
             }
             else if (RadioImage3.Checked)
             {
-                using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
                 {
-                    _Def.Save(CP.CP_Type.Registry);
+                    _Def.Save(Theme.Manager.Source.Registry);
                     if (My.Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                         RestartExplorer();
                 }

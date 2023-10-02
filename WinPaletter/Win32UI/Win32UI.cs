@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -29,9 +27,9 @@ namespace WinPaletter
         {
             ComboBox1.PopulateThemes();
             ComboBox1.SelectedIndex = 0;
-            ApplyDefaultCPValues();
-            LoadCP(My.Env.CP);
-            SetMetrics(My.Env.CP);
+            ApplyDefaultTMValues();
+            LoadTM(My.Env.TM);
+            SetMetrics(My.Env.TM);
             this.DoubleBuffer();
 
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
@@ -68,164 +66,164 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void LoadCP(CP CP)
+        public void LoadTM(Theme.Manager TM)
         {
-            ApplyCPValues(CP);
+            LoadFromTM(TM);
             ApplyRetroPreview();
         }
 
-        public void ApplyCPValues(CP CP)
+        public void LoadFromTM(Theme.Manager TM)
         {
-            Toggle1.Checked = CP.Win32.EnableTheming;
-            Toggle2.Checked = CP.Win32.EnableGradient;
-            ActiveBorder_pick.BackColor = CP.Win32.ActiveBorder;
-            activetitle_pick.BackColor = CP.Win32.ActiveTitle;
-            AppWorkspace_pick.BackColor = CP.Win32.AppWorkspace;
-            background_pick.BackColor = CP.Win32.Background;
-            btnaltface_pick.BackColor = CP.Win32.ButtonAlternateFace;
-            btndkshadow_pick.BackColor = CP.Win32.ButtonDkShadow;
-            btnface_pick.BackColor = CP.Win32.ButtonFace;
-            btnhilight_pick.BackColor = CP.Win32.ButtonHilight;
-            btnlight_pick.BackColor = CP.Win32.ButtonLight;
-            btnshadow_pick.BackColor = CP.Win32.ButtonShadow;
-            btntext_pick.BackColor = CP.Win32.ButtonText;
-            GActivetitle_pick.BackColor = CP.Win32.GradientActiveTitle;
-            GInactivetitle_pick.BackColor = CP.Win32.GradientInactiveTitle;
-            GrayText_pick.BackColor = CP.Win32.GrayText;
-            hilighttext_pick.BackColor = CP.Win32.HilightText;
-            hottracking_pick.BackColor = CP.Win32.HotTrackingColor;
-            InactiveBorder_pick.BackColor = CP.Win32.InactiveBorder;
-            InactiveTitle_pick.BackColor = CP.Win32.InactiveTitle;
-            InactivetitleText_pick.BackColor = CP.Win32.InactiveTitleText;
-            InfoText_pick.BackColor = CP.Win32.InfoText;
-            InfoWindow_pick.BackColor = CP.Win32.InfoWindow;
-            menu_pick.BackColor = CP.Win32.Menu;
-            menubar_pick.BackColor = CP.Win32.MenuBar;
-            menutext_pick.BackColor = CP.Win32.MenuText;
-            Scrollbar_pick.BackColor = CP.Win32.Scrollbar;
-            TitleText_pick.BackColor = CP.Win32.TitleText;
-            Window_pick.BackColor = CP.Win32.Window;
-            Frame_pick.BackColor = CP.Win32.WindowFrame;
-            WindowText_pick.BackColor = CP.Win32.WindowText;
-            hilight_pick.BackColor = CP.Win32.Hilight;
-            menuhilight_pick.BackColor = CP.Win32.MenuHilight;
-            desktop_pick.BackColor = CP.Win32.Desktop;
+            Toggle1.Checked = TM.Win32.EnableTheming;
+            Toggle2.Checked = TM.Win32.EnableGradient;
+            ActiveBorder_pick.BackColor = TM.Win32.ActiveBorder;
+            activetitle_pick.BackColor = TM.Win32.ActiveTitle;
+            AppWorkspace_pick.BackColor = TM.Win32.AppWorkspace;
+            background_pick.BackColor = TM.Win32.Background;
+            btnaltface_pick.BackColor = TM.Win32.ButtonAlternateFace;
+            btndkshadow_pick.BackColor = TM.Win32.ButtonDkShadow;
+            btnface_pick.BackColor = TM.Win32.ButtonFace;
+            btnhilight_pick.BackColor = TM.Win32.ButtonHilight;
+            btnlight_pick.BackColor = TM.Win32.ButtonLight;
+            btnshadow_pick.BackColor = TM.Win32.ButtonShadow;
+            btntext_pick.BackColor = TM.Win32.ButtonText;
+            GActivetitle_pick.BackColor = TM.Win32.GradientActiveTitle;
+            GInactivetitle_pick.BackColor = TM.Win32.GradientInactiveTitle;
+            GrayText_pick.BackColor = TM.Win32.GrayText;
+            hilighttext_pick.BackColor = TM.Win32.HilightText;
+            hottracking_pick.BackColor = TM.Win32.HotTrackingColor;
+            InactiveBorder_pick.BackColor = TM.Win32.InactiveBorder;
+            InactiveTitle_pick.BackColor = TM.Win32.InactiveTitle;
+            InactivetitleText_pick.BackColor = TM.Win32.InactiveTitleText;
+            InfoText_pick.BackColor = TM.Win32.InfoText;
+            InfoWindow_pick.BackColor = TM.Win32.InfoWindow;
+            menu_pick.BackColor = TM.Win32.Menu;
+            menubar_pick.BackColor = TM.Win32.MenuBar;
+            menutext_pick.BackColor = TM.Win32.MenuText;
+            Scrollbar_pick.BackColor = TM.Win32.Scrollbar;
+            TitleText_pick.BackColor = TM.Win32.TitleText;
+            Window_pick.BackColor = TM.Win32.Window;
+            Frame_pick.BackColor = TM.Win32.WindowFrame;
+            WindowText_pick.BackColor = TM.Win32.WindowText;
+            hilight_pick.BackColor = TM.Win32.Hilight;
+            menuhilight_pick.BackColor = TM.Win32.MenuHilight;
+            desktop_pick.BackColor = TM.Win32.Desktop;
         }
 
-        public void ApplyDefaultCPValues()
+        public void ApplyDefaultTMValues()
         {
-            CP DefCP;
+            Theme.Manager DefTM;
 
             if (My.Env.W11)
             {
-                DefCP = new CP_Defaults().Default_Windows11();
+                DefTM = new Theme.Default().Windows11();
             }
             else if (My.Env.W10)
             {
-                DefCP = new CP_Defaults().Default_Windows10();
+                DefTM = new Theme.Default().Windows10();
             }
             else if (My.Env.W81)
             {
-                DefCP = new CP_Defaults().Default_Windows81();
+                DefTM = new Theme.Default().Windows81();
             }
             else if (My.Env.W7)
             {
-                DefCP = new CP_Defaults().Default_Windows7();
+                DefTM = new Theme.Default().Windows7();
             }
             else if (My.Env.WVista)
             {
-                DefCP = new CP_Defaults().Default_WindowsVista();
+                DefTM = new Theme.Default().WindowsVista();
             }
             else if (My.Env.WXP)
             {
-                DefCP = new CP_Defaults().Default_WindowsXP();
+                DefTM = new Theme.Default().WindowsXP();
             }
             else
             {
-                DefCP = new CP_Defaults().Default_Windows11();
+                DefTM = new Theme.Default().Windows11();
             }
 
-            ActiveBorder_pick.DefaultColor = DefCP.Win32.ActiveBorder;
-            activetitle_pick.DefaultColor = DefCP.Win32.ActiveTitle;
-            AppWorkspace_pick.DefaultColor = DefCP.Win32.AppWorkspace;
-            background_pick.DefaultColor = DefCP.Win32.Background;
-            btnaltface_pick.DefaultColor = DefCP.Win32.ButtonAlternateFace;
-            btndkshadow_pick.DefaultColor = DefCP.Win32.ButtonDkShadow;
-            btnface_pick.DefaultColor = DefCP.Win32.ButtonFace;
-            btnhilight_pick.DefaultColor = DefCP.Win32.ButtonHilight;
-            btnlight_pick.DefaultColor = DefCP.Win32.ButtonLight;
-            btnshadow_pick.DefaultColor = DefCP.Win32.ButtonShadow;
-            btntext_pick.DefaultColor = DefCP.Win32.ButtonText;
-            GActivetitle_pick.DefaultColor = DefCP.Win32.GradientActiveTitle;
-            GInactivetitle_pick.DefaultColor = DefCP.Win32.GradientInactiveTitle;
-            GrayText_pick.DefaultColor = DefCP.Win32.GrayText;
-            hilighttext_pick.DefaultColor = DefCP.Win32.HilightText;
-            hottracking_pick.DefaultColor = DefCP.Win32.HotTrackingColor;
-            InactiveBorder_pick.DefaultColor = DefCP.Win32.InactiveBorder;
-            InactiveTitle_pick.DefaultColor = DefCP.Win32.InactiveTitle;
-            InactivetitleText_pick.DefaultColor = DefCP.Win32.InactiveTitleText;
-            InfoText_pick.DefaultColor = DefCP.Win32.InfoText;
-            InfoWindow_pick.DefaultColor = DefCP.Win32.InfoWindow;
-            menu_pick.DefaultColor = DefCP.Win32.Menu;
-            menubar_pick.DefaultColor = DefCP.Win32.MenuBar;
-            menutext_pick.DefaultColor = DefCP.Win32.MenuText;
-            Scrollbar_pick.DefaultColor = DefCP.Win32.Scrollbar;
-            TitleText_pick.DefaultColor = DefCP.Win32.TitleText;
-            Window_pick.DefaultColor = DefCP.Win32.Window;
-            Frame_pick.DefaultColor = DefCP.Win32.WindowFrame;
-            WindowText_pick.DefaultColor = DefCP.Win32.WindowText;
-            hilight_pick.DefaultColor = DefCP.Win32.Hilight;
-            menuhilight_pick.DefaultColor = DefCP.Win32.MenuHilight;
-            desktop_pick.DefaultColor = DefCP.Win32.Desktop;
+            ActiveBorder_pick.DefaultColor = DefTM.Win32.ActiveBorder;
+            activetitle_pick.DefaultColor = DefTM.Win32.ActiveTitle;
+            AppWorkspace_pick.DefaultColor = DefTM.Win32.AppWorkspace;
+            background_pick.DefaultColor = DefTM.Win32.Background;
+            btnaltface_pick.DefaultColor = DefTM.Win32.ButtonAlternateFace;
+            btndkshadow_pick.DefaultColor = DefTM.Win32.ButtonDkShadow;
+            btnface_pick.DefaultColor = DefTM.Win32.ButtonFace;
+            btnhilight_pick.DefaultColor = DefTM.Win32.ButtonHilight;
+            btnlight_pick.DefaultColor = DefTM.Win32.ButtonLight;
+            btnshadow_pick.DefaultColor = DefTM.Win32.ButtonShadow;
+            btntext_pick.DefaultColor = DefTM.Win32.ButtonText;
+            GActivetitle_pick.DefaultColor = DefTM.Win32.GradientActiveTitle;
+            GInactivetitle_pick.DefaultColor = DefTM.Win32.GradientInactiveTitle;
+            GrayText_pick.DefaultColor = DefTM.Win32.GrayText;
+            hilighttext_pick.DefaultColor = DefTM.Win32.HilightText;
+            hottracking_pick.DefaultColor = DefTM.Win32.HotTrackingColor;
+            InactiveBorder_pick.DefaultColor = DefTM.Win32.InactiveBorder;
+            InactiveTitle_pick.DefaultColor = DefTM.Win32.InactiveTitle;
+            InactivetitleText_pick.DefaultColor = DefTM.Win32.InactiveTitleText;
+            InfoText_pick.DefaultColor = DefTM.Win32.InfoText;
+            InfoWindow_pick.DefaultColor = DefTM.Win32.InfoWindow;
+            menu_pick.DefaultColor = DefTM.Win32.Menu;
+            menubar_pick.DefaultColor = DefTM.Win32.MenuBar;
+            menutext_pick.DefaultColor = DefTM.Win32.MenuText;
+            Scrollbar_pick.DefaultColor = DefTM.Win32.Scrollbar;
+            TitleText_pick.DefaultColor = DefTM.Win32.TitleText;
+            Window_pick.DefaultColor = DefTM.Win32.Window;
+            Frame_pick.DefaultColor = DefTM.Win32.WindowFrame;
+            WindowText_pick.DefaultColor = DefTM.Win32.WindowText;
+            hilight_pick.DefaultColor = DefTM.Win32.Hilight;
+            menuhilight_pick.DefaultColor = DefTM.Win32.MenuHilight;
+            desktop_pick.DefaultColor = DefTM.Win32.Desktop;
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
-            CP.Win32.EnableTheming = Toggle1.Checked;
-            CP.Win32.EnableGradient = Toggle2.Checked;
-            CP.Win32.ActiveBorder = ActiveBorder_pick.BackColor;
-            CP.Win32.ActiveTitle = activetitle_pick.BackColor;
-            CP.Win32.AppWorkspace = AppWorkspace_pick.BackColor;
-            CP.Win32.Background = background_pick.BackColor;
-            CP.Win32.ButtonAlternateFace = btnaltface_pick.BackColor;
-            CP.Win32.ButtonDkShadow = btndkshadow_pick.BackColor;
-            CP.Win32.ButtonFace = btnface_pick.BackColor;
-            CP.Win32.ButtonHilight = btnhilight_pick.BackColor;
-            CP.Win32.ButtonLight = btnlight_pick.BackColor;
-            CP.Win32.ButtonShadow = btnshadow_pick.BackColor;
-            CP.Win32.ButtonText = btntext_pick.BackColor;
-            CP.Win32.GradientActiveTitle = GActivetitle_pick.BackColor;
-            CP.Win32.GradientInactiveTitle = GInactivetitle_pick.BackColor;
-            CP.Win32.GrayText = GrayText_pick.BackColor;
-            CP.Win32.HilightText = hilighttext_pick.BackColor;
-            CP.Win32.HotTrackingColor = hottracking_pick.BackColor;
-            CP.Win32.InactiveBorder = InactiveBorder_pick.BackColor;
-            CP.Win32.InactiveTitle = InactiveTitle_pick.BackColor;
-            CP.Win32.InactiveTitleText = InactivetitleText_pick.BackColor;
-            CP.Win32.InfoText = InfoText_pick.BackColor;
-            CP.Win32.InfoWindow = InfoWindow_pick.BackColor;
-            CP.Win32.Menu = menu_pick.BackColor;
-            CP.Win32.MenuBar = menubar_pick.BackColor;
-            CP.Win32.MenuText = menutext_pick.BackColor;
-            CP.Win32.Scrollbar = Scrollbar_pick.BackColor;
-            CP.Win32.TitleText = TitleText_pick.BackColor;
-            CP.Win32.Window = Window_pick.BackColor;
-            CP.Win32.WindowFrame = Frame_pick.BackColor;
-            CP.Win32.WindowText = WindowText_pick.BackColor;
-            CP.Win32.Hilight = hilight_pick.BackColor;
-            CP.Win32.MenuHilight = menuhilight_pick.BackColor;
-            CP.Win32.Desktop = desktop_pick.BackColor;
+            TM.Win32.EnableTheming = Toggle1.Checked;
+            TM.Win32.EnableGradient = Toggle2.Checked;
+            TM.Win32.ActiveBorder = ActiveBorder_pick.BackColor;
+            TM.Win32.ActiveTitle = activetitle_pick.BackColor;
+            TM.Win32.AppWorkspace = AppWorkspace_pick.BackColor;
+            TM.Win32.Background = background_pick.BackColor;
+            TM.Win32.ButtonAlternateFace = btnaltface_pick.BackColor;
+            TM.Win32.ButtonDkShadow = btndkshadow_pick.BackColor;
+            TM.Win32.ButtonFace = btnface_pick.BackColor;
+            TM.Win32.ButtonHilight = btnhilight_pick.BackColor;
+            TM.Win32.ButtonLight = btnlight_pick.BackColor;
+            TM.Win32.ButtonShadow = btnshadow_pick.BackColor;
+            TM.Win32.ButtonText = btntext_pick.BackColor;
+            TM.Win32.GradientActiveTitle = GActivetitle_pick.BackColor;
+            TM.Win32.GradientInactiveTitle = GInactivetitle_pick.BackColor;
+            TM.Win32.GrayText = GrayText_pick.BackColor;
+            TM.Win32.HilightText = hilighttext_pick.BackColor;
+            TM.Win32.HotTrackingColor = hottracking_pick.BackColor;
+            TM.Win32.InactiveBorder = InactiveBorder_pick.BackColor;
+            TM.Win32.InactiveTitle = InactiveTitle_pick.BackColor;
+            TM.Win32.InactiveTitleText = InactivetitleText_pick.BackColor;
+            TM.Win32.InfoText = InfoText_pick.BackColor;
+            TM.Win32.InfoWindow = InfoWindow_pick.BackColor;
+            TM.Win32.Menu = menu_pick.BackColor;
+            TM.Win32.MenuBar = menubar_pick.BackColor;
+            TM.Win32.MenuText = menutext_pick.BackColor;
+            TM.Win32.Scrollbar = Scrollbar_pick.BackColor;
+            TM.Win32.TitleText = TitleText_pick.BackColor;
+            TM.Win32.Window = Window_pick.BackColor;
+            TM.Win32.WindowFrame = Frame_pick.BackColor;
+            TM.Win32.WindowText = WindowText_pick.BackColor;
+            TM.Win32.Hilight = hilight_pick.BackColor;
+            TM.Win32.MenuHilight = menuhilight_pick.BackColor;
+            TM.Win32.Desktop = desktop_pick.BackColor;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
-            SetClassicWindowColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicTaskbar);
+            ApplyToTM(My.Env.TM);
+            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR2);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR3);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR4);
+            SetClassicPanelRaisedRColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicTaskbar);
             Close();
         }
 
@@ -847,7 +845,7 @@ namespace WinPaletter
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
                 Toggle1.Checked = false;
-                using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
                 {
                     LoadFromWin9xTheme(OpenThemeDialog.FileName, _Def.Win32);
                 }
@@ -855,7 +853,7 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromWin9xTheme(string File, CP.Structures.Win32UI _DefWin32)
+        public void LoadFromWin9xTheme(string File, Theme.Structures.Win32UI _DefWin32)
         {
             if (System.IO.File.Exists(File))
             {
@@ -1061,55 +1059,55 @@ namespace WinPaletter
             ApplyRetroPreview();
         }
 
-        public void SetMetrics(CP CP)
+        public void SetMetrics(Theme.Manager TM)
         {
-            PanelR2.Width = CP.MetricsFonts.ScrollWidth;
-            menucontainer0.Height = CP.MetricsFonts.MenuHeight;
+            PanelR2.Width = TM.MetricsFonts.ScrollWidth;
+            menucontainer0.Height = TM.MetricsFonts.MenuHeight;
 
-            menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont));
+            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
 
-            LabelR1.Font = CP.MetricsFonts.MenuFont;
-            LabelR2.Font = CP.MetricsFonts.MenuFont;
-            LabelR3.Font = CP.MetricsFonts.MenuFont;
+            LabelR1.Font = TM.MetricsFonts.MenuFont;
+            LabelR2.Font = TM.MetricsFonts.MenuFont;
+            LabelR3.Font = TM.MetricsFonts.MenuFont;
 
-            LabelR9.Font = CP.MetricsFonts.MenuFont;
-            LabelR5.Font = CP.MetricsFonts.MenuFont;
-            LabelR6.Font = CP.MetricsFonts.MenuFont;
+            LabelR9.Font = TM.MetricsFonts.MenuFont;
+            LabelR5.Font = TM.MetricsFonts.MenuFont;
+            LabelR6.Font = TM.MetricsFonts.MenuFont;
 
-            menucontainer1.Height = My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3;
+            menucontainer1.Height = My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
             highlight.Height = menucontainer1.Height + 1;
             menucontainer3.Height = menucontainer1.Height + 1;
             Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom;
 
-            LabelR4.Font = CP.MetricsFonts.MessageFont;
+            LabelR4.Font = TM.MetricsFonts.MessageFont;
 
-            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f);
-            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f);
-            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
+            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
+            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
+            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
 
             int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(CP.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
+            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(TM.MetricsFonts.CaptionFont).Height);
+            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(TM.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
             TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
 
-            int iP = 3 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth;
-            int iT = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum;
+            int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
+            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + TitleTextH_Sum;
             var _Padding = new Padding(iP, iT, iP, iP);
 
             foreach (WindowR WindowR in pnl_preview.GetAllControls().OfType<WindowR>())
             {
                 if (!WindowR.UseItAsMenu)
                 {
-                    SetClassicWindowMetrics(CP, WindowR);
+                    SetClassicWindowMetrics(TM, WindowR);
                     WindowR.Padding = _Padding;
                 }
             }
 
-            WindowR3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
-            WindowR2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + CP.MetricsFonts.MenuHeight;
+            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
+            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + TM.MetricsFonts.MenuHeight;
 
             Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
-            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth);
+            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);
 
             WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10;
             WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15;
@@ -1117,10 +1115,10 @@ namespace WinPaletter
             LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2;
             LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2;
 
-            RetroShadow1.Visible = CP.WindowsEffects.WindowShadow;
+            RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
 
-            ButtonR1.FocusRectWidth = (int)CP.WindowsEffects.FocusRectWidth;
-            ButtonR1.FocusRectHeight = (int)CP.WindowsEffects.FocusRectHeight;
+            ButtonR1.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
+            ButtonR1.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
             ButtonR1.Refresh();
         }
 
@@ -1232,7 +1230,7 @@ namespace WinPaletter
             LabelR2.ForeColor = GrayText_pick.BackColor;
 
             LabelR9.ForeColor = GrayText_pick.BackColor;
-  
+
             LabelR4.ForeColor = WindowText_pick.BackColor;
 
             LabelR13.BackColor = InfoWindow_pick.BackColor;
@@ -1260,11 +1258,11 @@ namespace WinPaletter
                 PanelR1.ButtonShadow = hilight_pick.BackColor;
 
                 menuhilight.BackColor = menuhilight_pick.BackColor;  // Filling of selected item
-                
+
                 highlight.BackColor = hilight_pick.BackColor;        // Outer Border of selected item
 
                 menucontainer0.BackColor = menubar_pick.BackColor;
-                
+
                 LabelR3.ForeColor = hilighttext_pick.BackColor;
             }
             else
@@ -1276,11 +1274,11 @@ namespace WinPaletter
                 PanelR1.ButtonShadow = btnshadow_pick.BackColor;
 
                 menuhilight.BackColor = hilight_pick.BackColor;      // Both will have same color
-                
+
                 highlight.BackColor = hilight_pick.BackColor;        // Both will have same color
-                
+
                 menucontainer0.BackColor = menu_pick.BackColor;
-               
+
                 LabelR3.ForeColor = menutext_pick.BackColor;
             }
 
@@ -1294,17 +1292,17 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var cpx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                LoadCP(cpx);
-                cpx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                LoadTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            var cpx = new CP(CP.CP_Type.Registry);
-            LoadCP(cpx);
-            cpx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            LoadTM(TMx);
+            TMx.Dispose();
         }
 
         private void Toggle2_CheckedChanged(object sender, EventArgs e)
@@ -1323,26 +1321,26 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
 
-            SetClassicWindowColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR2);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR3);
-            SetClassicButtonColors(My.Env.CP, My.MyProject.Forms.MainFrm.ButtonR4);
-            SetClassicPanelRaisedRColors(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicTaskbar);
+            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2, false);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR2);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR3);
+            SetClassicButtonColors(My.Env.TM, My.MyProject.Forms.MainFrm.ButtonR4);
+            SetClassicPanelRaisedRColors(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicTaskbar);
 
             try
             {
-                CPx.Win32.Apply();
-                CPx.Win32.Update_UPM_DEFAULT();
+                TMx.Win32.Apply();
+                TMx.Win32.Update_UPM_DEFAULT();
             }
             catch
             {
             }
-            CPx.Dispose();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
@@ -1354,10 +1352,10 @@ namespace WinPaletter
                 s.Clear();
                 s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_Copyrights, DateTime.Now.Year));
                 s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ProgrammedBy, My.MyProject.Application.Info.CompanyName));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedFromAppVer, My.Env.CP.Info.AppVersion));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedBy, My.Env.CP.Info.Author));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeName, My.Env.CP.Info.ThemeName));
-                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeVersion, My.Env.CP.Info.ThemeVersion));
+                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedFromAppVer, My.Env.TM.Info.AppVersion));
+                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_CreatedBy, My.Env.TM.Info.Author));
+                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeName, My.Env.TM.Info.ThemeName));
+                s.Add("; " + string.Format(My.Env.Lang.OldMSTheme_ThemeVersion, My.Env.TM.Info.ThemeVersion));
                 s.Add("");
 
                 s.Add(string.Format(@"[Control Panel\Colors]"));

@@ -1,5 +1,4 @@
 ﻿using Devcorp.Controls.VisualStyles;
-using Microsoft.VisualBasic;
 using System;
 using System.IO;
 using System.Windows.Forms;

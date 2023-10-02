@@ -45,7 +45,8 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,6 +56,7 @@
     <DocumentationFile>bin\Release\WinPaletter.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -96,10 +98,6 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Animator">
       <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Animator.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AnimCur">
-      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\AnimCur.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Cyotek.Windows.Forms.ColorPicker">
@@ -245,6 +243,33 @@
     <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Assemblies\AnimatedCursors\BitmapOps.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\EOANIWriter.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurLoader.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\OffsetStream.cs" />
+    <Compile Include="Classes\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Theme\Structures\Others\AltTab.cs" />
+    <Compile Include="Theme\Structures\WinPaletter\AppTheme.cs" />
+    <Compile Include="Theme\Structures\Consoles\Console.cs" />
+    <Compile Include="Theme\Structures\Others\Cursor.cs" />
+    <Compile Include="Theme\Structures\WinPaletter\Info.cs" />
+    <Compile Include="Theme\Structures\LogonUI\LogonUI10x.cs" />
+    <Compile Include="Theme\Structures\LogonUI\LogonUI7.cs" />
+    <Compile Include="Theme\Structures\LogonUI\LogonUIXP.cs" />
+    <Compile Include="Theme\Structures\Others\MetricsFonts.cs" />
+    <Compile Include="Theme\Structures\Others\ScreenSaver.cs" />
+    <Compile Include="Theme\Structures\Others\Sounds.cs" />
+    <Compile Include="Theme\Structures\Wallpaper\Wallpaper.cs" />
+    <Compile Include="Theme\Structures\Wallpaper\WallpaperTone.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Win32UI.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows10x.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows7.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows8x.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\WindowsVista.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\WindowsXP.cs" />
+    <Compile Include="Theme\Structures\Others\WinEffects.cs" />
     <Compile Include="GlobalUsings.cs" />
     <Compile Include="ColorItemControllers\ColorInfoDragDrop.Designer.cs">
       <DependentUpon>ColorInfoDragDrop.cs</DependentUpon>
@@ -275,7 +300,7 @@
     </Compile>
     <Compile Include="Converter\Converter.cs" />
     <Compile Include="Converter\Converter_WT.cs" />
-    <Compile Include="CP\PreviewHelpers.cs" />
+    <Compile Include="Theme\PreviewHelpers.cs" />
     <Compile Include="Extras\AltTabEditor.Designer.cs">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
     </Compile>
@@ -499,8 +524,8 @@
     <Compile Include="ColorItemControllers\SubMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CP\CP.cs" />
-    <Compile Include="CP\CP_Defaults.cs" />
+    <Compile Include="Theme\Manager.cs" />
+    <Compile Include="Theme\Default.cs" />
     <Compile Include="CursorsStudio\CursorsCustomizer.cs" />
     <Compile Include="CursorsStudio\CursorsStudio.Designer.cs">
       <DependentUpon>CursorsStudio.cs</DependentUpon>
@@ -705,7 +730,7 @@
     <Compile Include="Terminals\WindowsTerminalDecide.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Terminals\WinTerminal.cs" />
+    <Compile Include="Theme\Structures\Consoles\WinTerminal.cs" />
     <Compile Include="Updates\Updates.Designer.cs">
       <DependentUpon>Updates.cs</DependentUpon>
     </Compile>
@@ -950,6 +975,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Converter\Converter_Form.resx">
       <DependentUpon>Converter_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Extras\AltTabEditor.resx">
       <DependentUpon>AltTabEditor.cs</DependentUpon>
@@ -1039,12 +1065,14 @@
       <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>WinPaletter.My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
       <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromImage.resx">
       <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateDashboard.resx">
       <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>

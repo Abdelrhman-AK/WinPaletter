@@ -21,22 +21,22 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromCP(My.Env.CP);
-            SetClassicButtonColors(My.Env.CP, ButtonR1);
+            ApplyFromTM(My.Env.TM);
+            SetClassicButtonColors(My.Env.TM, ButtonR1);
 
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.WindowsEffects;
+                ref var temp = ref TM.WindowsEffects;
                 EffectsEnabled.Checked = temp.Enabled;
                 CheckBox1.Checked = temp.WindowAnimation;
                 CheckBox2.Checked = temp.WindowShadow;
                 CheckBox3.Checked = temp.WindowUIEffects;
                 CheckBox6.Checked = temp.MenuAnimation;
                 CheckBox27.Checked = temp.AnimateControlsInsideWindow;
-                if (temp.MenuFade == CP.Structures.WinEffects.MenuAnimType.Fade)
+                if (temp.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade)
                     ComboBox1.SelectedIndex = 0;
                 else
                     ComboBox1.SelectedIndex = 1;
@@ -45,7 +45,7 @@ namespace WinPaletter
                 CheckBox8.Checked = temp.ComboBoxAnimation;
                 CheckBox7.Checked = temp.ListBoxSmoothScrolling;
                 CheckBox9.Checked = temp.TooltipAnimation;
-                if (temp.TooltipFade == CP.Structures.WinEffects.MenuAnimType.Fade)
+                if (temp.TooltipFade == Theme.Structures.WinEffects.MenuAnimType.Fade)
                     ComboBox2.SelectedIndex = 0;
                 else
                     ComboBox2.SelectedIndex = 1;
@@ -70,9 +70,9 @@ namespace WinPaletter
                 CheckBox22.Checked = temp.Win11BootDots;
                 CheckBox26.Checked = temp.ClassicVolMixer;
 
-                RadioButton1.Checked = temp.Win11ExplorerBar == CP.Structures.WinEffects.ExplorerBar.Default;
-                RadioButton2.Checked = temp.Win11ExplorerBar == CP.Structures.WinEffects.ExplorerBar.Ribbon;
-                RadioButton3.Checked = temp.Win11ExplorerBar == CP.Structures.WinEffects.ExplorerBar.Bar;
+                RadioButton1.Checked = temp.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Default;
+                RadioButton2.Checked = temp.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Ribbon;
+                RadioButton3.Checked = temp.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Bar;
                 CheckBox23.Checked = temp.DisableNavBar;
                 CheckBox24.Checked = temp.AutoHideScrollBars;
                 CheckBox25.Checked = temp.FullScreenStartMenu;
@@ -85,37 +85,37 @@ namespace WinPaletter
                 {
                     switch (temp.ColorFilter)
                     {
-                        case CP.Structures.WinEffects.ColorFilters.Grayscale:
+                        case Theme.Structures.WinEffects.ColorFilters.Grayscale:
                             {
                                 RadioImage5.Checked = true;
                                 break;
                             }
 
-                        case CP.Structures.WinEffects.ColorFilters.Inverted:
+                        case Theme.Structures.WinEffects.ColorFilters.Inverted:
                             {
                                 RadioImage7.Checked = true;
                                 break;
                             }
 
-                        case CP.Structures.WinEffects.ColorFilters.GrayscaleInverted:
+                        case Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted:
                             {
                                 RadioImage6.Checked = true;
                                 break;
                             }
 
-                        case CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia:
+                        case Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia:
                             {
                                 RadioImage2.Checked = true;
                                 break;
                             }
 
-                        case CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia:
+                        case Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia:
                             {
                                 RadioImage3.Checked = true;
                                 break;
                             }
 
-                        case CP.Structures.WinEffects.ColorFilters.BlueYellow:
+                        case Theme.Structures.WinEffects.ColorFilters.BlueYellow:
                             {
                                 RadioImage4.Checked = true;
                                 break;
@@ -136,10 +136,10 @@ namespace WinPaletter
 
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.WindowsEffects;
+                ref var temp = ref TM.WindowsEffects;
                 temp.Enabled = EffectsEnabled.Checked;
                 temp.WindowAnimation = CheckBox1.Checked;
                 temp.WindowShadow = CheckBox2.Checked;
@@ -147,18 +147,18 @@ namespace WinPaletter
                 temp.AnimateControlsInsideWindow = CheckBox27.Checked;
                 temp.MenuAnimation = CheckBox6.Checked;
                 if (ComboBox1.SelectedIndex == 0)
-                    temp.MenuFade = CP.Structures.WinEffects.MenuAnimType.Fade;
+                    temp.MenuFade = Theme.Structures.WinEffects.MenuAnimType.Fade;
                 else
-                    temp.MenuFade = CP.Structures.WinEffects.MenuAnimType.Scroll;
+                    temp.MenuFade = Theme.Structures.WinEffects.MenuAnimType.Scroll;
                 temp.MenuSelectionFade = CheckBox5.Checked;
                 temp.MenuShowDelay = (uint)Trackbar1.Value;
                 temp.ComboBoxAnimation = CheckBox8.Checked;
                 temp.ListBoxSmoothScrolling = CheckBox7.Checked;
                 temp.TooltipAnimation = CheckBox9.Checked;
                 if (ComboBox2.SelectedIndex == 0)
-                    temp.TooltipFade = CP.Structures.WinEffects.MenuAnimType.Fade;
+                    temp.TooltipFade = Theme.Structures.WinEffects.MenuAnimType.Fade;
                 else
-                    temp.TooltipFade = CP.Structures.WinEffects.MenuAnimType.Scroll;
+                    temp.TooltipFade = Theme.Structures.WinEffects.MenuAnimType.Scroll;
                 temp.IconsShadow = CheckBox4.Checked;
                 temp.IconsDesktopTranslSel = CheckBox10.Checked;
                 temp.ShowWinContentDrag = CheckBox11.Checked;
@@ -182,17 +182,17 @@ namespace WinPaletter
 
                 if (RadioButton1.Checked)
                 {
-                    temp.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Default;
+                    temp.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Default;
                 }
 
                 else if (RadioButton2.Checked)
                 {
-                    temp.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Ribbon;
+                    temp.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Ribbon;
                 }
 
                 else if (RadioButton3.Checked)
                 {
-                    temp.Win11ExplorerBar = CP.Structures.WinEffects.ExplorerBar.Bar;
+                    temp.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Bar;
 
                 }
 
@@ -208,37 +208,37 @@ namespace WinPaletter
                 else if (RadioImage5.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.Grayscale;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Grayscale;
                 }
 
                 else if (RadioImage7.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.Inverted;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Inverted;
                 }
 
                 else if (RadioImage6.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.GrayscaleInverted;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted;
                 }
 
                 else if (RadioImage2.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia;
                 }
 
                 else if (RadioImage3.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.RedGreen_protanopia;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia;
                 }
 
                 else if (RadioImage4.Checked)
                 {
                     temp.ColorFilter_Enabled = true;
-                    temp.ColorFilter = CP.Structures.WinEffects.ColorFilters.BlueYellow;
+                    temp.ColorFilter = Theme.Structures.WinEffects.ColorFilters.BlueYellow;
 
                 }
 
@@ -249,24 +249,24 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
@@ -278,22 +278,22 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            My.MyProject.Forms.MainFrm.ApplyColorsToElements(CPx);
-            CPx.WindowsEffects.Apply();
-            CPx.Win32.Update_UPM_DEFAULT();
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            My.MyProject.Forms.MainFrm.ApplyColorsToElements(TMx);
+            TMx.WindowsEffects.Apply();
+            TMx.Win32.Update_UPM_DEFAULT();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            ApplyToCP(My.Env.CP);
-            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
-            My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.CP, false);
+            ApplyToTM(My.Env.TM);
+            My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
+            My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM, false);
             Cursor = Cursors.Default;
             Close();
         }

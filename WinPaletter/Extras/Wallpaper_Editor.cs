@@ -19,7 +19,7 @@ namespace WinPaletter
     public partial class Wallpaper_Editor
     {
 
-        public CP.Structures.WallpaperTone WT = new CP.Structures.WallpaperTone();
+        public Theme.Structures.WallpaperTone WT = new Theme.Structures.WallpaperTone();
         private Bitmap img, img_filled, img_tile;
         private Bitmap img_untouched_forTint, img_tinted, img_tinted_filled, img_tinted_tile;
 
@@ -37,7 +37,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
             index = 0;
             ApplyPreviewStyle();
 
@@ -97,10 +97,10 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.Wallpaper;
+                ref var temp = ref TM.Wallpaper;
                 WallpaperEnabled.Checked = temp.Enabled;
                 RadioButton1.Checked = temp.SlideShow_Folder_or_ImagesList;
                 RadioButton2.Checked = !temp.SlideShow_Folder_or_ImagesList;
@@ -114,17 +114,17 @@ namespace WinPaletter
                     switch (temp.WallpaperType)
                     {
 
-                        case CP.Structures.Wallpaper.WallpaperTypes.Picture:
+                        case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
                             {
                                 source_pic.Checked = true;
                                 break;
                             }
-                        case CP.Structures.Wallpaper.WallpaperTypes.SolidColor:
+                        case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
                             {
                                 source_color.Checked = true;
                                 break;
                             }
-                        case CP.Structures.Wallpaper.WallpaperTypes.SlideShow:
+                        case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
                             {
                                 source_slideshow.Checked = true;
                                 break;
@@ -141,27 +141,27 @@ namespace WinPaletter
                 TextBox1.Text = temp.ImageFile;
                 switch (temp.WallpaperStyle)
                 {
-                    case CP.Structures.Wallpaper.WallpaperStyles.Tile:
+                    case Theme.Structures.Wallpaper.WallpaperStyles.Tile:
                         {
                             style_tile.Checked = true;
                             break;
                         }
-                    case CP.Structures.Wallpaper.WallpaperStyles.Centered:
+                    case Theme.Structures.Wallpaper.WallpaperStyles.Centered:
                         {
                             style_center.Checked = true;
                             break;
                         }
-                    case CP.Structures.Wallpaper.WallpaperStyles.Stretched:
+                    case Theme.Structures.Wallpaper.WallpaperStyles.Stretched:
                         {
                             style_stretch.Checked = true;
                             break;
                         }
-                    case CP.Structures.Wallpaper.WallpaperStyles.Fill:
+                    case Theme.Structures.Wallpaper.WallpaperStyles.Fill:
                         {
                             style_fill.Checked = true;
                             break;
                         }
-                    case CP.Structures.Wallpaper.WallpaperStyles.Fit:
+                    case Theme.Structures.Wallpaper.WallpaperStyles.Fit:
                         {
                             style_fit.Checked = true;
                             break;
@@ -186,41 +186,41 @@ namespace WinPaletter
                 Trackbar1.Value = temp.Wallpaper_Slideshow_Interval;
                 CheckBox3.Checked = temp.Wallpaper_Slideshow_Shuffle;
 
-                pnl_preview.BackColor = CP.Win32.Background;
-                color_pick.BackColor = CP.Win32.Background;
+                pnl_preview.BackColor = TM.Win32.Background;
+                color_pick.BackColor = TM.Win32.Background;
             }
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             Cursor = Cursors.AppStarting;
 
             {
-                ref var temp = ref CP.Wallpaper;
+                ref var temp = ref TM.Wallpaper;
                 temp.Enabled = WallpaperEnabled.Checked;
                 temp.SlideShow_Folder_or_ImagesList = RadioButton1.Checked;
 
                 if (source_pic.Checked)
                 {
-                    temp.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture;
+                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
                     WT.Enabled = false;
                 }
 
                 else if (source_color.Checked)
                 {
-                    temp.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SolidColor;
+                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SolidColor;
                     WT.Enabled = false;
                 }
 
                 else if (source_slideshow.Checked)
                 {
-                    temp.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.SlideShow;
+                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SlideShow;
                     WT.Enabled = false;
                 }
 
                 else if (source_wallpapertone.Checked)
                 {
-                    temp.WallpaperType = CP.Structures.Wallpaper.WallpaperTypes.Picture;
+                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
                     WT.Enabled = true;
 
                 }
@@ -229,27 +229,27 @@ namespace WinPaletter
 
                 if (style_tile.Checked)
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Tile;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
                 }
                 else if (style_center.Checked)
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Centered;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
                 }
                 else if (style_stretch.Checked)
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Stretched;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
                 }
                 else if (style_fill.Checked)
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fill;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
                 }
                 else if (style_fit.Checked)
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fit;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
                 }
                 else
                 {
-                    temp.WallpaperStyle = CP.Structures.Wallpaper.WallpaperStyles.Fill;
+                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
                 }
 
                 temp.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
@@ -261,14 +261,14 @@ namespace WinPaletter
 
             }
 
-            CP.Win32.Background = color_pick.BackColor;
+            TM.Win32.Background = color_pick.BackColor;
 
             Cursor = Cursors.Default;
         }
 
         public void ApplyWT()
         {
-            WT = new CP.Structures.WallpaperTone()
+            WT = new Theme.Structures.WallpaperTone()
             {
                 Enabled = source_wallpapertone.Checked,
                 Image = TextBox3.Text,
@@ -281,38 +281,38 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        My.Env.CP.WallpaperTone_W11 = WT;
+                        My.Env.TM.WallpaperTone_W11 = WT;
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        My.Env.CP.WallpaperTone_W10 = WT;
+                        My.Env.TM.WallpaperTone_W10 = WT;
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        My.Env.CP.WallpaperTone_W81 = WT;
+                        My.Env.TM.WallpaperTone_W81 = WT;
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        My.Env.CP.WallpaperTone_W7 = WT;
+                        My.Env.TM.WallpaperTone_W7 = WT;
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        My.Env.CP.WallpaperTone_WVista = WT;
+                        My.Env.TM.WallpaperTone_WVista = WT;
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        My.Env.CP.WallpaperTone_WXP = WT;
+                        My.Env.TM.WallpaperTone_WXP = WT;
                         break;
                     }
 
                 default:
                     {
-                        My.Env.CP.WallpaperTone_W11 = WT;
+                        My.Env.TM.WallpaperTone_W11 = WT;
                         break;
                     }
 
@@ -323,52 +323,52 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             ApplyWT();
-            My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.CP);
+            My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM);
             Close();
         }
 
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
             ApplyWT();
 
-            CPx.Wallpaper.Apply(source_wallpapertone.Checked);
-            CPx.Win32.Apply();
+            TMx.Wallpaper.Apply(source_wallpapertone.Checked);
+            TMx.Win32.Apply();
 
             if (source_wallpapertone.Checked)
             {
                 WT.Apply();
             }
 
-            CPx.Dispose();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 

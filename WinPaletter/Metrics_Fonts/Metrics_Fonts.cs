@@ -35,40 +35,40 @@ namespace WinPaletter
 
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
 
             Window1.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
             Window2.CopycatFrom(My.MyProject.Forms.MainFrm.Window2, true);
             Window4.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
             Window6.CopycatFrom(My.MyProject.Forms.MainFrm.Window1, true);
 
-            SetClassicWindowColors(My.Env.CP, WindowR1);
-            SetClassicWindowColors(My.Env.CP, WindowR2, false);
-            SetClassicWindowColors(My.Env.CP, WindowR3);
-            SetClassicWindowColors(My.Env.CP, WindowR5);
-            SetClassicPanelColors(My.Env.CP, PanelR1);
-            SetClassicPanelColors(My.Env.CP, PanelR2);
-            SetClassicButtonColors(My.Env.CP, ButtonR1);
-            SetClassicButtonColors(My.Env.CP, ButtonR2);
-            SetClassicButtonColors(My.Env.CP, ButtonR3);
-            SetClassicButtonColors(My.Env.CP, ButtonR10);
-            SetClassicButtonColors(My.Env.CP, ButtonR11);
-            SetClassicButtonColors(My.Env.CP, ButtonR12);
+            SetClassicWindowColors(My.Env.TM, WindowR1);
+            SetClassicWindowColors(My.Env.TM, WindowR2, false);
+            SetClassicWindowColors(My.Env.TM, WindowR3);
+            SetClassicWindowColors(My.Env.TM, WindowR5);
+            SetClassicPanelColors(My.Env.TM, PanelR1);
+            SetClassicPanelColors(My.Env.TM, PanelR2);
+            SetClassicButtonColors(My.Env.TM, ButtonR1);
+            SetClassicButtonColors(My.Env.TM, ButtonR2);
+            SetClassicButtonColors(My.Env.TM, ButtonR3);
+            SetClassicButtonColors(My.Env.TM, ButtonR10);
+            SetClassicButtonColors(My.Env.TM, ButtonR11);
+            SetClassicButtonColors(My.Env.TM, ButtonR12);
 
-            ScrollBarR2.ButtonHilight = My.Env.CP.Win32.ButtonHilight;
-            ScrollBarR2.BackColor = My.Env.CP.Win32.ButtonFace;
-            ScrollBarR1.ButtonHilight = My.Env.CP.Win32.ButtonHilight;
-            ScrollBarR1.BackColor = My.Env.CP.Win32.ButtonFace;
+            ScrollBarR2.ButtonHilight = My.Env.TM.Win32.ButtonHilight;
+            ScrollBarR2.BackColor = My.Env.TM.Win32.ButtonFace;
+            ScrollBarR1.ButtonHilight = My.Env.TM.Win32.ButtonHilight;
+            ScrollBarR1.BackColor = My.Env.TM.Win32.ButtonFace;
 
-            Label13.ForeColor = My.Env.CP.Win32.ButtonText;
-            Label14.ForeColor = My.Env.CP.Win32.ButtonText;
+            Label13.ForeColor = My.Env.TM.Win32.ButtonText;
+            Label14.ForeColor = My.Env.TM.Win32.ButtonText;
             Refresh17BitPreference();
 
             this.DoubleBuffer();
 
-            bool condition0 = My.Env.PreviewStyle == WindowStyle.W7 && My.Env.CP.Windows7.Theme == CP.Structures.Windows7.Themes.Classic;
-            bool condition1 = My.Env.PreviewStyle == WindowStyle.WVista && My.Env.CP.WindowsVista.Theme == CP.Structures.Windows7.Themes.Classic;
-            bool condition2 = My.Env.PreviewStyle == WindowStyle.WXP && My.Env.CP.WindowsXP.Theme == CP.Structures.WindowsXP.Themes.Classic;
+            bool condition0 = My.Env.PreviewStyle == WindowStyle.W7 && My.Env.TM.Windows7.Theme == Theme.Structures.Windows7.Themes.Classic;
+            bool condition1 = My.Env.PreviewStyle == WindowStyle.WVista && My.Env.TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Classic;
+            bool condition2 = My.Env.PreviewStyle == WindowStyle.WXP && My.Env.TM.WindowsXP.Theme == Theme.Structures.WindowsXP.Themes.Classic;
 
             if (condition0 | condition1 | condition2)
             {
@@ -148,86 +148,86 @@ namespace WinPaletter
         public void Refresh17BitPreference()
         {
 
-            if (My.Env.CP.Win32.EnableTheming)
+            if (My.Env.TM.Win32.EnableTheming)
             {
-                MenuStrip2.BackColor = My.Env.CP.Win32.MenuBar;
+                MenuStrip2.BackColor = My.Env.TM.Win32.MenuBar;
             }
             else
             {
-                MenuStrip2.BackColor = My.Env.CP.Win32.Menu;
+                MenuStrip2.BackColor = My.Env.TM.Win32.Menu;
             }
 
-            ToolStripMenuItem1.ForeColor = My.Env.CP.Win32.MenuText;
-            ToolStripMenuItem4.ForeColor = My.Env.CP.Win32.MenuText;
+            ToolStripMenuItem1.ForeColor = My.Env.TM.Win32.MenuText;
+            ToolStripMenuItem4.ForeColor = My.Env.TM.Win32.MenuText;
 
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
-            MetricsEnabled.Checked = CP.MetricsFonts.Enabled;
+            MetricsEnabled.Checked = TM.MetricsFonts.Enabled;
 
-            Label1.Font = CP.MetricsFonts.CaptionFont;
-            Window1.Font = CP.MetricsFonts.CaptionFont;
-            WindowR1.Font = CP.MetricsFonts.CaptionFont;
-            WindowR3.Font = CP.MetricsFonts.CaptionFont;
-            WindowR5.Font = CP.MetricsFonts.CaptionFont;
+            Label1.Font = TM.MetricsFonts.CaptionFont;
+            Window1.Font = TM.MetricsFonts.CaptionFont;
+            WindowR1.Font = TM.MetricsFonts.CaptionFont;
+            WindowR3.Font = TM.MetricsFonts.CaptionFont;
+            WindowR5.Font = TM.MetricsFonts.CaptionFont;
 
-            Label1.Text = CP.MetricsFonts.CaptionFont.Name;
+            Label1.Text = TM.MetricsFonts.CaptionFont.Name;
 
-            Label2.Font = CP.MetricsFonts.IconFont;
-            FakeIcon1.Font = CP.MetricsFonts.IconFont;
-            FakeIcon2.Font = CP.MetricsFonts.IconFont;
-            FakeIcon3.Font = CP.MetricsFonts.IconFont;
-            Label2.Text = CP.MetricsFonts.IconFont.Name;
+            Label2.Font = TM.MetricsFonts.IconFont;
+            FakeIcon1.Font = TM.MetricsFonts.IconFont;
+            FakeIcon2.Font = TM.MetricsFonts.IconFont;
+            FakeIcon3.Font = TM.MetricsFonts.IconFont;
+            Label2.Text = TM.MetricsFonts.IconFont.Name;
 
-            Label3.Font = CP.MetricsFonts.MenuFont;
-            MenuStrip1.Font = CP.MetricsFonts.MenuFont;
-            MenuStrip2.Font = CP.MetricsFonts.MenuFont;
-            Label3.Text = CP.MetricsFonts.MenuFont.Name;
+            Label3.Font = TM.MetricsFonts.MenuFont;
+            MenuStrip1.Font = TM.MetricsFonts.MenuFont;
+            MenuStrip2.Font = TM.MetricsFonts.MenuFont;
+            Label3.Text = TM.MetricsFonts.MenuFont.Name;
 
-            Label5.Font = CP.MetricsFonts.SmCaptionFont;
-            Window2.Font = CP.MetricsFonts.SmCaptionFont;
-            WindowR2.Font = CP.MetricsFonts.SmCaptionFont;
-            Label5.Text = CP.MetricsFonts.SmCaptionFont.Name;
+            Label5.Font = TM.MetricsFonts.SmCaptionFont;
+            Window2.Font = TM.MetricsFonts.SmCaptionFont;
+            WindowR2.Font = TM.MetricsFonts.SmCaptionFont;
+            Label5.Text = TM.MetricsFonts.SmCaptionFont.Name;
 
-            Label4.Font = CP.MetricsFonts.MessageFont;
-            msgLbl.Font = CP.MetricsFonts.MessageFont;
-            Label13.Font = CP.MetricsFonts.MessageFont;
-            Label4.Text = CP.MetricsFonts.MessageFont.Name;
+            Label4.Font = TM.MetricsFonts.MessageFont;
+            msgLbl.Font = TM.MetricsFonts.MessageFont;
+            Label13.Font = TM.MetricsFonts.MessageFont;
+            Label4.Text = TM.MetricsFonts.MessageFont.Name;
 
-            Label6.Font = CP.MetricsFonts.StatusFont;
-            statusLbl.Font = CP.MetricsFonts.StatusFont;
-            Label14.Font = CP.MetricsFonts.StatusFont;
-            Label6.Text = CP.MetricsFonts.StatusFont.Name;
-            PanelR1.Height = Math.Max(GetTitleTextHeight(CP.MetricsFonts.StatusFont), 20);
+            Label6.Font = TM.MetricsFonts.StatusFont;
+            statusLbl.Font = TM.MetricsFonts.StatusFont;
+            Label14.Font = TM.MetricsFonts.StatusFont;
+            Label6.Text = TM.MetricsFonts.StatusFont.Name;
+            PanelR1.Height = Math.Max(GetTitleTextHeight(TM.MetricsFonts.StatusFont), 20);
 
-            TextBox1.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg;
-            TextBox2.Text = CP.MetricsFonts.FontSubstitute_MSShellDlg2;
-            TextBox3.Text = CP.MetricsFonts.FontSubstitute_SegoeUI;
+            TextBox1.Text = TM.MetricsFonts.FontSubstitute_MSShellDlg;
+            TextBox2.Text = TM.MetricsFonts.FontSubstitute_MSShellDlg2;
+            TextBox3.Text = TM.MetricsFonts.FontSubstitute_SegoeUI;
 
-            CheckBox1.Checked = CP.MetricsFonts.Fonts_SingleBitPP;
+            CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
 
-            Trackbar1.Value = CP.MetricsFonts.BorderWidth;
-            Trackbar2.Value = CP.MetricsFonts.CaptionHeight;
-            Trackbar3.Value = CP.MetricsFonts.CaptionWidth;
-            Trackbar6.Value = CP.MetricsFonts.IconSpacing;
-            Trackbar4.Value = CP.MetricsFonts.IconVerticalSpacing;
-            Trackbar9.Value = CP.MetricsFonts.MenuHeight;
-            Trackbar8.Value = CP.MetricsFonts.MenuWidth;
-            Trackbar12.Value = CP.MetricsFonts.PaddedBorderWidth;
-            Trackbar11.Value = CP.MetricsFonts.ScrollHeight;
-            Trackbar10.Value = CP.MetricsFonts.ScrollWidth;
-            Trackbar14.Value = CP.MetricsFonts.SmCaptionHeight;
-            Trackbar13.Value = CP.MetricsFonts.SmCaptionWidth;
-            Trackbar7.Value = CP.MetricsFonts.DesktopIconSize;
-            Trackbar5.Value = CP.MetricsFonts.ShellIconSize;
-            Trackbar15.Value = CP.MetricsFonts.ShellSmallIconSize;
+            Trackbar1.Value = TM.MetricsFonts.BorderWidth;
+            Trackbar2.Value = TM.MetricsFonts.CaptionHeight;
+            Trackbar3.Value = TM.MetricsFonts.CaptionWidth;
+            Trackbar6.Value = TM.MetricsFonts.IconSpacing;
+            Trackbar4.Value = TM.MetricsFonts.IconVerticalSpacing;
+            Trackbar9.Value = TM.MetricsFonts.MenuHeight;
+            Trackbar8.Value = TM.MetricsFonts.MenuWidth;
+            Trackbar12.Value = TM.MetricsFonts.PaddedBorderWidth;
+            Trackbar11.Value = TM.MetricsFonts.ScrollHeight;
+            Trackbar10.Value = TM.MetricsFonts.ScrollWidth;
+            Trackbar14.Value = TM.MetricsFonts.SmCaptionHeight;
+            Trackbar13.Value = TM.MetricsFonts.SmCaptionWidth;
+            Trackbar7.Value = TM.MetricsFonts.DesktopIconSize;
+            Trackbar5.Value = TM.MetricsFonts.ShellIconSize;
+            Trackbar15.Value = TM.MetricsFonts.ShellSmallIconSize;
 
-            WindowR1.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth;
-            WindowR3.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth;
-            WindowR5.Metrics_CaptionWidth = CP.MetricsFonts.CaptionWidth;
+            WindowR1.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
+            WindowR3.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
+            WindowR5.Metrics_CaptionWidth = TM.MetricsFonts.CaptionWidth;
 
-            if (CP.WindowsEffects.IconsShadow)
+            if (TM.WindowsEffects.IconsShadow)
             {
                 FakeIcon1.ColorGlow = Color.FromArgb(75, 0, 0, 0);
             }
@@ -249,7 +249,7 @@ namespace WinPaletter
             if (My.Env.PreviewStyle == WindowStyle.W11)
             {
 
-                if (CP.Windows11.AppMode_Light)
+                if (TM.Windows11.AppMode_Light)
                 {
                     theme = WPStyle.CtrlTheme.Default;
                     StatusForeColor = Color.Black;
@@ -266,7 +266,7 @@ namespace WinPaletter
             else if (My.Env.PreviewStyle == WindowStyle.W10)
             {
 
-                if (CP.Windows10.AppMode_Light)
+                if (TM.Windows10.AppMode_Light)
                 {
                     theme = WPStyle.CtrlTheme.Default;
                     StatusForeColor = Color.Black;
@@ -296,37 +296,37 @@ namespace WinPaletter
             StatusStrip1.BackColor = statusBackColor;
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
-            CP.MetricsFonts.Enabled = MetricsEnabled.Checked;
+            TM.MetricsFonts.Enabled = MetricsEnabled.Checked;
 
-            CP.MetricsFonts.CaptionFont = Label1.Font;
-            CP.MetricsFonts.IconFont = Label2.Font;
-            CP.MetricsFonts.MenuFont = Label3.Font;
-            CP.MetricsFonts.MessageFont = Label4.Font;
-            CP.MetricsFonts.SmCaptionFont = Label5.Font;
-            CP.MetricsFonts.StatusFont = Label6.Font;
+            TM.MetricsFonts.CaptionFont = Label1.Font;
+            TM.MetricsFonts.IconFont = Label2.Font;
+            TM.MetricsFonts.MenuFont = Label3.Font;
+            TM.MetricsFonts.MessageFont = Label4.Font;
+            TM.MetricsFonts.SmCaptionFont = Label5.Font;
+            TM.MetricsFonts.StatusFont = Label6.Font;
 
-            CP.MetricsFonts.BorderWidth = Trackbar1.Value;
-            CP.MetricsFonts.CaptionHeight = Trackbar2.Value;
-            CP.MetricsFonts.CaptionWidth = Trackbar3.Value;
-            CP.MetricsFonts.IconSpacing = Trackbar6.Value;
-            CP.MetricsFonts.IconVerticalSpacing = Trackbar4.Value;
-            CP.MetricsFonts.MenuHeight = Trackbar9.Value;
-            CP.MetricsFonts.MenuWidth = Trackbar8.Value;
-            CP.MetricsFonts.PaddedBorderWidth = Trackbar12.Value;
-            CP.MetricsFonts.ScrollHeight = Trackbar11.Value;
-            CP.MetricsFonts.ScrollWidth = Trackbar10.Value;
-            CP.MetricsFonts.SmCaptionHeight = Trackbar14.Value;
-            CP.MetricsFonts.SmCaptionWidth = Trackbar13.Value;
-            CP.MetricsFonts.DesktopIconSize = Trackbar7.Value;
-            CP.MetricsFonts.ShellIconSize = Trackbar5.Value;
-            CP.MetricsFonts.ShellSmallIconSize = Trackbar15.Value;
-            CP.MetricsFonts.Fonts_SingleBitPP = CheckBox1.Checked;
+            TM.MetricsFonts.BorderWidth = Trackbar1.Value;
+            TM.MetricsFonts.CaptionHeight = Trackbar2.Value;
+            TM.MetricsFonts.CaptionWidth = Trackbar3.Value;
+            TM.MetricsFonts.IconSpacing = Trackbar6.Value;
+            TM.MetricsFonts.IconVerticalSpacing = Trackbar4.Value;
+            TM.MetricsFonts.MenuHeight = Trackbar9.Value;
+            TM.MetricsFonts.MenuWidth = Trackbar8.Value;
+            TM.MetricsFonts.PaddedBorderWidth = Trackbar12.Value;
+            TM.MetricsFonts.ScrollHeight = Trackbar11.Value;
+            TM.MetricsFonts.ScrollWidth = Trackbar10.Value;
+            TM.MetricsFonts.SmCaptionHeight = Trackbar14.Value;
+            TM.MetricsFonts.SmCaptionWidth = Trackbar13.Value;
+            TM.MetricsFonts.DesktopIconSize = Trackbar7.Value;
+            TM.MetricsFonts.ShellIconSize = Trackbar5.Value;
+            TM.MetricsFonts.ShellSmallIconSize = Trackbar15.Value;
+            TM.MetricsFonts.Fonts_SingleBitPP = CheckBox1.Checked;
 
-            CP.MetricsFonts.FontSubstitute_MSShellDlg = TextBox1.Text;
-            CP.MetricsFonts.FontSubstitute_MSShellDlg2 = TextBox2.Text;
-            CP.MetricsFonts.FontSubstitute_SegoeUI = TextBox3.Text;
+            TM.MetricsFonts.FontSubstitute_MSShellDlg = TextBox1.Text;
+            TM.MetricsFonts.FontSubstitute_MSShellDlg2 = TextBox2.Text;
+            TM.MetricsFonts.FontSubstitute_SegoeUI = TextBox3.Text;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -417,12 +417,12 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             Close();
-            SetModernWindowMetrics(My.Env.CP, My.MyProject.Forms.MainFrm.Window1);
-            SetModernWindowMetrics(My.Env.CP, My.MyProject.Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(My.Env.CP, My.MyProject.Forms.MainFrm.ClassicWindow2);
+            SetModernWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.Window1);
+            SetModernWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.Window2);
+            SetClassicWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowMetrics(My.Env.TM, My.MyProject.Forms.MainFrm.ClassicWindow2);
         }
 
         private void Button7_Click(object sender, EventArgs e)
@@ -433,16 +433,16 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            SetModernWindowMetrics(CPx, My.MyProject.Forms.MainFrm.Window1);
-            SetModernWindowMetrics(CPx, My.MyProject.Forms.MainFrm.Window2);
-            SetClassicWindowMetrics(CPx, My.MyProject.Forms.MainFrm.ClassicWindow1);
-            SetClassicWindowMetrics(CPx, My.MyProject.Forms.MainFrm.ClassicWindow2);
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            SetModernWindowMetrics(TMx, My.MyProject.Forms.MainFrm.Window1);
+            SetModernWindowMetrics(TMx, My.MyProject.Forms.MainFrm.Window2);
+            SetClassicWindowMetrics(TMx, My.MyProject.Forms.MainFrm.ClassicWindow1);
+            SetClassicWindowMetrics(TMx, My.MyProject.Forms.MainFrm.ClassicWindow2);
 
-            CPx.MetricsFonts.Apply();
-            CPx.Dispose();
+            TMx.MetricsFonts.Apply();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
@@ -561,7 +561,7 @@ namespace WinPaletter
         {
             i_s_h.Text = ((UI.WP.Trackbar)sender).Value.ToString();
 
-            FakeIcon1.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16; 
+            FakeIcon1.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
             FakeIcon2.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
             FakeIcon3.Width = Trackbar7.Value + 15 + ((UI.WP.Trackbar)sender).Value / 16;
             FakeIcon3.Left = FakeIcon1.Right + 2;
@@ -621,24 +621,24 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
@@ -758,7 +758,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
-            My.Env.RenderingHint = My.Env.CP.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             My.MyProject.Forms.MainFrm.Visible = true;
         }
 
@@ -810,7 +810,7 @@ namespace WinPaletter
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
-            if (CP.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
@@ -824,7 +824,7 @@ namespace WinPaletter
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
 
-            if (CP.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }
@@ -838,7 +838,7 @@ namespace WinPaletter
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
 
-            if (CP.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
+            if (Theme.Manager.IsFontInstalled(((UI.WP.TextBox)sender).Text.ToString(), FontStyle.Regular))
             {
                 ((UI.WP.TextBox)sender).Font = new Font(((UI.WP.TextBox)sender).Text.ToString(), 9f, FontStyle.Regular);
             }

@@ -631,7 +631,7 @@ namespace WinPaletter
             // StoreItem1
             // 
             StoreItem1.Anchor = AnchorStyles.Top;
-            StoreItem1.CP = null;
+            StoreItem1.TM = null;
             StoreItem1.DoneByWinPaletter = false;
             StoreItem1.FileName = null;
             StoreItem1.Font = new Font("Segoe UI", 9.0f);

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -309,27 +308,27 @@ namespace WinPaletter
 
                     if (File.Exists(TerDir))
                     {
-                        My.Env.CP.Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
+                        My.Env.TM.Terminal = new WinTerminal(TerDir, WinTerminal.Mode.JSONFile);
                     }
                     else
                     {
-                        My.Env.CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                        My.Env.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
                     }
 
                     if (File.Exists(TerPreDir))
                     {
-                        My.Env.CP.TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        My.Env.TM.TerminalPreview = new WinTerminal(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
                     else
                     {
-                        My.Env.CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                        My.Env.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                     }
                 }
 
                 else
                 {
-                    My.Env.CP.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
-                    My.Env.CP.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                    My.Env.TM.Terminal = new WinTerminal("", WinTerminal.Mode.Empty);
+                    My.Env.TM.TerminalPreview = new WinTerminal("", WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                 }
             }
 
@@ -352,9 +351,9 @@ namespace WinPaletter
             if (ch_EP)
             {
                 My.Env.EP = new ExplorerPatcher();
-                My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
-                My.MyProject.Forms.MainFrm.ApplyCPValues(My.Env.CP);
-                My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.CP, false);
+                My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
+                My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
+                My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM, false);
                 PreviewHelpers.ReValidateLivePreview(My.MyProject.Forms.MainFrm.pnl_preview);
             }
 

@@ -21,7 +21,7 @@ namespace WinPaletter
             WPStyle.ApplyStyle(this);
             Icon = My.MyProject.Forms.LogonUI.Icon;
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -39,19 +39,19 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.LogonUIXP;
+                ref var temp = ref TM.LogonUIXP;
                 Toggle1.Checked = temp.Enabled;
                 switch (temp.Mode)
                 {
-                    case CP.Structures.LogonUIXP.Modes.Default:
+                    case Theme.Structures.LogonUIXP.Modes.Default:
                         {
                             RadioImage1.Checked = true;
                             break;
                         }
-                    case CP.Structures.LogonUIXP.Modes.Win2000:
+                    case Theme.Structures.LogonUIXP.Modes.Win2000:
                         {
                             RadioImage2.Checked = true;
                             break;
@@ -68,15 +68,15 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.LogonUIXP;
+                ref var temp = ref TM.LogonUIXP;
                 temp.Enabled = Toggle1.Checked;
                 if (RadioImage1.Checked)
-                    temp.Mode = CP.Structures.LogonUIXP.Modes.Default;
+                    temp.Mode = Theme.Structures.LogonUIXP.Modes.Default;
                 else
-                    temp.Mode = CP.Structures.LogonUIXP.Modes.Win2000;
+                    temp.Mode = Theme.Structures.LogonUIXP.Modes.Win2000;
                 temp.BackColor = color_pick.BackColor;
                 temp.ShowMoreOptions = CheckBox1.Checked;
             }
@@ -86,24 +86,24 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
@@ -115,17 +115,17 @@ namespace WinPaletter
         private void Button10_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            CPx.LogonUIXP.Apply();
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            TMx.LogonUIXP.Apply();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             Close();
         }
 

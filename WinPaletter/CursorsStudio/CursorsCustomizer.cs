@@ -2356,9 +2356,9 @@ namespace WinPaletter
     public class CursorOptions
     {
 
-        public CursorOptions(CP.Structures.Cursor Cursor = default)
+        public CursorOptions(Theme.Structures.Cursor Cursor = default)
         {
-            if (Cursor != default)
+            if (Cursor != null)
             {
                 ArrowStyle = Cursor.ArrowStyle;
                 CircleStyle = Cursor.CircleStyle;

@@ -103,7 +103,7 @@ namespace WinPaletter
 
                         ver = ls[UpdateChannel].Split(' ')[1];
 
-                        if (ver.CompareTo(My.Env.AppVersion) == -1)
+                        if (new Version(ver) > new Version(My.Env.AppVersion))
                         {
                             url = ls[UpdateChannel].Split(' ')[4];
                             UpdateSize = Conversions.ToDecimal(ls[UpdateChannel].Split(' ')[2]);

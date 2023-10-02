@@ -1559,7 +1559,7 @@ namespace WinPaletter
             }
         }
 
-        public static void DrawAeroEffect(this Graphics G, Rectangle Rect, Bitmap BackgroundBlurred, Color Color1, float ColorBalance, Color Color2, float GlowBalance, float alpha, int Radius, bool RoundedCorners)
+        public static void DrawAeroEffect(this Graphics G, Rectangle Rect, Bitmap BackgroundBlurred, Color Color1, decimal ColorBalance, Color Color2, decimal GlowBalance, decimal alpha, int Radius, bool RoundedCorners)
         {
 
             if (RoundedCorners)
@@ -1567,23 +1567,23 @@ namespace WinPaletter
                 if (BackgroundBlurred is not null)
                     G.DrawRoundImage(BackgroundBlurred, Rect, Radius, true);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255f), Color.Black)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255f)), Color1)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
 
-                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255f), Color1);
-                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255f), Color2);
+                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
+                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100f)), Color2)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150f)), C1.Blend(C2, 100d))))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
                 {
                     G.FillRoundedRect(br, Rect, Radius, true);
                 }
@@ -1593,23 +1593,23 @@ namespace WinPaletter
                 if (BackgroundBlurred is not null)
                     G.DrawImage(BackgroundBlurred, Rect);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255f), Color.Black)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * 255), Color.Black)))
                 {
                     G.FillRectangle(br, Rect);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255f)), Color1)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (ColorBalance * 255)), Color1)))
                 {
                     G.FillRectangle(br, Rect);
                 }
 
-                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255f), Color1);
-                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255f), Color2);
+                var C1 = Color.FromArgb((int)Math.Round(ColorBalance * 255), Color1);
+                var C2 = Color.FromArgb((int)Math.Round(GlowBalance * 255), Color2);
 
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100f)), Color2)))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 100)), Color2)))
                 {
                     G.FillRectangle(br, Rect);
                 }
-                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150f)), C1.Blend(C2, 100d))))
+                using (var br = new SolidBrush(Color.FromArgb((int)Math.Round(alpha * (GlowBalance * 150)), C1.Blend(C2, 100d))))
                 {
                     G.FillRectangle(br, Rect);
                 }

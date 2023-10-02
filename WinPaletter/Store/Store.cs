@@ -1,6 +1,5 @@
 ﻿using Devcorp.Controls.VisualStyles;
 using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,19 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
-
     public partial class Store
     {
 
         #region Variables
         private bool StartedAsOnlineOrOffline = true;
-        private bool FinishedLoadingInitialCPs;
-        private Dictionary<string, CP> CPList = new Dictionary<string, CP>();
+        private bool FinishedLoadingInitialTMs;
+        private Dictionary<string, Theme.Manager> TMList = new();
         private readonly int w = (int)Math.Round(528d * 0.6d);
         private readonly int h = (int)Math.Round(297d * 0.6d);
 
@@ -52,18 +49,18 @@ namespace WinPaletter
 
         #region Preview Subs
 
-        public void Adjust_Preview(CP CP)
+        public void Adjust_Preview(Theme.Manager TM)
         {
 
-            My.Env.Wallpaper = My.MyProject.Application.FetchSuitableWallpaper(CP, My.Env.PreviewStyle);
+            My.Env.Wallpaper = My.MyProject.Application.FetchSuitableWallpaper(TM, My.Env.PreviewStyle);
             pnl_preview.BackgroundImage = My.Env.Wallpaper;
             pnl_preview_classic.BackgroundImage = My.Env.Wallpaper;
 
-            ApplyWinElementsColors(CP, My.Env.PreviewStyle, false, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview);
-            ApplyWindowStyles(CP, My.Env.PreviewStyle, Window1, Window2);
-            ApplyWinElementsStyle(CP, My.Env.PreviewStyle, taskbar, start, ActionCenter, Window1, Window2, Panel3, lnk_preview, ClassicTaskbar, ButtonR2, ButtonR3, ButtonR4, ClassicWindow1, ClassicWindow2, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceColors.Checked, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceFonts.Checked);
+            ApplyWinElementsColors(TM, My.Env.PreviewStyle, false, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview);
+            ApplyWindowStyles(TM, My.Env.PreviewStyle, Window1, Window2);
+            ApplyWinElementsStyle(TM, My.Env.PreviewStyle, taskbar, start, ActionCenter, Window1, Window2, Panel3, lnk_preview, ClassicTaskbar, ButtonR2, ButtonR3, ButtonR4, ClassicWindow1, ClassicWindow2, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceColors.Checked, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked, My.MyProject.Forms.MainFrm.WXP_VS_ReplaceFonts.Checked);
 
-            AdjustPreview_ModernOrClassic(CP, My.Env.PreviewStyle, tabs_preview, WXP_Alert2);
+            AdjustPreview_ModernOrClassic(TM, My.Env.PreviewStyle, tabs_preview, WXP_Alert2);
         }
 
         private void Menu_Window_SizeChanged(object sender, EventArgs e)
@@ -82,17 +79,17 @@ namespace WinPaletter
             Menu_Window.BringToFront();
         }
 
-        public void SetClassicMetrics(CP CP)
+        public void SetClassicMetrics(Theme.Manager TM)
         {
             try
             {
-                if ((My.Env.PreviewStyle == WindowStyle.WXP && My.MyProject.Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked) & CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                if ((My.Env.PreviewStyle == WindowStyle.WXP && My.MyProject.Forms.MainFrm.WXP_VS_ReplaceMetrics.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
                     if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
                     {
                         using (var vs = new VisualStyleFile(My.Env.VS))
                         {
-                            CP.MetricsFonts.Overwrite_Metrics(vs.Metrics);
+                            TM.MetricsFonts.Overwrite_Metrics(vs.Metrics);
                         }
                     }
 
@@ -100,7 +97,7 @@ namespace WinPaletter
                     {
                         using (var vs = new VisualStyleFile(My.Env.VS))
                         {
-                            CP.MetricsFonts.Overwrite_Fonts(vs.Metrics);
+                            TM.MetricsFonts.Overwrite_Fonts(vs.Metrics);
                         }
                     }
                 }
@@ -109,53 +106,53 @@ namespace WinPaletter
             {
             }
 
-            PanelR2.Width = CP.MetricsFonts.ScrollWidth;
-            menucontainer0.Height = CP.MetricsFonts.MenuHeight;
+            PanelR2.Width = TM.MetricsFonts.ScrollWidth;
+            menucontainer0.Height = TM.MetricsFonts.MenuHeight;
 
-            menucontainer0.Height = Math.Max(CP.MetricsFonts.MenuHeight, My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont));
+            menucontainer0.Height = Math.Max(TM.MetricsFonts.MenuHeight, My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont));
 
-            LabelR1.Font = CP.MetricsFonts.MenuFont;
-            LabelR2.Font = CP.MetricsFonts.MenuFont;
-            LabelR3.Font = CP.MetricsFonts.MenuFont;
+            LabelR1.Font = TM.MetricsFonts.MenuFont;
+            LabelR2.Font = TM.MetricsFonts.MenuFont;
+            LabelR3.Font = TM.MetricsFonts.MenuFont;
 
-            LabelR9.Font = CP.MetricsFonts.MenuFont;
-            LabelR5.Font = CP.MetricsFonts.MenuFont;
-            LabelR6.Font = CP.MetricsFonts.MenuFont;
+            LabelR9.Font = TM.MetricsFonts.MenuFont;
+            LabelR5.Font = TM.MetricsFonts.MenuFont;
+            LabelR6.Font = TM.MetricsFonts.MenuFont;
 
-            menucontainer1.Height = My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(CP.MetricsFonts.MenuFont) + 3;
+            menucontainer1.Height = My.MyProject.Forms.Metrics_Fonts.GetTitleTextHeight(TM.MetricsFonts.MenuFont) + 3;
             highlight.Height = menucontainer1.Height + 1;
             menucontainer3.Height = menucontainer1.Height + 1;
             Menu_Window.Height = menucontainer1.Height + highlight.Height + menucontainer3.Height + Menu_Window.Padding.Top + Menu_Window.Padding.Bottom;
 
-            LabelR4.Font = CP.MetricsFonts.MessageFont;
+            LabelR4.Font = TM.MetricsFonts.MessageFont;
 
-            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f);
-            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f);
-            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(CP.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
+            LabelR1.Width = (int)Math.Round(LabelR1.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
+            LabelR2.Width = (int)Math.Round(LabelR2.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f);
+            PanelR1.Width = (int)Math.Round(LabelR3.Text.Measure(TM.MetricsFonts.MenuFont).Width + 5f + PanelR1.Padding.Left + PanelR1.Padding.Right);
 
             int TitleTextH, TitleTextH_9, TitleTextH_Sum;
-            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(CP.MetricsFonts.CaptionFont).Height);
-            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(CP.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
+            TitleTextH = (int)Math.Round("ABCabc0123xYz.#".Measure(TM.MetricsFonts.CaptionFont).Height);
+            TitleTextH_9 = (int)Math.Round("ABCabc0123xYz.#".Measure(new Font(TM.MetricsFonts.CaptionFont.Name, 9f, Font.Style)).Height);
             TitleTextH_Sum = Math.Max(0, TitleTextH - TitleTextH_9 - 5);
 
-            int iP = 3 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth;
-            int iT = 4 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + CP.MetricsFonts.CaptionHeight + TitleTextH_Sum;
+            int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
+            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + TitleTextH_Sum;
             var _Padding = new System.Windows.Forms.Padding(iP, iT, iP, iP);
 
             foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
             {
                 if (!WindowR.UseItAsMenu)
                 {
-                    SetClassicWindowMetrics(CP, WindowR);
+                    SetClassicWindowMetrics(TM, WindowR);
                     WindowR.Padding = _Padding;
                 }
             }
 
-            WindowR3.Height = 85 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
-            WindowR2.Height = 120 + CP.MetricsFonts.PaddedBorderWidth + CP.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + CP.MetricsFonts.MenuHeight;
+            WindowR3.Height = 85 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR3.GetTitleTextHeight();
+            WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + WindowR2.GetTitleTextHeight() + TM.MetricsFonts.MenuHeight;
 
             Menu_Window.Top = WindowR2.Top + menucontainer0.Top + menucontainer0.Height;
-            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - CP.MetricsFonts.PaddedBorderWidth - CP.MetricsFonts.BorderWidth);
+            Menu_Window.Left = Math.Min(WindowR2.Left + menucontainer0.Left + PanelR1.Left + (+3), WindowR2.Right - TM.MetricsFonts.PaddedBorderWidth - TM.MetricsFonts.BorderWidth);
 
             WindowR3.Top = WindowR2.Top + TextBoxR1.Top + TextBoxR1.Font.Height + 10;
             WindowR3.Left = WindowR2.Left + TextBoxR1.Left + 15;
@@ -163,24 +160,24 @@ namespace WinPaletter
             LabelR13.Top = WindowR4.Top + WindowR4.Metrics_CaptionHeight + 2;
             LabelR13.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2;
 
-            RetroShadow1.Visible = CP.WindowsEffects.WindowShadow;
+            RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
 
-            ButtonR5.FocusRectWidth = (int)CP.WindowsEffects.FocusRectWidth;
-            ButtonR5.FocusRectHeight = (int)CP.WindowsEffects.FocusRectHeight;
+            ButtonR5.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
+            ButtonR5.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
             ButtonR5.Refresh();
         }
 
-        public void ApplyRetroPreview(CP CP)
+        public void ApplyRetroPreview(Theme.Manager TM)
         {
             try
             {
-                if ((My.Env.PreviewStyle == WindowStyle.WXP && My.MyProject.Forms.MainFrm.WXP_VS_ReplaceColors.Checked) & CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                if ((My.Env.PreviewStyle == WindowStyle.WXP && My.MyProject.Forms.MainFrm.WXP_VS_ReplaceColors.Checked) & TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
                     if (System.IO.File.Exists(My.Env.VS) & !string.IsNullOrEmpty(My.Env.VS))
                     {
                         using (var vs = new VisualStyleFile(My.Env.VS))
                         {
-                            CP.Win32.Load(Structures.Win32UI.Method.VisualStyles, vs.Metrics);
+                            TM.Win32.Load(Theme.Structures.Win32UI.Method.VisualStyles, vs.Metrics);
                         }
                     }
                 }
@@ -189,148 +186,148 @@ namespace WinPaletter
             {
             }
 
-            WindowR1.ColorGradient = CP.Win32.EnableGradient;
-            WindowR1.Color1 = CP.Win32.InactiveTitle;
-            WindowR1.Color2 = CP.Win32.GradientInactiveTitle;
-            WindowR1.ForeColor = CP.Win32.InactiveTitleText;
-            WindowR1.ColorBorder = CP.Win32.InactiveBorder;
+            WindowR1.ColorGradient = TM.Win32.EnableGradient;
+            WindowR1.Color1 = TM.Win32.InactiveTitle;
+            WindowR1.Color2 = TM.Win32.GradientInactiveTitle;
+            WindowR1.ForeColor = TM.Win32.InactiveTitleText;
+            WindowR1.ColorBorder = TM.Win32.InactiveBorder;
 
-            WindowR2.ColorGradient = CP.Win32.EnableGradient;
-            WindowR3.ColorGradient = CP.Win32.EnableGradient;
-            WindowR4.ColorGradient = CP.Win32.EnableGradient;
+            WindowR2.ColorGradient = TM.Win32.EnableGradient;
+            WindowR3.ColorGradient = TM.Win32.EnableGradient;
+            WindowR4.ColorGradient = TM.Win32.EnableGradient;
 
-            WindowR2.Color1 = CP.Win32.ActiveTitle;
-            WindowR3.Color1 = CP.Win32.ActiveTitle;
-            WindowR4.Color1 = CP.Win32.ActiveTitle;
+            WindowR2.Color1 = TM.Win32.ActiveTitle;
+            WindowR3.Color1 = TM.Win32.ActiveTitle;
+            WindowR4.Color1 = TM.Win32.ActiveTitle;
 
-            WindowR2.Color2 = CP.Win32.GradientActiveTitle;
-            WindowR3.Color2 = CP.Win32.GradientActiveTitle;
-            WindowR4.Color2 = CP.Win32.GradientActiveTitle;
+            WindowR2.Color2 = TM.Win32.GradientActiveTitle;
+            WindowR3.Color2 = TM.Win32.GradientActiveTitle;
+            WindowR4.Color2 = TM.Win32.GradientActiveTitle;
 
-            WindowR2.ForeColor = CP.Win32.TitleText;
-            WindowR3.ForeColor = CP.Win32.TitleText;
-            WindowR4.ForeColor = CP.Win32.TitleText;
+            WindowR2.ForeColor = TM.Win32.TitleText;
+            WindowR3.ForeColor = TM.Win32.TitleText;
+            WindowR4.ForeColor = TM.Win32.TitleText;
 
-            WindowR2.ColorBorder = CP.Win32.ActiveBorder;
-            WindowR3.ColorBorder = CP.Win32.ActiveBorder;
-            WindowR4.ColorBorder = CP.Win32.ActiveBorder;
+            WindowR2.ColorBorder = TM.Win32.ActiveBorder;
+            WindowR3.ColorBorder = TM.Win32.ActiveBorder;
+            WindowR4.ColorBorder = TM.Win32.ActiveBorder;
 
             foreach (UI.Retro.WindowR WindowR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.WindowR>())
             {
-                if (!WindowR.UseItAsMenu) 
-                    WindowR.BackColor = CP.Win32.ButtonFace;
+                if (!WindowR.UseItAsMenu)
+                    WindowR.BackColor = TM.Win32.ButtonFace;
 
-                WindowR.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-                WindowR.ButtonHilight = CP.Win32.ButtonHilight;
-                WindowR.ButtonHilight = CP.Win32.ButtonHilight;
-                WindowR.ButtonLight = CP.Win32.ButtonLight;
-                WindowR.ButtonShadow = CP.Win32.ButtonShadow;
-                WindowR.ButtonText = CP.Win32.ButtonText;
+                WindowR.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+                WindowR.ButtonHilight = TM.Win32.ButtonHilight;
+                WindowR.ButtonHilight = TM.Win32.ButtonHilight;
+                WindowR.ButtonLight = TM.Win32.ButtonLight;
+                WindowR.ButtonShadow = TM.Win32.ButtonShadow;
+                WindowR.ButtonText = TM.Win32.ButtonText;
             }
 
             foreach (UI.Retro.ButtonR ButtonR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.ButtonR>())
             {
-                ButtonR.WindowFrame = CP.Win32.WindowFrame;
-                ButtonR.BackColor = CP.Win32.ButtonFace;
-                ButtonR.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-                ButtonR.ButtonHilight = CP.Win32.ButtonHilight;
-                ButtonR.ButtonLight = CP.Win32.ButtonLight;
-                ButtonR.ButtonShadow = CP.Win32.ButtonShadow;
-                ButtonR.ForeColor = CP.Win32.ButtonText;
+                ButtonR.WindowFrame = TM.Win32.WindowFrame;
+                ButtonR.BackColor = TM.Win32.ButtonFace;
+                ButtonR.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+                ButtonR.ButtonHilight = TM.Win32.ButtonHilight;
+                ButtonR.ButtonLight = TM.Win32.ButtonLight;
+                ButtonR.ButtonShadow = TM.Win32.ButtonShadow;
+                ButtonR.ForeColor = TM.Win32.ButtonText;
             }
 
             foreach (UI.Retro.PanelRaisedR PanelRaisedR in ClassicColorsPreview.GetAllControls().OfType<UI.Retro.PanelRaisedR>())
             {
-                PanelRaisedR.ButtonHilight = CP.Win32.ButtonHilight;
-                PanelRaisedR.ButtonShadow = CP.Win32.ButtonShadow;
+                PanelRaisedR.ButtonHilight = TM.Win32.ButtonHilight;
+                PanelRaisedR.ButtonShadow = TM.Win32.ButtonShadow;
             }
 
-            TextBoxR1.BackColor = CP.Win32.Window;
-            TextBoxR1.ForeColor = CP.Win32.WindowText;
-            TextBoxR1.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-            TextBoxR1.ButtonHilight = CP.Win32.ButtonHilight;
-            TextBoxR1.ButtonLight = CP.Win32.ButtonLight;
-            TextBoxR1.ButtonShadow = CP.Win32.ButtonShadow;
+            TextBoxR1.BackColor = TM.Win32.Window;
+            TextBoxR1.ForeColor = TM.Win32.WindowText;
+            TextBoxR1.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+            TextBoxR1.ButtonHilight = TM.Win32.ButtonHilight;
+            TextBoxR1.ButtonLight = TM.Win32.ButtonLight;
+            TextBoxR1.ButtonShadow = TM.Win32.ButtonShadow;
             TextBoxR1.Refresh();
 
-            PanelR2.BackColor = CP.Win32.ButtonFace;
-            PanelR2.ButtonHilight = CP.Win32.ButtonHilight;
+            PanelR2.BackColor = TM.Win32.ButtonFace;
+            PanelR2.ButtonHilight = TM.Win32.ButtonHilight;
 
-            Menu_Window.ButtonFace = CP.Win32.ButtonFace;
-            Menu_Window.ButtonDkShadow = CP.Win32.ButtonDkShadow;
-            Menu_Window.ButtonHilight = CP.Win32.ButtonHilight;
-            Menu_Window.ButtonLight = CP.Win32.ButtonLight;
-            Menu_Window.ButtonShadow = CP.Win32.ButtonShadow;
-            Menu_Window.BackColor = CP.Win32.Menu;
+            Menu_Window.ButtonFace = TM.Win32.ButtonFace;
+            Menu_Window.ButtonDkShadow = TM.Win32.ButtonDkShadow;
+            Menu_Window.ButtonHilight = TM.Win32.ButtonHilight;
+            Menu_Window.ButtonLight = TM.Win32.ButtonLight;
+            Menu_Window.ButtonShadow = TM.Win32.ButtonShadow;
+            Menu_Window.BackColor = TM.Win32.Menu;
             Menu_Window.Refresh();
 
-            PanelR1.BackColor = CP.Win32.Menu;
-            PanelR1.ButtonHilight = CP.Win32.ButtonHilight;
-            PanelR1.ButtonShadow = CP.Win32.ButtonShadow;
+            PanelR1.BackColor = TM.Win32.Menu;
+            PanelR1.ButtonHilight = TM.Win32.ButtonHilight;
+            PanelR1.ButtonShadow = TM.Win32.ButtonShadow;
 
-            programcontainer.BackColor = CP.Win32.AppWorkspace;
+            programcontainer.BackColor = TM.Win32.AppWorkspace;
 
-            ClassicColorsPreview.BackColor = CP.Win32.Background;
+            ClassicColorsPreview.BackColor = TM.Win32.Background;
 
-            menucontainer0.BackColor = CP.Win32.MenuBar;
+            menucontainer0.BackColor = TM.Win32.MenuBar;
 
-            highlight.BackColor = CP.Win32.Hilight;
+            highlight.BackColor = TM.Win32.Hilight;
 
-            menuhilight.BackColor = CP.Win32.MenuHilight;
+            menuhilight.BackColor = TM.Win32.MenuHilight;
 
-            LabelR6.ForeColor = CP.Win32.MenuText;
-            LabelR1.ForeColor = CP.Win32.MenuText;
+            LabelR6.ForeColor = TM.Win32.MenuText;
+            LabelR1.ForeColor = TM.Win32.MenuText;
 
-            LabelR5.ForeColor = CP.Win32.HilightText;
+            LabelR5.ForeColor = TM.Win32.HilightText;
 
-            LabelR2.ForeColor = CP.Win32.GrayText;
+            LabelR2.ForeColor = TM.Win32.GrayText;
 
-            LabelR9.ForeColor = CP.Win32.GrayText;
+            LabelR9.ForeColor = TM.Win32.GrayText;
 
-            LabelR4.ForeColor = CP.Win32.WindowText;
+            LabelR4.ForeColor = TM.Win32.WindowText;
 
-            LabelR13.BackColor = CP.Win32.InfoWindow;
-            LabelR13.ForeColor = CP.Win32.InfoText;
+            LabelR13.BackColor = TM.Win32.InfoWindow;
+            LabelR13.ForeColor = TM.Win32.InfoText;
 
-            Refresh17BitPreference(CP);
+            Refresh17BitPreference(TM);
 
             RetroShadow1.Refresh();
         }
 
-        public void Refresh17BitPreference(CP CP)
+        public void Refresh17BitPreference(Theme.Manager TM)
         {
 
-            if (CP.Win32.EnableTheming)
+            if (TM.Win32.EnableTheming)
             {
                 // Theming Enabled (Menus Has colors and borders)
                 Menu_Window.Flat = true;
                 PanelR1.Flat = true;
-                PanelR1.BackColor = CP.Win32.MenuHilight;
-                PanelR1.ButtonShadow = CP.Win32.Hilight;
+                PanelR1.BackColor = TM.Win32.MenuHilight;
+                PanelR1.ButtonShadow = TM.Win32.Hilight;
 
-                menuhilight.BackColor = CP.Win32.MenuHilight;  // Filling of selected item
-               
-                highlight.BackColor = CP.Win32.Hilight; // Outer Border of selected item
+                menuhilight.BackColor = TM.Win32.MenuHilight;  // Filling of selected item
 
-                menucontainer0.BackColor = CP.Win32.MenuBar;
-                
-                LabelR3.ForeColor = CP.Win32.HilightText;
+                highlight.BackColor = TM.Win32.Hilight; // Outer Border of selected item
+
+                menucontainer0.BackColor = TM.Win32.MenuBar;
+
+                LabelR3.ForeColor = TM.Win32.HilightText;
             }
             else
             {
                 // Theming Disabled (Menus are retro 3d)
                 Menu_Window.Flat = false;
                 PanelR1.Flat = false;
-                PanelR1.BackColor = CP.Win32.Menu;
-                PanelR1.ButtonShadow = CP.Win32.ButtonShadow;
+                PanelR1.BackColor = TM.Win32.Menu;
+                PanelR1.ButtonShadow = TM.Win32.ButtonShadow;
 
-                menuhilight.BackColor = CP.Win32.Hilight; // Both will have same color
-               
-                highlight.BackColor = CP.Win32.Hilight; // Both will have same color
+                menuhilight.BackColor = TM.Win32.Hilight; // Both will have same color
 
-                menucontainer0.BackColor = CP.Win32.Menu;
-                
-                LabelR3.ForeColor = CP.Win32.MenuText;
+                highlight.BackColor = TM.Win32.Hilight; // Both will have same color
+
+                menucontainer0.BackColor = TM.Win32.Menu;
+
+                LabelR3.ForeColor = TM.Win32.MenuText;
             }
 
             Menu_Window.Invalidate();
@@ -340,7 +337,7 @@ namespace WinPaletter
 
         }
 
-        public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Structures.Console Console, bool PS)
+        public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Theme.Structures.Console Console, bool PS)
         {
             CMD.CMD_ColorTable00 = Console.ColorTable00;
             CMD.CMD_ColorTable01 = Console.ColorTable01;
@@ -447,25 +444,25 @@ namespace WinPaletter
             CMD.Refresh();
         }
 
-        public void LoadCursorsFromCP(CP CP)
+        public void LoadCursorsFromTM(Theme.Manager TM)
         {
-            CursorCP_to_Cursor(Arrow, CP.Cursor_Arrow);
-            CursorCP_to_Cursor(Help, CP.Cursor_Help);
-            CursorCP_to_Cursor(AppLoading, CP.Cursor_AppLoading);
-            CursorCP_to_Cursor(Busy, CP.Cursor_Busy);
-            CursorCP_to_Cursor(Move_Cur, CP.Cursor_Move);
-            CursorCP_to_Cursor(NS, CP.Cursor_NS);
-            CursorCP_to_Cursor(EW, CP.Cursor_EW);
-            CursorCP_to_Cursor(NESW, CP.Cursor_NESW);
-            CursorCP_to_Cursor(NWSE, CP.Cursor_NWSE);
-            CursorCP_to_Cursor(Up, CP.Cursor_Up);
-            CursorCP_to_Cursor(Pen, CP.Cursor_Pen);
-            CursorCP_to_Cursor(None, CP.Cursor_None);
-            CursorCP_to_Cursor(Link, CP.Cursor_Link);
-            CursorCP_to_Cursor(Pin, CP.Cursor_Pin);
-            CursorCP_to_Cursor(Person, CP.Cursor_Person);
-            CursorCP_to_Cursor(IBeam, CP.Cursor_IBeam);
-            CursorCP_to_Cursor(Cross, CP.Cursor_Cross);
+            CursorTM_to_Cursor(Arrow, TM.Cursor_Arrow);
+            CursorTM_to_Cursor(Help, TM.Cursor_Help);
+            CursorTM_to_Cursor(AppLoading, TM.Cursor_AppLoading);
+            CursorTM_to_Cursor(Busy, TM.Cursor_Busy);
+            CursorTM_to_Cursor(Move_Cur, TM.Cursor_Move);
+            CursorTM_to_Cursor(NS, TM.Cursor_NS);
+            CursorTM_to_Cursor(EW, TM.Cursor_EW);
+            CursorTM_to_Cursor(NESW, TM.Cursor_NESW);
+            CursorTM_to_Cursor(NWSE, TM.Cursor_NWSE);
+            CursorTM_to_Cursor(Up, TM.Cursor_Up);
+            CursorTM_to_Cursor(Pen, TM.Cursor_Pen);
+            CursorTM_to_Cursor(None, TM.Cursor_None);
+            CursorTM_to_Cursor(Link, TM.Cursor_Link);
+            CursorTM_to_Cursor(Pin, TM.Cursor_Pin);
+            CursorTM_to_Cursor(Person, TM.Cursor_Person);
+            CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
+            CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
 
             foreach (CursorControl i in Cursors_Container.Controls)
             {
@@ -476,7 +473,7 @@ namespace WinPaletter
             }
         }
 
-        public void CursorCP_to_Cursor(CursorControl CursorControl, Structures.Cursor Cursor)
+        public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
             CursorControl.Prop_ArrowStyle = Cursor.ArrowStyle;
             CursorControl.Prop_CircleStyle = Cursor.CircleStyle;
@@ -521,7 +518,7 @@ namespace WinPaletter
 
             DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
             ShowIcon = false;
-            FinishedLoadingInitialCPs = false;
+            FinishedLoadingInitialTMs = false;
             _Shown = false;
 
             this.LoadLanguage();
@@ -571,7 +568,7 @@ namespace WinPaletter
         {
             // To prevent effect of a store theme on the other forms
             My.Env.Settings = new WPSettings(WPSettings.Mode.Registry);
-            My.Env.RenderingHint = My.Env.CP.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             WPStyle.ApplyStyle(this);
 
@@ -591,7 +588,7 @@ namespace WinPaletter
 
         #endregion
 
-        #region Backgroundworkers to load Store CPs
+        #region Backgroundworkers to load Store themes managers
         public void OnlineMode()
         {
             Dnsapi.DnsFlushResolverCache();
@@ -737,20 +734,20 @@ namespace WinPaletter
                     if (allProgress > 0)
                         FilesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
-                    // Convert themes CPs into StoreItems, and exclude the old formats of WPTH
+                    // Convert themes managers into StoreItems, and exclude the old formats of WPTH
                     if (System.IO.File.Exists(Dir + @"\" + FileName) && _Converter.FetchFile(Dir + @"\" + FileName) == Converter_CP.WP_Format.JSON)
                     {
                         try
                         {
                             Status_lbl.SetText(string.Format(My.Env.Lang.Store_LoadingTheme, FileName));
 
-                            using (var CP = new CP(CP_Type.File, Dir + @"\" + FileName, true))
+                            using (var TM = new Theme.Manager(Theme.Manager.Source.File, Dir + @"\" + FileName, true))
                             {
 
                                 var ctrl = new UI.Controllers.StoreItem()
                                 {
                                     FileName = Dir + @"\" + FileName,
-                                    CP = CP,
+                                    TM = TM,
                                     MD5_ThemeFile = MD5_ThemeFile,
                                     MD5_PackFile = MD5_PackFile,
                                     DoneByWinPaletter = (DB.ToUpper() ?? "") == (My.Resources.Link_StoreMainDB.ToUpper() ?? ""),
@@ -760,10 +757,10 @@ namespace WinPaletter
                                 };
 
                                 if (ctrl.DoneByWinPaletter)
-                                    ctrl.CP.Info.Author = My.MyProject.Application.Info.ProductName;
+                                    ctrl.TM.Info.Author = My.MyProject.Application.Info.ProductName;
 
                                 ctrl.Click += StoreItem_Clicked;
-                                ctrl.CPChanged += StoreItem_CPChanged;
+                                ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
                                 ctrl.MouseEnter += StoreItem_MouseEnter;
                                 ctrl.MouseLeave += StoreItem_MouseLeave;
 
@@ -790,10 +787,10 @@ namespace WinPaletter
                 // Finalizing
                 BeginInvoke(new Action(() => ProgressBar1.Visible = false));
 
-                CPList.Clear();
+                TMList.Clear();
             }
 
-            FinishedLoadingInitialCPs = true;
+            FinishedLoadingInitialTMs = true;
         }
 
         public void OfflineMode()
@@ -832,14 +829,14 @@ namespace WinPaletter
 
                         try
                         {
-                            if (!CPList.ContainsKey(file))
+                            if (!TMList.ContainsKey(file))
                             {
 
                                 Status_lbl.SetText("Enumerating themes: \"" + file + "\"");
 
-                                using (var CPx = new CP(CP_Type.File, file, true))
+                                using (var TMx = new Theme.Manager(Theme.Manager.Source.File, file, true))
                                 {
-                                    CPList.Add(file, CPx);
+                                    TMList.Add(file, TMx);
                                 }
                             }
                         }
@@ -856,14 +853,14 @@ namespace WinPaletter
             }
 
 
-            foreach (var StoreItem in CPList)
+            foreach (var StoreItem in TMList)
             {
                 Status_lbl.SetText("Loading theme \"" + StoreItem.Value.Info.ThemeName + "\"");
 
                 var ctrl = new UI.Controllers.StoreItem()
                 {
                     FileName = StoreItem.Key,
-                    CP = StoreItem.Value,
+                    TM = StoreItem.Value,
                     MD5_ThemeFile = CalculateMD5(StoreItem.Key),
                     DoneByWinPaletter = false,
                     Size = new Size(w, h),
@@ -871,10 +868,10 @@ namespace WinPaletter
                 };
 
                 if (ctrl.DoneByWinPaletter)
-                    ctrl.CP.Info.Author = My.MyProject.Application.Info.ProductName;
+                    ctrl.TM.Info.Author = My.MyProject.Application.Info.ProductName;
 
                 ctrl.Click += StoreItem_Clicked;
-                ctrl.CPChanged += StoreItem_CPChanged;
+                ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
                 ctrl.MouseEnter += StoreItem_MouseEnter;
                 ctrl.MouseLeave += StoreItem_MouseLeave;
 
@@ -894,9 +891,9 @@ namespace WinPaletter
 
             Status_lbl.SetText("");
 
-            CPList.Clear();
+            TMList.Clear();
 
-            FinishedLoadingInitialCPs = true;
+            FinishedLoadingInitialTMs = true;
         }
 
         private void FilesFetcher_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -971,7 +968,7 @@ namespace WinPaletter
 
                             My.MyProject.Forms.Store_Hover.Show();
 
-                            Adjust_Preview(temp.CP);
+                            Adjust_Preview(temp.TM);
                             tabs_preview.SelectedIndex = 0;
                             My.MyProject.Forms.Store_Hover.img0 = tabs_preview.ToBitmap();
                             tabs_preview.SelectedIndex = 1;
@@ -987,7 +984,7 @@ namespace WinPaletter
                     {
                         selectedItem = (UI.Controllers.StoreItem)sender;
                         Cursor = Cursors.AppStarting;
-                        StoreItem1.CP = selectedItem.CP;
+                        StoreItem1.TM = selectedItem.TM;
                         StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter;
                         Theme_MD5_lbl.Text = "MD5: " + selectedItem.MD5_ThemeFile;
 
@@ -996,29 +993,29 @@ namespace WinPaletter
                             My.Env.Animator.HideSync(Tabs);
                             search_panel.Visible = false;
 
-                            Titlebar_lbl.Text = StoreItem.CP.Info.ThemeName + " - " + My.Env.Lang.By + " " + StoreItem.CP.Info.Author;
-                            if (IsFontInstalled(StoreItem.CP.MetricsFonts.CaptionFont.Name))
+                            Titlebar_lbl.Text = StoreItem.TM.Info.ThemeName + " - " + My.Env.Lang.By + " " + StoreItem.TM.Info.Author;
+                            if (Theme.Manager.IsFontInstalled(StoreItem.TM.MetricsFonts.CaptionFont.Name))
                             {
-                                Titlebar_lbl.Font = new Font(StoreItem.CP.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+                                Titlebar_lbl.Font = new Font(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }
                             else
                             {
                                 Titlebar_lbl.Font = new Font("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                             }
 
-                            if (StoreItem.CP.AppTheme.Enabled)
+                            if (StoreItem.TM.AppTheme.Enabled)
                             {
-                                My.Env.Settings.Appearance.CustomColors = StoreItem.CP.AppTheme.Enabled;
-                                My.Env.Settings.Appearance.CustomTheme = StoreItem.CP.AppTheme.DarkMode;
-                                My.Env.Settings.Appearance.RoundedCorners = StoreItem.CP.AppTheme.RoundCorners;
-                                My.Env.Settings.Appearance.BackColor = StoreItem.CP.AppTheme.BackColor;
-                                My.Env.Settings.Appearance.AccentColor = StoreItem.CP.AppTheme.AccentColor;
+                                My.Env.Settings.Appearance.CustomColors = StoreItem.TM.AppTheme.Enabled;
+                                My.Env.Settings.Appearance.CustomTheme = StoreItem.TM.AppTheme.DarkMode;
+                                My.Env.Settings.Appearance.RoundedCorners = StoreItem.TM.AppTheme.RoundCorners;
+                                My.Env.Settings.Appearance.BackColor = StoreItem.TM.AppTheme.BackColor;
+                                My.Env.Settings.Appearance.AccentColor = StoreItem.TM.AppTheme.AccentColor;
                                 WPStyle.ApplyStyle(this, true);
                             }
 
-                            if (StoreItem.CP.AppTheme.Enabled)
+                            if (StoreItem.TM.AppTheme.Enabled)
                             {
-                                Label14.ForeColor = StoreItem.CP.AppTheme.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
+                                Label14.ForeColor = StoreItem.TM.AppTheme.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
                             }
                             else
                             {
@@ -1027,14 +1024,14 @@ namespace WinPaletter
                             Label6.ForeColor = Label14.ForeColor;
                             Theme_MD5_lbl.ForeColor = Label14.ForeColor;
 
-                            Adjust_Preview(StoreItem.CP);
-                            ApplyRetroPreview(StoreItem.CP);
-                            SetClassicMetrics(StoreItem.CP);
-                            ApplyCMDPreview(CMD1, StoreItem.CP.CommandPrompt, false);
-                            ApplyCMDPreview(CMD2, StoreItem.CP.PowerShellx86, true);
-                            ApplyCMDPreview(CMD3, StoreItem.CP.PowerShellx64, true);
-                            LoadCursorsFromCP(StoreItem.CP);
-                            My.Env.RenderingHint = StoreItem.CP.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                            Adjust_Preview(StoreItem.TM);
+                            ApplyRetroPreview(StoreItem.TM);
+                            SetClassicMetrics(StoreItem.TM);
+                            ApplyCMDPreview(CMD1, StoreItem.TM.CommandPrompt, false);
+                            ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
+                            ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
+                            LoadCursorsFromTM(StoreItem.TM);
+                            My.Env.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                             foreach (CursorControl i in Cursors_Container.Controls)
                             {
@@ -1061,32 +1058,32 @@ namespace WinPaletter
                                 respacksize_lbl.Text = 0.SizeString();
                             }
 
-                            desc_txt.Text = StoreItem.CP.Info.Description;
+                            desc_txt.Text = StoreItem.TM.Info.Description;
 
-                            if (My.Env.AppVersion.CompareTo(StoreItem.CP.Info.AppVersion) != -1)
+                            if (My.Env.AppVersion.CompareTo(StoreItem.TM.Info.AppVersion) != -1)
                             {
                                 VersionAlert_lbl.Visible = false;
                             }
                             else
                             {
                                 VersionAlert_lbl.Visible = true;
-                                VersionAlert_lbl.Text = string.Format(My.Env.Lang.Store_LowAppVersionAlert, StoreItem.CP.Info.AppVersion, My.Env.AppVersion);
+                                VersionAlert_lbl.Text = string.Format(My.Env.Lang.Store_LowAppVersionAlert, StoreItem.TM.Info.AppVersion, My.Env.AppVersion);
                             }
 
                             var os_list = new List<string>();
                             os_list.Clear();
 
-                            if (StoreItem.CP.Info.DesignedFor_Win11)
+                            if (StoreItem.TM.Info.DesignedFor_Win11)
                                 os_list.Add(My.Env.Lang.OS_Win11);
-                            if (StoreItem.CP.Info.DesignedFor_Win10)
+                            if (StoreItem.TM.Info.DesignedFor_Win10)
                                 os_list.Add(My.Env.Lang.OS_Win10);
-                            if (StoreItem.CP.Info.DesignedFor_Win81)
+                            if (StoreItem.TM.Info.DesignedFor_Win81)
                                 os_list.Add(My.Env.Lang.OS_Win81);
-                            if (StoreItem.CP.Info.DesignedFor_Win7)
+                            if (StoreItem.TM.Info.DesignedFor_Win7)
                                 os_list.Add(My.Env.Lang.OS_Win7);
-                            if (StoreItem.CP.Info.DesignedFor_WinVista)
+                            if (StoreItem.TM.Info.DesignedFor_WinVista)
                                 os_list.Add(My.Env.Lang.OS_WinVista);
-                            if (StoreItem.CP.Info.DesignedFor_WinXP)
+                            if (StoreItem.TM.Info.DesignedFor_WinXP)
                                 os_list.Add(My.Env.Lang.OS_WinXP);
 
                             string os_format = "";
@@ -1116,26 +1113,26 @@ namespace WinPaletter
 
                             desc_txt.BackColor = desc_txt.GetParentColor();
 
-                            if (StoreItem.CP.AppTheme.Enabled)
+                            if (StoreItem.TM.AppTheme.Enabled)
                             {
-                                desc_txt.ForeColor = StoreItem.CP.AppTheme.DarkMode ? Color.White : Color.Black;
+                                desc_txt.ForeColor = StoreItem.TM.AppTheme.DarkMode ? Color.White : Color.Black;
                             }
                             else
                             {
                                 desc_txt.ForeColor = My.Env.Style.DarkMode ? Color.White : Color.Black;
                             }
 
-                            CMD1.Visible = StoreItem.CP.CommandPrompt.Enabled;
-                            CMD2.Visible = StoreItem.CP.PowerShellx86.Enabled;
-                            CMD3.Visible = StoreItem.CP.PowerShellx64.Enabled;
-                            Panel1.Visible = StoreItem.CP.Cursor_Enabled;
-                            author_url_button.Visible = !string.IsNullOrWhiteSpace(StoreItem.CP.Info.AuthorSocialMediaLink);
+                            CMD1.Visible = StoreItem.TM.CommandPrompt.Enabled;
+                            CMD2.Visible = StoreItem.TM.PowerShellx86.Enabled;
+                            CMD3.Visible = StoreItem.TM.PowerShellx64.Enabled;
+                            Panel1.Visible = StoreItem.TM.Cursor_Enabled;
+                            author_url_button.Visible = !string.IsNullOrWhiteSpace(StoreItem.TM.Info.AuthorSocialMediaLink);
 
                             Tabs.SelectedIndex = 1;
 
                             My.Env.Animator.ShowSync(Tabs);
 
-                            // ' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .CP.Info.Color2, 10, 15)
+                            // ' '' ''Visual.FadeColor(Titlebar_panel, "BackColor", Titlebar_panel.BackColor, .Manager.Info.Color2, 10, 15)
                         }
 
 
@@ -1157,13 +1154,13 @@ namespace WinPaletter
 
         }
 
-        public void StoreItem_CPChanged(object sender, EventArgs e)
+        public void StoreItem_ThemeManagerChanged(object sender, EventArgs e)
         {
-            if (FinishedLoadingInitialCPs)
+            if (FinishedLoadingInitialTMs)
             {
                 {
                     var temp = (UI.Controllers.StoreItem)sender;
-                    Adjust_Preview(temp.CP);
+                    Adjust_Preview(temp.TM);
                     temp.Refresh();
                 }
             }
@@ -1192,20 +1189,20 @@ namespace WinPaletter
 
             {
                 ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = selectedItem.CP.AppTheme.Enabled;
-                temp.BackColor = selectedItem.CP.AppTheme.BackColor;
-                temp.AccentColor = selectedItem.CP.AppTheme.AccentColor;
-                temp.CustomTheme = selectedItem.CP.AppTheme.DarkMode;
-                temp.RoundedCorners = selectedItem.CP.AppTheme.RoundCorners;
+                temp.CustomColors = selectedItem.TM.AppTheme.Enabled;
+                temp.BackColor = selectedItem.TM.AppTheme.BackColor;
+                temp.AccentColor = selectedItem.TM.AppTheme.AccentColor;
+                temp.CustomTheme = selectedItem.TM.AppTheme.DarkMode;
+                temp.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
             }
             WPStyle.ApplyStyle(null, true);
 
-            using (var CPx = new CP(CP_Type.File, selectedItem.FileName))
+            using (var TMx = new Theme.Manager(Theme.Manager.Source.File, selectedItem.FileName))
             {
                 if (selectedItem.DoneByWinPaletter)
-                    CPx.Info.Author = My.MyProject.Application.Info.CompanyName;
-                CPx.Save(CP_Type.Registry, "", My.Env.Settings.ThemeLog.Enabled() ? log : null, true);
-                My.Env.CP_Original = (CP)CPx.Clone();
+                    TMx.Info.Author = My.MyProject.Application.Info.CompanyName;
+                TMx.Save(Theme.Manager.Source.Registry, "", My.Env.Settings.ThemeLog.Enabled() ? log : null, true);
+                My.Env.TM_Original = (Theme.Manager)TMx.Clone();
             }
 
             UpdateExtendedTitlebar();
@@ -1217,16 +1214,16 @@ namespace WinPaletter
                 Core.RestartExplorer(My.Env.Settings.ThemeLog.Enabled() ? log : null);
             }
             else if (My.Env.Settings.ThemeLog.Enabled())
-                AddNode(log, My.Env.Lang.NoDefResExplorer, "warning");
+                Theme.Manager.AddNode(log, My.Env.Lang.NoDefResExplorer, "warning");
 
             if (My.Env.Settings.ThemeLog.Enabled())
-                AddNode(log, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_AllDone), "info");
+                Theme.Manager.AddNode(log, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_AllDone), "info");
 
-            if (selectedItem.CP.MetricsFonts.Enabled & GetWindowsScreenScalingFactor() > 100d)
-                AddNode(log, string.Format("{0}", My.Env.Lang.CP_MetricsHighDPIAlert), "info");
+            if (selectedItem.TM.MetricsFonts.Enabled & GetWindowsScreenScalingFactor() > 100d)
+                Theme.Manager.AddNode(log, string.Format("{0}", My.Env.Lang.CP_MetricsHighDPIAlert), "info");
 
             if (My.Env.Settings.ThemeLog.Enabled())
-                AddNode(log, My.Env.Lang.Store_LogoffRecommended, "info");
+                Theme.Manager.AddNode(log, My.Env.Lang.Store_LogoffRecommended, "info");
 
             log_lbl.Visible = true;
             ok_btn.Visible = true;
@@ -1253,17 +1250,17 @@ namespace WinPaletter
             if (ApplyOrEditToggle)
             {
                 // Apply button is pressed
-                My.MyProject.Forms.Store_CPToggles.CP = selectedItem.CP;
+                My.MyProject.Forms.Store_CPToggles.TM = selectedItem.TM;
                 if (My.MyProject.Forms.Store_CPToggles.ShowDialog() == DialogResult.OK)
                 {
                     Apply_Theme();
                     if (selectedItem.DoneByWinPaletter)
-                        My.Env.CP.Info.Author = My.MyProject.Application.Info.CompanyName;
-                    My.Env.CP = selectedItem.CP;
-                    My.Env.CP_Original = (CP)My.Env.CP.Clone();
-                    My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.CP, false);
-                    My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
-                    My.MyProject.Forms.MainFrm.ApplyCPValues(My.Env.CP);
+                        My.Env.TM.Info.Author = My.MyProject.Application.Info.CompanyName;
+                    My.Env.TM = selectedItem.TM;
+                    My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
+                    My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM, false);
+                    My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
+                    My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
                     UpdateTitlebarColors();
                 }
             }
@@ -1272,13 +1269,13 @@ namespace WinPaletter
                 // Edit button is pressed
                 WindowState = FormWindowState.Minimized;
                 My.MyProject.Forms.ComplexSave.GetResponse(My.MyProject.Forms.MainFrm.SaveFileDialog1, null, null, null);
-                My.Env.CP_Original = (CP)My.Env.CP.Clone();
-                My.Env.CP = new CP(CP_Type.File, selectedItem.FileName);
+                My.Env.TM_Original = (Theme.Manager)My.Env.TM.Clone();
+                My.Env.TM = new Theme.Manager(Theme.Manager.Source.File, selectedItem.FileName);
                 if (selectedItem.DoneByWinPaletter)
-                    My.Env.CP.Info.Author = My.MyProject.Application.Info.CompanyName;
-                My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.CP, false);
-                My.MyProject.Forms.MainFrm.ApplyCPValues(My.Env.CP);
-                My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.CP);
+                    My.Env.TM.Info.Author = My.MyProject.Application.Info.CompanyName;
+                My.MyProject.Forms.MainFrm.ApplyStylesToElements(My.Env.TM, false);
+                My.MyProject.Forms.MainFrm.LoadFromTM(My.Env.TM);
+                My.MyProject.Forms.MainFrm.ApplyColorsToElements(My.Env.TM);
             }
         }
 
@@ -1290,7 +1287,7 @@ namespace WinPaletter
                 if (Container.Controls[0] is UI.Controllers.StoreItem)
                 {
                     ((UI.Controllers.StoreItem)Container.Controls[0]).MouseClick -= StoreItem_Clicked;
-                    ((UI.Controllers.StoreItem)Container.Controls[0]).CPChanged -= StoreItem_CPChanged;
+                    ((UI.Controllers.StoreItem)Container.Controls[0]).ThemeManagerChanged -= StoreItem_ThemeManagerChanged;
                     ((UI.Controllers.StoreItem)Container.Controls[0]).MouseEnter -= StoreItem_MouseEnter;
                     ((UI.Controllers.StoreItem)Container.Controls[0]).MouseLeave -= StoreItem_MouseLeave;
                 }
@@ -1319,7 +1316,7 @@ namespace WinPaletter
 
             foreach (var st_item in lst)
             {
-                if ((My.Env.Settings.Store.Search_ThemeNames && st_item.Value.CP.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (My.Env.Settings.Store.Search_AuthorsNames && st_item.Value.CP.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (My.Env.Settings.Store.Search_Descriptions && st_item.Value.CP.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)))
+                if ((My.Env.Settings.Store.Search_ThemeNames && st_item.Value.TM.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (My.Env.Settings.Store.Search_AuthorsNames && st_item.Value.TM.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)) | (My.Env.Settings.Store.Search_Descriptions && st_item.Value.TM.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", "").ToUpper().Contains(search_text)))
 
                 {
 
@@ -1328,7 +1325,7 @@ namespace WinPaletter
                     var ctrl = new UI.Controllers.StoreItem()
                     {
                         FileName = st_item.Key,
-                        CP = st_item.Value.CP,
+                        TM = st_item.Value.TM,
                         MD5_ThemeFile = CalculateMD5(st_item.Key),
                         DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
                         Size = new Size(w, h),
@@ -1336,10 +1333,10 @@ namespace WinPaletter
                     };
 
                     if (ctrl.DoneByWinPaletter)
-                        ctrl.CP.Info.Author = My.MyProject.Application.Info.ProductName;
+                        ctrl.TM.Info.Author = My.MyProject.Application.Info.ProductName;
 
                     ctrl.Click += StoreItem_Clicked;
-                    ctrl.CPChanged += StoreItem_CPChanged;
+                    ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
                     ctrl.MouseEnter += StoreItem_MouseEnter;
                     ctrl.MouseLeave += StoreItem_MouseLeave;
 
@@ -1450,25 +1447,25 @@ namespace WinPaletter
 
                 if (My.Env.W7)
                 {
-                    if (My.Env.CP.Windows7.Theme != Structures.Windows7.Themes.Classic)
+                    if (My.Env.TM.Windows7.Theme != Theme.Structures.Windows7.Themes.Classic)
                     {
                         Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234);
                     }
                     else
                     {
-                        Titlebar_panel.BackColor = My.Env.CP.Win32.ButtonFace;
+                        Titlebar_panel.BackColor = My.Env.TM.Win32.ButtonFace;
                     }
                 }
 
                 else if (My.Env.WVista)
                 {
-                    if (My.Env.CP.WindowsVista.Theme != Structures.Windows7.Themes.Classic)
+                    if (My.Env.TM.WindowsVista.Theme != Theme.Structures.Windows7.Themes.Classic)
                     {
                         Titlebar_panel.BackColor = Color.FromArgb(185, 209, 234);
                     }
                     else
                     {
-                        Titlebar_panel.BackColor = My.Env.CP.Win32.ButtonFace;
+                        Titlebar_panel.BackColor = My.Env.TM.Win32.ButtonFace;
                     }
 
                 }
@@ -1478,13 +1475,13 @@ namespace WinPaletter
             {
                 Titlebar_lbl.DrawOnGlass = false;
 
-                if (My.Env.CP.WindowsXP.Theme != Structures.WindowsXP.Themes.Classic)
+                if (My.Env.TM.WindowsXP.Theme != Theme.Structures.WindowsXP.Themes.Classic)
                 {
                     Titlebar_panel.BackColor = My.Env.Style.Colors.Back;
                 }
                 else
                 {
-                    Titlebar_panel.BackColor = My.Env.CP.Win32.ButtonFace;
+                    Titlebar_panel.BackColor = My.Env.TM.Win32.ButtonFace;
                 }
             }
 
@@ -1575,9 +1572,9 @@ namespace WinPaletter
         {
 
             My.Env.Animator.HideSync(Tabs);
-            My.Env.RenderingHint = My.Env.CP.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            My.Env.RenderingHint = My.Env.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-            if (selectedItem is not null && selectedItem.CP.AppTheme.Enabled)
+            if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
                 My.Env.Settings = new WPSettings(WPSettings.Mode.Registry);
                 WPStyle.FetchDarkMode();
@@ -1601,9 +1598,9 @@ namespace WinPaletter
         {
             ApplyOrEditToggle = sender == Apply_btn;
 
-            if (!string.IsNullOrWhiteSpace(selectedItem.CP.Info.License))
+            if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
             {
-                My.MyProject.Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.CP.Info.License;
+                My.MyProject.Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
                 if (!(My.MyProject.Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
                     return;
             }
@@ -1634,8 +1631,8 @@ namespace WinPaletter
                         {
                             My.MyProject.Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
                             My.MyProject.Forms.Store_DownloadProgress.File = Dir + @"\" + FileName;
-                            My.MyProject.Forms.Store_DownloadProgress.ThemeName = selectedItem.CP.Info.ThemeName;
-                            My.MyProject.Forms.Store_DownloadProgress.ThemeVersion = selectedItem.CP.Info.ThemeVersion;
+                            My.MyProject.Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                            My.MyProject.Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
                             if (My.MyProject.Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK)
                                 DoActionsAfterPackDownload();
                         }
@@ -1813,12 +1810,12 @@ namespace WinPaletter
         private void Author_url_button_Click(object sender, EventArgs e)
         {
 
-            if (WPStyle.MsgBox(My.Env.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.CP.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+            if (WPStyle.MsgBox(My.Env.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
             {
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(selectedItem.CP.Info.AuthorSocialMediaLink))
-                        Process.Start(selectedItem.CP.Info.AuthorSocialMediaLink);
+                    if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink))
+                        Process.Start(selectedItem.TM.Info.AuthorSocialMediaLink);
                 }
                 catch
                 {
@@ -1830,9 +1827,9 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
 
-            if (!string.IsNullOrWhiteSpace(selectedItem.CP.Info.License))
+            if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
             {
-                My.MyProject.Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.CP.Info.License;
+                My.MyProject.Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
                 if (!(My.MyProject.Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
                     return;
             }
@@ -1857,8 +1854,8 @@ namespace WinPaletter
 
                         My.MyProject.Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
                         My.MyProject.Forms.Store_DownloadProgress.File = themepackfilename;
-                        My.MyProject.Forms.Store_DownloadProgress.ThemeName = selectedItem.CP.Info.ThemeName;
-                        My.MyProject.Forms.Store_DownloadProgress.ThemeVersion = selectedItem.CP.Info.ThemeVersion;
+                        My.MyProject.Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                        My.MyProject.Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
                         My.MyProject.Forms.Store_DownloadProgress.ShowDialog();
                     }
                 }

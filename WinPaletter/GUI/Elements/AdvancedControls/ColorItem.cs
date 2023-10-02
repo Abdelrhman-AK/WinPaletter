@@ -201,6 +201,8 @@ namespace WinPaletter.UI.Controllers
 
                 }
 
+                My.MyProject.Application.CopiedColor = BackColor;
+
                 My.MyProject.Forms.ColorInfoDragDrop.Close();
 
                 base.OnDragDrop(e);

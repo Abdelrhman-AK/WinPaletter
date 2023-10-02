@@ -220,7 +220,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            ApplyFromCP(My.Env.CP);
+            ApplyFromTM(My.Env.TM);
             CheckBox35_SFC.Checked = My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound;
 
             // Remove handler to avoid doubling/tripling events
@@ -282,12 +282,12 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyFromCP(CP CP)
+        public void ApplyFromTM(Theme.Manager TM)
         {
-            ApplyFromCP(CP.Sounds);
+            ApplyFromTM(TM.Sounds);
         }
 
-        public void ApplyFromCP(CP.Structures.Sounds Sounds)
+        public void ApplyFromTM(Theme.Structures.Sounds Sounds)
         {
             SoundsEnabled.Checked = Sounds.Enabled;
             TextBox1.Text = Sounds.Snd_Win_SystemStart;
@@ -383,10 +383,10 @@ namespace WinPaletter
 
         }
 
-        public void ApplyToCP(CP CP)
+        public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref CP.Sounds;
+                ref var temp = ref TM.Sounds;
                 temp.Enabled = SoundsEnabled.Checked;
                 temp.Snd_Win_SystemStart = TextBox1.Text;
                 temp.Snd_Imageres_SystemStart = TextBox2.Text;
@@ -489,24 +489,24 @@ namespace WinPaletter
         {
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var CPx = new CP(CP.CP_Type.File, OpenFileDialog1.FileName);
-                ApplyFromCP(CPx);
-                CPx.Dispose();
+                var TMx = new Theme.Manager(Theme.Manager.Source.File, OpenFileDialog1.FileName);
+                ApplyFromTM(TMx);
+                TMx.Dispose();
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyFromCP(CPx);
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyFromTM(TMx);
+            TMx.Dispose();
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+            using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
             {
-                ApplyFromCP(_Def);
+                ApplyFromTM(_Def);
             }
         }
 
@@ -515,7 +515,7 @@ namespace WinPaletter
             My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             My.Env.Settings.Save(WPSettings.Mode.Registry);
 
-            ApplyToCP(My.Env.CP);
+            ApplyToTM(My.Env.TM);
             Close();
         }
 
@@ -526,11 +526,11 @@ namespace WinPaletter
             My.Env.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             My.Env.Settings.Save(WPSettings.Mode.Registry);
 
-            var CPx = new CP(CP.CP_Type.Registry);
-            ApplyToCP(CPx);
-            ApplyToCP(My.Env.CP);
-            CPx.Sounds.Apply();
-            CPx.Dispose();
+            var TMx = new Theme.Manager(Theme.Manager.Source.Registry);
+            ApplyToTM(TMx);
+            ApplyToTM(My.Env.TM);
+            TMx.Sounds.Apply();
+            TMx.Dispose();
             Cursor = Cursors.Default;
         }
 
@@ -558,7 +558,7 @@ namespace WinPaletter
         {
             if (OpenThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                using (var _Def = CP_Defaults.From(My.Env.PreviewStyle))
+                using (var _Def = Theme.Default.From(My.Env.PreviewStyle))
                 {
                     GetFromClassicThemeFile(OpenThemeDialog.FileName, _Def.Sounds);
                 }
@@ -566,11 +566,11 @@ namespace WinPaletter
         }
 
 
-        public void GetFromClassicThemeFile(string File, CP.Structures.Sounds _DefaultSounds)
+        public void GetFromClassicThemeFile(string File, Theme.Structures.Sounds _DefaultSounds)
         {
             using (var _ini = new INI(File))
             {
-                var snd = new CP.Structures.Sounds();
+                var snd = new Theme.Structures.Sounds();
 
                 string Scope_Win = @"AppEvents\Schemes\Apps\.Default\{0}\.Current";
                 snd.Snd_Win_Default = _ini.IniReadValue(string.Format(Scope_Win, ".Default"), "DefaultValue", _DefaultSounds.Snd_Win_Default).PhrasePath();
@@ -666,7 +666,7 @@ namespace WinPaletter
                 snd.Snd_SpeechRec_MisrecoSound = _ini.IniReadValue(string.Format(Scope_SpeechRec, "MisrecoSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_MisrecoSound).PhrasePath();
                 snd.Snd_SpeechRec_PanelSound = _ini.IniReadValue(string.Format(Scope_SpeechRec, "PanelSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_PanelSound).PhrasePath();
 
-                ApplyFromCP(snd);
+                ApplyFromTM(snd);
                 GC.Collect();
                 GC.SuppressFinalize(snd);
             }
