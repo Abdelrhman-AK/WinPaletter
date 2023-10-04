@@ -694,20 +694,20 @@ namespace WinPaletter
             LoadSettings();
 
             int w = 19;
-            EP_Start_11.Image = My.Resources.Native11.Resize(w, w);
-            EP_Start_10.Image = My.Resources.Native10.Resize(w, w);
+            EP_Start_11.Image = Properties.Resources.Native11.Resize(w, w);
+            EP_Start_10.Image = Properties.Resources.Native10.Resize(w, w);
             EP_Taskbar_11.Image = EP_Start_11.Image;
             EP_Taskbar_10.Image = EP_Start_10.Image;
 
             if (My.Env.Style.DarkMode)
             {
-                EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Resize(w, w);
-                EP_ORB_10.Image = My.Resources.StartBtn_10Dark.Resize(w, w);
+                EP_ORB_11.Image = Properties.Resources.StartBtn_11_EP.Resize(w, w);
+                EP_ORB_10.Image = Properties.Resources.StartBtn_10Dark.Resize(w, w);
             }
             else
             {
-                EP_ORB_11.Image = My.Resources.StartBtn_11_EP.Invert().Resize(w, w);
-                EP_ORB_10.Image = My.Resources.StartBtn_10Light.Resize(w, w);
+                EP_ORB_11.Image = Properties.Resources.StartBtn_11_EP.Invert().Resize(w, w);
+                EP_ORB_10.Image = Properties.Resources.StartBtn_10Light.Resize(w, w);
             }
 
             if (My.Env.WXP)
@@ -853,7 +853,7 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Repository + "wiki/Language-creation");
+            Process.Start(Properties.Resources.Link_Repository + "wiki/Language-creation");
         }
 
         private void Button16_Click(object sender, EventArgs e)
@@ -874,7 +874,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Repository + "tree/master/Languages");
+            Process.Start(Properties.Resources.Link_Repository + "tree/master/Languages");
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -898,7 +898,7 @@ namespace WinPaletter
             {
                 int i = ListBox1.SelectedIndex;
 
-                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (My.Resources.Link_StoreReposDB.ToUpper() ?? "")) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (My.Resources.Link_StoreMainDB.ToUpper() ?? "")))
+                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (Properties.Resources.Link_StoreReposDB.ToUpper() ?? "")) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? "") == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? "")))
                 {
                     ListBox1.Items.RemoveAt(i);
                     if (i < ListBox1.Items.Count - 1)

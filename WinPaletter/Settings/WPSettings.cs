@@ -351,7 +351,7 @@ namespace WinPaletter
                 public void Load()
                 {
                     Online_or_Offline = Conversions.ToBoolean(GetReg(REG_Store, "Online_or_Offline", true));
-                    Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { My.Resources.Link_StoreMainDB, My.Resources.Link_StoreReposDB });
+                    Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB });
                     Offline_Directories = (string[])GetReg(REG_Store, "Offline_Directories", new[] { "" });
                     Offline_SubFolders = Conversions.ToBoolean(GetReg(REG_Store, "Offline_SubFolders", true));
                     Search_ThemeNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_ThemeNames", true));
@@ -359,31 +359,31 @@ namespace WinPaletter
                     Search_Descriptions = Conversions.ToBoolean(GetReg(REG_Store, "Search_Descriptions", true));
                     ShowTips = Conversions.ToBoolean(GetReg(REG_Store, "ShowTips", true));
 
-                    if (!Online_Repositories.Contains(My.Resources.Link_StoreMainDB))
+                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = My.Resources.Link_StoreMainDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
                     }
 
-                    if (!Online_Repositories.Contains(My.Resources.Link_StoreReposDB))
+                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = My.Resources.Link_StoreReposDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
                     }
                 }
 
                 public void Save()
                 {
-                    if (!Online_Repositories.Contains(My.Resources.Link_StoreMainDB))
+                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = My.Resources.Link_StoreMainDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
                     }
 
-                    if (!Online_Repositories.Contains(My.Resources.Link_StoreReposDB))
+                    if (!Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
                     {
                         Array.Resize(ref Online_Repositories, Online_Repositories.Length + 1);
-                        Online_Repositories[Online_Repositories.Length - 1] = My.Resources.Link_StoreReposDB;
+                        Online_Repositories[Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
                     }
 
                     EditReg(REG_Store, "Search_ThemeNames", Search_ThemeNames, RegistryValueKind.DWord);
@@ -564,7 +564,7 @@ namespace WinPaletter
             Search_AuthorsNames = true,
             Search_Descriptions = true,
             Online_or_Offline = true,
-            Online_Repositories = new[] { My.Resources.Link_StoreMainDB, My.Resources.Link_StoreReposDB },
+            Online_Repositories = new[] { Properties.Resources.Link_StoreMainDB, Properties.Resources.Link_StoreReposDB },
             Offline_Directories = new[] { "" },
             Offline_SubFolders = true,
             ShowTips = true
@@ -642,16 +642,16 @@ namespace WinPaletter
                                         }
                                     }
 
-                                    if (!Store.Online_Repositories.Contains(My.Resources.Link_StoreMainDB))
+                                    if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
                                     {
                                         Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = My.Resources.Link_StoreMainDB;
+                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
                                     }
 
-                                    if (!Store.Online_Repositories.Contains(My.Resources.Link_StoreReposDB))
+                                    if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
                                     {
                                         Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = My.Resources.Link_StoreReposDB;
+                                        Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
                                     }
                                 }
                                 catch (Exception ex)
@@ -701,16 +701,16 @@ namespace WinPaletter
 
                 case Mode.File:
                     {
-                        if (!Store.Online_Repositories.Contains(My.Resources.Link_StoreMainDB))
+                        if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreMainDB))
                         {
                             Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = My.Resources.Link_StoreMainDB;
+                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreMainDB;
                         }
 
-                        if (!Store.Online_Repositories.Contains(My.Resources.Link_StoreReposDB))
+                        if (!Store.Online_Repositories.Contains(Properties.Resources.Link_StoreReposDB))
                         {
                             Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
-                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = My.Resources.Link_StoreReposDB;
+                            Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Properties.Resources.Link_StoreReposDB;
                         }
 
                         System.IO.File.WriteAllText(File, ToString());

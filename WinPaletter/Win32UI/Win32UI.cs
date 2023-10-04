@@ -1536,7 +1536,7 @@ namespace WinPaletter
 
             Toggle1.Checked = condition0 | condition1 | condition2;
 
-            LoadFromWinThemeString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
+            LoadFromWinThemeString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString());
         }
 
         private void Menu_Window_SizeChanged(object sender, EventArgs e)
@@ -1575,7 +1575,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-classic-colors");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-classic-colors");
         }
 
     }

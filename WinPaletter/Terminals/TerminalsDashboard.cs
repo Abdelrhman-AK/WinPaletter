@@ -98,9 +98,9 @@ namespace WinPaletter
             Location = My.MyProject.Forms.MainFrm.Button24.PointToScreen(Point.Empty) - (Size)new Point(0, Height);
 
             if (My.Env.W10)
-                PictureBox1.Image = My.Resources.Native10;
+                PictureBox1.Image = Properties.Resources.Native10;
             else
-                PictureBox1.Image = My.Resources.Native11;
+                PictureBox1.Image = Properties.Resources.Native11;
 
             User32.AnimateWindow(Handle, _Speed, User32.AnimateWindowFlags.AW_ACTIVATE | User32.AnimateWindowFlags.AW_BLEND);
 

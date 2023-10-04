@@ -49,7 +49,7 @@ namespace WinPaletter.UI.WP
 
         #region Variables
 
-        private readonly TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.6d));
+        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.6d));
         private Color LineImage;
         private Color BC;
         private readonly int Steps = 15;

@@ -26,7 +26,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
 
         private Bitmap AdaptedBack, AdaptedBackBlurred;
-        private Bitmap Noise7 = My.Resources.AeroGlass;
+        private Bitmap Noise7 = Properties.Resources.AeroGlass;
         private readonly int FreeMargin = 8;
 
         public enum Preview_Enum
@@ -104,7 +104,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     try
                     {
-                        Noise7 = My.Resources.AeroGlass.Fade((double)(Win7Noise / 100f));
+                        Noise7 = Properties.Resources.AeroGlass.Fade((double)(Win7Noise / 100f));
                     }
                     catch
                     {
@@ -295,7 +295,7 @@ namespace WinPaletter.UI.Simulation
             }
             try
             {
-                Noise7 = My.Resources.AeroGlass.Fade(Win7Noise / 100);
+                Noise7 = Properties.Resources.AeroGlass.Fade(Win7Noise / 100);
             }
             catch
             {
@@ -732,25 +732,25 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (CloseRect.Height >= 27)
                     {
-                        CloseBtn = My.Resources.Win8_Close_3;
+                        CloseBtn = Properties.Resources.Win8_Close_3;
                     }
                     else if (CloseRect.Height >= 24)
                     {
-                        CloseBtn = My.Resources.Win8_Close_2;
+                        CloseBtn = Properties.Resources.Win8_Close_2;
                     }
                     else if (CloseRect.Height >= 21)
                     {
-                        CloseBtn = My.Resources.Win8_Close_1;
+                        CloseBtn = Properties.Resources.Win8_Close_1;
                     }
                     else
                     {
-                        CloseBtn = My.Resources.Win8_Close_0;
+                        CloseBtn = Properties.Resources.Win8_Close_0;
                     }
                 }
 
                 else
                 {
-                    CloseBtn = My.Resources.Win8_Close_ToolWindow;
+                    CloseBtn = Properties.Resources.Win8_Close_ToolWindow;
                 }
 
                 if (Preview == Preview_Enum.W8Lite)
@@ -893,14 +893,14 @@ namespace WinPaletter.UI.Simulation
 
                     if (Active)
                     {
-                        G.DrawImage(My.Resources.Win7Sides, RectSide1);
-                        G.DrawImage(My.Resources.Win7Sides, RectSide2);
+                        G.DrawImage(Properties.Resources.Win7Sides, RectSide1);
+                        G.DrawImage(Properties.Resources.Win7Sides, RectSide2);
 
                         int TitleTopW = (int)Math.Round(Rect.Width * 0.6d);
                         int TitleTopH = (int)Math.Round(Rect.Height * 0.6d);
 
-                        G.DrawImage(My.Resources.Win7_TitleTopL, new Rectangle(Rect.X + (ToolWindow ? 0 : 1), Rect.Y + (ToolWindow ? 1 : 0), TitleTopW, TitleTopH));
-                        G.DrawImage(My.Resources.Win7_TitleTopR, new Rectangle(Rect.X + Rect.Width - TitleTopW, Rect.Y + (ToolWindow ? 1 : 0), TitleTopW, TitleTopH));
+                        G.DrawImage(Properties.Resources.Win7_TitleTopL, new Rectangle(Rect.X + (ToolWindow ? 0 : 1), Rect.Y + (ToolWindow ? 1 : 0), TitleTopW, TitleTopH));
+                        G.DrawImage(Properties.Resources.Win7_TitleTopR, new Rectangle(Rect.X + Rect.Width - TitleTopW, Rect.Y + (ToolWindow ? 1 : 0), TitleTopW, TitleTopH));
                     }
 
                     var inner = new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
@@ -966,20 +966,20 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (!WinVista)
                             {
-                                closeBtn = My.Resources.Win7_Close_Active;
+                                closeBtn = Properties.Resources.Win7_Close_Active;
                             }
                             else
                             {
-                                closeBtn = My.Resources.Vista_Close_Active;
+                                closeBtn = Properties.Resources.Vista_Close_Active;
                             }
                         }
                         else if (!WinVista)
                         {
-                            closeBtn = My.Resources.Win7_Close_inactive;
+                            closeBtn = Properties.Resources.Win7_Close_inactive;
                         }
                         else
                         {
-                            closeBtn = My.Resources.Vista_Close_inactive;
+                            closeBtn = Properties.Resources.Vista_Close_inactive;
                         }
 
                         CloseRect = new Rectangle(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height);
@@ -1049,20 +1049,20 @@ namespace WinPaletter.UI.Simulation
                         {
                             if (CloseRect.Height >= 22)
                             {
-                                CloseBtn = My.Resources.Win7_Basic_Close_2;
+                                CloseBtn = Properties.Resources.Win7_Basic_Close_2;
                             }
                             else if (CloseRect.Height >= 18)
                             {
-                                CloseBtn = My.Resources.Win7_Basic_Close_1;
+                                CloseBtn = Properties.Resources.Win7_Basic_Close_1;
                             }
                             else
                             {
-                                CloseBtn = My.Resources.Win7_Basic_Close_0;
+                                CloseBtn = Properties.Resources.Win7_Basic_Close_0;
                             }
                         }
                         else
                         {
-                            CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow;
+                            CloseBtn = Properties.Resources.Win7_Basic_Close_ToolWindow;
                         }
 
                         int xW = CloseRect.Width % 2 == 0 ? CloseBtn.Width + 1 : CloseBtn.Width;
@@ -1214,8 +1214,8 @@ namespace WinPaletter.UI.Simulation
                     }
                     if (Active)
                     {
-                        G.DrawImage(My.Resources.Win7Sides, RectSide1);
-                        G.DrawImage(My.Resources.Win7Sides, RectSide2);
+                        G.DrawImage(Properties.Resources.Win7Sides, RectSide1);
+                        G.DrawImage(Properties.Resources.Win7Sides, RectSide2);
                     }
                     G.ResetClip();
                     G.FillRectangle(Brushes.White, InnerWindow_1);
@@ -1280,20 +1280,20 @@ namespace WinPaletter.UI.Simulation
                     {
                         if (CloseRect.Height >= 22)
                         {
-                            CloseBtn = My.Resources.Win7_Basic_Close_2;
+                            CloseBtn = Properties.Resources.Win7_Basic_Close_2;
                         }
                         else if (CloseRect.Height >= 18)
                         {
-                            CloseBtn = My.Resources.Win7_Basic_Close_1;
+                            CloseBtn = Properties.Resources.Win7_Basic_Close_1;
                         }
                         else
                         {
-                            CloseBtn = My.Resources.Win7_Basic_Close_0;
+                            CloseBtn = Properties.Resources.Win7_Basic_Close_0;
                         }
                     }
                     else
                     {
-                        CloseBtn = My.Resources.Win7_Basic_Close_ToolWindow;
+                        CloseBtn = Properties.Resources.Win7_Basic_Close_ToolWindow;
                     }
 
 
@@ -1373,12 +1373,12 @@ namespace WinPaletter.UI.Simulation
                 if (Active)
                 {
                     ForeColorX = AccentColor_Active.IsDark() ? Color.White : Color.Black;
-                    closeImg = AccentColor_Active.IsDark() ? My.Resources.Win10x_Close_Dark : My.Resources.Win10x_Close_Light;
+                    closeImg = AccentColor_Active.IsDark() ? Properties.Resources.Win10x_Close_Dark : Properties.Resources.Win10x_Close_Light;
                 }
                 else
                 {
                     ForeColorX = AccentColor_Inactive.IsDark() ? Color.FromArgb(115, 115, 115) : Color.Black;
-                    closeImg = AccentColor_Inactive.IsDark() ? My.Resources.Win10x_Close_Dark : My.Resources.Win10x_Close_Light;
+                    closeImg = AccentColor_Inactive.IsDark() ? Properties.Resources.Win10x_Close_Dark : Properties.Resources.Win10x_Close_Light;
                 }
             }
 
@@ -1387,27 +1387,27 @@ namespace WinPaletter.UI.Simulation
                 if (Preview == Preview_Enum.W11)
                 {
                     ForeColorX = DarkMode ? Color.White : Color.Black;
-                    closeImg = DarkMode ? My.Resources.Win10x_Close_Dark : My.Resources.Win10x_Close_Light;
+                    closeImg = DarkMode ? Properties.Resources.Win10x_Close_Dark : Properties.Resources.Win10x_Close_Light;
                 }
                 else if (DarkMode)
                 {
                     ForeColorX = Color.White;
-                    closeImg = My.Resources.Win10x_Close_Dark;
+                    closeImg = Properties.Resources.Win10x_Close_Dark;
                 }
                 else
                 {
                     ForeColorX = Color.Black;
-                    closeImg = My.Resources.Win10x_Close_Light;
+                    closeImg = Properties.Resources.Win10x_Close_Light;
                 }
             }
             else
             {
                 ForeColorX = Color.FromArgb(115, 115, 115);
-                closeImg = DarkMode ? My.Resources.Win10x_Close_Dark : My.Resources.Win10x_Close_Light;
+                closeImg = DarkMode ? Properties.Resources.Win10x_Close_Dark : Properties.Resources.Win10x_Close_Light;
             }
 
             if (!ToolWindow)
-                G.DrawImage(Active ? My.Resources.SampleApp_Small_Active : My.Resources.SampleApp_Small_Inactive, IconRect);
+                G.DrawImage(Active ? Properties.Resources.SampleApp_Small_Active : Properties.Resources.SampleApp_Small_Inactive, IconRect);
 
             if (Preview == Preview_Enum.W11 | Preview == Preview_Enum.W10)
             {

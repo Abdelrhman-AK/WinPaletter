@@ -35,11 +35,11 @@ namespace WinPaletter
                         lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win11);
                         lbl8.Text = My.Env.Lang.CP_Undefined;
                         lbl9.Text = My.Env.Lang.CP_Undefined;
-                        pic5.Image = My.Resources.Mini_Settings_Icons;
-                        pic6.Image = My.Resources.Mini_PressedButton;
-                        pic7.Image = My.Resources.Mini_UWPDlg;
-                        pic8.Image = My.Resources.Mini_Undefined;
-                        pic9.Image = My.Resources.Mini_Undefined;
+                        pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                        pic6.Image = Properties.Resources.Mini_PressedButton;
+                        pic7.Image = Properties.Resources.Mini_UWPDlg;
+                        pic8.Image = Properties.Resources.Mini_Undefined;
+                        pic9.Image = Properties.Resources.Mini_Undefined;
 
                         switch (!TM.Windows11.WinMode_Light)
                         {
@@ -51,10 +51,10 @@ namespace WinPaletter
                                     lbl4.Text = My.Env.Lang.CP_11_OverflowTray;
                                     lbl5.Text = My.Env.Lang.CP_11_Settings;
 
-                                    pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                    pic2.Image = My.Resources.Mini_ACHover_Links;
-                                    pic3.Image = My.Resources.Mini_Lines_Toggles_Buttons;
-                                    pic4.Image = My.Resources.Mini_Overflow;
+                                    pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                    pic2.Image = Properties.Resources.Mini_ACHover_Links;
+                                    pic3.Image = Properties.Resources.Mini_Lines_Toggles_Buttons;
+                                    pic4.Image = Properties.Resources.Mini_Overflow;
                                     break;
                                 }
                             case false:   // '''''''''Light
@@ -65,10 +65,10 @@ namespace WinPaletter
                                     lbl4.Text = My.Env.Lang.CP_11_Lines_Toggles_Buttons_Overflow;
                                     lbl5.Text = My.Env.Lang.CP_11_SettingsAndTaskbarAppUnderline;
 
-                                    pic1.Image = My.Resources.Mini_Taskbar;
-                                    pic2.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                    pic3.Image = My.Resources.Mini_Badge;
-                                    pic4.Image = My.Resources.Mini_Lines_Toggles_Buttons;
+                                    pic1.Image = Properties.Resources.Mini_Taskbar;
+                                    pic2.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                    pic3.Image = Properties.Resources.Mini_Badge;
+                                    pic4.Image = Properties.Resources.Mini_Lines_Toggles_Buttons;
                                     break;
                                 }
                         }
@@ -87,26 +87,26 @@ namespace WinPaletter
                                             if (My.Env.EP.UseStart10)
                                             {
                                                 lbl1.Text = My.Env.Lang.CP_10_Taskbar;
-                                                pic1.Image = My.Resources.Mini_Taskbar;
+                                                pic1.Image = Properties.Resources.Mini_Taskbar;
                                             }
                                             else
                                             {
                                                 lbl1.Text = My.Env.Lang.CP_11_StartMenu_Taskbar_AC;
-                                                pic1.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
+                                                pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                             }
 
                                             lbl3.Text = My.Env.Lang.CP_EP_ACButton_TaskbarAppLine;
                                             lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
 
-                                            pic3.Image = My.Resources.Mini_AC;
-                                            pic5.Image = My.Resources.Mini_Settings_Icons;
-                                            pic6.Image = My.Resources.Native11;
+                                            pic3.Image = Properties.Resources.Mini_AC;
+                                            pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                            pic6.Image = Properties.Resources.Native11;
                                         }
 
                                         if (My.Env.EP.UseStart10)
                                         {
                                             lbl4.Text = My.Env.Lang.CP_EP_StartMenu_OverflowMenus;
-                                            pic4.Image = My.Resources.Mini_StartMenu;
+                                            pic4.Image = Properties.Resources.Mini_StartMenu;
                                         }
 
                                         break;
@@ -121,17 +121,17 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
                                             lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
 
-                                            pic3.Image = My.Resources.Mini_TaskbarApp;
-                                            pic5.Image = My.Resources.Mini_Settings_Icons;
-                                            pic6.Image = My.Resources.Native11;
+                                            pic3.Image = Properties.Resources.Mini_TaskbarApp;
+                                            pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                            pic6.Image = Properties.Resources.Native11;
                                         }
 
                                         if (My.Env.EP.UseStart10)
                                         {
                                             lbl2.Text = My.Env.Lang.CP_EP_ActionCenterBackground;
                                             lbl4.Text = My.Env.Lang.CP_EP_StartMenu_ActionCenterButtons;
-                                            pic2.Image = My.Resources.Mini_AC;
-                                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
+                                            pic2.Image = Properties.Resources.Mini_AC;
+                                            pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                         }
 
                                         break;
@@ -159,11 +159,11 @@ namespace WinPaletter
                                     lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
                                     lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
 
-                                    pic2.Image = My.Resources.Mini_ACHover_Links;
-                                    pic3.Image = My.Resources.Mini_TaskbarApp;
-                                    pic5.Image = My.Resources.Mini_Settings_Icons;
-                                    pic6.Image = My.Resources.Native10;
-                                    pic7.Image = My.Resources.Mini_UWPDlg;
+                                    pic2.Image = Properties.Resources.Mini_ACHover_Links;
+                                    pic3.Image = Properties.Resources.Mini_TaskbarApp;
+                                    pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                    pic6.Image = Properties.Resources.Native10;
+                                    pic7.Image = Properties.Resources.Mini_UWPDlg;
 
                                     if (TM.Windows10.Transparency)
                                     {
@@ -171,9 +171,9 @@ namespace WinPaletter
                                         lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
                                         lbl8.Text = My.Env.Lang.CP_10_Taskbar_StartContextMenu;
 
-                                        pic1.Image = My.Resources.Mini_Hamburger;
-                                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                        pic8.Image = My.Resources.Mini_Taskbar;
+                                        pic1.Image = Properties.Resources.Mini_Hamburger;
+                                        pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                        pic8.Image = Properties.Resources.Mini_Taskbar;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
@@ -184,8 +184,8 @@ namespace WinPaletter
                                     else
                                     {
                                         lbl1.Text = My.Env.Lang.CP_10_Taskbar;
-                                        pic1.Image = My.Resources.Mini_Taskbar;
-                                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
+                                        pic1.Image = Properties.Resources.Mini_Taskbar;
+                                        pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
@@ -197,7 +197,7 @@ namespace WinPaletter
                                         }
 
                                         lbl8.Text = My.Env.Lang.CP_10_StartContextMenu;
-                                        pic8.Image = My.Resources.Mini_StartContextMenu;
+                                        pic8.Image = Properties.Resources.Mini_StartContextMenu;
 
                                     }
 
@@ -213,12 +213,12 @@ namespace WinPaletter
                                         lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
                                         lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
 
-                                        pic1.Image = My.Resources.Mini_Hamburger;
-                                        pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                        pic5.Image = My.Resources.Mini_Settings_Icons;
-                                        pic6.Image = My.Resources.Native10;
-                                        pic7.Image = My.Resources.Mini_UWPDlg;
-                                        pic8.Image = My.Resources.Mini_Taskbar;
+                                        pic1.Image = Properties.Resources.Mini_Hamburger;
+                                        pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                        pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                        pic6.Image = Properties.Resources.Native10;
+                                        pic7.Image = Properties.Resources.Mini_UWPDlg;
+                                        pic8.Image = Properties.Resources.Mini_Taskbar;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
@@ -227,8 +227,8 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_Taskbar_ACLinks_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_Undefined;
-                                            pic3.Image = My.Resources.Mini_Undefined;
+                                            pic2.Image = Properties.Resources.Mini_Undefined;
+                                            pic3.Image = Properties.Resources.Mini_Undefined;
                                         }
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
@@ -238,8 +238,8 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_Taskbar_ACLinks_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_Undefined;
-                                            pic3.Image = My.Resources.Mini_TaskbarApp;
+                                            pic2.Image = Properties.Resources.Mini_Undefined;
+                                            pic3.Image = Properties.Resources.Mini_TaskbarApp;
                                         }
 
                                         else
@@ -249,8 +249,8 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_Taskbar_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_ACHover_Links;
-                                            pic3.Image = My.Resources.Mini_TaskbarApp;
+                                            pic2.Image = Properties.Resources.Mini_ACHover_Links;
+                                            pic3.Image = Properties.Resources.Mini_TaskbarApp;
 
                                         }
                                     }
@@ -260,9 +260,9 @@ namespace WinPaletter
                                         lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
                                         lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
 
-                                        pic1.Image = My.Resources.Mini_Taskbar;
-                                        pic6.Image = My.Resources.Native10;
-                                        pic7.Image = My.Resources.Mini_UWPDlg;
+                                        pic1.Image = Properties.Resources.Mini_Taskbar;
+                                        pic6.Image = Properties.Resources.Native10;
+                                        pic7.Image = Properties.Resources.Mini_UWPDlg;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
@@ -272,11 +272,11 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_ACLinks_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_Undefined;
-                                            pic3.Image = My.Resources.Mini_Undefined;
-                                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                            pic5.Image = My.Resources.Mini_Settings_Icons;
-                                            pic8.Image = My.Resources.Mini_ACHover_Links;
+                                            pic2.Image = Properties.Resources.Mini_Undefined;
+                                            pic3.Image = Properties.Resources.Mini_Undefined;
+                                            pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                            pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                            pic8.Image = Properties.Resources.Mini_ACHover_Links;
                                         }
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
@@ -287,11 +287,11 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_ACLinks_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_Undefined;
-                                            pic3.Image = My.Resources.Mini_TaskbarApp;
-                                            pic4.Image = My.Resources.Mini_TaskbarActiveIcon;
-                                            pic5.Image = My.Resources.Mini_Settings_Icons;
-                                            pic8.Image = My.Resources.Mini_ACHover_Links;
+                                            pic2.Image = Properties.Resources.Mini_Undefined;
+                                            pic3.Image = Properties.Resources.Mini_TaskbarApp;
+                                            pic4.Image = Properties.Resources.Mini_TaskbarActiveIcon;
+                                            pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                            pic8.Image = Properties.Resources.Mini_ACHover_Links;
                                         }
 
                                         else
@@ -302,11 +302,11 @@ namespace WinPaletter
                                             lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
                                             lbl8.Text = My.Env.Lang.CP_10_StartContextMenu;
 
-                                            pic2.Image = My.Resources.Mini_ACHover_Links;
-                                            pic3.Image = My.Resources.Mini_TaskbarApp;
-                                            pic4.Image = My.Resources.Mini_StartMenu_Taskbar_AC;
-                                            pic5.Image = My.Resources.Mini_Settings_Icons;
-                                            pic8.Image = My.Resources.Mini_StartContextMenu;
+                                            pic2.Image = Properties.Resources.Mini_ACHover_Links;
+                                            pic3.Image = Properties.Resources.Mini_TaskbarApp;
+                                            pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
+                                            pic5.Image = Properties.Resources.Mini_Settings_Icons;
+                                            pic8.Image = Properties.Resources.Mini_StartContextMenu;
                                         }
                                     }
 
@@ -1292,9 +1292,9 @@ namespace WinPaletter
             if (Style != WindowStyle.WVista & Style != WindowStyle.WXP)
             {
                 ClassicTaskbar.Height = 44;
-                ClassicAppButton1.Image = My.Resources.SampleApp_Active;
-                ClassicAppButton2.Image = My.Resources.SampleApp_Inactive;
-                ClassicStartButton.Image = My.Resources.Native7.Resize(18, 16);
+                ClassicAppButton1.Image = Properties.Resources.SampleApp_Active;
+                ClassicAppButton2.Image = Properties.Resources.SampleApp_Inactive;
+                ClassicStartButton.Image = Properties.Resources.Native7.Resize(18, 16);
                 ClassicAppButton1.ImageAlign = ContentAlignment.MiddleCenter;
                 ClassicAppButton2.ImageAlign = ContentAlignment.MiddleCenter;
                 ClassicAppButton1.Width = 48;
@@ -1473,9 +1473,9 @@ namespace WinPaletter
                         Start.Top = Taskbar.Top - Start.Height;
 
                         ClassicTaskbar.Height = Taskbar.Height;
-                        ClassicAppButton1.Image = My.Resources.SampleApp_Active.Resize(23, 23);
-                        ClassicAppButton2.Image = My.Resources.SampleApp_Inactive.Resize(23, 23);
-                        ClassicStartButton.Image = My.Resources.Native7.Resize(18, 16);
+                        ClassicAppButton1.Image = Properties.Resources.SampleApp_Active.Resize(23, 23);
+                        ClassicAppButton2.Image = Properties.Resources.SampleApp_Inactive.Resize(23, 23);
+                        ClassicStartButton.Image = Properties.Resources.Native7.Resize(18, 16);
                         ClassicAppButton1.ImageAlign = ContentAlignment.BottomLeft;
                         ClassicAppButton2.ImageAlign = ContentAlignment.BottomLeft;
                         ClassicAppButton1.Width = 140;
@@ -1499,9 +1499,9 @@ namespace WinPaletter
                         Start.Top = Taskbar.Top - Start.Height;
 
                         ClassicTaskbar.Height = Taskbar.Height;
-                        ClassicAppButton1.Image = My.Resources.SampleApp_Active.Resize(23, 23);
-                        ClassicAppButton2.Image = My.Resources.SampleApp_Inactive.Resize(23, 23);
-                        ClassicStartButton.Image = My.Resources.NativeXP.Resize(18, 16);
+                        ClassicAppButton1.Image = Properties.Resources.SampleApp_Active.Resize(23, 23);
+                        ClassicAppButton2.Image = Properties.Resources.SampleApp_Inactive.Resize(23, 23);
+                        ClassicStartButton.Image = Properties.Resources.NativeXP.Resize(18, 16);
                         ClassicAppButton1.ImageAlign = ContentAlignment.BottomLeft;
                         ClassicAppButton2.ImageAlign = ContentAlignment.BottomLeft;
                         ClassicAppButton1.Width = 140;

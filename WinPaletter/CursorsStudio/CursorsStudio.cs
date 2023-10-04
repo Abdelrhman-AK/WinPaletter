@@ -906,7 +906,7 @@ namespace WinPaletter
 
         private void Toggle1_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -1196,7 +1196,7 @@ namespace WinPaletter
 
         private void CursorsStudio_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-cursors");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-cursors");
         }
     }
 }

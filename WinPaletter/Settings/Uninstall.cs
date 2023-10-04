@@ -16,7 +16,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
-            Icon = My.Resources.Icon_Uninstall;
+            Icon = Properties.Resources.Icon_Uninstall;
         }
 
         private void Button2_Click(object sender, EventArgs e)

@@ -379,7 +379,7 @@ namespace WinPaletter
 
         private void WallpaperEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -979,7 +979,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Wallpaper");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Wallpaper");
         }
     }
 }

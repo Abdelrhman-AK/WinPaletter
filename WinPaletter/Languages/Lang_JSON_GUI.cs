@@ -905,7 +905,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Language-creation");
+            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation");
         }
     }
 }

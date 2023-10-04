@@ -36,14 +36,14 @@ namespace WinPaletter
             if (My.Env.PreviewStyle == WindowStyle.W81)
             {
                 Button3.Visible = true;
-                PictureBox11.Image = My.Resources.LogonUI8;
-                PictureBox4.Image = My.Resources.Native8;
+                PictureBox11.Image = Properties.Resources.LogonUI8;
+                PictureBox4.Image = Properties.Resources.Native8;
             }
             else if (My.Env.PreviewStyle == WindowStyle.W7)
             {
                 Button3.Visible = false;
-                PictureBox11.Image = My.Resources.LogonUI7;
-                PictureBox4.Image = My.Resources.Native7;
+                PictureBox11.Image = Properties.Resources.LogonUI7;
+                PictureBox4.Image = Properties.Resources.Native7;
             }
 
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
@@ -576,12 +576,12 @@ namespace WinPaletter
 
         private void Toggle1_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-LogonUI-screen#windows-81-and-windows-7");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-LogonUI-screen#windows-81-and-windows-7");
         }
     }
 }

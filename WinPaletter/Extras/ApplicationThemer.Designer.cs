@@ -319,7 +319,7 @@ namespace WinPaletter
             // checker_img
             // 
             checker_img.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            checker_img.Image = My.Resources.checker_disabled;
+            checker_img.Image = Properties.Resources.checker_disabled;
             checker_img.Location = new Point(498, 20);
             checker_img.Name = "checker_img";
             checker_img.Size = new Size(35, 31);

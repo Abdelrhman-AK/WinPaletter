@@ -25,7 +25,7 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
-        private TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.15d));
+        private TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.15d));
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
         private bool tick = false;
@@ -331,7 +331,7 @@ namespace WinPaletter.UI.Simulation
 
         public void NoiseBack()
         {
-            Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.5d));
+            Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.5d));
         }
 
         #endregion

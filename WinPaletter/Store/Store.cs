@@ -750,7 +750,7 @@ namespace WinPaletter
                                     TM = TM,
                                     MD5_ThemeFile = MD5_ThemeFile,
                                     MD5_PackFile = MD5_PackFile,
-                                    DoneByWinPaletter = (DB.ToUpper() ?? "") == (My.Resources.Link_StoreMainDB.ToUpper() ?? ""),
+                                    DoneByWinPaletter = (DB.ToUpper() ?? "") == (Properties.Resources.Link_StoreMainDB.ToUpper() ?? ""),
                                     Size = new Size(w, h),
                                     URL_ThemeFile = URL_ThemeFile,
                                     URL_PackFile = URL_PackFile
@@ -1508,7 +1508,7 @@ namespace WinPaletter
         {
             Titlebar_lbl.ForeColor = My.Env.Style.DarkMode ? Color.White : Color.Black;
             search_box.ForeColor = My.Env.Style.DarkMode ? Color.White : Color.Black;
-            back_btn.Image = My.Env.Style.DarkMode ? My.Resources.Store_BackBtn : My.Resources.Store_BackBtn.Invert();
+            back_btn.Image = My.Env.Style.DarkMode ? Properties.Resources.Store_BackBtn : Properties.Resources.Store_BackBtn.Invert();
         }
         #endregion
 

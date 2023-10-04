@@ -445,7 +445,7 @@ namespace WinPaletter.My
 
             if (!Directory.Exists(Env.PATH_appData))
                 Directory.CreateDirectory(Env.PATH_appData);
-            File.WriteAllBytes(Env.PATH_appData + @"\uninstall.ico", Resources.Icon_Uninstall.ToByteArray());
+            File.WriteAllBytes(Env.PATH_appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
 
             if (Registry.CurrentUser.OpenSubKey(RegPath, true) is null)
                 Registry.CurrentUser.CreateSubKey(RegPath, true);
@@ -457,8 +457,8 @@ namespace WinPaletter.My
                 temp.SetValue("DisplayVersion", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
                 temp.SetValue("Publisher", MyProject.Application.Info.CompanyName, RegistryValueKind.String);
                 temp.SetValue("DisplayIcon", Env.PATH_appData + @"\uninstall.ico", RegistryValueKind.String);
-                temp.SetValue("URLInfoAbout", Resources.Link_Repository, RegistryValueKind.String);
-                temp.SetValue("Contact", Resources.Link_Repository, RegistryValueKind.String);
+                temp.SetValue("URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
+                temp.SetValue("Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
                 temp.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
                 temp.SetValue("Comments", "This will help you delete WinPaletter and clean up its used data", RegistryValueKind.String);
                 temp.SetValue("UninstallString", exe + " /uninstall", RegistryValueKind.String);
@@ -529,7 +529,7 @@ namespace WinPaletter.My
         }
         public Bitmap FetchSuitableWallpaper(Theme.Manager TM, WindowStyle PreviewConfig)
         {
-            using (var picbox = new PictureBox() { Size = MyProject.Forms.MainFrm.pnl_preview.Size, BackColor = TM.Win32.Background })
+            using (PictureBox picbox = new() { Size = MyProject.Forms.MainFrm.pnl_preview.Size, BackColor = TM.Win32.Background })
             {
                 Bitmap Wall;
 
@@ -655,16 +655,16 @@ namespace WinPaletter.My
                 if (Wall is not null)
                 {
 
-                    float ScaleW = 1f;
-                    float ScaleH = 1f;
+                    double ScaleW = 1;
+                    double ScaleH = 1;
 
                     if (Wall.Width > Screen.PrimaryScreen.Bounds.Size.Width | Wall.Height > Screen.PrimaryScreen.Bounds.Size.Height)
                     {
-                        ScaleW = (float)(1920d / picbox.Size.Width);
-                        ScaleH = (float)(1080d / picbox.Size.Height);
+                        ScaleW = (1920 / (double)picbox.Size.Width);
+                        ScaleH = (1080 / (double)picbox.Size.Height);
                     }
 
-                    Wall = Wall.Resize((int)Math.Round(Wall.Width / ScaleW), (int)Math.Round(Wall.Height / ScaleH));
+                    Wall = Wall.Resize((int)Math.Round((double)Wall.Width / ScaleW), (int)Math.Round((double)Wall.Height / ScaleH));
 
                     if (TM.Wallpaper.WallpaperStyle == Theme.Structures.Wallpaper.WallpaperStyles.Fill)
                     {
@@ -880,7 +880,7 @@ namespace WinPaletter.My
 
             try
             {
-                MemoryFonts.AddMemoryFont(Resources.JetBrainsMono_Medium);
+                MemoryFonts.AddMemoryFont(Properties.Resources.JetBrainsMono_Medium);
                 ConsoleFont = MemoryFonts.GetFont(0, 7.75f);
                 ConsoleFontMedium = MemoryFonts.GetFont(0, 9f);
                 ConsoleFontLarge = MemoryFonts.GetFont(0, 10f);
@@ -1059,9 +1059,9 @@ namespace WinPaletter.My
                     if (!Directory.Exists(Env.PATH_appData))
                         Directory.CreateDirectory(Env.PATH_appData);
 
-                    File.WriteAllBytes(Env.PATH_appData + @"\fileextension.ico", Resources.fileextension.ToByteArray());
-                    File.WriteAllBytes(Env.PATH_appData + @"\settingsfile.ico", Resources.settingsfile.ToByteArray());
-                    File.WriteAllBytes(Env.PATH_appData + @"\themerespack.ico", Resources.ThemesResIcon.ToByteArray());
+                    File.WriteAllBytes(Env.PATH_appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
+                    File.WriteAllBytes(Env.PATH_appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
+                    File.WriteAllBytes(Env.PATH_appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
 
                     CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", Env.PATH_appData + @"\fileextension.ico", Assembly.GetExecutingAssembly().Location);
                     CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", Env.PATH_appData + @"\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
@@ -1073,30 +1073,30 @@ namespace WinPaletter.My
             {
             }
 
-            Env.Notifications_IL.Images.Add("info", Resources.notify_info);
-            Env.Notifications_IL.Images.Add("apply", Resources.notify_applying);
-            Env.Notifications_IL.Images.Add("error", Resources.notify_error);
-            Env.Notifications_IL.Images.Add("warning", Resources.notify_warning);
-            Env.Notifications_IL.Images.Add("time", Resources.notify_time);
-            Env.Notifications_IL.Images.Add("success", Resources.notify_success);
-            Env.Notifications_IL.Images.Add("skip", Resources.notify_skip);
-            Env.Notifications_IL.Images.Add("admin", Resources.notify_administrator);
+            Env.Notifications_IL.Images.Add("info", Properties.Resources.notify_info);
+            Env.Notifications_IL.Images.Add("apply", Properties.Resources.notify_applying);
+            Env.Notifications_IL.Images.Add("error", Properties.Resources.notify_error);
+            Env.Notifications_IL.Images.Add("warning", Properties.Resources.notify_warning);
+            Env.Notifications_IL.Images.Add("time", Properties.Resources.notify_time);
+            Env.Notifications_IL.Images.Add("success", Properties.Resources.notify_success);
+            Env.Notifications_IL.Images.Add("skip", Properties.Resources.notify_skip);
+            Env.Notifications_IL.Images.Add("admin", Properties.Resources.notify_administrator);
 
-            Env.Notifications_IL.Images.Add("reg_add", Resources.notify_reg_add);
-            Env.Notifications_IL.Images.Add("reg_delete", Resources.notify_reg_delete);
-            Env.Notifications_IL.Images.Add("reg_skip", Resources.notify_reg_skip);
-            Env.Notifications_IL.Images.Add("task_add", Resources.notify_task_add);
-            Env.Notifications_IL.Images.Add("task_remove", Resources.notify_task_remove);
-            Env.Notifications_IL.Images.Add("file_rename", Resources.notify_file_rename);
-            Env.Notifications_IL.Images.Add("dll", Resources.notify_dll);
-            Env.Notifications_IL.Images.Add("pe_patch", Resources.notify_pe_patch);
-            Env.Notifications_IL.Images.Add("pe_backup", Resources.notify_pe_backup);
-            Env.Notifications_IL.Images.Add("pe_restore", Resources.notify_pe_restore);
+            Env.Notifications_IL.Images.Add("reg_add", Properties.Resources.notify_reg_add);
+            Env.Notifications_IL.Images.Add("reg_delete", Properties.Resources.notify_reg_delete);
+            Env.Notifications_IL.Images.Add("reg_skip", Properties.Resources.notify_reg_skip);
+            Env.Notifications_IL.Images.Add("task_add", Properties.Resources.notify_task_add);
+            Env.Notifications_IL.Images.Add("task_remove", Properties.Resources.notify_task_remove);
+            Env.Notifications_IL.Images.Add("file_rename", Properties.Resources.notify_file_rename);
+            Env.Notifications_IL.Images.Add("dll", Properties.Resources.notify_dll);
+            Env.Notifications_IL.Images.Add("pe_patch", Properties.Resources.notify_pe_patch);
+            Env.Notifications_IL.Images.Add("pe_backup", Properties.Resources.notify_pe_backup);
+            Env.Notifications_IL.Images.Add("pe_restore", Properties.Resources.notify_pe_restore);
 
 
-            Env.Lang_IL.Images.Add("main", Resources.LangNode_Main);
-            Env.Lang_IL.Images.Add("value", Resources.LangNode_Value);
-            Env.Lang_IL.Images.Add("json", Resources.LangNode_JSON);
+            Env.Lang_IL.Images.Add("main", Properties.Resources.LangNode_Main);
+            Env.Lang_IL.Images.Add("value", Properties.Resources.LangNode_Value);
+            Env.Lang_IL.Images.Add("json", Properties.Resources.LangNode_JSON);
 
             Env.Saving_Exceptions.Clear();
             Env.Loading_Exceptions.Clear();
@@ -1117,7 +1117,7 @@ namespace WinPaletter.My
             {
                 if (!Directory.Exists(Env.PATH_appData + @"\VisualStyles\Luna"))
                     Directory.CreateDirectory(Env.PATH_appData + @"\VisualStyles\Luna");
-                File.WriteAllBytes(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", Resources.luna);
+                File.WriteAllBytes(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", Properties.Resources.luna);
                 using (var s = new FileStream(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", FileMode.Open, FileAccess.Read))
                 {
                     using (var z = new ZipArchive(s, ZipArchiveMode.Read))
@@ -1591,7 +1591,7 @@ namespace WinPaletter.My
 
             byte[] b = null;
 
-            using (var ms = new MemoryStream(Resources.Assemblies))
+            using (var ms = new MemoryStream(Properties.Resources.Assemblies))
             {
                 using (var zip = new ZipArchive(ms))
                 {

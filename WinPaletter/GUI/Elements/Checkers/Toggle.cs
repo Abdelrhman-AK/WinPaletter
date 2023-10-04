@@ -371,13 +371,13 @@ namespace WinPaletter.UI.WP
 
                 if (Checked)
                 {
-                    G.DrawImage((BorderColor.IsDark() ? My.Resources.darkmode_dark : My.Resources.darkmode_light).Fade((double)val), CheckC);
-                    G.DrawImage((BorderColor.IsDark() ? My.Resources.lightmode_dark : My.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
+                    G.DrawImage((BorderColor.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
+                    G.DrawImage((BorderColor.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
                 }
                 else
                 {
-                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? My.Resources.darkmode_dark : My.Resources.darkmode_light).Fade((double)val), CheckC);
-                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? My.Resources.lightmode_dark : My.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
+                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? Properties.Resources.darkmode_dark : Properties.Resources.darkmode_light).Fade((double)val), CheckC);
+                    G.DrawImage((My.Env.Style.Colors.BaseColor.IsDark() ? Properties.Resources.lightmode_dark : Properties.Resources.lightmode_light).Fade((double)(1m - val)), CheckC);
                 }
 
                 using (var P = new Pen(lgborderChecked))

@@ -639,7 +639,7 @@ namespace WinPaletter
             // PictureBox16
             // 
             PictureBox16.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox16.Image = My.Resources.Store_DoneByWinPaletter;
+            PictureBox16.Image = Properties.Resources.Store_DoneByWinPaletter;
             PictureBox16.Location = new Point(6, 325);
             PictureBox16.Name = "PictureBox16";
             PictureBox16.Size = new Size(24, 24);
@@ -695,7 +695,7 @@ namespace WinPaletter
             // PictureBox15
             // 
             PictureBox15.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox15.Image = My.Resources.Store_DoneByUser;
+            PictureBox15.Image = Properties.Resources.Store_DoneByUser;
             PictureBox15.Location = new Point(6, 355);
             PictureBox15.Name = "PictureBox15";
             PictureBox15.Size = new Size(24, 24);
@@ -734,7 +734,7 @@ namespace WinPaletter
             // PictureBox14
             // 
             PictureBox14.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox14.Image = My.Resources.Store_DesignedForXP;
+            PictureBox14.Image = Properties.Resources.Store_DesignedForXP;
             PictureBox14.Location = new Point(42, 284);
             PictureBox14.Name = "PictureBox14";
             PictureBox14.Size = new Size(24, 24);
@@ -745,7 +745,7 @@ namespace WinPaletter
             // PictureBox13
             // 
             PictureBox13.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox13.Image = My.Resources.Store_DesignedForVista;
+            PictureBox13.Image = Properties.Resources.Store_DesignedForVista;
             PictureBox13.Location = new Point(42, 254);
             PictureBox13.Name = "PictureBox13";
             PictureBox13.Size = new Size(24, 24);
@@ -756,7 +756,7 @@ namespace WinPaletter
             // PictureBox12
             // 
             PictureBox12.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox12.Image = My.Resources.Store_DesignedFor7;
+            PictureBox12.Image = Properties.Resources.Store_DesignedFor7;
             PictureBox12.Location = new Point(42, 224);
             PictureBox12.Name = "PictureBox12";
             PictureBox12.Size = new Size(24, 24);
@@ -767,7 +767,7 @@ namespace WinPaletter
             // PictureBox11
             // 
             PictureBox11.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox11.Image = My.Resources.Store_DesignedFor8;
+            PictureBox11.Image = Properties.Resources.Store_DesignedFor8;
             PictureBox11.Location = new Point(42, 194);
             PictureBox11.Name = "PictureBox11";
             PictureBox11.Size = new Size(24, 24);
@@ -778,7 +778,7 @@ namespace WinPaletter
             // PictureBox10
             // 
             PictureBox10.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox10.Image = My.Resources.Store_DesignedFor10;
+            PictureBox10.Image = Properties.Resources.Store_DesignedFor10;
             PictureBox10.Location = new Point(42, 164);
             PictureBox10.Name = "PictureBox10";
             PictureBox10.Size = new Size(24, 24);
@@ -789,7 +789,7 @@ namespace WinPaletter
             // PictureBox9
             // 
             PictureBox9.BackgroundImageLayout = ImageLayout.Center;
-            PictureBox9.Image = My.Resources.Store_DesignedFor11;
+            PictureBox9.Image = Properties.Resources.Store_DesignedFor11;
             PictureBox9.Location = new Point(42, 134);
             PictureBox9.Name = "PictureBox9";
             PictureBox9.Size = new Size(24, 24);

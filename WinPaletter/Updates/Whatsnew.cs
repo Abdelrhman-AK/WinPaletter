@@ -50,34 +50,34 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Changelog);
+            Process.Start(Properties.Resources.Link_Changelog);
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Color-picker-control#3-drag-and-drop");
+            Process.Start(Properties.Resources.Link_Wiki + "/Color-picker-control#3-drag-and-drop");
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Palette-generator");
+            Process.Start(Properties.Resources.Link_Wiki + "/Palette-generator");
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Color-picker-control#4-previous-colors-like-undo-or-colors-history");
-            Process.Start(My.Resources.Link_Wiki + "/Color-picker-control#1-cut-copy-paste-and-undo");
-            Process.Start(My.Resources.Link_Wiki + "/Color-picker-control#6-color-history");
+            Process.Start(Properties.Resources.Link_Wiki + "/Color-picker-control#4-previous-colors-like-undo-or-colors-history");
+            Process.Start(Properties.Resources.Link_Wiki + "/Color-picker-control#1-cut-copy-paste-and-undo");
+            Process.Start(Properties.Resources.Link_Wiki + "/Color-picker-control#6-color-history");
         }
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Language-creation");
+            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation");
         }
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Theme-log-verbose-level");
+            Process.Start(Properties.Resources.Link_Wiki + "/Theme-log-verbose-level");
         }
     }
 }

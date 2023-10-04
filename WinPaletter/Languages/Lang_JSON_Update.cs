@@ -154,7 +154,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Language-creation-(old-methods)#3-update-your-language-file-when-a-new-winpaletter-is-released");
+            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation-(old-methods)#3-update-your-language-file-when-a-new-winpaletter-is-released");
         }
     }
 }

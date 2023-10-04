@@ -165,7 +165,7 @@ namespace WinPaletter
 
         private void AppThemeEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
             AdjustPreview();
         }
 
@@ -345,7 +345,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-WinPaletter-application-theme");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-WinPaletter-application-theme");
         }
 
     }

@@ -83,7 +83,7 @@ namespace WinPaletter
                     {
                         Label17.SetText(My.Env.Lang.Checking);
 
-                        ls = WebCL.DownloadString(My.Resources.Link_Updates).CList();
+                        ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
 
                         for (int x = 0, loopTo = ls.Count - 1; x <= loopTo; x++)
                         {
@@ -202,7 +202,7 @@ namespace WinPaletter
 
                 if (RadioButton3.Checked)
                 {
-                    Process.Start(My.Resources.Link_Releases);
+                    Process.Start(Properties.Resources.Link_Releases);
                 }
 
             }
@@ -312,7 +312,7 @@ namespace WinPaletter
 
         private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(My.Resources.Link_Changelog);
+            Process.Start(Properties.Resources.Link_Changelog);
         }
 
         private void Button3_Click(object sender, EventArgs e)

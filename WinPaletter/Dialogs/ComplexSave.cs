@@ -62,37 +62,37 @@ namespace WinPaletter
 
             if (My.Env.W11)
             {
-                RadioImage7.Image = My.Resources.Native11.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
             }
 
             else if (My.Env.W10)
             {
-                RadioImage7.Image = My.Resources.Native10.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.Native10.Resize(20, 20);
             }
 
             else if (My.Env.W8 | My.Env.W81)
             {
-                RadioImage7.Image = My.Resources.Native8.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.Native8.Resize(20, 20);
             }
 
             else if (My.Env.W7)
             {
-                RadioImage7.Image = My.Resources.Native7.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.Native7.Resize(20, 20);
             }
 
             else if (My.Env.WVista)
             {
-                RadioImage7.Image = My.Resources.NativeVista.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.NativeVista.Resize(20, 20);
             }
 
             else if (My.Env.WXP)
             {
-                RadioImage7.Image = My.Resources.NativeXP.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.NativeXP.Resize(20, 20);
             }
 
             else
             {
-                RadioImage7.Image = My.Resources.Native11.Resize(20, 20);
+                RadioImage7.Image = Properties.Resources.Native11.Resize(20, 20);
             }
 
 

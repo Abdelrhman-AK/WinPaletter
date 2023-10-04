@@ -486,7 +486,7 @@ namespace WinPaletter
                     RaiseUpdate = false;
                     ver = "";
 
-                    Updates_ls = WebCL.DownloadString(My.Resources.Link_Updates).CList();
+                    Updates_ls = WebCL.DownloadString(Properties.Resources.Link_Updates).CList();
 
                     for (int x = 0, loopTo = Updates_ls.Count - 1; x <= loopTo; x++)
                     {
@@ -520,7 +520,7 @@ namespace WinPaletter
             {
                 My.MyProject.Forms.Updates.ls = Updates_ls;
                 NotifyUpdates.Visible = true;
-                Button5.Image = My.Resources.Update_Dot;
+                Button5.Image = Properties.Resources.Update_Dot;
                 NotifyUpdates.ShowBalloonTip(10000, My.MyProject.Application.Info.Title, string.Format("{0}. {1} {2}", My.Env.Lang.NewUpdate, My.Env.Lang.Version, ver), ToolTipIcon.Info);
             }
         }
@@ -566,61 +566,61 @@ namespace WinPaletter
             Size = new Size(Conversions.ToInteger(My.Env.Settings.General.MainFormWidth), Conversions.ToInteger(My.Env.Settings.General.MainFormHeight));
             WindowState = (FormWindowState)Conversions.ToInteger(My.Env.Settings.General.MainFormStatus);
 
-            Select_W11.Image = My.Resources.Native11;
-            Select_W10.Image = My.Resources.Native10;
-            Select_W81.Image = My.Resources.Native8;
-            Select_W7.Image = My.Resources.Native7;
-            Select_WVista.Image = My.Resources.NativeVista;
-            Select_WXP.Image = My.Resources.NativeXP;
+            Select_W11.Image = Properties.Resources.Native11;
+            Select_W10.Image = Properties.Resources.Native10;
+            Select_W81.Image = Properties.Resources.Native8;
+            Select_W7.Image = Properties.Resources.Native7;
+            Select_WVista.Image = Properties.Resources.NativeVista;
+            Select_WXP.Image = Properties.Resources.NativeXP;
             if (!My.Env.isElevated)
-                apply_btn.Image = My.Resources.WP_Admin;
+                apply_btn.Image = Properties.Resources.WP_Admin;
 
             if (My.Env.PreviewStyle == WindowStyle.W11)
             {
                 TablessControl1.SelectedIndex = 0;
-                Button20.Image = My.Resources.add_win11;
+                Button20.Image = Properties.Resources.add_win11;
                 Select_W11.Checked = true;
             }
 
             else if (My.Env.PreviewStyle == WindowStyle.W10)
             {
                 TablessControl1.SelectedIndex = 1;
-                Button20.Image = My.Resources.add_win10;
+                Button20.Image = Properties.Resources.add_win10;
                 Select_W10.Checked = true;
             }
 
             else if (My.Env.PreviewStyle == WindowStyle.W81)
             {
                 TablessControl1.SelectedIndex = 2;
-                Button20.Image = My.Resources.add_win8;
+                Button20.Image = Properties.Resources.add_win8;
                 Select_W81.Checked = true;
             }
 
             else if (My.Env.PreviewStyle == WindowStyle.W7)
             {
                 TablessControl1.SelectedIndex = 3;
-                Button20.Image = My.Resources.add_win7;
+                Button20.Image = Properties.Resources.add_win7;
                 Select_W7.Checked = true;
             }
 
             else if (My.Env.PreviewStyle == WindowStyle.WVista)
             {
                 TablessControl1.SelectedIndex = 4;
-                Button20.Image = My.Resources.add_winvista;
+                Button20.Image = Properties.Resources.add_winvista;
                 Select_WVista.Checked = true;
             }
 
             else if (My.Env.PreviewStyle == WindowStyle.WXP)
             {
                 TablessControl1.SelectedIndex = 5;
-                Button20.Image = My.Resources.add_winxp;
+                Button20.Image = Properties.Resources.add_winxp;
                 Select_WXP.Checked = true;
             }
 
             else
             {
                 TablessControl1.SelectedIndex = 0;
-                Button20.Image = My.Resources.add_win11;
+                Button20.Image = Properties.Resources.add_win11;
                 Select_W11.Checked = true;
             }
 
@@ -2947,7 +2947,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             My.MyProject.Forms.Updates.ShowDialog();
-            Button5.Image = My.Resources.Update;
+            Button5.Image = Properties.Resources.Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -3097,31 +3097,31 @@ namespace WinPaletter
 
             if (My.Env.PreviewStyle == WindowStyle.W11)
             {
-                Button20.Image = My.Resources.add_win11;
+                Button20.Image = Properties.Resources.add_win11;
             }
             else if (My.Env.PreviewStyle == WindowStyle.W10)
             {
-                Button20.Image = My.Resources.add_win10;
+                Button20.Image = Properties.Resources.add_win10;
             }
             else if (My.Env.PreviewStyle == WindowStyle.W81)
             {
-                Button20.Image = My.Resources.add_win8;
+                Button20.Image = Properties.Resources.add_win8;
             }
             else if (My.Env.PreviewStyle == WindowStyle.W7)
             {
-                Button20.Image = My.Resources.add_win7;
+                Button20.Image = Properties.Resources.add_win7;
             }
             else if (My.Env.PreviewStyle == WindowStyle.WVista)
             {
-                Button20.Image = My.Resources.add_winvista;
+                Button20.Image = Properties.Resources.add_winvista;
             }
             else if (My.Env.PreviewStyle == WindowStyle.WXP)
             {
-                Button20.Image = My.Resources.add_winxp;
+                Button20.Image = Properties.Resources.add_winxp;
             }
             else
             {
-                Button20.Image = My.Resources.add_win11;
+                Button20.Image = Properties.Resources.add_win11;
             }
 
 
@@ -3301,7 +3301,7 @@ namespace WinPaletter
 
         private void Button39_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki);
+            Process.Start(Properties.Resources.Link_Wiki);
         }
 
         private void Button40_Click(object sender, EventArgs e)

@@ -1065,7 +1065,7 @@ namespace WinPaletter
             Button199.DrawOnGlass = false;
             Button199.Font = new Font("Segoe UI", 9.0f);
             Button199.ForeColor = Color.White;
-            Button199.Image = My.Resources.Sound_Stop;
+            Button199.Image = Properties.Resources.Sound_Stop;
             Button199.LineColor = Color.FromArgb(117, 3, 34);
             Button199.Location = new Point(639, 3);
             Button199.Name = "Button199";
@@ -1081,7 +1081,7 @@ namespace WinPaletter
             Button200.DrawOnGlass = false;
             Button200.Font = new Font("Segoe UI", 9.0f);
             Button200.ForeColor = Color.White;
-            Button200.Image = My.Resources.Sound_Play;
+            Button200.Image = Properties.Resources.Sound_Play;
             Button200.LineColor = Color.FromArgb(1, 45, 77);
             Button200.Location = new Point(677, 3);
             Button200.Name = "Button200";
@@ -1227,7 +1227,7 @@ namespace WinPaletter
             Button19.DrawOnGlass = false;
             Button19.Font = new Font("Segoe UI", 9.0f);
             Button19.ForeColor = Color.White;
-            Button19.Image = My.Resources.Sound_Stop;
+            Button19.Image = Properties.Resources.Sound_Stop;
             Button19.LineColor = Color.FromArgb(117, 3, 34);
             Button19.Location = new Point(639, 3);
             Button19.Name = "Button19";
@@ -1243,7 +1243,7 @@ namespace WinPaletter
             Button20.DrawOnGlass = false;
             Button20.Font = new Font("Segoe UI", 9.0f);
             Button20.ForeColor = Color.White;
-            Button20.Image = My.Resources.Sound_Play;
+            Button20.Image = Properties.Resources.Sound_Play;
             Button20.LineColor = Color.FromArgb(1, 45, 77);
             Button20.Location = new Point(677, 3);
             Button20.Name = "Button20";
@@ -1346,7 +1346,7 @@ namespace WinPaletter
             Button15.DrawOnGlass = false;
             Button15.Font = new Font("Segoe UI", 9.0f);
             Button15.ForeColor = Color.White;
-            Button15.Image = My.Resources.Sound_Stop;
+            Button15.Image = Properties.Resources.Sound_Stop;
             Button15.LineColor = Color.FromArgb(117, 3, 34);
             Button15.Location = new Point(639, 3);
             Button15.Name = "Button15";
@@ -1362,7 +1362,7 @@ namespace WinPaletter
             Button5.DrawOnGlass = false;
             Button5.Font = new Font("Segoe UI", 9.0f);
             Button5.ForeColor = Color.White;
-            Button5.Image = My.Resources.Sound_Play;
+            Button5.Image = Properties.Resources.Sound_Play;
             Button5.LineColor = Color.FromArgb(1, 45, 77);
             Button5.Location = new Point(677, 3);
             Button5.Name = "Button5";
@@ -1464,7 +1464,7 @@ namespace WinPaletter
             Button25.DrawOnGlass = false;
             Button25.Font = new Font("Segoe UI", 9.0f);
             Button25.ForeColor = Color.White;
-            Button25.Image = My.Resources.Sound_Stop;
+            Button25.Image = Properties.Resources.Sound_Stop;
             Button25.LineColor = Color.FromArgb(117, 3, 34);
             Button25.Location = new Point(639, 3);
             Button25.Name = "Button25";
@@ -1480,7 +1480,7 @@ namespace WinPaletter
             Button26.DrawOnGlass = false;
             Button26.Font = new Font("Segoe UI", 9.0f);
             Button26.ForeColor = Color.White;
-            Button26.Image = My.Resources.Sound_Play;
+            Button26.Image = Properties.Resources.Sound_Play;
             Button26.LineColor = Color.FromArgb(1, 45, 77);
             Button26.Location = new Point(677, 3);
             Button26.Name = "Button26";
@@ -1582,7 +1582,7 @@ namespace WinPaletter
             Button16.DrawOnGlass = false;
             Button16.Font = new Font("Segoe UI", 9.0f);
             Button16.ForeColor = Color.White;
-            Button16.Image = My.Resources.Sound_Stop;
+            Button16.Image = Properties.Resources.Sound_Stop;
             Button16.LineColor = Color.FromArgb(117, 3, 34);
             Button16.Location = new Point(639, 3);
             Button16.Name = "Button16";
@@ -1598,7 +1598,7 @@ namespace WinPaletter
             Button13.DrawOnGlass = false;
             Button13.Font = new Font("Segoe UI", 9.0f);
             Button13.ForeColor = Color.White;
-            Button13.Image = My.Resources.Sound_Play;
+            Button13.Image = Properties.Resources.Sound_Play;
             Button13.LineColor = Color.FromArgb(1, 45, 77);
             Button13.Location = new Point(677, 3);
             Button13.Name = "Button13";
@@ -1700,7 +1700,7 @@ namespace WinPaletter
             Button17.DrawOnGlass = false;
             Button17.Font = new Font("Segoe UI", 9.0f);
             Button17.ForeColor = Color.White;
-            Button17.Image = My.Resources.Sound_Stop;
+            Button17.Image = Properties.Resources.Sound_Stop;
             Button17.LineColor = Color.FromArgb(117, 3, 34);
             Button17.Location = new Point(639, 3);
             Button17.Name = "Button17";
@@ -1716,7 +1716,7 @@ namespace WinPaletter
             Button3.DrawOnGlass = false;
             Button3.Font = new Font("Segoe UI", 9.0f);
             Button3.ForeColor = Color.White;
-            Button3.Image = My.Resources.Sound_Play;
+            Button3.Image = Properties.Resources.Sound_Play;
             Button3.LineColor = Color.FromArgb(1, 45, 77);
             Button3.Location = new Point(677, 3);
             Button3.Name = "Button3";
@@ -1804,7 +1804,7 @@ namespace WinPaletter
             Button18.DrawOnGlass = false;
             Button18.Font = new Font("Segoe UI", 9.0f);
             Button18.ForeColor = Color.White;
-            Button18.Image = My.Resources.Sound_Stop;
+            Button18.Image = Properties.Resources.Sound_Stop;
             Button18.LineColor = Color.FromArgb(117, 3, 34);
             Button18.Location = new Point(639, 3);
             Button18.Name = "Button18";
@@ -1820,7 +1820,7 @@ namespace WinPaletter
             Button2.DrawOnGlass = false;
             Button2.Font = new Font("Segoe UI", 9.0f);
             Button2.ForeColor = Color.White;
-            Button2.Image = My.Resources.Sound_Play;
+            Button2.Image = Properties.Resources.Sound_Play;
             Button2.LineColor = Color.FromArgb(1, 45, 77);
             Button2.Location = new Point(677, 3);
             Button2.Name = "Button2";
@@ -1925,7 +1925,7 @@ namespace WinPaletter
             Button205.DrawOnGlass = false;
             Button205.Font = new Font("Segoe UI", 9.0f);
             Button205.ForeColor = Color.White;
-            Button205.Image = My.Resources.Sound_Stop;
+            Button205.Image = Properties.Resources.Sound_Stop;
             Button205.LineColor = Color.FromArgb(117, 3, 34);
             Button205.Location = new Point(639, 3);
             Button205.Name = "Button205";
@@ -1941,7 +1941,7 @@ namespace WinPaletter
             Button206.DrawOnGlass = false;
             Button206.Font = new Font("Segoe UI", 9.0f);
             Button206.ForeColor = Color.White;
-            Button206.Image = My.Resources.Sound_Play;
+            Button206.Image = Properties.Resources.Sound_Play;
             Button206.LineColor = Color.FromArgb(1, 45, 77);
             Button206.Location = new Point(677, 3);
             Button206.Name = "Button206";
@@ -2030,7 +2030,7 @@ namespace WinPaletter
             Button211.DrawOnGlass = false;
             Button211.Font = new Font("Segoe UI", 9.0f);
             Button211.ForeColor = Color.White;
-            Button211.Image = My.Resources.Sound_Stop;
+            Button211.Image = Properties.Resources.Sound_Stop;
             Button211.LineColor = Color.FromArgb(117, 3, 34);
             Button211.Location = new Point(639, 3);
             Button211.Name = "Button211";
@@ -2046,7 +2046,7 @@ namespace WinPaletter
             Button212.DrawOnGlass = false;
             Button212.Font = new Font("Segoe UI", 9.0f);
             Button212.ForeColor = Color.White;
-            Button212.Image = My.Resources.Sound_Play;
+            Button212.Image = Properties.Resources.Sound_Play;
             Button212.LineColor = Color.FromArgb(1, 45, 77);
             Button212.Location = new Point(677, 3);
             Button212.Name = "Button212";
@@ -2135,7 +2135,7 @@ namespace WinPaletter
             Button40.DrawOnGlass = false;
             Button40.Font = new Font("Segoe UI", 9.0f);
             Button40.ForeColor = Color.White;
-            Button40.Image = My.Resources.Sound_Stop;
+            Button40.Image = Properties.Resources.Sound_Stop;
             Button40.LineColor = Color.FromArgb(117, 3, 34);
             Button40.Location = new Point(639, 3);
             Button40.Name = "Button40";
@@ -2151,7 +2151,7 @@ namespace WinPaletter
             Button41.DrawOnGlass = false;
             Button41.Font = new Font("Segoe UI", 9.0f);
             Button41.ForeColor = Color.White;
-            Button41.Image = My.Resources.Sound_Play;
+            Button41.Image = Properties.Resources.Sound_Play;
             Button41.LineColor = Color.FromArgb(1, 45, 77);
             Button41.Location = new Point(677, 3);
             Button41.Name = "Button41";
@@ -2240,7 +2240,7 @@ namespace WinPaletter
             Button37.DrawOnGlass = false;
             Button37.Font = new Font("Segoe UI", 9.0f);
             Button37.ForeColor = Color.White;
-            Button37.Image = My.Resources.Sound_Stop;
+            Button37.Image = Properties.Resources.Sound_Stop;
             Button37.LineColor = Color.FromArgb(117, 3, 34);
             Button37.Location = new Point(639, 3);
             Button37.Name = "Button37";
@@ -2256,7 +2256,7 @@ namespace WinPaletter
             Button38.DrawOnGlass = false;
             Button38.Font = new Font("Segoe UI", 9.0f);
             Button38.ForeColor = Color.White;
-            Button38.Image = My.Resources.Sound_Play;
+            Button38.Image = Properties.Resources.Sound_Play;
             Button38.LineColor = Color.FromArgb(1, 45, 77);
             Button38.Location = new Point(677, 3);
             Button38.Name = "Button38";
@@ -2345,7 +2345,7 @@ namespace WinPaletter
             Button34.DrawOnGlass = false;
             Button34.Font = new Font("Segoe UI", 9.0f);
             Button34.ForeColor = Color.White;
-            Button34.Image = My.Resources.Sound_Stop;
+            Button34.Image = Properties.Resources.Sound_Stop;
             Button34.LineColor = Color.FromArgb(117, 3, 34);
             Button34.Location = new Point(639, 3);
             Button34.Name = "Button34";
@@ -2361,7 +2361,7 @@ namespace WinPaletter
             Button35.DrawOnGlass = false;
             Button35.Font = new Font("Segoe UI", 9.0f);
             Button35.ForeColor = Color.White;
-            Button35.Image = My.Resources.Sound_Play;
+            Button35.Image = Properties.Resources.Sound_Play;
             Button35.LineColor = Color.FromArgb(1, 45, 77);
             Button35.Location = new Point(677, 3);
             Button35.Name = "Button35";
@@ -2450,7 +2450,7 @@ namespace WinPaletter
             Button31.DrawOnGlass = false;
             Button31.Font = new Font("Segoe UI", 9.0f);
             Button31.ForeColor = Color.White;
-            Button31.Image = My.Resources.Sound_Stop;
+            Button31.Image = Properties.Resources.Sound_Stop;
             Button31.LineColor = Color.FromArgb(117, 3, 34);
             Button31.Location = new Point(639, 3);
             Button31.Name = "Button31";
@@ -2466,7 +2466,7 @@ namespace WinPaletter
             Button32.DrawOnGlass = false;
             Button32.Font = new Font("Segoe UI", 9.0f);
             Button32.ForeColor = Color.White;
-            Button32.Image = My.Resources.Sound_Play;
+            Button32.Image = Properties.Resources.Sound_Play;
             Button32.LineColor = Color.FromArgb(1, 45, 77);
             Button32.Location = new Point(677, 3);
             Button32.Name = "Button32";
@@ -2555,7 +2555,7 @@ namespace WinPaletter
             Button28.DrawOnGlass = false;
             Button28.Font = new Font("Segoe UI", 9.0f);
             Button28.ForeColor = Color.White;
-            Button28.Image = My.Resources.Sound_Stop;
+            Button28.Image = Properties.Resources.Sound_Stop;
             Button28.LineColor = Color.FromArgb(117, 3, 34);
             Button28.Location = new Point(639, 3);
             Button28.Name = "Button28";
@@ -2571,7 +2571,7 @@ namespace WinPaletter
             Button29.DrawOnGlass = false;
             Button29.Font = new Font("Segoe UI", 9.0f);
             Button29.ForeColor = Color.White;
-            Button29.Image = My.Resources.Sound_Play;
+            Button29.Image = Properties.Resources.Sound_Play;
             Button29.LineColor = Color.FromArgb(1, 45, 77);
             Button29.Location = new Point(677, 3);
             Button29.Name = "Button29";
@@ -2678,7 +2678,7 @@ namespace WinPaletter
             Button169.DrawOnGlass = false;
             Button169.Font = new Font("Segoe UI", 9.0f);
             Button169.ForeColor = Color.White;
-            Button169.Image = My.Resources.Sound_Stop;
+            Button169.Image = Properties.Resources.Sound_Stop;
             Button169.LineColor = Color.FromArgb(117, 3, 34);
             Button169.Location = new Point(639, 3);
             Button169.Name = "Button169";
@@ -2694,7 +2694,7 @@ namespace WinPaletter
             Button170.DrawOnGlass = false;
             Button170.Font = new Font("Segoe UI", 9.0f);
             Button170.ForeColor = Color.White;
-            Button170.Image = My.Resources.Sound_Play;
+            Button170.Image = Properties.Resources.Sound_Play;
             Button170.LineColor = Color.FromArgb(1, 45, 77);
             Button170.Location = new Point(677, 3);
             Button170.Name = "Button170";
@@ -2794,7 +2794,7 @@ namespace WinPaletter
             Button166.DrawOnGlass = false;
             Button166.Font = new Font("Segoe UI", 9.0f);
             Button166.ForeColor = Color.White;
-            Button166.Image = My.Resources.Sound_Stop;
+            Button166.Image = Properties.Resources.Sound_Stop;
             Button166.LineColor = Color.FromArgb(117, 3, 34);
             Button166.Location = new Point(639, 3);
             Button166.Name = "Button166";
@@ -2810,7 +2810,7 @@ namespace WinPaletter
             Button167.DrawOnGlass = false;
             Button167.Font = new Font("Segoe UI", 9.0f);
             Button167.ForeColor = Color.White;
-            Button167.Image = My.Resources.Sound_Play;
+            Button167.Image = Properties.Resources.Sound_Play;
             Button167.LineColor = Color.FromArgb(1, 45, 77);
             Button167.Location = new Point(677, 3);
             Button167.Name = "Button167";
@@ -2899,7 +2899,7 @@ namespace WinPaletter
             Button58.DrawOnGlass = false;
             Button58.Font = new Font("Segoe UI", 9.0f);
             Button58.ForeColor = Color.White;
-            Button58.Image = My.Resources.Sound_Stop;
+            Button58.Image = Properties.Resources.Sound_Stop;
             Button58.LineColor = Color.FromArgb(117, 3, 34);
             Button58.Location = new Point(639, 3);
             Button58.Name = "Button58";
@@ -2915,7 +2915,7 @@ namespace WinPaletter
             Button59.DrawOnGlass = false;
             Button59.Font = new Font("Segoe UI", 9.0f);
             Button59.ForeColor = Color.White;
-            Button59.Image = My.Resources.Sound_Play;
+            Button59.Image = Properties.Resources.Sound_Play;
             Button59.LineColor = Color.FromArgb(1, 45, 77);
             Button59.Location = new Point(677, 3);
             Button59.Name = "Button59";
@@ -3004,7 +3004,7 @@ namespace WinPaletter
             Button43.DrawOnGlass = false;
             Button43.Font = new Font("Segoe UI", 9.0f);
             Button43.ForeColor = Color.White;
-            Button43.Image = My.Resources.Sound_Stop;
+            Button43.Image = Properties.Resources.Sound_Stop;
             Button43.LineColor = Color.FromArgb(117, 3, 34);
             Button43.Location = new Point(639, 3);
             Button43.Name = "Button43";
@@ -3020,7 +3020,7 @@ namespace WinPaletter
             Button44.DrawOnGlass = false;
             Button44.Font = new Font("Segoe UI", 9.0f);
             Button44.ForeColor = Color.White;
-            Button44.Image = My.Resources.Sound_Play;
+            Button44.Image = Properties.Resources.Sound_Play;
             Button44.LineColor = Color.FromArgb(1, 45, 77);
             Button44.Location = new Point(677, 3);
             Button44.Name = "Button44";
@@ -3109,7 +3109,7 @@ namespace WinPaletter
             Button46.DrawOnGlass = false;
             Button46.Font = new Font("Segoe UI", 9.0f);
             Button46.ForeColor = Color.White;
-            Button46.Image = My.Resources.Sound_Stop;
+            Button46.Image = Properties.Resources.Sound_Stop;
             Button46.LineColor = Color.FromArgb(117, 3, 34);
             Button46.Location = new Point(639, 3);
             Button46.Name = "Button46";
@@ -3125,7 +3125,7 @@ namespace WinPaletter
             Button47.DrawOnGlass = false;
             Button47.Font = new Font("Segoe UI", 9.0f);
             Button47.ForeColor = Color.White;
-            Button47.Image = My.Resources.Sound_Play;
+            Button47.Image = Properties.Resources.Sound_Play;
             Button47.LineColor = Color.FromArgb(1, 45, 77);
             Button47.Location = new Point(677, 3);
             Button47.Name = "Button47";
@@ -3214,7 +3214,7 @@ namespace WinPaletter
             Button49.DrawOnGlass = false;
             Button49.Font = new Font("Segoe UI", 9.0f);
             Button49.ForeColor = Color.White;
-            Button49.Image = My.Resources.Sound_Stop;
+            Button49.Image = Properties.Resources.Sound_Stop;
             Button49.LineColor = Color.FromArgb(117, 3, 34);
             Button49.Location = new Point(639, 3);
             Button49.Name = "Button49";
@@ -3230,7 +3230,7 @@ namespace WinPaletter
             Button50.DrawOnGlass = false;
             Button50.Font = new Font("Segoe UI", 9.0f);
             Button50.ForeColor = Color.White;
-            Button50.Image = My.Resources.Sound_Play;
+            Button50.Image = Properties.Resources.Sound_Play;
             Button50.LineColor = Color.FromArgb(1, 45, 77);
             Button50.Location = new Point(677, 3);
             Button50.Name = "Button50";
@@ -3319,7 +3319,7 @@ namespace WinPaletter
             Button52.DrawOnGlass = false;
             Button52.Font = new Font("Segoe UI", 9.0f);
             Button52.ForeColor = Color.White;
-            Button52.Image = My.Resources.Sound_Stop;
+            Button52.Image = Properties.Resources.Sound_Stop;
             Button52.LineColor = Color.FromArgb(117, 3, 34);
             Button52.Location = new Point(639, 3);
             Button52.Name = "Button52";
@@ -3335,7 +3335,7 @@ namespace WinPaletter
             Button53.DrawOnGlass = false;
             Button53.Font = new Font("Segoe UI", 9.0f);
             Button53.ForeColor = Color.White;
-            Button53.Image = My.Resources.Sound_Play;
+            Button53.Image = Properties.Resources.Sound_Play;
             Button53.LineColor = Color.FromArgb(1, 45, 77);
             Button53.Location = new Point(677, 3);
             Button53.Name = "Button53";
@@ -3424,7 +3424,7 @@ namespace WinPaletter
             Button55.DrawOnGlass = false;
             Button55.Font = new Font("Segoe UI", 9.0f);
             Button55.ForeColor = Color.White;
-            Button55.Image = My.Resources.Sound_Stop;
+            Button55.Image = Properties.Resources.Sound_Stop;
             Button55.LineColor = Color.FromArgb(117, 3, 34);
             Button55.Location = new Point(639, 3);
             Button55.Name = "Button55";
@@ -3440,7 +3440,7 @@ namespace WinPaletter
             Button56.DrawOnGlass = false;
             Button56.Font = new Font("Segoe UI", 9.0f);
             Button56.ForeColor = Color.White;
-            Button56.Image = My.Resources.Sound_Play;
+            Button56.Image = Properties.Resources.Sound_Play;
             Button56.LineColor = Color.FromArgb(1, 45, 77);
             Button56.Location = new Point(677, 3);
             Button56.Name = "Button56";
@@ -3558,7 +3558,7 @@ namespace WinPaletter
             Button260.DrawOnGlass = false;
             Button260.Font = new Font("Segoe UI", 9.0f);
             Button260.ForeColor = Color.White;
-            Button260.Image = My.Resources.Sound_Stop;
+            Button260.Image = Properties.Resources.Sound_Stop;
             Button260.LineColor = Color.FromArgb(117, 3, 34);
             Button260.Location = new Point(639, 3);
             Button260.Name = "Button260";
@@ -3574,7 +3574,7 @@ namespace WinPaletter
             Button261.DrawOnGlass = false;
             Button261.Font = new Font("Segoe UI", 9.0f);
             Button261.ForeColor = Color.White;
-            Button261.Image = My.Resources.Sound_Play;
+            Button261.Image = Properties.Resources.Sound_Play;
             Button261.LineColor = Color.FromArgb(1, 45, 77);
             Button261.Location = new Point(677, 3);
             Button261.Name = "Button261";
@@ -3662,7 +3662,7 @@ namespace WinPaletter
             Button163.DrawOnGlass = false;
             Button163.Font = new Font("Segoe UI", 9.0f);
             Button163.ForeColor = Color.White;
-            Button163.Image = My.Resources.Sound_Stop;
+            Button163.Image = Properties.Resources.Sound_Stop;
             Button163.LineColor = Color.FromArgb(117, 3, 34);
             Button163.Location = new Point(639, 3);
             Button163.Name = "Button163";
@@ -3678,7 +3678,7 @@ namespace WinPaletter
             Button164.DrawOnGlass = false;
             Button164.Font = new Font("Segoe UI", 9.0f);
             Button164.ForeColor = Color.White;
-            Button164.Image = My.Resources.Sound_Play;
+            Button164.Image = Properties.Resources.Sound_Play;
             Button164.LineColor = Color.FromArgb(1, 45, 77);
             Button164.Location = new Point(677, 3);
             Button164.Name = "Button164";
@@ -3767,7 +3767,7 @@ namespace WinPaletter
             Button157.DrawOnGlass = false;
             Button157.Font = new Font("Segoe UI", 9.0f);
             Button157.ForeColor = Color.White;
-            Button157.Image = My.Resources.Sound_Stop;
+            Button157.Image = Properties.Resources.Sound_Stop;
             Button157.LineColor = Color.FromArgb(117, 3, 34);
             Button157.Location = new Point(639, 3);
             Button157.Name = "Button157";
@@ -3783,7 +3783,7 @@ namespace WinPaletter
             Button158.DrawOnGlass = false;
             Button158.Font = new Font("Segoe UI", 9.0f);
             Button158.ForeColor = Color.White;
-            Button158.Image = My.Resources.Sound_Play;
+            Button158.Image = Properties.Resources.Sound_Play;
             Button158.LineColor = Color.FromArgb(1, 45, 77);
             Button158.Location = new Point(677, 3);
             Button158.Name = "Button158";
@@ -3872,7 +3872,7 @@ namespace WinPaletter
             Button154.DrawOnGlass = false;
             Button154.Font = new Font("Segoe UI", 9.0f);
             Button154.ForeColor = Color.White;
-            Button154.Image = My.Resources.Sound_Stop;
+            Button154.Image = Properties.Resources.Sound_Stop;
             Button154.LineColor = Color.FromArgb(117, 3, 34);
             Button154.Location = new Point(639, 3);
             Button154.Name = "Button154";
@@ -3888,7 +3888,7 @@ namespace WinPaletter
             Button155.DrawOnGlass = false;
             Button155.Font = new Font("Segoe UI", 9.0f);
             Button155.ForeColor = Color.White;
-            Button155.Image = My.Resources.Sound_Play;
+            Button155.Image = Properties.Resources.Sound_Play;
             Button155.LineColor = Color.FromArgb(1, 45, 77);
             Button155.Location = new Point(677, 3);
             Button155.Name = "Button155";
@@ -3977,7 +3977,7 @@ namespace WinPaletter
             Button151.DrawOnGlass = false;
             Button151.Font = new Font("Segoe UI", 9.0f);
             Button151.ForeColor = Color.White;
-            Button151.Image = My.Resources.Sound_Stop;
+            Button151.Image = Properties.Resources.Sound_Stop;
             Button151.LineColor = Color.FromArgb(117, 3, 34);
             Button151.Location = new Point(639, 3);
             Button151.Name = "Button151";
@@ -3993,7 +3993,7 @@ namespace WinPaletter
             Button152.DrawOnGlass = false;
             Button152.Font = new Font("Segoe UI", 9.0f);
             Button152.ForeColor = Color.White;
-            Button152.Image = My.Resources.Sound_Play;
+            Button152.Image = Properties.Resources.Sound_Play;
             Button152.LineColor = Color.FromArgb(1, 45, 77);
             Button152.Location = new Point(677, 3);
             Button152.Name = "Button152";
@@ -4082,7 +4082,7 @@ namespace WinPaletter
             Button148.DrawOnGlass = false;
             Button148.Font = new Font("Segoe UI", 9.0f);
             Button148.ForeColor = Color.White;
-            Button148.Image = My.Resources.Sound_Stop;
+            Button148.Image = Properties.Resources.Sound_Stop;
             Button148.LineColor = Color.FromArgb(117, 3, 34);
             Button148.Location = new Point(639, 3);
             Button148.Name = "Button148";
@@ -4098,7 +4098,7 @@ namespace WinPaletter
             Button149.DrawOnGlass = false;
             Button149.Font = new Font("Segoe UI", 9.0f);
             Button149.ForeColor = Color.White;
-            Button149.Image = My.Resources.Sound_Play;
+            Button149.Image = Properties.Resources.Sound_Play;
             Button149.LineColor = Color.FromArgb(1, 45, 77);
             Button149.Location = new Point(677, 3);
             Button149.Name = "Button149";
@@ -4187,7 +4187,7 @@ namespace WinPaletter
             Button145.DrawOnGlass = false;
             Button145.Font = new Font("Segoe UI", 9.0f);
             Button145.ForeColor = Color.White;
-            Button145.Image = My.Resources.Sound_Stop;
+            Button145.Image = Properties.Resources.Sound_Stop;
             Button145.LineColor = Color.FromArgb(117, 3, 34);
             Button145.Location = new Point(639, 3);
             Button145.Name = "Button145";
@@ -4203,7 +4203,7 @@ namespace WinPaletter
             Button146.DrawOnGlass = false;
             Button146.Font = new Font("Segoe UI", 9.0f);
             Button146.ForeColor = Color.White;
-            Button146.Image = My.Resources.Sound_Play;
+            Button146.Image = Properties.Resources.Sound_Play;
             Button146.LineColor = Color.FromArgb(1, 45, 77);
             Button146.Location = new Point(677, 3);
             Button146.Name = "Button146";
@@ -4292,7 +4292,7 @@ namespace WinPaletter
             Button142.DrawOnGlass = false;
             Button142.Font = new Font("Segoe UI", 9.0f);
             Button142.ForeColor = Color.White;
-            Button142.Image = My.Resources.Sound_Stop;
+            Button142.Image = Properties.Resources.Sound_Stop;
             Button142.LineColor = Color.FromArgb(117, 3, 34);
             Button142.Location = new Point(639, 3);
             Button142.Name = "Button142";
@@ -4308,7 +4308,7 @@ namespace WinPaletter
             Button143.DrawOnGlass = false;
             Button143.Font = new Font("Segoe UI", 9.0f);
             Button143.ForeColor = Color.White;
-            Button143.Image = My.Resources.Sound_Play;
+            Button143.Image = Properties.Resources.Sound_Play;
             Button143.LineColor = Color.FromArgb(1, 45, 77);
             Button143.Location = new Point(677, 3);
             Button143.Name = "Button143";
@@ -4411,7 +4411,7 @@ namespace WinPaletter
             Button241.DrawOnGlass = false;
             Button241.Font = new Font("Segoe UI", 9.0f);
             Button241.ForeColor = Color.White;
-            Button241.Image = My.Resources.Sound_Stop;
+            Button241.Image = Properties.Resources.Sound_Stop;
             Button241.LineColor = Color.FromArgb(117, 3, 34);
             Button241.Location = new Point(639, 3);
             Button241.Name = "Button241";
@@ -4427,7 +4427,7 @@ namespace WinPaletter
             Button242.DrawOnGlass = false;
             Button242.Font = new Font("Segoe UI", 9.0f);
             Button242.ForeColor = Color.White;
-            Button242.Image = My.Resources.Sound_Play;
+            Button242.Image = Properties.Resources.Sound_Play;
             Button242.LineColor = Color.FromArgb(1, 45, 77);
             Button242.Location = new Point(677, 3);
             Button242.Name = "Button242";
@@ -4516,7 +4516,7 @@ namespace WinPaletter
             Button244.DrawOnGlass = false;
             Button244.Font = new Font("Segoe UI", 9.0f);
             Button244.ForeColor = Color.White;
-            Button244.Image = My.Resources.Sound_Stop;
+            Button244.Image = Properties.Resources.Sound_Stop;
             Button244.LineColor = Color.FromArgb(117, 3, 34);
             Button244.Location = new Point(639, 3);
             Button244.Name = "Button244";
@@ -4532,7 +4532,7 @@ namespace WinPaletter
             Button245.DrawOnGlass = false;
             Button245.Font = new Font("Segoe UI", 9.0f);
             Button245.ForeColor = Color.White;
-            Button245.Image = My.Resources.Sound_Play;
+            Button245.Image = Properties.Resources.Sound_Play;
             Button245.LineColor = Color.FromArgb(1, 45, 77);
             Button245.Location = new Point(677, 3);
             Button245.Name = "Button245";
@@ -4621,7 +4621,7 @@ namespace WinPaletter
             Button238.DrawOnGlass = false;
             Button238.Font = new Font("Segoe UI", 9.0f);
             Button238.ForeColor = Color.White;
-            Button238.Image = My.Resources.Sound_Stop;
+            Button238.Image = Properties.Resources.Sound_Stop;
             Button238.LineColor = Color.FromArgb(117, 3, 34);
             Button238.Location = new Point(639, 3);
             Button238.Name = "Button238";
@@ -4637,7 +4637,7 @@ namespace WinPaletter
             Button239.DrawOnGlass = false;
             Button239.Font = new Font("Segoe UI", 9.0f);
             Button239.ForeColor = Color.White;
-            Button239.Image = My.Resources.Sound_Play;
+            Button239.Image = Properties.Resources.Sound_Play;
             Button239.LineColor = Color.FromArgb(1, 45, 77);
             Button239.Location = new Point(677, 3);
             Button239.Name = "Button239";
@@ -4726,7 +4726,7 @@ namespace WinPaletter
             Button235.DrawOnGlass = false;
             Button235.Font = new Font("Segoe UI", 9.0f);
             Button235.ForeColor = Color.White;
-            Button235.Image = My.Resources.Sound_Stop;
+            Button235.Image = Properties.Resources.Sound_Stop;
             Button235.LineColor = Color.FromArgb(117, 3, 34);
             Button235.Location = new Point(639, 3);
             Button235.Name = "Button235";
@@ -4742,7 +4742,7 @@ namespace WinPaletter
             Button236.DrawOnGlass = false;
             Button236.Font = new Font("Segoe UI", 9.0f);
             Button236.ForeColor = Color.White;
-            Button236.Image = My.Resources.Sound_Play;
+            Button236.Image = Properties.Resources.Sound_Play;
             Button236.LineColor = Color.FromArgb(1, 45, 77);
             Button236.Location = new Point(677, 3);
             Button236.Name = "Button236";
@@ -4831,7 +4831,7 @@ namespace WinPaletter
             Button160.DrawOnGlass = false;
             Button160.Font = new Font("Segoe UI", 9.0f);
             Button160.ForeColor = Color.White;
-            Button160.Image = My.Resources.Sound_Stop;
+            Button160.Image = Properties.Resources.Sound_Stop;
             Button160.LineColor = Color.FromArgb(117, 3, 34);
             Button160.Location = new Point(639, 3);
             Button160.Name = "Button160";
@@ -4847,7 +4847,7 @@ namespace WinPaletter
             Button161.DrawOnGlass = false;
             Button161.Font = new Font("Segoe UI", 9.0f);
             Button161.ForeColor = Color.White;
-            Button161.Image = My.Resources.Sound_Play;
+            Button161.Image = Properties.Resources.Sound_Play;
             Button161.LineColor = Color.FromArgb(1, 45, 77);
             Button161.Location = new Point(677, 3);
             Button161.Name = "Button161";
@@ -4954,7 +4954,7 @@ namespace WinPaletter
             Button232.DrawOnGlass = false;
             Button232.Font = new Font("Segoe UI", 9.0f);
             Button232.ForeColor = Color.White;
-            Button232.Image = My.Resources.Sound_Stop;
+            Button232.Image = Properties.Resources.Sound_Stop;
             Button232.LineColor = Color.FromArgb(117, 3, 34);
             Button232.Location = new Point(639, 3);
             Button232.Name = "Button232";
@@ -4970,7 +4970,7 @@ namespace WinPaletter
             Button233.DrawOnGlass = false;
             Button233.Font = new Font("Segoe UI", 9.0f);
             Button233.ForeColor = Color.White;
-            Button233.Image = My.Resources.Sound_Play;
+            Button233.Image = Properties.Resources.Sound_Play;
             Button233.LineColor = Color.FromArgb(1, 45, 77);
             Button233.Location = new Point(677, 3);
             Button233.Name = "Button233";
@@ -5059,7 +5059,7 @@ namespace WinPaletter
             Button196.DrawOnGlass = false;
             Button196.Font = new Font("Segoe UI", 9.0f);
             Button196.ForeColor = Color.White;
-            Button196.Image = My.Resources.Sound_Stop;
+            Button196.Image = Properties.Resources.Sound_Stop;
             Button196.LineColor = Color.FromArgb(117, 3, 34);
             Button196.Location = new Point(639, 3);
             Button196.Name = "Button196";
@@ -5075,7 +5075,7 @@ namespace WinPaletter
             Button197.DrawOnGlass = false;
             Button197.Font = new Font("Segoe UI", 9.0f);
             Button197.ForeColor = Color.White;
-            Button197.Image = My.Resources.Sound_Play;
+            Button197.Image = Properties.Resources.Sound_Play;
             Button197.LineColor = Color.FromArgb(1, 45, 77);
             Button197.Location = new Point(677, 3);
             Button197.Name = "Button197";
@@ -5164,7 +5164,7 @@ namespace WinPaletter
             Button175.DrawOnGlass = false;
             Button175.Font = new Font("Segoe UI", 9.0f);
             Button175.ForeColor = Color.White;
-            Button175.Image = My.Resources.Sound_Stop;
+            Button175.Image = Properties.Resources.Sound_Stop;
             Button175.LineColor = Color.FromArgb(117, 3, 34);
             Button175.Location = new Point(639, 3);
             Button175.Name = "Button175";
@@ -5180,7 +5180,7 @@ namespace WinPaletter
             Button176.DrawOnGlass = false;
             Button176.Font = new Font("Segoe UI", 9.0f);
             Button176.ForeColor = Color.White;
-            Button176.Image = My.Resources.Sound_Play;
+            Button176.Image = Properties.Resources.Sound_Play;
             Button176.LineColor = Color.FromArgb(1, 45, 77);
             Button176.Location = new Point(677, 3);
             Button176.Name = "Button176";
@@ -5269,7 +5269,7 @@ namespace WinPaletter
             Button178.DrawOnGlass = false;
             Button178.Font = new Font("Segoe UI", 9.0f);
             Button178.ForeColor = Color.White;
-            Button178.Image = My.Resources.Sound_Stop;
+            Button178.Image = Properties.Resources.Sound_Stop;
             Button178.LineColor = Color.FromArgb(117, 3, 34);
             Button178.Location = new Point(639, 3);
             Button178.Name = "Button178";
@@ -5285,7 +5285,7 @@ namespace WinPaletter
             Button179.DrawOnGlass = false;
             Button179.Font = new Font("Segoe UI", 9.0f);
             Button179.ForeColor = Color.White;
-            Button179.Image = My.Resources.Sound_Play;
+            Button179.Image = Properties.Resources.Sound_Play;
             Button179.LineColor = Color.FromArgb(1, 45, 77);
             Button179.Location = new Point(677, 3);
             Button179.Name = "Button179";
@@ -5374,7 +5374,7 @@ namespace WinPaletter
             Button181.DrawOnGlass = false;
             Button181.Font = new Font("Segoe UI", 9.0f);
             Button181.ForeColor = Color.White;
-            Button181.Image = My.Resources.Sound_Stop;
+            Button181.Image = Properties.Resources.Sound_Stop;
             Button181.LineColor = Color.FromArgb(117, 3, 34);
             Button181.Location = new Point(639, 3);
             Button181.Name = "Button181";
@@ -5390,7 +5390,7 @@ namespace WinPaletter
             Button182.DrawOnGlass = false;
             Button182.Font = new Font("Segoe UI", 9.0f);
             Button182.ForeColor = Color.White;
-            Button182.Image = My.Resources.Sound_Play;
+            Button182.Image = Properties.Resources.Sound_Play;
             Button182.LineColor = Color.FromArgb(1, 45, 77);
             Button182.Location = new Point(677, 3);
             Button182.Name = "Button182";
@@ -5479,7 +5479,7 @@ namespace WinPaletter
             Button184.DrawOnGlass = false;
             Button184.Font = new Font("Segoe UI", 9.0f);
             Button184.ForeColor = Color.White;
-            Button184.Image = My.Resources.Sound_Stop;
+            Button184.Image = Properties.Resources.Sound_Stop;
             Button184.LineColor = Color.FromArgb(117, 3, 34);
             Button184.Location = new Point(639, 3);
             Button184.Name = "Button184";
@@ -5495,7 +5495,7 @@ namespace WinPaletter
             Button185.DrawOnGlass = false;
             Button185.Font = new Font("Segoe UI", 9.0f);
             Button185.ForeColor = Color.White;
-            Button185.Image = My.Resources.Sound_Play;
+            Button185.Image = Properties.Resources.Sound_Play;
             Button185.LineColor = Color.FromArgb(1, 45, 77);
             Button185.Location = new Point(677, 3);
             Button185.Name = "Button185";
@@ -5584,7 +5584,7 @@ namespace WinPaletter
             Button187.DrawOnGlass = false;
             Button187.Font = new Font("Segoe UI", 9.0f);
             Button187.ForeColor = Color.White;
-            Button187.Image = My.Resources.Sound_Stop;
+            Button187.Image = Properties.Resources.Sound_Stop;
             Button187.LineColor = Color.FromArgb(117, 3, 34);
             Button187.Location = new Point(639, 3);
             Button187.Name = "Button187";
@@ -5600,7 +5600,7 @@ namespace WinPaletter
             Button188.DrawOnGlass = false;
             Button188.Font = new Font("Segoe UI", 9.0f);
             Button188.ForeColor = Color.White;
-            Button188.Image = My.Resources.Sound_Play;
+            Button188.Image = Properties.Resources.Sound_Play;
             Button188.LineColor = Color.FromArgb(1, 45, 77);
             Button188.Location = new Point(677, 3);
             Button188.Name = "Button188";
@@ -5689,7 +5689,7 @@ namespace WinPaletter
             Button190.DrawOnGlass = false;
             Button190.Font = new Font("Segoe UI", 9.0f);
             Button190.ForeColor = Color.White;
-            Button190.Image = My.Resources.Sound_Stop;
+            Button190.Image = Properties.Resources.Sound_Stop;
             Button190.LineColor = Color.FromArgb(117, 3, 34);
             Button190.Location = new Point(639, 3);
             Button190.Name = "Button190";
@@ -5705,7 +5705,7 @@ namespace WinPaletter
             Button191.DrawOnGlass = false;
             Button191.Font = new Font("Segoe UI", 9.0f);
             Button191.ForeColor = Color.White;
-            Button191.Image = My.Resources.Sound_Play;
+            Button191.Image = Properties.Resources.Sound_Play;
             Button191.LineColor = Color.FromArgb(1, 45, 77);
             Button191.Location = new Point(677, 3);
             Button191.Name = "Button191";
@@ -5794,7 +5794,7 @@ namespace WinPaletter
             Button193.DrawOnGlass = false;
             Button193.Font = new Font("Segoe UI", 9.0f);
             Button193.ForeColor = Color.White;
-            Button193.Image = My.Resources.Sound_Stop;
+            Button193.Image = Properties.Resources.Sound_Stop;
             Button193.LineColor = Color.FromArgb(117, 3, 34);
             Button193.Location = new Point(639, 3);
             Button193.Name = "Button193";
@@ -5810,7 +5810,7 @@ namespace WinPaletter
             Button194.DrawOnGlass = false;
             Button194.Font = new Font("Segoe UI", 9.0f);
             Button194.ForeColor = Color.White;
-            Button194.Image = My.Resources.Sound_Play;
+            Button194.Image = Properties.Resources.Sound_Play;
             Button194.LineColor = Color.FromArgb(1, 45, 77);
             Button194.Location = new Point(677, 3);
             Button194.Name = "Button194";
@@ -5917,7 +5917,7 @@ namespace WinPaletter
             Button202.DrawOnGlass = false;
             Button202.Font = new Font("Segoe UI", 9.0f);
             Button202.ForeColor = Color.White;
-            Button202.Image = My.Resources.Sound_Stop;
+            Button202.Image = Properties.Resources.Sound_Stop;
             Button202.LineColor = Color.FromArgb(117, 3, 34);
             Button202.Location = new Point(639, 3);
             Button202.Name = "Button202";
@@ -5933,7 +5933,7 @@ namespace WinPaletter
             Button203.DrawOnGlass = false;
             Button203.Font = new Font("Segoe UI", 9.0f);
             Button203.ForeColor = Color.White;
-            Button203.Image = My.Resources.Sound_Play;
+            Button203.Image = Properties.Resources.Sound_Play;
             Button203.LineColor = Color.FromArgb(1, 45, 77);
             Button203.Location = new Point(677, 3);
             Button203.Name = "Button203";
@@ -6022,7 +6022,7 @@ namespace WinPaletter
             Button172.DrawOnGlass = false;
             Button172.Font = new Font("Segoe UI", 9.0f);
             Button172.ForeColor = Color.White;
-            Button172.Image = My.Resources.Sound_Stop;
+            Button172.Image = Properties.Resources.Sound_Stop;
             Button172.LineColor = Color.FromArgb(117, 3, 34);
             Button172.Location = new Point(639, 3);
             Button172.Name = "Button172";
@@ -6038,7 +6038,7 @@ namespace WinPaletter
             Button173.DrawOnGlass = false;
             Button173.Font = new Font("Segoe UI", 9.0f);
             Button173.ForeColor = Color.White;
-            Button173.Image = My.Resources.Sound_Play;
+            Button173.Image = Properties.Resources.Sound_Play;
             Button173.LineColor = Color.FromArgb(1, 45, 77);
             Button173.Location = new Point(677, 3);
             Button173.Name = "Button173";
@@ -6127,7 +6127,7 @@ namespace WinPaletter
             Button79.DrawOnGlass = false;
             Button79.Font = new Font("Segoe UI", 9.0f);
             Button79.ForeColor = Color.White;
-            Button79.Image = My.Resources.Sound_Stop;
+            Button79.Image = Properties.Resources.Sound_Stop;
             Button79.LineColor = Color.FromArgb(117, 3, 34);
             Button79.Location = new Point(639, 3);
             Button79.Name = "Button79";
@@ -6143,7 +6143,7 @@ namespace WinPaletter
             Button80.DrawOnGlass = false;
             Button80.Font = new Font("Segoe UI", 9.0f);
             Button80.ForeColor = Color.White;
-            Button80.Image = My.Resources.Sound_Play;
+            Button80.Image = Properties.Resources.Sound_Play;
             Button80.LineColor = Color.FromArgb(1, 45, 77);
             Button80.Location = new Point(677, 3);
             Button80.Name = "Button80";
@@ -6232,7 +6232,7 @@ namespace WinPaletter
             Button61.DrawOnGlass = false;
             Button61.Font = new Font("Segoe UI", 9.0f);
             Button61.ForeColor = Color.White;
-            Button61.Image = My.Resources.Sound_Stop;
+            Button61.Image = Properties.Resources.Sound_Stop;
             Button61.LineColor = Color.FromArgb(117, 3, 34);
             Button61.Location = new Point(639, 3);
             Button61.Name = "Button61";
@@ -6248,7 +6248,7 @@ namespace WinPaletter
             Button62.DrawOnGlass = false;
             Button62.Font = new Font("Segoe UI", 9.0f);
             Button62.ForeColor = Color.White;
-            Button62.Image = My.Resources.Sound_Play;
+            Button62.Image = Properties.Resources.Sound_Play;
             Button62.LineColor = Color.FromArgb(1, 45, 77);
             Button62.Location = new Point(677, 3);
             Button62.Name = "Button62";
@@ -6337,7 +6337,7 @@ namespace WinPaletter
             Button64.DrawOnGlass = false;
             Button64.Font = new Font("Segoe UI", 9.0f);
             Button64.ForeColor = Color.White;
-            Button64.Image = My.Resources.Sound_Stop;
+            Button64.Image = Properties.Resources.Sound_Stop;
             Button64.LineColor = Color.FromArgb(117, 3, 34);
             Button64.Location = new Point(639, 3);
             Button64.Name = "Button64";
@@ -6353,7 +6353,7 @@ namespace WinPaletter
             Button65.DrawOnGlass = false;
             Button65.Font = new Font("Segoe UI", 9.0f);
             Button65.ForeColor = Color.White;
-            Button65.Image = My.Resources.Sound_Play;
+            Button65.Image = Properties.Resources.Sound_Play;
             Button65.LineColor = Color.FromArgb(1, 45, 77);
             Button65.Location = new Point(677, 3);
             Button65.Name = "Button65";
@@ -6442,7 +6442,7 @@ namespace WinPaletter
             Button67.DrawOnGlass = false;
             Button67.Font = new Font("Segoe UI", 9.0f);
             Button67.ForeColor = Color.White;
-            Button67.Image = My.Resources.Sound_Stop;
+            Button67.Image = Properties.Resources.Sound_Stop;
             Button67.LineColor = Color.FromArgb(117, 3, 34);
             Button67.Location = new Point(639, 3);
             Button67.Name = "Button67";
@@ -6458,7 +6458,7 @@ namespace WinPaletter
             Button68.DrawOnGlass = false;
             Button68.Font = new Font("Segoe UI", 9.0f);
             Button68.ForeColor = Color.White;
-            Button68.Image = My.Resources.Sound_Play;
+            Button68.Image = Properties.Resources.Sound_Play;
             Button68.LineColor = Color.FromArgb(1, 45, 77);
             Button68.Location = new Point(677, 3);
             Button68.Name = "Button68";
@@ -6547,7 +6547,7 @@ namespace WinPaletter
             Button70.DrawOnGlass = false;
             Button70.Font = new Font("Segoe UI", 9.0f);
             Button70.ForeColor = Color.White;
-            Button70.Image = My.Resources.Sound_Stop;
+            Button70.Image = Properties.Resources.Sound_Stop;
             Button70.LineColor = Color.FromArgb(117, 3, 34);
             Button70.Location = new Point(639, 3);
             Button70.Name = "Button70";
@@ -6563,7 +6563,7 @@ namespace WinPaletter
             Button71.DrawOnGlass = false;
             Button71.Font = new Font("Segoe UI", 9.0f);
             Button71.ForeColor = Color.White;
-            Button71.Image = My.Resources.Sound_Play;
+            Button71.Image = Properties.Resources.Sound_Play;
             Button71.LineColor = Color.FromArgb(1, 45, 77);
             Button71.Location = new Point(677, 3);
             Button71.Name = "Button71";
@@ -6652,7 +6652,7 @@ namespace WinPaletter
             Button73.DrawOnGlass = false;
             Button73.Font = new Font("Segoe UI", 9.0f);
             Button73.ForeColor = Color.White;
-            Button73.Image = My.Resources.Sound_Stop;
+            Button73.Image = Properties.Resources.Sound_Stop;
             Button73.LineColor = Color.FromArgb(117, 3, 34);
             Button73.Location = new Point(639, 3);
             Button73.Name = "Button73";
@@ -6668,7 +6668,7 @@ namespace WinPaletter
             Button74.DrawOnGlass = false;
             Button74.Font = new Font("Segoe UI", 9.0f);
             Button74.ForeColor = Color.White;
-            Button74.Image = My.Resources.Sound_Play;
+            Button74.Image = Properties.Resources.Sound_Play;
             Button74.LineColor = Color.FromArgb(1, 45, 77);
             Button74.Location = new Point(677, 3);
             Button74.Name = "Button74";
@@ -6757,7 +6757,7 @@ namespace WinPaletter
             Button76.DrawOnGlass = false;
             Button76.Font = new Font("Segoe UI", 9.0f);
             Button76.ForeColor = Color.White;
-            Button76.Image = My.Resources.Sound_Stop;
+            Button76.Image = Properties.Resources.Sound_Stop;
             Button76.LineColor = Color.FromArgb(117, 3, 34);
             Button76.Location = new Point(639, 3);
             Button76.Name = "Button76";
@@ -6773,7 +6773,7 @@ namespace WinPaletter
             Button77.DrawOnGlass = false;
             Button77.Font = new Font("Segoe UI", 9.0f);
             Button77.ForeColor = Color.White;
-            Button77.Image = My.Resources.Sound_Play;
+            Button77.Image = Properties.Resources.Sound_Play;
             Button77.LineColor = Color.FromArgb(1, 45, 77);
             Button77.Location = new Point(677, 3);
             Button77.Name = "Button77";
@@ -6881,7 +6881,7 @@ namespace WinPaletter
             Button103.DrawOnGlass = false;
             Button103.Font = new Font("Segoe UI", 9.0f);
             Button103.ForeColor = Color.White;
-            Button103.Image = My.Resources.Sound_Stop;
+            Button103.Image = Properties.Resources.Sound_Stop;
             Button103.LineColor = Color.FromArgb(117, 3, 34);
             Button103.Location = new Point(639, 3);
             Button103.Name = "Button103";
@@ -6897,7 +6897,7 @@ namespace WinPaletter
             Button104.DrawOnGlass = false;
             Button104.Font = new Font("Segoe UI", 9.0f);
             Button104.ForeColor = Color.White;
-            Button104.Image = My.Resources.Sound_Play;
+            Button104.Image = Properties.Resources.Sound_Play;
             Button104.LineColor = Color.FromArgb(1, 45, 77);
             Button104.Location = new Point(677, 3);
             Button104.Name = "Button104";
@@ -6986,7 +6986,7 @@ namespace WinPaletter
             Button106.DrawOnGlass = false;
             Button106.Font = new Font("Segoe UI", 9.0f);
             Button106.ForeColor = Color.White;
-            Button106.Image = My.Resources.Sound_Stop;
+            Button106.Image = Properties.Resources.Sound_Stop;
             Button106.LineColor = Color.FromArgb(117, 3, 34);
             Button106.Location = new Point(639, 3);
             Button106.Name = "Button106";
@@ -7002,7 +7002,7 @@ namespace WinPaletter
             Button107.DrawOnGlass = false;
             Button107.Font = new Font("Segoe UI", 9.0f);
             Button107.ForeColor = Color.White;
-            Button107.Image = My.Resources.Sound_Play;
+            Button107.Image = Properties.Resources.Sound_Play;
             Button107.LineColor = Color.FromArgb(1, 45, 77);
             Button107.Location = new Point(677, 3);
             Button107.Name = "Button107";
@@ -7091,7 +7091,7 @@ namespace WinPaletter
             Button109.DrawOnGlass = false;
             Button109.Font = new Font("Segoe UI", 9.0f);
             Button109.ForeColor = Color.White;
-            Button109.Image = My.Resources.Sound_Stop;
+            Button109.Image = Properties.Resources.Sound_Stop;
             Button109.LineColor = Color.FromArgb(117, 3, 34);
             Button109.Location = new Point(639, 3);
             Button109.Name = "Button109";
@@ -7107,7 +7107,7 @@ namespace WinPaletter
             Button110.DrawOnGlass = false;
             Button110.Font = new Font("Segoe UI", 9.0f);
             Button110.ForeColor = Color.White;
-            Button110.Image = My.Resources.Sound_Play;
+            Button110.Image = Properties.Resources.Sound_Play;
             Button110.LineColor = Color.FromArgb(1, 45, 77);
             Button110.Location = new Point(677, 3);
             Button110.Name = "Button110";
@@ -7196,7 +7196,7 @@ namespace WinPaletter
             Button82.DrawOnGlass = false;
             Button82.Font = new Font("Segoe UI", 9.0f);
             Button82.ForeColor = Color.White;
-            Button82.Image = My.Resources.Sound_Stop;
+            Button82.Image = Properties.Resources.Sound_Stop;
             Button82.LineColor = Color.FromArgb(117, 3, 34);
             Button82.Location = new Point(639, 3);
             Button82.Name = "Button82";
@@ -7212,7 +7212,7 @@ namespace WinPaletter
             Button83.DrawOnGlass = false;
             Button83.Font = new Font("Segoe UI", 9.0f);
             Button83.ForeColor = Color.White;
-            Button83.Image = My.Resources.Sound_Play;
+            Button83.Image = Properties.Resources.Sound_Play;
             Button83.LineColor = Color.FromArgb(1, 45, 77);
             Button83.Location = new Point(677, 3);
             Button83.Name = "Button83";
@@ -7301,7 +7301,7 @@ namespace WinPaletter
             Button85.DrawOnGlass = false;
             Button85.Font = new Font("Segoe UI", 9.0f);
             Button85.ForeColor = Color.White;
-            Button85.Image = My.Resources.Sound_Stop;
+            Button85.Image = Properties.Resources.Sound_Stop;
             Button85.LineColor = Color.FromArgb(117, 3, 34);
             Button85.Location = new Point(639, 3);
             Button85.Name = "Button85";
@@ -7317,7 +7317,7 @@ namespace WinPaletter
             Button86.DrawOnGlass = false;
             Button86.Font = new Font("Segoe UI", 9.0f);
             Button86.ForeColor = Color.White;
-            Button86.Image = My.Resources.Sound_Play;
+            Button86.Image = Properties.Resources.Sound_Play;
             Button86.LineColor = Color.FromArgb(1, 45, 77);
             Button86.Location = new Point(677, 3);
             Button86.Name = "Button86";
@@ -7406,7 +7406,7 @@ namespace WinPaletter
             Button88.DrawOnGlass = false;
             Button88.Font = new Font("Segoe UI", 9.0f);
             Button88.ForeColor = Color.White;
-            Button88.Image = My.Resources.Sound_Stop;
+            Button88.Image = Properties.Resources.Sound_Stop;
             Button88.LineColor = Color.FromArgb(117, 3, 34);
             Button88.Location = new Point(639, 3);
             Button88.Name = "Button88";
@@ -7422,7 +7422,7 @@ namespace WinPaletter
             Button89.DrawOnGlass = false;
             Button89.Font = new Font("Segoe UI", 9.0f);
             Button89.ForeColor = Color.White;
-            Button89.Image = My.Resources.Sound_Play;
+            Button89.Image = Properties.Resources.Sound_Play;
             Button89.LineColor = Color.FromArgb(1, 45, 77);
             Button89.Location = new Point(677, 3);
             Button89.Name = "Button89";
@@ -7511,7 +7511,7 @@ namespace WinPaletter
             Button91.DrawOnGlass = false;
             Button91.Font = new Font("Segoe UI", 9.0f);
             Button91.ForeColor = Color.White;
-            Button91.Image = My.Resources.Sound_Stop;
+            Button91.Image = Properties.Resources.Sound_Stop;
             Button91.LineColor = Color.FromArgb(117, 3, 34);
             Button91.Location = new Point(639, 3);
             Button91.Name = "Button91";
@@ -7527,7 +7527,7 @@ namespace WinPaletter
             Button92.DrawOnGlass = false;
             Button92.Font = new Font("Segoe UI", 9.0f);
             Button92.ForeColor = Color.White;
-            Button92.Image = My.Resources.Sound_Play;
+            Button92.Image = Properties.Resources.Sound_Play;
             Button92.LineColor = Color.FromArgb(1, 45, 77);
             Button92.Location = new Point(677, 3);
             Button92.Name = "Button92";
@@ -7616,7 +7616,7 @@ namespace WinPaletter
             Button94.DrawOnGlass = false;
             Button94.Font = new Font("Segoe UI", 9.0f);
             Button94.ForeColor = Color.White;
-            Button94.Image = My.Resources.Sound_Stop;
+            Button94.Image = Properties.Resources.Sound_Stop;
             Button94.LineColor = Color.FromArgb(117, 3, 34);
             Button94.Location = new Point(639, 3);
             Button94.Name = "Button94";
@@ -7632,7 +7632,7 @@ namespace WinPaletter
             Button95.DrawOnGlass = false;
             Button95.Font = new Font("Segoe UI", 9.0f);
             Button95.ForeColor = Color.White;
-            Button95.Image = My.Resources.Sound_Play;
+            Button95.Image = Properties.Resources.Sound_Play;
             Button95.LineColor = Color.FromArgb(1, 45, 77);
             Button95.Location = new Point(677, 3);
             Button95.Name = "Button95";
@@ -7721,7 +7721,7 @@ namespace WinPaletter
             Button97.DrawOnGlass = false;
             Button97.Font = new Font("Segoe UI", 9.0f);
             Button97.ForeColor = Color.White;
-            Button97.Image = My.Resources.Sound_Stop;
+            Button97.Image = Properties.Resources.Sound_Stop;
             Button97.LineColor = Color.FromArgb(117, 3, 34);
             Button97.Location = new Point(639, 3);
             Button97.Name = "Button97";
@@ -7737,7 +7737,7 @@ namespace WinPaletter
             Button98.DrawOnGlass = false;
             Button98.Font = new Font("Segoe UI", 9.0f);
             Button98.ForeColor = Color.White;
-            Button98.Image = My.Resources.Sound_Play;
+            Button98.Image = Properties.Resources.Sound_Play;
             Button98.LineColor = Color.FromArgb(1, 45, 77);
             Button98.Location = new Point(677, 3);
             Button98.Name = "Button98";
@@ -7826,7 +7826,7 @@ namespace WinPaletter
             Button100.DrawOnGlass = false;
             Button100.Font = new Font("Segoe UI", 9.0f);
             Button100.ForeColor = Color.White;
-            Button100.Image = My.Resources.Sound_Stop;
+            Button100.Image = Properties.Resources.Sound_Stop;
             Button100.LineColor = Color.FromArgb(117, 3, 34);
             Button100.Location = new Point(639, 3);
             Button100.Name = "Button100";
@@ -7842,7 +7842,7 @@ namespace WinPaletter
             Button101.DrawOnGlass = false;
             Button101.Font = new Font("Segoe UI", 9.0f);
             Button101.ForeColor = Color.White;
-            Button101.Image = My.Resources.Sound_Play;
+            Button101.Image = Properties.Resources.Sound_Play;
             Button101.LineColor = Color.FromArgb(1, 45, 77);
             Button101.Location = new Point(677, 3);
             Button101.Name = "Button101";
@@ -7950,7 +7950,7 @@ namespace WinPaletter
             Button112.DrawOnGlass = false;
             Button112.Font = new Font("Segoe UI", 9.0f);
             Button112.ForeColor = Color.White;
-            Button112.Image = My.Resources.Sound_Stop;
+            Button112.Image = Properties.Resources.Sound_Stop;
             Button112.LineColor = Color.FromArgb(117, 3, 34);
             Button112.Location = new Point(639, 3);
             Button112.Name = "Button112";
@@ -7966,7 +7966,7 @@ namespace WinPaletter
             Button113.DrawOnGlass = false;
             Button113.Font = new Font("Segoe UI", 9.0f);
             Button113.ForeColor = Color.White;
-            Button113.Image = My.Resources.Sound_Play;
+            Button113.Image = Properties.Resources.Sound_Play;
             Button113.LineColor = Color.FromArgb(1, 45, 77);
             Button113.Location = new Point(677, 3);
             Button113.Name = "Button113";
@@ -8055,7 +8055,7 @@ namespace WinPaletter
             Button115.DrawOnGlass = false;
             Button115.Font = new Font("Segoe UI", 9.0f);
             Button115.ForeColor = Color.White;
-            Button115.Image = My.Resources.Sound_Stop;
+            Button115.Image = Properties.Resources.Sound_Stop;
             Button115.LineColor = Color.FromArgb(117, 3, 34);
             Button115.Location = new Point(639, 3);
             Button115.Name = "Button115";
@@ -8071,7 +8071,7 @@ namespace WinPaletter
             Button116.DrawOnGlass = false;
             Button116.Font = new Font("Segoe UI", 9.0f);
             Button116.ForeColor = Color.White;
-            Button116.Image = My.Resources.Sound_Play;
+            Button116.Image = Properties.Resources.Sound_Play;
             Button116.LineColor = Color.FromArgb(1, 45, 77);
             Button116.Location = new Point(677, 3);
             Button116.Name = "Button116";
@@ -8160,7 +8160,7 @@ namespace WinPaletter
             Button118.DrawOnGlass = false;
             Button118.Font = new Font("Segoe UI", 9.0f);
             Button118.ForeColor = Color.White;
-            Button118.Image = My.Resources.Sound_Stop;
+            Button118.Image = Properties.Resources.Sound_Stop;
             Button118.LineColor = Color.FromArgb(117, 3, 34);
             Button118.Location = new Point(639, 3);
             Button118.Name = "Button118";
@@ -8176,7 +8176,7 @@ namespace WinPaletter
             Button119.DrawOnGlass = false;
             Button119.Font = new Font("Segoe UI", 9.0f);
             Button119.ForeColor = Color.White;
-            Button119.Image = My.Resources.Sound_Play;
+            Button119.Image = Properties.Resources.Sound_Play;
             Button119.LineColor = Color.FromArgb(1, 45, 77);
             Button119.Location = new Point(677, 3);
             Button119.Name = "Button119";
@@ -8265,7 +8265,7 @@ namespace WinPaletter
             Button121.DrawOnGlass = false;
             Button121.Font = new Font("Segoe UI", 9.0f);
             Button121.ForeColor = Color.White;
-            Button121.Image = My.Resources.Sound_Stop;
+            Button121.Image = Properties.Resources.Sound_Stop;
             Button121.LineColor = Color.FromArgb(117, 3, 34);
             Button121.Location = new Point(639, 3);
             Button121.Name = "Button121";
@@ -8281,7 +8281,7 @@ namespace WinPaletter
             Button122.DrawOnGlass = false;
             Button122.Font = new Font("Segoe UI", 9.0f);
             Button122.ForeColor = Color.White;
-            Button122.Image = My.Resources.Sound_Play;
+            Button122.Image = Properties.Resources.Sound_Play;
             Button122.LineColor = Color.FromArgb(1, 45, 77);
             Button122.Location = new Point(677, 3);
             Button122.Name = "Button122";
@@ -8370,7 +8370,7 @@ namespace WinPaletter
             Button124.DrawOnGlass = false;
             Button124.Font = new Font("Segoe UI", 9.0f);
             Button124.ForeColor = Color.White;
-            Button124.Image = My.Resources.Sound_Stop;
+            Button124.Image = Properties.Resources.Sound_Stop;
             Button124.LineColor = Color.FromArgb(117, 3, 34);
             Button124.Location = new Point(639, 3);
             Button124.Name = "Button124";
@@ -8386,7 +8386,7 @@ namespace WinPaletter
             Button125.DrawOnGlass = false;
             Button125.Font = new Font("Segoe UI", 9.0f);
             Button125.ForeColor = Color.White;
-            Button125.Image = My.Resources.Sound_Play;
+            Button125.Image = Properties.Resources.Sound_Play;
             Button125.LineColor = Color.FromArgb(1, 45, 77);
             Button125.Location = new Point(677, 3);
             Button125.Name = "Button125";
@@ -8475,7 +8475,7 @@ namespace WinPaletter
             Button127.DrawOnGlass = false;
             Button127.Font = new Font("Segoe UI", 9.0f);
             Button127.ForeColor = Color.White;
-            Button127.Image = My.Resources.Sound_Stop;
+            Button127.Image = Properties.Resources.Sound_Stop;
             Button127.LineColor = Color.FromArgb(117, 3, 34);
             Button127.Location = new Point(639, 3);
             Button127.Name = "Button127";
@@ -8491,7 +8491,7 @@ namespace WinPaletter
             Button128.DrawOnGlass = false;
             Button128.Font = new Font("Segoe UI", 9.0f);
             Button128.ForeColor = Color.White;
-            Button128.Image = My.Resources.Sound_Play;
+            Button128.Image = Properties.Resources.Sound_Play;
             Button128.LineColor = Color.FromArgb(1, 45, 77);
             Button128.Location = new Point(677, 3);
             Button128.Name = "Button128";
@@ -8580,7 +8580,7 @@ namespace WinPaletter
             Button130.DrawOnGlass = false;
             Button130.Font = new Font("Segoe UI", 9.0f);
             Button130.ForeColor = Color.White;
-            Button130.Image = My.Resources.Sound_Stop;
+            Button130.Image = Properties.Resources.Sound_Stop;
             Button130.LineColor = Color.FromArgb(117, 3, 34);
             Button130.Location = new Point(639, 3);
             Button130.Name = "Button130";
@@ -8596,7 +8596,7 @@ namespace WinPaletter
             Button131.DrawOnGlass = false;
             Button131.Font = new Font("Segoe UI", 9.0f);
             Button131.ForeColor = Color.White;
-            Button131.Image = My.Resources.Sound_Play;
+            Button131.Image = Properties.Resources.Sound_Play;
             Button131.LineColor = Color.FromArgb(1, 45, 77);
             Button131.Location = new Point(677, 3);
             Button131.Name = "Button131";
@@ -8685,7 +8685,7 @@ namespace WinPaletter
             Button133.DrawOnGlass = false;
             Button133.Font = new Font("Segoe UI", 9.0f);
             Button133.ForeColor = Color.White;
-            Button133.Image = My.Resources.Sound_Stop;
+            Button133.Image = Properties.Resources.Sound_Stop;
             Button133.LineColor = Color.FromArgb(117, 3, 34);
             Button133.Location = new Point(639, 3);
             Button133.Name = "Button133";
@@ -8701,7 +8701,7 @@ namespace WinPaletter
             Button134.DrawOnGlass = false;
             Button134.Font = new Font("Segoe UI", 9.0f);
             Button134.ForeColor = Color.White;
-            Button134.Image = My.Resources.Sound_Play;
+            Button134.Image = Properties.Resources.Sound_Play;
             Button134.LineColor = Color.FromArgb(1, 45, 77);
             Button134.Location = new Point(677, 3);
             Button134.Name = "Button134";
@@ -8790,7 +8790,7 @@ namespace WinPaletter
             Button136.DrawOnGlass = false;
             Button136.Font = new Font("Segoe UI", 9.0f);
             Button136.ForeColor = Color.White;
-            Button136.Image = My.Resources.Sound_Stop;
+            Button136.Image = Properties.Resources.Sound_Stop;
             Button136.LineColor = Color.FromArgb(117, 3, 34);
             Button136.Location = new Point(639, 3);
             Button136.Name = "Button136";
@@ -8806,7 +8806,7 @@ namespace WinPaletter
             Button137.DrawOnGlass = false;
             Button137.Font = new Font("Segoe UI", 9.0f);
             Button137.ForeColor = Color.White;
-            Button137.Image = My.Resources.Sound_Play;
+            Button137.Image = Properties.Resources.Sound_Play;
             Button137.LineColor = Color.FromArgb(1, 45, 77);
             Button137.Location = new Point(677, 3);
             Button137.Name = "Button137";
@@ -8895,7 +8895,7 @@ namespace WinPaletter
             Button139.DrawOnGlass = false;
             Button139.Font = new Font("Segoe UI", 9.0f);
             Button139.ForeColor = Color.White;
-            Button139.Image = My.Resources.Sound_Stop;
+            Button139.Image = Properties.Resources.Sound_Stop;
             Button139.LineColor = Color.FromArgb(117, 3, 34);
             Button139.Location = new Point(639, 3);
             Button139.Name = "Button139";
@@ -8911,7 +8911,7 @@ namespace WinPaletter
             Button140.DrawOnGlass = false;
             Button140.Font = new Font("Segoe UI", 9.0f);
             Button140.ForeColor = Color.White;
-            Button140.Image = My.Resources.Sound_Play;
+            Button140.Image = Properties.Resources.Sound_Play;
             Button140.LineColor = Color.FromArgb(1, 45, 77);
             Button140.Location = new Point(677, 3);
             Button140.Name = "Button140";
@@ -9015,7 +9015,7 @@ namespace WinPaletter
             Button214.DrawOnGlass = false;
             Button214.Font = new Font("Segoe UI", 9.0f);
             Button214.ForeColor = Color.White;
-            Button214.Image = My.Resources.Sound_Stop;
+            Button214.Image = Properties.Resources.Sound_Stop;
             Button214.LineColor = Color.FromArgb(117, 3, 34);
             Button214.Location = new Point(639, 3);
             Button214.Name = "Button214";
@@ -9031,7 +9031,7 @@ namespace WinPaletter
             Button215.DrawOnGlass = false;
             Button215.Font = new Font("Segoe UI", 9.0f);
             Button215.ForeColor = Color.White;
-            Button215.Image = My.Resources.Sound_Play;
+            Button215.Image = Properties.Resources.Sound_Play;
             Button215.LineColor = Color.FromArgb(1, 45, 77);
             Button215.Location = new Point(677, 3);
             Button215.Name = "Button215";
@@ -9120,7 +9120,7 @@ namespace WinPaletter
             Button217.DrawOnGlass = false;
             Button217.Font = new Font("Segoe UI", 9.0f);
             Button217.ForeColor = Color.White;
-            Button217.Image = My.Resources.Sound_Stop;
+            Button217.Image = Properties.Resources.Sound_Stop;
             Button217.LineColor = Color.FromArgb(117, 3, 34);
             Button217.Location = new Point(639, 3);
             Button217.Name = "Button217";
@@ -9136,7 +9136,7 @@ namespace WinPaletter
             Button218.DrawOnGlass = false;
             Button218.Font = new Font("Segoe UI", 9.0f);
             Button218.ForeColor = Color.White;
-            Button218.Image = My.Resources.Sound_Play;
+            Button218.Image = Properties.Resources.Sound_Play;
             Button218.LineColor = Color.FromArgb(1, 45, 77);
             Button218.Location = new Point(677, 3);
             Button218.Name = "Button218";
@@ -9225,7 +9225,7 @@ namespace WinPaletter
             Button220.DrawOnGlass = false;
             Button220.Font = new Font("Segoe UI", 9.0f);
             Button220.ForeColor = Color.White;
-            Button220.Image = My.Resources.Sound_Stop;
+            Button220.Image = Properties.Resources.Sound_Stop;
             Button220.LineColor = Color.FromArgb(117, 3, 34);
             Button220.Location = new Point(639, 3);
             Button220.Name = "Button220";
@@ -9241,7 +9241,7 @@ namespace WinPaletter
             Button221.DrawOnGlass = false;
             Button221.Font = new Font("Segoe UI", 9.0f);
             Button221.ForeColor = Color.White;
-            Button221.Image = My.Resources.Sound_Play;
+            Button221.Image = Properties.Resources.Sound_Play;
             Button221.LineColor = Color.FromArgb(1, 45, 77);
             Button221.Location = new Point(677, 3);
             Button221.Name = "Button221";
@@ -9330,7 +9330,7 @@ namespace WinPaletter
             Button223.DrawOnGlass = false;
             Button223.Font = new Font("Segoe UI", 9.0f);
             Button223.ForeColor = Color.White;
-            Button223.Image = My.Resources.Sound_Stop;
+            Button223.Image = Properties.Resources.Sound_Stop;
             Button223.LineColor = Color.FromArgb(117, 3, 34);
             Button223.Location = new Point(639, 3);
             Button223.Name = "Button223";
@@ -9346,7 +9346,7 @@ namespace WinPaletter
             Button224.DrawOnGlass = false;
             Button224.Font = new Font("Segoe UI", 9.0f);
             Button224.ForeColor = Color.White;
-            Button224.Image = My.Resources.Sound_Play;
+            Button224.Image = Properties.Resources.Sound_Play;
             Button224.LineColor = Color.FromArgb(1, 45, 77);
             Button224.Location = new Point(677, 3);
             Button224.Name = "Button224";
@@ -9435,7 +9435,7 @@ namespace WinPaletter
             Button226.DrawOnGlass = false;
             Button226.Font = new Font("Segoe UI", 9.0f);
             Button226.ForeColor = Color.White;
-            Button226.Image = My.Resources.Sound_Stop;
+            Button226.Image = Properties.Resources.Sound_Stop;
             Button226.LineColor = Color.FromArgb(117, 3, 34);
             Button226.Location = new Point(639, 3);
             Button226.Name = "Button226";
@@ -9451,7 +9451,7 @@ namespace WinPaletter
             Button227.DrawOnGlass = false;
             Button227.Font = new Font("Segoe UI", 9.0f);
             Button227.ForeColor = Color.White;
-            Button227.Image = My.Resources.Sound_Play;
+            Button227.Image = Properties.Resources.Sound_Play;
             Button227.LineColor = Color.FromArgb(1, 45, 77);
             Button227.Location = new Point(677, 3);
             Button227.Name = "Button227";
@@ -9540,7 +9540,7 @@ namespace WinPaletter
             Button229.DrawOnGlass = false;
             Button229.Font = new Font("Segoe UI", 9.0f);
             Button229.ForeColor = Color.White;
-            Button229.Image = My.Resources.Sound_Stop;
+            Button229.Image = Properties.Resources.Sound_Stop;
             Button229.LineColor = Color.FromArgb(117, 3, 34);
             Button229.Location = new Point(639, 3);
             Button229.Name = "Button229";
@@ -9556,7 +9556,7 @@ namespace WinPaletter
             Button230.DrawOnGlass = false;
             Button230.Font = new Font("Segoe UI", 9.0f);
             Button230.ForeColor = Color.White;
-            Button230.Image = My.Resources.Sound_Play;
+            Button230.Image = Properties.Resources.Sound_Play;
             Button230.LineColor = Color.FromArgb(1, 45, 77);
             Button230.Location = new Point(677, 3);
             Button230.Name = "Button230";
@@ -9675,7 +9675,7 @@ namespace WinPaletter
             Button247.DrawOnGlass = false;
             Button247.Font = new Font("Segoe UI", 9.0f);
             Button247.ForeColor = Color.White;
-            Button247.Image = My.Resources.Sound_Stop;
+            Button247.Image = Properties.Resources.Sound_Stop;
             Button247.LineColor = Color.FromArgb(117, 3, 34);
             Button247.Location = new Point(639, 3);
             Button247.Name = "Button247";
@@ -9691,7 +9691,7 @@ namespace WinPaletter
             Button248.DrawOnGlass = false;
             Button248.Font = new Font("Segoe UI", 9.0f);
             Button248.ForeColor = Color.White;
-            Button248.Image = My.Resources.Sound_Play;
+            Button248.Image = Properties.Resources.Sound_Play;
             Button248.LineColor = Color.FromArgb(1, 45, 77);
             Button248.Location = new Point(677, 3);
             Button248.Name = "Button248";
@@ -9780,7 +9780,7 @@ namespace WinPaletter
             Button250.DrawOnGlass = false;
             Button250.Font = new Font("Segoe UI", 9.0f);
             Button250.ForeColor = Color.White;
-            Button250.Image = My.Resources.Sound_Stop;
+            Button250.Image = Properties.Resources.Sound_Stop;
             Button250.LineColor = Color.FromArgb(117, 3, 34);
             Button250.Location = new Point(639, 3);
             Button250.Name = "Button250";
@@ -9796,7 +9796,7 @@ namespace WinPaletter
             Button251.DrawOnGlass = false;
             Button251.Font = new Font("Segoe UI", 9.0f);
             Button251.ForeColor = Color.White;
-            Button251.Image = My.Resources.Sound_Play;
+            Button251.Image = Properties.Resources.Sound_Play;
             Button251.LineColor = Color.FromArgb(1, 45, 77);
             Button251.Location = new Point(677, 3);
             Button251.Name = "Button251";
@@ -9885,7 +9885,7 @@ namespace WinPaletter
             Button253.DrawOnGlass = false;
             Button253.Font = new Font("Segoe UI", 9.0f);
             Button253.ForeColor = Color.White;
-            Button253.Image = My.Resources.Sound_Stop;
+            Button253.Image = Properties.Resources.Sound_Stop;
             Button253.LineColor = Color.FromArgb(117, 3, 34);
             Button253.Location = new Point(639, 3);
             Button253.Name = "Button253";
@@ -9901,7 +9901,7 @@ namespace WinPaletter
             Button254.DrawOnGlass = false;
             Button254.Font = new Font("Segoe UI", 9.0f);
             Button254.ForeColor = Color.White;
-            Button254.Image = My.Resources.Sound_Play;
+            Button254.Image = Properties.Resources.Sound_Play;
             Button254.LineColor = Color.FromArgb(1, 45, 77);
             Button254.Location = new Point(677, 3);
             Button254.Name = "Button254";
@@ -9990,7 +9990,7 @@ namespace WinPaletter
             Button256.DrawOnGlass = false;
             Button256.Font = new Font("Segoe UI", 9.0f);
             Button256.ForeColor = Color.White;
-            Button256.Image = My.Resources.Sound_Stop;
+            Button256.Image = Properties.Resources.Sound_Stop;
             Button256.LineColor = Color.FromArgb(117, 3, 34);
             Button256.Location = new Point(639, 3);
             Button256.Name = "Button256";
@@ -10006,7 +10006,7 @@ namespace WinPaletter
             Button257.DrawOnGlass = false;
             Button257.Font = new Font("Segoe UI", 9.0f);
             Button257.ForeColor = Color.White;
-            Button257.Image = My.Resources.Sound_Play;
+            Button257.Image = Properties.Resources.Sound_Play;
             Button257.LineColor = Color.FromArgb(1, 45, 77);
             Button257.Location = new Point(677, 3);
             Button257.Name = "Button257";
@@ -10105,7 +10105,7 @@ namespace WinPaletter
             Button208.DrawOnGlass = false;
             Button208.Font = new Font("Segoe UI", 9.0f);
             Button208.ForeColor = Color.White;
-            Button208.Image = My.Resources.Sound_Stop;
+            Button208.Image = Properties.Resources.Sound_Stop;
             Button208.LineColor = Color.FromArgb(117, 3, 34);
             Button208.Location = new Point(639, 3);
             Button208.Name = "Button208";
@@ -10121,7 +10121,7 @@ namespace WinPaletter
             Button209.DrawOnGlass = false;
             Button209.Font = new Font("Segoe UI", 9.0f);
             Button209.ForeColor = Color.White;
-            Button209.Image = My.Resources.Sound_Play;
+            Button209.Image = Properties.Resources.Sound_Play;
             Button209.LineColor = Color.FromArgb(1, 45, 77);
             Button209.Location = new Point(677, 3);
             Button209.Name = "Button209";
@@ -10293,7 +10293,7 @@ namespace WinPaletter
             // checker_img
             // 
             checker_img.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            checker_img.Image = My.Resources.checker_disabled;
+            checker_img.Image = Properties.Resources.checker_disabled;
             checker_img.Location = new Point(823, 4);
             checker_img.Name = "checker_img";
             checker_img.Size = new Size(35, 31);

@@ -665,11 +665,11 @@ namespace WinPaletter.UI.Controllers
 
             if (BackColor.A < 255)
             {
-                using (var br = new TextureBrush(My.Resources.BackgroundOpacity))
+                using (var br = new TextureBrush(Properties.Resources.BackgroundOpacity))
                 {
                     G.FillRoundedRect(br, RectInner, R);
                 }
-                using (var br = new TextureBrush(My.Resources.BackgroundOpacity.Fade(alpha / 255d)))
+                using (var br = new TextureBrush(Properties.Resources.BackgroundOpacity.Fade(alpha / 255d)))
                 {
                     G.FillRoundedRect(br, Rect, R);
                 }

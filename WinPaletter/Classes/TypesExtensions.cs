@@ -931,12 +931,12 @@ namespace WinPaletter
                 if (NoiseMode == NoiseMode.Acrylic)
                 {
                     TextureBrush br;
-                    br = new TextureBrush(My.Resources.GaussianBlur.Fade((double)opacity));
+                    br = new TextureBrush(Properties.Resources.GaussianBlur.Fade((double)opacity));
                     g.FillRectangle(br, new Rectangle(0, 0, bmp.Width, bmp.Height));
                 }
                 else if (NoiseMode == NoiseMode.Aero)
                 {
-                    g.DrawImage(My.Resources.AeroGlass.Fade((double)opacity), new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    g.DrawImage(Properties.Resources.AeroGlass.Fade((double)opacity), new Rectangle(0, 0, bmp.Width, bmp.Height));
                 }
 
                 g.Save();
@@ -1009,49 +1009,51 @@ namespace WinPaletter
                 int sourceHeight = Bitmap.Height;
                 int destX = 0;
                 int destY = 0;
-                float nPercent = 0f;
-                float nPercentW = 0f;
-                float nPercentH = 0f;
-                nPercentW = Size.Width / (float)sourceWidth;
-                nPercentH = Size.Height / (float)sourceHeight;
+                decimal nPercent = 0;
+                decimal nPercentW = 0;
+                decimal nPercentH = 0;
+                nPercentW = Size.Width / (decimal)sourceWidth;
+                nPercentH = Size.Height / (decimal)sourceHeight;
 
                 if (nPercentH < nPercentW)
                 {
                     nPercent = nPercentH;
-                    destX = Convert.ToInt16((Size.Width - sourceWidth * nPercent) / 2f);
+                    destX = Convert.ToInt16((Size.Width - sourceWidth * nPercent) / 2);
                 }
                 else
                 {
                     nPercent = nPercentW;
-                    destY = Convert.ToInt16((Size.Height - sourceHeight * nPercent) / 2f);
+                    destY = Convert.ToInt16((Size.Height - sourceHeight * nPercent) / 2);
                 }
 
                 int destWidth = (int)Math.Round(sourceWidth * nPercent);
                 int destHeight = (int)Math.Round(sourceHeight * nPercent);
+
                 var bmPhoto = new Bitmap(Size.Width, Size.Height, PixelFormat.Format32bppArgb);
                 bmPhoto.SetResolution(Bitmap.HorizontalResolution, Bitmap.VerticalResolution);
                 var grPhoto = Graphics.FromImage(bmPhoto);
                 grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 grPhoto.DrawImage(Bitmap, new Rectangle(0, 0, destWidth, destHeight));
                 grPhoto.Dispose();
-                var bm = bmPhoto.Clone(new Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb);
-                float f;
+                Bitmap bm = bmPhoto.Clone(new Rectangle(0, 0, destWidth, destHeight), PixelFormat.Format32bppArgb);
+                decimal f;
 
                 if (nPercentH < nPercentW)
                 {
                     f = Size.Width - bm.Width;
                     bm = bm.Resize(Size.Width, (int)Math.Round(Size.Height + f));
-                    bm = bm.Clone(new Rectangle(0, (int)Math.Round(1d / 3d * (double)f), Size.Width, Size.Height), PixelFormat.Format32bppArgb);
+                    int x = (int)Math.Round(1d / 3d * (double)f);
+                    int correctionFactor = bm.Height + x <= Size.Height ? Size.Height : bm.Height - x;
+                    return bm.Clone(new Rectangle(0, (int)Math.Round(1d / 3d * (double)f), Size.Width, correctionFactor), PixelFormat.Format32bppArgb);
                 }
                 else
                 {
                     f = Size.Height - bm.Height;
                     bm = bm.Resize(Size.Width, (int)Math.Round(Size.Height + f));
-                    bm = bm.Clone(new Rectangle((int)Math.Round(1d / 3d * (double)f), 0, Size.Width, Size.Height), PixelFormat.Format32bppArgb);
+                    int x = (int)Math.Round(1d / 3d * (double)f);
+                    int correctionFactor = bm.Width + x <= Size.Width ? Size.Width : bm.Width - x;
+                    return bm.Clone(new Rectangle(x, 0, correctionFactor, Size.Height), PixelFormat.Format32bppArgb);
                 }
-
-
-                return bm;
             }
             catch
             {
@@ -1065,7 +1067,7 @@ namespace WinPaletter
         public static Image FillScale(this Image Image, Size Size)
         {
             if (Image != null)
-                using (Bitmap bmp = new Bitmap(Image))
+                using (Bitmap bmp = new(Image))
                 {
                     return FillScale(bmp, Size);
                 }
@@ -1283,12 +1285,14 @@ namespace WinPaletter
         {
             if (!FixMethod)
             {
-                var bm = new Bitmap(Control.Width, Control.Height);
-
-                lock (Control)
+                using (Bitmap bmp = new(Control.Width, Control.Height))
                 {
-                    Control.DrawToBitmap(bm, new Rectangle(0, 0, Control.Width, Control.Height));
-                    return (Bitmap)bm.Clone();
+                    Rectangle rect = new(0, 0, bmp.Width, bmp.Height);
+                    lock (Control)
+                    {
+                        Control.DrawToBitmap(bmp, rect);
+                        return (Bitmap)bmp.Clone();
+                    }
                 }
             }
             else
@@ -1303,12 +1307,14 @@ namespace WinPaletter
             Control[] childControls = Control.Controls.Cast<Control>().ToArray();
             Array.Reverse(childControls);
 
-            var bmp = new Bitmap(Control.Width, Control.Height);
-
-            foreach (var childControl in childControls)
-                childControl.DrawToBitmap(bmp, childControl.Bounds);
-
-            return bmp;
+            using (Bitmap bmp = new(Control.Width, Control.Height))
+            {
+                foreach (Control childControl in childControls)
+                {
+                    childControl.DrawToBitmap(bmp, childControl.Bounds);
+                }
+                return (Bitmap)bmp.Clone();
+            }
         }
 
         public static void DoubleBufferedControl(Control Control, bool setting)
@@ -1861,7 +1867,7 @@ namespace WinPaletter
         public static void PopulateThemes(this ComboBox ComboBox)
         {
             ComboBox.Items.Clear();
-            ComboBox.Items.AddRange(My.Resources.RetroThemesDB.CList().Select(f => f.Split('|')[0]).ToArray());
+            ComboBox.Items.AddRange(Properties.Resources.RetroThemesDB.CList().Select(f => f.Split('|')[0]).ToArray());
         }
     }
 

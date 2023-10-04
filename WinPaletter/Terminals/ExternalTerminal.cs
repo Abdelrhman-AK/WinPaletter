@@ -1549,7 +1549,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-consoles-(Command-Prompt-and-PowerShell)");
         }
     }
 }

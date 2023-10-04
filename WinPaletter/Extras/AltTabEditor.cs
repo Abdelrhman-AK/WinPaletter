@@ -26,43 +26,43 @@ namespace WinPaletter
             {
                 case WindowStyle.W11:
                     {
-                        RadioImage1.Image = My.Resources.Native11;
+                        RadioImage1.Image = Properties.Resources.Native11;
                         break;
                     }
 
                 case WindowStyle.W10:
                     {
-                        RadioImage1.Image = My.Resources.Native10;
+                        RadioImage1.Image = Properties.Resources.Native10;
                         break;
                     }
 
                 case WindowStyle.W81:
                     {
-                        RadioImage1.Image = My.Resources.Native8;
+                        RadioImage1.Image = Properties.Resources.Native8;
                         break;
                     }
 
                 case WindowStyle.W7:
                     {
-                        RadioImage1.Image = My.Resources.Native7;
+                        RadioImage1.Image = Properties.Resources.Native7;
                         break;
                     }
 
                 case WindowStyle.WVista:
                     {
-                        RadioImage1.Image = My.Resources.NativeVista;
+                        RadioImage1.Image = Properties.Resources.NativeVista;
                         break;
                     }
 
                 default:
                     {
-                        RadioImage1.Image = My.Resources.Native11;
+                        RadioImage1.Image = Properties.Resources.Native11;
                         break;
                     }
 
             }
 
-            RadioImage2.Image = My.Resources.NativeXP;
+            RadioImage2.Image = Properties.Resources.NativeXP;
 
             pnl_preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview.BackgroundImage;
             Classic_Preview1.BackgroundImage = My.MyProject.Forms.MainFrm.pnl_preview_classic.BackgroundImage;
@@ -259,7 +259,7 @@ namespace WinPaletter
 
         private void AltTabEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void Opacity_btn_Click(object sender, EventArgs e)
@@ -290,7 +290,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-switcher-(Alt-Tab-appearance)");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-switcher-(Alt-Tab-appearance)");
         }
     }
 }

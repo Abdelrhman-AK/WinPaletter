@@ -313,7 +313,7 @@ namespace WinPaletter
             AlertBox1.CenterText = false;
             AlertBox1.CustomColor = Color.FromArgb(0, 81, 210);
             AlertBox1.Font = new Font("Segoe UI", 9.0f);
-            AlertBox1.Image = My.Resources.notify_info;
+            AlertBox1.Image = Properties.Resources.notify_info;
             AlertBox1.Location = new Point(12, 174);
             AlertBox1.Name = "AlertBox1";
             AlertBox1.Size = new Size(437, 32);

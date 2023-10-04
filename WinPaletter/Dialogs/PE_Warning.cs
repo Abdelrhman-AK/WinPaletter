@@ -119,12 +119,12 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Antiviruses-or-browsers-download-issue");
+            Process.Start(Properties.Resources.Link_Wiki + "/Antiviruses-or-browsers-download-issue");
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Advanced-options-to-patch-PE-files");
+            Process.Start(Properties.Resources.Link_Wiki + "/Advanced-options-to-patch-PE-files");
         }
 
         private void Button4_Click(object sender, EventArgs e)

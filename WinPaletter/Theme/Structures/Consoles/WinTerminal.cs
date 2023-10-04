@@ -576,7 +576,7 @@ namespace WinPaletter
                         {
                             // JFont.Add("font"]
                             var JFont = new JObject();
-                            if (DefaultProf.Font.Weight !< 0)
+                            if (DefaultProf.Font.Weight! < 0)
                                 JFont["weight"] = FontWeight_ReturnToString(DefaultProf.Font.Weight);
                             if (!string.IsNullOrEmpty(DefaultProf.Font.Face))
                                 JFont["face"] = DefaultProf.Font.Face;
@@ -587,7 +587,7 @@ namespace WinPaletter
 
                         else
                         {
-                            if (DefaultProf.Font.Weight !< 0)
+                            if (DefaultProf.Font.Weight! < 0)
                                 JSonFile["profiles"]["defaults"]["font"]["weight"] = FontWeight_ReturnToString(DefaultProf.Font.Weight);
                             if (!string.IsNullOrEmpty(DefaultProf.Font.Face))
                                 JSonFile["profiles"]["defaults"]["font"]["face"] = DefaultProf.Font.Face;

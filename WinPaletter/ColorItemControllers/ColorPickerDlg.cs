@@ -1154,7 +1154,7 @@ namespace WinPaletter
             {
                 if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
                 {
-                    foreach (Color C in Theme.Manager.GetPaletteFromString(My.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
+                    foreach (Color C in Theme.Manager.GetPaletteFromString(Properties.Resources.RetroThemesDB, ComboBox1.SelectedItem.ToString()))
                     {
                         UI.Controllers.ColorItem MiniColorItem = new UI.Controllers.ColorItem();
                         MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();

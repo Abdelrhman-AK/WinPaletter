@@ -409,7 +409,8 @@ namespace WinPaletter.Theme
             Snd_Win_SystemExit_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
             Snd_Win_WindowsLogoff_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
             Snd_Win_WindowsLogon_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
-            Snd_Win_WindowsUnlock_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7
+            Snd_Win_WindowsUnlock_TaskMgmt = !My.Env.WXP & !My.Env.WVista & !My.Env.W7,
+            Snd_ChargerConnected = ""
         };
 
         public AltTab AltTab = new()

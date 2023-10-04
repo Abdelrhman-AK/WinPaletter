@@ -240,7 +240,6 @@
     <None Include="Resources\Assemblies.zip" />
     <None Include="Resources\JetBrainsMono-Medium.ttf" />
     <None Include="Resources\luna.zip" />
-    <None Include="Resources\RetroThemesDB.wpdb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Assemblies\AnimatedCursors\BitmapOps.cs" />
@@ -250,6 +249,11 @@
     <Compile Include="Classes\Assemblies\AnimatedCursors\EOIcoCurWriter.cs" />
     <Compile Include="Classes\Assemblies\AnimatedCursors\OffsetStream.cs" />
     <Compile Include="Classes\Assemblies\AnimatedCursors\StreamOps.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Theme\Structures\Others\AltTab.cs" />
     <Compile Include="Theme\Structures\WinPaletter\AppTheme.cs" />
     <Compile Include="Theme\Structures\Consoles\Console.cs" />
@@ -476,11 +480,6 @@
     <Compile Include="My Project\MyNamespace.Static.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.cs">
       <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
     </Compile>
@@ -779,24 +778,38 @@
     <Content Include="Icons\fileextension.ico" />
     <Content Include="Icons\settingsfile.ico" />
     <Content Include="My Project\Application.myapp" />
-    <Content Include="Resources\AC_10_Dark.png" />
-    <Content Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\Start10_Light.png" />
+    <None Include="Resources\Start10_Dark.png" />
+    <None Include="Resources\notify_error.png" />
+    <None Include="Resources\SampleApp_Inactive.png" />
+    <None Include="Resources\notify_warning.png" />
+    <None Include="Resources\notify_info.png" />
+    <None Include="Resources\Native11.png" />
+    <None Include="Resources\lightmode_light.png" />
+    <None Include="Resources\lightmode_dark.png" />
+    <None Include="Resources\darkmode_light.png" />
+    <None Include="Resources\darkmode_dark.png" />
+    <None Include="Resources\AC_11_Light.png" />
+    <None Include="Resources\fileextension.ico" />
+    <None Include="Resources\AC_10_Dark.png" />
+    <None Include="Resources\AC_10_Light.png" />
+    <None Include="Resources\RetroThemesDB.wpdb" />
     <None Include="Resources\XML_Unlock.xml" />
-    <None Include="Resources\XML_ChargerConnected.xml" />
     <None Include="Resources\XML_Shutdown.xml" />
     <None Include="Resources\XML_Logon.xml" />
     <None Include="Resources\XML_Logoff.xml" />
+    <None Include="Resources\XML_ChargerConnected.xml" />
     <None Include="Resources\AC_11_Dark.png" />
-    <Content Include="Resources\add_win10.png" />
-    <Content Include="Resources\add_win11.png" />
-    <Content Include="Resources\add_win7.png" />
-    <Content Include="Resources\add_win8.png" />
-    <Content Include="Resources\add_winvista.png" />
-    <Content Include="Resources\add_winxp.png" />
-    <Content Include="Resources\AeroGlass.png" />
-    <Content Include="Resources\AeroPeek.png" />
+    <None Include="Resources\add_win10.png" />
+    <None Include="Resources\add_win11.png" />
+    <None Include="Resources\add_win7.png" />
+    <None Include="Resources\add_win8.png" />
+    <None Include="Resources\add_winvista.png" />
+    <None Include="Resources\add_winxp.png" />
+    <None Include="Resources\AeroGlass.png" />
+    <None Include="Resources\AeroPeek.png" />
     <None Include="Resources\BackgroundOpacity.png" />
-    <Content Include="Resources\BasicTaskbar.png" />
+    <None Include="Resources\BasicTaskbar.png" />
     <None Include="Resources\WP_Admin.png" />
     <None Include="Resources\checker_enabled.png" />
     <None Include="Resources\checker_disabled.png" />
@@ -812,59 +825,59 @@
     <None Include="Resources\CF_Pie_Grayscale.png" />
     <None Include="Resources\CF_Pie_Normal.png" />
     <None Include="Resources\CF_Pie_Red-green_green weak_deuteranopia.png" />
-    <Content Include="Resources\CMD_10x18.png" />
-    <Content Include="Resources\CMD_10x18_P.png" />
-    <Content Include="Resources\CMD_12x16.png" />
-    <Content Include="Resources\CMD_12x16_P.png" />
-    <Content Include="Resources\CMD_16x12.png" />
-    <Content Include="Resources\CMD_16x12_P.png" />
-    <Content Include="Resources\CMD_16x8.png" />
-    <Content Include="Resources\CMD_16x8_P.png" />
-    <Content Include="Resources\CMD_4x6.png" />
-    <Content Include="Resources\CMD_4x6_P.png" />
-    <Content Include="Resources\CMD_5x12.png" />
-    <Content Include="Resources\CMD_5x12_P.png" />
-    <Content Include="Resources\CMD_6x8.png" />
-    <Content Include="Resources\CMD_6x8_P.png" />
-    <Content Include="Resources\CMD_7x12.png" />
-    <Content Include="Resources\CMD_7x12_P.png" />
-    <Content Include="Resources\CMD_8x12.png" />
-    <Content Include="Resources\CMD_8x12_P.png" />
-    <Content Include="Resources\CMD_8x8.png" />
-    <Content Include="Resources\CMD_8x8_P.png" />
-    <Content Include="Resources\GaussianBlur.png" />
-    <Content Include="Resources\GaussianBlurOpaque.png" />
+    <None Include="Resources\CMD_10x18.png" />
+    <None Include="Resources\CMD_10x18_P.png" />
+    <None Include="Resources\CMD_12x16.png" />
+    <None Include="Resources\CMD_12x16_P.png" />
+    <None Include="Resources\CMD_16x12.png" />
+    <None Include="Resources\CMD_16x12_P.png" />
+    <None Include="Resources\CMD_16x8.png" />
+    <None Include="Resources\CMD_16x8_P.png" />
+    <None Include="Resources\CMD_4x6.png" />
+    <None Include="Resources\CMD_4x6_P.png" />
+    <None Include="Resources\CMD_5x12.png" />
+    <None Include="Resources\CMD_5x12_P.png" />
+    <None Include="Resources\CMD_6x8.png" />
+    <None Include="Resources\CMD_6x8_P.png" />
+    <None Include="Resources\CMD_7x12.png" />
+    <None Include="Resources\CMD_7x12_P.png" />
+    <None Include="Resources\CMD_8x12.png" />
+    <None Include="Resources\CMD_8x12_P.png" />
+    <None Include="Resources\CMD_8x8.png" />
+    <None Include="Resources\CMD_8x8_P.png" />
+    <None Include="Resources\GaussianBlur.png" />
+    <None Include="Resources\GaussianBlurOpaque.png" />
     <None Include="Resources\icons8_PowerShell.ico" />
     <None Include="Resources\icons8_command_line.ico" />
-    <Content Include="Resources\Icon_Uninstall.ico" />
-    <Content Include="Resources\LangNode_JSON.png" />
-    <Content Include="Resources\LangNode_Main.png" />
-    <Content Include="Resources\LangNode_Value.png" />
-    <Content Include="Resources\LICENSE.txt" />
-    <Content Include="Resources\LogonUI7.png" />
-    <Content Include="Resources\LogonUI8.png" />
+    <None Include="Resources\Icon_Uninstall.ico" />
+    <None Include="Resources\LangNode_JSON.png" />
+    <None Include="Resources\LangNode_Main.png" />
+    <None Include="Resources\LangNode_Value.png" />
+    <None Include="Resources\LICENSE.txt" />
+    <None Include="Resources\LogonUI7.png" />
+    <None Include="Resources\LogonUI8.png" />
     <None Include="Resources\Mini_AC.png" />
-    <Content Include="Resources\Mini_ACHover_Links.png" />
+    <None Include="Resources\Mini_ACHover_Links.png" />
     <None Include="Resources\Mini_Badge.png" />
-    <Content Include="Resources\Mini_Hamburger.png" />
-    <Content Include="Resources\Mini_Lines_Toggles_Buttons.png" />
-    <Content Include="Resources\Mini_Overflow.png" />
-    <Content Include="Resources\Mini_PressedButton.png" />
-    <Content Include="Resources\Mini_SettingsIcons.png" />
+    <None Include="Resources\Mini_Hamburger.png" />
+    <None Include="Resources\Mini_Lines_Toggles_Buttons.png" />
+    <None Include="Resources\Mini_Overflow.png" />
+    <None Include="Resources\Mini_PressedButton.png" />
+    <None Include="Resources\Mini_SettingsIcons.png" />
     <None Include="Resources\Mini_StartMenu.png" />
     <None Include="Resources\Mini_StartContextMenu.png" />
-    <Content Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
-    <Content Include="Resources\Mini_Taskbar.png" />
-    <Content Include="Resources\Mini_TaskbarActiveIcon.png" />
-    <Content Include="Resources\Mini_TaskbarApp.png" />
-    <Content Include="Resources\Mini_Undefined.png" />
-    <Content Include="Resources\Mini_UWPDlg.png" />
-    <Content Include="Resources\Native10.png" />
-    <Content Include="Resources\Native7.png" />
-    <Content Include="Resources\Native8.png" />
-    <Content Include="Resources\NativeVista.png" />
-    <Content Include="Resources\NativeXP.png" />
-    <Content Include="Resources\notify_administrator.png" />
+    <None Include="Resources\Mini_StartMenu_Taskbar_AC.png" />
+    <None Include="Resources\Mini_Taskbar.png" />
+    <None Include="Resources\Mini_TaskbarActiveIcon.png" />
+    <None Include="Resources\Mini_TaskbarApp.png" />
+    <None Include="Resources\Mini_Undefined.png" />
+    <None Include="Resources\Mini_UWPDlg.png" />
+    <None Include="Resources\Native10.png" />
+    <None Include="Resources\Native7.png" />
+    <None Include="Resources\Native8.png" />
+    <None Include="Resources\NativeVista.png" />
+    <None Include="Resources\NativeXP.png" />
+    <None Include="Resources\notify_administrator.png" />
     <None Include="Resources\notify_applying.png" />
     <None Include="Resources\notify_dll.png" />
     <None Include="Resources\notify_reg_add.png" />
@@ -874,37 +887,35 @@
     <None Include="Resources\notify_pe_restore.png" />
     <None Include="Resources\notify_pe_patch.png" />
     <None Include="Resources\notify_pe_backup.png" />
-    <Content Include="Resources\notify_skip.png" />
-    <Content Include="Resources\notify_success.png" />
+    <None Include="Resources\notify_skip.png" />
+    <None Include="Resources\notify_success.png" />
     <None Include="Resources\notify_task_add.png" />
     <None Include="Resources\notify_task_remove.png" />
-    <Content Include="Resources\notify_time.png" />
-    <Content Include="Resources\PS_10x18.png" />
-    <Content Include="Resources\PS_12x16.png" />
-    <Content Include="Resources\PS_16x12.png" />
-    <Content Include="Resources\PS_16x8.png" />
-    <Content Include="Resources\PS_4x6.png" />
-    <Content Include="Resources\PS_5x12.png" />
-    <Content Include="Resources\PS_6x8.png" />
-    <Content Include="Resources\PS_7x12.png" />
-    <Content Include="Resources\PS_8x12.png" />
-    <Content Include="Resources\PS_8x8.png" />
+    <None Include="Resources\notify_time.png" />
+    <None Include="Resources\PS_10x18.png" />
+    <None Include="Resources\PS_12x16.png" />
+    <None Include="Resources\PS_16x12.png" />
+    <None Include="Resources\PS_16x8.png" />
+    <None Include="Resources\PS_4x6.png" />
+    <None Include="Resources\PS_5x12.png" />
+    <None Include="Resources\PS_6x8.png" />
+    <None Include="Resources\PS_7x12.png" />
+    <None Include="Resources\PS_8x12.png" />
+    <None Include="Resources\PS_8x8.png" />
     <None Include="Resources\Start11_EP_Rounded_Dark.png" />
     <None Include="Resources\Start11_EP_Rounded_Light.png" />
     <None Include="Resources\Start11_Light.png" />
     <None Include="Resources\Start11_Dark.png" />
     <None Include="Resources\SampleApp_Small_Inactive.png" />
-    <None Include="Resources\SampleApp_Active.png" />
-    <None Include="Resources\SampleApp_Inctive.png" />
     <None Include="Resources\SampleApp_Small_Active.png" />
     <None Include="Resources\Sound_Stop.png" />
     <None Include="Resources\Sound_Play.png" />
     <None Include="Resources\settingsfile.ico" />
-    <Content Include="Resources\Start7.png" />
-    <Content Include="Resources\Start7Basic.png" />
-    <Content Include="Resources\Start7Glass.png" />
-    <Content Include="Resources\StartBtn_10Dark.png" />
-    <Content Include="Resources\StartBtn_10Light.png" />
+    <None Include="Resources\Start7.png" />
+    <None Include="Resources\Start7Basic.png" />
+    <None Include="Resources\Start7Glass.png" />
+    <None Include="Resources\StartBtn_10Dark.png" />
+    <None Include="Resources\StartBtn_10Light.png" />
     <None Include="Resources\StartBtn_11_EP.png" />
     <None Include="Resources\StartBtn_11Dark.png" />
     <None Include="Resources\StartBtn_11Light.png" />
@@ -928,40 +939,40 @@
     <None Include="Resources\Store_Pattern7.png" />
     <None Include="Resources\Store_Pattern9.png" />
     <None Include="Resources\Store_ThemeVersion.png" />
-    <Content Include="Resources\Taskbar_ActiveApp7.png" />
-    <Content Include="Resources\Taskbar_InactiveApp7.png" />
+    <None Include="Resources\Taskbar_ActiveApp7.png" />
+    <None Include="Resources\Taskbar_InactiveApp7.png" />
     <None Include="Resources\ThemesResIcon.ico" />
-    <Content Include="Resources\Update.png" />
-    <Content Include="Resources\Update_Dot.png" />
-    <Content Include="Resources\Vista_ActiveApp.png" />
-    <Content Include="Resources\Vista_Close_Active.png" />
-    <Content Include="Resources\Vista_Close_inactive.png" />
-    <Content Include="Resources\Vista_InactiveApp.png" />
-    <Content Include="Resources\Vista_StartAero.png" />
-    <Content Include="Resources\Vista_StartBasic.png" />
-    <Content Include="Resources\Vista_StartLowerORB.png" />
-    <Content Include="Resources\Vista_Taskbar.png" />
+    <None Include="Resources\Update.png" />
+    <None Include="Resources\Update_Dot.png" />
+    <None Include="Resources\Vista_ActiveApp.png" />
+    <None Include="Resources\Vista_Close_Active.png" />
+    <None Include="Resources\Vista_Close_inactive.png" />
+    <None Include="Resources\Vista_InactiveApp.png" />
+    <None Include="Resources\Vista_StartAero.png" />
+    <None Include="Resources\Vista_StartBasic.png" />
+    <None Include="Resources\Vista_StartLowerORB.png" />
+    <None Include="Resources\Vista_Taskbar.png" />
     <None Include="Resources\Win7AltTabBasicButton.png" />
     <None Include="Resources\Win10x_Close_Light.png" />
     <None Include="Resources\Win10x_Close_Dark.png" />
-    <Content Include="Resources\Win7Logo.png" />
-    <Content Include="Resources\Win7ORB.png" />
-    <Content Include="Resources\Win7Sides.png" />
-    <Content Include="Resources\Win7TaskbarSides.png" />
-    <Content Include="Resources\Win7_Basic_Close_0.png" />
-    <Content Include="Resources\Win7_Basic_Close_1.png" />
-    <Content Include="Resources\Win7_Basic_Close_2.png" />
-    <Content Include="Resources\Win7_Basic_Close_ToolWindow.png" />
-    <Content Include="Resources\Win7_Close_Active.png" />
-    <Content Include="Resources\Win7_Close_inactive.png" />
-    <Content Include="Resources\Win7_TitleTopL.png" />
-    <Content Include="Resources\Win7_TitleTopR.png" />
-    <Content Include="Resources\Win8ORB.png" />
-    <Content Include="Resources\Win8_Close_0.png" />
-    <Content Include="Resources\Win8_Close_1.png" />
-    <Content Include="Resources\Win8_Close_2.png" />
-    <Content Include="Resources\Win8_Close_3.png" />
-    <Content Include="Resources\Win8_Close_ToolWindow.png" />
+    <None Include="Resources\Win7Logo.png" />
+    <None Include="Resources\Win7ORB.png" />
+    <None Include="Resources\Win7Sides.png" />
+    <None Include="Resources\Win7TaskbarSides.png" />
+    <None Include="Resources\Win7_Basic_Close_0.png" />
+    <None Include="Resources\Win7_Basic_Close_1.png" />
+    <None Include="Resources\Win7_Basic_Close_2.png" />
+    <None Include="Resources\Win7_Basic_Close_ToolWindow.png" />
+    <None Include="Resources\Win7_Close_Active.png" />
+    <None Include="Resources\Win7_Close_inactive.png" />
+    <None Include="Resources\Win7_TitleTopL.png" />
+    <None Include="Resources\Win7_TitleTopR.png" />
+    <None Include="Resources\Win8ORB.png" />
+    <None Include="Resources\Win8_Close_0.png" />
+    <None Include="Resources\Win8_Close_1.png" />
+    <None Include="Resources\Win8_Close_2.png" />
+    <None Include="Resources\Win8_Close_3.png" />
+    <None Include="Resources\Win8_Close_ToolWindow.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ColorItemControllers\ColorInfoDragDrop.resx">
@@ -1061,12 +1072,6 @@
     <EmbeddedResource Include="Extras\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>WinPaletter.My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
       <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
     </EmbeddedResource>
@@ -1076,6 +1081,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteGenerator\PaletteGenerateDashboard.resx">
       <DependentUpon>PaletteGenerateDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>

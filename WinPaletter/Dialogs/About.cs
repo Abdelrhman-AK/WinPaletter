@@ -27,7 +27,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Repository);
+            Process.Start(Properties.Resources.Link_Repository);
         }
 
         private void Button2_Click(object sender, EventArgs e)

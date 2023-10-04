@@ -181,7 +181,7 @@ namespace WinPaletter
                 {
                     case TaskType.Shutdown:
                         {
-                            string XML_Scheme = string.Format(My.Resources.XML_Shutdown, File);
+                            string XML_Scheme = string.Format(Properties.Resources.XML_Shutdown, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Shutdown"), "task_add");
@@ -191,7 +191,7 @@ namespace WinPaletter
 
                     case TaskType.Logoff:
                         {
-                            string XML_Scheme = string.Format(My.Resources.XML_Logoff, File);
+                            string XML_Scheme = string.Format(Properties.Resources.XML_Logoff, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logoff"), "task_add");
@@ -201,7 +201,7 @@ namespace WinPaletter
 
                     case TaskType.Logon:
                         {
-                            string XML_Scheme = string.Format(My.Resources.XML_Logon, File);
+                            string XML_Scheme = string.Format(Properties.Resources.XML_Logon, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Logon"), "task_add");
@@ -211,7 +211,7 @@ namespace WinPaletter
 
                     case TaskType.Unlock:
                         {
-                            string XML_Scheme = string.Format(My.Resources.XML_Unlock, File);
+                            string XML_Scheme = string.Format(Properties.Resources.XML_Unlock, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\Unlock"), "task_add");
@@ -221,7 +221,7 @@ namespace WinPaletter
 
                     case TaskType.ChargerConnected:
                         {
-                            string XML_Scheme = string.Format(My.Resources.XML_ChargerConnected, File);
+                            string XML_Scheme = string.Format(Properties.Resources.XML_ChargerConnected, File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\ChargerConnected"), "task_add");
@@ -313,7 +313,7 @@ namespace WinPaletter
         public static void DrawDWMEffect(this Form Form, Padding Margins, bool Border = true, FormStyle FormStyle = FormStyle.Mica)
         {
 
-            if (Margins == null)
+            if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
 
             var CompositionEnabled = default(bool);
@@ -398,6 +398,25 @@ namespace WinPaletter
             Marshal.FreeHGlobal(accentPtr);
         }
 
+        public static void DrawAcrylic(IntPtr Handle, bool Border = true)
+        {
+            var accent = new User32.AccentPolicy() { AccentState = User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND };
+            if (Border)
+                accent.AccentFlags = 0x20 | 0x40 | 0x80 | 0x100;
+            int accentStructSize = Marshal.SizeOf(accent);
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var Data = new User32.WindowCompositionAttributeData()
+            {
+                Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                SizeOfData = accentStructSize,
+                Data = accentPtr
+            };
+            User32.SetWindowCompositionAttribute(Handle, ref Data);
+            Marshal.FreeHGlobal(accentPtr);
+        }
+
         /// <summary>
         /// Draws Mica Style (Windows 11 and Higher - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
         /// </summary>
@@ -421,7 +440,7 @@ namespace WinPaletter
             else
                 FS = FormStyle.Mica;
 
-            if (Margins == null)
+            if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
             var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
 
@@ -431,12 +450,51 @@ namespace WinPaletter
             Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
         }
 
+        public static void DrawMica(IntPtr Handle, Padding Margins, MicaStyle Style = MicaStyle.Mica)
+        {
+            var CompositionEnabled = default(bool);
+            try
+            {
+                Dwmapi.DwmIsCompositionEnabled(ref CompositionEnabled);
+            }
+            catch
+            {
+                CompositionEnabled = false;
+            }
+
+            var FS = new FormStyle();
+            if (Style == MicaStyle.Mica)
+                FS = FormStyle.Mica;
+            if (Style == MicaStyle.Tabbed & My.Env.W11_22523)
+                FS = FormStyle.Tabbed;
+            else
+                FS = FormStyle.Mica;
+
+            if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
+                Margins = new Padding(-1, -1, -1, -1);
+            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+
+            DLLFunc.DarkTitlebar(Handle, My.Env.Style.DarkMode);
+            int argpvAttribute = (int)FS;
+            Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
+        }
+
+
         public static void DrawAero(this Form Form, Padding Margins)
         {
-            if (Margins == null)
+            if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
                 Margins = new Padding(-1, -1, -1, -1);
             var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
             Dwmapi.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
+        }
+
+        public static void DrawAero(IntPtr Handle, Padding Margins)
+        {
+            if (Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
+                Margins = new Padding(-1, -1, -1, -1);
+            var DWM_Margins = new Dwmapi.MARGINS() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
+            Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
         }
 
         public static void DrawTransparentGray(this Form Form, bool NoWindowBorders = true)

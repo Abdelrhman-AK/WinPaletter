@@ -1151,7 +1151,7 @@ namespace WinPaletter
             // 
             // PictureBox36
             // 
-            PictureBox36.Image = My.Resources.Native11;
+            PictureBox36.Image = Properties.Resources.Native11;
             PictureBox36.Location = new Point(17, 114);
             PictureBox36.Name = "PictureBox36";
             PictureBox36.Size = new Size(24, 24);

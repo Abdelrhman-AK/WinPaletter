@@ -1946,7 +1946,7 @@ namespace WinPaletter
             // PictureBox33
             // 
             PictureBox33.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            PictureBox33.Image = My.Resources.CF_Img_Normal;
+            PictureBox33.Image = Properties.Resources.CF_Img_Normal;
             PictureBox33.Location = new Point(180, 162);
             PictureBox33.Name = "PictureBox33";
             PictureBox33.Size = new Size(252, 168);
@@ -1957,7 +1957,7 @@ namespace WinPaletter
             // PictureBox32
             // 
             PictureBox32.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            PictureBox32.Image = My.Resources.CF_Pie_Normal;
+            PictureBox32.Image = Properties.Resources.CF_Pie_Normal;
             PictureBox32.Location = new Point(6, 162);
             PictureBox32.Name = "PictureBox32";
             PictureBox32.Size = new Size(168, 168);

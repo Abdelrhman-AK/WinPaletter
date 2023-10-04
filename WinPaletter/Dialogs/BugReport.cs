@@ -177,7 +177,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Repository + "issues");
+            Process.Start(Properties.Resources.Link_Repository + "issues");
             try
             {
                 My.MyProject.Forms.BK.Close();

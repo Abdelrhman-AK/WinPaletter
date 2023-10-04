@@ -23,7 +23,7 @@ namespace WinPaletter.UI.WP
 
         #region Variables
 
-        private readonly TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.4d));
+        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.4d));
 
         #endregion
 

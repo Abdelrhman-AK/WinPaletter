@@ -28,7 +28,7 @@ namespace WinPaletter.UI.WP
         private float _Angle = 0f;
         private Color C1, C2;
         private bool _Focused = true;
-        private readonly TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.7d));
+        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.7d));
 
         public enum Styles
         {

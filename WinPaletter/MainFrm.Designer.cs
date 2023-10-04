@@ -1568,7 +1568,7 @@ namespace WinPaletter
             // W11_pic9
             // 
             W11_pic9.BackColor = Color.Transparent;
-            W11_pic9.Image = My.Resources.Mini_Undefined;
+            W11_pic9.Image = Properties.Resources.Mini_Undefined;
             W11_pic9.Location = new Point(2, 2);
             W11_pic9.Name = "W11_pic9";
             W11_pic9.Size = new Size(24, 24);
@@ -2653,7 +2653,7 @@ namespace WinPaletter
             // W10_pic9
             // 
             W10_pic9.BackColor = Color.Transparent;
-            W10_pic9.Image = My.Resources.Mini_Undefined;
+            W10_pic9.Image = Properties.Resources.Mini_Undefined;
             W10_pic9.Location = new Point(2, 2);
             W10_pic9.Name = "W10_pic9";
             W10_pic9.Size = new Size(24, 24);

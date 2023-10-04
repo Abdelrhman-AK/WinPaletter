@@ -15,7 +15,7 @@ namespace WinPaletter
             this.LoadLanguage();
             WPStyle.ApplyStyle(this);
             TextBox1.Font = My.MyProject.Application.ConsoleFontLarge;
-            TextBox1.Text = My.Resources.LICENSE;
+            TextBox1.Text = Properties.Resources.LICENSE;
             My.MyProject.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation);
         }
 

@@ -83,9 +83,9 @@ namespace WinPaletter
                 tabs_preview_3.SelectedIndex = 0;
             }
 
-            FakeIcon1.Icon = My.MyProject.Forms.MainFrm.Icon;                  // My.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-            FakeIcon2.Icon = My.Resources.fileextension;    // My.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-            FakeIcon3.Icon = My.Resources.ThemesResIcon;    // My.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+            FakeIcon1.Icon = My.MyProject.Forms.MainFrm.Icon;                  // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+            FakeIcon2.Icon = Properties.Resources.fileextension;    // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+            FakeIcon3.Icon = Properties.Resources.ThemesResIcon;    // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
             if (My.Env.WXP)
             {
@@ -856,7 +856,7 @@ namespace WinPaletter
 
         private void MetricsEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void Trackbar15_Scroll(object sender)
@@ -886,7 +886,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-Metrics-and-Fonts");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-Metrics-and-Fonts");
         }
     }
 }

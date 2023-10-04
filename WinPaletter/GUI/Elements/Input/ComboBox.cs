@@ -47,7 +47,7 @@ namespace WinPaletter.UI.WP
 
         #region Variables
 
-        private readonly TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.3d));
+        private readonly TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.3d));
         private bool _Shown = false;
 
         private MouseState State = MouseState.None;

@@ -437,7 +437,7 @@ namespace WinPaletter
             // PictureBox3
             // 
             PictureBox3.BackColor = Color.Transparent;
-            PictureBox3.Image = My.Resources.SampleApp_Active;
+            PictureBox3.Image = Properties.Resources.SampleApp_Active;
             PictureBox3.Location = new Point(190, 20);
             PictureBox3.Name = "PictureBox3";
             PictureBox3.Size = new Size(35, 35);
@@ -466,7 +466,7 @@ namespace WinPaletter
             // 
             PictureBox1.BackColor = Color.Transparent;
             PictureBox1.Dock = DockStyle.Fill;
-            PictureBox1.Image = My.Resources.SampleApp_Active;
+            PictureBox1.Image = Properties.Resources.SampleApp_Active;
             PictureBox1.Location = new Point(3, 3);
             PictureBox1.Name = "PictureBox1";
             PictureBox1.Size = new Size(30, 30);
@@ -477,7 +477,7 @@ namespace WinPaletter
             // PictureBox2
             // 
             PictureBox2.BackColor = Color.Transparent;
-            PictureBox2.Image = My.Resources.SampleApp_Active;
+            PictureBox2.Image = Properties.Resources.SampleApp_Active;
             PictureBox2.Location = new Point(149, 20);
             PictureBox2.Name = "PictureBox2";
             PictureBox2.Size = new Size(35, 35);
@@ -679,7 +679,7 @@ namespace WinPaletter
             // checker_img
             // 
             checker_img.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            checker_img.Image = My.Resources.checker_disabled;
+            checker_img.Image = Properties.Resources.checker_disabled;
             checker_img.Location = new Point(781, 4);
             checker_img.Name = "checker_img";
             checker_img.Size = new Size(35, 31);

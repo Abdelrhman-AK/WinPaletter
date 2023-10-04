@@ -28,7 +28,7 @@ namespace WinPaletter.UI.Controllers
 
         #region Variables
 
-        private TextureBrush Noise = new TextureBrush(My.Resources.GaussianBlur.Fade(0.65d));
+        private TextureBrush Noise = new TextureBrush(Properties.Resources.GaussianBlur.Fade(0.65d));
         private List<Bitmap> DesignedFor_Badges = new List<Bitmap>();
         private TextureBrush pattern;
         private bool AnimateOnClick = false;
@@ -121,17 +121,17 @@ namespace WinPaletter.UI.Controllers
             if (_TM is not null)
             {
                 if (_TM.Info.DesignedFor_Win11)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedFor11);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor11);
                 if (_TM.Info.DesignedFor_Win10)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedFor10);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor10);
                 if (_TM.Info.DesignedFor_Win81)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedFor8);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor8);
                 if (_TM.Info.DesignedFor_Win7)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedFor7);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedFor7);
                 if (_TM.Info.DesignedFor_WinVista)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedForVista);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedForVista);
                 if (_TM.Info.DesignedFor_WinXP)
-                    DesignedFor_Badges.Add(My.Resources.Store_DesignedForXP);
+                    DesignedFor_Badges.Add(Properties.Resources.Store_DesignedForXP);
             }
             Refresh();
         }
@@ -154,52 +154,52 @@ namespace WinPaletter.UI.Controllers
 
                 case 1:
                     {
-                        bmp = My.Resources.Store_Pattern1;
+                        bmp = Properties.Resources.Store_Pattern1;
                         break;
                     }
                 case 2:
                     {
-                        bmp = My.Resources.Store_Pattern2;
+                        bmp = Properties.Resources.Store_Pattern2;
                         break;
                     }
                 case 3:
                     {
-                        bmp = My.Resources.Store_Pattern3;
+                        bmp = Properties.Resources.Store_Pattern3;
                         break;
                     }
                 case 4:
                     {
-                        bmp = My.Resources.Store_Pattern4;
+                        bmp = Properties.Resources.Store_Pattern4;
                         break;
                     }
                 case 5:
                     {
-                        bmp = My.Resources.Store_Pattern5;
+                        bmp = Properties.Resources.Store_Pattern5;
                         break;
                     }
                 case 6:
                     {
-                        bmp = My.Resources.Store_Pattern6;
+                        bmp = Properties.Resources.Store_Pattern6;
                         break;
                     }
                 case 7:
                     {
-                        bmp = My.Resources.Store_Pattern7;
+                        bmp = Properties.Resources.Store_Pattern7;
                         break;
                     }
                 case 8:
                     {
-                        bmp = My.Resources.Store_Pattern8;
+                        bmp = Properties.Resources.Store_Pattern8;
                         break;
                     }
                 case 9:
                     {
-                        bmp = My.Resources.Store_Pattern9;
+                        bmp = Properties.Resources.Store_Pattern9;
                         break;
                     }
                 case 10:
                     {
-                        bmp = My.Resources.Store_Pattern10;
+                        bmp = Properties.Resources.Store_Pattern10;
                         break;
                     }
 
@@ -382,17 +382,17 @@ namespace WinPaletter.UI.Controllers
 
                 if (DoneByWinPaletter)
                 {
-                    G.DrawImage(My.Resources.Store_DoneByWinPaletter, BadgeRect);
+                    G.DrawImage(Properties.Resources.Store_DoneByWinPaletter, BadgeRect);
                 }
                 else
                 {
-                    G.DrawImage(My.Resources.Store_DoneByUser, BadgeRect);
+                    G.DrawImage(Properties.Resources.Store_DoneByUser, BadgeRect);
                 }
 
                 string author = DoneByWinPaletter ? My.MyProject.Application.Info.ProductName : TM.Info.Author;
                 G.DrawString(My.Env.Lang.By + " " + author, new Font(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular), new SolidBrush(FC), Author_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
-                G.DrawImage(My.Resources.Store_ThemeVersion, VerRect);
+                G.DrawImage(Properties.Resources.Store_ThemeVersion, VerRect);
                 G.DrawString(TM.Info.ThemeVersion, My.MyProject.Application.ConsoleFont, new SolidBrush(FC), Version_Rect, ContentAlignment.MiddleRight.ToStringFormat());
 
                 for (int i = 0, loopTo = DesignedFor_Badges.Count - 1; i <= loopTo; i++)

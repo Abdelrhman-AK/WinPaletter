@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -63,10 +64,10 @@ namespace WinPaletter.Theme.Structures
             LoadingCircleBackNoise = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackNoise", false));
             LoadingCircleHotNoise = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotNoise", false));
 
-            PrimaryColorGradientMode = (Paths.GradientMode)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorGradientMode", (int)Paths.GradientMode.Circle));
-            SecondaryColorGradientMode = (Paths.GradientMode)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorGradientMode", (int)Paths.GradientMode.Vertical));
-            LoadingCircleBackGradientMode = (Paths.GradientMode)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackGradientMode", (int)Paths.GradientMode.Circle));
-            LoadingCircleHotGradientMode = (Paths.GradientMode)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotGradientMode", (int)Paths.GradientMode.Circle));
+            PrimaryColorGradientMode = Paths.ReturnGradientModeFromString(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorGradientMode", "circle").ToString());
+            SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorGradientMode", "vertical").ToString());
+            LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackGradientMode", "circle").ToString());
+            LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotGradientMode", "circle").ToString());
 
             PrimaryColorNoiseOpacity = float.Parse(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorNoiseOpacity", 25).ToString()) / 100;
             SecondaryColorNoiseOpacity = float.Parse(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorNoiseOpacity", 25).ToString()) / 100;
@@ -87,25 +88,25 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColor1", Cursor.PrimaryColor1.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColor2", Cursor.PrimaryColor2.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorGradient", Cursor.PrimaryColorGradient.ToInteger());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorGradientMode", (int)Cursor.PrimaryColorGradientMode);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.PrimaryColorGradientMode), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorNoise", Cursor.PrimaryColorNoise.ToInteger());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "PrimaryColorNoiseOpacity", Cursor.PrimaryColorNoiseOpacity * 100f);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColor1", Cursor.SecondaryColor1.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColor2", Cursor.SecondaryColor2.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorGradient", Cursor.SecondaryColorGradient.ToInteger());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorGradientMode", (int)Cursor.SecondaryColorGradientMode);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.SecondaryColorGradientMode), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorNoise", Cursor.SecondaryColorNoise.ToInteger());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "SecondaryColorNoiseOpacity", Cursor.SecondaryColorNoiseOpacity * 100f);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBack1", Cursor.LoadingCircleBack1.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBack2", Cursor.LoadingCircleBack2.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackGradient", Cursor.LoadingCircleBackGradient.ToInteger());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackGradientMode", (int)Cursor.LoadingCircleBackGradientMode);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleBackGradientMode), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackNoise", Cursor.LoadingCircleBackNoise.ToInteger());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleBackNoiseOpacity", Cursor.LoadingCircleBackNoiseOpacity * 100f);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHot1", Cursor.LoadingCircleHot1.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHot2", Cursor.LoadingCircleHot2.ToArgb());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotGradient", Cursor.LoadingCircleHotGradient.ToInteger());
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotGradientMode", (int)Cursor.LoadingCircleHotGradientMode);
+            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleHotGradientMode), RegistryValueKind.String);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotNoise", Cursor.LoadingCircleHotNoise.ToInteger());
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "LoadingCircleHotNoiseOpacity", Cursor.LoadingCircleHotNoiseOpacity * 100f);
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\" + subKey, "Shadow_Enabled", Cursor.Shadow_Enabled);

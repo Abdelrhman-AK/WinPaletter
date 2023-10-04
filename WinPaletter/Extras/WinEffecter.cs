@@ -300,7 +300,7 @@ namespace WinPaletter
 
         private void EffectsEnabled_CheckedChanged(object sender, EventArgs e)
         {
-            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? My.Resources.checker_enabled : My.Resources.checker_disabled;
+            checker_img.Image = Conversions.ToBoolean(((UI.WP.Toggle)sender).Checked) ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
         }
 
         private void MD_Click(object sender, EventArgs e)
@@ -389,8 +389,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Normal;
-                PictureBox32.Image = My.Resources.CF_Pie_Normal;
+                PictureBox33.Image = Properties.Resources.CF_Img_Normal;
+                PictureBox32.Image = Properties.Resources.CF_Pie_Normal;
 
                 R1.BackColor = Color.FromArgb(204, 50, 47);
                 R2.BackColor = Color.FromArgb(233, 80, 63);
@@ -422,8 +422,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Grayscale;
-                PictureBox32.Image = My.Resources.CF_Pie_Grayscale;
+                PictureBox33.Image = Properties.Resources.CF_Img_Grayscale;
+                PictureBox32.Image = Properties.Resources.CF_Pie_Grayscale;
 
                 R1.BackColor = Color.FromArgb(93, 93, 93);
                 R2.BackColor = Color.FromArgb(122, 122, 122);
@@ -455,8 +455,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Normal.Invert();
-                PictureBox32.Image = My.Resources.CF_Pie_Normal.Invert();
+                PictureBox33.Image = Properties.Resources.CF_Img_Normal.Invert();
+                PictureBox32.Image = Properties.Resources.CF_Pie_Normal.Invert();
 
                 R1.BackColor = Color.FromArgb(53, 208, 211);
                 R2.BackColor = Color.FromArgb(28, 174, 193);
@@ -488,8 +488,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Grayscale.Invert();
-                PictureBox32.Image = My.Resources.CF_Pie_Grayscale.Invert();
+                PictureBox33.Image = Properties.Resources.CF_Img_Grayscale.Invert();
+                PictureBox32.Image = Properties.Resources.CF_Pie_Grayscale.Invert();
 
                 R1.BackColor = Color.FromArgb(160, 160, 160);
                 R2.BackColor = Color.FromArgb(131, 131, 131);
@@ -521,8 +521,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Red_green_green_weak_deuteranopia;
-                PictureBox32.Image = My.Resources.CF_Pie_Red_green_green_weak_deuteranopia;
+                PictureBox33.Image = Properties.Resources.CF_Img_Red_green_green_weak_deuteranopia;
+                PictureBox32.Image = Properties.Resources.CF_Pie_Red_green_green_weak_deuteranopia;
 
                 R1.BackColor = Color.FromArgb(255, 50, 20);
                 R2.BackColor = Color.FromArgb(255, 80, 35);
@@ -554,8 +554,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Red_green_red_weak_protanopia;
-                PictureBox32.Image = My.Resources.CF_Pie_Red_green_red_weak_protanopia;
+                PictureBox33.Image = Properties.Resources.CF_Img_Red_green_red_weak_protanopia;
+                PictureBox32.Image = Properties.Resources.CF_Pie_Red_green_red_weak_protanopia;
 
                 R1.BackColor = Color.FromArgb(204, 121, 137);
                 R2.BackColor = Color.FromArgb(233, 151, 151);
@@ -587,8 +587,8 @@ namespace WinPaletter
         {
             if (Conversions.ToBoolean(((UI.WP.RadioImage)sender).Checked))
             {
-                PictureBox33.Image = My.Resources.CF_Img_Blue_yellow_tritanopia;
-                PictureBox32.Image = My.Resources.CF_Pie_Blue_yellow__tritanopia;
+                PictureBox33.Image = Properties.Resources.CF_Img_Blue_yellow_tritanopia;
+                PictureBox32.Image = Properties.Resources.CF_Pie_Blue_yellow__tritanopia;
 
                 R1.BackColor = Color.FromArgb(160, 60, 47);
                 R2.BackColor = Color.FromArgb(180, 85, 63);
@@ -618,7 +618,7 @@ namespace WinPaletter
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Edit-Windows-Effects");
+            Process.Start(Properties.Resources.Link_Wiki + "/Edit-Windows-Effects");
         }
     }
 }

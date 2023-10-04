@@ -230,7 +230,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Process.Start(My.Resources.Link_Wiki + "/Language-creation-(old-methods)");
+            Process.Start(Properties.Resources.Link_Wiki + "/Language-creation-(old-methods)");
         }
     }
 }

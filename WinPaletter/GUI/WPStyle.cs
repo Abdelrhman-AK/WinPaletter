@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -321,6 +322,28 @@ namespace WinPaletter
 
         }
 
+        public static void ApplyStyle(IntPtr Handle)
+        {
+            var ctrl_theme = My.Env.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
+            bool CustomR = My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors && My.Env.W11;
+
+            NativeWindow nativeWindow = new();
+            nativeWindow.AssignHandle(Handle);
+
+            DLLFunc.DarkTitlebar(nativeWindow.Handle, My.Env.Style.DarkMode);
+
+            if (My.Env.W11)
+            {
+                int argpvAttribute = (int)Dwmapi.FormCornersType.Default;
+                Dwmapi.DwmSetWindowAttribute(nativeWindow.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            }
+            if (CustomR & !My.Env.Settings.Appearance.RoundedCorners)
+            {
+                int argpvAttribute1 = (int)Dwmapi.FormCornersType.Rectangular;
+                Dwmapi.DwmSetWindowAttribute(nativeWindow.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+            }
+        }
+
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
         {
             // This will make all control have a consistent dark\light mode.
@@ -499,36 +522,34 @@ namespace WinPaletter
                 ctrl.Refresh();
         }
 
-        public static void SetControlTheme(IntPtr handle, CtrlTheme theme)
+        public static int SetControlTheme(IntPtr handle, CtrlTheme theme)
         {
-            // If Not My.W7 Then
             if (handle == IntPtr.Zero)
-                throw new ArgumentNullException(nameof(handle));
+                return 0;
 
             switch (theme)
             {
                 case CtrlTheme.None:
                     {
-                        UxTheme.SetWindowTheme(handle, "", "");
-                        break;
+                        return UxTheme.SetWindowTheme(handle, "", null);
                     }
                 case CtrlTheme.Explorer:
                     {
-                        UxTheme.SetWindowTheme(handle, "Explorer", null);
-                        break;
+                        return UxTheme.SetWindowTheme(handle, "Explorer", null);
                     }
                 case CtrlTheme.DarkExplorer:
                     {
-                        UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", null);
-                        break;
+                        return UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", null);
                     }
                 case CtrlTheme.Default:
                     {
-                        UxTheme.SetWindowTheme(handle, null, null);
-                        break;
+                        return UxTheme.SetWindowTheme(handle, null, null);
+                    }
+                default:
+                    {
+                        return 0;
                     }
             }
-            // End If
         }
 
         public enum CtrlTheme
@@ -565,6 +586,7 @@ namespace WinPaletter
                     _TD.HelpRequested -= TD_HelpRequested;
                     _TD.ExpandButtonClicked -= TD_ExpandButtonClicked;
                     _TD.ButtonClicked -= TD_ButtonClicked;
+                    _TD.Created -= TD_Created;
                 }
 
                 _TD = value;
@@ -577,6 +599,7 @@ namespace WinPaletter
                     _TD.HelpRequested += TD_HelpRequested;
                     _TD.ExpandButtonClicked += TD_ExpandButtonClicked;
                     _TD.ButtonClicked += TD_ButtonClicked;
+                    _TD.Created += TD_Created;
                 }
             }
         }
@@ -771,10 +794,10 @@ namespace WinPaletter
 
         private static DialogResult Msgbox_Classic(object Message, object SubMessage, object ExpandedDetails, object Footer, object DialogTitle, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information)
         {
-            string SM = !string.IsNullOrWhiteSpace(SubMessage.ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : "";
-            string ED = !string.IsNullOrWhiteSpace(ExpandedDetails.ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : "";
-            string Fo = !string.IsNullOrWhiteSpace(Footer.ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : "";
-            string T = !string.IsNullOrWhiteSpace(DialogTitle.ToString()) ? DialogTitle.ToString() : My.MyProject.Application.Info.Title;
+            string SM = !string.IsNullOrWhiteSpace((SubMessage ?? "").ToString()) ? "\r\n" + "\r\n" + SubMessage.ToString() : "";
+            string ED = !string.IsNullOrWhiteSpace((ExpandedDetails ?? "").ToString()) ? "\r\n" + "\r\n" + ExpandedDetails.ToString() : "";
+            string Fo = !string.IsNullOrWhiteSpace((Footer ?? "").ToString()) ? "\r\n" + "\r\n" + Footer.ToString() : "";
+            string T = !string.IsNullOrWhiteSpace((DialogTitle ?? "").ToString()) ? DialogTitle.ToString() : My.MyProject.Application.Info.Title;
 
             return MessageBox.Show(Message + SM + ED + Fo, T, Buttons, Icon);
         }
@@ -872,6 +895,17 @@ namespace WinPaletter
         private static void TD_ButtonClicked(object sender, TaskDialogItemClickedEventArgs e)
         {
 
+        }
+
+        
+        private static void TD_Created(object sender, EventArgs e)
+        {
+            ApplyStyle(((IWin32Window)sender).Handle);
+
+            foreach (IntPtr i in User32.GetChildWindows(((IWin32Window)sender).Handle))
+            {
+                ApplyStyle(i);
+            }
         }
         #endregion
 
