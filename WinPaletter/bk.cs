@@ -14,9 +14,10 @@ namespace WinPaletter
         {
             if (My.Env.W7 | My.Env.WVista)
                 FormBorderStyle = FormBorderStyle.Sizable;
+
             if (!My.Env.WVista)
             {
-                this.DrawDWMEffect(default, false, FormDWMEffects.FormStyle.Acrylic);
+                this.DrawDWMEffect(Padding.Empty, false, FormDWMEffects.FormStyle.Acrylic);
             }
             else
             {

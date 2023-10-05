@@ -327,7 +327,7 @@ namespace WinPaletter
             }
 
             bool Transparency_W11_10;
-            Transparency_W11_10 = (My.Env.W10 | My.Env.W11) && (bool)Reg_IO.GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true);
+            Transparency_W11_10 = (My.Env.W10 | My.Env.W11) && Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
 
             try
             {
