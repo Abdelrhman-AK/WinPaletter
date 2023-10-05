@@ -2,6 +2,93 @@
 
 ---
 
+### 1.0.8.1
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 05 Oct 2023  |
+
+> **Warning**
+> If you are using a language file, please re-download it from [here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages)
+
+> **Warning**
+> Please run `SFC /scanfile=%windir%\System32\imageres.dll` in Command Prompt as administrator and restart your Windows if you used a previous beta version to fix imageres.dll corruption made by modifying Windows startup sound. Don't use previous beta versions `1.0.7.x`.
+
+# New Features:
+
+### 1. WinPaletter is written now in C# instead of Visual Basic .NET
+It is expected to face bugs due to programming language shift. Please report problems you may face in Issues.
+
+### 2. Drag and drop colors items - read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Color-picker-control#3-drag-and-drop) to learn more.
+
+You can drag a color into another color to make it easier and quicker to change colors. You can also swap between colors, you can learn it from wiki.
+
+### 3. Palette extraction and distribution
+
+- If you are confused with colors for your Windows colors, WinPaletter now can generate a palette from one color or from an image.
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about this feature
+
+### 4. Colors history
+
+Click on a color item and navigate to history tab, you will see all color used for current open item.
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Color-picker-control#4-previous-colors-like-undo-or-colors-history) to learn more about this feature
+
+### 5. GUI language editor
+
+- It will help you create, modify and update languages JSON files by showing mini-forms that you can edit so that you can see all text items in real time
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Language-creation) to learn more about this feature
+
+### 6. New download sources for WinPaletter
+
+- Including WinGet and Chocolatey #168
+
+### 7. Theme log levels
+
+- There is a new level called "Advanced details" that shows you all registry modifications and actions done to your system during theme applying
+
+- Read [this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Theme-log-verbose-level) to learn more about this feature
+
+### 8. Windows Effects new feature
+
+- Animate controls and elements inside window
+
+***
+
+# Improvements:
+
+- Sounds
+  - Added Unlock and Charger connected sounds #170
+  - Improvement in Task Scheduler deflection method #170
+  - Fix empty icons after patching imageres.dll
+  - Fix "Sound API only supports playing PCM wave files" on opening a WAV file
+  - Added [alert dialog](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Advanced-options-to-patch-PE-files) on changing PE files resources, for example imageres.dll (for startup sound)
+  
+- Classic colors speed improvements
+
+***
+
+# Bugs fixes:
+- Fix issue of disappearing taskbar and start in preview
+- Fix issue of conflict between custom DPI and metrics and fonts #179 #178
+- Fix small icons fonts and other fonts on applying metrics and fonts with DPI higher than 125 and with delaying metrics and fonts effects option in settings is enabled 
+- Fix bug of opening an old theme file causes null or non-found values for the newly loaded theme
+- Fix WinPaletter theme load issue #173
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.0...v1.0.8.1) |
+| Previous Beta   | `1.0.7.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.9...v1.0.8.1) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.1) |
+
+---
+
 ### 1.0.8.0
 
 > **Info:**
@@ -147,7 +234,7 @@ And this is to make it more organized (each section is in a separate key (folder
 | Version Type    | Version Code | Link                                                                                |
 |:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
 | Previous Stable | `1.0.7.6`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.6...v1.0.8.0) |
-| Previous Beta   | `1.0.6.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.9...v1.0.8.0) |
+| Previous Beta   | `1.0.7.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.7.9...v1.0.8.0) |
 | Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.0) |
 
 ---
