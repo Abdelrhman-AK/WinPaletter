@@ -1262,7 +1262,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)PictureBox2).EndInit();
             GroupBox8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)PictureBox4).EndInit();
-            ControlSelection += new ControlSelectionEventHandler(Lang_JSON_GUI_ControlSelection);
             FormClosing += new FormClosingEventHandler(Lang_JSON_GUI_FormClosing);
             Load += new EventHandler(Lang_JSON_GUI_Load);
             ResumeLayout(false);

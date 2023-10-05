@@ -2042,7 +2042,7 @@ namespace WinPaletter
 
         private void W10_Button25_Click(object sender, EventArgs e)
         {
-            WPStyle.MsgBox(My.Env.Lang.CP_AccentOnTaskbarTib, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            WPStyle.MsgBox(My.Env.Lang.TM_AccentOnTaskbarTib, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void W10_TB_Blur_CheckedChanged(object sender, EventArgs e)
@@ -2766,10 +2766,10 @@ namespace WinPaletter
                 Theme.Manager.AddNode(TreeView1, My.Env.Lang.NoDefResExplorer, "warning");
 
             if (My.Env.Settings.ThemeLog.Enabled())
-                Theme.Manager.AddNode(TreeView1, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_AllDone), "info");
+                Theme.Manager.AddNode(TreeView1, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_AllDone), "info");
 
             if (TM.MetricsFonts.Enabled & GetWindowsScreenScalingFactor() > 100d)
-                Theme.Manager.AddNode(TreeView1, string.Format("{0}", My.Env.Lang.CP_MetricsHighDPIAlert), "info");
+                Theme.Manager.AddNode(TreeView1, string.Format("{0}", My.Env.Lang.TM_MetricsHighDPIAlert), "info");
 
             log_lbl.Visible = true;
             Button8.Visible = true;
@@ -2778,12 +2778,12 @@ namespace WinPaletter
 
             if (!(My.Env.Saving_Exceptions.Count == 0))
             {
-                log_lbl.Text = My.Env.Lang.CP_ErrorHappened;
+                log_lbl.Text = My.Env.Lang.TM_ErrorHappened;
                 Button14.Visible = true;
             }
             else if (My.Env.Settings.ThemeLog.CountDown && !(My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed))
             {
-                log_lbl.Text = string.Format(My.Env.Lang.CP_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds);
+                log_lbl.Text = string.Format(My.Env.Lang.TM_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds);
                 elapsedSecs = 1;
                 Timer1.Enabled = true;
                 Timer1.Start();
@@ -2793,7 +2793,7 @@ namespace WinPaletter
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            log_lbl.Text = string.Format(My.Env.Lang.CP_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
+            log_lbl.Text = string.Format(My.Env.Lang.TM_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
 
             if (elapsedSecs + 1 <= My.Env.Settings.ThemeLog.CountDown_Seconds)
             {

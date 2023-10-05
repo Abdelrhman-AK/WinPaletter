@@ -31,10 +31,10 @@ namespace WinPaletter
                 case WindowStyle.W11:
                     {
                         #region Win11
-                        lbl6.Text = My.Env.Lang.CP_11_SomePressedButtons;
-                        lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win11);
-                        lbl8.Text = My.Env.Lang.CP_Undefined;
-                        lbl9.Text = My.Env.Lang.CP_Undefined;
+                        lbl6.Text = My.Env.Lang.TM_11_SomePressedButtons;
+                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win11);
+                        lbl8.Text = My.Env.Lang.TM_Undefined;
+                        lbl9.Text = My.Env.Lang.TM_Undefined;
                         pic5.Image = Properties.Resources.Mini_Settings_Icons;
                         pic6.Image = Properties.Resources.Mini_PressedButton;
                         pic7.Image = Properties.Resources.Mini_UWPDlg;
@@ -45,11 +45,11 @@ namespace WinPaletter
                         {
                             case true:   // '''''''''DarkMode
                                 {
-                                    lbl1.Text = My.Env.Lang.CP_11_StartMenu_Taskbar_AC;
-                                    lbl2.Text = My.Env.Lang.CP_11_ACHover_Links;
-                                    lbl3.Text = My.Env.Lang.CP_11_Lines_Toggles_Buttons;
-                                    lbl4.Text = My.Env.Lang.CP_11_OverflowTray;
-                                    lbl5.Text = My.Env.Lang.CP_11_Settings;
+                                    lbl1.Text = My.Env.Lang.TM_11_StartMenu_Taskbar_AC;
+                                    lbl2.Text = My.Env.Lang.TM_11_ACHover_Links;
+                                    lbl3.Text = My.Env.Lang.TM_11_Lines_Toggles_Buttons;
+                                    lbl4.Text = My.Env.Lang.TM_11_OverflowTray;
+                                    lbl5.Text = My.Env.Lang.TM_11_Settings;
 
                                     pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                     pic2.Image = Properties.Resources.Mini_ACHover_Links;
@@ -59,11 +59,11 @@ namespace WinPaletter
                                 }
                             case false:   // '''''''''Light
                                 {
-                                    lbl1.Text = My.Env.Lang.CP_11_Taskbar_ACHover_Links;
-                                    lbl2.Text = My.Env.Lang.CP_11_StartMenu_AC;
-                                    lbl3.Text = My.Env.Lang.CP_11_UnreadBadge;
-                                    lbl4.Text = My.Env.Lang.CP_11_Lines_Toggles_Buttons_Overflow;
-                                    lbl5.Text = My.Env.Lang.CP_11_SettingsAndTaskbarAppUnderline;
+                                    lbl1.Text = My.Env.Lang.TM_11_Taskbar_ACHover_Links;
+                                    lbl2.Text = My.Env.Lang.TM_11_StartMenu_AC;
+                                    lbl3.Text = My.Env.Lang.TM_11_UnreadBadge;
+                                    lbl4.Text = My.Env.Lang.TM_11_Lines_Toggles_Buttons_Overflow;
+                                    lbl5.Text = My.Env.Lang.TM_11_SettingsAndTaskbarAppUnderline;
 
                                     pic1.Image = Properties.Resources.Mini_Taskbar;
                                     pic2.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -82,21 +82,21 @@ namespace WinPaletter
 
                                         if (My.Env.EP.UseTaskbar10)
                                         {
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
 
                                             if (My.Env.EP.UseStart10)
                                             {
-                                                lbl1.Text = My.Env.Lang.CP_10_Taskbar;
+                                                lbl1.Text = My.Env.Lang.TM_10_Taskbar;
                                                 pic1.Image = Properties.Resources.Mini_Taskbar;
                                             }
                                             else
                                             {
-                                                lbl1.Text = My.Env.Lang.CP_11_StartMenu_Taskbar_AC;
+                                                lbl1.Text = My.Env.Lang.TM_11_StartMenu_Taskbar_AC;
                                                 pic1.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                             }
 
-                                            lbl3.Text = My.Env.Lang.CP_EP_ACButton_TaskbarAppLine;
-                                            lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
+                                            lbl3.Text = My.Env.Lang.TM_EP_ACButton_TaskbarAppLine;
+                                            lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Properties.Resources.Mini_AC;
                                             pic5.Image = Properties.Resources.Mini_Settings_Icons;
@@ -105,7 +105,7 @@ namespace WinPaletter
 
                                         if (My.Env.EP.UseStart10)
                                         {
-                                            lbl4.Text = My.Env.Lang.CP_EP_StartMenu_OverflowMenus;
+                                            lbl4.Text = My.Env.Lang.TM_EP_StartMenu_OverflowMenus;
                                             pic4.Image = Properties.Resources.Mini_StartMenu;
                                         }
 
@@ -117,9 +117,9 @@ namespace WinPaletter
 
                                         if (My.Env.EP.UseTaskbar10)
                                         {
-                                            lbl3.Text = My.Env.Lang.CP_EP_Taskbar_AppUnderline;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                            lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
+                                            lbl3.Text = My.Env.Lang.TM_EP_Taskbar_AppUnderline;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
                                             pic5.Image = Properties.Resources.Mini_Settings_Icons;
@@ -128,8 +128,8 @@ namespace WinPaletter
 
                                         if (My.Env.EP.UseStart10)
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_EP_ActionCenterBackground;
-                                            lbl4.Text = My.Env.Lang.CP_EP_StartMenu_ActionCenterButtons;
+                                            lbl2.Text = My.Env.Lang.TM_EP_ActionCenterBackground;
+                                            lbl4.Text = My.Env.Lang.TM_EP_StartMenu_ActionCenterButtons;
                                             pic2.Image = Properties.Resources.Mini_AC;
                                             pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
                                         }
@@ -147,17 +147,17 @@ namespace WinPaletter
                 case WindowStyle.W10:
                     {
                         #region Win10
-                        lbl9.Text = My.Env.Lang.CP_Undefined;
+                        lbl9.Text = My.Env.Lang.TM_Undefined;
 
                         switch (!TM.Windows10.WinMode_Light)
                         {
                             case true: // '''''''''DarkMode
                                 {
-                                    lbl2.Text = My.Env.Lang.CP_10_ACLinks;
-                                    lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
-                                    lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                    lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
-                                    lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
+                                    lbl2.Text = My.Env.Lang.TM_10_ACLinks;
+                                    lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
+                                    lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                    lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
+                                    lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
 
                                     pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                     pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -167,9 +167,9 @@ namespace WinPaletter
 
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = My.Env.Lang.CP_10_Hamburger;
-                                        lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
-                                        lbl8.Text = My.Env.Lang.CP_10_Taskbar_StartContextMenu;
+                                        lbl1.Text = My.Env.Lang.TM_10_Hamburger;
+                                        lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
+                                        lbl8.Text = My.Env.Lang.TM_10_Taskbar_StartContextMenu;
 
                                         pic1.Image = Properties.Resources.Mini_Hamburger;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -177,26 +177,26 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_Taskbar_SomeBtns;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_Taskbar_SomeBtns;
                                         }
                                     }
 
                                     else
                                     {
-                                        lbl1.Text = My.Env.Lang.CP_10_Taskbar;
+                                        lbl1.Text = My.Env.Lang.TM_10_Taskbar;
                                         pic1.Image = Properties.Resources.Mini_Taskbar;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
                                         }
                                         else
                                         {
-                                            lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
+                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
                                         }
 
-                                        lbl8.Text = My.Env.Lang.CP_10_StartContextMenu;
+                                        lbl8.Text = My.Env.Lang.TM_10_StartContextMenu;
                                         pic8.Image = Properties.Resources.Mini_StartContextMenu;
 
                                     }
@@ -208,10 +208,10 @@ namespace WinPaletter
                                 {
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = My.Env.Lang.CP_10_Hamburger;
-                                        lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
-                                        lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
+                                        lbl1.Text = My.Env.Lang.TM_10_Hamburger;
+                                        lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
+                                        lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
 
                                         pic1.Image = Properties.Resources.Mini_Hamburger;
                                         pic4.Image = Properties.Resources.Mini_StartMenu_Taskbar_AC;
@@ -222,10 +222,10 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_Undefined;
-                                            lbl3.Text = My.Env.Lang.CP_Undefined;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_Undefined;
+                                            lbl3.Text = My.Env.Lang.TM_Undefined;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_Undefined;
@@ -233,10 +233,10 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_Undefined;
-                                            lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_Undefined;
+                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -244,10 +244,10 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_10_ACLinks;
-                                            lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_Taskbar_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_10_ACLinks;
+                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_Taskbar_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -256,9 +256,9 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        lbl1.Text = My.Env.Lang.CP_10_Taskbar;
-                                        lbl6.Text = My.Env.Lang.CP_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(My.Env.Lang.CP_UWPBackground, My.Env.Lang.OS_Win10);
+                                        lbl1.Text = My.Env.Lang.TM_10_Taskbar;
+                                        lbl6.Text = My.Env.Lang.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(My.Env.Lang.TM_UWPBackground, My.Env.Lang.OS_Win10);
 
                                         pic1.Image = Properties.Resources.Mini_Taskbar;
                                         pic6.Image = Properties.Resources.Native10;
@@ -266,11 +266,11 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_Undefined;
-                                            lbl3.Text = My.Env.Lang.CP_Undefined;
-                                            lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_Undefined;
+                                            lbl3.Text = My.Env.Lang.TM_Undefined;
+                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_Undefined;
@@ -281,11 +281,11 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_Undefined;
-                                            lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
-                                            lbl4.Text = My.Env.Lang.CP_10_TaskbarFocusedApp_StartButtonHover;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_Undefined;
+                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = My.Env.Lang.TM_10_TaskbarFocusedApp_StartButtonHover;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_Undefined;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;
@@ -296,11 +296,11 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = My.Env.Lang.CP_10_ACLinks;
-                                            lbl3.Text = My.Env.Lang.CP_10_TaskbarAppUnderline;
-                                            lbl4.Text = My.Env.Lang.CP_10_StartMenu_AC_TaskbarActiveApp;
-                                            lbl5.Text = My.Env.Lang.CP_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = My.Env.Lang.CP_10_StartContextMenu;
+                                            lbl2.Text = My.Env.Lang.TM_10_ACLinks;
+                                            lbl3.Text = My.Env.Lang.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = My.Env.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl5.Text = My.Env.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = My.Env.Lang.TM_10_StartContextMenu;
 
                                             pic2.Image = Properties.Resources.Mini_ACHover_Links;
                                             pic3.Image = Properties.Resources.Mini_TaskbarApp;

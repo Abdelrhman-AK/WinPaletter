@@ -2029,14 +2029,14 @@ namespace WinPaletter.Theme
                                 OS = My.Env.Lang.OS_WinUndefined;
                             }
 
-                            AddNode(TreeView, string.Format("{0}", string.Format(My.Env.Lang.CP_ApplyFrom, OS)), "info");
+                            AddNode(TreeView, string.Format("{0}", string.Format(My.Env.Lang.TM_ApplyFrom, OS)), "info");
 
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Applying_Started), "info");
+                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_Started), "info");
 
                             if (!My.Env.isElevated)
                             {
-                                AddNode(TreeView, string.Format("{0}}", My.Env.Lang.CP_Admin_Msg0), "admin");
-                                AddNode(TreeView, string.Format("{0}", My.Env.Lang.CP_Admin_Msg1), "admin");
+                                AddNode(TreeView, string.Format("{0}}", My.Env.Lang.TM_Admin_Msg0), "admin");
+                                AddNode(TreeView, string.Format("{0}", My.Env.Lang.TM_Admin_Msg1), "admin");
                             }
 
                         }
@@ -2050,31 +2050,31 @@ namespace WinPaletter.Theme
 
 
 
-                            Execute(() => { using (var def = Theme.Default.Get()) { def.LogonUI10x.NoLockScreen = false; def.LogonUI7.Enabled = false; def.Windows81.NoLockScreen = false; def.LogonUIXP.Enabled = true; if (!My.Env.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP(); def.CommandPrompt.Enabled = true; def.PowerShellx86.Enabled = true; def.PowerShellx64.Enabled = true; def.MetricsFonts.Enabled = true; def.WindowsEffects.Enabled = true; def.AltTab.Enabled = true; def.ScreenSaver.Enabled = true; def.Sounds.Enabled = true; def.AppTheme.Enabled = true; def.Wallpaper.Enabled = false; def.Save(Source.Registry); } }, TreeView, My.Env.Lang.CP_ThemeReset, My.Env.Lang.CP_ThemeReset_Error, My.Env.Lang.CP_Time, sw_all);
+                            Execute(() => { using (var def = Theme.Default.Get()) { def.LogonUI10x.NoLockScreen = false; def.LogonUI7.Enabled = false; def.Windows81.NoLockScreen = false; def.LogonUIXP.Enabled = true; if (!My.Env.WXP) ResetCursorsToAero(); else ResetCursorsToNone_XP(); def.CommandPrompt.Enabled = true; def.PowerShellx86.Enabled = true; def.PowerShellx64.Enabled = true; def.MetricsFonts.Enabled = true; def.WindowsEffects.Enabled = true; def.AltTab.Enabled = true; def.ScreenSaver.Enabled = true; def.Sounds.Enabled = true; def.AppTheme.Enabled = true; def.Wallpaper.Enabled = false; def.Save(Source.Registry); } }, TreeView, My.Env.Lang.TM_ThemeReset, My.Env.Lang.TM_ThemeReset_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         // Theme info
-                        Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.CP_SavingInfo, My.Env.Lang.CP_SavingInfo_Error, My.Env.Lang.CP_Time, sw_all);
+                        Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.TM_SavingInfo, My.Env.Lang.TM_SavingInfo_Error, My.Env.Lang.TM_Time, sw_all);
 
                         // WinPaletter application theme
-                        Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.CP_Applying_AppTheme, My.Env.Lang.CP_Error_AppTheme, My.Env.Lang.CP_Time, sw_all, !AppTheme.Enabled, My.Env.Lang.CP_Skip_AppTheme, true);
+                        Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, My.Env.Lang.TM_Applying_AppTheme, My.Env.Lang.TM_Error_AppTheme, My.Env.Lang.TM_Time, sw_all, !AppTheme.Enabled, My.Env.Lang.TM_Skip_AppTheme, true);
 
                         // Wallpaper
                         // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
-                        this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Wallpaper, My.Env.Lang.CP_Error_Wallpaper, My.Env.Lang.CP_Time, sw_all, !Wallpaper.Enabled, My.Env.Lang.CP_Skip_Wallpaper);
+                        this.Execute(new MethodInvoker(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Wallpaper, My.Env.Lang.TM_Error_Wallpaper, My.Env.Lang.TM_Time, sw_all, !Wallpaper.Enabled, My.Env.Lang.TM_Skip_Wallpaper);
 
                         if (My.Env.W11)
                         {
-                            this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Win11, My.Env.Lang.CP_W11_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Windows11.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win11, My.Env.Lang.TM_W11_Error, My.Env.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_LogonUI11, My.Env.Lang.CP_LogonUI11_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUI11, My.Env.Lang.TM_LogonUI11_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         if (My.Env.W10)
                         {
-                            this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Win10, My.Env.Lang.CP_W10_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Windows10.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win10, My.Env.Lang.TM_W10_Error, My.Env.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_LogonUI10, My.Env.Lang.CP_LogonUI10_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUI10, My.Env.Lang.TM_LogonUI10_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         if (My.Env.W8 | My.Env.W81)
@@ -2083,10 +2083,10 @@ namespace WinPaletter.Theme
                                     {
                                         Windows81.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.CP_Applying_Win81, My.Env.Lang.CP_W81_Error, My.Env.Lang.CP_Time, sw_all);
+                                    }), TreeView, My.Env.Lang.TM_Applying_Win81, My.Env.Lang.TM_W81_Error, My.Env.Lang.TM_Time, sw_all);
 
 
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, My.Env.Lang.CP_Applying_LogonUI8, My.Env.Lang.CP_LogonUI8_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Apply_LogonUI_8(TreeView)), TreeView, My.Env.Lang.TM_Applying_LogonUI8, My.Env.Lang.TM_LogonUI8_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         if (My.Env.W7)
@@ -2095,9 +2095,9 @@ namespace WinPaletter.Theme
                                     {
                                         Windows7.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.CP_Applying_Win7, My.Env.Lang.CP_W7_Error, My.Env.Lang.CP_Time, sw_all);
+                                    }), TreeView, My.Env.Lang.TM_Applying_Win7, My.Env.Lang.TM_W7_Error, My.Env.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, My.Env.Lang.CP_Applying_LogonUI7, My.Env.Lang.CP_LogonUI7_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView, My.Env.Lang.TM_Applying_LogonUI7, My.Env.Lang.TM_LogonUI7_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         if (My.Env.WVista)
@@ -2106,27 +2106,27 @@ namespace WinPaletter.Theme
                                     {
                                         WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
                                         RefreshDWM(this);
-                                    }), TreeView, My.Env.Lang.CP_Applying_WinVista, My.Env.Lang.CP_WVista_Error, My.Env.Lang.CP_Time, sw_all);
+                                    }), TreeView, My.Env.Lang.TM_Applying_WinVista, My.Env.Lang.TM_WVista_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         if (My.Env.WXP)
                         {
-                            this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_WinXP, My.Env.Lang.CP_WXP_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_WinXP, My.Env.Lang.TM_WXP_Error, My.Env.Lang.TM_Time, sw_all);
 
-                            this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_LogonUIXP, My.Env.Lang.CP_LogonUIXP_Error, My.Env.Lang.CP_Time, sw_all);
+                            this.Execute(new MethodInvoker(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_LogonUIXP, My.Env.Lang.TM_LogonUIXP_Error, My.Env.Lang.TM_Time, sw_all);
                         }
 
                         // Win32UI
-                        this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Win32UI, My.Env.Lang.CP_WIN32UI_Error, My.Env.Lang.CP_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Win32UI, My.Env.Lang.TM_WIN32UI_Error, My.Env.Lang.TM_Time, sw_all);
 
                         // WindowsEffects
-                        this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_WinEffects, My.Env.Lang.CP_WinEffects_Error, My.Env.Lang.CP_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_WinEffects, My.Env.Lang.TM_WinEffects_Error, My.Env.Lang.TM_Time, sw_all);
 
                         // Metrics\Fonts
-                        this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Metrics, My.Env.Lang.CP_Error_Metrics, My.Env.Lang.CP_Time_They, sw_all, !MetricsFonts.Enabled, My.Env.Lang.CP_Skip_Metrics);
+                        this.Execute(new MethodInvoker(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Metrics, My.Env.Lang.TM_Error_Metrics, My.Env.Lang.TM_Time_They, sw_all, !MetricsFonts.Enabled, My.Env.Lang.TM_Skip_Metrics);
 
                         // AltTab
-                        this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_AltTab, My.Env.Lang.CP_Error_AltTab, My.Env.Lang.CP_Time, sw_all, !AltTab.Enabled, My.Env.Lang.CP_Skip_AltTab, true);
+                        this.Execute(new MethodInvoker(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_AltTab, My.Env.Lang.TM_Error_AltTab, My.Env.Lang.TM_Time, sw_all, !AltTab.Enabled, My.Env.Lang.TM_Skip_AltTab, true);
 
                         // WallpaperTone
                         this.Execute(new MethodInvoker(() =>
@@ -2154,7 +2154,7 @@ namespace WinPaletter.Theme
                                             WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
                                     }
 
-                                }), TreeView, My.Env.Lang.CP_Applying_WallpaperTone, My.Env.Lang.CP_WallpaperTone_Error, My.Env.Lang.CP_Time, sw_all);
+                                }), TreeView, My.Env.Lang.TM_Applying_WallpaperTone, My.Env.Lang.TM_WallpaperTone_Error, My.Env.Lang.TM_Time, sw_all);
 
                         #region Consoles
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
@@ -2163,11 +2163,11 @@ namespace WinPaletter.Theme
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
                         EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
-                        this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_CMD, My.Env.Lang.CP_CMD_Error, My.Env.Lang.CP_Time, sw_all, !CommandPrompt.Enabled, My.Env.Lang.CP_Skip_CMD);
+                        this.Execute(new MethodInvoker(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_CMD, My.Env.Lang.TM_CMD_Error, My.Env.Lang.TM_Time, sw_all, !CommandPrompt.Enabled, My.Env.Lang.TM_Skip_CMD);
 
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_PS32, My.Env.Lang.CP_PS32_Error, My.Env.Lang.CP_Time, sw_all, !PowerShellx86.Enabled, My.Env.Lang.CP_Skip_PS32);
+                        this.Execute(new MethodInvoker(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_PS32, My.Env.Lang.TM_PS32_Error, My.Env.Lang.TM_Time, sw_all, !PowerShellx86.Enabled, My.Env.Lang.TM_Skip_PS32);
 
-                        this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_PS64, My.Env.Lang.CP_PS64_Error, My.Env.Lang.CP_Time, sw_all, !PowerShellx64.Enabled, My.Env.Lang.CP_Skip_PS64);
+                        this.Execute(new MethodInvoker(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_PS64, My.Env.Lang.TM_PS64_Error, My.Env.Lang.TM_Time, sw_all, !PowerShellx64.Enabled, My.Env.Lang.TM_Skip_PS64);
                         #endregion
 
                         #region Windows Terminal
@@ -2181,24 +2181,24 @@ namespace WinPaletter.Theme
                             {
                                 if (Terminal.Enabled & TerminalPreview.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Check_Terminals), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_Terminals), "info");
                                 }
 
                                 else if (Terminal.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalPreview), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Check_TerminalStable), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_TerminalStable), "info");
                                 }
 
                                 else if (TerminalPreview.Enabled)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalStable), "skip");
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Check_TerminalPreview), "info");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Check_TerminalPreview), "info");
                                 }
 
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_Terminals), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_Terminals), "skip");
 
                                 }
 
@@ -2240,10 +2240,10 @@ namespace WinPaletter.Theme
 
                                     try
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Applying_TerminalStable), "info");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_TerminalStable), "info");
                                         Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                                         if (ReportProgress)
-                                            AddNode(TreeView, string.Format(My.Env.Lang.CP_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -2252,8 +2252,8 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Error_TerminalStable), "error");
-                                            AddException(My.Env.Lang.CP_Error_TerminalStable, ex);
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Error_TerminalStable), "error");
+                                            AddException(My.Env.Lang.TM_Error_TerminalStable, ex);
                                         }
                                         else
                                         {
@@ -2268,11 +2268,11 @@ namespace WinPaletter.Theme
 
                                 else if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalStable_NotInstalled), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable_NotInstalled), "skip");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalStable_DeflectionNotFound), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalStable_DeflectionNotFound), "skip");
 
                                 }
                             }
@@ -2284,10 +2284,10 @@ namespace WinPaletter.Theme
 
                                     try
                                     {
-                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Applying_TerminalPreview), "info");
+                                        AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Applying_TerminalPreview), "info");
                                         TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                         if (ReportProgress)
-                                            AddNode(TreeView, string.Format(My.Env.Lang.CP_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -2296,8 +2296,8 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Error_TerminalPreview), "error");
-                                            AddException(My.Env.Lang.CP_Error_TerminalPreview, ex);
+                                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Error_TerminalPreview), "error");
+                                            AddException(My.Env.Lang.TM_Error_TerminalPreview, ex);
                                         }
                                         else
                                         {
@@ -2311,30 +2311,30 @@ namespace WinPaletter.Theme
 
                                 else if (!My.Env.Settings.WindowsTerminals.Path_Deflection)
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalPreview_NotInstalled), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview_NotInstalled), "skip");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_TerminalPreview_DeflectionNotFound), "skip");
+                                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_TerminalPreview_DeflectionNotFound), "skip");
                                 }
                             }
                         }
 
                         else
                         {
-                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Skip_Terminals_NotSupported), "skip");
+                            AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Skip_Terminals_NotSupported), "skip");
                         }
                         sw.Stop();
                         #endregion
 
                         // ScreenSaver
-                        this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_ScreenSaver, My.Env.Lang.CP_Error_ScreenSaver, My.Env.Lang.CP_Time, sw_all);
+                        this.Execute(new MethodInvoker(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_ScreenSaver, My.Env.Lang.TM_Error_ScreenSaver, My.Env.Lang.TM_Time, sw_all);
 
                         // Sounds
-                        this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.CP_Applying_Sounds, My.Env.Lang.CP_Error_Sounds, My.Env.Lang.CP_Time, sw_all, !Sounds.Enabled, My.Env.Lang.CP_Skip_Sounds);
+                        this.Execute(new MethodInvoker(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView, My.Env.Lang.TM_Applying_Sounds, My.Env.Lang.TM_Error_Sounds, My.Env.Lang.TM_Time, sw_all, !Sounds.Enabled, My.Env.Lang.TM_Skip_Sounds);
 
                         // Cursors
-                        this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", My.Env.Lang.CP_Error_Cursors, My.Env.Lang.CP_Time_Cursors, sw_all);
+                        this.Execute(new MethodInvoker(() => Apply_Cursors(TreeView)), TreeView, "", My.Env.Lang.TM_Error_Cursors, My.Env.Lang.TM_Time_Cursors, sw_all);
 
                         // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                         if (My.Env.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -2346,7 +2346,7 @@ namespace WinPaletter.Theme
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", ""), RegistryValueKind.String);
-                                    }), TreeView, My.Env.Lang.CP_Applying_DesktopAllUsers, My.Env.Lang.CP_Error_SetDesktop, My.Env.Lang.CP_Time);
+                                    }), TreeView, My.Env.Lang.TM_Applying_DesktopAllUsers, My.Env.Lang.TM_Error_SetDesktop, My.Env.Lang.TM_Time);
                         }
 
                         else if (My.Env.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
@@ -2358,7 +2358,7 @@ namespace WinPaletter.Theme
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
                                         EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", "", RegistryValueKind.String);
-                                    }), TreeView, My.Env.Lang.CP_Applying_DesktopAllUsers, My.Env.Lang.CP_Error_SetDesktop, My.Env.Lang.CP_Time);
+                                    }), TreeView, My.Env.Lang.TM_Applying_DesktopAllUsers, My.Env.Lang.TM_Error_SetDesktop, My.Env.Lang.TM_Time);
 
                         }
 
@@ -2380,11 +2380,11 @@ namespace WinPaletter.Theme
                         {
                             if (!_ErrorHappened)
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.CP_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d)), "success");
                             }
                             else
                             {
-                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.CP_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
+                                AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)), "warning");
                             }
                         }
 
@@ -3655,12 +3655,12 @@ namespace WinPaletter.Theme
                 }
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format(My.Env.Lang.CP_RenderingCustomLogonUI_MayNotRespond), "info");
+                    AddNode(TreeView, string.Format(My.Env.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
                     if (ReportProgress)
-                        AddNode(TreeView, string.Format("{3}: " + My.Env.Lang.CP_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
+                        AddNode(TreeView, string.Format("{3}: " + My.Env.Lang.TM_RenderingCustomLogonUI_Progress + " {2} ({0}/{1})", x + 1, bmpList.Count, bmpList[x].Width + "x" + bmpList[x].Height, DateTime.Now.ToLongTimeString()), "info");
 
                     if (LogonElement.Grayscale)
                     {
@@ -3812,10 +3812,10 @@ namespace WinPaletter.Theme
                 }
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format(My.Env.Lang.CP_RenderingCustomLogonUI_MayNotRespond), "info");
+                    AddNode(TreeView, string.Format(My.Env.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
 
                 if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}:  " + My.Env.Lang.CP_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
+                    AddNode(TreeView, string.Format("{0}:  " + My.Env.Lang.TM_RenderingCustomLogonUI, DateTime.Now.ToLongTimeString()), "info");
 
                 if (LogonUI7.Grayscale)
                 {
@@ -3905,7 +3905,7 @@ namespace WinPaletter.Theme
 
             var sw = new Stopwatch();
             if (ReportProgress)
-                AddNode(TreeView, string.Format("{0}: " + My.Env.Lang.CP_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
+                AddNode(TreeView, string.Format("{0}: " + My.Env.Lang.TM_SavingCursorsColors, DateTime.Now.ToLongTimeString()), "info");
 
             sw.Reset();
             sw.Start();
@@ -3929,12 +3929,12 @@ namespace WinPaletter.Theme
             Theme.Structures.Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, ReportProgress_Detailed ? TreeView : null);
 
             if (ReportProgress)
-                AddNode(TreeView, string.Format(My.Env.Lang.CP_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                AddNode(TreeView, string.Format(My.Env.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
             sw.Stop();
 
             if (Cursor_Enabled)
             {
-                this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, My.Env.Lang.CP_RenderingCursors, My.Env.Lang.CP_RenderingCursors_Error, My.Env.Lang.CP_Time);
+                this.Execute(new MethodInvoker(() => ExportCursors(this, TreeView)), TreeView, My.Env.Lang.TM_RenderingCursors, My.Env.Lang.TM_RenderingCursors_Error, My.Env.Lang.TM_Time);
 
                 if (My.Env.Settings.ThemeApplyingBehavior.AutoApplyCursors)
                 {
@@ -3960,10 +3960,10 @@ namespace WinPaletter.Theme
                                 ApplyCursorsToReg(@"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? TreeView : null);
                             }
 
-                        }), TreeView, My.Env.Lang.CP_ApplyingCursors, My.Env.Lang.CP_CursorsApplying_Error, My.Env.Lang.CP_Time);
+                        }), TreeView, My.Env.Lang.TM_ApplyingCursors, My.Env.Lang.TM_CursorsApplying_Error, My.Env.Lang.TM_Time);
                 }
                 else if (ReportProgress)
-                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_Restricted_Cursors), "error");
+                    AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_Restricted_Cursors), "error");
             }
 
             else if (My.Env.Settings.ThemeApplyingBehavior.ResetCursorsToAero)
@@ -4679,7 +4679,7 @@ namespace WinPaletter.Theme
             catch (Exception ex)
             {
 
-                if (MsgBox(My.Env.Lang.CP_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.CP_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.CP_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(My.Env.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     My.MyProject.Forms.BugReport.ThrowError(ex);
 
             }
@@ -4794,7 +4794,7 @@ namespace WinPaletter.Theme
             catch (Exception ex)
             {
 
-                if (MsgBox(My.Env.Lang.CP_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.CP_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.CP_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(My.Env.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, My.Env.Lang.TM_RestoreCursorsErrorPressOK, "", "", "", "", My.Env.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     My.MyProject.Forms.BugReport.ThrowError(ex);
 
             }

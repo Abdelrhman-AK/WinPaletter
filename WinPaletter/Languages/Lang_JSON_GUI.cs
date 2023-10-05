@@ -15,9 +15,8 @@ namespace WinPaletter
     {
 
         #region Variables and events
-        public event ControlSelectionEventHandler ControlSelection;
+        public static event EventHandler ControlSelection;
 
-        public delegate void ControlSelectionEventHandler(object sender, EventArgs e);
         private Control _SelectedItem;
         private List<Form> FormsList = new List<Form>();
 
@@ -712,11 +711,15 @@ namespace WinPaletter
             Label5.Text = My.Env.Lang.Lang_ChooseAForm;
             data.DoubleBuffer();
 
+            ControlSelection += Lang_JSON_GUI_ControlSelection;
+
             Refresh();
         }
 
         private void Lang_JSON_GUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ControlSelection -= Lang_JSON_GUI_ControlSelection;
+
             if (Th is not null && Th.IsAlive)
                 Th.Abort();
             foreach (var f in FormsList)

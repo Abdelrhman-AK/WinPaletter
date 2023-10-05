@@ -79,5 +79,10 @@ namespace WinPaletter
         {
             Process.Start(Properties.Resources.Link_Wiki + "/Theme-log-verbose-level");
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Process.Start(Properties.Resources.Link_Wiki + "/Get-WinPaletter");
+        }
     }
 }

@@ -1041,7 +1041,7 @@ namespace WinPaletter.My
                 }
                 catch (Exception ex)
                 {
-                    if (WPStyle.MsgBox(Env.Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, Env.Lang.MonitorIssue2 + "\r\n" + Env.Lang.CP_RestoreCursorsErrorPressOK) == DialogResult.OK)
+                    if (WPStyle.MsgBox(Env.Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, Env.Lang.MonitorIssue2 + "\r\n" + Env.Lang.TM_RestoreCursorsErrorPressOK) == DialogResult.OK)
                     {
                         MyProject.Forms.BugReport.ThrowError(ex);
                     }

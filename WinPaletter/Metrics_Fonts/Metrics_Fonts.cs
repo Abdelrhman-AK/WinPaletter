@@ -125,7 +125,7 @@ namespace WinPaletter
             }
 
             Button12.Image = My.MyProject.Forms.MainFrm.Button20.Image.Resize(16, 16);
-            AlertBox10.Text = My.Env.Lang.CP_MetricsHighDPIAlert;
+            AlertBox10.Text = My.Env.Lang.TM_MetricsHighDPIAlert;
 
             AlertBox11.Text = My.MyProject.Forms.MainFrm.WXP_Alert2.Text;
             AlertBox11.Visible = My.MyProject.Forms.MainFrm.WXP_Alert2.Visible;

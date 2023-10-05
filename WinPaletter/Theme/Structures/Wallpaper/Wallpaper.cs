@@ -121,7 +121,7 @@ namespace WinPaletter.Theme.Structures
                             {
                                 if (bmp.RawFormat != System.Drawing.Imaging.ImageFormat.Bmp)
                                 {
-                                    if (MsgBox(My.Env.Lang.CP_Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, My.Env.Lang.CP_Wallpaper_NonBMP1) == DialogResult.Yes)
+                                    if (MsgBox(My.Env.Lang.TM_Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, My.Env.Lang.TM_Wallpaper_NonBMP1) == DialogResult.Yes)
                                     {
                                         bmp.Save(ImageFile, System.Drawing.Imaging.ImageFormat.Bmp);
                                     }

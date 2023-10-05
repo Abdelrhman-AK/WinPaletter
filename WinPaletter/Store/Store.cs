@@ -1217,10 +1217,10 @@ namespace WinPaletter
                 Theme.Manager.AddNode(log, My.Env.Lang.NoDefResExplorer, "warning");
 
             if (My.Env.Settings.ThemeLog.Enabled())
-                Theme.Manager.AddNode(log, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.CP_AllDone), "info");
+                Theme.Manager.AddNode(log, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), My.Env.Lang.TM_AllDone), "info");
 
             if (selectedItem.TM.MetricsFonts.Enabled & GetWindowsScreenScalingFactor() > 100d)
-                Theme.Manager.AddNode(log, string.Format("{0}", My.Env.Lang.CP_MetricsHighDPIAlert), "info");
+                Theme.Manager.AddNode(log, string.Format("{0}", My.Env.Lang.TM_MetricsHighDPIAlert), "info");
 
             if (My.Env.Settings.ThemeLog.Enabled())
                 Theme.Manager.AddNode(log, My.Env.Lang.Store_LogoffRecommended, "info");
@@ -1232,12 +1232,12 @@ namespace WinPaletter
 
             if (!(My.Env.Saving_Exceptions.Count == 0))
             {
-                log_lbl.Text = My.Env.Lang.CP_ErrorHappened;
+                log_lbl.Text = My.Env.Lang.TM_ErrorHappened;
                 ShowErrors_btn.Visible = true;
             }
             else if (My.Env.Settings.ThemeLog.CountDown && !(My.Env.Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed))
             {
-                log_lbl.Text = string.Format(My.Env.Lang.CP_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds);
+                log_lbl.Text = string.Format(My.Env.Lang.TM_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds);
                 apply_elapsedSecs = 1;
                 Log_Timer.Enabled = true;
                 Log_Timer.Start();
@@ -1517,7 +1517,7 @@ namespace WinPaletter
         #region Timers
         private void Log_Timer_Tick(object sender, EventArgs e)
         {
-            log_lbl.Text = string.Format(My.Env.Lang.CP_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds - apply_elapsedSecs);
+            log_lbl.Text = string.Format(My.Env.Lang.TM_LogWillClose, My.Env.Settings.ThemeLog.CountDown_Seconds - apply_elapsedSecs);
 
             if (apply_elapsedSecs + 1 <= My.Env.Settings.ThemeLog.CountDown_Seconds)
             {
