@@ -114,5 +114,7 @@ or 3. Chocolatey: `choco install WinPaletter --version 1.0.8` (You must mention 
 
 - [Bitmap effects by ImageProcessor](https://imageprocessor.org/)
 
+- [Patching PE files by Tyrrrz/Ressy](https://github.com/Tyrrrz/Ressy)
+
 - [Retro Themes Presets are By Microsoft (From Windows 3.1, Windows 98 and Windows XP Classic Themes).
 Command Prompt and PowerShell Raster Fonts previews are by Microsoft too.](https://www.microsoft.com)
