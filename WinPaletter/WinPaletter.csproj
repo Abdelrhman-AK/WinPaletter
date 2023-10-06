@@ -87,8 +87,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Animator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Animator.1.0.3\lib\net20\Animator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Cyotek.Windows.Forms.ColorPicker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.1.7.2\lib\net35\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Devcorp.Controls.VisualStyles">
+      <HintPath>..\..\Workspace\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
@@ -96,18 +108,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Animator">
-      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Animator.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Cyotek.Windows.Forms.ColorPicker">
-      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Devcorp.Controls.VisualStyles">
-      <HintPath>..\..\..\VB Working Area - Projects\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>False</Private>
     </Reference>
