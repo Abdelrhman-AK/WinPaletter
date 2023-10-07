@@ -8,6 +8,8 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) [Wiki (Help)](https://github.com/Abdelrhman-AK/WinPaletter/wiki)
 
+# ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/PayPal.png?raw=true) [Support me (PayPal)](https://www.paypal.me/AbdelrhmanAK)
+
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Changelog.png?raw=true) [Changelog](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md)
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/License.png?raw=true) [License: MIT](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
