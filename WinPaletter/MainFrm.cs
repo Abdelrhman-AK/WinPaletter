@@ -87,12 +87,12 @@ namespace WinPaletter
             author_lbl.Text = string.Format("{0} {1}", My.Env.Lang.By, TM.Info.Author);
 
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = TM.AppTheme.Enabled;
-                temp.BackColor = TM.AppTheme.BackColor;
-                temp.AccentColor = TM.AppTheme.AccentColor;
-                temp.CustomTheme = TM.AppTheme.DarkMode;
-                temp.RoundedCorners = TM.AppTheme.RoundCorners;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = TM.AppTheme.Enabled;
+                Appearance.BackColor = TM.AppTheme.BackColor;
+                Appearance.AccentColor = TM.AppTheme.AccentColor;
+                Appearance.CustomTheme = TM.AppTheme.DarkMode;
+                Appearance.RoundedCorners = TM.AppTheme.RoundCorners;
             }
             WPStyle.ApplyStyle(this);
 
@@ -726,13 +726,13 @@ namespace WinPaletter
 
             var old = new WPSettings(WPSettings.Mode.Registry);
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = old.Appearance.CustomColors;
-                temp.BackColor = old.Appearance.BackColor;
-                temp.AccentColor = old.Appearance.AccentColor;
-                temp.CustomTheme = old.Appearance.CustomTheme;
-                temp.RoundedCorners = old.Appearance.RoundedCorners;
-                temp.Save();
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = old.Appearance.CustomColors;
+                Appearance.BackColor = old.Appearance.BackColor;
+                Appearance.AccentColor = old.Appearance.AccentColor;
+                Appearance.CustomTheme = old.Appearance.CustomTheme;
+                Appearance.RoundedCorners = old.Appearance.RoundedCorners;
+                Appearance.Save();
             }
         }
 
@@ -3307,6 +3307,11 @@ namespace WinPaletter
         private void Button40_Click(object sender, EventArgs e)
         {
             My.MyProject.Forms.PaletteGenerateDashboard.ShowDialog();
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            Process.Start(Properties.Resources.Link_PayPal);
         }
 
         private void Button30_Click_1(object sender, EventArgs e)

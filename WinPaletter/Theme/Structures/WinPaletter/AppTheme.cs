@@ -29,12 +29,12 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Settings", "RoundedCorners", RoundCorners);
 
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = Enabled;
-                temp.BackColor = BackColor;
-                temp.AccentColor = AccentColor;
-                temp.CustomTheme = DarkMode;
-                temp.RoundedCorners = RoundCorners;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = Enabled;
+                Appearance.BackColor = BackColor;
+                Appearance.AccentColor = AccentColor;
+                Appearance.CustomTheme = DarkMode;
+                Appearance.RoundedCorners = RoundCorners;
             }
 
             WPStyle.ApplyStyle();

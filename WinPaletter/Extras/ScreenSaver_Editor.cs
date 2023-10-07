@@ -30,11 +30,10 @@ namespace WinPaletter
         public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.ScreenSaver;
-                ScrSvrEnabled.Checked = temp.Enabled;
-                TextBox1.Text = temp.File;
-                Trackbar5.Value = temp.TimeOut;
-                CheckBox1.Checked = temp.IsSecure;
+                ScrSvrEnabled.Checked = TM.ScreenSaver.Enabled;
+                TextBox1.Text = TM.ScreenSaver.File;
+                Trackbar5.Value = TM.ScreenSaver.TimeOut;
+                CheckBox1.Checked = TM.ScreenSaver.IsSecure;
             }
 
         }
@@ -42,11 +41,10 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.ScreenSaver;
-                temp.Enabled = ScrSvrEnabled.Checked;
-                temp.File = TextBox1.Text;
-                temp.TimeOut = Trackbar5.Value;
-                temp.IsSecure = CheckBox1.Checked;
+                TM.ScreenSaver.Enabled = ScrSvrEnabled.Checked;
+                TM.ScreenSaver.File = TextBox1.Text;
+                TM.ScreenSaver.TimeOut = Trackbar5.Value;
+                TM.ScreenSaver.IsSecure = CheckBox1.Checked;
             }
         }
 

@@ -709,6 +709,15 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://paypal.me/AbdelrhmanAK.
+        /// </summary>
+        internal static string Link_PayPal {
+            get {
+                return ResourceManager.GetString("Link_PayPal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/Abdelrhman-AK/WinPaletter/releases.
         /// </summary>
         internal static string Link_Releases {

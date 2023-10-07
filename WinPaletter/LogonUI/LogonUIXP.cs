@@ -42,9 +42,8 @@ namespace WinPaletter
         public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.LogonUIXP;
-                Toggle1.Checked = temp.Enabled;
-                switch (temp.Mode)
+                Toggle1.Checked = TM.LogonUIXP.Enabled;
+                switch (TM.LogonUIXP.Mode)
                 {
                     case Theme.Structures.LogonUIXP.Modes.Default:
                         {
@@ -63,22 +62,23 @@ namespace WinPaletter
                             break;
                         }
                 }
-                color_pick.BackColor = temp.BackColor;
-                CheckBox1.Checked = temp.ShowMoreOptions;
+                color_pick.BackColor = TM.LogonUIXP.BackColor;
+                CheckBox1.Checked = TM.LogonUIXP.ShowMoreOptions;
             }
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.LogonUIXP;
-                temp.Enabled = Toggle1.Checked;
+                TM.LogonUIXP.Enabled = Toggle1.Checked;
+
                 if (RadioImage1.Checked)
-                    temp.Mode = Theme.Structures.LogonUIXP.Modes.Default;
+                    TM.LogonUIXP.Mode = Theme.Structures.LogonUIXP.Modes.Default;
                 else
-                    temp.Mode = Theme.Structures.LogonUIXP.Modes.Win2000;
-                temp.BackColor = color_pick.BackColor;
-                temp.ShowMoreOptions = CheckBox1.Checked;
+                    TM.LogonUIXP.Mode = Theme.Structures.LogonUIXP.Modes.Win2000;
+
+                TM.LogonUIXP.BackColor = color_pick.BackColor;
+                TM.LogonUIXP.ShowMoreOptions = CheckBox1.Checked;
             }
         }
 

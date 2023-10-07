@@ -32,13 +32,13 @@ namespace WinPaletter
             Read(sets);
 
             {
-                ref var temp = ref My.Env.Lang;
-                Label11.Text = temp.Name;
-                Label12.Text = temp.TranslationVersion;
-                Label14.Text = temp.AppVer + " " + My.Env.Lang.AndBelow;
-                Label19.Text = temp.Lang;
-                Label16.Text = temp.LangCode;
-                Label22.Text = !temp.RightToLeft ? My.Env.Lang.Lang_HasLeftToRight : My.Env.Lang.Lang_HasRightToLeft;
+                ref Localizer lang = ref My.Env.Lang;
+                Label11.Text = lang.Name;
+                Label12.Text = lang.TranslationVersion;
+                Label14.Text = lang.AppVer + " " + My.Env.Lang.AndBelow;
+                Label19.Text = lang.Lang;
+                Label16.Text = lang.LangCode;
+                Label22.Text = !lang.RightToLeft ? My.Env.Lang.Lang_HasLeftToRight : My.Env.Lang.Lang_HasRightToLeft;
             }
 
             if (_External)
@@ -211,50 +211,50 @@ namespace WinPaletter
             bool ch_EP = false;
 
             {
-                ref var temp = ref My.Env.Settings;
-                if (temp.Appearance.DarkMode != RadioButton3.Checked)
+                ref WPSettings Settings = ref My.Env.Settings;
+                if (Settings.Appearance.DarkMode != RadioButton3.Checked)
                     ch_appearance = true;
-                if (temp.Appearance.AutoDarkMode != CheckBox6.Checked)
+                if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
                     ch_appearance = true;
-                if (temp.Appearance.ManagedByTheme != CheckBox30.Checked)
+                if (Settings.Appearance.ManagedByTheme != CheckBox30.Checked)
                     ch_appearance = true;
 
-                if (temp.NerdStats.Enabled != CheckBox10.Checked)
+                if (Settings.NerdStats.Enabled != CheckBox10.Checked)
                     ch_nerd = true;
-                if ((int)temp.NerdStats.Type != ComboBox3.SelectedIndex)
+                if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
                     ch_nerd = true;
-                if (temp.NerdStats.ShowHexHash != CheckBox11.Checked)
+                if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
                     ch_nerd = true;
-                if (temp.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
+                if (Settings.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
                     ch_nerd = true;
-                if (temp.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
+                if (Settings.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
                     ch_nerd = true;
-                if (temp.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
+                if (Settings.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
                     ch_nerd = true;
 
-                if (temp.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
+                if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
                     ch_terminal = true;
-                if ((temp.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
                     ch_terminal = true;
-                if ((temp.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
+                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
                     ch_terminal = true;
 
-                if (temp.Language.Enabled != CheckBox8.Checked)
+                if (Settings.Language.Enabled != CheckBox8.Checked)
                     ch_lang = true;
-                if ((temp.Language.File ?? "") != (TextBox3.Text ?? ""))
+                if ((Settings.Language.File ?? "") != (TextBox3.Text ?? ""))
                     ch_lang = true;
 
-                if (temp.ExplorerPatcher.Enabled != CheckBox20.Checked)
+                if (Settings.ExplorerPatcher.Enabled != CheckBox20.Checked)
                     ch_EP = true;
-                if (temp.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
+                if (Settings.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
                     ch_EP = true;
-                if (temp.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
+                if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
                     ch_EP = true;
-                if ((int)temp.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
+                if ((int)Settings.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
                     ch_EP = true;
-                if (temp.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
+                if (Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
                     ch_EP = true;
-                if (temp.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
+                if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     ch_EP = true;
             }
 
@@ -475,170 +475,170 @@ namespace WinPaletter
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            var NewSets = new WPSettings(WPSettings.Mode.Empty);
+            WPSettings NewSets = new WPSettings(WPSettings.Mode.Empty);
 
             Changed = false;
 
             {
-                ref var temp = ref My.Env.Settings;
-                if (temp.FileTypeManagement.AutoAddExt != CheckBox1.Checked)
+                ref WPSettings Settings = ref My.Env.Settings;
+                if (Settings.FileTypeManagement.AutoAddExt != CheckBox1.Checked)
                     Changed = true;
-                if (temp.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
+                if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.AutoRestartExplorer != CheckBox2.Checked)
+                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer != CheckBox2.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.AutoApplyCursors != CheckBox7.Checked)
+                if (Settings.ThemeApplyingBehavior.AutoApplyCursors != CheckBox7.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ResetCursorsToAero != CheckBox16.Checked)
+                if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != CheckBox16.Checked)
                     Changed = true;
-                if (temp.Updates.AutoCheck != CheckBox5.Checked)
+                if (Settings.Updates.AutoCheck != CheckBox5.Checked)
                     Changed = true;
-                if ((int)temp.Updates.Channel != ComboBox2.SelectedIndex)
+                if ((int)Settings.Updates.Channel != ComboBox2.SelectedIndex)
                     Changed = true;
-                if (temp.Miscellaneous.Win7LivePreview != CheckBox9.Checked)
+                if (Settings.Miscellaneous.Win7LivePreview != CheckBox9.Checked)
                     Changed = true;
-                if (temp.Miscellaneous.Classic_Color_Picker != CheckBox32.Checked)
+                if (Settings.Miscellaneous.Classic_Color_Picker != CheckBox32.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ShowSaveConfirmation != CheckBox17.Checked)
+                if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != CheckBox17.Checked)
                     Changed = true;
-                if (temp.FileTypeManagement.CompressThemeFile != CheckBox33.Checked)
-                    Changed = true;
-
-                if (temp.Appearance.DarkMode != RadioButton3.Checked)
-                    Changed = true;
-                if (temp.Appearance.AutoDarkMode != CheckBox6.Checked)
-                    Changed = true;
-                if (temp.Appearance.ManagedByTheme != CheckBox30.Checked)
+                if (Settings.FileTypeManagement.CompressThemeFile != CheckBox33.Checked)
                     Changed = true;
 
-                if (temp.Language.Enabled != CheckBox8.Checked)
+                if (Settings.Appearance.DarkMode != RadioButton3.Checked)
                     Changed = true;
-                if ((temp.Language.File ?? "") != (TextBox3.Text ?? ""))
+                if (Settings.Appearance.AutoDarkMode != CheckBox6.Checked)
                     Changed = true;
-
-                if (temp.NerdStats.Enabled != CheckBox10.Checked)
-                    Changed = true;
-                if ((int)temp.NerdStats.Type != ComboBox3.SelectedIndex)
-                    Changed = true;
-                if (temp.NerdStats.ShowHexHash != CheckBox11.Checked)
-                    Changed = true;
-                if (temp.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
-                    Changed = true;
-                if (temp.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
-                    Changed = true;
-                if (temp.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
-                    Changed = true;
-                if (temp.NerdStats.DragAndDrop != CheckBox35.Checked)
-                    Changed = true;
-                if (temp.NerdStats.DragAndDropColorsGuide != CheckBox37.Checked)
-                    Changed = true;
-                if (temp.NerdStats.DragAndDropRippleEffect != CheckBox38.Checked)
+                if (Settings.Appearance.ManagedByTheme != CheckBox30.Checked)
                     Changed = true;
 
-                if (temp.WindowsTerminals.Bypass != CheckBox12.Checked)
+                if (Settings.Language.Enabled != CheckBox8.Checked)
                     Changed = true;
-                if (temp.WindowsTerminals.ListAllFonts != CheckBox13.Checked)
-                    Changed = true;
-                if (temp.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
-                    Changed = true;
-                if ((temp.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
-                    Changed = true;
-                if ((temp.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.CMD_OverrideUserPreferences != CheckBox15.Checked)
+                if ((Settings.Language.File ?? "") != (TextBox3.Text ?? ""))
                     Changed = true;
 
-                if (temp.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
+                if (Settings.NerdStats.Enabled != CheckBox10.Checked)
                     Changed = true;
-                if (temp.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Basic & !VL1.Checked)
+                if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
                     Changed = true;
-                if (temp.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
+                if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
                     Changed = true;
-                if (temp.ThemeLog.CountDown != CheckBox18.Checked)
+                if (Settings.NerdStats.MoreLabelTransparency != CheckBox3.Checked)
                     Changed = true;
-                if (temp.ThemeLog.CountDown_Seconds != NumericUpDown1.Value)
+                if (Settings.NerdStats.UseWindowsMonospacedFont != CheckBox31.Checked)
                     Changed = true;
-                if (temp.ThemeLog.ShowSkippedItemsOnDetailedVerbose != CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked)
+                if (Settings.NerdStats.DotDefaultChangedIndicator != CheckBox34.Checked)
                     Changed = true;
-
-                if (temp.ExplorerPatcher.Enabled != CheckBox20.Checked)
+                if (Settings.NerdStats.DragAndDrop != CheckBox35.Checked)
                     Changed = true;
-                if (temp.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
+                if (Settings.NerdStats.DragAndDropColorsGuide != CheckBox37.Checked)
                     Changed = true;
-                if (temp.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
-                    Changed = true;
-                if ((int)temp.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
-                    Changed = true;
-                if (temp.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
-                    Changed = true;
-                if (temp.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
+                if (Settings.NerdStats.DragAndDropRippleEffect != CheckBox38.Checked)
                     Changed = true;
 
-                if (temp.ThemeApplyingBehavior.DelayMetrics != CheckBox22.Checked)
+                if (Settings.WindowsTerminals.Bypass != CheckBox12.Checked)
+                    Changed = true;
+                if (Settings.WindowsTerminals.ListAllFonts != CheckBox13.Checked)
+                    Changed = true;
+                if (Settings.WindowsTerminals.Path_Deflection != CheckBox14.Checked)
+                    Changed = true;
+                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? "") != (TextBox1.Text ?? ""))
+                    Changed = true;
+                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? "") != (TextBox2.Text ?? ""))
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != CheckBox15.Checked)
                     Changed = true;
 
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
+                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton6.Checked)
+                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Basic & !VL1.Checked)
                     Changed = true;
-
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton8.Checked)
+                if (Settings.ThemeLog.VerboseLevel == WPSettings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton10.Checked)
+                if (Settings.ThemeLog.CountDown != CheckBox18.Checked)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton9.Checked)
+                if (Settings.ThemeLog.CountDown_Seconds != NumericUpDown1.Value)
                     Changed = true;
-                if (temp.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.UPM_HKU_DEFAULT != CheckBox25.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton11.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton14.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton13.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton16.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton15.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton18.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton17.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton20.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton19.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton22.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton23.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != CheckBox35_SFC.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != CheckBox36.Checked)
-                    Changed = true;
-                if (temp.ThemeApplyingBehavior.PE_ModifyByDefault != RadioButton25.Checked)
+                if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != CheckBox19_ShowSkippedItemsOnDetailedVerbose.Checked)
                     Changed = true;
 
-                if (temp.Store.Online_or_Offline & !RadioImage1.Checked)
+                if (Settings.ExplorerPatcher.Enabled != CheckBox20.Checked)
                     Changed = true;
-                if (!temp.Store.Online_or_Offline & !RadioImage2.Checked)
+                if (Settings.ExplorerPatcher.Enabled_Force != CheckBox21.Checked)
+                    Changed = true;
+                if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
+                    Changed = true;
+                if ((int)Settings.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
+                    Changed = true;
+                if (Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
+                    Changed = true;
+                if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     Changed = true;
 
-                if (temp.Store.Search_ThemeNames != CheckBox28.Checked)
+                if (Settings.ThemeApplyingBehavior.DelayMetrics != CheckBox22.Checked)
                     Changed = true;
-                if (temp.Store.Search_Descriptions != CheckBox26.Checked)
+
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
                     Changed = true;
-                if (temp.Store.Search_AuthorsNames != CheckBox27.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton6.Checked)
                     Changed = true;
-                if (temp.Store.Offline_SubFolders != CheckBox29.Checked)
+
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton8.Checked)
                     Changed = true;
-                if (temp.Store.ShowTips != CheckBox4.Checked)
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton10.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton9.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT != CheckBox25.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton11.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton14.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton13.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton16.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton15.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton18.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton17.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton20.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton19.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton22.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton23.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == WPSettings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != CheckBox35_SFC.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != CheckBox36.Checked)
+                    Changed = true;
+                if (Settings.ThemeApplyingBehavior.PE_ModifyByDefault != RadioButton25.Checked)
+                    Changed = true;
+
+                if (Settings.Store.Online_or_Offline & !RadioImage1.Checked)
+                    Changed = true;
+                if (!Settings.Store.Online_or_Offline & !RadioImage2.Checked)
+                    Changed = true;
+
+                if (Settings.Store.Search_ThemeNames != CheckBox28.Checked)
+                    Changed = true;
+                if (Settings.Store.Search_Descriptions != CheckBox26.Checked)
+                    Changed = true;
+                if (Settings.Store.Search_AuthorsNames != CheckBox27.Checked)
+                    Changed = true;
+                if (Settings.Store.Offline_SubFolders != CheckBox29.Checked)
+                    Changed = true;
+                if (Settings.Store.ShowTips != CheckBox4.Checked)
                     Changed = true;
 
             }

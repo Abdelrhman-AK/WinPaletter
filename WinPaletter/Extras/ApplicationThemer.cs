@@ -45,13 +45,13 @@ namespace WinPaletter
             if (!CloseAndApply) // Restore previous settings
             {
                 {
-                    ref var temp = ref My.Env.Settings.Appearance;
-                    temp.CustomColors = BackupSettings.Appearance.CustomColors;
-                    temp.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                    temp.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                    temp.BackColor = BackupSettings.Appearance.BackColor;
-                    temp.AccentColor = BackupSettings.Appearance.AccentColor;
-                    temp.Save();
+                    ref WPSettings.Structures.Appearance appearance = ref My.Env.Settings.Appearance;
+                    appearance.CustomColors = BackupSettings.Appearance.CustomColors;
+                    appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
+                    appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
+                    appearance.BackColor = BackupSettings.Appearance.BackColor;
+                    appearance.AccentColor = BackupSettings.Appearance.AccentColor;
+                    appearance.Save();
                 }
 
                 WPStyle.FetchDarkMode();
@@ -64,12 +64,12 @@ namespace WinPaletter
         public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.AppTheme;
-                AppThemeEnabled.Checked = temp.Enabled;
-                appearance_dark.Checked = temp.DarkMode;
-                RoundedCorners.Checked = temp.RoundCorners;
-                BackColorPick.BackColor = temp.BackColor;
-                AccentColor.BackColor = temp.AccentColor;
+                ref Theme.Structures.AppTheme AppTheme = ref TM.AppTheme;
+                AppThemeEnabled.Checked = AppTheme.Enabled;
+                appearance_dark.Checked = AppTheme.DarkMode;
+                RoundedCorners.Checked = AppTheme.RoundCorners;
+                BackColorPick.BackColor = AppTheme.BackColor;
+                AccentColor.BackColor = AppTheme.AccentColor;
             }
 
         }
@@ -77,12 +77,12 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.AppTheme;
-                temp.Enabled = AppThemeEnabled.Checked;
-                temp.DarkMode = appearance_dark.Checked;
-                temp.RoundCorners = RoundedCorners.Checked;
-                temp.BackColor = BackColorPick.BackColor;
-                temp.AccentColor = AccentColor.BackColor;
+                ref Theme.Structures.AppTheme AppTheme = ref TM.AppTheme;
+                AppTheme.Enabled = AppThemeEnabled.Checked;
+                AppTheme.DarkMode = appearance_dark.Checked;
+                AppTheme.RoundCorners = RoundedCorners.Checked;
+                AppTheme.BackColor = BackColorPick.BackColor;
+                AppTheme.AccentColor = AccentColor.BackColor;
             }
         }
 
@@ -92,12 +92,12 @@ namespace WinPaletter
                 return;
 
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = true;
-                temp.CustomTheme = appearance_dark.Checked;
-                temp.RoundedCorners = RoundedCorners.Checked;
-                temp.BackColor = BackColorPick.BackColor;
-                temp.AccentColor = AccentColor.BackColor;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = true;
+                Appearance.CustomTheme = appearance_dark.Checked;
+                Appearance.RoundedCorners = RoundedCorners.Checked;
+                Appearance.BackColor = BackColorPick.BackColor;
+                Appearance.AccentColor = AccentColor.BackColor;
             }
 
             WPStyle.ApplyStyle(this);
@@ -181,12 +181,12 @@ namespace WinPaletter
                 return;
 
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = BackupSettings.Appearance.CustomColors;
-                temp.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                temp.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                temp.BackColor = BackupSettings.Appearance.BackColor;
-                temp.AccentColor = BackupSettings.Appearance.AccentColor;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
+                Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
+                Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
+                Appearance.BackColor = BackupSettings.Appearance.BackColor;
+                Appearance.AccentColor = BackupSettings.Appearance.AccentColor;
             }
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
@@ -205,12 +205,12 @@ namespace WinPaletter
         private void BackColorPick_Click(object sender, EventArgs e)
         {
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = BackupSettings.Appearance.CustomColors;
-                temp.CustomTheme = BackupSettings.Appearance.CustomTheme;
-                temp.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
-                temp.BackColor = BackupSettings.Appearance.BackColor;
-                temp.AccentColor = BackupSettings.Appearance.AccentColor;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = BackupSettings.Appearance.CustomColors;
+                Appearance.CustomTheme = BackupSettings.Appearance.CustomTheme;
+                Appearance.RoundedCorners = BackupSettings.Appearance.RoundedCorners;
+                Appearance.BackColor = BackupSettings.Appearance.BackColor;
+                Appearance.AccentColor = BackupSettings.Appearance.AccentColor;
             }
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)

@@ -100,10 +100,9 @@ namespace WinPaletter
         public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.Wallpaper;
-                WallpaperEnabled.Checked = temp.Enabled;
-                RadioButton1.Checked = temp.SlideShow_Folder_or_ImagesList;
-                RadioButton2.Checked = !temp.SlideShow_Folder_or_ImagesList;
+                WallpaperEnabled.Checked = TM.Wallpaper.Enabled;
+                RadioButton1.Checked = TM.Wallpaper.SlideShow_Folder_or_ImagesList;
+                RadioButton2.Checked = !TM.Wallpaper.SlideShow_Folder_or_ImagesList;
 
                 if (WT.Enabled)
                 {
@@ -111,7 +110,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    switch (temp.WallpaperType)
+                    switch (TM.Wallpaper.WallpaperType)
                     {
 
                         case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
@@ -138,8 +137,8 @@ namespace WinPaletter
                     }
                 }
 
-                TextBox1.Text = temp.ImageFile;
-                switch (temp.WallpaperStyle)
+                TextBox1.Text = TM.Wallpaper.ImageFile;
+                switch (TM.Wallpaper.WallpaperStyle)
                 {
                     case Theme.Structures.Wallpaper.WallpaperStyles.Tile:
                         {
@@ -180,11 +179,11 @@ namespace WinPaletter
                 SBar.Value = WT.S;
                 LBar.Value = WT.L;
 
-                TextBox2.Text = temp.Wallpaper_Slideshow_ImagesRootPath;
+                TextBox2.Text = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
                 ListBox1.Items.Clear();
-                ListBox1.Items.AddRange(temp.Wallpaper_Slideshow_Images);
-                Trackbar1.Value = temp.Wallpaper_Slideshow_Interval;
-                CheckBox3.Checked = temp.Wallpaper_Slideshow_Shuffle;
+                ListBox1.Items.AddRange(TM.Wallpaper.Wallpaper_Slideshow_Images);
+                Trackbar1.Value = TM.Wallpaper.Wallpaper_Slideshow_Interval;
+                CheckBox3.Checked = TM.Wallpaper.Wallpaper_Slideshow_Shuffle;
 
                 pnl_preview.BackColor = TM.Win32.Background;
                 color_pick.BackColor = TM.Win32.Background;
@@ -196,68 +195,67 @@ namespace WinPaletter
             Cursor = Cursors.AppStarting;
 
             {
-                ref var temp = ref TM.Wallpaper;
-                temp.Enabled = WallpaperEnabled.Checked;
-                temp.SlideShow_Folder_or_ImagesList = RadioButton1.Checked;
+                TM.Wallpaper.Enabled = WallpaperEnabled.Checked;
+                TM.Wallpaper.SlideShow_Folder_or_ImagesList = RadioButton1.Checked;
 
                 if (source_pic.Checked)
                 {
-                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
+                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
                     WT.Enabled = false;
                 }
 
                 else if (source_color.Checked)
                 {
-                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SolidColor;
+                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SolidColor;
                     WT.Enabled = false;
                 }
 
                 else if (source_slideshow.Checked)
                 {
-                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SlideShow;
+                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.SlideShow;
                     WT.Enabled = false;
                 }
 
                 else if (source_wallpapertone.Checked)
                 {
-                    temp.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
+                    TM.Wallpaper.WallpaperType = Theme.Structures.Wallpaper.WallpaperTypes.Picture;
                     WT.Enabled = true;
 
                 }
 
-                temp.ImageFile = TextBox1.Text;
+                TM.Wallpaper.ImageFile = TextBox1.Text;
 
                 if (style_tile.Checked)
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
                 }
                 else if (style_center.Checked)
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
                 }
                 else if (style_stretch.Checked)
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
                 }
                 else if (style_fill.Checked)
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
                 }
                 else if (style_fit.Checked)
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
                 }
                 else
                 {
-                    temp.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+                    TM.Wallpaper.WallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
                 }
 
-                temp.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
-                temp.Wallpaper_Slideshow_Images = new string[] { };
-                temp.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
+                TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
+                TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
+                TM.Wallpaper.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
 
-                temp.Wallpaper_Slideshow_Interval = Trackbar1.Value;
-                temp.Wallpaper_Slideshow_Shuffle = CheckBox3.Checked;
+                TM.Wallpaper.Wallpaper_Slideshow_Interval = Trackbar1.Value;
+                TM.Wallpaper.Wallpaper_Slideshow_Shuffle = CheckBox3.Checked;
 
             }
 

@@ -1068,8 +1068,8 @@ namespace WinPaletter
                         if (ExplorerPatcher.IsAllowed())
                         {
                             {
-                                ref var temp = ref My.Env.EP;
-                                if (!temp.UseStart10)
+                                ref ExplorerPatcher EP = ref My.Env.EP;
+                                if (!EP.UseStart10)
                                 {
                                     Start_Style = UI.Simulation.WinElement.Styles.Start11;
                                 }
@@ -1078,7 +1078,7 @@ namespace WinPaletter
                                     Start_Style = UI.Simulation.WinElement.Styles.Start10;
                                 }
 
-                                if (!temp.UseTaskbar10)
+                                if (!EP.UseTaskbar10)
                                 {
                                     Taskbar_Style = UI.Simulation.WinElement.Styles.Taskbar11;
                                 }
@@ -1318,9 +1318,9 @@ namespace WinPaletter
                         if (ExplorerPatcher.IsAllowed())
                         {
                             {
-                                ref var temp1 = ref My.Env.EP;
+                                ref ExplorerPatcher EP = ref My.Env.EP;
 
-                                if (!temp1.UseTaskbar10)
+                                if (!EP.UseTaskbar10)
                                 {
                                     Taskbar.BlurPower = 8;
                                     Taskbar.Height = 42;
@@ -1330,11 +1330,11 @@ namespace WinPaletter
                                 {
                                     Taskbar.BlurPower = 8;
                                     Taskbar.Height = 35;
-                                    Taskbar.UseWin11ORB_WithWin10 = !temp1.TaskbarButton10;
+                                    Taskbar.UseWin11ORB_WithWin10 = !EP.TaskbarButton10;
                                     Taskbar.NoisePower = 0f;
                                 }
 
-                                if (!temp1.UseStart10)
+                                if (!EP.UseStart10)
                                 {
                                     Start.BlurPower = 6;
                                     Start.NoisePower = 0.3f;
@@ -1346,7 +1346,7 @@ namespace WinPaletter
                                     Start.BlurPower = 7;
                                     Start.NoisePower = 0.3f;
 
-                                    switch (temp1.StartStyle)
+                                    switch (EP.StartStyle)
                                     {
                                         case ExplorerPatcher.StartStyles.NotRounded:
                                             {

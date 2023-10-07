@@ -206,30 +206,28 @@ namespace WinPaletter.Theme.Structures
                     SystemParametersInfo((int)SPI.Icons.GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.None);
 
                     {
-                        ref var temp = ref NCM;
-                        temp.lfCaptionFont = lfCaptionFont;
-                        temp.lfSMCaptionFont = lfSMCaptionFont;
-                        temp.lfStatusFont = lfStatusFont;
-                        temp.lfMenuFont = lfMenuFont;
-                        temp.lfMessageFont = lfMessageFont;
+                        NCM.lfCaptionFont = lfCaptionFont;
+                        NCM.lfSMCaptionFont = lfSMCaptionFont;
+                        NCM.lfStatusFont = lfStatusFont;
+                        NCM.lfMenuFont = lfMenuFont;
+                        NCM.lfMessageFont = lfMessageFont;
 
-                        temp.iBorderWidth = BorderWidth;
-                        temp.iScrollWidth = ScrollWidth;
-                        temp.iScrollHeight = ScrollHeight;
-                        temp.iCaptionWidth = CaptionWidth;
-                        temp.iCaptionHeight = CaptionHeight;
-                        temp.iSMCaptionWidth = SmCaptionWidth;
-                        temp.iSMCaptionHeight = SmCaptionHeight;
-                        temp.iMenuWidth = MenuWidth;
-                        temp.iMenuHeight = MenuHeight;
-                        temp.iPaddedBorderWidth = PaddedBorderWidth;
+                        NCM.iBorderWidth = BorderWidth;
+                        NCM.iScrollWidth = ScrollWidth;
+                        NCM.iScrollHeight = ScrollHeight;
+                        NCM.iCaptionWidth = CaptionWidth;
+                        NCM.iCaptionHeight = CaptionHeight;
+                        NCM.iSMCaptionWidth = SmCaptionWidth;
+                        NCM.iSMCaptionHeight = SmCaptionHeight;
+                        NCM.iMenuWidth = MenuWidth;
+                        NCM.iMenuHeight = MenuHeight;
+                        NCM.iPaddedBorderWidth = PaddedBorderWidth;
                     }
 
                     {
-                        ref var temp1 = ref ICO;
-                        temp1.iHorzSpacing = IconSpacing;
-                        temp1.iVertSpacing = IconVerticalSpacing;
-                        temp1.lfFont = lfIconFont;
+                        ICO.iHorzSpacing = IconSpacing;
+                        ICO.iVertSpacing = IconVerticalSpacing;
+                        ICO.lfFont = lfIconFont;
                     }
 
                     if (TreeView is not null)

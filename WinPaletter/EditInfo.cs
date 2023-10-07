@@ -44,28 +44,28 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             {
-                ref var temp = ref My.Env.Lang;
+                ref Localizer lang = ref My.Env.Lang;
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
                 {
-                    WPStyle.MsgBox(temp.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(lang.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox2.Text))
                 {
-                    WPStyle.MsgBox(temp.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(lang.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (!TextBox2.Text.Replace(".", "").All(char.IsDigit))
                 {
-                    WPStyle.MsgBox(temp.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(lang.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox4.Text))
                 {
-                    WPStyle.MsgBox(temp.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WPStyle.MsgBox(lang.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }

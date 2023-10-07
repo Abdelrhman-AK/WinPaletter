@@ -1188,12 +1188,12 @@ namespace WinPaletter
             }
 
             {
-                ref var temp = ref My.Env.Settings.Appearance;
-                temp.CustomColors = selectedItem.TM.AppTheme.Enabled;
-                temp.BackColor = selectedItem.TM.AppTheme.BackColor;
-                temp.AccentColor = selectedItem.TM.AppTheme.AccentColor;
-                temp.CustomTheme = selectedItem.TM.AppTheme.DarkMode;
-                temp.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
+                ref WPSettings.Structures.Appearance Appearance = ref My.Env.Settings.Appearance;
+                Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
+                Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
+                Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
+                Appearance.CustomTheme = selectedItem.TM.AppTheme.DarkMode;
+                Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
             }
             WPStyle.ApplyStyle(null, true);
 

@@ -327,20 +327,17 @@ namespace WinPaletter
             var ctrl_theme = My.Env.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default;
             bool CustomR = My.Env.Settings.Appearance.ManagedByTheme && My.Env.Settings.Appearance.CustomColors && My.Env.W11;
 
-            NativeWindow nativeWindow = new();
-            nativeWindow.AssignHandle(Handle);
-
-            DLLFunc.DarkTitlebar(nativeWindow.Handle, My.Env.Style.DarkMode);
+            DLLFunc.DarkTitlebar(Handle, My.Env.Style.DarkMode);
 
             if (My.Env.W11)
             {
                 int argpvAttribute = (int)Dwmapi.FormCornersType.Default;
-                Dwmapi.DwmSetWindowAttribute(nativeWindow.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+                Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
             }
             if (CustomR & !My.Env.Settings.Appearance.RoundedCorners)
             {
                 int argpvAttribute1 = (int)Dwmapi.FormCornersType.Rectangular;
-                Dwmapi.DwmSetWindowAttribute(nativeWindow.Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                Dwmapi.DwmSetWindowAttribute(Handle, Dwmapi.DWMATTRIB.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
             }
         }
 

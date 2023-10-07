@@ -442,10 +442,9 @@ namespace WinPaletter.UI.WP
             Circle = new Rectangle((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
 
             {
-                ref var temp = ref Thumb;
                 using (var br = new SolidBrush(C))
                 {
-                    G.FillRoundedRect(br, new Rectangle(temp.X + 1, middleRect.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), middleRect.Height));
+                    G.FillRoundedRect(br, new Rectangle(Thumb.X + 1, middleRect.Y, (int)Math.Round(Circle.Left + Circle.Width / 2d), middleRect.Height));
                 }
             }
 

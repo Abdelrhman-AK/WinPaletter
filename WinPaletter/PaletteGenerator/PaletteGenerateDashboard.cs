@@ -48,13 +48,12 @@ namespace WinPaletter
                         if (aeroEnabled)
                         {
                             Dwmapi.DwmSetWindowAttribute(Handle, WPStyle.GetRoundedCorners() ? 2 : 1, ref val, 4);
-                            var bla = new Dwmapi.MARGINS();
+                            Dwmapi.MARGINS bla = new();
                             {
-                                ref var temp = ref bla;
-                                temp.bottomHeight = 1;
-                                temp.leftWidth = 1;
-                                temp.rightWidth = 1;
-                                temp.topHeight = 1;
+                                bla.bottomHeight = 1;
+                                bla.leftWidth = 1;
+                                bla.rightWidth = 1;
+                                bla.topHeight = 1;
                             }
                             Dwmapi.DwmExtendFrameIntoClientArea(Handle, ref bla);
                         }

@@ -46,6 +46,7 @@ namespace WinPaletter
             this.SaveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.OpenFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.button41 = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.Select_WXP = new WinPaletter.UI.WP.RadioImage();
@@ -625,6 +626,24 @@ namespace WinPaletter
             // 
             this.OpenFileDialog2.DefaultExt = "wpt";
             this.OpenFileDialog2.Filter = "Visual Styles File (*.msstyles)|*.msstyles|Theme File (*.theme)|*.theme";
+            // 
+            // button41
+            // 
+            this.button41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(35)))));
+            this.button41.DrawOnGlass = false;
+            this.button41.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button41.ForeColor = System.Drawing.Color.White;
+            this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
+            this.button41.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(52)))), ((int)(((byte)(84)))));
+            this.button41.Location = new System.Drawing.Point(954, 490);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(130, 38);
+            this.button41.TabIndex = 35;
+            this.button41.Text = "Support me";
+            this.button41.UseVisualStyleBackColor = false;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
             // Button28
             // 
@@ -6439,6 +6458,7 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(1094, 701);
+            this.Controls.Add(this.button41);
             this.Controls.Add(this.Button28);
             this.Controls.Add(this.previewContainer);
             this.Controls.Add(this.TablessControl1);
@@ -7008,5 +7028,6 @@ namespace WinPaletter
         internal UI.WP.Button Button39;
         internal OpenFileDialog OpenFileDialog1;
         internal UI.WP.Button Button40;
+        internal UI.WP.Button button41;
     }
 }

@@ -190,23 +190,21 @@ namespace WinPaletter
         public void ApplyFromTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.AltTab;
-                AltTabEnabled.Checked = temp.Enabled;
-                RadioImage1.Checked = temp.Style == Theme.Structures.AltTab.Styles.Default | temp.Style == Theme.Structures.AltTab.Styles.EP_Win10;
-                RadioImage2.Checked = temp.Style == Theme.Structures.AltTab.Styles.ClassicNT;
-                Trackbar1.Value = temp.Win10Opacity;
+                AltTabEnabled.Checked = TM.AltTab.Enabled;
+                RadioImage1.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.Default | TM.AltTab.Style == Theme.Structures.AltTab.Styles.EP_Win10;
+                RadioImage2.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.ClassicNT;
+                Trackbar1.Value = TM.AltTab.Win10Opacity;
             }
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
             {
-                ref var temp = ref TM.AltTab;
-                temp.Enabled = AltTabEnabled.Checked;
-                temp.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
+                TM.AltTab.Enabled = AltTabEnabled.Checked;
+                TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
                 if (ExplorerPatcher.IsAllowed() & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
-                    temp.Style = Theme.Structures.AltTab.Styles.EP_Win10;
-                temp.Win10Opacity = Trackbar1.Value;
+                    TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
+                TM.AltTab.Win10Opacity = Trackbar1.Value;
             }
         }
 
