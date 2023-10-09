@@ -403,7 +403,7 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             var R1 = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-            string WallpaperPath = R1.GetValue("Wallpaper").ToString();
+            string WallpaperPath = R1.GetValue("Wallpaper", null).ToString();
             if (R1 is not null)
                 R1.Close();
 

@@ -9,11 +9,9 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
-using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Management;
-using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
@@ -25,7 +23,7 @@ namespace WinPaletter.My
 {
     static class Env
     {
-        public readonly static string PATH_appData = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+        public readonly static string PATH_appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
         public readonly static string PATH_Windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows");
         public readonly static string PATH_explorer = PATH_Windows + @"\explorer.exe";
         public readonly static string PATH_ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
@@ -257,7 +255,7 @@ namespace WinPaletter.My
         }
         #endregion
 
-        #region    Variables
+        #region Variables
         private ManagementEventWatcher WallMon_Watcher1, WallMon_Watcher2, WallMon_Watcher3, WallMon_Watcher4;
         private readonly MethodInvoker UpdateDarkModeInvoker = new(() =>
         {
@@ -280,16 +278,6 @@ namespace WinPaletter.My
             MyProject.Forms.Metrics_Fonts.Classic_Preview4.BackgroundImage = wall;
             MyProject.Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
             MyProject.Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
-            //MyProject.Forms.MainFrm.pnl_preview.Refresh();
-            //MyProject.Forms.Metrics_Fonts.pnl_preview1.Refresh();
-            //MyProject.Forms.Metrics_Fonts.pnl_preview2.Refresh();
-            //MyProject.Forms.Metrics_Fonts.pnl_preview3.Refresh();
-            //MyProject.Forms.Metrics_Fonts.pnl_preview4.Refresh();
-            //MyProject.Forms.Metrics_Fonts.Classic_Preview1.Refresh();
-            //MyProject.Forms.Metrics_Fonts.Classic_Preview3.Refresh();
-            //MyProject.Forms.Metrics_Fonts.Classic_Preview4.Refresh();
-            //MyProject.Forms.AltTabEditor.pnl_preview1.Refresh();
-            //MyProject.Forms.AltTabEditor.Classic_Preview1.Refresh();
             return null;
         }
 
@@ -341,7 +329,7 @@ namespace WinPaletter.My
         }
         #endregion
 
-        #region    File Association And Uninstall
+        #region File Association And Uninstall
 
         /// <summary>
         /// Associate WinPaletter Files Types in Registry
@@ -355,44 +343,28 @@ namespace WinPaletter.My
 
             if (extension.Substring(0, 1) != ".")
                 extension = "." + extension;
+
             if (exeProgram.Contains("\""))
                 exeProgram = exeProgram.Replace("\"", "");
+
             exeProgram = string.Format("\"{0}\"", exeProgram);
 
-            RegistryKey mainKey, descriptionKey;
-            mainKey = Registry.CurrentUser.OpenSubKey(@"Software\Classes", true);
-            descriptionKey = Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("WinPaletter", true);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", "", className, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", "", description, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open", "Icon", exeProgram.Replace("\"", "") + ", 0", RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\Shell\\Open\\Command", "", exeProgram + " \"%1\"", RegistryValueKind.String);
 
-            try
+            if ((className.ToLower() ?? "") == ("WinPaletter.ThemeFile".ToLower() ?? ""))
             {
-                mainKey.CreateSubKey(extension, true).SetValue("", className);
-                mainKey.CreateSubKey(className, true).SetValue("", description);
-                mainKey.CreateSubKey(className + @"\Shell\Open", true).SetValue("Icon", exeProgram.Replace("\"", "") + ", 0");
-                mainKey.CreateSubKey(className + @"\Shell\Open\Command", true).SetValue("", exeProgram + " \"%1\"");
-
-                if ((className.ToLower() ?? "") == ("WinPaletter.ThemeFile".ToLower() ?? ""))
-                {
-                    mainKey.CreateSubKey(className + @"\Shell\Edit In WinPaletter\Command", true).SetValue("", exeProgram + "  /edit:\"%1\"");
-                    mainKey.CreateSubKey(className + @"\Shell\Apply by WinPaletter\Command", true).SetValue("", exeProgram + "  /apply:\"%1\"");
-                }
-
-                mainKey.CreateSubKey(className + @"\DefaultIcon", true).SetValue("", iconPath);
-
-                descriptionKey.SetValue("DisplayName", MyProject.Application.Info.ProductName);
-                descriptionKey.SetValue("Publisher", MyProject.Application.Info.CompanyName);
-                descriptionKey.SetValue("Version", MyProject.Application.Info.Version.ToString());
+                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Edit In WinPaletter\\Command", "", exeProgram + "  /edit:\"%1\"", RegistryValueKind.String);
+                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Apply by WinPaletter\\Command", "", exeProgram + "  /apply:\"%1\"", RegistryValueKind.String);
             }
 
-            catch (Exception e)
-            {
-            }
-            finally
-            {
-                if (mainKey is not null)
-                    mainKey.Close();
-                if (descriptionKey is not null)
-                    descriptionKey.Close();
-            }
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\DefaultIcon", "", iconPath, RegistryValueKind.String);
+
+            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName", MyProject.Application.Info.ProductName, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", MyProject.Application.Info.CompanyName, RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Version", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
 
             // Notify Windows that file associations have changed
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.SHCNF_IDLIST, 0, 0);
@@ -440,33 +412,29 @@ namespace WinPaletter.My
         public void CreateUninstaller()
         {
             string guidText = MyProject.Application.Info.ProductName;
-            string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\" + guidText;
+            string RegPath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\" + guidText;
             string exe = Assembly.GetExecutingAssembly().Location;
 
-            if (!Directory.Exists(Env.PATH_appData))
-                Directory.CreateDirectory(Env.PATH_appData);
-            File.WriteAllBytes(Env.PATH_appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
-
-            if (Registry.CurrentUser.OpenSubKey(RegPath, true) is null)
-                Registry.CurrentUser.CreateSubKey(RegPath, true);
+            if (!System.IO.Directory.Exists(Env.PATH_appData))
+                System.IO.Directory.CreateDirectory(Env.PATH_appData);
+            System.IO.File.WriteAllBytes(Env.PATH_appData + @"\uninstall.ico", Properties.Resources.Icon_Uninstall.ToByteArray());
 
             {
-                var temp = Registry.CurrentUser.OpenSubKey(RegPath, true);
-                temp.SetValue("DisplayName", "WinPaletter", RegistryValueKind.String);
-                temp.SetValue("ApplicationVersion", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
-                temp.SetValue("DisplayVersion", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
-                temp.SetValue("Publisher", MyProject.Application.Info.CompanyName, RegistryValueKind.String);
-                temp.SetValue("DisplayIcon", Env.PATH_appData + @"\uninstall.ico", RegistryValueKind.String);
-                temp.SetValue("URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
-                temp.SetValue("Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
-                temp.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
-                temp.SetValue("Comments", "This will help you delete WinPaletter and clean up its used data", RegistryValueKind.String);
-                temp.SetValue("UninstallString", exe + " /uninstall", RegistryValueKind.String);
-                temp.SetValue("QuietUninstallString", exe + " /uninstall-quiet", RegistryValueKind.String);
-                temp.SetValue("InstallLocation", MyProject.Application.Info.DirectoryPath, RegistryValueKind.String);
-                temp.SetValue("NoModify", 1, RegistryValueKind.DWord);
-                temp.SetValue("NoRepair", 1, RegistryValueKind.DWord);
-                temp.SetValue("EstimatedSize", new FileInfo(exe).Length / 1024d, RegistryValueKind.DWord);
+                EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
+                EditReg(RegPath, "ApplicationVersion", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
+                EditReg(RegPath, "DisplayVersion", MyProject.Application.Info.Version.ToString(), RegistryValueKind.String);
+                EditReg(RegPath, "Publisher", MyProject.Application.Info.CompanyName, RegistryValueKind.String);
+                EditReg(RegPath, "DisplayIcon", Env.PATH_appData + @"\uninstall.ico", RegistryValueKind.String);
+                EditReg(RegPath, "URLInfoAbout", Properties.Resources.Link_Repository, RegistryValueKind.String);
+                EditReg(RegPath, "Contact", Properties.Resources.Link_Repository, RegistryValueKind.String);
+                EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
+                EditReg(RegPath, "Comments", My.Env.Lang.Uninstall_Comment, RegistryValueKind.String);
+                EditReg(RegPath, "UninstallString", exe + " /uninstall", RegistryValueKind.String);
+                EditReg(RegPath, "QuietUninstallString", exe + " /uninstall", RegistryValueKind.String);
+                EditReg(RegPath, "InstallLocation", MyProject.Application.Info.DirectoryPath, RegistryValueKind.String);
+                EditReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
+                EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
+                EditReg(RegPath, "EstimatedSize", new System.IO.FileInfo(exe).Length / 1024d, RegistryValueKind.DWord);
             }
         }
         public void Uninstall_Quiet()
@@ -479,18 +447,18 @@ namespace WinPaletter.My
 
             try
             {
-                if (!Env.WXP && File.Exists(Env.PATH_appData + @"\WindowsStartup_Backup.wav"))
+                if (!Env.WXP && System.IO.File.Exists(Env.PATH_appData + @"\WindowsStartup_Backup.wav"))
                 {
-                    PE.ReplaceResource(Env.PATH_imageres, "WAV", Env.WVista ? 5051 : 5080, File.ReadAllBytes(Env.PATH_appData + @"\WindowsStartup_Backup.wav"));
+                    PE.ReplaceResource(Env.PATH_imageres, "WAV", Env.WVista ? 5051 : 5080, System.IO.File.ReadAllBytes(Env.PATH_appData + @"\WindowsStartup_Backup.wav"));
                 }
             }
             catch
             {
             }
 
-            if (Directory.Exists(Env.PATH_appData))
+            if (System.IO.Directory.Exists(Env.PATH_appData))
             {
-                Directory.Delete(Env.PATH_appData, true);
+                System.IO.Directory.Delete(Env.PATH_appData, true);
                 if (!Env.WXP)
                 {
                     Theme.Manager.ResetCursorsToAero();
@@ -518,7 +486,7 @@ namespace WinPaletter.My
         }
         #endregion
 
-        #region    Wallpaper and User Preferences System
+        #region Wallpaper and User Preferences System
         private void FetchStockWallpaper()
         {
             using (var wall_New = new Bitmap((Bitmap)GetWallpaper().Clone()))
@@ -599,7 +567,7 @@ namespace WinPaletter.My
 
                     else if (TM.Wallpaper.WallpaperType == Theme.Structures.Wallpaper.WallpaperTypes.Picture)
                     {
-                        if (File.Exists(TM.Wallpaper.ImageFile))
+                        if (System.IO.File.Exists(TM.Wallpaper.ImageFile))
                         {
                             Wall = Bitmap_Mgr.Load(TM.Wallpaper.ImageFile);
                         }
@@ -620,10 +588,10 @@ namespace WinPaletter.My
 
                         if (TM.Wallpaper.SlideShow_Folder_or_ImagesList)
                         {
-                            string[] ls = Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")).ToArray();
+                            string[] ls = System.IO.Directory.EnumerateFiles(TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath, "*.*", System.IO.SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")).ToArray();
 
 
-                            if (ls.Count() > 0 && File.Exists(ls[0]))
+                            if (ls.Count() > 0 && System.IO.File.Exists(ls[0]))
                             {
                                 Wall = Bitmap_Mgr.Load(ls[0]);
                             }
@@ -635,7 +603,7 @@ namespace WinPaletter.My
                             }
                         }
 
-                        else if (TM.Wallpaper.Wallpaper_Slideshow_Images.Count() > 0 && File.Exists(TM.Wallpaper.Wallpaper_Slideshow_Images[0]))
+                        else if (TM.Wallpaper.Wallpaper_Slideshow_Images.Count() > 0 && System.IO.File.Exists(TM.Wallpaper.Wallpaper_Slideshow_Images[0]))
                         {
                             Wall = Bitmap_Mgr.Load(TM.Wallpaper.Wallpaper_Slideshow_Images[0]);
                         }
@@ -706,7 +674,7 @@ namespace WinPaletter.My
             string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString();
             int WallpaperType = Conversions.ToInteger(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
 
-            if (File.Exists(WallpaperPath) && WallpaperType != 1)
+            if (System.IO.File.Exists(WallpaperPath) && WallpaperType != 1)
             {
                 return new Bitmap(Bitmap_Mgr.Load(WallpaperPath).GetThumbnailImage(MyProject.Computer.Screen.Bounds.Width, MyProject.Computer.Screen.Bounds.Height, null, IntPtr.Zero));
             }
@@ -723,7 +691,7 @@ namespace WinPaletter.My
             {
                 S.Reset();
                 S.Start();
-                while (!File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString()))
+                while (!System.IO.File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", "").ToString()))
                 {
                     if (S.ElapsedMilliseconds > 5000L)
                         break;
@@ -805,357 +773,40 @@ namespace WinPaletter.My
         {
             Wallpaper_Changed();
         }
-
         public void Wallpaper_Changed()
         {
             Invoke(UpdateWallpaperInvoker);
         }
         #endregion
 
-        #region    Application Startup and Shutdown Subs
-        private void MyApplication_Shutdown(object sender, EventArgs e)
-        {
-            if (!Env.WXP)
-            {
-                try
-                {
-                    WallMon_Watcher1.Stop();
-                    WallMon_Watcher2.Stop();
-
-                    if (!Env.W7 & !Env.W81 & !Env.WVista)
-                    {
-                        WallMon_Watcher3.Stop();
-                        WallMon_Watcher4.Stop();
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            try
-            {
-                if (File.Exists("oldWinpaletter.trash"))
-                    FileSystem.Kill("oldWinpaletter.trash");
-                if (File.Exists("oldWinpaletter_2.trash"))
-                    FileSystem.Kill("oldWinpaletter_2.trash");
-            }
-            catch
-            {
-            }
-
-            AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
-            AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
-            Application.ThreadException -= ThreadExceptionHandler;
-
-            try
-            {
-                WallMon_Watcher1.EventArrived -= Wallpaper_Changed_EventHandler;
-                WallMon_Watcher2.EventArrived -= Wallpaper_Changed_EventHandler;
-                WallMon_Watcher3.EventArrived -= WallpaperType_Changed;
-                WallMon_Watcher4.EventArrived -= DarkMode_Changed_EventHandler;
-            }
-            catch
-            {
-            }
-
-            SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
-        }
-
+        #region Application Startup and Shutdown Subs
         private void MyApplication_Startup(object sender, StartupEventArgs e)
         {
+            ExternalLink = false;
+            ExternalLink_File = "";
 
-            try
-            {
-                if (File.Exists("oldWinpaletter.trash"))
-                    FileSystem.Kill("oldWinpaletter.trash");
-                if (File.Exists("oldWinpaletter_2.trash"))
-                    FileSystem.Kill("oldWinpaletter_2.trash");
-            }
-            catch
-            {
-            }
+            DeleteUpdateResiduals();
 
             Env.Animator = new AnimatorNS.Animator() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
 
-            try
-            {
-                MemoryFonts.AddMemoryFont(Properties.Resources.JetBrainsMono_Medium);
-                ConsoleFont = MemoryFonts.GetFont(0, 7.75f);
-                ConsoleFontMedium = MemoryFonts.GetFont(0, 9f);
-                ConsoleFontLarge = MemoryFonts.GetFont(0, 10f);
-            }
-            catch
-            {
-                ConsoleFont = new Font("Lucida Console", 7.5f);
-                ConsoleFontMedium = new Font("Lucida Console", 9f);
-                ConsoleFontLarge = new Font("Lucida Console", 10f);
-            }
-
-            if (Environment.GetCommandLineArgs().Count() > 1)
-            {
-                ArgsList.Clear();
-                for (int x = 1, loopTo = Environment.GetCommandLineArgs().Count() - 1; x <= loopTo; x++)
-                    ArgsList.Add(Environment.GetCommandLineArgs()[x]);
-            }
+            GetMemoryFonts();
 
             WPStyle.FetchDarkMode();
             WPStyle.ApplyStyle();
 
-            foreach (string arg in ArgsList)
-            {
-                if (arg.ToLower() == "/exportlanguage")
-                {
-                    Env.Lang.ExportJSON(string.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year));
-                    WPStyle.MsgBox(Env.Lang.LngExported, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    using (var Prc = Process.GetCurrentProcess())
-                    {
-                        Prc.Kill();
-                    }
-                    break;
-                }
+            LoadLanguage();
 
-                else if (arg.ToLower() == "/uninstall")
-                {
-                    MyProject.Forms.Uninstall.ShowDialog();
-                    using (var Prc = Process.GetCurrentProcess())
-                    {
-                        Prc.Kill();
-                    }
-                    break;
-                }
+            CheckIfLicenseChecked();
 
-                else if (arg.ToLower() == "/uninstall-quiet")
-                {
-                    Uninstall_Quiet();
-                    break;
-                }
+            ExecuteArgs();
 
-                else if (arg.StartsWith("/convert:", Env._ignore))
-                {
-                    CMD_Convert(arg, true);
-                }
+            StartWallpaperMonitor();
 
-                else if (arg.StartsWith("/convert-list:", Env._ignore))
-                {
-                    CMD_Convert_List(arg, true);
-
-                }
-            }
-
-            if (Env.Settings.Language.Enabled)
-            {
-                try
-                {
-                    Env.Lang.LoadLanguageFromJSON(Env.Settings.Language.File);
-                }
-                catch (Exception ex)
-                {
-                    MyProject.Forms.BugReport.ThrowError(ex);
-                }
-            }
-
-            if (!Env.Settings.General.LicenseAccepted)
-            {
-                if (MyProject.Forms.LicenseForm.ShowDialog() != DialogResult.OK)
-                {
-                    using (var Prc = Process.GetCurrentProcess())
-                    {
-                        Prc.Kill();
-                    }
-                }
-            }
-
-            ExternalLink = false;
-            ExternalLink_File = "";
-
-            foreach (string arg in ArgsList)
-            {
-                if (!arg.StartsWith("/apply:", Env._ignore) & !arg.StartsWith("/edit:", Env._ignore) & !arg.StartsWith("/convert:", Env._ignore) & !arg.StartsWith("/convert-list:", Env._ignore))
-                {
-
-                    if (Path.GetExtension(arg).ToLower() == ".wpth")
-                    {
-                        if (Env.Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
-                        {
-                            ExternalLink = true;
-                            ExternalLink_File = arg;
-                        }
-                        else
-                        {
-                            var TMx = new Theme.Manager(Theme.Manager.Source.File, arg);
-                            TMx.Save(Theme.Manager.Source.Registry, arg);
-                            if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                                RestartExplorer();
-                            using (var Prc = Process.GetCurrentProcess())
-                            {
-                                Prc.Kill();
-                            }
-                        }
-                    }
-
-                    if (Path.GetExtension(arg).ToLower() == ".wpsf")
-                    {
-                        MyProject.Forms.SettingsX._External = true;
-                        MyProject.Forms.SettingsX._File = arg;
-                        MyProject.Forms.SettingsX.ShowDialog();
-                        using (var Prc = Process.GetCurrentProcess())
-                        {
-                            Prc.Kill();
-                        }
-                    }
-                }
-
-                else if (arg.StartsWith("/apply:", Env._ignore))
-                {
-                    string File = arg.Remove(0, "/apply:".Count());
-                    File = File.Replace("\"", "");
-                    if (System.IO.File.Exists(File))
-                    {
-                        var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
-                        TMx.Save(Theme.Manager.Source.Registry);
-                        if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
-                            RestartExplorer();
-                        using (var Prc = Process.GetCurrentProcess())
-                        {
-                            Prc.Kill();
-                        }
-                    }
-                }
-
-                else if (arg.StartsWith("/edit:", Env._ignore))
-                {
-                    string File = arg.Remove(0, "/edit:".Count());
-                    File = File.Replace("\"", "");
-                    ExternalLink = true;
-                    ExternalLink_File = File;
-
-                }
-            }
-
-            if (!Env.WXP)
-            {
-                try
-                {
-                    Monitor();
-                }
-                catch (Exception ex)
-                {
-                    if (WPStyle.MsgBox(Env.Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, Env.Lang.MonitorIssue2 + "\r\n" + Env.Lang.TM_RestoreCursorsErrorPressOK) == DialogResult.OK)
-                    {
-                        MyProject.Forms.BugReport.ThrowError(ex);
-                    }
-                }
-            }
-            else
-            {
-                SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
-            }
-
-            try
-            {
-                if (Env.Settings.FileTypeManagement.AutoAddExt)
-                {
-                    if (!Directory.Exists(Env.PATH_appData))
-                        Directory.CreateDirectory(Env.PATH_appData);
-
-                    File.WriteAllBytes(Env.PATH_appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
-                    File.WriteAllBytes(Env.PATH_appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
-                    File.WriteAllBytes(Env.PATH_appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
-
-                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", "WinPaletter Theme File", Env.PATH_appData + @"\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", "WinPaletter Settings File", Env.PATH_appData + @"\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", "WinPaletter Theme Resources Pack", Env.PATH_appData + @"\themerespack.ico", Assembly.GetExecutingAssembly().Location);
-
-                }
-            }
-            catch
-            {
-            }
-
-            Env.Notifications_IL.Images.Add("info", Properties.Resources.notify_info);
-            Env.Notifications_IL.Images.Add("apply", Properties.Resources.notify_applying);
-            Env.Notifications_IL.Images.Add("error", Properties.Resources.notify_error);
-            Env.Notifications_IL.Images.Add("warning", Properties.Resources.notify_warning);
-            Env.Notifications_IL.Images.Add("time", Properties.Resources.notify_time);
-            Env.Notifications_IL.Images.Add("success", Properties.Resources.notify_success);
-            Env.Notifications_IL.Images.Add("skip", Properties.Resources.notify_skip);
-            Env.Notifications_IL.Images.Add("admin", Properties.Resources.notify_administrator);
-
-            Env.Notifications_IL.Images.Add("reg_add", Properties.Resources.notify_reg_add);
-            Env.Notifications_IL.Images.Add("reg_delete", Properties.Resources.notify_reg_delete);
-            Env.Notifications_IL.Images.Add("reg_skip", Properties.Resources.notify_reg_skip);
-            Env.Notifications_IL.Images.Add("task_add", Properties.Resources.notify_task_add);
-            Env.Notifications_IL.Images.Add("task_remove", Properties.Resources.notify_task_remove);
-            Env.Notifications_IL.Images.Add("file_rename", Properties.Resources.notify_file_rename);
-            Env.Notifications_IL.Images.Add("dll", Properties.Resources.notify_dll);
-            Env.Notifications_IL.Images.Add("pe_patch", Properties.Resources.notify_pe_patch);
-            Env.Notifications_IL.Images.Add("pe_backup", Properties.Resources.notify_pe_backup);
-            Env.Notifications_IL.Images.Add("pe_restore", Properties.Resources.notify_pe_restore);
-
-
-            Env.Lang_IL.Images.Add("main", Properties.Resources.LangNode_Main);
-            Env.Lang_IL.Images.Add("value", Properties.Resources.LangNode_Value);
-            Env.Lang_IL.Images.Add("json", Properties.Resources.LangNode_JSON);
-
-            Env.Saving_Exceptions.Clear();
-            Env.Loading_Exceptions.Clear();
-
-            if (Env.W7 | Env.WVista | Env.WXP)
-            {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            }
-
-            // Detects if WinPaletter started with Classic Theme
-            var vsFile = new System.Text.StringBuilder(260);
-            var colorName = new System.Text.StringBuilder(260);
-            var sizeName = new System.Text.StringBuilder(260);
-            NativeMethods.UxTheme.GetCurrentThemeName(vsFile, 260, colorName, 260, sizeName, 260);
-            Env.StartedWithClassicTheme = string.IsNullOrEmpty(vsFile.ToString());
-
-            try
-            {
-                if (!Directory.Exists(Env.PATH_appData + @"\VisualStyles\Luna"))
-                    Directory.CreateDirectory(Env.PATH_appData + @"\VisualStyles\Luna");
-                File.WriteAllBytes(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", Properties.Resources.luna);
-                using (var s = new FileStream(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", FileMode.Open, FileAccess.Read))
-                {
-                    using (var z = new ZipArchive(s, ZipArchiveMode.Read))
-                    {
-                        foreach (ZipArchiveEntry entry in z.Entries)
-                        {
-                            if (entry.FullName.Contains(@"\"))
-                            {
-                                string dest = Path.Combine(Env.PATH_appData + @"\VisualStyles\Luna", entry.FullName);
-                                string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), "");
-                                if (!Directory.Exists(dest_dir))
-                                    Directory.CreateDirectory(dest_dir);
-                            }
-                            entry.ExtractToFile(Path.Combine(Env.PATH_appData + @"\VisualStyles\Luna", entry.FullName), true);
-                        }
-                    }
-                    s.Close();
-                }
-                File.WriteAllText(Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
-            }
-            catch (Exception ex)
-            {
-                MyProject.Forms.BugReport.ThrowError(ex);
-            }
-
-            // Backup Windows Startup sound
-            try
-            {
-                if (!Env.WXP && !File.Exists(Env.PATH_appData + @"\WindowsStartup_Backup.wav"))
-                {
-                    byte[] SoundBytes = PE.GetResource(Env.PATH_imageres, "WAVE", Env.WVista ? 5051 : 5080);
-                    File.WriteAllBytes(Env.PATH_appData + @"\WindowsStartup_Backup.wav", SoundBytes);
-                }
-            }
-            catch (Exception ex)
-            {
-                MyProject.Forms.BugReport.ThrowError(ex);
-            }
+            AssociateFiles();
+            DetectIfWPStartedWithClassicTheme();
+            ExtractLuna();
+            BackupWindowsStartupSound();
+            CreateUninstaller();
 
             #region WhatsNew
             if (!Env.Settings.General.WhatsNewRecord.Contains(MyProject.Application.Info.Version.ToString()))
@@ -1180,22 +831,76 @@ namespace WinPaletter.My
             }
             #endregion
 
-            CreateUninstaller();
+            InitializeImageLists();
 
+            LoadThemeManager();
+        }
+
+        private void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
+        {
+            ExecuteArgs_ProgramStarted(e);
+        }
+
+        private void MyApplication_Shutdown(object sender, EventArgs e)
+        {
+            if (!Env.WXP)
+            {
+                try
+                {
+                    WallMon_Watcher1.Stop();
+                    WallMon_Watcher2.Stop();
+
+                    if (!Env.W7 & !Env.W81 & !Env.WVista)
+                    {
+                        WallMon_Watcher3.Stop();
+                        WallMon_Watcher4.Stop();
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            DeleteUpdateResiduals();
+
+            AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
+            AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
+            Application.ThreadException -= ThreadExceptionHandler;
+
+            try
+            {
+                WallMon_Watcher1.EventArrived -= Wallpaper_Changed_EventHandler;
+                WallMon_Watcher2.EventArrived -= Wallpaper_Changed_EventHandler;
+                WallMon_Watcher3.EventArrived -= WallpaperType_Changed;
+                WallMon_Watcher4.EventArrived -= DarkMode_Changed_EventHandler;
+            }
+            catch
+            {
+            }
+
+            SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
+        }
+        #endregion
+
+        #region Helpers
+        private void LoadThemeManager()
+        {
             if (Env.W11)
                 Env.PreviewStyle = WindowStyle.W11;
-            if (Env.W10)
+            else if (Env.W10)
                 Env.PreviewStyle = WindowStyle.W10;
-            if (Env.W81)
+            else if (Env.W81)
                 Env.PreviewStyle = WindowStyle.W81;
-            if (Env.W8)
+            else if (Env.W8)
                 Env.PreviewStyle = WindowStyle.W81;
-            if (Env.W7)
+            else if (Env.W7)
                 Env.PreviewStyle = WindowStyle.W7;
-            if (Env.WVista)
+            else if (Env.WVista)
                 Env.PreviewStyle = WindowStyle.WVista;
-            if (Env.WXP)
+            else if (Env.WXP)
                 Env.PreviewStyle = WindowStyle.WXP;
+            else
+                Env.PreviewStyle = WindowStyle.W11;
 
             // Load Manager
             if (!MyProject.Application.ExternalLink)
@@ -1215,7 +920,138 @@ namespace WinPaletter.My
             Env.TM_FirstTime = (Theme.Manager)Env.TM.Clone();
         }
 
-        private void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
+        private void DeleteUpdateResiduals()
+        {
+            try
+            {
+                if (System.IO.File.Exists("oldWinpaletter.trash"))
+                    FileSystem.Kill("oldWinpaletter.trash");
+                if (System.IO.File.Exists("oldWinpaletter_2.trash"))
+                    FileSystem.Kill("oldWinpaletter_2.trash");
+            }
+            catch
+            {
+            }
+        }
+
+        private void GetMemoryFonts()
+        {
+            try
+            {
+                MemoryFonts.AddMemoryFont(Properties.Resources.JetBrainsMono_Medium);
+                ConsoleFont = MemoryFonts.GetFont(0, 7.75f);
+                ConsoleFontMedium = MemoryFonts.GetFont(0, 9f);
+                ConsoleFontLarge = MemoryFonts.GetFont(0, 10f);
+            }
+            catch
+            {
+                ConsoleFont = new Font("Lucida Console", 7.5f);
+                ConsoleFontMedium = new Font("Lucida Console", 9f);
+                ConsoleFontLarge = new Font("Lucida Console", 10f);
+            }
+        }
+
+        private void ExecuteArgs()
+        {
+            if (Environment.GetCommandLineArgs().Count() > 1)
+            {
+                ArgsList.Clear();
+                for (int x = 1, loopTo = Environment.GetCommandLineArgs().Count() - 1; x <= loopTo; x++)
+                    ArgsList.Add(Environment.GetCommandLineArgs()[x]);
+            }
+
+            foreach (string arg in ArgsList)
+            {
+                if (arg.ToLower() == "/exportlanguage")
+                {
+                    Env.Lang.ExportJSON(string.Format("language-en {0}.{1}.{2} {3}-{4}-{5}.json", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year));
+                    WPStyle.MsgBox(Env.Lang.LngExported, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    using Process Prc = Process.GetCurrentProcess();
+                    Prc.Kill();
+                    break;
+                }
+
+                else if (arg.ToLower() == "/uninstall")
+                {
+                    MyProject.Forms.Uninstall.ShowDialog();
+                    using Process Prc = Process.GetCurrentProcess();
+                    Prc.Kill();
+                    break;
+                }
+
+                else if (arg.ToLower() == "/uninstall-quiet")
+                {
+                    Uninstall_Quiet();
+                    break;
+                }
+
+                else if (arg.StartsWith("/convert:", Env._ignore))
+                {
+                    CMD_Convert(arg, true);
+                }
+
+                else if (arg.StartsWith("/convert-list:", Env._ignore))
+                {
+                    CMD_Convert_List(arg, true);
+
+                }
+
+                else if (!arg.StartsWith("/apply:", Env._ignore) & !arg.StartsWith("/edit:", Env._ignore) & !arg.StartsWith("/convert:", Env._ignore) & !arg.StartsWith("/convert-list:", Env._ignore))
+                {
+                    if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
+                    {
+                        if (Env.Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
+                        {
+                            ExternalLink = true;
+                            ExternalLink_File = arg;
+                        }
+                        else
+                        {
+                            var TMx = new Theme.Manager(Theme.Manager.Source.File, arg);
+                            TMx.Save(Theme.Manager.Source.Registry, arg);
+                            if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+                                RestartExplorer();
+                            using Process Prc = Process.GetCurrentProcess();
+                            Prc.Kill();
+                        }
+                    }
+
+                    if (System.IO.Path.GetExtension(arg).ToLower() == ".wpsf")
+                    {
+                        MyProject.Forms.SettingsX._External = true;
+                        MyProject.Forms.SettingsX._File = arg;
+                        MyProject.Forms.SettingsX.ShowDialog();
+                        using Process Prc = Process.GetCurrentProcess();
+                        Prc.Kill();
+                    }
+                }
+
+                else if (arg.StartsWith("/apply:", Env._ignore))
+                {
+                    string File = arg.Remove(0, "/apply:".Count());
+                    File = File.Replace("\"", "");
+                    if (System.IO.File.Exists(File))
+                    {
+                        var TMx = new Theme.Manager(Theme.Manager.Source.File, File);
+                        TMx.Save(Theme.Manager.Source.Registry);
+                        if (Env.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
+                            RestartExplorer();
+                        using Process Prc = Process.GetCurrentProcess();
+                        Prc.Kill();
+                    }
+                }
+
+                else if (arg.StartsWith("/edit:", Env._ignore))
+                {
+                    string File = arg.Remove(0, "/edit:".Count());
+                    File = File.Replace("\"", "");
+                    ExternalLink = true;
+                    ExternalLink_File = File;
+                }
+            }
+        }
+
+        private void ExecuteArgs_ProgramStarted(StartupNextInstanceEventArgs e)
         {
             try
             {
@@ -1225,6 +1061,7 @@ namespace WinPaletter.My
                 {
                     e.BringToForeground = true;
                 }
+
                 else if ((arg.ToLower() ?? "") == ("/exportlanguage".ToLower() ?? ""))
                 {
                     WPStyle.MsgBox(Env.Lang.LngShouldClose, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1252,84 +1089,9 @@ namespace WinPaletter.My
 
                 else if (!arg.StartsWith("/apply:", Env._ignore) & !arg.StartsWith("/edit:", Env._ignore))
                 {
-
-                    if (Path.GetExtension(arg).ToLower() == ".wpth")
+                    if (System.IO.Path.GetExtension(arg).ToLower() == ".wpth")
                     {
-                        if (Env.TM != Env.TM_Original)
-                        {
-                            if (Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
-                            {
-                                switch (MyProject.Forms.ComplexSave.ShowDialog())
-                                {
-                                    case DialogResult.Yes:
-                                        {
-                                            string[] r = Env.Settings.General.ComplexSaveResult.Split('.');
-                                            string r1 = r[0];
-                                            string r2 = r[1];
-                                            switch (r1 ?? "")
-                                            {
-                                                case "0":              // ' Save
-                                                    {
-                                                        if (File.Exists(MyProject.Forms.MainFrm.SaveFileDialog1.FileName))
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            return;
-                                                        }
-
-                                                        break;
-                                                    }
-
-                                                case "1":              // ' Save As
-                                                    {
-                                                        if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            return;
-                                                        }
-
-                                                        break;
-                                                    }
-                                            }
-
-                                            switch (r2 ?? "")
-                                            {
-                                                case "1":      // ' Apply   ' Case 0= Don't Apply
-                                                    {
-                                                        MyProject.Forms.MainFrm.Apply_Theme();
-                                                        break;
-                                                    }
-                                            }
-
-                                            break;
-                                        }
-
-                                    case DialogResult.No:
-                                        {
-                                            break;
-                                        }
-
-
-                                    case DialogResult.Cancel:
-                                        {
-                                            return;
-                                        }
-                                }
-                            }
-
-                        }
+                        MyProject.Forms.ComplexSave.GetResponse(MyProject.Forms.MainFrm.SaveFileDialog1, () => MyProject.Forms.MainFrm.Apply_Theme(), () => MyProject.Forms.MainFrm.Apply_Theme(Env.TM_FirstTime), () => MyProject.Forms.MainFrm.Apply_Theme(Theme.Default.Get()));
 
                         Env.TM = new Theme.Manager(Theme.Manager.Source.File, arg);
                         Env.TM_Original = (Theme.Manager)Env.TM.Clone();
@@ -1344,7 +1106,7 @@ namespace WinPaletter.My
                         }
                     }
 
-                    if (Path.GetExtension(arg).ToLower() == ".wpsf")
+                    if (System.IO.Path.GetExtension(arg).ToLower() == ".wpsf")
                     {
                         MyProject.Forms.SettingsX._External = true;
                         MyProject.Forms.SettingsX._File = arg;
@@ -1372,82 +1134,7 @@ namespace WinPaletter.My
                         string File = arg.Remove(0, "/edit:".Count());
                         File = File.Replace("\"", "");
 
-                        if (Env.TM != Env.TM_Original)
-                        {
-
-                            if (Env.Settings.ThemeApplyingBehavior.ShowSaveConfirmation)
-                            {
-                                switch (MyProject.Forms.ComplexSave.ShowDialog())
-                                {
-                                    case DialogResult.Yes:
-                                        {
-                                            string[] r = Env.Settings.General.ComplexSaveResult.Split('.');
-                                            string r1 = r[0];
-                                            string r2 = r[1];
-                                            switch (r1 ?? "")
-                                            {
-                                                case "0":              // ' Save
-                                                    {
-                                                        if (System.IO.File.Exists(MyProject.Forms.MainFrm.SaveFileDialog1.FileName))
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            return;
-                                                        }
-
-                                                        break;
-                                                    }
-
-                                                case "1":              // ' Save As
-                                                    {
-                                                        if (MyProject.Forms.MainFrm.SaveFileDialog1.ShowDialog() == DialogResult.OK)
-                                                        {
-                                                            Env.TM.Save(Theme.Manager.Source.File, MyProject.Forms.MainFrm.SaveFileDialog1.FileName);
-                                                            Env.TM_Original = (Theme.Manager)Env.TM.Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            return;
-                                                        }
-
-                                                        break;
-                                                    }
-                                            }
-
-                                            switch (r2 ?? "")
-                                            {
-                                                case "1":      // ' Apply   ' Case 0= Don't Apply
-                                                    {
-                                                        MyProject.Forms.MainFrm.Apply_Theme();
-                                                        break;
-                                                    }
-                                            }
-
-                                            break;
-                                        }
-
-                                    case DialogResult.No:
-                                        {
-                                            break;
-                                        }
-
-
-                                    case DialogResult.Cancel:
-                                        {
-                                            return;
-                                        }
-                                }
-                            }
-
-                        }
+                        MyProject.Forms.ComplexSave.GetResponse(MyProject.Forms.MainFrm.SaveFileDialog1, () => MyProject.Forms.MainFrm.Apply_Theme(), () => MyProject.Forms.MainFrm.Apply_Theme(Env.TM_FirstTime), () => MyProject.Forms.MainFrm.Apply_Theme(Theme.Default.Get()));
 
                         Env.TM = new Theme.Manager(Theme.Manager.Source.File, File);
                         Env.TM_Original = (Theme.Manager)Env.TM.Clone();
@@ -1455,12 +1142,12 @@ namespace WinPaletter.My
                         MyProject.Forms.MainFrm.SaveFileDialog1.FileName = File;
                         MyProject.Forms.MainFrm.LoadFromTM(Env.TM);
                         MyProject.Forms.MainFrm.ApplyColorsToElements(Env.TM);
-
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                MyProject.Forms.BugReport.ThrowError(ex);
                 e.BringToForeground = true;
             }
         }
@@ -1481,7 +1168,7 @@ namespace WinPaletter.My
 
                 var _Convert = new Converter();
 
-                if (File.Exists(Source) && !(_Convert.FetchFile(Source) == Converter_CP.WP_Format.Error))
+                if (System.IO.File.Exists(Source) && !(_Convert.FetchFile(Source) == Converter_CP.WP_Format.Error))
                 {
                     _Convert.Convert(Source, Destination, Compress == "1", OldWPTH == "1");
                 }
@@ -1498,10 +1185,8 @@ namespace WinPaletter.My
 
             if (KillProcessAfterConvert)
             {
-                using (var Prc = Process.GetCurrentProcess())
-                {
-                    Prc.Kill();
-                }
+                using Process Prc = Process.GetCurrentProcess();
+                Prc.Kill();
             }
         }
 
@@ -1512,12 +1197,10 @@ namespace WinPaletter.My
                 string source = arg.Remove(0, "/convert-list:".Count());
                 var _Convert = new Converter();
 
-                if (File.Exists(source))
+                if (System.IO.File.Exists(source))
                 {
-
-                    foreach (string File in File.ReadAllLines(source))
+                    foreach (string File in System.IO.File.ReadAllLines(source))
                     {
-
                         string f;
                         string compress = Env.Settings.FileTypeManagement.CompressThemeFile ? "1" : "0";
                         string OldWPTH = "0";
@@ -1538,15 +1221,15 @@ namespace WinPaletter.My
                                     compress = arr[2];
                             }
 
-                            var FI = new FileInfo(f);
-                            string Name = Path.GetFileNameWithoutExtension(FI.Name);
+                            var FI = new System.IO.FileInfo(f);
+                            string Name = System.IO.Path.GetFileNameWithoutExtension(FI.Name);
                             string Dir = FI.FullName.Replace(FI.FullName.Split('\\').Last(), "WinPaletterConversion");
                             string SaveAs = Dir + @"\" + Name + ".wpth";
 
                             if (!(_Convert.FetchFile(f) == Converter_CP.WP_Format.Error))
                             {
-                                if (!Directory.Exists(Dir))
-                                    Directory.CreateDirectory(Dir);
+                                if (!System.IO.Directory.Exists(Dir))
+                                    System.IO.Directory.CreateDirectory(Dir);
                                 _Convert.Convert(f, SaveAs, compress == "1", OldWPTH == "1");
                             }
                             else
@@ -1554,9 +1237,7 @@ namespace WinPaletter.My
                                 WPStyle.MsgBox(Env.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error, f);
                             }
                         }
-
                     }
-
                 }
             }
 
@@ -1567,16 +1248,172 @@ namespace WinPaletter.My
 
             if (KillProcessAfterConvert)
             {
-                using (var Prc = Process.GetCurrentProcess())
+                using Process Prc = Process.GetCurrentProcess();
+                Prc.Kill();
+            }
+        }
+
+        private void LoadLanguage()
+        {
+            if (Env.Settings.Language.Enabled)
+            {
+                try
                 {
+                    Env.Lang.LoadLanguageFromJSON(Env.Settings.Language.File);
+                }
+                catch (Exception ex)
+                {
+                    MyProject.Forms.BugReport.ThrowError(ex);
+                }
+            }
+        }
+
+        private void CheckIfLicenseChecked()
+        {
+            if (!Env.Settings.General.LicenseAccepted)
+            {
+                if (MyProject.Forms.LicenseForm.ShowDialog() != DialogResult.OK)
+                {
+                    using Process Prc = Process.GetCurrentProcess();
                     Prc.Kill();
                 }
             }
         }
 
-        #endregion
+        private void StartWallpaperMonitor()
+        {
+            if (!Env.WXP)
+            {
+                try
+                {
+                    Monitor();
+                }
+                catch (Exception ex)
+                {
+                    if (WPStyle.MsgBox(Env.Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, Env.Lang.MonitorIssue2 + "\r\n" + Env.Lang.TM_RestoreCursorsErrorPressOK) == DialogResult.OK)
+                    {
+                        MyProject.Forms.BugReport.ThrowError(ex);
+                    }
+                }
+            }
+            else
+            {
+                SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
+            }
+        }
 
-        #region    Domain (External Resources) and Exceptions Handling
+        private void InitializeImageLists()
+        {
+            Env.Notifications_IL.Images.Add("info", Properties.Resources.notify_info);
+            Env.Notifications_IL.Images.Add("apply", Properties.Resources.notify_applying);
+            Env.Notifications_IL.Images.Add("error", Properties.Resources.notify_error);
+            Env.Notifications_IL.Images.Add("warning", Properties.Resources.notify_warning);
+            Env.Notifications_IL.Images.Add("time", Properties.Resources.notify_time);
+            Env.Notifications_IL.Images.Add("success", Properties.Resources.notify_success);
+            Env.Notifications_IL.Images.Add("skip", Properties.Resources.notify_skip);
+            Env.Notifications_IL.Images.Add("admin", Properties.Resources.notify_administrator);
+            Env.Notifications_IL.Images.Add("reg_add", Properties.Resources.notify_reg_add);
+            Env.Notifications_IL.Images.Add("reg_delete", Properties.Resources.notify_reg_delete);
+            Env.Notifications_IL.Images.Add("reg_skip", Properties.Resources.notify_reg_skip);
+            Env.Notifications_IL.Images.Add("task_add", Properties.Resources.notify_task_add);
+            Env.Notifications_IL.Images.Add("task_remove", Properties.Resources.notify_task_remove);
+            Env.Notifications_IL.Images.Add("file_rename", Properties.Resources.notify_file_rename);
+            Env.Notifications_IL.Images.Add("dll", Properties.Resources.notify_dll);
+            Env.Notifications_IL.Images.Add("pe_patch", Properties.Resources.notify_pe_patch);
+            Env.Notifications_IL.Images.Add("pe_backup", Properties.Resources.notify_pe_backup);
+            Env.Notifications_IL.Images.Add("pe_restore", Properties.Resources.notify_pe_restore);
+
+            Env.Lang_IL.Images.Add("main", Properties.Resources.LangNode_Main);
+            Env.Lang_IL.Images.Add("value", Properties.Resources.LangNode_Value);
+            Env.Lang_IL.Images.Add("json", Properties.Resources.LangNode_JSON);
+
+            Env.Saving_Exceptions.Clear();
+            Env.Loading_Exceptions.Clear();
+        }
+
+        private void AssociateFiles()
+        {
+            try
+            {
+                if (Env.Settings.FileTypeManagement.AutoAddExt)
+                {
+                    if (!System.IO.Directory.Exists(Env.PATH_appData))
+                        System.IO.Directory.CreateDirectory(Env.PATH_appData);
+
+                    System.IO.File.WriteAllBytes(Env.PATH_appData + @"\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
+                    System.IO.File.WriteAllBytes(Env.PATH_appData + @"\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
+                    System.IO.File.WriteAllBytes(Env.PATH_appData + @"\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
+
+                    CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Env.Lang.WP_Theme_FileType, Env.PATH_appData + @"\fileextension.ico", Assembly.GetExecutingAssembly().Location);
+                    CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Env.Lang.WP_Settings_FileType, Env.PATH_appData + @"\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
+                    CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Env.Lang.WP_ResourcesPack_FileType, Env.PATH_appData + @"\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private void DetectIfWPStartedWithClassicTheme()
+        {
+            System.Text.StringBuilder vsFile = new(260);
+            System.Text.StringBuilder colorName = new(260);
+            System.Text.StringBuilder sizeName = new(260);
+            NativeMethods.UxTheme.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
+            Env.StartedWithClassicTheme = string.IsNullOrEmpty(vsFile.ToString());
+        }
+
+        private void ExtractLuna()
+        {
+            try
+            {
+                if (!System.IO.Directory.Exists(Env.PATH_appData + @"\VisualStyles\Luna"))
+                    System.IO.Directory.CreateDirectory(Env.PATH_appData + @"\VisualStyles\Luna");
+                System.IO.File.WriteAllBytes(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", Properties.Resources.luna);
+                using (System.IO.FileStream s = new(Env.PATH_appData + @"\VisualStyles\Luna\Luna.zip", System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                {
+                    using (var z = new System.IO.Compression.ZipArchive(s, System.IO.Compression.ZipArchiveMode.Read))
+                    {
+                        foreach (System.IO.Compression.ZipArchiveEntry entry in z.Entries)
+                        {
+                            if (entry.FullName.Contains(@"\"))
+                            {
+                                string dest = System.IO.Path.Combine(Env.PATH_appData + @"\VisualStyles\Luna", entry.FullName);
+                                string dest_dir = dest.Replace(@"\" + dest.Split('\\').Last(), "");
+                                if (!System.IO.Directory.Exists(dest_dir))
+                                    System.IO.Directory.CreateDirectory(dest_dir);
+                            }
+                            entry.ExtractToFile(System.IO.Path.Combine(Env.PATH_appData + @"\VisualStyles\Luna", entry.FullName), true);
+                        }
+                    }
+                    s.Close();
+                }
+                System.IO.File.WriteAllText(Env.PATH_appData + @"\VisualStyles\Luna\luna.theme", string.Format("[VisualStyles]{1}Path={0}{1}ColorStyle=NormalColor{1}Size=NormalSize", Env.PATH_appData + @"\VisualStyles\Luna\luna.msstyles", "\r\n"));
+            }
+            catch (Exception ex)
+            {
+                MyProject.Forms.BugReport.ThrowError(ex);
+            }
+        }
+
+        private void BackupWindowsStartupSound()
+        {
+            try
+            {
+                if (!Env.WXP && !System.IO.File.Exists(Env.PATH_appData + @"\WindowsStartup_Backup.wav"))
+                {
+                    byte[] SoundBytes = PE.GetResource(Env.PATH_imageres, "WAVE", Env.WVista ? 5051 : 5080);
+                    System.IO.File.WriteAllBytes(Env.PATH_appData + @"\WindowsStartup_Backup.wav", SoundBytes);
+                }
+            }
+            catch (Exception ex)
+            {
+                MyProject.Forms.BugReport.ThrowError(ex);
+            }
+        }
+        #endregion 
+
+        #region Domain (External Resources) and Exceptions Handling
         private Assembly DomainCheck(object sender, ResolveEventArgs e)
         {
             return GetAssemblyFromZIP(e.Name);
@@ -1591,16 +1428,16 @@ namespace WinPaletter.My
 
             byte[] b = null;
 
-            using (var ms = new MemoryStream(Properties.Resources.Assemblies))
+            using (var ms = new System.IO.MemoryStream(Properties.Resources.Assemblies))
             {
                 using (var zip = new ZipArchive(ms))
                 {
                     if (zip.Entries.Any(entry => entry.Name.EndsWith(Name + ".dll", Env._ignore)))
                     {
-                        using (var _as = new MemoryStream())
+                        using (var _as = new System.IO.MemoryStream())
                         {
                             zip.GetEntry(Name + ".dll").Open().CopyTo(_as);
-                            _as.Seek(0L, SeekOrigin.Begin);
+                            _as.Seek(0L, System.IO.SeekOrigin.Begin);
                             b = _as.ToArray();
                         }
                     }

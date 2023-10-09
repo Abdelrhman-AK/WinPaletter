@@ -134,6 +134,10 @@ namespace WinPaletter
         public string ErrorExplorerRestart { get; set; } = "Error in restarting explorer. Relaunch it in Task Manager (Open Task Manager > Run new task > Type 'Explorer.exe' and launch)";
         public string Scaling { get; set; } = "Scaling";
         public string LanguageRestart { get; set; } = "To apply this language, save settings and restart WinPaletter.";
+        public string Uninstall_Comment { get; set; } = "This will help you delete WinPaletter and clean up its used data";
+        public string WP_Theme_FileType { get; set; } = "WinPaletter Theme File";
+        public string WP_Settings_FileType { get; set; } = "WinPaletter Settings File";
+        public string WP_ResourcesPack_FileType { get; set; } = "WinPaletter Theme Resources Pack";
 
         public string TM_11_StartMenu_Taskbar_AC { get; set; } = "Start menu, taskbar && action center";
         public string TM_11_ACHover_Links { get; set; } = "Action center hover && links";

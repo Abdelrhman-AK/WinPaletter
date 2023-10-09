@@ -10,6 +10,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Net;
 using System.Windows.Forms;
 
 namespace WinPaletter.My
@@ -38,6 +39,11 @@ namespace WinPaletter.My
             Startup += MyApplication_Startup;
             StartupNextInstance += MyApplication_StartupNextInstance;
             UnhandledException += SecondChanceExceptionHandler;
+
+            if (Env.W7 | Env.WVista | Env.WXP)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            }
         }
 
         [DebuggerStepThrough()]

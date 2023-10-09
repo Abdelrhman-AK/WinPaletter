@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 
 namespace WinPaletter
 {
@@ -31,6 +32,8 @@ namespace WinPaletter
                     IsInstalled = false;
                 }
             }
+            catch
+            { }
             finally
             {
                 My.MyProject.Computer.Registry.CurrentUser.Close();
@@ -41,14 +44,14 @@ namespace WinPaletter
 
                 if (IsInstalled & My.Env.W11)
                 {
-                    UseStart10 = Conversions.ToBoolean(Reg_IO.GetReg(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", false));
+                    UseStart10 = Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
                     {
                         {
                             var temp = My.MyProject.Computer.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
-                            UseTaskbar10 = Conversions.ToBoolean(temp.GetValue("OldTaskbar"));
-                            TaskbarButton10 = (int)temp.GetValue("OrbStyle") == 0;
-                            StartStyle = (StartStyles)Conversions.ToInteger(temp.GetValue("StartUI_EnableRoundedCorners"));
+                            UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
+                            TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
+                            StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
                         }
                     }
                     finally
