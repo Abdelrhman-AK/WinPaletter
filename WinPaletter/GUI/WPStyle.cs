@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -894,7 +893,7 @@ namespace WinPaletter
 
         }
 
-        
+
         private static void TD_Created(object sender, EventArgs e)
         {
             ApplyStyle(((IWin32Window)sender).Handle);
