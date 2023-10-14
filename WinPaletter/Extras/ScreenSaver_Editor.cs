@@ -187,7 +187,7 @@ namespace WinPaletter
         {
             using (var _ini = new INI(File))
             {
-                TextBox1.Text = _ini.IniReadValue("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
+                TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
             }
         }
 

@@ -862,11 +862,11 @@ namespace WinPaletter
 
                 JObject JObj = (JObject)JToken.Parse(System.IO.File.ReadAllText(LangFile));
 
-                var j_info = new JObject() { { "Name".ToLower(), TextBox5.Text }, { "TranslationVersion".ToLower(), TextBox6.Text }, { "Lang".ToLower(), TextBox3.Text }, { "LangCode".ToLower(), TextBox4.Text }, { "AppVer".ToLower(), TextBox7.Text }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
+                var j_info = new JObject() { { "Name".ToLower(), TextBox5.Text ?? "" }, { "TranslationVersion".ToLower(), TextBox6.Text ?? "" }, { "Lang".ToLower(), TextBox3.Text ?? "" }, { "LangCode".ToLower(), TextBox4.Text ?? "" }, { "AppVer".ToLower(), TextBox7.Text ?? "" }, { "RightToLeft".ToLower(), RadioButton2.Checked } };
 
                 var j_globalstrings = new JObject();
                 for (int r = 0, loopTo = data.Rows.Count - 1; r <= loopTo; r++)
-                    j_globalstrings[data[0, r].Value.ToString().ToLower()] = data[1, r].Value.ToString();
+                    j_globalstrings[data[0, r].Value.ToString().ToLower()] = (data[1, r].Value ?? "").ToString();
 
                 JObj["Information"] = j_info;
                 JObj["Global Strings"] = j_globalstrings;
@@ -879,7 +879,7 @@ namespace WinPaletter
 
         private void data_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if ((data[1, e.RowIndex].Value.ToString().ToLower().Trim() ?? "") != (data[2, e.RowIndex].Value.ToString().ToLower().Trim() ?? "") && !string.IsNullOrWhiteSpace(data[1, e.RowIndex].Value.ToString().ToLower().Trim()))
+            if (((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) != ((data[2, e.RowIndex].Value ?? "").ToString().ToLower().Trim()) && !string.IsNullOrWhiteSpace((data[1, e.RowIndex].Value ?? "").ToString().ToLower().Trim()))
             {
                 data[1, e.RowIndex].Style.BackColor = data[2, e.RowIndex].Style.BackColor;
             }

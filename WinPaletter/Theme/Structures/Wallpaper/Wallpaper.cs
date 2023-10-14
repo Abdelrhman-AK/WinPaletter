@@ -163,21 +163,21 @@ namespace WinPaletter.Theme.Structures
 
                             if (WallpaperType == WallpaperTypes.SlideShow && SlideShow_Folder_or_ImagesList && Directory.Exists(Wallpaper_Slideshow_ImagesRootPath))
                             {
-                                _ini.IniWriteValue("Slideshow", "ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath);
+                                _ini.Write("Slideshow", "ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath);
                             }
 
-                            _ini.IniWriteValue("Slideshow", "Interval", Wallpaper_Slideshow_Interval.ToString());
-                            _ini.IniWriteValue("Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle.ToString());
+                            _ini.Write("Slideshow", "Interval", Wallpaper_Slideshow_Interval.ToString());
+                            _ini.Write("Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle.ToString());
 
                             if (WallpaperType == WallpaperTypes.SlideShow && !SlideShow_Folder_or_ImagesList)
                             {
                                 if (Directory.Exists(Wallpaper_Slideshow_Images[0]))
                                 {
-                                    _ini.IniWriteValue("Slideshow", "ImagesRootPath", new FileInfo(Wallpaper_Slideshow_Images[0]).Directory.FullName);
+                                    _ini.Write("Slideshow", "ImagesRootPath", new FileInfo(Wallpaper_Slideshow_Images[0]).Directory.FullName);
                                 }
 
                                 for (int i = 0, loopTo = Wallpaper_Slideshow_Images.Count() - 1; i <= loopTo; i++)
-                                    _ini.IniWriteValue("Slideshow", "Item" + i + "Path", Wallpaper_Slideshow_Images[i]);
+                                    _ini.Write("Slideshow", "Item" + i + "Path", Wallpaper_Slideshow_Images[i]);
                             }
 
                         }

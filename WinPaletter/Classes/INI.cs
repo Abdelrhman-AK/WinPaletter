@@ -1,33 +1,50 @@
 ﻿using System;
 using System.Text;
-using static WinPaletter.NativeMethods.Kernel32;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
 
-    public class INI : IDisposable
+    public class INI : IDisposable, ICloneable
     {
-
         public string path;
         private bool disposedValue;
 
-        public INI(string INIPath)
+        public INI(string File)
         {
-            path = INIPath;
+            path = File;
         }
 
-        public void IniWriteValue(string Section, string Key, string Value)
+        public void Write(string Section, string Key, string Value)
         {
-            WritePrivateProfileString(Section, Key, Value, path);
+            Kernel32.WritePrivateProfileString(Section, Key, Value, path);
         }
 
-        public string IniReadValue(string Section, string Key, string DefaultValue = null)
+        public string Read(string Section, string Key, string DefaultValue = null)
         {
-            var temp = new StringBuilder(65535);
-            int i = GetPrivateProfileString(Section, Key, DefaultValue, temp, temp.Capacity, path);
-            return temp.ToString();
+            StringBuilder SB = new(65535);
+            int i = Kernel32.GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
+            return SB.ToString();
         }
 
+        public void DeleteSection(string Section)
+        {
+            Kernel32.WritePrivateProfileString(Section, null, null, path);
+        }
+
+        public void DeleteKey(string Section, string Key)
+        {
+            Kernel32.WritePrivateProfileString(Section, Key, null, path);
+        }
+
+        #region Clone support
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+        #endregion
+
+        #region IDisposable Support
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -56,5 +73,6 @@ namespace WinPaletter
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

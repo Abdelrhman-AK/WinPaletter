@@ -66,8 +66,6 @@ namespace WinPaletter
         public static void RestartExplorer(TreeView TreeView = null)
         {
             {
-                var temp = My.MyProject.Application;
-
                 try
                 {
                     if (TreeView is not null)
@@ -75,9 +73,9 @@ namespace WinPaletter
                     var sw = new Stopwatch();
                     sw.Reset();
                     sw.Start();
-                    temp.processKiller.Start();
-                    temp.processKiller.WaitForExit();
-                    temp.processExplorer.Start();
+                    My.MyProject.Application.processKiller.Start();
+                    My.MyProject.Application.processKiller.WaitForExit();
+                    My.MyProject.Application.processExplorer.Start();
                     sw.Stop();
                     if (TreeView is not null)
                         Theme.Manager.AddNode(TreeView, string.Format("{0}: {1}", DateTime.Now.ToLongTimeString(), string.Format(My.Env.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)), "time");
