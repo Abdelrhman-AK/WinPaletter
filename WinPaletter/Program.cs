@@ -779,7 +779,7 @@ namespace WinPaletter.My
         }
         #endregion
 
-        #region Application Startup and Shutdown Subs
+        #region Application Startup and Shutdown Voids
         private void MyApplication_Startup(object sender, StartupEventArgs e)
         {
             ExternalLink = false;

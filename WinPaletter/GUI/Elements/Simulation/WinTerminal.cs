@@ -183,7 +183,7 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         public GraphicsPath RR(Rectangle r, int radius)
         {

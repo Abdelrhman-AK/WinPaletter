@@ -29,7 +29,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        #region    Subs not related to colors and shapes
+        #region    Voids not related to colors and shapes
         private void CMD_Load(object sender, EventArgs e)
         {
             _Shown = false;
@@ -165,7 +165,7 @@ namespace WinPaletter
         }
         #endregion
 
-        #region    Subs to modify colors or shapes
+        #region    Voids to modify colors or shapes
         public void ApplyCursorShape()
         {
             CMD_PreviewCursorInner.Dock = DockStyle.Fill;

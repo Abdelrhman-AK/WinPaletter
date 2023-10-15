@@ -404,7 +404,7 @@ namespace WinPaletter.UI.Simulation
         }
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
         public void CopycatFrom(WinElement element)
         {
             Style = element.Style;

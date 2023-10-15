@@ -463,7 +463,7 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         public void UpdateColorsHistory()
         {

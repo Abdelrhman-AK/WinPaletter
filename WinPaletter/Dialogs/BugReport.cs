@@ -21,7 +21,6 @@ namespace WinPaletter
             WPStyle.ApplyStyle(this);
             var c = PictureBox1.Image.AverageColor().CB((float)(My.Env.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
-            this.DrawCustomTitlebar(c);
 
             Label2.Font = My.MyProject.Application.ConsoleFontMedium;
             Label3.Font = My.MyProject.Application.ConsoleFontMedium;
@@ -92,7 +91,7 @@ namespace WinPaletter
 
                         AddData(str, Exception, TreeView);
 
-                        TreeView.Nodes.Add(str + @" target sub\function").Nodes.Add(Exception.TargetSite.Name + " @ " + Exception.Source);
+                        TreeView.Nodes.Add(str + @" target void\function").Nodes.Add(Exception.TargetSite.Name + " @ " + Exception.Source);
                         TreeView.Nodes.Add(str + " assembly").Nodes.Add(Exception.TargetSite.Module.Assembly.FullName);
                         TreeView.Nodes.Add(str + " assembly's file").Nodes.Add(Exception.TargetSite.Module.Assembly.Location);
                         TreeView.Nodes.Add(str + " HRESULT").Nodes.Add(Exception.HResult.ToString());

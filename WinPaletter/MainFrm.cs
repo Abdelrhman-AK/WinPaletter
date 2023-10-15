@@ -34,7 +34,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        #region Preview Subs
+        #region Preview Voids
         public void ApplyColorsToElements(Theme.Manager TM)
         {
             ApplyWinElementsColors(TM, My.Env.PreviewStyle, true, taskbar, start, ActionCenter, setting_icon_preview, Label8, lnk_preview);

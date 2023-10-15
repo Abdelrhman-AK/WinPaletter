@@ -114,7 +114,7 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
         public void UpdateBadges()
         {
             DesignedFor_Badges.Clear();

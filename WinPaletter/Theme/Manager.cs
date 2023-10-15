@@ -3567,7 +3567,7 @@ namespace WinPaletter.Theme
         }
         #endregion
 
-        #region Applying Subs
+        #region Applying Voids
         public static void Apply_LogonUI7(Theme.Structures.LogonUI7 LogonElement, string RegEntryHint = "LogonUI", TreeView TreeView = null)
         {
 

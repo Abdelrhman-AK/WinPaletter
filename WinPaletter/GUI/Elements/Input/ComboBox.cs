@@ -62,7 +62,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Subs
+        #region Voids
 
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {

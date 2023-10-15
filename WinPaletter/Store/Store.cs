@@ -47,7 +47,7 @@ namespace WinPaletter
         }
         #endregion
 
-        #region Preview Subs
+        #region Preview Voids
 
         public void Adjust_Preview(Theme.Manager TM)
         {
@@ -1167,7 +1167,7 @@ namespace WinPaletter
         }
         #endregion
 
-        #region Subs\Functions
+        #region Voids\Functions
 
         #region    Store
         public void Apply_Theme()

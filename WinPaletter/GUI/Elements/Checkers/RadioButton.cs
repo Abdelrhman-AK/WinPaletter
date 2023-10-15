@@ -207,7 +207,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         private void UncheckOthersOnChecked()
         {

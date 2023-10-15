@@ -361,7 +361,7 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         private double GetProgress()
         {

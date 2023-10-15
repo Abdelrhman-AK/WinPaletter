@@ -337,7 +337,7 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         public int GetTitleTextHeight()
         {

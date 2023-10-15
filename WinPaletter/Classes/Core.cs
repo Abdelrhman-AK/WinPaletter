@@ -171,7 +171,10 @@ namespace WinPaletter
                     }
                 };
 
-                string tmp = System.IO.Path.ChangeExtension(System.IO.Path.GetTempFileName(), ".xml");
+                string tmp = System.IO.Path.GetTempFileName();
+                System.IO.File.Move(tmp, System.IO.Path.ChangeExtension(tmp, ".xml"));
+                tmp = System.IO.Path.ChangeExtension(tmp, ".xml");
+
                 if (System.IO.File.Exists(tmp))
                     FileSystem.Kill(tmp);
 
@@ -219,7 +222,8 @@ namespace WinPaletter
 
                     case TaskType.ChargerConnected:
                         {
-                            string XML_Scheme = string.Format(Properties.Resources.XML_ChargerConnected, File);
+                            // Use Replace instead of format to avoid FormatExceptionError
+                            string XML_Scheme = Properties.Resources.XML_ChargerConnected.Replace("{0}", File);
                             System.IO.File.WriteAllText(tmp, XML_Scheme);
                             if (TreeView is not null)
                                 Theme.Manager.AddNode(TreeView, string.Format(My.Env.Lang.Verbose_CreateTask, @"WinPaletter\ChargerConnected"), "task_add");

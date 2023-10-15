@@ -304,7 +304,7 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
-        #region Subs/Functions
+        #region Voids/Functions
 
         public void CopycatFrom(Window Window, bool IgnoreLocationSizesAndText = false)
         {

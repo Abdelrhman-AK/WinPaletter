@@ -20,7 +20,7 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
-        #region Main Subs
+        #region Main Voids
 
         private void Button20_Click(object sender, EventArgs e) // imageres.dll player
         {

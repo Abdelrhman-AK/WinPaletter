@@ -38,7 +38,7 @@ namespace WinPaletter
         }
         #endregion
 
-        #region Helpers subs/functions
+        #region Helpers Voids/functions
         public void OpenFile()
         {
             Lang = new Localizer();
@@ -532,17 +532,17 @@ namespace WinPaletter
         {
             AllowEditing = false;
 
-            Label4.Text = ((UI.Controllers.TextTranslationItem)sender).Name;
+            Label4.Text = ((Control)sender).Name;
 
-            if (!string.IsNullOrWhiteSpace(((UI.Controllers.TextTranslationItem)sender).Text))
+            if (!string.IsNullOrWhiteSpace(((Control)sender).Text))
             {
-                TextBox1.Text = ((UI.Controllers.TextTranslationItem)sender).Text;
+                TextBox1.Text = ((Control)sender).Text;
                 EditingTag = false;
             }
 
-            else if (((UI.Controllers.TextTranslationItem)sender).Tag is not null && !string.IsNullOrWhiteSpace(((UI.Controllers.TextTranslationItem)sender).Tag.ToString()))
+            else if (((Control)sender).Tag is not null && !string.IsNullOrWhiteSpace(((Control)sender).Tag.ToString()))
             {
-                TextBox1.Text = ((UI.Controllers.TextTranslationItem)sender).Tag.ToString();
+                TextBox1.Text = ((Control)sender).Tag.ToString();
                 EditingTag = true;
             }
 
@@ -550,7 +550,6 @@ namespace WinPaletter
             {
                 TextBox1.Text = "";
                 EditingTag = false;
-
             }
 
             if (sender is UI.Controllers.TextTranslationItem)

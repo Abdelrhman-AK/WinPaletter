@@ -690,7 +690,7 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        #region    Subs to modify colors or shapes
+        #region    Voids to modify colors or shapes
         public void ApplyCursorShape()
         {
 
